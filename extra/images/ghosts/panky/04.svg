@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg3505"
+   sodipodi:version="0.32"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="04.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1"
+   inkscape:export-filename="/home/andreas/Dokumente/Projekte/McMinos/svg/ghosts/alpha/04.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs3507">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective3208" />
+    <inkscape:perspective
+       id="perspective3103"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.775311"
+     inkscape:cx="16"
+     inkscape:cy="16"
+     inkscape:current-layer="g2882"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="4"
+     gridtolerance="4"
+     guidetolerance="4"
+     inkscape:window-width="1600"
+     inkscape:window-height="840"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:object-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-guide="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3515"
+       units="px"
+       visible="true"
+       enabled="true"
+       spacingx="1px"
+       spacingy="1px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3510">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:date>2010-08-08</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>ghost-alpha-04</dc:identifier>
+        <dc:description>Preliminary animation for ghost Panky (for now: Alpha). pixels.</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       d="M 16,1 C 7.7309372,1 1,7.7309372 1,16 l 0,8 c 0,2.749063 2.2509372,5 5,5 2.7490628,0 5,-2.250937 5,-5 0,2.749063 2.250937,5 5,5 2.749063,0 5,-2.250937 5,-5 0,2.749063 2.250937,5 5,5 2.749063,0 5,-2.250937 5,-5 l 0,-8 C 31,7.7309372 24.269063,1 16,1 z m 0,2 c 7.186937,0 13,5.8130628 13,13 l 0,8 c 0,1.666937 -1.333063,3 -3,3 -1.666937,0 -3,-1.333063 -3,-3 0,-1.093063 -0.906937,-2 -2,-2 -1.093063,0 -2,0.906937 -2,2 0,1.666937 -1.333063,3 -3,3 -1.666937,0 -3,-1.333063 -3,-3 0,-1.093063 -0.906937,-2 -2,-2 -1.0930628,0 -2,0.906937 -2,2 0,1.666937 -1.3330628,3 -3,3 C 4.3330628,27 3,25.666937 3,24 L 3,16 C 3,8.8130628 8.8130628,3 16,3 z"
+       id="path3265"
+       sodipodi:nodetypes="cccsssssccccccsssssssssccc" />
+    <path
+       style="fill:#00aa00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="M 16,2 C 8.272,2 2,8.272 2,16 l 0,8 c 0,2.208 1.792,4 4,4 2.208,0 4,-1.792 4,-4 0,-0.552 0.448,-1 1,-1 0.552,0 1,0.448 1,1 0,2.208 1.792,4 4,4 2.208,0 4,-1.792 4,-4 0,-0.552 0.448,-1 1,-1 0.552,0 1,0.448 1,1 0,2.208 1.792,4 4,4 2.208,0 4,-1.792 4,-4 l 0,-8 C 30,8.272 23.728,2 16,2 z"
+       id="path2857"
+       sodipodi:nodetypes="cccsssssssssccc" />
+    <g
+       id="g2886"
+       transform="matrix(2,0,0,2,62,0)">
+      <path
+         d="M 10,5 C 10,6.1045695 9.1045695,7 8,7 6.8954305,7 6,6.1045695 6,5 6,3.8954305 6.8954305,3 8,3 c 1.1045695,0 2,0.8954305 2,2 z"
+         sodipodi:ry="2"
+         sodipodi:rx="2"
+         sodipodi:cy="5"
+         sodipodi:cx="8"
+         id="path2861"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         sodipodi:type="arc"
+         transform="translate(-34,0)" />
+      <path
+         transform="translate(-28,0)"
+         sodipodi:type="arc"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path2867"
+         sodipodi:cx="8"
+         sodipodi:cy="5"
+         sodipodi:rx="2"
+         sodipodi:ry="2"
+         d="M 10,5 C 10,6.1045695 9.1045695,7 8,7 6.8954305,7 6,6.1045695 6,5 6,3.8954305 6.8954305,3 8,3 c 1.1045695,0 2,0.8954305 2,2 z" />
+    </g>
+    <g
+       id="g2882"
+       transform="matrix(2,0,0,2,63,0)">
+      <path
+         transform="translate(-34,0)"
+         d="M 9,5 C 9,5.5522847 8.5522847,6 8,6 7.4477153,6 7,5.5522847 7,5 7,4.4477153 7.4477153,4 8,4 8.5522847,4 9,4.4477153 9,5 z"
+         sodipodi:ry="1"
+         sodipodi:rx="1"
+         sodipodi:cy="5"
+         sodipodi:cx="8"
+         id="path2863"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path2869"
+         sodipodi:cx="8"
+         sodipodi:cy="5"
+         sodipodi:rx="1"
+         sodipodi:ry="1"
+         d="M 9,5 C 9,5.5522847 8.5522847,6 8,6 7.4477153,6 7,5.5522847 7,5 7,4.4477153 7.4477153,4 8,4 8.5522847,4 9,4.4477153 9,5 z"
+         transform="translate(-28,0)" />
+    </g>
+  </g>
+</svg>

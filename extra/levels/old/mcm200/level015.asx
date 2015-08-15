@@ -1,0 +1,81 @@
+;	LEVEL 48
+;	FOR MAC MINOS - Version 0.68
+;	STEFAN NEUDECKER "HUAN"
+
+
+AUTHOR:		Goblin
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		15
+ACCCD:		15
+
+; Format des Levels
+LWID:		50
+LHI:		30
+SCROLLX:	1
+SCROLLY:	1
+BACK:		36
+
+
+; Stati des Levels
+LTIME:		510
+RSTRT:		0
+MIRROR:		0
+
+MCSPEED:	2
+
+; maximal vorhandene Geistertypen
+GHOST1:		10
+GHSPEED1:	2
+GRTIME1:	10
+AGIL1:		10
+
+GHOST2:		0
+GHOST3:		0
+GHOST3:		0
+
+
+CHOC:		1,10
+MINE:		0,0
+DYNA:		1,10
+BMBS:		1,1
+KEYS:		1,1
+MNEY:		0,0
+LIVE:		0,999
+
+
+; Leveldaten
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z............................................WZCCZ
+Z..............9989898989898989898989.........ZCCZ
+Z.......................Z.Z...................Z..Z
+Z......................ZZ.ZZ..................Z..Z
+Z.....................ZZZ.GZZ.................ZZ.Z
+Z....................ZZZZ.ZZZZ.................Z.Z
+Z...................ZZG...ZZZZZ................Z.Z
+Z..................ZZZZZZ.ZZZZZZ...............Z.Z
+Z.................ZZZZZZZ.ZZZZZZZ..............Z.Z
+Z................ZZZZG....ZZZZZZZZ.............Z.Z
+Z...............ZZZZZZZZZ....GZZZZZ............Z.Z
+Z.ZZZZZZZZZZZZZZZZZZZZZZZ.ZZZZZZZZZZZZZZZZZZZZZZ.Z
+Z.......................Z.Z......................Z
+ZZZZZZZZZZZZZZZZZZZZZZZ.Z.Z.ZZZZZZZZZZZZZZZZZZZZZZ
+........................Z.Z.......................
+ZZZZZZZZZZZZZZZZZZZZZZZZZWZZZZZZZZZZZZZZZZZZZZZZZZ
+Z.........................XXXXXXXXXXXXXXXXXXXXXXXX
+X.XXXXXXXXXXXXXXXXXXXX...........................X
+X......................XXXXXXXXXXXXXXXXXXXXXXXXXXX
+X.XXXXXXXXXXXXXXXXX.W..X.........................X
+X.X...............X....X.XXXXXXXXXXXX.XXXX...XXX.X
+..X.XXXXXXXXXXXXX.XXXXXX.X++++++++++X.X..XXXXX...
+X.X.X...........X........X**********X.X..........X
+XXXXX.XXXXXXXXX.XXXXXXXX.XXXXXXDXXXXX.XXXXXXXXXXXX
+X.....X.......X..................................X
+X.XXXXX.X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X................................................X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXkX
+XP...............................................X
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+#

@@ -1,0 +1,71 @@
+;	LEVEL 74
+;	FOR MAC MINOS - Version 0.1
+
+
+AUTHOR:		TBD;	Walter Norbisrath
+NUMBR:		74
+ACCCD:		914619000
+VERSION:	1100
+
+LWID:		40
+LHI:		40
+VWID:		40
+VHI:		40
+SCROLLX:	1
+SCROLLY:	1
+BACK:		49
+
+MCSPEED:	1
+
+GRTIME1:	6
+GHOST1:		15
+AGIL1:		5
+GHSPEED:	1
+
+CHOC:		0,0
+BMBS:		0,0
+DYNA:		0,0
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X ....1  cX ,,,   ,,X...r  rGGX ,   ,,,,X
+X , .  ,, X  ,,b,   X...r r rrX  ö ü ü  X
+X üüüüüüü X  ,  ,,, X...r   r X, ä, , , X
+X üüüüüüü X,   ,,   X...r  r  X ,ä,ä, , X
+X.äääWPää X  ,,W,  ,XG  r rGr X, ä,W,ö ,X
+X.äääääää X ,,,ü,, ,X   r  r rX  ä, ,ü, X
+X.äääääää X   ,ü,,  XGG r r   X  ä, ,ö  X
+X ,.....,,X   ,   , X  r  r rrX, ä,r, ö,X
+X.,..,,,33X,  ,,,   XGr  rr rWX  ,      X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXvXXXXX
+X  ,X XG  XG        X3> < > < X   Xr    X
+X X,...XXXXXXXXXXXX X XvX^XvX X  Xd7XXX X
+X X  ,  2 X .,.   X X < > < < X  Xb,  X X
+X X XvXXX X  XXXXXX XvX^XXXXX X  X b  X X
+X X >W> X X  XbW  X X   XW<.. <rrX    X X
+X X,XvX X X  X    X XvX^XXX..rX..X.XX X X
+X X   < X XXXX  r X X  ü  X XXX..X XdXXbX
+X XXXXX X X  dXXXXX X X ü. ß  XXXXXX ,,XX
+X     < > X         X  X X..  X.G.  X.. X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X...,,....XGG  O  GGX GGG  GG XW o99999oX
+X.üüüüüüß.X   O O   XXXXXXXXXXX9999ooo9oX
+X.öüüüüßß.X  O   O  X  r rrdX Xooo993o99X
+X.öö   ßß.X O rrr O Xrr r  rX.X999ooooo9X
+X,öö W ßß,XO  rWr  OX  r  r X,X9o9999999X
+X.öö   ßß.X   rOr   Xr r r  X.X9o9ooooooX
+X.ööääääß.X   rOr   X r r r X,X9o3o999ooX
+X.öääääää.X   rrr   Xr r rr X.X9oo99o9..X
+X...,,....X    O    XWr r rbX,X9999oo..uX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XG.......3X,<.>.> >,X      XXXX.öööö ßß.X
+X XXXXXXX X^X^XvXvX^X XXXXXXdXX..ö üüüßßX
+X X  9  X X > < >,< X X2    XXX..ö......X
+X XDXXX X X^XvXvX^X^XGX rrr X.XßßßßßüüüüX
+X Xk WX X X >,>W> > XXX  Wr X.X üüüäößßßX
+X XDXX  X X^X^X^XvXvX.X b r X.Xüöäßüöä..X
+X X 9rk X X < >,>,< X,X     X.XüüöäßüäößX
+X XXX XXX X^X^X^X^XvX9X    XX.X  ößöüäßßX
+X3........X,< < < < X      .. XW öäßüöäßX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#

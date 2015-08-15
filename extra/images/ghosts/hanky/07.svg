@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg3505"
+   sodipodi:version="0.32"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="ghost-hanky-07.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/andreas/Dokumente/Projekte/McMinos/svg/ghosts/ghost-hanky-07-x48.png"
+   inkscape:export-xdpi="135"
+   inkscape:export-ydpi="135"
+   version="1.1">
+  <title
+     id="title2867">Ghost Hanky (1st ghost ever) for McMinos</title>
+  <defs
+     id="defs3507">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective3513" />
+    <inkscape:perspective
+       id="perspective4690"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3736"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="18.71875"
+     inkscape:cx="16"
+     inkscape:cy="16"
+     inkscape:current-layer="layer4"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="4"
+     gridtolerance="4"
+     guidetolerance="4"
+     inkscape:window-width="1600"
+     inkscape:window-height="840"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:object-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-guide="true"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3515"
+       units="px"
+       visible="true"
+       enabled="true"
+       spacingx="1px"
+       spacingy="1px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3510">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Ghost Hanky (1st ghost ever) for McMinos</dc:title>
+        <dc:date>2010-08-08</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>ghost-hanky-07</dc:identifier>
+        <dc:description>Ghost Hanky (1st ghost ever) for McMinos</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Pixelbild"
+     sodipodi:insensitive="true"
+     style="display:none">
+    <image
+       y="0"
+       x="0"
+       id="image3738"
+       height="32"
+       width="32"
+       sodipodi:absref="/home/andreas/Dokumente/Projekte/McMinos/mcminos_pc/grafik/32x32/ghosts/ghost-1-hanky-01.gif"
+       xlink:href="/home/andreas/Dokumente/Projekte/McMinos/mcminos_pc/grafik/32x32/ghosts/ghost-1-hanky-01.gif" />
+  </g>
+  <g
+     id="layer1"
+     inkscape:label="Vektorisierung"
+     inkscape:groupmode="layer"
+     style="display:none">
+    <path
+       style="opacity:1;fill:#ff0000;fill-opacity:0.25098039;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 13,1 C 14.710225,1.1064748 17.514985,1.3963658 19,3 C 20.485015,4.6036342 20.286048,9.7390249 21,11 C 21.713952,12.260975 21.040288,11.931795 22,12 C 22.959712,12.068205 24.946242,9.7455494 26,9 C 27.053758,8.2544506 27.93934,6.787868 29,7 C 30.06066,7.212132 30.58247,8.6209905 31,10 C 31.41753,11.379009 31.164051,14.343249 31,16 C 30.835949,17.656751 30.318062,19.802319 30,21 C 29.681938,22.197681 29,23.051317 29,24 C 29,24.948683 29.690121,26.251887 30,27 C 30.309879,27.748113 30.854013,28.381588 31,29 C 31.145987,29.618412 31,31 31,31 C 31,31 27.894626,30.330944 27,30 C 26.105374,29.669056 25.61628,29.444189 25,29 C 24.38372,28.555811 23.277164,27.669133 23,27 C 22.722836,26.330867 23,25 23,25 C 23,25 20.358013,27.236807 19,28 C 17.641987,28.763193 15.422967,29.903426 14,30 C 12.577033,30.096574 10.744063,29.596866 10,29 C 9.2559368,28.403134 9.4046784,27.454971 9,27 C 8.5953216,26.545029 8.0162425,25.995907 7.4754098,26 C 6.9345771,26.004093 6.5692842,26.426342 6,27 C 5.4307158,27.573658 4.8067658,29.383796 4,30 C 3.1932342,30.616204 1,31 1,31 C 1,31 1.7558275,29.504659 2,28 C 2.2441725,26.495341 2.1496226,23.10535 2,21 C 1.8503774,18.89465 1.1496226,16.10535 1,14 C 0.85037737,11.89465 0.27164676,8.1785003 1,7 C 1.7283532,5.8214997 2.2501351,5.8783137 3,6 C 3.7498649,6.1216863 4.3596929,7.1116213 5,8 C 5.6403071,8.8883787 7,12 7,12 C 7,12 6.4736166,3.6833469 8,2 C 9.5263834,0.31665313 11.289775,0.89352524 13,1 z"
+       id="path3762"
+       sodipodi:nodetypes="czzzzzzzzzzzczzzczzzzzzzczzzzzzczz" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Geist geometrisch"
+     style="display:inline">
+    <path
+       id="path3821"
+       d="M 16,1 C 11.584,1 8,4.584 8,9 L 8,10 7,5 C 7,3.344 5.656,2 4,2 2.344,2 1,3.344 1,5 l 0,20 9.75,4.0625 C 12.153893,30.280539 13.996861,31 16,31 c 2.003139,0 3.846107,-0.719461 5.25,-1.9375 L 31,25 31,5 C 31,3.344 29.656,2 28,2 26.344,2 25,3.344 25,5 l -1,5 0,-1 C 24,4.584 20.416,1 16,1 z"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       sodipodi:nodetypes="ccccscccscccscccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline"
+       d="M 16,1 C 11.584,1 8,4.584 8,9 L 7,9 7,5 C 7,3.344 5.656,2 4,2 2.344,2 1,3.344 1,5 l 0,20 9.75,4.0625 C 12.153893,30.280539 13.996861,31 16,31 c 2.003139,0 3.846107,-0.719461 5.25,-1.9375 L 31,25 31,5 C 31,3.344 29.656,2 28,2 26.344,2 25,3.344 25,5 l 0,4 -1,0 C 24,4.584 20.416,1 16,1 z"
+       id="path3802"
+       sodipodi:nodetypes="ccccscccscccscccc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.99356911;fill-rule:nonzero;stroke:none;display:inline"
+       id="path3768"
+       sodipodi:cx="11.5"
+       sodipodi:cy="8.5"
+       sodipodi:rx="1.5"
+       sodipodi:ry="2.5"
+       d="m 13,8.5 a 1.5,2.5 0 1 1 -3,0 1.5,2.5 0 1 1 3,0 z"
+       transform="translate(2,0)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.99356911;fill-rule:nonzero;stroke:none;display:inline"
+       id="path3770"
+       sodipodi:cx="16.5"
+       sodipodi:cy="8.5"
+       sodipodi:rx="1.5"
+       sodipodi:ry="2.5"
+       d="m 18,8.5 a 1.5,2.5 0 1 1 -3,0 1.5,2.5 0 1 1 3,0 z"
+       transform="translate(2,0)" />
+    <path
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="M 7,5 C 7,6.656 5.656,8 4,8 L 4,9 C 6.2079999,9 7.9999998,7.208 8,5 L 7,5 z"
+       id="path3806" />
+    <path
+       id="path3809"
+       d="m 25,5 c 0,1.656 1.344,3 3,3 l 0,1 C 25.792,9 24,7.208 24,5 l 1,0 z"
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 10,12 c 0,0 3,2.305509 6,2.305509 3,0 6,-2.305509 6,-2.305509 0,0 -3.836669,1 -6,1 -2.163331,0 -6,-1 -6,-1 z"
+       id="path3813"
+       sodipodi:nodetypes="czczc" />
+    <rect
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="rect3823"
+       width="1"
+       height="9"
+       x="2"
+       y="15" />
+    <rect
+       y="15"
+       x="29"
+       height="9"
+       width="1"
+       id="rect3829"
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <rect
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="rect6061"
+       width="1"
+       height="8"
+       x="25"
+       y="18" />
+    <rect
+       y="18"
+       x="6"
+       height="8"
+       width="1"
+       id="rect6063"
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <rect
+       y="21"
+       x="21"
+       height="7"
+       width="1"
+       id="rect10110"
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <rect
+       style="fill:#c0c0c0;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="rect10112"
+       width="1"
+       height="7"
+       x="10"
+       y="21" />
+  </g>
+</svg>

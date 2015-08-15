@@ -1,0 +1,289 @@
+'''
+Created on Apr 18, 2010
+
+@author: ulno
+
+Create from the images path the corresponding directory in images.
+inkscape is needed for this
+
+'''
+
+import glob
+import sys
+import os
+import re
+import subprocess
+import pygame
+
+# the source images in SVG
+IMAGE_DIRECTORY=os.path.join("..","images.test2")
+
+# the directory where the images will be saved
+OUTPUT_DIRECTORY=os.path.join("..","..","core","assets","entities")
+
+# the generated source-file to load and access the images
+OUTPUT_FILE=os.path.join("..","..","core","src","com","mcminos","game","Entities.java")
+
+IMAGE_FORMAT="RGBA"
+CONFIG_FILE="CONFIG"
+README_FILE="README"
+TMP_PNG_FILE="/tmp/mcminos_create_image.png"
+
+# options, which will be evaluated from CONFIG and their defaults
+config_options={
+    "symbol":None, # the symbol representing the entity
+    "size":1, # the multiplier for the size (castle:2, explosion: 3)
+    "speed":100, # the animation speed or animation speed list (10 frames per second default)
+    "order":None, # the order of the images
+    "zindex":0, # show this on which level?
+    "anchor":(0,0), # anchor point of the icon
+    "moving":False, # This object moves by itself (like mcminos or the ghosts)
+    }
+
+# obsolete SIZE_LIST = [(64,64),(48,48),(32,32),(24,24),(16,16),(12,12),(8,8),(6,6)]
+# w equals h, so only one value here
+#SIZE_LIST = [128,64,32,16,8,6]
+SIZE_LIST = [64,16] # for testing
+
+#try:
+#    os.rmdir(OUTPUT_DIRECTORY)
+#except OSError:
+#    pass # ignore missing directory
+#os.mkdir(OUTPUT_DIRECTORY)
+
+filename_format = re.compile("(?P<config>"+CONFIG_FILE+")|" + # can be config
+                             "(?P<readme>"+README_FILE+")|" + # or readme
+                             "(?:" + # or
+                             "(?P<description>.*)" + # some descriptive stuff, which will be ignored
+                             "(?P<animation_number>\d\d)" + # animation number
+                             "(?:\.(?P<svg>svg)|-(?P<width>\d\d)x(?P<height>\d\d)\.png)" + # extension
+                             ")$") 
+#                             "(?P<name>[a-zA-Z]" + # Start with a letter
+#                             "[a-zA-Z0-9_\-]*)" + # Continue with several alpha numerics or - or _
+#                             "(?:-x(?P<scaling>\d\d))?" + # Have maybe scaling
+invalid_name_chars = re.compile("[\-\.]")
+
+config_dictionary={}
+config_dictionary[""]=config_options
+entity_list={} # The dictionary storing entities
+
+class Animation_Image():
+    '''One image of an animation.'''
+    def __init__(self, image, animation_step):
+        self.image = image
+        self.animation_step = animation_step
+    def get(self):
+        return (self.image, self.animation_step)
+        
+class Entity():
+    def __init__(self, name, config):
+        """
+        config must have the form of the config_options
+        """
+        self.image_dictionary = {} # this dictionary includes dictionaries with sizes per category
+        self.name = name
+        self.config = config.copy()
+        print "Creating new entity", name, " with config", config
+    def add_image(self, 
+                  png_file_name, 
+                  block_resolution,
+                  multiple_w,multiple_h,
+                  display_length=config_options["speed"], 
+                  category="default", 
+                  animation_step = 0):
+        img = pygame.image.load( png_file_name )
+        (w,h) = img.get_size()
+        # not nexessaryassert w==h, "Will not handle non square images."
+        assert w==block_resolution*multiple_w, "stored width %s does not correspond to scaling %s" % (w,multiple_h)
+        assert h==block_resolution*multiple_h, "stored height %s does not correspond to scaling %s" % (h,multiple_h)
+        if not category in self.image_dictionary:
+            self.image_dictionary[category] = {}
+        if not block_resolution in self.image_dictionary[category]:
+            self.image_dictionary[category][block_resolution] = {} # This will store the images of the animations under their corresponding step-number
+        self.image_dictionary[category][block_resolution][animation_step] = \
+            Animation_Image(img, animation_step)
+        print "Adding image. Category:",category,\
+            "storage resolution:",block_resolution,\
+            "real size:",(w,h),\
+            "step:",animation_step
+    def check_size(self, width, category="default"):
+        if category in self.image_dictionary:
+            return width in self.image_dictionary[category]
+    def write_files_and_code(self):
+        '''
+        Write the output images into the destination directory.
+        '''
+        first_category = self.image_dictionary.keys()[0]
+        first_size = self.image_dictionary[first_category].keys()[0]
+        anisteps = self.image_dictionary[first_category][first_size].keys()
+        if self.config["order"] == None:
+            self.config["order"] = anisteps
+        if not self.config["speed"] is list:
+            self.config["speed"] = [self.config["speed"]] \
+                * len(self.config["order"])
+        scaling=self.config["speed"]
+        
+        current = "entity_" + self.name
+        code = "Entity %s = new Entity(\'%s\',%s,%s,%s,%s,%s);\n" % \
+                ( current, self.config["symbol"], 
+                self.config["anchor"][0], self.config["anchor"][1],
+                self.config["zindex"], repr(self.config["moving"]).lower(),
+                self.config["size"] )
+        for category in self.image_dictionary:
+            for size in self.image_dictionary[category]:
+                anisteps = self.image_dictionary[category][size].keys()
+                anisteps.sort()
+                step_nr = 0 # allways start with 0
+                for anistep in anisteps:
+                    (img, _) = self.image_dictionary[category][size][anistep].get()
+                    image_name = "%s_%s_%s_%s" \
+                        % (self.name,category,size,step_nr)
+                    file_name = os.path.join( OUTPUT_DIRECTORY, image_name + ".png" )
+                    pygame.image.save(img,file_name)
+                    code += "%s.addImage( \"%s\", \"%s\", %s, %s );\n" % ( current, \
+                        category, os.path.join("entities", image_name + ".png"), \
+                        size, step_nr)
+                    step_nr += 1
+        for category in self.image_dictionary:
+            for size in self.image_dictionary[category]:
+                step_nr = 0 # allways start with 0
+                anisteps = self.image_dictionary[category][size].keys()
+                assert len(self.config['speed']) == len(self.config['order']), \
+                        "number of animation times does not match config."
+                anisteps.sort()
+                print category,self.config['speed'], self.config['order'], anisteps
+                step_nr = 0
+                for anistep in self.config['order']:
+                    image_nr = anisteps.index( self.config["order"][step_nr] )
+                    code += "%s.addAnimationStep( \"%s\", %s, %s );\n" % \
+                        (current, category, image_nr, \
+                            self.config['speed'][step_nr])
+                    step_nr += 1
+                break # only do for one size (should be the same for all sizes)
+        return code
+
+# main program
+for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
+    short_root = root[len(IMAGE_DIRECTORY)+1:] # cut off root
+    if len(short_root) > 0: # not main directory - any sub-directory, only folders in main-directory are read
+        # construct the name
+        short_root_elements = short_root.split(os.path.sep)
+        root_class_name = "_".join(short_root_elements)
+        complete_name = re.sub(invalid_name_chars,"_",root_class_name)
+        # We are in a new directory -> Parse CONFIG, if available
+        if CONFIG_FILE in files:
+            for option in config_options:
+                exec( "%s=%s" % (option, repr(config_options[option]) ))
+            # we execute any python code here, nothing for the enduser (TODO: maybe check format here)
+            exec(open(os.path.join(root,CONFIG_FILE)).read())
+            new_config = {}
+            for option in config_options:
+                new_config[option]=eval(option)
+            # construct the class-name
+            name = re.sub(invalid_name_chars,"_",root_class_name) # replace . and - with _
+            config_dictionary[name]=new_config
+        for file in files:
+            print "Path:", short_root, "File name:", file
+            m = filename_format.match(file) # analyze filename
+            if m==None:
+                print "wrong filename format"
+            elif m.group("config") != None \
+              or  m.group("readme") != None: # ignore config and readme
+                print "ignored or parsed before"
+                print
+            else:
+                description=m.group("description")
+                animation_number=int(m.group("animation_number"))
+                svg = m.group("svg") != None
+                width=None
+                height=None
+                if not svg:
+                    width = int(m.group("width"))
+                    height = int(m.group("height"))
+                # find corresponding class (longest matching subpath)
+                current_subpath = ""
+                for p in config_dictionary:
+                    if short_root.startswith(p):
+                        if len(p)>len(current_subpath):
+                            current_subpath = p
+                config=config_dictionary[current_subpath]
+                name = current_subpath
+                # report
+                print \
+"""name: %(name)s
+description: %(description)s
+animation-nr: %(animation_number)s
+is-svg: %(svg)s
+width: %(width)s
+height: %(height)s
+config: %(config)s
+"""%locals()
+                # if there is a name, convert images
+                if name != "":
+                    # check if entity exists
+                    if not name in entity_list:
+                        entity_list[name] = Entity(name,config)
+                    current_entity = entity_list[name]
+                    if svg: # if this is an svg, create all missing sizes
+                        scaling=size
+                        if isinstance(scaling,tuple): # probably two coordinates
+                            multiple_w=scaling[0]
+                            multiple_h=scaling[1]
+                        else:
+                            multiple_w=scaling
+                            multiple_h=scaling
+                        assert multiple_w>0 and multiple_h>0, "Wrong scaling."
+                        for width in SIZE_LIST: 
+                            # convert file with inkscape
+                            #print "width",width,"mutiples",multiple_w,multiple_h,"total",int(width)*multiple_w,int(width)*multiple_h
+                            # do we need height here for the stupid doors?
+                            p = subprocess.Popen(["inkscape",
+                                            "-w", "%d"%(int(width)*multiple_w),
+                                            "-h", "%d"%(int(width)*multiple_h),
+                                            "-e",TMP_PNG_FILE,
+                                            os.path.join(root,file)],
+                                            stdout=subprocess.PIPE)
+                            p.wait()
+                            category_name = complete_name[len(name):]
+                            if category_name == "":
+                                category_name = "default"
+                            else:
+                                category_name = category_name[1:] # strip first char
+                            current_entity.add_image(TMP_PNG_FILE,
+                                                     int(width),
+                                                     multiple_w,multiple_h,
+                                                     display_length=speed,
+                                                     category=category_name,
+                                                     animation_step = animation_number)
+                    else: # This is already a pixel-graphics
+                        pass # TODO: overwrite or add this
+
+####### all parsed, now print code
+print "Writing output file %s." % OUTPUT_FILE
+f=open(OUTPUT_FILE,"w")
+f.write( \
+"""package com.mcminos.game;
+
+/* Attention: this file is auto-generated by convert_images, 
+ * do not change. */
+ 
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+class Entities {
+    
+    static void init() {
+""")
+for e in entity_list:
+    f.write( entity_list[e].write_files_and_code() )
+f.write( \
+"""
+    } // end init
+
+} // end Entities class
+""")
+f.close()
+

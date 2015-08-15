@@ -1,0 +1,59 @@
+;   LEVEL 012
+;   FOR MAC MINOS Versions > 0.68
+
+AUTHOR:		TWoT;		Ulrich Norbisrath
+NUMBR:		12
+ACCCD:		37392
+SHAREWARE:	1
+
+LWID:		18
+LHI:		18
+VWID:		18
+VHI:		18
+SCROLLX:	1
+SCROLLY:	1
+BACK:		24
+
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+MCSPEED:	1
+GHOST1:		4
+GHSPEED1:	1
+AGIL1:		20
+GRTIME1:	5
+
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
+
+LIVE:		0,999
+CHOC:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,999
+MEDC:		0,999
+UMBR:		0,999
+KEYS:		0,999
+
+LEVEL:
+ r r r r r r r r r
+rcr r r r r r r r
+ rPr r.r r.r r r r
+r r r r r r r r.r
+ r.r r r r r r r r
+r r r r.r r r r r
+ r r r r r rGr r r
+r r r.r r r r r r
+ rGr r r r.r r r r
+r r r r r r r r r
+ r r r r rGr r r r
+r r r.r r r r r r
+ r r r r r r r r r
+r r rGr r r.r r.r
+ r r r r r r r r r
+r r r r r.r r r r
+ r r r r r r r r r
+r r r r r r r r r
+#

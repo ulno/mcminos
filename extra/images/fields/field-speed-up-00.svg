@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg3505"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="field-speed-up-00.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs3507">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective3513" />
+    <inkscape:perspective
+       id="perspective4690"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2415"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective5551"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective5594"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="14.375"
+     inkscape:cx="16"
+     inkscape:cy="16"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="4"
+     gridtolerance="4"
+     guidetolerance="4"
+     inkscape:window-width="641"
+     inkscape:window-height="678"
+     inkscape:window-x="0"
+     inkscape:window-y="37"
+     inkscape:object-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-guide="true"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3515"
+       units="px"
+       visible="true"
+       enabled="true"
+       spacingx="1px"
+       spacingy="1px" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="15.5,14.451495"
+       id="guide3315" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="16.5,14.18633"
+       id="guide3317" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3510">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Skull 00</dc:title>
+        <dc:date>2010-05-06</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>skull-00</dc:identifier>
+        <dc:description>Poisonous skull.</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g3197">
+      <rect
+         y="0"
+         x="-8.8817842e-16"
+         height="31.999994"
+         width="32"
+         id="rect5494"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <g
+         id="g3228">
+        <path
+           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           d="M 0,0 L 0,32 L 32,32 L 32,0 L 0,0 z M 1,1 L 31,1 L 31,31 L 1,31 L 1,1 z"
+           id="rect5481" />
+      </g>
+      <path
+         sodipodi:nodetypes="cccccccccc"
+         id="rect2448"
+         d="M 1,1 L 1,31 L 31,31 L 31,1 L 1,1 z M 2,2 L 30,2 L 30,30 L 2,30 L 2,2 z"
+         style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         id="path2414"
+         d="M 12.125 5.28125 C 11.950326 5.28125 11.79152 5.3150547 11.625 5.34375 C 13.037179 5.5871015 14.125 6.7999241 14.125 8.28125 C 14.125 9.3408789 13.580195 10.278731 12.75 10.8125 C 12.864375 10.781005 12.970783 10.753423 13.09375 10.75 C 13.208347 10.747494 13.327428 10.758377 13.4375 10.78125 L 13.78125 10.78125 C 14.590463 10.243603 15.125 9.3249555 15.125 8.28125 C 15.125 6.6252504 13.781 5.28125 12.125 5.28125 z M 14.09375 10.75 C 14.037677 10.751561 13.989012 10.771562 13.9375 10.78125 L 14.4375 10.78125 C 14.327428 10.758377 14.208347 10.747494 14.09375 10.75 z M 19.125 10.78125 C 19.400565 10.781028 19.670867 10.856713 19.90625 11 L 24.90625 14 C 25.613865 14.431472 25.837722 15.354884 25.40625 16.0625 C 25.219983 16.367978 24.937688 16.576137 24.625 16.6875 C 25.281693 16.92403 26.028712 16.681663 26.40625 16.0625 C 26.837722 15.354884 26.613865 14.431472 25.90625 14 L 20.90625 11 C 20.670867 10.856713 20.400565 10.781028 20.125 10.78125 L 19.125 10.78125 z M 12.1875 11.09375 C 12.02155 11.157063 11.833362 11.187703 11.65625 11.21875 C 11.782113 11.239084 11.900676 11.277112 12.03125 11.28125 C 12.064296 11.241008 12.08605 11.190602 12.125 11.15625 C 12.136186 11.14591 12.144756 11.134995 12.15625 11.125 C 12.167548 11.11561 12.175933 11.102804 12.1875 11.09375 z M 16.75 13.78125 L 27.1875 24.21875 C 27.774303 24.805553 27.774303 25.756946 27.1875 26.34375 C 27.023684 26.507566 26.829779 26.615148 26.625 26.6875 C 27.153759 26.874319 27.764513 26.766737 28.1875 26.34375 C 28.774303 25.756946 28.774303 24.805553 28.1875 24.21875 L 17.75 13.78125 L 16.75 13.78125 z M 8 14.75 C 7.8401629 14.751656 7.681053 14.792172 7.53125 14.84375 L 10.9375 15.53125 L 10.96875 15.34375 L 8.40625 14.8125 C 8.2702083 14.775069 8.1364266 14.748587 8 14.75 z M 14.03125 15.3125 L 13.59375 17.5625 C 13.486666 18.112371 13.090091 18.521696 12.59375 18.6875 L 12.84375 18.75 C 13.65435 18.902585 14.43608 18.372126 14.59375 17.5625 L 14.875 16.15625 L 14.03125 15.3125 z M 19.71875 21 L 15.9375 22.28125 L 16.59375 24.90625 C 16.792583 25.685013 16.347279 26.473453 15.59375 26.71875 C 15.875066 26.82528 16.186404 26.830067 16.5 26.75 C 17.311168 26.542892 17.800857 25.717418 17.59375 24.90625 L 16.9375 22.28125 L 19.96875 21.25 L 19.71875 21 z "
+         style="fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="csssssssscccssccccccccsccccsccccsccccscsc"
+         id="path2416"
+         d="M 10.123652,5.207099 C 8.4676518,5.207099 7.1236528,6.551099 7.1236528,8.207099 C 7.1236528,9.863099 8.4676518,11.207099 10.123652,11.207099 C 10.499856,11.207099 10.854252,11.146225 11.186152,11.019599 C 11.174585,11.028653 11.1662,11.041459 11.154902,11.050849 C 11.143408,11.060844 11.134838,11.071759 11.123652,11.082099 C 11.023842,11.170127 10.94752,11.282007 10.873652,11.394599 C 10.860786,11.415725 10.854246,11.435278 10.842402,11.457099 C 10.793199,11.540131 10.719109,11.61391 10.686152,11.707099 C 10.637597,11.844393 10.631233,11.972367 10.623652,12.113349 L 9.9361528,15.457099 L 6.4049028,14.738349 C 5.8607358,14.588626 5.2851418,14.758773 4.9049023,15.175849 C 4.5246632,15.592924 4.3931432,16.179056 4.5924023,16.707099 C 4.7916616,17.235144 5.2814198,17.613947 5.8424028,17.675849 L 10.842402,18.675849 C 11.653002,18.828435 12.434732,18.297975 12.592402,17.488349 L 13.029902,15.238349 L 16.342402,18.550849 L 12.654902,19.769599 C 11.891345,20.010159 11.451218,20.807889 11.654902,21.582099 L 12.654902,25.582099 C 12.862009,26.393267 13.687484,26.882956 14.498652,26.675849 C 15.30982,26.468742 15.799509,25.643267 15.592402,24.832099 L 14.936152,22.207099 L 18.717402,20.925849 L 24.061152,26.269599 C 24.647955,26.856402 25.599349,26.856402 26.186152,26.269599 C 26.772955,25.682796 26.772955,24.731402 26.186152,24.144599 L 15.748652,13.707099 L 17.717402,13.707099 L 22.342402,16.488349 C 23.050017,16.919821 23.97343,16.695964 24.404902,15.988349 C 24.836374,15.280734 24.612517,14.357321 23.904902,13.925849 L 18.904902,10.925849 C 18.669519,10.782562 18.399217,10.706877 18.123652,10.707099 L 12.436152,10.707099 C 12.32608,10.684226 12.206999,10.673343 12.092402,10.675849 C 11.969435,10.679272 11.863027,10.706854 11.748652,10.738349 C 12.578847,10.20458 13.123652,9.2667279 13.123652,8.207099 C 13.123652,6.551099 11.779652,5.207099 10.123652,5.207099 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="cccccccccc"
+         id="rect3222"
+         d="M 3,3 L 3,29 L 29,29 L 29,3 L 3,3 z M 4,4 L 28,4 L 28,28 L 4,28 L 4,4 z"
+         style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

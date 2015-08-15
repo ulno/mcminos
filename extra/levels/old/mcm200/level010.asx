@@ -1,0 +1,96 @@
+;	LEVEL 40
+;	FOR MAC MINOS - Version 0.1
+;	STEFAN NEUDECKER "HUAN"
+
+AUTHOR:		Goblin
+NUMBR:  	10
+ACCCD:  	10
+
+; Format des Levels
+LWID:	 	50
+LHI:	 	50
+VWID:		15
+VHI:		15
+BACK:	 	45
+SCROLLX:	1
+SCROLLY:	1
+
+
+; Stati des Levels
+LTIME:	 	500
+RSTRT:	 	0
+MIRROR:	 	0
+
+MCSPEED:	2
+
+; maximal vorhandene Geistertypen
+GHOST1:	 	10
+GHSPEED1:	2
+AGIL1:		8
+GRTIME1:	3
+
+GHOST2:	 	0
+GHOST3:	  	0
+GHOST3:	  	0
+
+
+CHOC:		0,999
+MINE:		0,999
+DYNA:		0,999
+BMBS:		0,999
+KEYS:		0,999
+LIVE:		0,999
+
+; Leveldaten
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX***X
+X....X....X....X....X....X....X....Xk1..X....X.M.X
+X.XG +.XX.X.XX.X.XX.X.XX...XX.X.XX.X.XX.L.XX.X.F.X
+X.XX.X.XX...XX.X.XX...XX.X.XX.X.XX...XX.X.XX...W.X
+X....X....X....X....X...*X....X....X....X....X.A.X
+XXXMXXXXXXXXX.XXXX.XXXXXXXXX*XXXX.XXXXXXXXXXXXXXXX
+X..W.X....X....XW...X....X....X....X....X....X...X
+X.XX.+.XX.X.XX.X.CC.X.XX...XX.X.XX.X.XX.*.XX.X.X.X
+X.XX.X.XX.X.GX...CC.X.XX.X.XX.X.XX...XX.X.XX...G.X
+X....X....X....X...*X....X....X....X....X....X...X
+XXXXXXXFXXXXXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXfXX
+XdbdbX....X....X....X....X....X....X....X....X...X
+X,**,D.SW.X.XX...XX.X.XX.X.XX...GX.X.XX...XX.X.X.X
+X_bk,X.XM.X.XX.X.XX...XX.X.XX.X.XX...XX.X.XX...X.X
+X****X....X....X....X....X....X....X....X....X..*X
+XXXXXXXX.XXXX.XXXXXXXXXXXXXX*XXXXXXXXXXXXXXXXXXXXX
+L....X...?X....X....X....X....X....X....X....X...*
+_,U..X.XX.X.XX...XX.X.XX.X.XX.X.XX...XX.X.XX...U .
+_,U....XX.X.XX.X.XX...XX.X.XX...XX.X.XX...XX.X.U .
+.....X....X.G..X..?.X....X....X....X..G.X....X....
+XXXXXXXXXXXXXXXXXXDXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXX
+X*...X....XW...X****X....X....X....X....X....X...X
+X.XX.X.XX.X.XX.X++++X.XX...XX.X.XX...XX.X.XX...X.X
+X.XX...XX.X.XX.Xdbdb,.XX.X.XX...XX.X.XX...XX.X.X.X
+X....X....X....X+++WX....X....X....X....X....X...X
+XXX.XXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X
+X....X....X....X....X....X....X....X....X....X...X
+X.XX.X.XX.X.XX...XX.X.WX...XX.X.XX...XX.X.XX.X.X.X
+X.XX.X.XX...XX.X.XX...XX.X.XX...XX.X.XX.X.XX...X.X
+X....X....X....X....X....X....X....X....X....X...X
+XXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXXX.XXXXXX
+X....X....X....X....X....X....X....X....X....X...X
+X.XX...XX.X.XX...XX.X.XX...XX.X.XX.X.XX.X.XX.X.X.X
+X.XX.X.XX...XX.X.XX...XX.X.XX...XX.X.XX.X.XX...X.X
+X....X....X....X....X....X....X....X....X....X...X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXX.XXXXXXXXXX.X
+X.........X....X....X....X....X....X....X....X...X
+X?XX.X.XX.X.XX...XX.X.XX...XW.X.XX.X.XX...XX.X.X.X
+D?XX.X.XX...XX.X.XX.X.XX.X.XX.X.XX.X.XX.X.XX...S.k
+X?...X....X....X....X....X....X....X....X....X...X
+XX.XXXXXXXXXXXXXX.XXXXX.XXX.XXXX.XXXXXXXXXXXXXXXXX
+X....X....X....X....X....X....X....X....X....X.G.X
+X.XX.X.XX...XX.X.XX.X.XX.X.XX.X.XX.X.XX.X.XX$+.X.X
+X.XX...XX.X.XX.X.XX.X.XX.X.XX.X.XX.X.XX.k.XX.X.X*X
+X....X....X....X....X....X....X....X....X....X.*PX
+XXXXXXXXXXXXX.XXXX.XXX.XXXXX.XXXX.XXXX.XXXXXXXXXXX
+X.........X....X....X....X....X....X.........X...X
+XCCX.G.XX...XX.X.XX...XX.X.XX...XX.D.XX.X.XW...X.X
+XCCX.G....X....X....X....X....X....X....X....X.X.X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX...X
+#

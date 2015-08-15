@@ -1,0 +1,119 @@
+;	LEVEL 001 ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	18.07.93
+;	Last changes:	24.11.93
+;	Done by.....:	Andreas Neudecker
+
+;	HEADER
+AUTHOR: 	NoPe;		Andreas Neudecker
+VERSION:	0100;		ACHTUNG!
+SHAREWARE:	0
+
+NUMBR:		1
+SHOWNR:		1
+ACCCD:		1
+
+;	LEVELFORMAT
+LWID:		50
+LHI:		50
+VWID:		50
+VHI:		50
+SCROLLX:	0
+SCROLLY:	0
+BACK:		3
+
+;	STATUS-Angaben
+LTIME:		0
+RSTRT:		0
+MIRROR: 	0
+
+;	McMINOS
+MCSPEED:	2
+
+;	GEISTER
+GHOST1: 	10
+GHSPEED1:	1
+AGIL1:		5
+GRTIME1:	1
+
+GHOST2: 	10
+GHSPEED2:	1
+AGIL2:		5
+GRTIME2:	1
+PILLMAX2:	1
+PILLFREQ2:	0
+
+GHOST3: 	5
+GHSPEED3:	1
+AGIL3:		5
+GRTIME3:	1
+TRANSWALL3: 0
+
+GHOST4: 	0
+GHSPEED4:	2
+AGIL4:		5
+GRTIME4:	1
+
+;	MIN-/MAX-ZAHL DER WERKZEUGE
+LIVE:		0,999
+KEYS:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,0
+CHOC:		0,0
+MEDC:		0,0
+UMBR:		0,999
+
+;	LEVELDATEN
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXG           G       G    g   H G      <   bbX
+XXd   XXX  g         g      H              XXX  bX
+XX XX X       H         g       G      g   D r  XX
+XX      XXX                                XXX   X
+XXXXXX   G    g                           GX     X
+XGXXX                       m              XXXXX X
+X                                              < X
+X                   b                          XXX
+X   g   H                                b       X
+X                                                X
+X                                                X
+X               m                                X
+X                                                X
+X G    g               b                         X
+X                                                X
+X                                 X              X
+X                                 X              X
+X                                                X
+X                                                X
+X                  b                             X
+XG                                               X
+X          XX                                    X
+X                                                X
+X                      CC          m             X
+X     m                CC                        X
+X                                                X
+Xg                                               X
+X                                                X
+X                                                X
+X                          m                     X
+X                                                X
+X                                                X
+X H       b                     XX               X
+X                               c                X
+X                                                X
+X                                                X
+X                                                X
+X                                                X
+Xg           X                                   X
+X           X                                    X
+X                                                X
+X                                                X
+XX                                               X
+XX                                              XX
+XXXvX                                        P  XX
+XXbbX                                          XXX
+XXbXXX                                        XXXX
+XkXX>>>                                    XXXdbOX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#	;_ENDE_DER_LEVELDATEN

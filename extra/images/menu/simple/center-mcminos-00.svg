@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg3505"
+   sodipodi:version="0.32"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="center-mcminos-00.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
+  <title
+     id="title3661">Center McMinos Symbol</title>
+  <defs
+     id="defs3507">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective2836" />
+    <inkscape:perspective
+       id="perspective2899"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3072"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2823"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="18.59375"
+     inkscape:cx="16.107563"
+     inkscape:cy="16"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="4"
+     gridtolerance="4"
+     guidetolerance="4"
+     inkscape:window-width="824"
+     inkscape:window-height="836"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:object-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-guide="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3515"
+       units="px"
+       visible="true"
+       enabled="true"
+       spacingx="0.25px"
+       spacingy="0.25px"
+       empspacing="4"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3510">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Center McMinos Symbol</dc:title>
+        <dc:date>2010-10-28</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>center-mcminos-00</dc:identifier>
+        <dc:description>Center McMinos symbol for McMinos menus.
+
+2010-10-28: New arrows, 1 original, 3 clones. Improved McMinos.</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g3614">
+      <rect
+         y="0"
+         x="0"
+         height="32"
+         width="32"
+         id="rect3625"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      <path
+         id="rect3603"
+         d="M 1,1 1,31 31,31 31,1 1,1 z M 2,2 30,2 30,30 2,30 2,2 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      <path
+         transform="matrix(1.1111111,0,0,1.1111111,-1.2222222,-2.3333333)"
+         d="m 20,16.5 a 4.5,4.5 0 1 1 -9,0 4.5,4.5 0 1 1 9,0 z"
+         sodipodi:ry="4.5"
+         sodipodi:rx="4.5"
+         sodipodi:cy="16.5"
+         sodipodi:cx="15.5"
+         id="path2829"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(1.3088921,0,0,1.3100898,-5.6922737,-5.7114366)"
+         d="m 16,15.045867 a 0.9550063,0.95413327 0 1 1 -1.910013,0 0.9550063,0.95413327 0 1 1 1.910013,0 z"
+         sodipodi:ry="0.95413327"
+         sodipodi:rx="0.9550063"
+         sodipodi:cy="15.045867"
+         sodipodi:cx="15.044993"
+         id="path3605"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path3607"
+         sodipodi:cx="15.044993"
+         sodipodi:cy="15.045867"
+         sodipodi:rx="0.9550063"
+         sodipodi:ry="0.95413327"
+         d="m 16,15.045867 a 0.9550063,0.95413327 0 1 1 -1.910013,0 0.9550063,0.95413327 0 1 1 1.910013,0 z"
+         transform="matrix(1.3088921,0,0,1.3100898,-1.6922737,-5.7114366)" />
+      <path
+         transform="translate(0,-0.25074458)"
+         sodipodi:open="true"
+         sodipodi:end="2.8797933"
+         sodipodi:start="0.26179939"
+         d="m 18.897777,16.776457 a 3,3 0 0 1 -5.795555,0"
+         sodipodi:ry="3"
+         sodipodi:rx="3"
+         sodipodi:cy="16"
+         sodipodi:cx="16"
+         id="path3609"
+         style="fill:#ff0000;fill-opacity:0;fill-rule:nonzero;stroke:#ffffff;stroke-width:1;stroke-linecap:butt;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:transform-center-y="-9.5"
+         sodipodi:nodetypes="cccccccccc"
+         id="rect3614"
+         d="m 15,3 0,4.5 -2,-2 0,2 3,3 3,-3 0,-2 -2,2 0,-4.5 -2,0 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      <use
+         inkscape:transform-center-x="-9.5"
+         height="32"
+         width="32"
+         transform="matrix(0,1,-1,0,32,0)"
+         id="use2879"
+         xlink:href="#rect3614"
+         y="0"
+         x="0" />
+      <use
+         inkscape:transform-center-y="9.5"
+         x="0"
+         y="0"
+         xlink:href="#rect3614"
+         id="use2881"
+         transform="matrix(-1,0,0,-1,32,32)"
+         width="32"
+         height="32" />
+      <use
+         inkscape:transform-center-x="9.5"
+         height="32"
+         width="32"
+         transform="matrix(0,-1,1,0,0,32)"
+         id="use2883"
+         xlink:href="#rect3614"
+         y="0"
+         x="0" />
+      <path
+         transform="translate(-0.5,-0.5)"
+         d="m 15,14.5 a 0.5,0.5 0 1 1 -1,0 0.5,0.5 0 1 1 1,0 z"
+         sodipodi:ry="0.5"
+         sodipodi:rx="0.5"
+         sodipodi:cy="14.5"
+         sodipodi:cx="14.5"
+         id="path3657"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path3659"
+         sodipodi:cx="14.5"
+         sodipodi:cy="14.5"
+         sodipodi:rx="0.5"
+         sodipodi:ry="0.5"
+         d="m 15,14.5 a 0.5,0.5 0 1 1 -1,0 0.5,0.5 0 1 1 1,0 z"
+         transform="translate(3.5,-0.5)" />
+    </g>
+  </g>
+</svg>

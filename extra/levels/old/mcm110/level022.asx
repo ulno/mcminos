@@ -1,0 +1,62 @@
+;	LEVEL 22
+;	FOR McMINOS - Version 1.10
+
+AUTHOR:		NoPe		; Andreas Neudecker
+NUMBR:		22
+ACCCD:		79631
+VERSION:	1100
+
+LWID:		50
+LHI:		20
+VWID:		50
+VHI:		20
+SCROLLX:	1
+SCROLLY:	1
+BACK:		19
+
+LTIME:		200
+RSTRT:		1
+MIRROR:		0
+MCSPEED:	2
+
+GHOST1:		15
+GHSPEED1:	1
+AGIL1:		50
+GRTIME1:	1
+
+LIVE:		0,999
+CHOC:		0,999
+BMBS:		0,999
+DYNA:		0,999
+MINE:		0,999
+MNEY:		0,99999999
+MEDC:		0,999
+UMBR:		0,999
+KEYS:		0,999
+
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXbXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XCC              dX,b,XG>>v>>>v>>>>>>>>>>>>>>>>>vX
+dCC              XdSSSbXXX>^rX>^Xrrv<v<<rv<rrv<X X
+Xdrdrdrdrdrdrdrdr,X,c,Xb<<<<  << <<<^<r^<<^<<<^ <d
+drdrdrdrdrdrdrdrdZdSPSXbXXrXrXrXrXLXXXdXdXdXdXdXXX
+Xrrrrrrrrrrrrrrrr,Z,k,XbX>  d G  G  GOX,S,S,S,S,Xd
+ZZZ|ZZZZZaZZZZZ|ZZdS SXvbdrdZZZZ  GG  XdX     1 ,X
+X                 X, ,XbXr,rZW ZXXXXXXXX, X,X,X Sd
+X     .        r XdS Sd rr ,XXDX 9 9 919 9dXdXd9dX
+X        r   k    X, ,X rr Xd,999dSdSdSdSdX99999Sd
+X  r             XdS Sd   ^rdXdddX,X,X,X,XX9,XdXdX
+X,     ,     .    X,1,bXdXdbX399919999999993SdSdSd
+dX,XX      r   r,XdS XS,S,S,d9dSdSdSdSdSdSdSd9 9dX
+X   X O       rdrbX, ,2    S, SdSdSdSdSdSdSdS S Sd
+d^X X    r     r,XdS S S,S Sd9 919 9 919 919 9S9dX
+X X     r r k     X, , ,X, ,odSdSdSdSdSdSdSdSdS3Sd
+d^X    r G r  r  XdS   odS SdSdSdSdSdSdSdSdSdS,9dX
+XWX  .  r r O  d ,X,S,S,.,9 939 9 9 9 929 9 919 Sd
+d,X,_ _, r  _,_,dXd.d.d.d.,SdSdSdSdSdSdSdSdSdSdSdX
+XdXdXdXdXdXdXdXdXXXbXbXXXXXdXdXdXdXdXdXdXdXdXdXdXX
+#

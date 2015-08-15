@@ -1,0 +1,81 @@
+;	LEVEL 030 ---------------------------------------------+
+;	FOR McMINOS - Version 2.00
+;	Created.....:	19.12.93
+;	Last changes:	23.12.93
+;	Done by.....:	Andreas Neudecker
+
+;	HEADER ------------------------------------------------+
+AUTHOR: 	NoPe;		Andreas Neudecker
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		30
+SHOWNR:		30
+ACCCD:		30
+
+;	LEVELFORMAT -------------------------------------------+
+LWID:		47
+LHI:		17
+SCROLLX:	0
+SCROLLY:	0
+BACK:		30
+
+;	STATUS-Angaben ----------------------------------------+
+LTIME:		0
+RSTRT:		4
+MIRROR: 	0
+
+;	McMINOS -----------------------------------------------+
+MCSPEED:	1
+
+;	GEISTER -----------------------------------------------+
+GHOST1: 	3
+GHSPEED1:	1
+AGIL1:		50
+GRTIME1:	3
+
+GHOST2: 	3
+GHSPEED2:	1
+AGIL2:		50
+GRTIME2:	3
+PILLMAX2:	0
+PILLFREQ2:	0
+
+GHOST3: 	1
+GHSPEED3:	1
+AGIL3:		5
+GRTIME3:	1
+TRANSWALL3: 15
+
+GHOST4: 	0
+
+;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
+LIVE:		0,999
+KEYS:		0,999
+BMBS:		0,999
+DYNA:		0,0
+MINE:		0,999
+CHOC:		0,0
+MEDC:		0,999
+UMBR:		0,999
+
+;	LEVELDATEN --------------------------------------------+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X+.....................3.....................1X
+X.XXXXb.X.XX.CC.X..XXXX.XXXX..X.XX_CC.X..XXXX.X
+X..._...X.b_2CC.X...b..P.._...X..b.CC.X...b...X
+XX.XXXX.X.XXXXX.X.XXXX.X.XXXX.X.XXXXX.X.XXXX.XX
+XX..._.....1X......b...X..._.....3X...._.b...XX
+XXW.XXXX._X.X.X..XXXX..X..XXXX..X.X.X..XXXX.WXX
+Xm...._...X...X...b....m...._...X...X...b....mX
+XX.X.XXXX.X.X.X.XXXX.X.X.X.XXXX.X.X.X.XXXX.X.XX
+Xm.X..._1........b...X.b.X..._.........b...X.mX
+XX.X..XXXX..Xm.XXXX..X.X.X..XXXX.3X..XXXX..X.XX
+XX......_...X...b......X......_...X...b......XX
+XXXX.X.XXXX.X.XXXX.X.XXXXX.X.XXXX.X.XXXX.X.XXXX
+X.CC.X..._.....b...X..._CC.X..._.....b...X...+X
+X.CC.X..XXXX.XXXX_.X.XX3CC.X..XXXX.XXXX..X.XX.X
+X3...........................................*X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#	;_ENDE_DER_LEVELDATEN_---------------------------------*

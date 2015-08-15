@@ -1,0 +1,86 @@
+;	LEVEL 033 ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	07.04.93
+;	Last changes:	07.04.93
+;	Done by.....:	Andreas Neudecker
+
+;   HEADER ------------------------------------------------*
+AUTHOR:		NoPe;		Andreas Neudecker
+NUMBR:		33
+ACCCD:		6131233
+VERSION:	1100
+
+;   LEVELFORMAT -------------------------------------------*
+LWID:		30
+LHI:		20
+VWID:		30
+VHI:		20
+SCROLLX:	0
+SCROLLY:	0
+BACK:		34
+
+;   STATUS-Angaben ----------------------------------------*
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+;   McMINOS -----------------------------------------------*
+MCSPEED:	1
+
+;   GEISTER -----------------------------------------------*
+GHOST1:		1
+GHSPEED1:	1
+AGIL1:		20
+GRTIME1:	3
+
+GHOST2:		2
+GHSPEED2:	1
+AGIL2:		35
+GRTIME2:	5
+PILLMAX2:	25
+PILLFREQ2:	10
+
+GHOST3:		2
+GHSPEED3:	1
+AGIL3:		35
+GRTIME3:	5
+TRANSWALL3:	15
+
+GHOST4:		0
+GHSPEED4:	1
+AGIL4:		10
+GRTIME4:	5
+
+;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+KEYS:		0,999
+BMBS:		0,999
+DYNA:		0,0
+MINE:		0,999
+CHOC:		0,999
+MEDC:		0,999
+UMBR:		0,999
+
+;   LEVELDATEN --------------------------------------------*
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZW   _  Xuooo o  Xb  Xb  X   Z
+Z XXXXX X.oo o   X u X u X O Z
+Z  r   _oooo o   X   X   X3  Z
+Z XXXXX oouoo    dXXXdXXXdXXXZ
+Z       oo.o     X   X1 UX   Z
+Z XXXXX o o      X 3 X O X b Z
+Z       ooo o    X  rX   X   Z
+Z XmXrX X ooo    dXXXdXXXdXXXZ
+Z XmX X X o o CC X   Xb bXF bZ
+Z XmX X_ 8oo  CC X r X , X 3 Z
+Z X_X X X ooo    X  3X   X   Z
+Z X_X   X   o bb XXXXdXXXdXXXZ
+Z  r   ZZ  mob  bZZ  Xm mX   Z
+Z XXXX Z.ZXXboXXZ.Z  X X X XfZ
+Z   r  ZZZ  o...ZZZ    X X X Z
+Z XXXXc    o...  U  XXXXb mX Z
+Z XbX+rXrXoPo.  .U   XbXXXXX Z
+Z        o+W+o.   U    f    WZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+# 	; ENDE DER LEVELDATEN ---------------------------------*

@@ -1,0 +1,64 @@
+;	LEVEL 12
+;	FOR MAC MINOS - Version 0.3
+;	Stefan Neudecker (Goblin)
+;	Last changes:	26.12.93
+;	Done by:		NoPe
+
+AUTHOR:		Goblin_&_NoPe
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		12
+ACCCD:		12
+
+; Format des Levels
+LWID:		50
+LHI:		15
+
+SCROLLX:	1
+SCROLLY:	1
+BACK:		15
+
+MCSPEED:	1
+
+; Stati des Levels
+LTIME:		0
+RSTRT:		4
+MIRROR:		0
+
+; maximal vorhandene Geistertypen
+GHOST1:		6
+GHSPEED1:	1
+AGIL:		10
+GRTIME1:	5
+
+GHOST2:		0
+GHOST3:		0
+GHOST3:		0
+
+CHOC:		0,999
+MINE:		0,999
+DYNA:		0,0
+BMBS:		0,999
+KEYS:		0,999
+LIVE:		0,999
+
+
+; Leveldaten
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        XXXZ    Z
+XX  XXX XXX XXX XXX XXX XXXXXXXXXXXX  XXXXZZZ bb Z
+ZCCG X   X   X   X   X   XXXXX  XXXXXXXX  D      Z
+ZCCX   r   r   r   r      XXX     XXXXX   Zb d  XZ
+X     rrr rrr rrr rrr      X  X    XXX   XZX   XZX
+XX rrrrrrrrrrrrrrrrrrrrrrr   XXX    X   XXZXXbXkZX
+XX rrrrrrrXXXX rrr G rrrrr  XXXXXX     XXXZZZZZZZX
+ F PrrrrXXXXX   r  X   rrrr  XXXXXX  L           G
+XXXXXXXXXXXX      XXX   rrrr   ZZZZWXXXXXXXXXXXXXX
+XX+ +XXXXX      XXXXXrX    XXX  .O+O+OZZXXXXXZZZZZ
+XXXd  XXX    WXXXXXXX XXX    ZXZZZZZZZZXXX    D  X
+XXXXGb X     XXXXXXXX XXXXX    XXXXXXXXX    XZZZ X
+XXXXX bD  CC  r      , XXXXXX    XXXXXX    XZXXZ X
+XXXXXXXX  CC  XXXXXXX kXXXXXXXX    XX    XXXZXdG X
+XXXXXXXXX    XXXXXXXXXXXXXXXXXXXX  XG    XXXZ    X
+#

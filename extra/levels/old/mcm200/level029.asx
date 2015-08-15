@@ -1,0 +1,85 @@
+;	LEVEL NEW ---------------------------------------------+
+;	FOR McMINOS - Version 2.00
+;	Created.....:	16.12.92
+;	Last changes:	16.12.93
+;	Done by.....:	Andreas Neudecker
+
+;	HEADER ------------------------------------------------+
+AUTHOR: 	NoPe;		Andreas Neudecker
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		29
+SHOWNR:		29
+ACCCD:		29
+
+;	LEVELFORMAT -------------------------------------------+
+LWID:		40
+LHI:		24
+SCROLLX:	1
+SCROLLY:	1
+BACK:		29
+
+;	STATUS-Angaben ----------------------------------------+
+LTIME:		0
+RSTRT:		4
+MIRROR: 	0
+
+;	McMINOS -----------------------------------------------+
+MCSPEED:	1
+
+;	GEISTER -----------------------------------------------+
+GHOST1: 	0
+
+GHOST2: 	6
+GHSPEED2:	1
+AGIL2:		15
+GRTIME2:	1
+PILLMAX2:	0
+PILLFREQ2:	0
+
+GHOST3: 	2
+GHSPEED3:	1
+AGIL3:		15
+GRTIME3:	1
+TRANSWALL3: 3
+
+GHOST4: 	0
+
+;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
+LIVE:		0,999
+KEYS:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,0
+CHOC:		0,0
+MEDC:		0,3
+UMBR:		0,999
+
+;	LEVELDATEN --------------------------------------------+
+LEVEL:
+. rrr...rrrr    rrrr        rrrrrrr    .
+.rrrrr               77    r..H_.mmrrW..
+.rr rr              8..99   r  .b r.mr..
+.rrLrr     .w   ooooo     9.rrrr.r.bH.r.
+.rrrrr     .o.oo     .o         r6rrrr.r
+..rrr     ..6     +    o        r.bHb.r.
+             o         ooo     ..r.b.r..
+             o    www    oo     ..r.rr..
+     ..P   w.o   wkwkw   o         r
+             o    www    o   9
+          ..6          ..o        ZvZ
+              o    b   W.o        ZDZ
+    d     .w   o     ..oo         ZvZ
+               .oSooDoo          .ZDZ
+    rrrr    rrrr     ..o          ZvZrrr
+rrrr..g.rrrr    rrrr          .ZZZZDZg..
+rg..r   r.g.r.g.r.g.r.w        ZCC.,Z
+    rrrr    rrrr    r          ZCC..Zrrr
+rrrr.g..rrrr  k rrrrr          Z..,.Zug.
+r   r   r   rg..r.g.r          Z   .Z
+.g..rrrr..k.rrrr    r          ZZZZZZrrr
+rrrr.u..rrrr    rrrrr
+    r.g.r   r.g.r.u.r
+    rrrr.g..rrrr    r
+#	;_ENDE_DER_LEVELDATEN_---------------------------------*

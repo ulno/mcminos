@@ -1,0 +1,78 @@
+;	LEVEL NEW ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	28.11.93
+;	Last changes:	26.12.93
+;	Done by.....:	Andreas Neudecker
+
+;	HEADER ------------------------------------------------*
+AUTHOR: 	NoPe;		Andreas Neudecker
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		7
+SHOWNR:		7
+SHAREWARE:	0
+ACCCD:		7
+
+;	LEVELFORMAT -------------------------------------------*
+LWID:		35
+LHI:		16
+VWID:		35
+VHI:		16
+SCROLLX:	1
+SCROLLY:	1
+BACK:		7
+
+;	STATUS-Angaben ----------------------------------------*
+LTIME:		0
+RSTRT:		4
+MIRROR: 	0
+
+;	McMINOS -----------------------------------------------*
+MCSPEED:	1
+
+;	GEISTER -----------------------------------------------*
+GHOST1: 	1
+GHSPEED1:	1
+AGIL1:		15
+GRTIME1:	5
+
+GHOST2: 	0
+
+GHOST3: 	2
+GHSPEED3:	1
+AGIL3:		15
+GRTIME3:	5
+TRANSWALL3: 1
+
+GHOST4: 	0
+
+;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+KEYS:		0,0
+BMBS:		0,999
+DYNA:		0,0
+MINE:		0,999
+CHOC:		0,0
+MEDC:		0,999
+UMBR:		0,999
+
+;	LEVELDATEN --------------------------------------------*
+LEVEL:
+rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+....r..b....r.b..f...r....G...r....
+....r.......r................r.....
+rrrrrrrrrrrrrrrrrrr.rrrrrrrrrrrrrrr
+rrrrrrrrrrrrWrrrrrrrrrrrrrr.rrrrrrr
+..r.W....r.r...CC..r.d.O...r.......
+..........r....CC..r.......r....b..
+rrrrrrrrrr.rrrrr.rrrrrrrrrr.rrrrrrr
+rrrrrrrrrr.rrrrr.rrrrrrrrrr.rrrrrrr
+....r...r...b.......r....r...r..G..
+....rb..r......r....r...rPr.r......
+r.rrrrrrrrrrrrr.rrrrrrrrrrrrrrrrrrr
+r.rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+....r.....r.H.....r....r...O.......
+......F..r.........r...r....r.W....
+rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+#	;_ENDE_DER_LEVELDATEN_---------------------------------*

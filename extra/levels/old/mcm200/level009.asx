@@ -1,0 +1,118 @@
+;	LEVEL 009 ---------------------------------------------*
+;	FOR McMINOS - Version 2.00
+;	Created.....:	19.06.93
+;	Last changes:	18.12.93
+;	Done by.....:	Andreas Neudecker
+
+;	HEADER
+AUTHOR: 	NoPe;		Andreas Neudecker
+VERSION:	0100;		ACHTUNG
+SHAREWARE:	0
+
+NUMBR:		9
+ACCCD:		9
+
+;	LEVELFORMAT
+LWID:		50
+LHI:		50
+VWID:		10
+VHI:		10
+SCROLLX:	0
+SCROLLY:	0
+BACK:		33
+
+;	STATUS-Angaben
+LTIME:		0
+RSTRT:		4
+MIRROR: 	0
+
+;	McMINOS
+MCSPEED:	1
+
+;	GEISTER
+GHOST1: 	2
+GHSPEED1:	1
+AGIL1:		30
+GRTIME1:	10
+
+GHOST2: 	0
+GHSPEED2:	1
+AGIL2:		0
+GRTIME2:	1
+PILLMAX2:	0
+PILLFREQ2:	1
+
+GHOST3: 	0
+GHSPEED3:	1
+AGIL3:		50
+GRTIME3:	10
+TRANSWALL3: 10
+
+GHOST4: 	0
+GHSPEED4:	1
+AGIL4:		50
+GRTIME4:	10
+
+;	MIN-/MAX-ZAHL DER WERKZEUGE
+LIVE:		0,999
+KEYS:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,0
+CHOC:		0,0
+MEDC:		0,0
+UMBR:		0,999
+
+;	LEVELDATEN
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z.....................v......9o9o...............WZ
+Z.r...9oooooooooooooo.,......o9o9.9o9o9o9o9o9o.,,Z
+Z..P.9o.................o9o9.9o9o.o9o9o9o9o9o9...Z
+Z...9o..9o9o9o9o9o9o9o9o9o9o.o....9o9o9o9o9o9o9o.Z
+Z..9o..9o9o9o9o9o9o9o9o9o9o9.o.9o9o9o9o9o9o9o9o9.Z
+Z.9o..9o9o9o9o9o9o9o9o9o9o9o...o9o9o9o9o9o9o9o9o.Z
+Z.o..9o9o9o9o9o9o9o9o9o9o9o9.9o9o9o9o9o9o9o9o9o9.Z
+Z.o.9o9o9o9o9o9o9o9..99o9o9o.o9o9o9o9o9.......9o.Z
+Z.o.o9o9o9o9o9o9o9o.F8.......9o9o9o9o9o.o9o9o.o9.Z
+Z.o.>..o9o9o9o9o9o9..99o9oo.9o9o9o9o9o9.9o9o9.9o.Z
+Z.o.9o.9o9o9o9o9o9o9o9o9o...o9o9o9o9o9o.o9o9o.o9.Z
+Z.o.o9.o9o9o9o2,9o9o9o9o9.oo9o.o9o9o9o9.9o9o9....Z
+Z.o.9o.9o9o9oZ.9b9o9o9o9o......9o9o9o9o.o9o9o9o9oZ
+Z.o..<......,.bo9,9o9o9o9ooooo.o9o9o9o9.9o9o9o9o9Z
+Z.o9o9o9o9.,.b.,o,o9o9o9d,r,rr,9o9o9o9o.o9o9o9o9oZ
+Z.9o9o9o9o9o9o9obo9o9o9,rrdrdbro9o9o9o9.9o.......Z
+Z.o9o9o9o9o9o9o9o,o9o9odor....dro9o9o9o....9o9o9.Z
+Z.9o9o9o9o9o9o9o9obo9o,o9or.CCr,9o9o9o9o9o9o9o9o.Z
+Z.o9o9o9o9o9o9o9o9o,b,d,o9orCCdro9o9o9o9o9o9o9o9.Z
+Z.9o9o9o9o9o9o9o9o9o9b3o,.d,r.r,9o9o9o9o9o9o9o9..Z
+Z.o9o9o9o9o9o9o9o9o9o9,bob.9drdro9o9o9o9o9o9o9..,Z
+Z..o9o9o9o9o9o9o9o9o9o9,,o,.9,ro9o9o9o9o9o9o9..b.Z
+Z9..o9o9o9o9o9o9o9o9o9o9o9d9o9o9o9o9o9o9o9o9..b..Z
+Zo9..o9o9o9o9o9o9o9o9o9o9o,o9o9o9o9o9o9o9o9b....uZ
+Z9o9..o9o9o9o9o9o9o9o9o9obZZZZZZZZZZZZZZZZZZZZZZ^Z
+Zo9o9.9o9o9o9o9o9o9o9o9o9Zb,b...ro9kX..hhh..hr.ZDZ
+Z9....o9o9o9o9o9o9o9o9o9oZ,W,..ro9oXX.h.rrrrr....Z
+Zo.o9o9o9o9o9.9o9o9o9o9o9Zb,b.ro9oX.Xrrrr......X.Z
+Z9..o9o9o9o9b9o9o9o9o9o9oZ...ro9oX..X.........vX.Z
+Zo9.9o9o9o9,9o9o9o9o9o9o9Z..ro9oX.r.X..b....vX.X.Z
+Z...o9o9o9b9o9o9o9o9o9o9oZ.ro9oX..r.X......X.X.X.Z
+Z.9o9o9o9,9o9o9o9o9o9o9o9Zro9o.D....X.X..^vX.X.X.Z
+Z.o9o9o9b9o9o9o9o9o9o9o9oZo9oXXX.XX.X.X.vbvbvbvX.Z
+Z.999o9,9o9o9o9o9o9o9o9o9Z9oXO.X.GX.X..X,X,X,X,X,Z
+Z.o999b9o9o9o9o9o9o9o9o9oZoXO.......X............Z
+Z.9o9,9o9o9o9o9o9o9o9o9o9ZXXX..XXXXXXoXXXXXXXXXX^Z
+Z.o999o9o9o9o9o9o9o9o9o9oZ.9XXXXo9o9oZo9o9o9o9o9rZ
+Z...ZZZZZZZZ|ZZo9o9o9o9o9Z9o9o9o9o9oXo9o9o9o9o9ruZ
+Z9o.o9o9Z9o9o9oOOOrrOOOrOZo9o9o9o9o.X9o9o9o9o9r..Z
+Zo..9o9o9Z9o9o9oO.r.u...uZ9o9o9o9o..Xo9o9o9o9r...Z
+Z9.9o9oZo.Z9o9o9o0gr..r..Zo9o9o9o.u.X9o9o9o9r...rZ
+Zo.o9o9oZo9Z9o9o9o0..rgr.Z9o9o9o....Xo9o9o9r.r.r.Z
+Z9..o9o9oZo9Z9o9o9oO..r..Zo9o9o...g.X9o9o9r...r.uZ
+Z.,....,9oZoZo9o9o9or..r.Z9o9o......Xo9o9rOr.r.r.Z
+Z..,,,..oZo9Z9o9o9o9o.rgrZo9o...g...X9o9rO.Or.H.rZ
+Z...b.,.9Z9Z9o9o9.9o9o.r.Z9o........Xo9rO.u.Or.r.Z
+Z.,,,,..oZoZo9o9o..9o9o..ZZ.........X9r.rO.O..r..Z
+Z......,Zo9o9o9o9o9o9o9ou.D........r.r...rO..r..uZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ ZZZZZZZZZZZZZZ
+#	;_ENDE_DER_LEVELDATEN

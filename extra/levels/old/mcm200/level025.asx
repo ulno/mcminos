@@ -1,0 +1,76 @@
+;	LEVEL 025 ---------------------------------------------+
+;	FOR McMINOS - Version 2.00
+;	Created.....:	24.11.93
+;	Last changes:	24.11.93
+;	Done by.....:	Andreas Neudecker
+
+;	HEADER ------------------------------------------------+
+AUTHOR: 	NoPe;		Andreas Neudecker
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		25
+SHOWNR:		25
+ACCCD:		25
+
+;	LEVELFORMAT -------------------------------------------+
+LWID:		19
+LHI:		19
+VWID:		19
+VHI:		19
+SCROLLX:	0
+SCROLLY:	0
+BACK:		19
+
+;	STATUS-Angaben ----------------------------------------+
+LTIME:		0
+RSTRT:		4
+MIRROR: 	0
+
+;	McMINOS -----------------------------------------------+
+MCSPEED:	1
+
+;	GEISTER -----------------------------------------------+
+GHOST2: 	1
+GHSPEED2:	1
+AGIL2:		25
+GRTIME2:	1
+PILLMAX2:	30000
+PILLFREQ2:	3
+
+GHOST1: 	0
+GHOST3: 	0
+GHOST4: 	0
+
+;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
+LIVE:		0,999
+KEYS:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,0
+CHOC:		0,0
+MEDC:		0,0
+UMBR:		0,999
+
+;	LEVELDATEN --------------------------------------------+
+LEVEL:
+XXXXXXXXXXXXXXXXXXX
+Xm                X
+X XXX XXX XXX XXX X
+X r   r     r  mr X
+X XXX XXX XXX XXX X
+X    .       .    X
+X XXX XXX XXX XXX X
+X   r  P    r r  mX
+X XXX XXX XXX XXX X
+X     |  m        X
+X XXX XXX XXX XXX X
+X r   r    r    r X
+X XXX XXX XXX XXX X
+X    .       g    X
+X XXX XXX XXX XXX X
+X  r    r   r   r X
+X XXX XXX XXX XXX X
+X.     k m        X
+XXXXXXXXXXXXXXXXXXX
+#	;_ENDE_DER_LEVELDATEN_---------------------------------+

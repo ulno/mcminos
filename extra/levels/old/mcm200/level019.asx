@@ -1,0 +1,93 @@
+;	LEVEL 64
+;	FOR McMINOS - Version 1.10
+
+AUTHOR:		NoPe		; Andreas Neudecker
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		19
+ACCCD:		19
+
+LWID:		50
+LHI:		50
+VWID:		50
+VHI:		50
+SCROLLX:	1
+SCROLLY:	1
+BACK:		46
+
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+MCSPEED:	1
+
+GHOST1:		10
+GHSPEED1:	2
+AGIL1:		20
+GRTIME1:	1
+
+LIVE:		0,999
+CHOC:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,0
+MEDC:		0,999
+UMBR:		0,999
+KEYS:		0,0
+
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
+
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZ.ZZZZZZZZZZZZZZZZZZZZZZ
+Z        >         > Z  FPZ.Z <          <      <Z
+Z ZZZZZZZZZZZZZZZZZZ Z ZZZZZZ ZZZZZZZZZZZZZZZZZZ Z
+ZGZkkk, Zkk,k,X      Z   1  Z      X           ZGZ
+ZZZk,k ,kk,kk,X XXXXXXXXXXX XXXXXX X           ZZZ
+Z    , ,k, k,kX>     X      X     <X   rrrrr     Z
+Z ,       ,kkkXXXXXX X XXXXXX XXXXXX   r   r  O  Z
+Z    ,Z,b   r    W5X X1X    X X        r W r  O  Z
+Z  b   , ,   , XXXXX X X1XX X X XXXXXX r   r  O  Z
+Z   ,    ,     X     X X  X X X        rrrrr     Z
+Z     ,    , ,,X XXXXX XX X X XXX|XXXX        XX Z
+Z ,  ,Z , , Z..X     X    X X   X   +XbXXXXX  OX Z
+Z.. ,..... .,..XXXXX XXXXXX XXX X XXXXXXbbbXXXXX Z
+Z.... ,., ......k+kX X     1X   X        X     < Z
+Z.,Z,...ZZZZZZZZZZ+X X XXXXXX ZZZZZZ ZZZZZZZZZZZ Z
+Z.................+X X   1  X ZW5k.Z   c   D...< Z
+XXXXXXXXXXXXXDXXXXXX XXXXXX X ZZZZZZ ZZZZZ ZZZZZ|Z
+XbbbbbbbbbbbbXX  <   X      X   >  X >.b1D D1d.< Z
+dX............X XXXXXX1XXXXXXXXXXX X ZZZZZ ZZZZZ X
+ZbbbbbbbbbbbbbX      X     <       X >.b1D >1b.D Z
+Z............bXXXXXXVXXXaXXXXXXXXXXX ZZZZZ ZZZZZ Z
+Zbbbbbbbbbbbbb.b.CCX    .X   X   X A >.b1D D1d.< Z
+dX.............b.CCXXXXX X X X X X X ZZZZZ ZZZZZ X
+Zbdbbdbbdbbdbbdbbbbbbbb>r  X   X   X >k.1D >1b.D Z
+ZZXZZXZZXZZXZZXZZZZZZZZZ ZZZZZZZZZZZZZZZZZZZZZZZDZ
+Z                      ZGZ                       Z
+Z^XXXXXXXvXXXXX3XXXXXX ZxZ XXXXXXXXXXSXXXXXXXXXXXZ
+      X             3  ZZZ X   F
+Z^XXX XXXXXXXXXXXXXXXX     X XXXXXXXXXXXX3XXXXXXXZ
+    X                ZXXXXXZ X
+ZSX XXXXXXXXXXXXXXXX         X XXXXXXXXSXXXXXXXXXZ
+         5         ZXXXXXXXXXZ S  f
+ZSXXXXXXXXXXXXXXXX        1    X XXXXXXXX^XXXXXXXZ
+                 ZXXXXXXXXSXXXXZ          X      Z
+Z^XXXXXXXXXXXXXX  F              XXXXXSXXXX XXXXXZ
+   +           ZXXXXXXSXXXXXXXXX^Z          X
+Z^XXXXXXXvXXXX     f       1       XXXXXXXXXX XXXZ
+             ZXvXXXXXXXXvXXXSXXXXXXZ          X
+Z^XXXXXXXXXX                         XXXXXXXX^X XZ
+           ZXXX1XXXXXXXXXXXXXSXXXXXXXZ
+Z^XXXXXXXX           F                 XXXXXX^XXXZ
+Z        ZXXXXXXXXXSXXXXXXX^XXXXXvXXXXXZ         Z
+Z^XXXXXX                f                XXXXXXXXZ
+Z XX   ZXXXXXXXX1XXXXXXXXXXXXXXXXX4XXXXXXZ   X   Z
+     X                                     X   X
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZDZZZZZZZZZZZZZZZZZZZZZZ
+Z.b...b...b...b...b..X.D.......D..,...,...,.,...LZ
+Zb.b.b.b.b.b.b.b.b.b.bXX.......XX.,.,.,.,.,...,,5Z
+Z...b...b...b...b...b.X...ZDZ...<...,...,...,...kZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZ.ZZZZZZZZZZZZZZZZZZZZZZ
+#

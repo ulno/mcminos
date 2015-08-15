@@ -1,0 +1,88 @@
+;	LEVEL 059 ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	05.04.93
+;	Last changes:	28.11.93
+;	Done by.....:	Andreas Neudecker
+
+;   HEADER ------------------------------------------------*
+AUTHOR:		NoPe;		Andreas Neudecker
+VERSION:	0100;		ACHTUNG: vor RELEASE erhöhen: 0200!
+SHAREWARE:	0
+
+NUMBR:		17
+ACCCD:		17
+
+;   LEVELFORMAT -------------------------------------------*
+LWID:		41
+LHI:		20
+VWID:		41
+VHI:		20
+SCROLLX:	1
+SCROLLY:	1
+BACK:		12
+
+;   STATUS-Angaben ----------------------------------------*
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+;   McMINOS -----------------------------------------------*
+MCSPEED:	1
+
+;   GEISTER -----------------------------------------------*
+GHOST1:		0
+GHSPEED1:	1
+AGIL1:		20
+GRTIME1:	3
+
+GHOST2:		5
+GHSPEED2:	1
+AGIL2:		10
+GRTIME2:	5
+PILLMAX2:	300
+PILLFREQ2:	3
+
+GHOST3:		2
+GHSPEED3:	1
+AGIL3:		20
+GRTIME3:	100
+TRANSWALL3:	15
+
+GHOST4:		0
+GHSPEED4:	1
+AGIL4:		10
+GRTIME4:	5
+
+;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+KEYS:		0,999
+BMBS:		0,3
+DYNA:		0,0
+MINE:		0,0
+CHOC:		0,2
+MEDC:		0,999
+UMBR:		0,999
+
+;   LEVELDATEN --------------------------------------------*
+LEVEL:
+XX X X XmXXXXXXXXXXXXXXXXXXXXXXX X XmX XX
+   X XmX X .........P       b  X XmX X
+XXXXmX X X.XXXXXX XXXXX XXXXXX XmX X XXXX
+   X X X X. m m   ..X..   mm   X X X X
+ X        .XXXXXX X...X XXXXXX         X
+XXXXXX X .         XXX           X XXXXXX
+        .X1XbX1X X     X XbX_X_X
+XXX X XX.X2X1X2X  XXXXX  XbX_XmX XX X XXX
+  m X   .X3X2X3XX Xg  X XXdX_X_X    Xb  3
+XXXXX X .XbX3XbX  X XmX  X,X,X,X  X XXXXX
+  g   X  .        X X X           X3
+XX XXXX X.XXXXXXX X X X XXXXXXX X XXXX XX
+  mX  m X .        3X      m    Xb   X  2
+XXXX XXXX X.XXX X X X X X XXX X XXXX XXXX
+          X.  X X X X X X.X   X     b
+XXXXXXXXXXX.X X X X XmX X.X X XXXXXXXXXXX
+    *XCC... X X  gX XmX  .X X      Xg
+XXXX XCCXXXXX XXXXX XmXXXXX XXXXXX X XXXX
+   X X X           .X.mmm  g     X X X
+XX X X X XXXXXXXXXXXXXXXXXXXXXXX X X X XX
+# 	; ENDE DER LEVELDATEN ---------------------------------*
