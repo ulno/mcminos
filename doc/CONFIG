@@ -1,0 +1,171 @@
+##  Sample CONFIG file for McMinos source image folders
+#   Created: before 2010-05-08
+#   Last change: 2010-08-04
+#   Editor: Andreas Neudecker (nope)
+
+##  This sample CONFIG file is ment to be a fully functional config, decorated
+#   with substantial documentation so it may be used as template for your own
+#   CONFIG files. Keep this in mind when editing this sample file.
+
+
+
+##  Syntax:
+#
+#   <parameter> = <value>
+#   where 'parameter' is an identifier following the rules for naming variables
+#   in Python (version 2.5 or above), and 'value' is either an integer or a
+#   UTF-8 character enclosed in single quotes.
+#   This way all settings are valid Python code. Keep it that way!
+#
+#   Where do values apply?
+#   If a parameter is set more than once in a file, the last instance will
+#   override all previous settings due to the linear parsing of the file.
+#   If a parameter is set again in a CONFIG file of a subfolder, it will be
+#   changed for the files in this subfolder (recursively) only.
+#
+#   Comments:
+#
+#   Any text following a hash character ('#') will be ignored, just as in
+#   Python.
+#   Importance: optional
+#   Default: no default
+
+
+
+##  symbol:
+#   The UTF-8 character representing the entity in level sources
+#
+#   type: character
+#   importance: required
+#   default: None
+#
+#   May be missing in a CONFIG file if it has been defined previously in a
+#   CONFIG file of higher hierarchy level
+symbol = 'P'
+
+
+
+##  Icon display related settings
+#
+#   Currently (2010-05-08) all SVG graphics for McMinos are drawn with a
+#   default icon size of 32x32 pixels in mind. This means that the virtual
+#   size set in all icons will be 32x32 pixels for icons that are
+#   1x1 level square in size, and (n*32)x(n*32) for icons that are nxn level
+#   squares in size.
+
+##  size:
+#
+#   The width AND height of the entity in level squares.
+#   At this time (2010-05-05) entities may only cover square space
+#   (i.e. width = height).
+#   At this time only square sizes (i.e. width = height) are defined.
+#
+#   type: tupel (integer, integer) [level squares]
+#   importance: optional
+#   default: (1, 1)
+size = (3, 3)
+
+##  anchor point (focus):
+#
+#   The field within an icon that's larger than 1 field that is used as anchor
+#   regarding the positioning of the icon on the level.
+#   Sample: imagine an icon that is 3 x 3 fields in size (equalling 96 x 96
+#   pixels for 32x32 pixel field size). You want the centre field of the icon
+#   to be at the given coordinates in the level (i.e. as anchor point). Set
+#   anchor to (1, 1) (be aware that top left is (0,0).
+#   An offset the size of the current field size (32 in this
+#   example) will be added to x and y, the upper left corner of the centre field
+#   becomes the focus point.
+#
+#   type: tuple (integer, integer) [level square coordinates relative to icon]
+#   importance: optional
+#   default: (0, 0) (upper left corner)
+#   error handling: if the x,y values of the tuple are larger than the actual
+#   dimensions of the icon (see 'size' above), a warning/error message shall
+#   be issued and the value set to the default
+focus = (1, 1)
+
+##  zindex:
+#   Define the order in which the entity is displayed relative to other
+#   objects (layers).
+#
+#   Usage conventions:
+#   000 - 099 -> reserved (for future use, just in case)
+#   100 - 199 -> background
+#   200 - 299 -> reserved
+#   300 - 399 -> fields, holes, doors
+#   400 - 499 -> walls,
+#   500 - 599 -> stuff lying on the ground (pills, extras, tools, etc.)
+#   600 - 699 -> reserved
+#   700 - 799 -> creatures
+#   800 - 899 -> explosions
+#   900 - 999 -> reserved
+#
+#   type: integer
+#   importance: optional
+#   min: 0 (= bottom layer)
+#   max: 999 (= top layer)
+#   defaults:
+#       backgrounds: 100
+#       doors, fields, holes: 300
+#       walls: 400
+#       stuff on the ground (see above): 500
+#       creatures:
+#           McMinos: 750
+#           all others: 700
+#       explosions: 800
+zindex = 750
+
+
+
+##  Animation related settings
+#
+#   The number of animation steps is currently (2010-05-08) not limited.
+#   Best practice for animations is to put all animation step image files in one
+#   folder carrying the name of the animation, and have all step files renamed
+#   by consecutive numbers. If numbers are omitted this is not a problem as
+#   images will be added to a list ordered by their name's numeric value
+#   (excluding the file name extension). Leading zeros in the file names will
+#   be ignored.
+
+##  speed:
+#
+#   For animated entities only: delay [milliseconds] before the next animation
+#   step is displayed. Is applied to all entities within any subdirectory.
+#   This setting may be overridden for animation series in CONFIG files of
+#   subfolders, or for single animation steps in the file name of the
+#   respective file in a subfolder.
+#
+#   type: integer [milliseconds] or list of integers [also in milliseconds]
+#   If the list has less values than there are animation steps available,
+#   the last value in the list will be applied to all further images.
+#   If the list has more values than there are animation steps available,
+#   values without a corresponding animation step will be ignored. [???]
+#   importance: optional
+#   default for single images: None
+#   default for animations consisting of >1 images: 100
+# speed =[80,1000,80]
+speed = 80
+
+##  order:
+#
+#   Order of animation steps; to allow for repetitions or shuffled order
+#   images to allow to avoid duplication of images
+#
+#   type: list of integers - the integers refer to the numbers
+#       which are coded in the animation pictures's file name!
+#   importance: optional
+#   default for single images: None
+#   default for animations consisting of n > 1 images: [1,...,n]
+order = [1,2,3,4,5,6,7,8,7,6,5,4,3,2]
+
+##  moving:
+#
+#   indicates if this object can move by itself
+#   (like mcminos or the ghosts)
+#
+#   type: boolean
+#   importance: optional
+#   default: false
+moving = False
+
