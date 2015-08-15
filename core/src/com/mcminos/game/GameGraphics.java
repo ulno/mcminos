@@ -168,12 +168,12 @@ public class GameGraphics {
      * @param gametime current gametime to find correct animation
      * @param levelX x and y block coordinates (level elements
      * @param levelY
-     * @param offsetX small shift in pixels of the level
+     * @param offsetX small shift in fraction of 1 (one block) of the level
      * @param offsetY
      */
-    void draw( Batch batch, long gametime, int levelX, int levelY, int offsetX, int offsetY) {
-        batch.draw( getTexture(gametime), (levelX + anchorX) * currentResolution + offsetX,
-                (levelY + anchorY) * currentResolution + offsetY);
+    void draw( Batch batch, long gametime, int levelX, int levelY, double offsetX, double offsetY) {
+        batch.draw( getTexture(gametime), (int)((levelX + anchorX + offsetX) * currentResolution),
+                (int)((levelY + anchorY + offsetY) * currentResolution) );
     }
 
     /**

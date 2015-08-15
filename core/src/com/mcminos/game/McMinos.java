@@ -4,13 +4,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 
 public class McMinos extends ApplicationAdapter implements InputProcessor {
 	SpriteBatch batch;
-	Texture img;
 	Entities gfx;
     long gameTime = 0;
     private int windowWidth;
@@ -40,14 +38,14 @@ public class McMinos extends ApplicationAdapter implements InputProcessor {
         windowHeight = height;
         // Solution from here: http://gamedev.stackexchange.com/questions/68785/why-does-resizing-my-game-window-move-and-distort-my-rendering
         Matrix4 matrix = new Matrix4();
-        matrix.setToOrtho2D(0, 0, width, height);
+        matrix.setToOrtho2D(0, 0, windowWidth, windowHeight);
         batch.setProjectionMatrix(matrix);
     }
 
     @Override
 	public void render () {
-        int offsetX = -10;
-        int offsetY = -10;
+        double offsetX = -0.2;
+        double offsetY = -0.5;
 
         gameTime += (long)(Gdx.graphics.getDeltaTime() * 1000);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -55,11 +53,11 @@ public class McMinos extends ApplicationAdapter implements InputProcessor {
 		batch.begin();
         for( int x=0; x<50; x++ )
             for( int y=0; y<50; y++ )
-                gfx.backgrounds_dry_grass.draw(batch, gameTime, x, y, offsetX, offsetY);
-		gfx.mcminos_default_front.draw(batch, gameTime, 2, 2, offsetX, offsetY);
-        gfx.ghosts_hanky.draw(batch, gameTime, 4, 2, offsetX, offsetY);
-        gfx.ghosts_zarathustra.draw(batch, gameTime, 0, 5, offsetX, offsetY);
-        gfx.ghosts_panky.draw(batch, gameTime, 5, 5, offsetX, offsetY);
+                Entities.backgrounds_dry_grass.draw(batch, gameTime, x, y, offsetX, offsetY);
+        Entities.mcminos_default_front.draw(batch, gameTime, 2, 2, offsetX, offsetY);
+        Entities.ghosts_hanky.draw(batch, gameTime, 4, 2, offsetX, offsetY);
+        Entities.ghosts_zarathustra.draw(batch, gameTime, 0, 5, offsetX, offsetY);
+        Entities.ghosts_panky.draw(batch, gameTime, 5, 5, offsetX, offsetY);
 		batch.end();
 	}
 
