@@ -6,6 +6,7 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -20,6 +21,21 @@ public class GameGraphics {
     private int anchorX, anchorY;
     private int zIndex;
     private boolean moving;
+
+    /**
+     * @return Width of graphics in level blocks
+     */
+    public int getWidth() {
+        return sizeX;
+    }
+
+    /**
+     * @return Height of graphics in level blocks
+     */
+    public int getHeight() {
+        return sizeY;
+    }
+
     private int sizeX, sizeY;
     private int totalAnimationLength;
     private int currentResolution = 0;
@@ -145,6 +161,22 @@ public class GameGraphics {
     }
 
     /**
+     * Draw with offset to a batch in current resolution
+     * Remember, level(0,0) is lower left corner due to libgdx' flipped y-axis
+     *
+     * @param batch the batch to draw in
+     * @param gametime current gametime to find correct animation
+     * @param levelX x and y block coordinates (level elements
+     * @param levelY
+     * @param offsetX small shift in pixels of the level
+     * @param offsetY
+     */
+    void draw( Batch batch, long gametime, int levelX, int levelY, int offsetX, int offsetY) {
+        batch.draw( getTexture(gametime), (levelX + anchorX) * currentResolution + offsetX,
+                (levelY + anchorY) * currentResolution + offsetY);
+    }
+
+    /**
      * For the static part concerning all graphics
      */
     static void setResolutionAll( int resolution ) {
@@ -152,4 +184,6 @@ public class GameGraphics {
             gfx.setResolution(resolution);
         }
     }
+
+
 }

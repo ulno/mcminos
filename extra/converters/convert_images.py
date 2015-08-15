@@ -40,8 +40,8 @@ config_options={
     }
 
 # w equals h, so only one value here
-#SIZE_LIST = [128,64,32,16,8,6]
-SIZE_LIST = [128,64,16] # for testing
+SIZE_LIST = [128,72,64,48,32,16,8,6]
+#SIZE_LIST = [128,64,16] # for testing
 
 #try:
 #    os.rmdir(OUTPUT_DIRECTORY)
@@ -284,16 +284,18 @@ class Entities {
 for e in entity_list:
     f.write( "public static GameGraphics %s;\n"%e )
 
-f.write(
-"""
+resList = SIZE_LIST[:]
+resList.sort(reverse=True)
+f.write("\n    public final static int[] resolutionList={%s};\n" \
+    % (",".join(map(str,resList))) )
 
+f.write( \
+"""
     private Entities() {
 """)
 for e in entity_list:
     print "Working on", e
     f.write( entity_list[e].code() )
-
-for e in entity_list:
     f.write( "%s.finishInit();\n"%e )
 
 f.write( \
