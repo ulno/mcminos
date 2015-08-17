@@ -38,7 +38,6 @@ public class LevelObject implements  Comparable<LevelObject> {
         if(index<0)
             index = - index - 1;
         all.add(index, this);
-        Collections.sort(all);
     }
 
     /*LevelObject(int x, int y) {
