@@ -10,11 +10,14 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-/** represent on of the entities in the game like mcminos itself, ghosts, walls or other things in the game
- *
+/**
+ * represent on of the graphical
+ * entities in the game like mcminos itself, ghosts, walls or other things in the game
+ * The class allows to retrieve corresponding textures for specific game/level objects
  */
 public class GameGraphics {
     private char symbol;
@@ -64,7 +67,7 @@ public class GameGraphics {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         totalAnimationLength = 0;
-        allGraphics.add( this );
+        allGraphics.add(this);
     }
 
     // Is called at end of initialisation, when all graphics has been added
@@ -166,10 +169,10 @@ public class GameGraphics {
      *
      * @param batch the batch to draw in
      * @param gametime current gametime to find correct animation
-     * @param levelX x and y block coordinates (level elements
-     * @param levelY
+     * @param levelX x and
+     * @param levelY y block coordinates (level elements)
      * @param offsetX small shift in fraction of 1 (one block) of the level
-     * @param offsetY
+     * @param offsetY shift in y
      */
     void draw( Batch batch, long gametime, int levelX, int levelY, double offsetX, double offsetY) {
         batch.draw( getTexture(gametime), (int)((levelX + anchorX + offsetX) * currentResolution),
@@ -185,5 +188,7 @@ public class GameGraphics {
         }
     }
 
-
+    public int getzIndex() {
+        return zIndex;
+    }
 }

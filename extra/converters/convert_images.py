@@ -34,7 +34,7 @@ config_options={
     "size":(1,1), # the multiplier for the size (castle:2, explosion: 3)
     "speed":100, # the animation speed or animation speed list (10 frames per second default)
     "order":[0], # the order of the images
-    "zindex":0, # show this on which level?
+    "zindex":700, # show this on which level?
     "anchor":(0,0), # anchor point of the icon
     "moving":False, # This object moves by itself (like mcminos or the ghosts)
     }

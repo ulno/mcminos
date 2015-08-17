@@ -24,6 +24,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
     private int touchDownX;
     private int touchDownY;
     private long lastZoomTime = 0;
+    private Level level = null;
 
     @Override
 	public void create () {
@@ -42,7 +43,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         gameResolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
         GameGraphics.setResolutionAll(gameResolution);
         // Load a level
-        // Level
+        level = new Level("levels/level001.asx");
     }
 
     @Override
@@ -65,19 +66,22 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-        for( int x=0; x<50; x++ )
+        LevelObject.drawAll(batch, gameTime);
+        /*for( int x=0; x<50; x++ )
             for( int y=0; y<50; y++ )
                 Entities.backgrounds_dry_grass.draw(batch, gameTime, x, y, offsetX, offsetY);
         Entities.mcminos_default_front.draw(batch, gameTime, 2, 2, offsetX, offsetY);
         Entities.ghosts_hanky.draw(batch, gameTime, 4, 2, offsetX, offsetY);
         Entities.ghosts_zarathustra.draw(batch, gameTime, 0, 5, offsetX, offsetY);
         Entities.ghosts_panky.draw(batch, gameTime, 5, 5, offsetX, offsetY);
-        Entities.walls_default_04.draw(batch, gameTime, 3, 7, offsetX, offsetY);
-        Entities.walls_default_03.draw(batch, gameTime, 3, 6, offsetX, offsetY);
-        Entities.walls_default_08.draw(batch, gameTime, 4, 6, offsetX, offsetY);
-        Entities.walls_default_00.draw(batch, gameTime, 3, 4, offsetX, offsetY);
-        Entities.pills_power_pill_apple_power_pill_apple.draw(batch, gameTime, 1, 1, offsetX, offsetY);
-        Entities.pills_power_pill_cookie.draw(batch, gameTime, 1, 3, offsetX, offsetY);
+
+        Entities.walls_default_01.draw(batch, gameTime, 10, 10, offsetX, offsetY);
+        Entities.walls_default_02.draw(batch, gameTime, 11, 10, offsetX, offsetY);
+        Entities.walls_default_04.draw(batch, gameTime, 12, 10, offsetX, offsetY);
+        Entities.walls_default_08.draw(batch, gameTime, 13, 10, offsetX, offsetY);
+
+        Entities.pills_power_pill_apple.draw(batch, gameTime, 1, 1, offsetX, offsetY);
+        Entities.pills_power_pill_cookie.draw(batch, gameTime, 1, 3, offsetX, offsetY);*/
         batch.end();
 	}
 
