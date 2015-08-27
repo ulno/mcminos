@@ -277,6 +277,10 @@ public class Level {
                 case 'b':
                     lb.makeBomb();
                     break;
+                case 'r':
+                    lb.makeRock();
+                    break;
+
             }
             linepos ++;
             if (linepos >= width) break;
@@ -342,4 +346,31 @@ public class Level {
         }
         return field[x][y];
     }
+
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getVisibleWidth() {
+        return visibleWidth;
+    }
+
+    public int getVisibleHeight() {
+        return visibleHeight;
+    }
+
+    public boolean getScrollX() {
+        return scrollX;
+    }
+
+    public boolean getScrollY() {
+        return scrollY;
+    }
+
+
 }

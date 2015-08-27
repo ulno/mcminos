@@ -80,6 +80,7 @@ public class LevelBlock {
         LevelObject lo = new LevelObject(x,y,Entities.mcminos_default_front.getzIndex());
         lo.setGfx(Entities.mcminos_default_front);
         movables.add(lo);
+        Game.mcminos=lo;
     }
 
     public void makePill() {
@@ -143,5 +144,11 @@ public class LevelBlock {
         LevelObject lo = new LevelObject(x,y,Entities.extras_bomb_default.getzIndex());
         lo.setGfx(Entities.extras_bomb_default);
         items.add(lo);
+    }
+
+    public void makeRock() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_rock.getzIndex());
+        lo.setGfx(Entities.extras_rock);
+        // TODO: add to right structure
     }
 }

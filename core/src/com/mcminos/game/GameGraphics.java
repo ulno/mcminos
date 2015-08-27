@@ -6,13 +6,9 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * represent on of the graphical
@@ -141,16 +137,15 @@ public class GameGraphics {
     }
 
     /**
-     * Set a specific resolution and extect corresponding tables to speed things up a bit
-     * @param resolution to set
+     * Set a specific resolution and extract corresponding tables to speed things up a bit
      */
-    void setResolution( int resolution ) {
+    void setResolution( ) {
         currentTextures = new Texture[timeList.length]; // think if re-init necessary -> leak?
-        if( ResolutionList.containsKey(resolution)) {
-            currentResolution = resolution;
+        if( ResolutionList.containsKey(Game.resolution)) {
+            currentResolution = Game.resolution;
 
             for (int i = 0; i < timeList.length; i++) {
-                currentTextures[i] = ((ArrayList<Texture>)ResolutionList.get(resolution))
+                currentTextures[i] = ((ArrayList<Texture>)ResolutionList.get(currentResolution))
                         .get(stepList.get(timeList[i]).first);
             }
         }
@@ -167,25 +162,33 @@ public class GameGraphics {
      * Draw with offset to a batch in current resolution
      * Remember, level(0,0) is lower left corner due to libgdx' flipped y-axis
      *
-     * @param batch the batch to draw in
-     * @param gametime current gametime to find correct animation
      * @param levelX x and
      * @param levelY y block coordinates (level elements)
-     * @param offsetX small shift in fraction of 1 (one block) of the level
-     * @param offsetY shift in y
      */
-    void draw( Batch batch, long gametime, int levelX, int levelY, double offsetX, double offsetY) {
-        batch.draw( getTexture(gametime), (int)((levelX + anchorX + offsetX) * currentResolution),
-                (int)((levelY + anchorY + offsetY) * currentResolution) );
+    void draw( double levelX, double levelY) {
+        int gamew = Game.fullWidth;
+        int gameh = Game.fullHeight;
+        int pixelx = (int) Math.round((levelX + anchorX - Game.x) * currentResolution); // TODO: Think, do we have to properly round here?
+        if( Game.getScrollX() )
+            pixelx = (pixelx + Game.fullWidth + currentResolution - 1) % Game.fullWidth - currentResolution + 1;
+        int pixely = (int) Math.round((levelY + anchorY - Game.y) * currentResolution );
+        if( Game.getScrollY() )
+            pixely = (pixely + Game.fullHeight + currentResolution - 1) % Game.fullHeight - currentResolution + 1;
+        // only draw if visible (some part of the rectangle is in visible area)
+        if( (pixelx + currentResolution > 0) && (pixely + currentResolution > 0)
+            && (pixelx < Game.w) && (pixely < Game.h) ) {
+            Game.batch.draw(getTexture(Game.gameTime), pixelx, pixely);
+        }
     }
 
     /**
      * For the static part concerning all graphics
      */
-    static void setResolutionAll( int resolution ) {
+    static void setResolutionAll( ) {
         for (GameGraphics gfx : allGraphics) {
-            gfx.setResolution(resolution);
+            gfx.setResolution();
         }
+        Game.resize();
     }
 
     public int getzIndex() {

@@ -1,30 +1,19 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 
 public class McMinos implements ApplicationListener, GestureListener, InputProcessor {
-	SpriteBatch batch;
-	Entities gfx;
-    long gameTime = 0;
-    private int windowWidth;
-    private int windowHeight;
-    private int gameResolution;
-    private int gameResolutionCounter;
-    private float density;
     private int touchDownX;
     private int touchDownY;
     private long lastZoomTime = 0;
-    private Level level = null;
+    private Game g = Game.getInstance();
 
     @Override
 	public void create () {
@@ -33,40 +22,26 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         im.addProcessor(gd);
         im.addProcessor(this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
-        gfx  = Entities.getInstance();
-        windowWidth = Gdx.graphics.getWidth(); //width of screen
-        windowHeight = Gdx.graphics.getHeight(); //height of screen
-		batch = new SpriteBatch();
-        density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
-        // Basically, based on density, we want to set out default zoomlevel.
-        gameResolutionCounter = 0;
-        gameResolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
-        GameGraphics.setResolutionAll(gameResolution);
-        // Load a level
-        level = new Level("levels/level001.asx");
+        g.init();
+        g.loadLevel("levels/level008.asx");
     }
 
     @Override
     public void resize(int width, int height) {
         //super.resize(width, height);
-        windowWidth = width;
-        windowHeight = height;
-        // Solution from here: http://gamedev.stackexchange.com/questions/68785/why-does-resizing-my-game-window-move-and-distort-my-rendering
-        Matrix4 matrix = new Matrix4();
-        matrix.setToOrtho2D(0, 0, windowWidth, windowHeight);
-        batch.setProjectionMatrix(matrix);
+        g.resize(width,height);
     }
 
     @Override
 	public void render () {
-        double offsetX = -0.2;
-        double offsetY = -0.5;
+        //double offsetX = -0.2;
+        //double offsetY = -0.5;
 
-        gameTime += (long)(Gdx.graphics.getDeltaTime() * 1000);
+        g.updateTime();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-        LevelObject.drawAll(batch, gameTime);
+		g.batch.begin();
+        LevelObject.drawAll();
         /*for( int x=0; x<50; x++ )
             for( int y=0; y<50; y++ )
                 Entities.backgrounds_dry_grass.draw(batch, gameTime, x, y, offsetX, offsetY);
@@ -82,7 +57,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
 
         Entities.pills_power_pill_apple.draw(batch, gameTime, 1, 1, offsetX, offsetY);
         Entities.pills_power_pill_cookie.draw(batch, gameTime, 1, 3, offsetX, offsetY);*/
-        batch.end();
+        g.batch.end();
 	}
 
     @Override
@@ -114,17 +89,17 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
     public boolean keyTyped(char character) {
         switch( character) {
             case '-':
-                gameResolutionCounter ++;
-                if (gameResolutionCounter > Entities.resolutionList.length - 1)
-                    gameResolutionCounter = Entities.resolutionList.length - 1;
+                g.gameResolutionCounter ++;
+                if (g.gameResolutionCounter > Entities.resolutionList.length - 1)
+                    g.gameResolutionCounter = Entities.resolutionList.length - 1;
                 break;
             case '+':
-                gameResolutionCounter --;
-                if (gameResolutionCounter < 0) gameResolutionCounter = 0;
+                g.gameResolutionCounter --;
+                if (g.gameResolutionCounter < 0) g.gameResolutionCounter = 0;
                 break;
         }
-        gameResolution = Entities.resolutionList[gameResolutionCounter];
-        GameGraphics.setResolutionAll( gameResolution );
+        g.resolution = Entities.resolutionList[g.gameResolutionCounter];
+        GameGraphics.setResolutionAll( );
         return false;
     }
 
@@ -194,20 +169,20 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        if( gameTime - lastZoomTime > 500 ) { // ignore some events
-            if( initialDistance > distance + windowHeight/4) {
-                gameResolutionCounter++;
-                if (gameResolutionCounter > Entities.resolutionList.length - 1)
-                    gameResolutionCounter = Entities.resolutionList.length - 1;
-                lastZoomTime = gameTime;
+        if( g.gameTime - lastZoomTime > 500 ) { // ignore some events
+            if( initialDistance > distance + g.h /4) {
+                g.gameResolutionCounter++;
+                if (g.gameResolutionCounter > Entities.resolutionList.length - 1)
+                    g.gameResolutionCounter = Entities.resolutionList.length - 1;
+                lastZoomTime = g.gameTime;
             }
-            else if( initialDistance < distance - windowHeight/4) {
-                gameResolutionCounter--;
-                if (gameResolutionCounter < 0) gameResolutionCounter = 0;
-                lastZoomTime = gameTime;
+            else if( initialDistance < distance - g.h /4) {
+                g.gameResolutionCounter--;
+                if (g.gameResolutionCounter < 0) g.gameResolutionCounter = 0;
+                lastZoomTime = g.gameTime;
             }
-            gameResolution = Entities.resolutionList[gameResolutionCounter];
-            GameGraphics.setResolutionAll( gameResolution );
+            g.resolution = Entities.resolutionList[g.gameResolutionCounter];
+            GameGraphics.setResolutionAll(  );
         }
         return true; // consume event
     }
