@@ -160,23 +160,23 @@ public class GameGraphics {
 
     /**
      * Draw with offset to a batch in current resolution
-     * Remember, level(0,0) is lower left corner due to libgdx' flipped y-axis
+     * Remember, level(0,0) is lower left corner due to libgdx' flipped windowYPos-axis
      *
-     * @param levelX x and
-     * @param levelY y block coordinates (level elements)
+     * @param levelX windowXPos and
+     * @param levelY windowYPos block coordinates (level elements)
      */
     void draw( double levelX, double levelY) {
         int gamew = Game.fullWidth;
         int gameh = Game.fullHeight;
-        int pixelx = (int) Math.round((levelX + anchorX - Game.x) * currentResolution); // TODO: Think, do we have to properly round here?
+        int pixelx = (int) Math.round((levelX + anchorX - Game.windowXPos) * currentResolution); // TODO: Think, do we have to properly round here?
         if( Game.getScrollX() )
             pixelx = (pixelx + Game.fullWidth + currentResolution - 1) % Game.fullWidth - currentResolution + 1;
-        int pixely = (int) Math.round((levelY + anchorY - Game.y) * currentResolution );
+        int pixely = (int) Math.round((levelY + anchorY - Game.windowYPos) * currentResolution );
         if( Game.getScrollY() )
             pixely = (pixely + Game.fullHeight + currentResolution - 1) % Game.fullHeight - currentResolution + 1;
         // only draw if visible (some part of the rectangle is in visible area)
         if( (pixelx + currentResolution > 0) && (pixely + currentResolution > 0)
-            && (pixelx < Game.w) && (pixely < Game.h) ) {
+            && (pixelx < Game.windowPixelWidth) && (pixely < Game.windowPixelHeight) ) {
             Game.batch.draw(getTexture(Game.gameTime), pixelx, pixely);
         }
     }

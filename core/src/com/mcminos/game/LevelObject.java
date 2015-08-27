@@ -13,8 +13,8 @@ import java.util.Collections;
  */
 public class LevelObject implements  Comparable<LevelObject> {
     public final static int maxzIndex=10000;
-    private double x;  // x-Position in level blocks
-    private double y; // y-Position in level blocks
+    private double x;  // windowXPos-Position in level blocks
+    private double y; // windowYPos-Position in level blocks
     private GameGraphics gfx; // actual Graphics for the object
     int zIndex = maxzIndex; // by default it is too high
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
@@ -44,8 +44,8 @@ public class LevelObject implements  Comparable<LevelObject> {
         all.add(index, this);
     }
 
-    /*LevelObject(int x, int y) {
-        LevelObject(x,y,maxzIndex);
+    /*LevelObject(int windowXPos, int windowYPos) {
+        LevelObject(windowXPos,windowYPos,maxzIndex);
     }
 */
     public void setGfx(GameGraphics gfx) {
@@ -68,5 +68,14 @@ public class LevelObject implements  Comparable<LevelObject> {
     @Override
     public int compareTo(LevelObject lo) {
         return  zIndex - lo.zIndex;
+    }
+
+    public void setXY(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public boolean hasGfx() {
+        return gfx != null;
     }
 }

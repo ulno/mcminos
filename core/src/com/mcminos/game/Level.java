@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * The actual level with the ability to read in a new level
  */
 public class Level {
-    public static final int maxDimension = 100; // maximum Level size in x and y
-    private LevelBlock[][] field; // on each level field are usally several objects, first is x, second y
+    public static final int maxDimension = 100; // maximum Level size in windowXPos and windowYPos
+    private LevelBlock[][] field; // on each level field are usally several objects, first is windowXPos, second windowYPos
     private String author = "McMinos";
     private int number = 199;
     private int showNumber = 199;
@@ -238,7 +238,7 @@ public class Level {
      * @param line
      */
     private void parseLevelLine(int levelline, String line) {
-        int destinationLine = height - levelline - 1; // Flip position for inverted y in libgdx
+        int destinationLine = height - levelline - 1; // Flip position for inverted windowYPos in libgdx
         int linepos = 0;
         for(char c : line.toCharArray()) {
             LevelBlock lb = field[linepos][destinationLine];
@@ -288,7 +288,7 @@ public class Level {
     }
 
     /**
-     * Find level block below of the given x,y position.
+     * Find level block below of the given windowXPos,windowYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -303,7 +303,7 @@ public class Level {
     }
 
     /**
-     * Find level block right of the given x,y position.
+     * Find level block right of the given windowXPos,windowYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -318,7 +318,7 @@ public class Level {
     }
 
     /**
-     * Find level block on top of the given x,y position.
+     * Find level block on top of the given windowXPos,windowYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -333,7 +333,7 @@ public class Level {
     }
 
     /**
-     * Find level block left of the given x,y position.
+     * Find level block left of the given windowXPos,windowYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.

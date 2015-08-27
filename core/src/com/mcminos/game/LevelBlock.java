@@ -81,6 +81,7 @@ public class LevelBlock {
         lo.setGfx(Entities.mcminos_default_front);
         movables.add(lo);
         Game.mcminos=lo;
+        Game.destination.setXY(x,y);
     }
 
     public void makePill() {
