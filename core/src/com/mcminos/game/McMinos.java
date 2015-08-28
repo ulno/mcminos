@@ -28,7 +28,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         g.loadLevel("levels/level008.asx");
         mcmMover = new Mover( g.mcminos, 1.0, Entities.mcminos_default_front, Entities.mcminos_default_up,
                 Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
-        Timer.schedule(new Timer.Task() {
+        /*Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 currentFrame++;
@@ -40,7 +40,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
                 sprite.setRegion(textureAtlas.findRegion(currentAtlasKey));
             }
         }
-                , 0, 1 / 100.0f);
+                , 0, 1 / 100.0f);*/
     }
 
     @Override
