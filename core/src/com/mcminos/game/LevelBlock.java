@@ -17,6 +17,41 @@ public class LevelBlock {
     private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions hovering here.
     private HashSet<LevelObject> items=new HashSet<>(); // items on the field
 
+
+    /**
+     * @param lo check if this is in movable or items (connected with this field)
+     * @return
+     */
+    public boolean has( LevelObject lo) {
+        return hasAsMovable(lo) || hasAsItem(lo);
+    }
+
+    public boolean hasAsMovable(LevelObject lo) {
+        return movables.contains(lo);
+    }
+
+    public boolean hasAsItem(LevelObject lo) {
+        return items.contains(lo);
+    }
+
+    /**
+     *
+     * @param lo remove thsi (either if in items or movables)
+     * @return
+     */
+    public boolean remove( LevelObject lo)
+    {
+        return removeMovable(lo) || removeItem(lo);
+    }
+
+    public boolean removeMovable(LevelObject lo) {
+        return movables.remove(lo);
+    }
+
+    public boolean removeItem(LevelObject lo) {
+        return items.remove(lo);
+    }
+
     public LevelBlock(Level level, int x, int y) {
         this.level = level;
         this.x = x;
@@ -81,7 +116,7 @@ public class LevelBlock {
         lo.setGfx(Entities.mcminos_default_front);
         movables.add(lo);
         Game.mcminos=lo;
-        Game.destination.setXY(x,y);
+        Game.destination.setXY(x, y);
     }
 
     public void makePill() {
@@ -151,5 +186,13 @@ public class LevelBlock {
         LevelObject lo = new LevelObject(x,y,Entities.extras_rock.getzIndex());
         lo.setGfx(Entities.extras_rock);
         // TODO: add to right structure
+    }
+
+    public void putMoveable(LevelObject lo) {
+        movables.add(lo);
+    }
+
+    public void putItem(LevelObject lo) {
+        items.add(lo);
     }
 }

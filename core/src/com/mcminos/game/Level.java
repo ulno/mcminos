@@ -288,12 +288,34 @@ public class Level {
     }
 
     /**
+     * Find level block at the given windowXPos,windowYPos position.
+     * @param x
+     * @param y
+     * @return return levelblock or null if there is no one.
+     */
+    public LevelBlock get( int x, int y ) {
+        return field[x][y];
+    }
+
+    /**
+     * Find level block at the given windowXPos,windowYPos position.
+     * Here we are looking at the center of the object.
+     *
+     * @param x
+     * @param y
+     * @return return levelblock or null if there is no one.
+     */
+    public LevelBlock get( double x, double y ) {
+        return get(((int) Math.round(x)), ((int) Math.round(y)));
+    }
+
+    /**
      * Find level block below of the given windowXPos,windowYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getDown( int x, int y) {
+    public LevelBlock getDown( int x, int y ) {
         y--;
         if(y<0) {
             if (scrollY) y += height;

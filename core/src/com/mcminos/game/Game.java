@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Matrix4;
  *
  */
 public class Game {
+    final static double distanceEpsilon = 0.05;
+    final static double baseSpeed = 2.0; // in blocks per second
     static SpriteBatch batch;
     static Entities gfx = null;
     static long gameTime = 0;
@@ -26,7 +28,7 @@ public class Game {
     static private float density;
     public static LevelObject mcminos = null;
     public static LevelObject destination = null;
-    private static Level level;
+    public static Level level;
 
 
     private static Game ourInstance = new Game();
@@ -183,5 +185,17 @@ public class Game {
 
     public static int getWindowPixelHeight() {
         return windowPixelHeight;
+    }
+
+    public static LevelBlock getLevelBlock(double x, double y) {
+        int w = Game.getLevelWidth();
+        int h = Game.getLevelHeight();
+        // TODO: consider taking scrollx and scrolly into account
+        int roundx = (int) Math.round(x), roundy = (int) Math.round(y);
+        if( level.getScrollX() ) roundx = (  roundx + w ) % w;
+        else roundx = Math.min(0,Math.max(w,roundx));
+        if( level.getScrollY() )  roundy = ( roundx  + h ) % h;
+        else roundy = Math.min(0,Math.max(h,roundy));
+        return level.get( roundx, roundy );
     }
 }

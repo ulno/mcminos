@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 
 public class McMinos implements ApplicationListener, GestureListener, InputProcessor {
     private int touchDownX;
     private int touchDownY;
     private long lastZoomTime = 0;
     private Game g = Game.getInstance();
+    private Mover mcmMover;
 
     @Override
 	public void create () {
@@ -24,6 +26,21 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
         g.init();
         g.loadLevel("levels/level008.asx");
+        mcmMover = new Mover( g.mcminos, 1.0, Entities.mcminos_default_front, Entities.mcminos_default_up,
+                Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                currentFrame++;
+                if (currentFrame > 20)
+                    currentFrame = 1;
+
+                // ATTENTION! String.format() doesnt work under GWT for god knows why...
+                currentAtlasKey = String.format("%04d", currentFrame);
+                sprite.setRegion(textureAtlas.findRegion(currentAtlasKey));
+            }
+        }
+                , 0, 1 / 100.0f);
     }
 
     @Override
@@ -45,7 +62,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
             double x = Game.mcminos.getX();
             double xdelta = x - Game.destination.getX();
             double xdiff = Math.abs( xdelta );
-            if (xdiff < 0.02) xdelta = 0.0;
+            if (xdiff < 0.5+Game.distanceEpsilon ) xdelta = 0.0;
             else {
                 if (Game.getScrollX() && xdiff >= Game.getLevelWidth() / 2.0) xdelta = Math.signum(xdelta);
                 else xdelta = -Math.signum(xdelta);
@@ -53,12 +70,26 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
             double y = Game.mcminos.getY();
             double ydelta = y - Game.destination.getY();
             double ydiff = Math.abs( ydelta );
-            if (ydiff < 0.02) ydelta = 0.0;
+            if (ydiff < 0.5+Game.distanceEpsilon ) ydelta = 0.0;
             else {
                 if( Game.getScrollY() && ydiff >= Game.getLevelHeight() / 2.0 ) ydelta = Math.signum(ydelta);
                 else ydelta = - Math.signum(ydelta);
             }
-            double newx = x + xdelta * deltaTime * 2;
+
+            Mover.directions tryDirections[] = {Mover.directions.STOP, Mover.directions.STOP};
+            int dircount = 0;
+            if( ydelta > 0 ) tryDirections[dircount++] = Mover.directions.UP;
+            if( ydelta < 0 ) tryDirections[dircount++] = Mover.directions.DOWN;
+            if( xdelta > 0 ) tryDirections[dircount++] = Mover.directions.RIGHT;
+            if( xdelta < 0 ) tryDirections[dircount++] = Mover.directions.LEFT;
+            if(dircount > 1 && xdiff > ydiff) {
+                Mover.directions tmp = tryDirections[0];
+                tryDirections[0] = tryDirections[1];
+                tryDirections[1] = tmp;
+            }
+            mcmMover.move( tryDirections );
+
+            /*double newx = x + xdelta * deltaTime * 2;
             double newy = y + ydelta * deltaTime * 2;
 
             if(Game.getScrollX()) {
@@ -70,7 +101,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
                 if (newy >= Game.getLevelHeight()) newy -= Game.getLevelHeight();
             }
 
-            Game.mcminos.setXY(newx, newy);
+            Game.mcminos.moveTo(newx, newy); */
         }
 
         g.updateTime();
@@ -163,7 +194,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         else {
             if( y >= Game.windowYPos + Game.getWindowBlockHeight() - 0.5 ) y = Game.windowYPos + Game.getWindowBlockHeight() - 0.5;
         }
-        Game.destination.setXY(x,y);
+        Game.destination.moveTo(x, y);
         // Check if it's on McMinos field
         // if collide, remove destination graphics
         Game.destination.setGfx(Entities.destination);

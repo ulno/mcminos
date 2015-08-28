@@ -18,6 +18,7 @@ public class LevelObject implements  Comparable<LevelObject> {
     private GameGraphics gfx; // actual Graphics for the object
     int zIndex = maxzIndex; // by default it is too high
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
+    private Mover mover = null;
 
     public double getX() {
         return x;
@@ -70,12 +71,36 @@ public class LevelObject implements  Comparable<LevelObject> {
         return  zIndex - lo.zIndex;
     }
 
+    public void moveTo(double x, double y) {
+        LevelBlock from = Game.getLevelBlock( this.x, this.y );
+        // check and eventually fix coordinates
+        if(Game.getScrollX()) {
+            if (x < 0.0) x += Game.getLevelWidth();
+            if (x >= Game.getLevelWidth()) x -= Game.getLevelWidth();
+        }
+        if(Game.getScrollY()) {
+            if (y < 0.0) y += Game.getLevelHeight();
+            if (y >= Game.getLevelHeight()) y -= Game.getLevelHeight();
+        }
+
+        LevelBlock to = Game.getLevelBlock( x, y );
+        // needs to be updeted to check for collisions via associations
+        from.removeMovable(this);
+        setXY(x,y);
+        to.putMoveable(this);
+    }
+
     public void setXY(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
+
     public boolean hasGfx() {
         return gfx != null;
+    }
+
+    public void setMover(Mover mover) {
+        this.mover = mover;
     }
 }
