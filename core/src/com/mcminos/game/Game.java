@@ -278,8 +278,12 @@ public class Game {
             if (xdiff <= virtualBlockResolution >> 1 || xdiff >= getVPixelsLevelWidth() - (virtualBlockResolution >> 1))
                 xdelta = 0;
             else {
-                if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1) xdelta = (int) Math.signum(xdelta);
-                else xdelta = - (int) Math.signum(xdelta);
+                //also allow this in non-scrolled levels
+                //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
+                if ( xdiff >= getVPixelsLevelWidth() >> 1)
+                    xdelta = (int) Math.signum(xdelta);
+                else
+                    xdelta = - (int) Math.signum(xdelta);
             }
             int y = mcminos.getY();
             int ydelta = y - destination.getY(); // delta to center of destination (two centers substract)
@@ -287,8 +291,12 @@ public class Game {
             if (ydiff <= virtualBlockResolution >> 1 || ydiff >= getVPixelsLevelHeight() - (virtualBlockResolution >> 1))
                 ydelta = 0;
             else {
-                if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 ) ydelta = (int) Math.signum(ydelta);
-                else ydelta = - (int) Math.signum(ydelta);
+                // also in non-scroll levels
+                //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
+                if( ydiff >= getVPixelsLevelHeight() >> 1 )
+                    ydelta = (int) Math.signum(ydelta);
+                else
+                    ydelta = - (int) Math.signum(ydelta);
             }
 
             Mover.directions tryDirections[] = {Mover.directions.STOP, Mover.directions.STOP};

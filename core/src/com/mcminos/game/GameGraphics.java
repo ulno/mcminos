@@ -185,6 +185,7 @@ public class GameGraphics {
     void draw( int vPixelX, int vPixelY) {
         int gamew = Game.fullPixelWidth;
         int gameh = Game.fullPixelHeight;
+        // TODO: think how to project the movable corner-pieces
         int pixelx = Util.shiftLeftLogical(vPixelX + anchorX - Game.windowVPixelXPos, currentResolutionBitsLeftShifter); // TODO: Think, do we have to properly round here?
         if( Game.getScrollX() )
             pixelx = (pixelx + gamew + currentResolution - 1) % gamew - currentResolution + 1;

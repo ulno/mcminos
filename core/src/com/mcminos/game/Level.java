@@ -230,7 +230,7 @@ public class Level {
                     lo.setGfx(bggfx);
                 }
             }
-        // update soem related variables
+        // update some related variables
         vPixelsWidth = width << Game.virtualBlockResolutionExponent;
         vPixelsHeight = height << Game.virtualBlockResolutionExponent;
     }
@@ -307,13 +307,16 @@ public class Level {
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getDown( int x, int y ) {
+    public LevelBlock getDown( int x, int y, boolean sy ) {
         y--;
         if(y<0) {
-            if (scrollY) y += height;
+            if (sy) y += height;
             else return null;
         }
         return field[x][y];
+    }
+    public LevelBlock getDown( int x, int y ) {
+        return getDown( x, y, scrollY);
     }
 
     /**
@@ -322,13 +325,16 @@ public class Level {
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getRight( int x, int y) {
+    public LevelBlock getRight( int x, int y, boolean sx) {
         x++;
         if(x>=width) {
-            if (scrollX) x -= width;
+            if (sx) x -= width;
             else return null;
         }
         return field[x][y];
+    }
+    public LevelBlock getRight( int x, int y ) {
+        return getRight( x, y, scrollX);
     }
 
     /**
@@ -337,13 +343,16 @@ public class Level {
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getUp( int x, int y) {
+    public LevelBlock getUp( int x, int y, boolean sy) {
         y++;
         if(y>=height) {
-            if (scrollY) y -= height;
+            if (sy) y -= height;
             else return null;
         }
         return field[x][y];
+    }
+    public LevelBlock getUp( int x, int y ) {
+        return getUp( x, y, scrollY);
     }
 
     /**
@@ -352,13 +361,16 @@ public class Level {
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getLeft( int x, int y) {
+    public LevelBlock getLeft( int x, int y, boolean sx) {
         x--;
         if(x<0) {
-            if (scrollX) x += width;
+            if (sx) x += width;
             else return null;
         }
         return field[x][y];
+    }
+    public LevelBlock getLeft( int x, int y ) {
+        return getLeft( x, y, scrollX);
     }
 
 

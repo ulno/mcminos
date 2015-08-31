@@ -74,16 +74,16 @@ public class LevelObject implements  Comparable<LevelObject> {
     public void moveTo(int x, int y) {
         LevelBlock from = levelBlock;
         // check and eventually fix coordinates
-        if(Game.getScrollX()) {
+        // if(Game.getScrollX()) { allways allow
             if (x < 0.0) x += Game.getLevelWidth() << Game.virtualBlockResolutionExponent;
             if (x >= Game.getLevelWidth() << Game.virtualBlockResolutionExponent)
                 x -= Game.getLevelWidth() << Game.virtualBlockResolutionExponent;
-        }
-        if(Game.getScrollY()) {
+        //}
+        //if(Game.getScrollY()) {
             if (y < 0.0) y += Game.getLevelHeight() << Game.virtualBlockResolutionExponent;
             if (y >= Game.getLevelHeight() << Game.virtualBlockResolutionExponent)
                 y -= Game.getLevelHeight() << Game.virtualBlockResolutionExponent;
-        }
+        //}
 
         LevelBlock to = Game.getLevelBlockFromVPixel(x, y);
         // needs to be updated to check for collisions via associations

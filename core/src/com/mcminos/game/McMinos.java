@@ -119,29 +119,29 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         // map windowVPixelXPos windowVPixelYPos to game coordinates
         // TODO: consider only first button/finger
         int x = Util.shiftLeftLogical(screenX, Game.virtualBlockResolutionExponent - Game.resolutionExponent) + Game.windowVPixelXPos - (Game.virtualBlockResolution >> 1);
-        if(Game.getScrollX()) {
+        //if(Game.getScrollX()) { allways do this
             if ( x >= Game.getVPixelsLevelWidth() )
                 x -= Game.getVPixelsLevelWidth();
             if ( x <= - (Game.virtualBlockResolution >> 1) )
                 x += Game.getVPixelsLevelWidth();
-        }
-        else {
-            if( x >= Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1) )
-                x = Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1);
-        }
+        //}
+        //else {
+        //    if( x >= Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1) )
+        //        x = Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1);
+        //}
 
         int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY, (Game.virtualBlockResolutionExponent - Game.resolutionExponent))
                 + Game.windowVPixelYPos - (Game.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
-        if(Game.getScrollY()) {
+        //if(Game.getScrollY()) { allways
             if( y >= Game.getVPixelsLevelHeight())
                 y -= Game.getVPixelsLevelHeight();
             if( y <= - (Game.virtualBlockResolution >> 1) )
                 y += Game.getLevelHeight();
-        }
-        else {
-            if( y >= Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1) )
-                y = Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1);
-        }
+        //}
+        //else {
+        //    if( y >= Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1) )
+        //        y = Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1);
+        //}
         Game.destination.moveTo(x, y);
         // Check if it's on McMinos field
         // if collide, remove destination graphics

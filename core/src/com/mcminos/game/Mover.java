@@ -88,16 +88,16 @@ public class Mover {
                         nextBlock = Game.getLevelBlock(blockX, blockY);
                         break;
                     case UP:
-                        nextBlock = Game.level.getUp(blockX, blockY);
+                        nextBlock = Game.level.getUp(blockX, blockY, true);
                         break;
                     case RIGHT:
-                        nextBlock = Game.level.getRight(blockX, blockY);
+                        nextBlock = Game.level.getRight(blockX, blockY, true);
                         break;
                     case DOWN:
-                        nextBlock = Game.level.getDown(blockX, blockY);
+                        nextBlock = Game.level.getDown(blockX, blockY, true);
                         break;
                     case LEFT:
-                        nextBlock = Game.level.getLeft(blockX, blockY);
+                        nextBlock = Game.level.getLeft(blockX, blockY, true);
                         break;
                 }
                 if (nextBlock != null && !nextBlock.hasWall()) {
