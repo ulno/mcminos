@@ -39,8 +39,8 @@ config_options={
     "moving":False, # This object moves by itself (like mcminos or the ghosts)
     }
 
-# w equals h, so only one value here
-SIZE_LIST = [128,72,64,48,32,16,8,6]
+# w equals h, so only one value here, to speed up gaming, resolutions must be powers of 2
+SIZE_LIST = [128,64,32,16]
 #SIZE_LIST = [128,64,16] # for testing
 
 #try:

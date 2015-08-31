@@ -8,14 +8,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Timer;
 
 public class McMinos implements ApplicationListener, GestureListener, InputProcessor {
     private int touchDownX;
     private int touchDownY;
     private long lastZoomTime = 0;
     private Game g = Game.getInstance();
-    private Mover mcmMover;
 
     @Override
 	public void create () {
@@ -25,22 +23,8 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         im.addProcessor(this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
         g.init();
-        g.loadLevel("levels/level008.asx");
-        mcmMover = new Mover( g.mcminos, 1.0, Entities.mcminos_default_front, Entities.mcminos_default_up,
-                Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
-        /*Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                currentFrame++;
-                if (currentFrame > 20)
-                    currentFrame = 1;
-
-                // ATTENTION! String.format() doesnt work under GWT for god knows why...
-                currentAtlasKey = String.format("%04d", currentFrame);
-                sprite.setRegion(textureAtlas.findRegion(currentAtlasKey));
-            }
-        }
-                , 0, 1 / 100.0f);*/
+        g.loadLevel("levels/level006.asx");
+        g.startMover();
     }
 
     @Override
@@ -55,63 +39,23 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         //double offsetX = -0.2;
         //double offsetY = -0.5;
 
-        // move everybody
-        // for now only mcminos
-        if(Game.destination.hasGfx()) { // destination is set
-            // check screen distance
-            double x = Game.mcminos.getX();
-            double xdelta = x - Game.destination.getX();
-            double xdiff = Math.abs( xdelta );
-            if (xdiff < 0.5+Game.distanceEpsilon ) xdelta = 0.0;
-            else {
-                if (Game.getScrollX() && xdiff >= Game.getLevelWidth() / 2.0) xdelta = Math.signum(xdelta);
-                else xdelta = -Math.signum(xdelta);
-            }
-            double y = Game.mcminos.getY();
-            double ydelta = y - Game.destination.getY();
-            double ydiff = Math.abs( ydelta );
-            if (ydiff < 0.5+Game.distanceEpsilon ) ydelta = 0.0;
-            else {
-                if( Game.getScrollY() && ydiff >= Game.getLevelHeight() / 2.0 ) ydelta = Math.signum(ydelta);
-                else ydelta = - Math.signum(ydelta);
-            }
+        // moving is not handled in rendering method
+        //
 
-            Mover.directions tryDirections[] = {Mover.directions.STOP, Mover.directions.STOP};
-            int dircount = 0;
-            if( ydelta > 0 ) tryDirections[dircount++] = Mover.directions.UP;
-            if( ydelta < 0 ) tryDirections[dircount++] = Mover.directions.DOWN;
-            if( xdelta > 0 ) tryDirections[dircount++] = Mover.directions.RIGHT;
-            if( xdelta < 0 ) tryDirections[dircount++] = Mover.directions.LEFT;
-            if(dircount > 1 && xdiff > ydiff) {
-                Mover.directions tmp = tryDirections[0];
-                tryDirections[0] = tryDirections[1];
-                tryDirections[1] = tmp;
-            }
-            mcmMover.move( tryDirections );
-
-            /*double newx = x + xdelta * deltaTime * 2;
-            double newy = y + ydelta * deltaTime * 2;
-
-            if(Game.getScrollX()) {
-                if (newx < 0.0) newx += Game.getLevelWidth();
-                if (newx >= Game.getLevelWidth()) newx -= Game.getLevelWidth();
-            }
-            if(Game.getScrollY()) {
-                if (newy < 0.0) newy += Game.getLevelHeight();
-                if (newy >= Game.getLevelHeight()) newy -= Game.getLevelHeight();
-            }
-
-            Game.mcminos.moveTo(newx, newy); */
-        }
-
-        g.updateTime();
+        g.updateTime(); // TODO: so we would actually not need to track time here
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		g.batch.begin();
+        try {
+            Game.updateLock.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         LevelObject.drawAll();
-        /*for( int windowXPos=0; windowXPos<50; windowXPos++ )
-            for( int windowYPos=0; windowYPos<50; windowYPos++ )
-                Entities.backgrounds_dry_grass.draw(batch, gameTime, windowXPos, windowYPos, offsetX, offsetY);
+        Game.updateLock.release();
+        /*for( int windowVPixelXPos=0; windowVPixelXPos<50; windowVPixelXPos++ )
+            for( int windowVPixelYPos=0; windowVPixelYPos<50; windowVPixelYPos++ )
+                Entities.backgrounds_dry_grass.draw(batch, gameTime, windowVPixelXPos, windowVPixelYPos, offsetX, offsetY);
         Entities.mcminos_default_front.draw(batch, gameTime, 2, 2, offsetX, offsetY);
         Entities.ghosts_hanky.draw(batch, gameTime, 4, 2, offsetX, offsetY);
         Entities.ghosts_zarathustra.draw(batch, gameTime, 0, 5, offsetX, offsetY);
@@ -165,40 +109,44 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
                 if (g.gameResolutionCounter < 0) g.gameResolutionCounter = 0;
                 break;
         }
-        g.resolution = Entities.resolutionList[g.gameResolutionCounter];
-        GameGraphics.setResolutionAll( );
+        g.setResolution( Entities.resolutionList[g.gameResolutionCounter] );
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // map windowXPos windowYPos to game coordinates
+        if( pointer>0) return false;
+        // map windowVPixelXPos windowVPixelYPos to game coordinates
         // TODO: consider only first button/finger
-        double x = (double) screenX / Game.resolution + Game.windowXPos - 0.5;
+        int x = Util.shiftLeftLogical(screenX, Game.virtualBlockResolutionExponent - Game.resolutionExponent) + Game.windowVPixelXPos - (Game.virtualBlockResolution >> 1);
         if(Game.getScrollX()) {
-            if (x >= Game.getLevelWidth())
-                x -= Game.getLevelWidth();
-            if (x <= -0.5)
-                x += Game.getLevelWidth();
+            if ( x >= Game.getVPixelsLevelWidth() )
+                x -= Game.getVPixelsLevelWidth();
+            if ( x <= - (Game.virtualBlockResolution >> 1) )
+                x += Game.getVPixelsLevelWidth();
         }
         else {
-            if( x >= Game.windowXPos + Game.getWindowBlockWidth() - 0.5 ) x = Game.windowXPos + Game.getWindowBlockWidth() - 0.5;
+            if( x >= Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1) )
+                x = Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1);
         }
-        double y = (double) (Gdx.graphics.getHeight() - screenY) / Game.resolution + Game.windowYPos - 0.5; // flip windowYPos-axis
+
+        int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY, (Game.virtualBlockResolutionExponent - Game.resolutionExponent))
+                + Game.windowVPixelYPos - (Game.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
         if(Game.getScrollY()) {
-            if(y>=Game.getLevelHeight())
-                y -= Game.getLevelHeight();
-            if(y<=-0.5)
+            if( y >= Game.getVPixelsLevelHeight())
+                y -= Game.getVPixelsLevelHeight();
+            if( y <= - (Game.virtualBlockResolution >> 1) )
                 y += Game.getLevelHeight();
         }
         else {
-            if( y >= Game.windowYPos + Game.getWindowBlockHeight() - 0.5 ) y = Game.windowYPos + Game.getWindowBlockHeight() - 0.5;
+            if( y >= Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1) )
+                y = Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1);
         }
         Game.destination.moveTo(x, y);
         // Check if it's on McMinos field
         // if collide, remove destination graphics
         Game.destination.setGfx(Entities.destination);
-        return true;
+        return false;
     }
 
     @Override
@@ -265,20 +213,18 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
     public boolean zoom(float initialDistance, float distance) {
         if( g.gameTime - lastZoomTime > 500 ) { // ignore some events
             if( initialDistance > distance + g.windowPixelHeight /4) {
-                g.gameResolutionCounter++;
-                if (g.gameResolutionCounter > Entities.resolutionList.length - 1)
-                    g.gameResolutionCounter = Entities.resolutionList.length - 1;
-                lastZoomTime = g.gameTime;
+                Game.gameResolutionCounter++;
+                if (Game.gameResolutionCounter > Entities.resolutionList.length - 1)
+                    Game.gameResolutionCounter = Entities.resolutionList.length - 1;
             }
             else if( initialDistance < distance - g.windowPixelHeight /4) {
-                g.gameResolutionCounter--;
-                if (g.gameResolutionCounter < 0) g.gameResolutionCounter = 0;
-                lastZoomTime = g.gameTime;
+                Game.gameResolutionCounter--;
+                if (Game.gameResolutionCounter < 0) g.gameResolutionCounter = 0;
             }
-            g.resolution = Entities.resolutionList[g.gameResolutionCounter];
-            GameGraphics.setResolutionAll(  );
+            g.setResolution(Entities.resolutionList[Game.gameResolutionCounter]);
+            lastZoomTime = g.gameTime;
         }
-        return true; // consume event
+        return false; // consume event
     }
 
     @Override

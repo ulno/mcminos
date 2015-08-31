@@ -20,24 +20,31 @@ public class GameGraphics {
     private int anchorX, anchorY;
     private int zIndex;
     private boolean moving;
+    private int blockWidth, blockHeight;
+    private int totalAnimationLength;
+    private int currentResolution = 0;
+    /**
+     * Shift how many bits to left to achieve the actual game resolution.
+     * If virtualBlockResolution is 128 and actual resolution is 64 pixel per block,
+     * this needs to be -1, because 128 << -1 = 64 (negative shifting shifts in other direction)
+     */
+    private int currentResolutionBitsLeftShifter = 0;
 
     /**
      * @return Width of graphics in level blocks
      */
     public int getWidth() {
-        return sizeX;
+        return blockWidth;
     }
 
     /**
      * @return Height of graphics in level blocks
      */
     public int getHeight() {
-        return sizeY;
+        return blockHeight;
     }
 
-    private int sizeX, sizeY;
-    private int totalAnimationLength;
-    private int currentResolution = 0;
+
     // Remember all graphics for game
     static private ArrayList<GameGraphics> allGraphics = new ArrayList<GameGraphics>();
 
@@ -53,15 +60,24 @@ public class GameGraphics {
     // current, resolution specific Textures mapped to gametime
     private Texture[] currentTextures = null;
 
-
-    GameGraphics(char symbol, int anchorX, int anchorY, int zIndex, boolean moving, int sizeX, int sizeY) {
+    /**
+     * Create a new GameGraphics
+     * @param symbol // symbol in old Mcminos ascii representation
+     * @param anchorX // center block point x (will be multiplied by virtualBlockResolution)
+     * @param anchorY // center block point y (will be multiplied by virtualBlockResolution)
+     * @param zIndex // for drawing order (layer)
+     * @param moving // is this object static or does it move
+     * @param blockWidth; // Width of graphics in blocks
+     * @param blockHeight; // Height of graphics in blocks
+     */
+    GameGraphics(char symbol, int anchorX, int anchorY, int zIndex, boolean moving, int blockWidth, int blockHeight) {
         this.symbol = symbol;
-        this.anchorX = anchorX;
-        this.anchorY = anchorY;
+        this.anchorX = anchorX << Game.virtualBlockResolutionExponent;
+        this.anchorY = anchorY << Game.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
         this.moving = moving;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+        this.blockWidth = blockWidth;
+        this.blockHeight = blockHeight;
         totalAnimationLength = 0;
         allGraphics.add(this);
     }
@@ -143,6 +159,7 @@ public class GameGraphics {
         currentTextures = new Texture[timeList.length]; // think if re-init necessary -> leak?
         if( ResolutionList.containsKey(Game.resolution)) {
             currentResolution = Game.resolution;
+            currentResolutionBitsLeftShifter = Util.log2binary(currentResolution) - Game.virtualBlockResolutionExponent;
 
             for (int i = 0; i < timeList.length; i++) {
                 currentTextures[i] = ((ArrayList<Texture>)ResolutionList.get(currentResolution))
@@ -160,20 +177,20 @@ public class GameGraphics {
 
     /**
      * Draw with offset to a batch in current resolution
-     * Remember, level(0,0) is lower left corner due to libgdx' flipped windowYPos-axis
+     * Remember, level(0,0) is lower left corner due to libgdx' flipped windowVPixelYPos-axis
      *
-     * @param levelX windowXPos and
-     * @param levelY windowYPos block coordinates (level elements)
+     * @param vPixelX virtualPixel x-coordinate (level block * virtualPixelResolution)
+     * @param vPixelY virtualPixel y-coordinate (level block * virtualPixelResolution)
      */
-    void draw( double levelX, double levelY) {
-        int gamew = Game.fullWidth;
-        int gameh = Game.fullHeight;
-        int pixelx = (int) Math.round((levelX + anchorX - Game.windowXPos) * currentResolution); // TODO: Think, do we have to properly round here?
+    void draw( int vPixelX, int vPixelY) {
+        int gamew = Game.fullPixelWidth;
+        int gameh = Game.fullPixelHeight;
+        int pixelx = Util.shiftLeftLogical(vPixelX + anchorX - Game.windowVPixelXPos, currentResolutionBitsLeftShifter); // TODO: Think, do we have to properly round here?
         if( Game.getScrollX() )
-            pixelx = (pixelx + Game.fullWidth + currentResolution - 1) % Game.fullWidth - currentResolution + 1;
-        int pixely = (int) Math.round((levelY + anchorY - Game.windowYPos) * currentResolution );
+            pixelx = (pixelx + gamew + currentResolution - 1) % gamew - currentResolution + 1;
+        int pixely = Util.shiftLeftLogical(vPixelY + anchorY - Game.windowVPixelYPos, currentResolutionBitsLeftShifter);
         if( Game.getScrollY() )
-            pixely = (pixely + Game.fullHeight + currentResolution - 1) % Game.fullHeight - currentResolution + 1;
+            pixely = (pixely + gameh + currentResolution - 1) % gameh - currentResolution + 1;
         // only draw if visible (some part of the rectangle is in visible area)
         if( (pixelx + currentResolution > 0) && (pixely + currentResolution > 0)
             && (pixelx < Game.windowPixelWidth) && (pixely < Game.windowPixelHeight) ) {

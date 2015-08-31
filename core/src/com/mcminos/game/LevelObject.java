@@ -13,18 +13,18 @@ import java.util.Collections;
  */
 public class LevelObject implements  Comparable<LevelObject> {
     public final static int maxzIndex=10000;
-    private double x;  // windowXPos-Position in level blocks
-    private double y; // windowYPos-Position in level blocks
+    private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
+    private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
     private GameGraphics gfx; // actual Graphics for the object
-    int zIndex = maxzIndex; // by default it is too high
+    private int zIndex = maxzIndex; // by default it is too high
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
     private Mover mover = null;
+    private LevelBlock levelBlock = null; // currently associated LevelBlock
 
-    public double getX() {
+    public int getX() {
         return x;
     }
-
-    public double getY() {
+    public int getY() {
         return y;
     }
 
@@ -34,9 +34,9 @@ public class LevelObject implements  Comparable<LevelObject> {
      * @param y in block coordinates (movable objects can have fraction as coordinate)
      * @param zIndex need to know zIndex to allow correct drawing order later
      */
-    LevelObject(double x, double y, int zIndex) {
-        this.x = x;
-        this.y = y;
+    LevelObject(int x, int y, int zIndex) {
+        this.x = x << Game.virtualBlockResolutionExponent;
+        this.y = y << Game.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
         // add to static list
         int index = Collections.binarySearch(all, this);
@@ -45,8 +45,8 @@ public class LevelObject implements  Comparable<LevelObject> {
         all.add(index, this);
     }
 
-    /*LevelObject(int windowXPos, int windowYPos) {
-        LevelObject(windowXPos,windowYPos,maxzIndex);
+    /*LevelObject(int windowVPixelXPos, int windowVPixelYPos) {
+        LevelObject(windowVPixelXPos,windowVPixelYPos,maxzIndex);
     }
 */
     public void setGfx(GameGraphics gfx) {
@@ -71,28 +71,38 @@ public class LevelObject implements  Comparable<LevelObject> {
         return  zIndex - lo.zIndex;
     }
 
-    public void moveTo(double x, double y) {
-        LevelBlock from = Game.getLevelBlock( this.x, this.y );
+    public void moveTo(int x, int y) {
+        LevelBlock from = levelBlock;
         // check and eventually fix coordinates
         if(Game.getScrollX()) {
-            if (x < 0.0) x += Game.getLevelWidth();
-            if (x >= Game.getLevelWidth()) x -= Game.getLevelWidth();
+            if (x < 0.0) x += Game.getLevelWidth() << Game.virtualBlockResolutionExponent;
+            if (x >= Game.getLevelWidth() << Game.virtualBlockResolutionExponent)
+                x -= Game.getLevelWidth() << Game.virtualBlockResolutionExponent;
         }
         if(Game.getScrollY()) {
-            if (y < 0.0) y += Game.getLevelHeight();
-            if (y >= Game.getLevelHeight()) y -= Game.getLevelHeight();
+            if (y < 0.0) y += Game.getLevelHeight() << Game.virtualBlockResolutionExponent;
+            if (y >= Game.getLevelHeight() << Game.virtualBlockResolutionExponent)
+                y -= Game.getLevelHeight() << Game.virtualBlockResolutionExponent;
         }
 
-        LevelBlock to = Game.getLevelBlock( x, y );
-        // needs to be updeted to check for collisions via associations
-        from.removeMovable(this);
+        LevelBlock to = Game.getLevelBlockFromVPixel(x, y);
+        // needs to be updated to check for collisions via associations
+        if(from != null)
+            from.removeMovable(this);
         setXY(x,y);
         to.putMoveable(this);
     }
 
-    public void setXY(double x, double y) {
+    public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     * assign a matching LevelBlock based on th ecurrent coordinates
+     */
+    public void assignLevelBlock() {
+        levelBlock = Game.getLevelBlockFromVPixel(x, y);
     }
 
 

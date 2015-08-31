@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 /**
  * Created by ulno on 17.08.15.
@@ -13,14 +12,16 @@ import java.util.ArrayList;
  * The actual level with the ability to read in a new level
  */
 public class Level {
-    public static final int maxDimension = 100; // maximum Level size in windowXPos and windowYPos
-    private LevelBlock[][] field; // on each level field are usally several objects, first is windowXPos, second windowYPos
+    public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
+    private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
     private String author = "McMinos";
     private int number = 199;
     private int showNumber = 199;
     private String accessCode = "";
     private int width = 20;
+    private int vPixelsWidth = 0;
     private int height = 20;
+    private int vPixelsHeight = 0;
     private int visibleWidth = 20;
     private int visibleHeight = 20;
     private boolean scrollX = false;
@@ -229,6 +230,9 @@ public class Level {
                     lo.setGfx(bggfx);
                 }
             }
+        // update soem related variables
+        vPixelsWidth = width << Game.virtualBlockResolutionExponent;
+        vPixelsHeight = height << Game.virtualBlockResolutionExponent;
     }
 
     /**
@@ -238,7 +242,7 @@ public class Level {
      * @param line
      */
     private void parseLevelLine(int levelline, String line) {
-        int destinationLine = height - levelline - 1; // Flip position for inverted windowYPos in libgdx
+        int destinationLine = height - levelline - 1; // Flip position for inverted windowVPixelYPos in libgdx
         int linepos = 0;
         for(char c : line.toCharArray()) {
             LevelBlock lb = field[linepos][destinationLine];
@@ -288,7 +292,7 @@ public class Level {
     }
 
     /**
-     * Find level block at the given windowXPos,windowYPos position.
+     * Find level block at the given x,y position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -298,19 +302,7 @@ public class Level {
     }
 
     /**
-     * Find level block at the given windowXPos,windowYPos position.
-     * Here we are looking at the center of the object.
-     *
-     * @param x
-     * @param y
-     * @return return levelblock or null if there is no one.
-     */
-    public LevelBlock get( double x, double y ) {
-        return get(((int) Math.round(x)), ((int) Math.round(y)));
-    }
-
-    /**
-     * Find level block below of the given windowXPos,windowYPos position.
+     * Find level block below of the given windowVPixelXPos,windowVPixelYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -325,7 +317,7 @@ public class Level {
     }
 
     /**
-     * Find level block right of the given windowXPos,windowYPos position.
+     * Find level block right of the given windowVPixelXPos,windowVPixelYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -340,7 +332,7 @@ public class Level {
     }
 
     /**
-     * Find level block on top of the given windowXPos,windowYPos position.
+     * Find level block on top of the given windowVPixelXPos,windowVPixelYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -355,7 +347,7 @@ public class Level {
     }
 
     /**
-     * Find level block left of the given windowXPos,windowYPos position.
+     * Find level block left of the given windowVPixelXPos,windowVPixelYPos position.
      * @param x
      * @param y
      * @return return levelblock or null if there is no one.
@@ -370,12 +362,12 @@ public class Level {
     }
 
 
-    public int getWidth() {
-        return width;
+    public int getVPixelsWidth() {
+        return vPixelsWidth;
     }
 
-    public int getHeight() {
-        return height;
+    public int getVPixelsHeight() {
+        return vPixelsHeight;
     }
 
     public int getVisibleWidth() {
@@ -394,5 +386,11 @@ public class Level {
         return scrollY;
     }
 
+    public int getWidth() {
+        return width;
+    }
 
+    public int getHeight() {
+        return height;
+    }
 }

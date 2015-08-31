@@ -17,10 +17,14 @@ public class Mover {
     private directions nextDirections[] = {directions.STOP};
     private LevelObject levelObject; // corresponding LevelObject
     private LevelBlock currentLevelBlock; // current associated LevelBlock
-    private double currentSpeed = 1.0;
+    private int currentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
 
-    public void setCurrentSpeed(double currentSpeed) {
-        this.currentSpeed = currentSpeed;
+    /**
+     *
+     * @param blocksPerSecond move how many blocks per second?
+     */
+    public void setCurrentSpeed(double blocksPerSecond) {
+        this.currentPixelSpeed = (int) Math.round(blocksPerSecond * Game.baseSpeed * Game.virtualBlockResolution / Game.timeResolution);
     }
 
     /**
@@ -35,14 +39,14 @@ public class Mover {
      */
     public void init( LevelObject lo, double speed, GameGraphics still, GameGraphics up, GameGraphics right, GameGraphics down, GameGraphics left) {
         levelObject = lo;
-        this.currentSpeed = speed;
+        setCurrentSpeed( speed );
         this.gfxStill = still;
         this.gfxUp = up;
         this.gfxRight = right;
         this.gfxDown = down;
         this.gfxLeft = left;
         lo.setMover(this);
-        this.currentLevelBlock = Game.getLevelBlock(lo.getX(), lo.getY());
+        this.currentLevelBlock = Game.getLevelBlockFromVPixel(lo.getX(), lo.getY());
     }
 
     /**
@@ -65,42 +69,15 @@ public class Mover {
     }
 
     public void move() {
-        double x = levelObject.getX();
-        double oldx = x;
-        double y = levelObject.getY();
-        double oldy = y;
-        double distance = Math.min(0.5, Gdx.graphics.getDeltaTime() * Game.baseSpeed * currentSpeed ); // max half block
+        int x = levelObject.getX();
+        int blockX = x >> Game.virtualBlockResolutionExponent;
+        int y = levelObject.getY();
+        int blockY = y >> Game.virtualBlockResolutionExponent;
+        // old float calculation        double distance = Math.min(0.5, Gdx.graphics.getDeltaTime() * Game.baseSpeed * currentSpeed ); // max half block
+        int distance = currentPixelSpeed;
 
-        // TODO: make decision to chose new direction first
-
-        // move always until totally in a square level block, before a new direction is possible
-        switch(currentDirection) {
-            case STOP:
-                levelObject.setGfx( gfxStill );
-                break;
-            case UP:
-                y += distance;
-                levelObject.setGfx( gfxUp );
-                break;
-            case RIGHT:
-                x += distance;
-                levelObject.setGfx( gfxRight );
-                break;
-            case DOWN:
-                y -= distance;
-                levelObject.setGfx( gfxDown );
-                break;
-            case LEFT:
-                x -= distance;
-                levelObject.setGfx( gfxLeft );
-                break;
-        }
-        // check if new direction can be set,
-        // for this to be true, distance must have passed a block-boundary or current direction has to be STOP
-        int xi = (int) x;
-        int yi = (int) y;
-        if(currentDirection == directions.STOP || (Math.abs(xi -(int)oldx) + Math.abs(yi - (int)oldy)) >= 1) {
-            //if( Math.abs(x%1) < Game.distanceEpsilon && Math.abs(y%1) < Game.distanceEpsilon )
+        // allow direction change when on block-boundaries
+        if (x % Game.virtualBlockResolution == 0 && y % Game.virtualBlockResolution == 0) {
             LevelBlock nextBlock = null;
 
             // check all direction choices
@@ -108,25 +85,19 @@ public class Mover {
                 // check if the new direction is actually not blocked
                 switch (dir) {
                     case STOP: // no movement so no problem
-                        nextBlock = Game.getLevelBlock(x, y);
-                        //x = xi; // when we stop, forget fraction
-                        //y = yi;
+                        nextBlock = Game.getLevelBlock(blockX, blockY);
                         break;
                     case UP:
-                        nextBlock = Game.level.getUp(xi, yi);
-                        y += Math.abs(xi-x); // convert fractions in motion
+                        nextBlock = Game.level.getUp(blockX, blockY);
                         break;
                     case RIGHT:
-                        nextBlock = Game.level.getRight(xi, yi);
-                        x += Math.abs(yi-y);
+                        nextBlock = Game.level.getRight(blockX, blockY);
                         break;
                     case DOWN:
-                        nextBlock = Game.level.getDown(xi, yi);
-                        y -= Math.abs(xi - x); // convert fractions in motion
+                        nextBlock = Game.level.getDown(blockX, blockY);
                         break;
                     case LEFT:
-                        nextBlock = Game.level.getLeft(xi, yi);
-                        x += Math.abs(yi - y);
+                        nextBlock = Game.level.getLeft(blockX, blockY);
                         break;
                 }
                 if (nextBlock != null && !nextBlock.hasWall()) {
@@ -134,12 +105,32 @@ public class Mover {
                     break; // stop loop
                 } else {
                     currentDirection = directions.STOP;
-                    //x = xi; // when we stop, forget fraction
-                    //y = yi;
                 }
             }
         }
-        levelObject.moveTo( x, y ); // finally move to new position
+        // do transformations for new direction
+        switch (currentDirection) {
+            case STOP:
+                levelObject.setGfx(gfxStill);
+                break;
+            case UP:
+                y += distance;
+                levelObject.setGfx(gfxUp);
+                break;
+            case RIGHT:
+                x += distance;
+                levelObject.setGfx(gfxRight);
+                break;
+            case DOWN:
+                y -= distance;
+                levelObject.setGfx(gfxDown);
+                break;
+            case LEFT:
+                x -= distance;
+                levelObject.setGfx(gfxLeft);
+                break;
+        }
+        levelObject.moveTo(x, y); // finally move to new position
     }
 
 

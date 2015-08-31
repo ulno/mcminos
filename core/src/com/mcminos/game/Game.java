@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Timer;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * Created by ulno on 27.08.15.
  *
@@ -39,6 +41,7 @@ public class Game {
     public static LevelObject destination = null;
     public static Level level;
     private Mover mcmMover;
+    static Semaphore updateLock = new Semaphore(1);
 
     public static void setResolution(int resolution) {
         Game.resolution = resolution;
@@ -88,7 +91,7 @@ public class Game {
             if (scroll) { // the level scrolls in this direction
                 if (Math.abs(delta) > totalBlocks << (virtualBlockResolutionExponent - 1))
                     delta = (int) Math.signum(delta) * (Math.abs(delta) - totalVPixels);
-                delta /= 20; // do it a little slowly depending on distance TODO: make constant dependent on other constants
+                delta >>= virtualBlockResolutionExponent - 2; // do it a little slowly depending on distance TODO: make constant dependent on other constants
                 inputPos += delta;
                 if (inputPos < 0) inputPos += totalVPixels;
                 else {
@@ -107,7 +110,8 @@ public class Game {
             }
         }
         else {
-            if( ! scroll )// not scroll and not too small -> make sure level aligned
+            // TODO: reconsider scrolling policy
+            // if( ! scroll )// not scroll and not too small -> make sure level aligned
                 inputPos = 0;
         }
         return inputPos;
@@ -237,7 +241,7 @@ public class Game {
     }
 
     /**
-     * Start the moving thread whcih wil manage all movement of objects in the game
+     * Start the moving thread which wil manage all movement of objects in the game
      */
     public void startMover() {
         mcmMover = new Mover( mcminos, 1.0, Entities.mcminos_default_front, Entities.mcminos_default_up,
@@ -260,6 +264,11 @@ public class Game {
      */
     private void doMovement() {
         // move everybody
+        try { // neds to be synchronized against drawing
+            Game.updateLock.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // for now only mcminos
         if(destination.hasGfx()) { // destination is set
             // check screen distance
@@ -307,9 +316,9 @@ public class Game {
             }
 
             mcminos.moveTo(newx, newy); */
-            mcmMover.move( tryDirections );
+            mcmMover.move(tryDirections);
         }
 
-
+        Game.updateLock.release();
     }
 }
