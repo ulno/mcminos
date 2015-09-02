@@ -196,11 +196,12 @@ public class GameGraphics {
 
         // first look at x
         int vTotalWidth = blockWidth << Game.virtualBlockResolutionExponent; // virtual size of graphics
+        int totalWidth = blockWidth << Game.resolutionExponent; // physical size of graphics
         int vx0w=vTotalWidth, vx1w=0;
         int vlw = Game.getVPixelsLevelWidth(); // virtual levelwidth
         vPixelX = (vPixelX - anchorX + vlw) % vlw; // make sure it's not negative and apply anchor
         int vx1 = (vlw - anchorX) % vlw;
-        if( vTotalWidth > vlw ) { // if it's outside the level bounds
+        if( vPixelX + vTotalWidth > vlw ) { // if it's outside the level bounds
             // vx1 = 0; will always be 0
             vx0w = vlw - vPixelX;
             vx1w = vTotalWidth - vx0w;
@@ -209,8 +210,8 @@ public class GameGraphics {
         int x0 = Util.shiftLeftLogical(vPixelX - Game.windowVPixelXPos, currentResolutionBitsLeftShifter);
         int x1 = Util.shiftLeftLogical(vx1 - Game.windowVPixelXPos, currentResolutionBitsLeftShifter);
         // always wrap around if( Game.getScrollX() ) {
-            x0 = (x0 + gamew + currentResolution - 1) % gamew - currentResolution + 1;
-            x1 = (x1 + gamew + currentResolution - 1) % gamew - currentResolution + 1;
+            x0 = (x0 + gamew + totalWidth - 1) % gamew - totalWidth + 1;
+            x1 = (x1 + gamew + totalWidth - 1) % gamew - totalWidth + 1;
         //}
         // get physical widths
         int x0w = Util.shiftLeftLogical(vx0w, currentResolutionBitsLeftShifter);
@@ -218,21 +219,22 @@ public class GameGraphics {
 
         // do same for y
         int vTotalHeight = blockHeight << Game.virtualBlockResolutionExponent; // virtual size of graphics
+        int totalHeight = blockHeight << Game.resolutionExponent; // physical size of graphics
         int vy0h = vTotalHeight, vy1h=0;
         int vlh = Game.getVPixelsLevelHeight(); // virtual levelwidth
         vPixelY = (vPixelY - anchorY + vlh) % vlh; // make sure it's not negative and apply anchor
         int vy1 = (vlh - anchorY) % vlh;
-        if( Game.virtualBlockResolution > vlh ) { // if it's outside the level bounds
+        if( vPixelY + vTotalHeight > vlh ) { // if it's outside the level bounds
             // vy1 = 0; will always be 0
             vy0h = vlh - vPixelY;
-            vy1h = vTotalWidth - vy0h;
+            vy1h = vTotalHeight - vy0h;
         }
         // get physical coordinates
         int y0 = Util.shiftLeftLogical(vPixelY  - Game.windowVPixelYPos, currentResolutionBitsLeftShifter);
         int y1 = Util.shiftLeftLogical(vy1  - Game.windowVPixelYPos, currentResolutionBitsLeftShifter);
         // if( Game.getScrollY() ) { // allways wrap around
-        y0 = (y0 + gameh + currentResolution - 1) % gameh - currentResolution + 1;
-        y1 = (y1 + gameh + currentResolution - 1) % gameh - currentResolution + 1;
+        y0 = (y0 + gameh + totalHeight -1) % gameh  - totalHeight + 1;
+        y1 = (y1 + gameh + totalHeight -1) % gameh  - totalHeight + 1;
         // }
         // get physical heights
         int y0h = Util.shiftLeftLogical(vy0h, currentResolutionBitsLeftShifter);
@@ -241,24 +243,20 @@ public class GameGraphics {
         // draw different parts to physical coordinates
         // only draw if visible (some part of the rectangle is in visible area)
         Texture t = getTexture(Game.gameTime);
-        if( (x0 + x0w > 0) && (y0 + y0h > 0)
-            && (x0 < Game.windowPixelWidth) && (y0 < Game.windowPixelHeight) ) {
+        if(  (x0 < Game.windowPixelWidth) && (y0 < Game.windowPixelHeight) ) {
             //Game.batch.draw(getTexture(Game.gameTime), x0, y0);
-            Game.batch.draw(t, x0, y0, 0, 0, x0w, y0h);
+            Game.batch.draw(t, x0, y0, 0, totalHeight - y0h, x0w, y0h);
         }
         if( (vx1w > 0)
-                && (x1 + x1w > 0) && (y0 + y0h > 0)
                 && (x1 < Game.windowPixelWidth) && (y0 < Game.windowPixelHeight)) {
-            Game.batch.draw(t, x1, y0, x0w, 0, x1w, y0h);
+            Game.batch.draw(t, x1, y0, x0w, totalHeight - y0h, x1w, y0h);
         }
-        if( (vy1h > 0)
-                && (x0 + x0w > 0) && (y1 + y1h > 0)
-                && (x0 < Game.windowPixelWidth) && (y1 < Game.windowPixelHeight)) {
-            Game.batch.draw(t, x0, y1, 0, y0h, x0w, y1h);
+        if(vy1h > 0) {
+            if( (x0 < Game.windowPixelWidth) && (y1 < Game.windowPixelHeight)) {
+                Game.batch.draw(t, x0, y1, 0, 0, x0w, y1h); }
             if( (vx1w > 0)
-                    && (x1 + x1w > 0) && (y1 + y1h > 0)
                     && (x1 < Game.windowPixelWidth) && (y1 < Game.windowPixelHeight)) {
-                Game.batch.draw(t, x1, y1, x0w, y0h, x1w, y1h);
+                Game.batch.draw(t, x1, y1, x0w, 0, x1w, y1h);
             }
         }
 

@@ -22,7 +22,7 @@ public class Level {
     private int vPixelsWidth = 0;
     private int height = 20;
     private int vPixelsHeight = 0;
-    private int visibleWidth = 20;
+    private int VisibleWidth = 20;
     private int visibleHeight = 20;
     private boolean scrollX = false;
     private boolean scrollY = false;
@@ -83,7 +83,7 @@ public class Level {
                             case "ACCCD": accessCode = strList[1]; break;
                             case "LWID": width = Integer.parseInt(strList[1]); break;
                             case "LHI": height = Integer.parseInt(strList[1]); break;
-                            case "VWID": visibleWidth = Integer.parseInt(strList[1]); break;
+                            case "VWID": VisibleWidth = Integer.parseInt(strList[1]); break;
                             case "VHI": visibleHeight = Integer.parseInt(strList[1]); break;
                             case "SCROLLX": scrollX = "1".equals(strList[1]); break;
                             case "SCROLLY": scrollY = "1".equals(strList[1]); break;
@@ -383,7 +383,7 @@ public class Level {
     }
 
     public int getVisibleWidth() {
-        return visibleWidth;
+        return VisibleWidth;
     }
 
     public int getVisibleHeight() {

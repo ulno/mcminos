@@ -137,14 +137,14 @@ public class Game {
         {
             if (windowVPixelWidth > level.getVisibleWidth() << virtualBlockResolutionExponent) {
                 windowVPixelWidth = level.getVisibleWidth() << virtualBlockResolutionExponent;
-                windowPixelWidth = level.getVisibleWidth() << virtualBlockResolutionExponent;
+                windowPixelWidth = level.getVisibleWidth() << resolutionExponent;
             }
             if (windowVPixelHeight > level.getVisibleHeight() << virtualBlockResolutionExponent) {
                 windowVPixelHeight = level.getVisibleHeight() << virtualBlockResolutionExponent;
-                windowPixelHeight = windowVPixelHeight << virtualBlockResolutionExponent;
+                windowPixelHeight = level.getVisibleHeight() << resolutionExponent;
             }
-            Game.fullPixelWidth = Game.getLevelWidth() * Game.resolution;
-            Game.fullPixelHeight = Game.getLevelHeight() * Game.resolution;
+            Game.fullPixelWidth = Game.getLevelWidth() << resolutionExponent;
+            Game.fullPixelHeight = Game.getLevelHeight() << resolutionExponent;
         }
     }
 
