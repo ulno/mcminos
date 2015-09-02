@@ -244,7 +244,7 @@ public class Game {
      * Start the moving thread which wil manage all movement of objects in the game
      */
     public void startMover() {
-        mcmMover = new Mover( mcminos, 1.0, Entities.mcminos_default_front, Entities.mcminos_default_up,
+        mcmMover = new Mover( mcminos, 1.0, true, Entities.mcminos_default_front, Entities.mcminos_default_up,
                 Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
 
         Timer.schedule(new Timer.Task() {

@@ -18,6 +18,8 @@ public class Mover {
     private LevelObject levelObject; // corresponding LevelObject
     private LevelBlock currentLevelBlock; // current associated LevelBlock
     private int currentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
+    private boolean canMoveRocks = false; // This moveable can move rocks (McMinos for example)
+    private boolean canPassWalls = false; // Can this move through walls?
 
     /**
      *
@@ -37,7 +39,7 @@ public class Mover {
      * @param down graphics for moving down
      * @param left  graphics for moving left
      */
-    public void init( LevelObject lo, double speed, GameGraphics still, GameGraphics up, GameGraphics right, GameGraphics down, GameGraphics left) {
+    public void init( LevelObject lo, double speed, boolean canMoveRocks, GameGraphics still, GameGraphics up, GameGraphics right, GameGraphics down, GameGraphics left) {
         levelObject = lo;
         setCurrentSpeed( speed );
         this.gfxStill = still;
@@ -47,6 +49,7 @@ public class Mover {
         this.gfxLeft = left;
         lo.setMover(this);
         this.currentLevelBlock = Game.getLevelBlockFromVPixel(lo.getX(), lo.getY());
+        this.canMoveRocks = canMoveRocks;
     }
 
     /**
@@ -59,13 +62,13 @@ public class Mover {
      * @param down graphics for moving down
      * @param left  graphics for moving left
      */
-    public Mover( LevelObject lo, double speed, GameGraphics still, GameGraphics up, GameGraphics right, GameGraphics down, GameGraphics left) {
-        init(lo, speed, still, up, right, down, left);
+    public Mover( LevelObject lo, double speed, boolean canMoveRocks, GameGraphics still, GameGraphics up, GameGraphics right, GameGraphics down, GameGraphics left) {
+        init(lo, speed, canMoveRocks, still, up, right, down, left);
     }
 
-    public Mover( LevelObject lo, double speed, GameGraphics gfx )
+    public Mover( LevelObject lo, double speed, boolean canMoveRocks, GameGraphics gfx )
     {
-        init(lo, speed, gfx, gfx, gfx, gfx, gfx);
+        init(lo, speed, canMoveRocks, gfx, gfx, gfx, gfx, gfx);
     }
 
     public void move() {
@@ -78,7 +81,7 @@ public class Mover {
 
         // allow direction change when on block-boundaries
         if (x % Game.virtualBlockResolution == 0 && y % Game.virtualBlockResolution == 0) {
-            LevelBlock nextBlock = null;
+            LevelBlock nextBlock = null, nextBlock2 = null;
 
             // check all direction choices
             for (directions dir : nextDirections) {
@@ -89,15 +92,19 @@ public class Mover {
                         break;
                     case UP:
                         nextBlock = Game.level.getUp(blockX, blockY, true);
+                        nextBlock2 = Game.level.getUp2(blockX, blockY); // for figuring out, if rocks are movable
                         break;
                     case RIGHT:
                         nextBlock = Game.level.getRight(blockX, blockY, true);
+                        nextBlock2 = Game.level.getRight2(blockX, blockY);
                         break;
                     case DOWN:
                         nextBlock = Game.level.getDown(blockX, blockY, true);
+                        nextBlock2 = Game.level.getDown2(blockX, blockY);
                         break;
                     case LEFT:
                         nextBlock = Game.level.getLeft(blockX, blockY, true);
+                        nextBlock2 = Game.level.getLeft2(blockX, blockY);
                         break;
                 }
                 if (nextBlock != null && !nextBlock.hasWall()) {

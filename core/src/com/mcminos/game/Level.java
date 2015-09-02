@@ -318,6 +318,9 @@ public class Level {
     public LevelBlock getDown( int x, int y ) {
         return getDown( x, y, scrollY);
     }
+    public LevelBlock getDown2(int x, int y) {
+        return field[x][(y-2+height)%height];
+    }
 
     /**
      * Find level block right of the given windowVPixelXPos,windowVPixelYPos position.
@@ -335,6 +338,9 @@ public class Level {
     }
     public LevelBlock getRight( int x, int y ) {
         return getRight( x, y, scrollX);
+    }
+    public LevelBlock getRight2(int x, int y) {
+        return field[(x+2)%width][y];
     }
 
     /**
@@ -354,6 +360,9 @@ public class Level {
     public LevelBlock getUp( int x, int y ) {
         return getUp( x, y, scrollY);
     }
+    public LevelBlock getUp2(int x, int y) {
+        return field[x][(y+2)%height];
+    }
 
     /**
      * Find level block left of the given windowVPixelXPos,windowVPixelYPos position.
@@ -371,6 +380,9 @@ public class Level {
     }
     public LevelBlock getLeft( int x, int y ) {
         return getLeft( x, y, scrollX);
+    }
+    public LevelBlock getLeft2(int x, int y) {
+        return field[(x-2+width)%width][y];
     }
 
 
@@ -405,4 +417,5 @@ public class Level {
     public int getHeight() {
         return height;
     }
+
 }
