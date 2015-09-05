@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
  */
 public class Level {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
+    private static int pillsNumber = 0;
     private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
     private String author = "McMinos";
     private int number = 199;
@@ -45,6 +46,7 @@ public class Level {
     private int chocolatesMin = 0, chocolatesMax = 999;
     private int medicinesMin = 0, medicinesMax = 999;
     private int umbrellasMin = 0, umbrellasMax = 999;
+
 
 
     Level ( String filename ) {
@@ -258,7 +260,6 @@ public class Level {
                     break;
                 case '.':
                     lb.makePill();
-                    // TODO: count the pills
                     break;
                 case '*':
                     lb.makePowerPill1();
@@ -418,4 +419,16 @@ public class Level {
         return height;
     }
 
+    public static void increasePills() {
+        pillsNumber ++;
+    }
+
+    public static void decreasePills() {
+        pillsNumber --;
+        // TODO: do we need to trigger something when we reach 0?
+    }
+
+    public static int getPillsNumber() {
+        return pillsNumber;
+    }
 }

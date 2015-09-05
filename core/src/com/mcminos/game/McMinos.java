@@ -23,7 +23,7 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         im.addProcessor(this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
         g.init();
-        g.loadLevel("levels/level001.asx");
+        g.loadLevel("levels/level006.asx");
         g.startMover();
     }
 

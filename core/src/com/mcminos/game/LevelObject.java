@@ -21,10 +21,10 @@ public class LevelObject implements  Comparable<LevelObject> {
     private Mover mover = null;
     private LevelBlock levelBlock = null; // currently associated LevelBlock
 
-    public int getX() {
+    public int getVX() {
         return x;
     }
-    public int getY() {
+    public int getVY() {
         return y;
     }
 
@@ -112,5 +112,22 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     public void setMover(Mover mover) {
         this.mover = mover;
+    }
+
+    public Mover getMover() {
+        return mover;
+    }
+
+    public void move() {
+        if( mover != null) {
+            mover.calculateDirection();
+            mover.move();
+        }
+    }
+
+    // make sure to remove yourself from list
+    public void dispose() {
+        all.remove(this);
+        // TODO: think if we also have to remove from other things in level-block
     }
 }

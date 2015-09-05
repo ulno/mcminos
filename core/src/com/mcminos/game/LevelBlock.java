@@ -12,9 +12,10 @@ public class LevelBlock {
     private int x,y; // Position in Level Field
     private Level level; // corresponding level
     private LevelObject wall=null; // The wall or door connected here
+    private LevelObject rock=null; // a rock connected to this field
     private LevelObject pill=null; // a potential pill on this field
     private LevelObject castle=null; // a part of a castle
-    private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions hovering here.
+    private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions, rocks hovering here.
     private HashSet<LevelObject> items=new HashSet<>(); // items on the field
 
 
@@ -120,9 +121,7 @@ public class LevelBlock {
     }
 
     public void makePill() {
-        LevelObject lo = new LevelObject(x,y,Entities.pills_pill_default.getzIndex());
-        lo.setGfx(Entities.pills_pill_default);
-        pill = lo;
+        putPill();
     }
 
     public void makePowerPill1() {
@@ -185,7 +184,9 @@ public class LevelBlock {
     public void makeRock() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_rock.getzIndex());
         lo.setGfx(Entities.extras_rock);
-        // TODO: add to right structure
+        rock = lo;
+        movables.add(lo);
+        Game.movables.add(lo);
     }
 
     public void putMoveable(LevelObject lo) {
@@ -194,5 +195,35 @@ public class LevelBlock {
 
     public void putItem(LevelObject lo) {
         items.add(lo);
+    }
+
+    public boolean hasRock() {
+        return rock != null;
+    }
+
+    public LevelObject getRock() {
+        return rock;
+    }
+
+    public void setRock(LevelObject rock) {
+        this.rock = rock;
+    }
+
+    public boolean hasPill() {
+        return pill != null;
+    }
+
+
+    public void removePill() {
+        level.decreasePills();
+        pill.dispose();
+        pill = null;
+    }
+
+    public void putPill() {
+        level.increasePills();
+        LevelObject lo = new LevelObject(x,y,Entities.pills_pill_default.getzIndex());
+        lo.setGfx(Entities.pills_pill_default);
+        pill = lo;
     }
 }
