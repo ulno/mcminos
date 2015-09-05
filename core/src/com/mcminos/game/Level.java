@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 public class Level {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
     private static int pillsNumber = 0;
+    private static int rockmeNumber = 0;
     private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
     private String author = "McMinos";
     private int number = 199;
@@ -258,6 +259,9 @@ public class Level {
                 case 'Z':
                     lb.makeIndestructableWall();
                     break;
+                case 'U':
+                    lb.makeInvisibleWall();
+                    break;
                 case '.':
                     lb.makePill();
                     break;
@@ -285,6 +289,81 @@ public class Level {
                 case 'r':
                     lb.makeRock();
                     break;
+                case 'O':
+                    lb.makeRockMe();
+                    break;
+                case '0':
+                    lb.makeRock();
+                    lb.makeRockMe();
+                    break;
+                case '6':
+                    lb.makeHole(0);
+                    break;
+                case '7':
+                    lb.makeHole(1);
+                    break;
+                case '8':
+                    lb.makeHole(2);
+                    break;
+                case '9':
+                    lb.makeHole(3);
+                    break;
+                case 'o':
+                    lb.makeHole(4);
+                    break;
+                /*
+;   D = door, closed
+;   | = door, opened
+;   F = Speed-Up field
+;   f = Speed-Down field
+;   W = Warp Hole
+;   A = Kill All Field
+;   ^, >, v, < = one way fields
+;   ä, ö, ü, ß = rotating one ways
+;                preset one way directions:
+;                ä=up, ö=right, ü=down, ß=left
+;   ? = surprise field (positive or negative)
+;   O = Rock Me Field
+;   0 = Rock Me Field with a stone on it
+;   6, 7, 8, 9, o = holes in the ground,
+;                (6 = smallest, o = biggest)
+
+;   USEFUL THINGS:
+;   . = Pill
+;   x = ladder
+;   a = kill all pill
+
+;   power pills: (do their job for 10 sec)
+;   * = apple; multipliers: MCSPEED *= 2; GHSPEEDs *= 1
+;   ( = mushroom; multipliers: MCSPEED *= 1; GHSPEEDs *= 2
+;   ) = bonbon; multipliers: MCSPEED *= 1; GHSPEEDs *= 1
+
+;   L = Live
+;   $ = clock, Level time (if level time is limited:) + 60 sec.
+;   c = Letter with level code
+
+;   Boni:
+;   1 = Bonus 100 Pt
+;   2 = Bonus 250 Pt
+;   3 = Bonus 500 Pt
+
+;   BAD THINGS:
+;   w = Whisky
+;   M = mirror
+;   p = poison; can be cured with medicine
+
+;   TOOLS:
+;   k = key
+;   b = bomb
+;   d = dynamite
+;   _ = mine (nicht aktivated)
+;   , = mine in the ground (aktivated)
+;   + = chocolate = power pill to be carried until needed);
+        multipliers: MCSPEED *= 2; GHSPEEDs *= 1
+        (does it's job for: 10 s)
+;   m = medicine (bottle of)
+;   u = umbrella
+                 */
 
             }
             linepos ++;
@@ -425,6 +504,15 @@ public class Level {
 
     public static void decreasePills() {
         pillsNumber --;
+        // TODO: do we need to trigger something when we reach 0?
+    }
+
+    public static void increaseRockmes() {
+        rockmeNumber ++;
+    }
+
+    public static void decreaseEockmes() {
+        rockmeNumber --;
         // TODO: do we need to trigger something when we reach 0?
     }
 

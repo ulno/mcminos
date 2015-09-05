@@ -20,6 +20,10 @@ public class LevelObject implements  Comparable<LevelObject> {
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
     private Mover mover = null;
     private LevelBlock levelBlock = null; // currently associated LevelBlock
+    private boolean indestructable = false;
+    private boolean invisible = false;
+    private boolean rockme;
+    private int holeLevel;
 
     public int getVX() {
         return x;
@@ -129,5 +133,38 @@ public class LevelObject implements  Comparable<LevelObject> {
     public void dispose() {
         all.remove(this);
         // TODO: think if we also have to remove from other things in level-block
+    }
+
+    public boolean isIndestructable() {
+        return indestructable;
+    }
+
+    public void setIndestructable(boolean indestructable) {
+        this.indestructable = indestructable;
+    }
+
+    public boolean isInvisible() {
+        return invisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        this.invisible = invisible;
+    }
+
+    public void setRockme(boolean rockme) {
+        this.rockme = rockme;
+    }
+
+    public boolean isRockme() {
+        return rockme;
+    }
+
+    public void setHoleLevel(int holeLevel) {
+        this.holeLevel = holeLevel;
+        // set gfx
+        GameGraphics[] holes =
+                new GameGraphics[]{Entities.holes_0, Entities.holes_1,
+                        Entities.holes_2, Entities.holes_3, Entities.holes_4};
+        this.setGfx( holes[holeLevel]);
     }
 }

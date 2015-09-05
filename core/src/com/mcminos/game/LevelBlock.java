@@ -37,7 +37,7 @@ public class LevelBlock {
 
     /**
      *
-     * @param lo remove thsi (either if in items or movables)
+     * @param lo remove this (either if in items or movables)
      * @return
      */
     public boolean remove( LevelObject lo)
@@ -60,13 +60,9 @@ public class LevelBlock {
 
     }
 
-    public void makeWall() {
-        wall = new LevelObject(x,y,Entities.walls_default_00.getzIndex());
-        updateWall();
-    }
-
     public void updateWall() {
-        if( wall != null ) { // only update, if this is a wall
+        // TODO: think about impact of neighborrelation when there are invisible walls -> now the neighbors know!
+        if( wall != null && ! wall.isIndestructable() && ! wall.isInvisible()) { // only update, if this is a normal wall
             // create wall number, based on neighbors
             int wallNr = 0;
             LevelBlock u = level.getUp(x, y);
@@ -108,8 +104,22 @@ public class LevelBlock {
         return wall != null;
     }
 
+
+    public void makeWall() {
+        wall = new LevelObject(x,y,Entities.walls_default_00.getzIndex());
+        updateWall();
+    }
+
     public void makeIndestructableWall() {
-        // TODO: need graphics for indestructable wall
+        // TODO: need Andreas' graphics for indestructable wall
+        wall = new LevelObject(x,y,Entities.walls_indestructable.getzIndex());
+        wall.setGfx(Entities.walls_indestructable);
+        wall.setIndestructable(true);
+    }
+
+    public void makeInvisibleWall() {
+        wall = new LevelObject(x,y,Entities.walls_default_00.getzIndex());
+        wall.setInvisible(true);
     }
 
     public void makeMcMinos() {
@@ -189,6 +199,13 @@ public class LevelBlock {
         Game.movables.add(lo);
     }
 
+    public void makeRockMe() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_rock_me.getzIndex());
+        lo.setGfx(Entities.extras_rock_me);
+        lo.setRockme(true);
+        level.increaseRockmes();
+    }
+
     public void putMoveable(LevelObject lo) {
         movables.add(lo);
     }
@@ -225,5 +242,14 @@ public class LevelBlock {
         LevelObject lo = new LevelObject(x,y,Entities.pills_pill_default.getzIndex());
         lo.setGfx(Entities.pills_pill_default);
         pill = lo;
+    }
+
+    /**
+     * Create a hole in the ground
+     * @param i 0: smallest, 4: biggest
+     */
+    public void makeHole(int i) {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex());
+        lo.setHoleLevel( i );
     }
 }
