@@ -16,7 +16,7 @@ public class LevelBlock {
     private LevelObject pill=null; // a potential pill on this field
     private LevelObject castle=null; // a part of a castle
     private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions, rocks hovering here.
-    private HashSet<LevelObject> collectible =new HashSet<>(); // collectible on the field
+    private HashSet<LevelObject> collectibles =new HashSet<>(); // collectibles on the field
     private LevelObject door=null; // a potential door
     private int oneWay = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
 
@@ -34,12 +34,12 @@ public class LevelBlock {
     }
 
     public boolean hasAsItem(LevelObject lo) {
-        return collectible.contains(lo);
+        return collectibles.contains(lo);
     }
 
     /**
      *
-     * @param lo remove this (either if in collectible or movables)
+     * @param lo remove this (either if in collectibles or movables)
      * @return
      */
     public boolean remove( LevelObject lo)
@@ -52,7 +52,7 @@ public class LevelBlock {
     }
 
     public boolean removeItem(LevelObject lo) {
-        return collectible.remove(lo);
+        return collectibles.remove(lo);
     }
 
     public LevelBlock(Level level, int x, int y) {
@@ -168,7 +168,7 @@ public class LevelBlock {
     public void makePowerPill1() {
         LevelObject lo = new LevelObject(x,y,Entities.pills_power_pill_apple.getzIndex(),LevelObject.Types.Power1);
         lo.setGfx(Entities.pills_power_pill_apple);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeCastle() {
@@ -201,44 +201,44 @@ public class LevelBlock {
     public void makeLive() {
         LevelObject lo = new LevelObject(x,y,Entities.pills_heart.getzIndex(),LevelObject.Types.Live);
         lo.setGfx(Entities.pills_heart);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeLetter() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_letter.getzIndex(),LevelObject.Types.Letter);
         lo.setGfx(Entities.extras_letter);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeSkull() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_skull.getzIndex(),LevelObject.Types.Skull);
         lo.setGfx(Entities.extras_skull);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeBomb() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_bomb_default.getzIndex(),LevelObject.Types.Bomb);
         lo.setGfx(Entities.extras_bomb_default);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeDynamite() {
         // TODO: Image by Andreas missing
         LevelObject lo = new LevelObject(x,y,Entities.extras_dynamite_default.getzIndex(),LevelObject.Types.Dynamite);
         lo.setGfx(Entities.extras_dynamite_default);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeKey() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_key.getzIndex(),LevelObject.Types.Key);
         lo.setGfx(Entities.extras_key);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeUmbrella() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_umbrella.getzIndex(),LevelObject.Types.Umbrella);
         lo.setGfx(Entities.extras_umbrella);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
 
@@ -275,7 +275,7 @@ public class LevelBlock {
     }
 
     public void putItem(LevelObject lo) {
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public boolean hasRock() {
@@ -325,26 +325,26 @@ public class LevelBlock {
     public void makeSpeedUpField() {
         LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.SpeedUpField);
         lo.setGfx(Entities.fields_field_speed_up);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeSpeedDownField() {
         LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.SpeedDownField);
         lo.setGfx(Entities.fields_field_speed_down);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeWarpHole() {
         LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.WarpHole);
         lo.setGfx(Entities.fields_field_warp_hole);
         level.addWarpHole(this);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     public void makeKillAllField() {
         LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.KillAllField);
         lo.setGfx(Entities.fields_field_skull);
-        collectible.add(lo);
+        collectibles.add(lo);
     }
 
     /**
@@ -381,5 +381,9 @@ public class LevelBlock {
                 break;
         }
 
+    }
+
+    public HashSet<LevelObject> getCollectibles() {
+        return collectibles;
     }
 }

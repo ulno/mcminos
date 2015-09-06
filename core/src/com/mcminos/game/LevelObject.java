@@ -12,7 +12,10 @@ import java.util.Collections;
 public class LevelObject implements  Comparable<LevelObject> {
 
 
-    public enum Types {Unspecified, Power1, Power2, IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter, Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella, DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay, Hole};
+    public enum Types {Unspecified, Power1, Power2,
+        IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter,
+        Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
+        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
@@ -36,6 +39,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         this.x = x << Game.virtualBlockResolutionExponent;
         this.y = y << Game.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
+        this.type = type;
         // add to static list
         int index = Collections.binarySearch(all, this);
         if(index<0)
@@ -164,5 +168,10 @@ public class LevelObject implements  Comparable<LevelObject> {
     public DoorTypes getDoorType() {
         return doorType;
     }
+
+    public Types getType() {
+        return type;
+    }
+
 
 }
