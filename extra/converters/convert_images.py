@@ -35,12 +35,12 @@ config_options={
     "speed":100, # the animation speed or animation speed list (10 frames per second default)
     "order":[0], # the order of the images
     "zindex":700, # show this on which level?
-    "anchor":(0,0), # anchor point of the icon
+    "focus":(1,1), # anchor point of the icon
     "moving":False, # This object moves by itself (like mcminos or the ghosts)
     }
 
 # w equals h, so only one value here, to speed up gaming, resolutions must be powers of 2
-SIZE_LIST = [128,64,32,16]
+SIZE_LIST = [128,64,32,16,8]
 #SIZE_LIST = [128,64,16] # for testing
 
 #try:
@@ -113,7 +113,7 @@ class Graphics_Element():
         current = "" + self.name
         code = "%s = new GameGraphics(\'%s\',%s,%s,%s,%s,%s,%s);\n" % \
                 ( current, self.config["symbol"], 
-                self.config["anchor"][0], self.config["anchor"][1],
+                self.config["focus"][0]-1, self.config["focus"][1]-1,
                 self.config["zindex"], repr(self.config["moving"]).lower(),
                 self.config["size"][0], self.config["size"][1])
         for size in self.image_dictionary:

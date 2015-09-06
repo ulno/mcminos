@@ -227,9 +227,10 @@ public class Level {
                 LevelBlock f = field[x][y];
                 f.updateWall();
                 f.updateCastle();
+                f.updateDoor();
                 // background
                 if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
-                    LevelObject lo = new LevelObject(x, y, Entities.backgrounds_blue_balls.getzIndex());
+                    LevelObject lo = new LevelObject(x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
                     lo.setGfx(bggfx);
                 }
             }
@@ -286,6 +287,15 @@ public class Level {
                 case 'b':
                     lb.makeBomb();
                     break;
+                case 'd':
+                    lb.makeDynamite();
+                    break;
+                case 'k':
+                    lb.makeKey();
+                    break;
+                case 'u':
+                    lb.makeUmbrella();
+                    break;
                 case 'r':
                     lb.makeRock();
                     break;
@@ -311,9 +321,13 @@ public class Level {
                 case 'o':
                     lb.makeHole(4);
                     break;
+                case 'D':
+                    lb.makeDoorClosed();
+                    break;
+                case '|':
+                    lb.makeDoorOpened();
+                    break;
                 /*
-;   D = door, closed
-;   | = door, opened
 ;   F = Speed-Up field
 ;   f = Speed-Down field
 ;   W = Warp Hole
@@ -323,13 +337,8 @@ public class Level {
 ;                preset one way directions:
 ;                ä=up, ö=right, ü=down, ß=left
 ;   ? = surprise field (positive or negative)
-;   O = Rock Me Field
-;   0 = Rock Me Field with a stone on it
-;   6, 7, 8, 9, o = holes in the ground,
-;                (6 = smallest, o = biggest)
 
 ;   USEFUL THINGS:
-;   . = Pill
 ;   x = ladder
 ;   a = kill all pill
 
@@ -353,9 +362,6 @@ public class Level {
 ;   p = poison; can be cured with medicine
 
 ;   TOOLS:
-;   k = key
-;   b = bomb
-;   d = dynamite
 ;   _ = mine (nicht aktivated)
 ;   , = mine in the ground (aktivated)
 ;   + = chocolate = power pill to be carried until needed);

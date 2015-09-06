@@ -166,7 +166,7 @@ public class Game {
         resolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
         Game.setResolution(resolution);
         // create destination-object
-        destination = new LevelObject(0,0,Entities.destination.getzIndex());
+        destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
     }
 
 
