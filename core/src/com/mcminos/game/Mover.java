@@ -111,7 +111,7 @@ public class Mover {
                         nextBlock2 = Game.level.getLeft2(blockX, blockY);
                         break;
                 }
-                if (nextBlock != null && !nextBlock.hasWall()) {
+                if (nextBlock != null && !nextBlock.hasWall() && !nextBlock.hasClosedDoor()) {
                     if(nextBlock.hasRock()) {
                         // TODO: check that there are no ghosts
                         if(canMoveRocks) { // check if this rock could actually be moved (not if there is rock or wall)

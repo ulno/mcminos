@@ -16,12 +16,13 @@ public class LevelBlock {
     private LevelObject pill=null; // a potential pill on this field
     private LevelObject castle=null; // a part of a castle
     private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions, rocks hovering here.
-    private HashSet<LevelObject> items=new HashSet<>(); // items on the field
+    private HashSet<LevelObject> collectible =new HashSet<>(); // collectible on the field
     private LevelObject door=null; // a potential door
+    private int oneWay = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
 
 
     /**
-     * @param lo check if this is in movable or items (connected with this field)
+     * @param lo check if this is in movable or collectible (connected with this field)
      * @return
      */
     public boolean has( LevelObject lo) {
@@ -33,12 +34,12 @@ public class LevelBlock {
     }
 
     public boolean hasAsItem(LevelObject lo) {
-        return items.contains(lo);
+        return collectible.contains(lo);
     }
 
     /**
      *
-     * @param lo remove this (either if in items or movables)
+     * @param lo remove this (either if in collectible or movables)
      * @return
      */
     public boolean remove( LevelObject lo)
@@ -51,7 +52,7 @@ public class LevelBlock {
     }
 
     public boolean removeItem(LevelObject lo) {
-        return items.remove(lo);
+        return collectible.remove(lo);
     }
 
     public LevelBlock(Level level, int x, int y) {
@@ -167,7 +168,7 @@ public class LevelBlock {
     public void makePowerPill1() {
         LevelObject lo = new LevelObject(x,y,Entities.pills_power_pill_apple.getzIndex(),LevelObject.Types.Power1);
         lo.setGfx(Entities.pills_power_pill_apple);
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public void makeCastle() {
@@ -200,43 +201,44 @@ public class LevelBlock {
     public void makeLive() {
         LevelObject lo = new LevelObject(x,y,Entities.pills_heart.getzIndex(),LevelObject.Types.Live);
         lo.setGfx(Entities.pills_heart);
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public void makeLetter() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_letter.getzIndex(),LevelObject.Types.Letter);
         lo.setGfx(Entities.extras_letter);
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public void makeSkull() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_skull.getzIndex(),LevelObject.Types.Skull);
         lo.setGfx(Entities.extras_skull);
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public void makeBomb() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_bomb_default.getzIndex(),LevelObject.Types.Bomb);
         lo.setGfx(Entities.extras_bomb_default);
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public void makeDynamite() {
+        // TODO: Image by Andreas missing
         LevelObject lo = new LevelObject(x,y,Entities.extras_dynamite_default.getzIndex(),LevelObject.Types.Dynamite);
         lo.setGfx(Entities.extras_dynamite_default);
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public void makeKey() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_key.getzIndex(),LevelObject.Types.Key);
         lo.setGfx(Entities.extras_key);
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public void makeUmbrella() {
         LevelObject lo = new LevelObject(x,y,Entities.extras_umbrella.getzIndex(),LevelObject.Types.Umbrella);
         lo.setGfx(Entities.extras_umbrella);
-        items.add(lo);
+        collectible.add(lo);
     }
 
 
@@ -273,7 +275,7 @@ public class LevelBlock {
     }
 
     public void putItem(LevelObject lo) {
-        items.add(lo);
+        collectible.add(lo);
     }
 
     public boolean hasRock() {
@@ -313,5 +315,71 @@ public class LevelBlock {
     public void makeHole(int i) {
         LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.Hole);
         lo.setHoleLevel( i );
+    }
+
+    public boolean hasClosedDoor() {
+        if( door == null) return false;
+        return door.getDoorType() == LevelObject.DoorTypes.HorizontalClosed || door.getDoorType() == LevelObject.DoorTypes.VerticalClosed;
+    }
+
+    public void makeSpeedUpField() {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.SpeedUpField);
+        lo.setGfx(Entities.fields_field_speed_up);
+        collectible.add(lo);
+    }
+
+    public void makeSpeedDownField() {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.SpeedDownField);
+        lo.setGfx(Entities.fields_field_speed_down);
+        collectible.add(lo);
+    }
+
+    public void makeWarpHole() {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.WarpHole);
+        lo.setGfx(Entities.fields_field_warp_hole);
+        level.addWarpHole(this);
+        collectible.add(lo);
+    }
+
+    public void makeKillAllField() {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.KillAllField);
+        lo.setGfx(Entities.fields_field_skull);
+        collectible.add(lo);
+    }
+
+    /**
+     * Make a one-way street. 0: up, 1: right, 2: down, 3: left, +4 rotatable
+      * @param i
+     */
+    public void makeOneWay(int i) {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.OneWay);
+        oneWay = i;
+        switch(i) {
+            case 0:
+                lo.setGfx(Entities.arrows_static_up);
+                break;
+            case 1:
+                lo.setGfx(Entities.arrows_static_right);
+                break;
+            case 2:
+                lo.setGfx(Entities.arrows_static_down);
+                break;
+            case 3:
+                lo.setGfx(Entities.arrows_static_left);
+                break;
+            case 4:
+                lo.setGfx(Entities.arrows_rotatable_up);
+                break;
+            case 5:
+                lo.setGfx(Entities.arrows_rotatable_right);
+                break;
+            case 6:
+                lo.setGfx(Entities.arrows_rotatable_down);
+                break;
+            case 7:
+                lo.setGfx(Entities.arrows_rotatable_left);
+                break;
+        }
+
     }
 }

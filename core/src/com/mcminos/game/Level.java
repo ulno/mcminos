@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by ulno on 17.08.15.
@@ -47,6 +48,7 @@ public class Level {
     private int chocolatesMin = 0, chocolatesMax = 999;
     private int medicinesMin = 0, medicinesMax = 999;
     private int umbrellasMin = 0, umbrellasMax = 999;
+    private ArrayList<LevelBlock> warpHoleBlocks = new ArrayList<>();
 
 
 
@@ -327,15 +329,43 @@ public class Level {
                 case '|':
                     lb.makeDoorOpened();
                     break;
+                case 'F':
+                    lb.makeSpeedUpField();
+                    break;
+                case 'f':
+                    lb.makeSpeedDownField();
+                    break;
+                case 'W':
+                    lb.makeWarpHole();
+                    break;
+                case 'A':
+                    lb.makeKillAllField();
+                    break;
+                case '^':
+                    lb.makeOneWay(0);
+                    break;
+                case '>':
+                    lb.makeOneWay(1);
+                    break;
+                case 'v':
+                    lb.makeOneWay(2);
+                    break;
+                case '<':
+                    lb.makeOneWay(3);
+                    break;
+                case 'ä':
+                    lb.makeOneWay(4);
+                    break;
+                case 'ö':
+                    lb.makeOneWay(5);
+                    break;
+                case 'ü':
+                    lb.makeOneWay(6);
+                    break;
+                case 'ß':
+                    lb.makeOneWay(7);
+                    break;
                 /*
-;   F = Speed-Up field
-;   f = Speed-Down field
-;   W = Warp Hole
-;   A = Kill All Field
-;   ^, >, v, < = one way fields
-;   ä, ö, ü, ß = rotating one ways
-;                preset one way directions:
-;                ä=up, ö=right, ü=down, ß=left
 ;   ? = surprise field (positive or negative)
 
 ;   USEFUL THINGS:
@@ -343,13 +373,10 @@ public class Level {
 ;   a = kill all pill
 
 ;   power pills: (do their job for 10 sec)
-;   * = apple; multipliers: MCSPEED *= 2; GHSPEEDs *= 1
 ;   ( = mushroom; multipliers: MCSPEED *= 1; GHSPEEDs *= 2
 ;   ) = bonbon; multipliers: MCSPEED *= 1; GHSPEEDs *= 1
 
-;   L = Live
 ;   $ = clock, Level time (if level time is limited:) + 60 sec.
-;   c = Letter with level code
 
 ;   Boni:
 ;   1 = Bonus 100 Pt
@@ -368,7 +395,6 @@ public class Level {
         multipliers: MCSPEED *= 2; GHSPEEDs *= 1
         (does it's job for: 10 s)
 ;   m = medicine (bottle of)
-;   u = umbrella
                  */
 
             }
@@ -524,5 +550,9 @@ public class Level {
 
     public static int getPillsNumber() {
         return pillsNumber;
+    }
+
+    public void addWarpHole(LevelBlock warpHoleBlock) {
+        warpHoleBlocks.add(warpHoleBlock);
     }
 }
