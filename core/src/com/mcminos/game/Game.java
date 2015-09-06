@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Timer;
 
+import java.util.HashSet;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -40,7 +41,8 @@ public class Game {
     public static LevelObject mcminos = null;
     public static LevelObject destination = null;
     public static Level level;
-    private Mover mcmMover;
+    private static Mover mcmMover;
+    public static HashSet<LevelObject> movables=new HashSet<>(); // all moveables - mcminos
     static Semaphore updateLock = new Semaphore(1);
 
     public static void setResolution(int resolution) {
@@ -64,8 +66,8 @@ public class Game {
      */
     public void updateWindowPosition() {
 
-        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getX(), level.getScrollX(), getLevelWidth(), windowVPixelWidth);
-        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getY(), level.getScrollY(), getLevelHeight(), windowVPixelHeight);
+        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getVX(), level.getScrollX(), getLevelWidth(), windowVPixelWidth);
+        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getVY(), level.getScrollY(), getLevelHeight(), windowVPixelHeight);
 
     }
 
@@ -137,14 +139,14 @@ public class Game {
         {
             if (windowVPixelWidth > level.getVisibleWidth() << virtualBlockResolutionExponent) {
                 windowVPixelWidth = level.getVisibleWidth() << virtualBlockResolutionExponent;
-                windowPixelWidth = level.getVisibleWidth() << virtualBlockResolutionExponent;
+                windowPixelWidth = level.getVisibleWidth() << resolutionExponent;
             }
             if (windowVPixelHeight > level.getVisibleHeight() << virtualBlockResolutionExponent) {
                 windowVPixelHeight = level.getVisibleHeight() << virtualBlockResolutionExponent;
-                windowPixelHeight = windowVPixelHeight << virtualBlockResolutionExponent;
+                windowPixelHeight = level.getVisibleHeight() << resolutionExponent;
             }
-            Game.fullPixelWidth = Game.getLevelWidth() * Game.resolution;
-            Game.fullPixelHeight = Game.getLevelHeight() * Game.resolution;
+            Game.fullPixelWidth = Game.getLevelWidth() << resolutionExponent;
+            Game.fullPixelHeight = Game.getLevelHeight() << resolutionExponent;
         }
     }
 
@@ -164,7 +166,7 @@ public class Game {
         resolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
         Game.setResolution(resolution);
         // create destination-object
-        destination = new LevelObject(0,0,Entities.destination.getzIndex());
+        destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
     }
 
 
@@ -233,18 +235,79 @@ public class Game {
         int h = Game.getLevelHeight();
         int roundx = (vPixelX + (virtualBlockResolution >> 1)) >> virtualBlockResolutionExponent;
         int roundy = (vPixelY + (virtualBlockResolution >> 1)) >> virtualBlockResolutionExponent;
-        if( level.getScrollX() ) roundx = (  roundx + w ) % w;
-        else roundx = Math.min(0,Math.max(w,roundx));
-        if( level.getScrollY() )  roundy = ( roundy  + h ) % h;
-        else roundy = Math.min(0,Math.max(h,roundy));
+        //if( level.getScrollX() )
+        roundx = (  roundx + w ) % w;
+        //else
+        //    roundx = Math.max(0,Math.min(w,roundx));
+        //if( level.getScrollY() )
+        roundy = ( roundy  + h ) % h;
+        //else
+        //    roundy = Math.max(0,Math.min(h,roundy));
         return level.get( roundx, roundy );
     }
+
+    public static MoverDirectionChooser moverMcminos = new MoverDirectionChooser() {
+        @Override
+        public Mover.directions[] chooseDirection(LevelObject lo) {
+            // mcminos
+            if (destination.hasGfx()) { // destination is set
+                // check screen distance
+                int x = mcminos.getVX();
+                int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
+                int xdiff = Math.abs(xdelta);
+                if (xdiff <= virtualBlockResolution >> 1 || xdiff >= getVPixelsLevelWidth() - (virtualBlockResolution >> 1))
+                    xdelta = 0;
+                else {
+                    //also allow this in non-scrolled levels
+                    //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
+                    if (xdiff >= getVPixelsLevelWidth() >> 1)
+                        xdelta = (int) Math.signum(xdelta);
+                    else
+                        xdelta = -(int) Math.signum(xdelta);
+                }
+                int y = mcminos.getVY();
+                int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
+                int ydiff = Math.abs(ydelta);
+                if (ydiff <= virtualBlockResolution >> 1 || ydiff >= getVPixelsLevelHeight() - (virtualBlockResolution >> 1))
+                    ydelta = 0;
+                else {
+                    // also in non-scroll levels
+                    //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
+                    if (ydiff >= getVPixelsLevelHeight() >> 1)
+                        ydelta = (int) Math.signum(ydelta);
+                    else
+                        ydelta = -(int) Math.signum(ydelta);
+                }
+
+                Mover.directions tryDirections[] = {Mover.directions.STOP, Mover.directions.STOP};
+                int dircount = 0;
+                if (ydelta > 0) tryDirections[dircount++] = Mover.directions.UP;
+                if (ydelta < 0) tryDirections[dircount++] = Mover.directions.DOWN;
+                if (xdelta > 0) tryDirections[dircount++] = Mover.directions.RIGHT;
+                if (xdelta < 0) tryDirections[dircount++] = Mover.directions.LEFT;
+                if (dircount > 1 && xdiff > ydiff) {
+                    Mover.directions tmp = tryDirections[0];
+                    tryDirections[0] = tryDirections[1];
+                    tryDirections[1] = tmp;
+                }
+                return tryDirections;
+            }
+            return new Mover.directions[]{};
+        }
+    };
+
+    public static MoverDirectionChooser moverRock = new MoverDirectionChooser() {
+        @Override
+        public Mover.directions[] chooseDirection(LevelObject lo) {
+            return new Mover.directions[]{Mover.directions.STOP};
+        }
+    };
 
     /**
      * Start the moving thread which wil manage all movement of objects in the game
      */
     public void startMover() {
-        mcmMover = new Mover( mcminos, 1.0, Entities.mcminos_default_front, Entities.mcminos_default_up,
+        mcmMover = new Mover( mcminos, 1.0, true, moverMcminos, Entities.mcminos_default_front, Entities.mcminos_default_up,
                 Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
 
         Timer.schedule(new Timer.Task() {
@@ -256,7 +319,7 @@ public class Game {
 
             }
         }
-                , 0, 1 / (float)timeResolution);
+                , 0, 1 / (float) timeResolution);
     }
 
     /**
@@ -264,69 +327,37 @@ public class Game {
      */
     private void doMovement() {
         // move everybody
-        try { // neds to be synchronized against drawing
+        try { // needs to be synchronized against drawing
             Game.updateLock.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // for now only mcminos
-        if(destination.hasGfx()) { // destination is set
-            // check screen distance
-            int x = mcminos.getX();
-            int xdelta = x - destination.getX(); // delta to center of destination (two centers substract)
-            int xdiff = Math.abs( xdelta );
-            if (xdiff <= virtualBlockResolution >> 1 || xdiff >= getVPixelsLevelWidth() - (virtualBlockResolution >> 1))
-                xdelta = 0;
-            else {
-                //also allow this in non-scrolled levels
-                //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
-                if ( xdiff >= getVPixelsLevelWidth() >> 1)
-                    xdelta = (int) Math.signum(xdelta);
-                else
-                    xdelta = - (int) Math.signum(xdelta);
-            }
-            int y = mcminos.getY();
-            int ydelta = y - destination.getY(); // delta to center of destination (two centers substract)
-            int ydiff = Math.abs( ydelta );
-            if (ydiff <= virtualBlockResolution >> 1 || ydiff >= getVPixelsLevelHeight() - (virtualBlockResolution >> 1))
-                ydelta = 0;
-            else {
-                // also in non-scroll levels
-                //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
-                if( ydiff >= getVPixelsLevelHeight() >> 1 )
-                    ydelta = (int) Math.signum(ydelta);
-                else
-                    ydelta = - (int) Math.signum(ydelta);
-            }
-
-            Mover.directions tryDirections[] = {Mover.directions.STOP, Mover.directions.STOP};
-            int dircount = 0;
-            if( ydelta > 0 ) tryDirections[dircount++] = Mover.directions.UP;
-            if( ydelta < 0 ) tryDirections[dircount++] = Mover.directions.DOWN;
-            if( xdelta > 0 ) tryDirections[dircount++] = Mover.directions.RIGHT;
-            if( xdelta < 0 ) tryDirections[dircount++] = Mover.directions.LEFT;
-            if(dircount > 1 && xdiff > ydiff) {
-                Mover.directions tmp = tryDirections[0];
-                tryDirections[0] = tryDirections[1];
-                tryDirections[1] = tmp;
-            }
-
-            /*double newx = x + xdelta * deltaTime * 2;
-            double newy = y + ydelta * deltaTime * 2;
-
-            if(getScrollX()) {
-                if (newx < 0.0) newx += getLevelWidth();
-                if (newx >= getLevelWidth()) newx -= getLevelWidth();
-            }
-            if(getScrollY()) {
-                if (newy < 0.0) newy += getLevelHeight();
-                if (newy >= getLevelHeight()) newy -= getLevelHeight();
-            }
-
-            mcminos.moveTo(newx, newy); */
-            mcmMover.move(tryDirections);
+        // move everybody
+        for( LevelObject m : movables ) {
+            m.move();
         }
+
+        mcmMover.calculateDirection();
+        mcmMover.move();
+
+        checkCollisions();
 
         Game.updateLock.release();
     }
+
+    /**
+     *     Check collisions (mainly if mcminos found something and can collect it)
+     * @return
+     */
+    private void checkCollisions() {
+        // check if something can be collected (only when full on field)
+        if((mcminos.getVX() % virtualBlockResolution  == 0) && (mcminos.getVY() % virtualBlockResolution == 0)) {
+            LevelBlock currentBlock = getLevelBlockFromVPixel( mcminos.getVX(), mcminos.getVY() );
+            if( currentBlock.hasPill() )
+            {
+                currentBlock.removePill();
+            }
+        }
+    }
+
 }

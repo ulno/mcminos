@@ -1,7 +1,5 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,6 +10,10 @@ import java.util.Collections;
  * created here. the corresponding graphics are in GameGraphics
  */
 public class LevelObject implements  Comparable<LevelObject> {
+
+
+    public enum Types {Unspecified, Power1, Power2, IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter, Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella, DoorClosed, DoorOpened, Hole};
+    public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
@@ -20,13 +22,9 @@ public class LevelObject implements  Comparable<LevelObject> {
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
     private Mover mover = null;
     private LevelBlock levelBlock = null; // currently associated LevelBlock
-
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
+    private int holeLevel;
+    private Types type;
+    private DoorTypes doorType = DoorTypes.None;
 
     /**
      *
@@ -34,7 +32,7 @@ public class LevelObject implements  Comparable<LevelObject> {
      * @param y in block coordinates (movable objects can have fraction as coordinate)
      * @param zIndex need to know zIndex to allow correct drawing order later
      */
-    LevelObject(int x, int y, int zIndex) {
+    LevelObject(int x, int y, int zIndex, Types type) {
         this.x = x << Game.virtualBlockResolutionExponent;
         this.y = y << Game.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
@@ -113,4 +111,58 @@ public class LevelObject implements  Comparable<LevelObject> {
     public void setMover(Mover mover) {
         this.mover = mover;
     }
+
+    public Mover getMover() {
+        return mover;
+    }
+
+    public void move() {
+        if( mover != null) {
+            mover.calculateDirection();
+            mover.move();
+        }
+    }
+
+    // make sure to remove yourself from list
+    public void dispose() {
+        all.remove(this);
+        // TODO: think if we also have to remove from other things in level-block
+    }
+
+    public boolean isIndestructable() {
+        return type == Types.IndestructableWall;
+    }
+
+    public boolean isInvisible() {
+        return type == Types.InvisibleWall;
+    }
+
+    public boolean isRockme() {
+        return type == Types.Rockme;
+    }
+
+    public void setHoleLevel(int holeLevel) {
+        this.holeLevel = holeLevel;
+        // set gfx
+        GameGraphics[] holes =
+                new GameGraphics[]{Entities.holes_0, Entities.holes_1,
+                        Entities.holes_2, Entities.holes_3, Entities.holes_4};
+        this.setGfx( holes[holeLevel]);
+    }
+
+    public int getVX() {
+        return x;
+    }
+    public int getVY() {
+        return y;
+    }
+
+    public void setDoorType(DoorTypes doorType) {
+        this.doorType = doorType;
+    }
+
+    public DoorTypes getDoorType() {
+        return doorType;
+    }
+
 }

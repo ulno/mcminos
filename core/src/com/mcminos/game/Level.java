@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
  */
 public class Level {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
+    private static int pillsNumber = 0;
+    private static int rockmeNumber = 0;
     private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
     private String author = "McMinos";
     private int number = 199;
@@ -22,7 +24,7 @@ public class Level {
     private int vPixelsWidth = 0;
     private int height = 20;
     private int vPixelsHeight = 0;
-    private int visibleWidth = 20;
+    private int VisibleWidth = 20;
     private int visibleHeight = 20;
     private boolean scrollX = false;
     private boolean scrollY = false;
@@ -45,6 +47,7 @@ public class Level {
     private int chocolatesMin = 0, chocolatesMax = 999;
     private int medicinesMin = 0, medicinesMax = 999;
     private int umbrellasMin = 0, umbrellasMax = 999;
+
 
 
     Level ( String filename ) {
@@ -83,7 +86,7 @@ public class Level {
                             case "ACCCD": accessCode = strList[1]; break;
                             case "LWID": width = Integer.parseInt(strList[1]); break;
                             case "LHI": height = Integer.parseInt(strList[1]); break;
-                            case "VWID": visibleWidth = Integer.parseInt(strList[1]); break;
+                            case "VWID": VisibleWidth = Integer.parseInt(strList[1]); break;
                             case "VHI": visibleHeight = Integer.parseInt(strList[1]); break;
                             case "SCROLLX": scrollX = "1".equals(strList[1]); break;
                             case "SCROLLY": scrollY = "1".equals(strList[1]); break;
@@ -224,9 +227,10 @@ public class Level {
                 LevelBlock f = field[x][y];
                 f.updateWall();
                 f.updateCastle();
+                f.updateDoor();
                 // background
                 if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
-                    LevelObject lo = new LevelObject(x, y, Entities.backgrounds_blue_balls.getzIndex());
+                    LevelObject lo = new LevelObject(x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
                     lo.setGfx(bggfx);
                 }
             }
@@ -256,9 +260,11 @@ public class Level {
                 case 'Z':
                     lb.makeIndestructableWall();
                     break;
+                case 'U':
+                    lb.makeInvisibleWall();
+                    break;
                 case '.':
                     lb.makePill();
-                    // TODO: count the pills
                     break;
                 case '*':
                     lb.makePowerPill1();
@@ -281,9 +287,89 @@ public class Level {
                 case 'b':
                     lb.makeBomb();
                     break;
+                case 'd':
+                    lb.makeDynamite();
+                    break;
+                case 'k':
+                    lb.makeKey();
+                    break;
+                case 'u':
+                    lb.makeUmbrella();
+                    break;
                 case 'r':
                     lb.makeRock();
                     break;
+                case 'O':
+                    lb.makeRockMe();
+                    break;
+                case '0':
+                    lb.makeRock();
+                    lb.makeRockMe();
+                    break;
+                case '6':
+                    lb.makeHole(0);
+                    break;
+                case '7':
+                    lb.makeHole(1);
+                    break;
+                case '8':
+                    lb.makeHole(2);
+                    break;
+                case '9':
+                    lb.makeHole(3);
+                    break;
+                case 'o':
+                    lb.makeHole(4);
+                    break;
+                case 'D':
+                    lb.makeDoorClosed();
+                    break;
+                case '|':
+                    lb.makeDoorOpened();
+                    break;
+                /*
+;   F = Speed-Up field
+;   f = Speed-Down field
+;   W = Warp Hole
+;   A = Kill All Field
+;   ^, >, v, < = one way fields
+;   ä, ö, ü, ß = rotating one ways
+;                preset one way directions:
+;                ä=up, ö=right, ü=down, ß=left
+;   ? = surprise field (positive or negative)
+
+;   USEFUL THINGS:
+;   x = ladder
+;   a = kill all pill
+
+;   power pills: (do their job for 10 sec)
+;   * = apple; multipliers: MCSPEED *= 2; GHSPEEDs *= 1
+;   ( = mushroom; multipliers: MCSPEED *= 1; GHSPEEDs *= 2
+;   ) = bonbon; multipliers: MCSPEED *= 1; GHSPEEDs *= 1
+
+;   L = Live
+;   $ = clock, Level time (if level time is limited:) + 60 sec.
+;   c = Letter with level code
+
+;   Boni:
+;   1 = Bonus 100 Pt
+;   2 = Bonus 250 Pt
+;   3 = Bonus 500 Pt
+
+;   BAD THINGS:
+;   w = Whisky
+;   M = mirror
+;   p = poison; can be cured with medicine
+
+;   TOOLS:
+;   _ = mine (nicht aktivated)
+;   , = mine in the ground (aktivated)
+;   + = chocolate = power pill to be carried until needed);
+        multipliers: MCSPEED *= 2; GHSPEEDs *= 1
+        (does it's job for: 10 s)
+;   m = medicine (bottle of)
+;   u = umbrella
+                 */
 
             }
             linepos ++;
@@ -318,6 +404,9 @@ public class Level {
     public LevelBlock getDown( int x, int y ) {
         return getDown( x, y, scrollY);
     }
+    public LevelBlock getDown2(int x, int y) {
+        return field[x][(y-2+height)%height];
+    }
 
     /**
      * Find level block right of the given windowVPixelXPos,windowVPixelYPos position.
@@ -335,6 +424,9 @@ public class Level {
     }
     public LevelBlock getRight( int x, int y ) {
         return getRight( x, y, scrollX);
+    }
+    public LevelBlock getRight2(int x, int y) {
+        return field[(x+2)%width][y];
     }
 
     /**
@@ -354,6 +446,9 @@ public class Level {
     public LevelBlock getUp( int x, int y ) {
         return getUp( x, y, scrollY);
     }
+    public LevelBlock getUp2(int x, int y) {
+        return field[x][(y+2)%height];
+    }
 
     /**
      * Find level block left of the given windowVPixelXPos,windowVPixelYPos position.
@@ -372,6 +467,9 @@ public class Level {
     public LevelBlock getLeft( int x, int y ) {
         return getLeft( x, y, scrollX);
     }
+    public LevelBlock getLeft2(int x, int y) {
+        return field[(x-2+width)%width][y];
+    }
 
 
     public int getVPixelsWidth() {
@@ -383,7 +481,7 @@ public class Level {
     }
 
     public int getVisibleWidth() {
-        return visibleWidth;
+        return VisibleWidth;
     }
 
     public int getVisibleHeight() {
@@ -404,5 +502,27 @@ public class Level {
 
     public int getHeight() {
         return height;
+    }
+
+    public static void increasePills() {
+        pillsNumber ++;
+    }
+
+    public static void decreasePills() {
+        pillsNumber --;
+        // TODO: do we need to trigger something when we reach 0?
+    }
+
+    public static void increaseRockmes() {
+        rockmeNumber ++;
+    }
+
+    public static void decreaseEockmes() {
+        rockmeNumber --;
+        // TODO: do we need to trigger something when we reach 0?
+    }
+
+    public static int getPillsNumber() {
+        return pillsNumber;
     }
 }

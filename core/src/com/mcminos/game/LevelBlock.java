@@ -12,10 +12,12 @@ public class LevelBlock {
     private int x,y; // Position in Level Field
     private Level level; // corresponding level
     private LevelObject wall=null; // The wall or door connected here
+    private LevelObject rock=null; // a rock connected to this field
     private LevelObject pill=null; // a potential pill on this field
     private LevelObject castle=null; // a part of a castle
-    private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions hovering here.
+    private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions, rocks hovering here.
     private HashSet<LevelObject> items=new HashSet<>(); // items on the field
+    private LevelObject door=null; // a potential door
 
 
     /**
@@ -36,7 +38,7 @@ public class LevelBlock {
 
     /**
      *
-     * @param lo remove thsi (either if in items or movables)
+     * @param lo remove this (either if in items or movables)
      * @return
      */
     public boolean remove( LevelObject lo)
@@ -59,13 +61,9 @@ public class LevelBlock {
 
     }
 
-    public void makeWall() {
-        wall = new LevelObject(x,y,Entities.walls_default_00.getzIndex());
-        updateWall();
-    }
-
     public void updateWall() {
-        if( wall != null ) { // only update, if this is a wall
+        // TODO: think about impact of neighborrelation when there are invisible walls -> now the neighbors know!
+        if( wall != null && ! wall.isIndestructable() && ! wall.isInvisible()) { // only update, if this is a normal wall
             // create wall number, based on neighbors
             int wallNr = 0;
             LevelBlock u = level.getUp(x, y);
@@ -103,16 +101,59 @@ public class LevelBlock {
         }
     }
 
+    public void updateDoor() {
+        if( door != null ) { // There is a door here
+            LevelBlock u = level.getUp(x, y);
+            //LevelBlock r = level.getRight(x, y);
+            LevelBlock d = level.getDown(x, y);
+            //LevelBlock l = level.getLeft(x, y);
+            boolean isopen = door.getDoorType() == LevelObject.DoorTypes.HorizontalOpened ||
+                    door.getDoorType() == LevelObject.DoorTypes.VerticalOpened;
+            if (u != null && d != null && u.hasWall() && d.hasWall()) {
+                if(isopen) {
+                    door.setGfx(Entities.walls_door_open_vertical);
+                    door.setDoorType(LevelObject.DoorTypes.VerticalOpened);
+                }
+                else {
+                    door.setGfx(Entities.walls_door_closed_vertical);
+                    door.setDoorType(LevelObject.DoorTypes.VerticalClosed);
+                }
+            }
+            else {// WE will assume then we take a horizontal door
+                if(isopen) {
+                    door.setGfx(Entities.walls_door_open_horizontal);
+                    door.setDoorType(LevelObject.DoorTypes.HorizontalOpened);
+                }
+                else {
+                    door.setGfx(Entities.walls_door_closed_horizontal);
+                    door.setDoorType(LevelObject.DoorTypes.HorizontalClosed);
+                }
+            }
+        }
+    }
+
     public boolean hasWall() {
         return wall != null;
     }
 
+
+    public void makeWall() {
+        wall = new LevelObject(x,y,Entities.walls_default_00.getzIndex(),LevelObject.Types.Wall);
+        updateWall();
+    }
+
     public void makeIndestructableWall() {
-        // TODO: need graphics for indestructable wall
+        // TODO: need Andreas' graphics for indestructable wall
+        wall = new LevelObject(x,y,Entities.walls_indestructable.getzIndex(),LevelObject.Types.IndestructableWall);
+        wall.setGfx(Entities.walls_indestructable);
+    }
+
+    public void makeInvisibleWall() {
+        wall = new LevelObject(x,y,Entities.walls_default_00.getzIndex(),LevelObject.Types.InvisibleWall);
     }
 
     public void makeMcMinos() {
-        LevelObject lo = new LevelObject(x,y,Entities.mcminos_default_front.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.mcminos_default_front.getzIndex(),LevelObject.Types.McMinos);
         lo.setGfx(Entities.mcminos_default_front);
         movables.add(lo);
         Game.mcminos=lo;
@@ -120,19 +161,17 @@ public class LevelBlock {
     }
 
     public void makePill() {
-        LevelObject lo = new LevelObject(x,y,Entities.pills_pill_default.getzIndex());
-        lo.setGfx(Entities.pills_pill_default);
-        pill = lo;
+        putPill();
     }
 
     public void makePowerPill1() {
-        LevelObject lo = new LevelObject(x,y,Entities.pills_power_pill_apple.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.pills_power_pill_apple.getzIndex(),LevelObject.Types.Power1);
         lo.setGfx(Entities.pills_power_pill_apple);
         items.add(lo);
     }
 
     public void makeCastle() {
-        castle = new LevelObject(x,y,Entities.castle_default.getzIndex());
+        castle = new LevelObject(x,y,Entities.castle_default.getzIndex(),LevelObject.Types.Castle);
         updateCastle();
     }
 
@@ -153,39 +192,80 @@ public class LevelBlock {
     }
 
     public void makeGhost1() {
-        LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
         lo.setGfx(Entities.ghosts_hanky);
         movables.add(lo);
     }
 
     public void makeLive() {
-        LevelObject lo = new LevelObject(x,y,Entities.pills_heart.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.pills_heart.getzIndex(),LevelObject.Types.Live);
         lo.setGfx(Entities.pills_heart);
         items.add(lo);
     }
 
     public void makeLetter() {
-        LevelObject lo = new LevelObject(x,y,Entities.extras_letter.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.extras_letter.getzIndex(),LevelObject.Types.Letter);
         lo.setGfx(Entities.extras_letter);
         items.add(lo);
     }
 
     public void makeSkull() {
-        LevelObject lo = new LevelObject(x,y,Entities.extras_skull.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.extras_skull.getzIndex(),LevelObject.Types.Skull);
         lo.setGfx(Entities.extras_skull);
         items.add(lo);
     }
 
     public void makeBomb() {
-        LevelObject lo = new LevelObject(x,y,Entities.extras_bomb_default.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.extras_bomb_default.getzIndex(),LevelObject.Types.Bomb);
         lo.setGfx(Entities.extras_bomb_default);
         items.add(lo);
     }
 
+    public void makeDynamite() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_dynamite_default.getzIndex(),LevelObject.Types.Dynamite);
+        lo.setGfx(Entities.extras_dynamite_default);
+        items.add(lo);
+    }
+
+    public void makeKey() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_key.getzIndex(),LevelObject.Types.Key);
+        lo.setGfx(Entities.extras_key);
+        items.add(lo);
+    }
+
+    public void makeUmbrella() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_umbrella.getzIndex(),LevelObject.Types.Umbrella);
+        lo.setGfx(Entities.extras_umbrella);
+        items.add(lo);
+    }
+
+
     public void makeRock() {
-        LevelObject lo = new LevelObject(x,y,Entities.extras_rock.getzIndex());
+        LevelObject lo = new LevelObject(x,y,Entities.extras_rock.getzIndex(),LevelObject.Types.Rock);
         lo.setGfx(Entities.extras_rock);
-        // TODO: add to right structure
+        rock = lo;
+        movables.add(lo);
+        Game.movables.add(lo);
+    }
+
+    public void makeRockMe() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_rock_me.getzIndex(),LevelObject.Types.Rockme);
+        lo.setGfx(Entities.extras_rock_me);
+        level.increaseRockmes();
+    }
+
+    public void makeDoorClosed() {
+        LevelObject lo = new LevelObject(x,y,Entities.walls_door_closed_horizontal.getzIndex(),LevelObject.Types.DoorClosed);
+        // graphics comes in wall update
+        lo.setDoorType(LevelObject.DoorTypes.HorizontalClosed);
+        door = lo;
+    }
+
+    public void makeDoorOpened() {
+        LevelObject lo = new LevelObject(x,y,Entities.walls_door_closed_horizontal.getzIndex(),LevelObject.Types.DoorOpened);
+        // graphics comes in wall update
+        lo.setDoorType(LevelObject.DoorTypes.HorizontalOpened);
+        door = lo;
     }
 
     public void putMoveable(LevelObject lo) {
@@ -194,5 +274,44 @@ public class LevelBlock {
 
     public void putItem(LevelObject lo) {
         items.add(lo);
+    }
+
+    public boolean hasRock() {
+        return rock != null;
+    }
+
+    public LevelObject getRock() {
+        return rock;
+    }
+
+    public void setRock(LevelObject rock) {
+        this.rock = rock;
+    }
+
+    public boolean hasPill() {
+        return pill != null;
+    }
+
+
+    public void removePill() {
+        level.decreasePills();
+        pill.dispose();
+        pill = null;
+    }
+
+    public void putPill() {
+        level.increasePills();
+        LevelObject lo = new LevelObject(x,y,Entities.pills_pill_default.getzIndex(),LevelObject.Types.Pill);
+        lo.setGfx(Entities.pills_pill_default);
+        pill = lo;
+    }
+
+    /**
+     * Create a hole in the ground
+     * @param i 0: smallest, 4: biggest
+     */
+    public void makeHole(int i) {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.Hole);
+        lo.setHoleLevel( i );
     }
 }
