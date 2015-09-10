@@ -17,7 +17,7 @@ public class Level {
     private static int pillsNumber = 0;
     private static int rockmeNumber = 0;
     private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
-    private String author = "McMinos";
+    private String author = "Main";
     private int number = 199;
     private int showNumber = 199;
     private String accessCode = "";
@@ -157,7 +157,7 @@ public class Level {
             e.printStackTrace();
         }
         // select background
-        GameGraphics bggfx = null;
+        Graphics bggfx = null;
         switch(background) {
             case "1":
             case "pavement-01":
@@ -237,8 +237,8 @@ public class Level {
                 }
             }
         // update some related variables
-        vPixelsWidth = width << Game.virtualBlockResolutionExponent;
-        vPixelsHeight = height << Game.virtualBlockResolutionExponent;
+        vPixelsWidth = width << Root.virtualBlockResolutionExponent;
+        vPixelsHeight = height << Root.virtualBlockResolutionExponent;
     }
 
     /**
@@ -555,4 +555,6 @@ public class Level {
     public void addWarpHole(LevelBlock warpHoleBlock) {
         warpHoleBlocks.add(warpHoleBlock);
     }
+
+
 }

@@ -80,7 +80,7 @@ public class LevelBlock {
                 wallNr += 4;
             if (l != null && l.hasWall())
                 wallNr += 8;
-            GameGraphics[] walls = { // TODO: consider how to switch to different walls (for example castle)!
+            Graphics[] walls = { // TODO: consider how to switch to different walls (for example castle)!
                     Entities.walls_default_00,
                     Entities.walls_default_01,
                     Entities.walls_default_02,
@@ -157,8 +157,8 @@ public class LevelBlock {
         LevelObject lo = new LevelObject(x,y,Entities.mcminos_default_front.getzIndex(),LevelObject.Types.McMinos);
         lo.setGfx(Entities.mcminos_default_front);
         movables.add(lo);
-        Game.mcminos=lo;
-        Game.destination.setXY(x, y);
+        Root.mcminos=lo;
+        Root.destination.setXY(x, y);
     }
 
     public void makePill() {
@@ -247,7 +247,7 @@ public class LevelBlock {
         lo.setGfx(Entities.extras_rock);
         rock = lo;
         movables.add(lo);
-        Game.movables.add(lo);
+        Root.movables.add(lo);
     }
 
     public void makeRockMe() {
