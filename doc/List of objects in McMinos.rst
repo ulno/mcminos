@@ -12,12 +12,20 @@ Alive
 =====
 
 * McMinos
+
+  * default (still, left, down, right, up)
+  * power(ed) (still, left, down, right, up)
+  * poisoned (still)
+  * drunken (still = moving?)
+  * cloaked (still = moving)
+
 * Ghosts
 
-  * Hanky
-  * Panky
-  * Zarathustra
-  * JumpingPill
+  * Ghost 1, Hanky
+  * Ghost 2, Panky
+  * Ghost 3, Zarathustra
+  * Ghost 4, JumpingPill
+  * Ghost 5 (?)
 
 Inanimate
 =========
@@ -26,10 +34,11 @@ Inanimate
 
   * default, 16 types (see graphics)
   * InvisibleWall
-  * IndestructibleWall
-  * Door
+  * IndestructibleWall -- TODO: select existing sketch or redraw
+  * Door -- TODO: fix problem with indestructable walls
   * Castle
-  * Hole
+  * Gravestone -- TODO: redraw, possibly as a cross again (see ATARI version)
+  * Hole -- TODO: draw graphics for areas of connected holes
   * Field
 
     + SpeedUp
@@ -38,37 +47,39 @@ Inanimate
     + RevolvingArrow
     + DeathField
         (i.e. skull field)
-    + WarpHole
+    + WarpHole -- TODO: try different animation
     + Rock
-    + RockTargetField
+    + RockTargetField -- TODO: agree upon selection among sketches
 
 Item
 ====
 
-* Bonus
-* Clock (increases available time in time-limited levels)
+* Bonus -- TODO: piggy bank exists, add others according to ATARI version
+* Cloak (disguises McMinos as ghost)
+* Clock (increases available time in time-limited levels) -- TODO: clock + animations
 * Explosive
 
-  * Bomb
-  * Dynamite
-  * Mine
+  * Bomb (default, fused, explosion)
+  * Dynamite (default, fused, explosion)
+  * Mine (default, active)
 
-* FlyingTool (was umbrella on Atari, will be cloud)
-* Letter (provides level code for direct access to level)
-* Life
+* FlyingTool (was umbrella on Atari, may now be cloud) -- TODO: pick umbrella or cloud
+* Letter (provides level code for direct access to level) -- TODO: do we still need this?
+* Life = heart
 * Mirror
-* NextLevelTool (was ladder on Atari, may be different item now)
+* NextLevelTool (was ladder on Atari, may be different item now) -- TODO: draw
 * Skull
-* Surprise
+* Surprise -- TODO: do we still need this? If so, draw nicely wrapped present or similar
 * Edible
 
   * Pill
   * Medicine
   * Poison
   * PowerPill
-  * Whiskey
+  * Whiskey -- TODO: draw
 
 Background
 ==========
 
-* diverse background tiles
+* diverse background tiles -- TODO: select usable background among existing sketches, draw new ones.
+
