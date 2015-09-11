@@ -1,10 +1,16 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.awt.*;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Semaphore;
 
@@ -14,7 +20,7 @@ import java.util.concurrent.Semaphore;
  * This is the class having all static game content which needs to be accessed by all other modules.
  *
  */
-public class Game {
+public class Root {
     // constants
     public final static int timeResolution = 128; // How often per second movements are updated?
     public final static int virtualBlockResolution = 128; // How many virtual pixels is a block big (independent of actually used resolution), must be a power of 2
@@ -24,7 +30,9 @@ public class Game {
     public final static int virtualBlockResolutionExponent = Util.log2binary(virtualBlockResolution);
     // not needed (yet?) public final static int baseVPixelSpeedPerFrame = (int) Math.round(baseSpeed * virtualBlockResolution / timeResolution);
 
-    static SpriteBatch batch;
+    public static SpriteBatch batch;
+    public static Stage stage;
+    public static BitmapFont defaultFont;
     static Entities gfx = null;
     static long gameTime = 0;
     static int windowVPixelXPos; // windowVPixelXPos-position (left) of game window in main game-screen in virtual pixels
@@ -44,21 +52,28 @@ public class Game {
     private static Mover mcmMover;
     public static HashSet<LevelObject> movables=new HashSet<>(); // all moveables - mcminos
     static Semaphore updateLock = new Semaphore(1);
+    private static LevelBlock lastBlock = null;
+    static int bombs=0; // number of bombs carried by mcminos
+    static int dynamites=0; // number of dynamites carried by mcminos
+    static int keys=0; // number of keys carried by mcminos
+    static int umbrellas = 0; // number of umbrellas carried by mcminos
+    static int lives = 3; // number of lives left
+    public static HashMap<String,Sound> soundList = new HashMap<>();
 
     public static void setResolution(int resolution) {
-        Game.resolution = resolution;
+        Root.resolution = resolution;
         resolutionExponent = Util.log2binary(resolution);
-        GameGraphics.setResolutionAll();
+        Graphics.setResolutionAll();
     }
 
-    private static Game ourInstance = new Game();
+    private static Root ourInstance = new Root();
     public static long gameFrame = 0;
 
-    public static Game getInstance() {
+    public static Root getInstance() {
         return ourInstance;
     }
 
-    private Game() {
+    private Root() {
     }
 
     /**
@@ -81,8 +96,8 @@ public class Game {
      * @return
      */
     private int computeWindowCoordinate(int inputPos, int mcmPos, boolean scroll, int totalBlocks, int visibleVPixels) {
-        // We compute the view based on McMinos' position
-        // when we are calling this, we try to make sure McMinos is visible near the center of the screen
+        // We compute the view based on Main' position
+        // when we are calling this, we try to make sure Main is visible near the center of the screen
         // However, scrollability of the level needs to be respected.
         // compute the distance of mcminos from the center
         // TODO: factor in delta time to make scrolling smooth or move to normal game movement mechanics
@@ -145,8 +160,8 @@ public class Game {
                 windowVPixelHeight = level.getVisibleHeight() << virtualBlockResolutionExponent;
                 windowPixelHeight = level.getVisibleHeight() << resolutionExponent;
             }
-            Game.fullPixelWidth = Game.getLevelWidth() << resolutionExponent;
-            Game.fullPixelHeight = Game.getLevelHeight() << resolutionExponent;
+            Root.fullPixelWidth = Root.getLevelWidth() << resolutionExponent;
+            Root.fullPixelHeight = Root.getLevelHeight() << resolutionExponent;
         }
     }
 
@@ -160,11 +175,13 @@ public class Game {
         windowVPixelYPos = 0; // TODO: this might have to be initialized from a saved state or just computed based on mcminos position
         //resize();  now donne in resolution setting
         batch = new SpriteBatch();
+        stage = new Stage(new ScreenViewport());
+        defaultFont = new BitmapFont(Gdx.files.internal("fonts/liberation-sans-64.fnt"));
         density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
         // Basically, based on density, we want to set out default zoomlevel.
         gameResolutionCounter = 0;
         resolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
-        Game.setResolution(resolution);
+        Root.setResolution(resolution);
         // create destination-object
         destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
     }
@@ -231,8 +248,8 @@ public class Game {
     }
 
     public static LevelBlock getLevelBlockFromVPixel( int vPixelX, int vPixelY) {
-        int w = Game.getLevelWidth();
-        int h = Game.getLevelHeight();
+        int w = Root.getLevelWidth();
+        int h = Root.getLevelHeight();
         int roundx = (vPixelX + (virtualBlockResolution >> 1)) >> virtualBlockResolutionExponent;
         int roundy = (vPixelY + (virtualBlockResolution >> 1)) >> virtualBlockResolutionExponent;
         //if( level.getScrollX() )
@@ -328,7 +345,7 @@ public class Game {
     private void doMovement() {
         // move everybody
         try { // needs to be synchronized against drawing
-            Game.updateLock.acquire();
+            Root.updateLock.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -342,7 +359,7 @@ public class Game {
 
         checkCollisions();
 
-        Game.updateLock.release();
+        Root.updateLock.release();
     }
 
     /**
@@ -355,9 +372,256 @@ public class Game {
             LevelBlock currentBlock = getLevelBlockFromVPixel( mcminos.getVX(), mcminos.getVY() );
             if( currentBlock.hasPill() )
             {
+                soundPlay("knurps");
                 currentBlock.removePill();
             }
+            // check, if mcminos actually moved or if it's the same field as last time
+            if(currentBlock != lastBlock) {
+                for( LevelObject b:currentBlock.getCollectibles()) {
+                    switch( b.getType() ) {
+                        case Bomb:
+                            soundPlay("tools");
+                            bombs ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            break;
+                        case Dynamite:
+                            soundPlay("tools");
+                            dynamites ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            break;
+                        case Key:
+                            soundPlay("tools");
+                            keys ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            break;
+                        case Umbrella:
+                            soundPlay("tools");
+                            umbrellas ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            break;
+                        case Live:
+                            soundPlay("life");
+                            lives ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            break;
+                    }
+                }
+            }
+            lastBlock = currentBlock;
+        }
+    }
+    
+    /*
+    void snd_killed( void )
+{
+	play_sound( GHOSTS, 3, 300 );
+}
+
+ Sound fr Powerpill 
+    void snd_power( void )
+    {
+        play_sound( POWER, 2, 300 );
+    }
+
+     Sound fr Tool 
+    void snd_tool( void )
+    {
+        play_sound( TOOLS, 1, 30 );
+    }
+
+     Sound fr neues Leben 
+    void snd_life( void )
+    {
+        play_sound( NEWLIFE, 2, 50 );
+    }
+
+     Sound fr nchsten Level 
+    void snd_levelend( void )
+    {
+        play_sound(APPLAUS, 255, 800 );
+    }
+
+     Sound fr neues Leben 
+    void snd_newlife( void )
+    {
+        play_sound( NEWLIFE, 2, 50 );
+    }
+
+     Sound fr Vergiftung 
+    void snd_pacpoison( void )
+    {
+        play_sound( POISON, 2, 300 );
+    }
+
+     Sound fr Gegengift 
+    void snd_antidot( void )
+    {
+        play_sound( TOOLS, 1, 30 );
+    }
+
+     Sound fr Explosion 
+    void snd_explosion( void )
+    {
+        play_sound( EXPLOSION, 4, 300 );
+    }
+
+     Sound fr Spiegel 
+    void snd_mirror( void )
+    {
+        play_sound( FADE, 2, 200 );
+    }
+
+     Sound fr Speedup 
+    void snd_speedup( void )
+    {
+        play_sound( SPEEDUP, 2, 300 );
+    }
+
+     Sound fr Slowdown 
+    void snd_slowdown( void )
+    {
+        play_sound( SLOWDOWN, 2, 200 );
+    }
+
+     Sound fr drunken 
+    void snd_drunken( void )
+    {
+        play_sound( ETHANOLE, 2, 200 );
+    }
+
+     Sound fr killall 
+    void snd_killall( void )
+    {
+        play_sound( KILLALL, 2, 100 );
+    }
+
+     Sound fr letter 
+    void snd_letter( void )
+    {
+        play_sound( TOOLS, 1, 30 );
+    }
+
+     Sound fr Lochvergrerung 
+    void snd_hole( void )
+    {
+        play_sound( HOLEGROW, 2, 20 );
+    }
+
+     Sound fr fallenden Stein bzw. aufbrechenden Boden 
+    void snd_rockfall( void )
+    {
+        play_sound( SPLASH, 3, 200 );
+    }
+
+     Sound fr warpin 
+    void snd_warpin( void )
+    {
+        play_sound( BLUB, 2, 200 );
+    }
+
+     Sound fr warpout 
+    void snd_warpout( void )
+    {
+        play_sound( BULB, 2, 200 );
+    }
+
+     Sound fr Tre ffnen 
+    void snd_opendoor( void )
+    {
+        play_sound( QUIETSCH, 2, 200 );
+    }
+
+     Sound fr Tre schlieen 
+    void snd_closedoor( void )
+    {
+        play_sound( RUMS, 2, 200 );
+    }
+
+     Sound fr Geist erschlagen 
+    void snd_beat( void )
+    {
+        play_sound( GOTYOU, 2, 100 );
+    }
+
+     Sound fr Stein schieben 
+    void snd_moverock( void )
+    {
+        play_sound( SND_MOVEROCK, 2, 120 );
+    }
+
+     Sound fr fallenden Main
+    void snd_falling( void )
+    {
+        play_sound( FALLING, 2, 300 );
+    }
+
+     Sound fr brennende Zndschnur 
+    void snd_zisch( void )
+    {
+        play_sound( ZISCH, 2, 400 );
+    }
+
+     Uhrticken 
+    void snd_tick( void )
+    {
+        play_sound( TICK, 0, 0 );
+    }
+
+     Beep 
+    void snd_beep( void )
+    {
+        play_sound( BEEP, 2, 30 );}
+    */
+    
+    
+
+    public static void loadSounds() {
+        String[] soundNames=new String[]{"aaahhh",
+                "applaus",
+                "beep",
+                "blub",
+                "bulb",
+                "error",
+                "ethanole",
+                "explosio",
+                "fade2",
+                "fade3",
+                "fade",
+                "falling",
+                "ghosts",
+                "gotyou",
+                "hihat",
+                "holegrow",
+                "killall",
+                "knurps",
+                "life",
+                "moverock",
+                "orchestr",
+                "panflute",
+                "poison",
+                "power2",
+                "power",
+                "quietsch",
+                "rums",
+                "slowdown",
+                "speedup",
+                "splash",
+                "tick",
+                "tools",
+                "trommeln",
+                "zisch"};
+        for( String s:soundNames ) {
+            Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/" + s + ".wav"));
+            soundList.put(s, sound);
         }
     }
 
+    public static void soundPlay(String s) {
+        soundList.get(s).play(1.0f);
+    }
 }

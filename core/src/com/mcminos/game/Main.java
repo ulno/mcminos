@@ -1,30 +1,33 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 
-public class McMinos implements ApplicationListener, GestureListener, InputProcessor {
+/**
+ * Created by ulno on 27.08.15.
+ *
+ * This is the Main class from where the game is controlled.
+ *
+ */
+public class Main extends Game implements ApplicationListener, GestureListener, InputProcessor {
     private int touchDownX;
     private int touchDownY;
     private long lastZoomTime = 0;
-    private Game g = Game.getInstance();
+    private Root g = Root.getInstance();
 
     @Override
 	public void create () {
-        InputMultiplexer im = new InputMultiplexer();
+        Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         GestureDetector gd = new GestureDetector(this);
-        im.addProcessor(gd);
-        im.addProcessor(this);
+        InputMultiplexer im = new InputMultiplexer(gd,this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
         g.init();
         g.loadLevel("levels/level023.asx");
         g.startMover();
+        g.loadSounds();
     }
 
     @Override
@@ -47,12 +50,13 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		g.batch.begin();
         try {
-            Game.updateLock.acquire();
+            Root.updateLock.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         LevelObject.drawAll();
-        Game.updateLock.release();
+        Root.updateLock.release();
+        g.defaultFont.draw(g.batch,"Test " + g.level.getPillsNumber(),20,Gdx.graphics.getHeight()-20);
         /*for( int windowVPixelXPos=0; windowVPixelXPos<50; windowVPixelXPos++ )
             for( int windowVPixelYPos=0; windowVPixelYPos<50; windowVPixelYPos++ )
                 Entities.backgrounds_dry_grass.draw(batch, gameTime, windowVPixelXPos, windowVPixelYPos, offsetX, offsetY);
@@ -118,34 +122,34 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
         if( pointer>0) return false;
         // map windowVPixelXPos windowVPixelYPos to game coordinates
         // TODO: consider only first button/finger
-        int x = Util.shiftLeftLogical(screenX, Game.virtualBlockResolutionExponent - Game.resolutionExponent) + Game.windowVPixelXPos - (Game.virtualBlockResolution >> 1);
-        //if(Game.getScrollX()) { allways do this
-            if ( x >= Game.getVPixelsLevelWidth() )
-                x -= Game.getVPixelsLevelWidth();
-            if ( x <= - (Game.virtualBlockResolution >> 1) )
-                x += Game.getVPixelsLevelWidth();
+        int x = Util.shiftLeftLogical(screenX, Root.virtualBlockResolutionExponent - Root.resolutionExponent) + Root.windowVPixelXPos - (Root.virtualBlockResolution >> 1);
+        //if(Root.getScrollX()) { allways do this
+            if ( x >= Root.getVPixelsLevelWidth() )
+                x -= Root.getVPixelsLevelWidth();
+            if ( x <= - (Root.virtualBlockResolution >> 1) )
+                x += Root.getVPixelsLevelWidth();
         //}
         //else {
-        //    if( x >= Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1) )
-        //        x = Game.windowVPixelXPos + Game.getWindowVPixelWidth() - (Game.virtualBlockResolution >> 1);
+        //    if( x >= Root.windowVPixelXPos + Root.getWindowVPixelWidth() - (Root.virtualBlockResolution >> 1) )
+        //        x = Root.windowVPixelXPos + Root.getWindowVPixelWidth() - (Root.virtualBlockResolution >> 1);
         //}
 
-        int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY, (Game.virtualBlockResolutionExponent - Game.resolutionExponent))
-                + Game.windowVPixelYPos - (Game.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
-        //if(Game.getScrollY()) { allways
-            if( y >= Game.getVPixelsLevelHeight())
-                y -= Game.getVPixelsLevelHeight();
-            if( y <= - (Game.virtualBlockResolution >> 1) )
-                y += Game.getLevelHeight();
+        int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY, (Root.virtualBlockResolutionExponent - Root.resolutionExponent))
+                + Root.windowVPixelYPos - (Root.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
+        //if(Root.getScrollY()) { allways
+            if( y >= Root.getVPixelsLevelHeight())
+                y -= Root.getVPixelsLevelHeight();
+            if( y <= - (Root.virtualBlockResolution >> 1) )
+                y += Root.getLevelHeight();
         //}
         //else {
-        //    if( y >= Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1) )
-        //        y = Game.windowVPixelYPos + Game.getWindowVPixelHeight() - (Game.virtualBlockResolution >> 1);
+        //    if( y >= Root.windowVPixelYPos + Root.getWindowVPixelHeight() - (Root.virtualBlockResolution >> 1) )
+        //        y = Root.windowVPixelYPos + Root.getWindowVPixelHeight() - (Root.virtualBlockResolution >> 1);
         //}
-        Game.destination.moveTo(x, y);
-        // Check if it's on McMinos field
+        Root.destination.moveTo(x, y);
+        // Check if it's on Main field
         // if collide, remove destination graphics
-        Game.destination.setGfx(Entities.destination);
+        Root.destination.setGfx(Entities.destination);
         return false;
     }
 
@@ -213,15 +217,15 @@ public class McMinos implements ApplicationListener, GestureListener, InputProce
     public boolean zoom(float initialDistance, float distance) {
         if( g.gameTime - lastZoomTime > 500 ) { // ignore some events
             if( initialDistance > distance + g.windowPixelHeight /4) {
-                Game.gameResolutionCounter++;
-                if (Game.gameResolutionCounter > Entities.resolutionList.length - 1)
-                    Game.gameResolutionCounter = Entities.resolutionList.length - 1;
+                Root.gameResolutionCounter++;
+                if (Root.gameResolutionCounter > Entities.resolutionList.length - 1)
+                    Root.gameResolutionCounter = Entities.resolutionList.length - 1;
             }
             else if( initialDistance < distance - g.windowPixelHeight /4) {
-                Game.gameResolutionCounter--;
-                if (Game.gameResolutionCounter < 0) g.gameResolutionCounter = 0;
+                Root.gameResolutionCounter--;
+                if (Root.gameResolutionCounter < 0) g.gameResolutionCounter = 0;
             }
-            g.setResolution(Entities.resolutionList[Game.gameResolutionCounter]);
+            g.setResolution(Entities.resolutionList[Root.gameResolutionCounter]);
             lastZoomTime = g.gameTime;
         }
         return false; // consume event

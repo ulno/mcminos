@@ -6,18 +6,21 @@ import java.util.Collections;
 /**
  * Created by ulno on 17.08.15.
  *
- * Actual objects of a Level. Walls, McMinos, Doors, Ghosts and pills are
- * created here. the corresponding graphics are in GameGraphics
+ * Actual objects of a Level. Walls, Main, Doors, Ghosts and pills are
+ * created here. the corresponding graphics are in Graphics
  */
 public class LevelObject implements  Comparable<LevelObject> {
 
 
-    public enum Types {Unspecified, Power1, Power2, IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter, Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella, DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay, Hole};
+    public enum Types {Unspecified, Power1, Power2,
+        IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter,
+        Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
+        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
-    private GameGraphics gfx; // actual Graphics for the object
+    private Graphics gfx; // actual Graphics for the object
     private int zIndex = maxzIndex; // by default it is too high
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
     private Mover mover = null;
@@ -33,9 +36,10 @@ public class LevelObject implements  Comparable<LevelObject> {
      * @param zIndex need to know zIndex to allow correct drawing order later
      */
     LevelObject(int x, int y, int zIndex, Types type) {
-        this.x = x << Game.virtualBlockResolutionExponent;
-        this.y = y << Game.virtualBlockResolutionExponent;
+        this.x = x << Root.virtualBlockResolutionExponent;
+        this.y = y << Root.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
+        this.type = type;
         // add to static list
         int index = Collections.binarySearch(all, this);
         if(index<0)
@@ -47,7 +51,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         LevelObject(windowVPixelXPos,windowVPixelYPos,maxzIndex);
     }
 */
-    public void setGfx(GameGraphics gfx) {
+    public void setGfx(Graphics gfx) {
         this.gfx = gfx;
     }
 
@@ -72,18 +76,18 @@ public class LevelObject implements  Comparable<LevelObject> {
     public void moveTo(int x, int y) {
         LevelBlock from = levelBlock;
         // check and eventually fix coordinates
-        // if(Game.getScrollX()) { allways allow
-            if (x < 0.0) x += Game.getLevelWidth() << Game.virtualBlockResolutionExponent;
-            if (x >= Game.getLevelWidth() << Game.virtualBlockResolutionExponent)
-                x -= Game.getLevelWidth() << Game.virtualBlockResolutionExponent;
+        // if(Root.getScrollX()) { allways allow
+            if (x < 0.0) x += Root.getLevelWidth() << Root.virtualBlockResolutionExponent;
+            if (x >= Root.getLevelWidth() << Root.virtualBlockResolutionExponent)
+                x -= Root.getLevelWidth() << Root.virtualBlockResolutionExponent;
         //}
-        //if(Game.getScrollY()) {
-            if (y < 0.0) y += Game.getLevelHeight() << Game.virtualBlockResolutionExponent;
-            if (y >= Game.getLevelHeight() << Game.virtualBlockResolutionExponent)
-                y -= Game.getLevelHeight() << Game.virtualBlockResolutionExponent;
+        //if(Root.getScrollY()) {
+            if (y < 0.0) y += Root.getLevelHeight() << Root.virtualBlockResolutionExponent;
+            if (y >= Root.getLevelHeight() << Root.virtualBlockResolutionExponent)
+                y -= Root.getLevelHeight() << Root.virtualBlockResolutionExponent;
         //}
 
-        LevelBlock to = Game.getLevelBlockFromVPixel(x, y);
+        LevelBlock to = Root.getLevelBlockFromVPixel(x, y);
         // needs to be updated to check for collisions via associations
         if(from != null)
             from.removeMovable(this);
@@ -100,7 +104,7 @@ public class LevelObject implements  Comparable<LevelObject> {
      * assign a matching LevelBlock based on th ecurrent coordinates
      */
     public void assignLevelBlock() {
-        levelBlock = Game.getLevelBlockFromVPixel(x, y);
+        levelBlock = Root.getLevelBlockFromVPixel(x, y);
     }
 
 
@@ -144,8 +148,8 @@ public class LevelObject implements  Comparable<LevelObject> {
     public void setHoleLevel(int holeLevel) {
         this.holeLevel = holeLevel;
         // set gfx
-        GameGraphics[] holes =
-                new GameGraphics[]{Entities.holes_0, Entities.holes_1,
+        Graphics[] holes =
+                new Graphics[]{Entities.holes_0, Entities.holes_1,
                         Entities.holes_2, Entities.holes_3, Entities.holes_4};
         this.setGfx( holes[holeLevel]);
     }
@@ -164,5 +168,10 @@ public class LevelObject implements  Comparable<LevelObject> {
     public DoorTypes getDoorType() {
         return doorType;
     }
+
+    public Types getType() {
+        return type;
+    }
+
 
 }
