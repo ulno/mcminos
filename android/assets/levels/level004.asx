@@ -1,0 +1,62 @@
+;	LEVEL 4
+;	FOR MAC MINOS - Versions > 0.51
+
+AUTHOR: 	NoPe;	Andreas Neudecker
+NUMBR:		4
+ACCCD:		666
+VERSION:	0900
+
+LWID:		13
+LHI:		20
+VWID:		13
+VHI:		20
+SCROLLX:	1
+SCROLLY:	1
+BACK:		4
+
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+MCSPEED:	1
+
+GHOST1:		6
+GHSPEED1:	1
+AGIL1:		30
+GRTIME1:	3
+
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
+
+LIVE:		0,999
+CHOC:		0,999
+BMBS:		0,999
+DYNA:		0,999
+MINE:		0,999
+MEDC:		0,999
+UMBR:		0,999
+KEYS:		0,999
+
+LEVEL:
+X.XXX..XXXXDX
+X......L....X
+X.XXXX.XXXX.X
+..kkb..>..D..
+X.XXXX.XXXX.X
+X.D..<..kkk.X
+X.XXXX.XXXXGX
+X.kk.k.>k.D.X
+X.XXXX.XXXX.X
+..D..<b.kkk..
+X.XXXX.XXXXkX
+X.>..D..kkk.X
+X.XXXX.XXXX.X
+..kkk..>b.D..
+X.XXXX.XXXX.X
+X.kkk.P>..D.X
+X.XXXXXXXXX.X
+....XCC...c..
+X....CCXb...X
+X.XXX..XXXX.X
+#

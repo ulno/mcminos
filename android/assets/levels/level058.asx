@@ -1,0 +1,69 @@
+;	LEVEL 58
+;	FOR MAC MINOS - Version 0.1
+;	Level von Walter Norbisrath
+
+AUTHOR:		TBD
+NUMBR:  	58
+ACCCD:  	1013451
+VERSION:	1100
+
+LWID:	 	34
+LHI:	 	34
+VWID:	 	34
+VHI:	 	34
+SCROLLX:	0
+SCROLLY:	0
+BACK:	    9
+
+LTIME:		0
+RSTRT:	    0
+MIRROR:	    0
+
+MCSPEED:    1
+
+GHOST1:		1
+GHSPEED1:   1
+GRTIME1:    10
+AGIL1:		50
+
+CHOC:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,0
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X1111           OO           2222X
+X1111          O  O          2222X
+X1111         O    O         2222X
+X  G   G     O      O    GG  G   X
+X           O        O           X
+X          O          O  G   G   X
+X  G   G  O    rrrrr   O         X
+X        O     r   r    O        X
+X       O      r   r     O       X
+X      O rrr   r   r      O      X
+X  G  O r   r  r   r       O     X
+X    O   r  r  r   r        O    X
+X  GOrrrrr  r  r   r         O   X
+X  O r      r  r   r          O  X
+X O  r   P  r  r   r           O X
+XO c r      rrrr   r            OX
+XO   r             r            OX
+X O  r             r           O X
+X  O r             r          O  X
+X   O rrrrrrrrrrrrrr         O   X
+X    O                      O    X
+X     O                    O  G  X
+X      O                  O      X
+X   G   O                O       X
+X        O              O      G X
+X         O            O         X
+X          O          O          X
+X     G     O        O       G   X
+X            O      O            X
+X3333         O    O         2222X
+X3333G         O  O   G      2222X
+X3333       G   OO   G      G2222X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#

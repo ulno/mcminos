@@ -1,0 +1,91 @@
+;	LEVEL 042 ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	07.04.93
+;	Last changes:	07.04.93
+;	Done by.....:	Andreas Neudecker
+
+;   HEADER ------------------------------------------------*
+AUTHOR:		NoPe;		Andreas Neudecker
+NUMBR:		42
+ACCCD:		42
+VERSION:	1100
+
+;   LEVELFORMAT -------------------------------------------*
+LWID:		12
+LHI:		25
+VWID:		12
+VHI:		25
+SCROLLX:	0
+SCROLLY:	0
+BACK:		21
+
+;   STATUS-Angaben ----------------------------------------*
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+;   McMINOS -----------------------------------------------*
+MCSPEED:	1
+
+;   GEISTER -----------------------------------------------*
+GHOST1:		3
+GHSPEED1:	1
+AGIL1:		20
+GRTIME1:	5
+
+GHOST2:		0
+GHSPEED2:	1
+AGIL2:		10
+GRTIME2:	5
+PILLMAX2:	0
+PILLFREQ2:	12
+
+GHOST3:		0
+GHSPEED3:	1
+AGIL3:		20
+GRTIME3:	10
+TRANSWALL3:	20
+
+GHOST4:		0
+GHSPEED4:	1
+AGIL4:		10
+GRTIME4:	5
+
+;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+KEYS:		0,999
+BMBS:		0,999
+DYNA:		0,0
+MINE:		0,999
+CHOC:		0,0
+MEDC:		0,999
+UMBR:		0,999
+
+;	LEVELDATEN --------------------------------------------*
+LEVEL:
+XXXXXXXXXXXX
+Xb........bX
+X.XX.XX.XX.X
+X.....2....X
+X.XXXW.XXX.X
+X..........X
+X.XX.XX.XX.X
+X....P.....X
+X.XXX.bXXX.X
+X..........X
+X.XX.XX.XX.X
+X.....3....X
+X.XXXCCXXX.X
+X....CC...3X
+X.XX.XX.XX.X
+X..1.......X
+X.XXX..XXX.X
+X..........X
+X.XX.XXbXX.X
+X..........X
+X.XXX.WXXX.X
+X..........X
+X.XX.XX.XX.X
+Xb........bX
+XXXXXXXXXXXX
+#	; ENDE DER LEVELDATEN ---------------------------------*

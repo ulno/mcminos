@@ -1,0 +1,78 @@
+;	LEVEL 070 ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	xx.xx.92
+;	Last changes:	12.06.93
+;	Done by.....:	Andreas Neudecker
+
+;	HEADER ------------------------------------------------*
+AUTHOR: 	NoPe;		Andreas Neudecker
+NUMBR:		70
+ACCCD:		199014817
+VERSION:	1100
+
+;	LEVELFORMAT -------------------------------------------*
+LWID:		20
+LHI:		12
+VWID:		20
+VHI:		12
+SCROLLX:	0
+SCROLLY:	0
+BACK:		47
+
+;	STATUS-Angaben ----------------------------------------*
+LTIME:		3
+RSTRT:		8		; BONUSLEVEL
+MIRROR: 	0
+
+;	McMINOS -----------------------------------------------*
+MCSPEED:	4
+
+;	GEISTER -----------------------------------------------*
+GHOST1: 	2
+GHSPEED1:	1
+AGIL1:		30
+GRTIME1:	10
+
+GHOST2: 	0
+GHSPEED2:	1
+AGIL2:		0
+GRTIME2:	1
+PILLMAX2:	0
+PILLFREQ2:	1
+
+GHOST3: 	0
+GHSPEED3:	1
+AGIL3:		50
+GRTIME3:	10
+TRANSWALL3: 10
+
+GHOST4: 	0
+GHSPEED4:	1
+AGIL4:		50
+GRTIME4:	10
+
+;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+KEYS:		0,0
+BMBS:		0,0
+DYNA:		0,0
+MINE:		0,0
+CHOC:		0,0
+MEDC:		0,0
+UMBR:		0,999
+
+;	LEVELDATEN --------------------------------------------*
+LEVEL:
+XXXXXXXXXXXXXXXXXXXX
+X312313131323231232X
+X121323123112323232X
+X131231231231XXXX31X
+X2X121X321312312312X
+X3X231X131323231232X
+X1X123XXXXXXX231231X
+X313231313132332323X
+X31XX13131323231232X
+X131231231231231231X
+XP1231313.X23231232X
+XXXXXXXXXXXXXXXXXXXX
+#	;_ENDE_DER_LEVELDATEN_---------------------------------*
