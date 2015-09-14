@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Semaphore;
@@ -59,6 +59,42 @@ public class Root {
     static int umbrellas = 0; // number of umbrellas carried by mcminos
     static int lives = 3; // number of lives left
     public static HashMap<String,Sound> soundList = new HashMap<>();
+    private static Main main;
+
+    public static String[] soundNames = new String[]{"aaahhh",
+            "applaus",
+            "beep",
+            "blub",
+            "bulb",
+            "error",
+            "ethanole",
+            "explosio",
+            "fade2",
+            "fade3",
+            "fade",
+            "falling",
+            "ghosts",
+            "gotyou",
+            "hihat",
+            "holegrow",
+            "killall",
+            "knurps",
+            "life",
+            "moverock",
+            "orchestr",
+            "panflute",
+            "poison",
+            "power2",
+            "power",
+            "quietsch",
+            "rums",
+            "slowdown",
+            "speedup",
+            "splash",
+            "tick",
+            "tools",
+            "trommeln",
+            "zisch"};
 
     public static void setResolution(int resolution) {
         Root.resolution = resolution;
@@ -74,12 +110,16 @@ public class Root {
     }
 
     private Root() {
+        batch = new SpriteBatch();
+        stage = new Stage(new ScreenViewport());
+        defaultFont = new BitmapFont(Gdx.files.internal("fonts/liberation-sans-64.fnt"));
+        density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
     }
 
     /**
      * Update the position of the currently seen viewable window
      */
-    public void updateWindowPosition() {
+    public static void updateWindowPosition() {
 
         windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getVX(), level.getScrollX(), getLevelWidth(), windowVPixelWidth);
         windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getVY(), level.getScrollY(), getLevelHeight(), windowVPixelHeight);
@@ -95,7 +135,7 @@ public class Root {
      * @param visibleVPixels total number of visible virtual pixels in this coordinate
      * @return
      */
-    private int computeWindowCoordinate(int inputPos, int mcmPos, boolean scroll, int totalBlocks, int visibleVPixels) {
+    private static int computeWindowCoordinate(int inputPos, int mcmPos, boolean scroll, int totalBlocks, int visibleVPixels) {
         // We compute the view based on Main' position
         // when we are calling this, we try to make sure Main is visible near the center of the screen
         // However, scrollability of the level needs to be respected.
@@ -134,7 +174,7 @@ public class Root {
         return inputPos;
     }
 
-    public void updateTime() {
+    public static void updateTime() {
         gameTime += (long)(Gdx.graphics.getDeltaTime() * 1000);
         updateWindowPosition();
     }
@@ -160,8 +200,8 @@ public class Root {
                 windowVPixelHeight = level.getVisibleHeight() << virtualBlockResolutionExponent;
                 windowPixelHeight = level.getVisibleHeight() << resolutionExponent;
             }
-            Root.fullPixelWidth = Root.getLevelWidth() << resolutionExponent;
-            Root.fullPixelHeight = Root.getLevelHeight() << resolutionExponent;
+            fullPixelWidth = getLevelWidth() << resolutionExponent;
+            fullPixelHeight = getLevelHeight() << resolutionExponent;
         }
     }
 
@@ -171,19 +211,18 @@ public class Root {
 
     public void init() {
         gfx = Entities.getInstance();
+        // Load after graphics have been loaded
         windowVPixelXPos = 0;
         windowVPixelYPos = 0; // TODO: this might have to be initialized from a saved state or just computed based on mcminos position
-        //resize();  now donne in resolution setting
-        batch = new SpriteBatch();
-        stage = new Stage(new ScreenViewport());
-        defaultFont = new BitmapFont(Gdx.files.internal("fonts/liberation-sans-64.fnt"));
-        density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
         // Basically, based on density, we want to set out default zoomlevel.
         gameResolutionCounter = 0;
         resolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
-        Root.setResolution(resolution);
+        setResolution(resolution);
         // create destination-object
         destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
+        loadLevel("levels/level023.asx");
+        startMover();
+        resize();
     }
 
 
@@ -577,51 +616,22 @@ public class Root {
     {
         play_sound( BEEP, 2, 30 );}
     */
-    
-    
 
-    public static void loadSounds() {
-        String[] soundNames=new String[]{"aaahhh",
-                "applaus",
-                "beep",
-                "blub",
-                "bulb",
-                "error",
-                "ethanole",
-                "explosio",
-                "fade2",
-                "fade3",
-                "fade",
-                "falling",
-                "ghosts",
-                "gotyou",
-                "hihat",
-                "holegrow",
-                "killall",
-                "knurps",
-                "life",
-                "moverock",
-                "orchestr",
-                "panflute",
-                "poison",
-                "power2",
-                "power",
-                "quietsch",
-                "rums",
-                "slowdown",
-                "speedup",
-                "splash",
-                "tick",
-                "tools",
-                "trommeln",
-                "zisch"};
-        for( String s:soundNames ) {
-            Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/" + s + ".wav"));
-            soundList.put(s, sound);
-        }
-    }
 
     public static void soundPlay(String s) {
         soundList.get(s).play(1.0f);
+    }
+
+    public void dispose() {
+        batch.dispose();
+        stage.dispose();
+    }
+
+    public static void setScreen(Screen scr) {
+        main.setScreen( scr );
+    }
+
+    public static void setMain(Main m) {
+        main = m;
     }
 }
