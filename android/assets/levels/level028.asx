@@ -1,0 +1,63 @@
+;	LEVEL 28
+;	FOR MAC MINOS - Version 1.10
+;	Created: 29.9.92
+
+AUTHOR:		NoPe;		Andreas Neudecker
+NUMBR:		28
+ACCCD:		1001782
+VERSION:	1100
+
+LWID:		21
+LHI:		21
+VWID:		21
+VHI:		21
+SCROLLX:	1
+SCROLLY:	1
+BACK:		44
+
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+MCSPEED:	1
+
+GHOST1:		5
+GHSPEED1:	1
+AGIL1:		15
+GRTIME1:	5
+
+LIVE:		0,999
+CHOC:		0,999
+BMBS:		0,999
+DYNA:		0,999
+MINE:		0,999
+MEDC:		0,999
+UMBR:		0,999
+KEYS:		0,999
+
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
+
+LEVEL:
+dXXXdXXXdXXXdXXXbXXXd
+X...Xb..X1.2X..bX.5bX
+X.P.X.b.X...X.b.X.b.X
+X...Xb..X4.3Xb..X.4bX
+.XXXdXXX.XXXdXXX.XXXd
+X..bX...X..bX...X..bX
+X.b.X.c.X.b.X.5.X.b.X
+Xb..X...Xb..X...Xb..X
+dXXXdXXXdXXXdXXXdXXXd
+X..bXb.bXCC.X..,X..bX
+X.b.X.b.XCC.XGb.X.bkX
+Xb..X...X...Xb..Xd.bX
+dXXXdXXXGXXXdXXXLZZZd
+X..bX..,X..bX...Z...Z
+Xkb.X...X.b.X.b.ZbbbZ
+Xb.bX...Xb..Xb.bZZDZZ
+dXXXdXXXdXXXdXXXbZDZd
+X...X..bX...X...Xb.bX
+X.d.X.b.X.b.X.d.X.b.X
+X...Xb..Xb.bXb.bX..bX
+dXXXdXXXdXXXdXXXdXXXd
+#

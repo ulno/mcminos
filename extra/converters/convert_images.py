@@ -64,6 +64,7 @@ invalid_name_chars = re.compile("[\-\.]")
 config_dictionary={}
 config_dictionary[""]=config_options
 entity_list={} # The dictionary storing entities
+images_count = 0 # total number of images
 
 class Animation_Image():
     '''One image of an animation.'''
@@ -98,24 +99,30 @@ class Graphics_Element():
 #    def check_size(self, width, category="default"):
 #        if category in self.image_dictionary:
 #            return width in self.image_dictionary[category]
-    def code(self):
+    def code(self,preload):
         '''
         get some code for the current graphics element.
+        if preload == 1 then just generate code for asset-manager
         '''
+        global images_count
+
         first_size = self.image_dictionary.keys()[0]
-        anisteps = self.image_dictionary[first_size].keys()
-        if self.config["order"] == None:
-            self.config["order"] = anisteps
-        if not self.config["speed"] is list:
-            self.config["speed"] = [self.config["speed"]] \
-                * len(self.config["order"])
+        if preload == 0:
+            anisteps = self.image_dictionary[first_size].keys()
+            if self.config["order"] == None:
+                self.config["order"] = anisteps
+            if not self.config["speed"] is list:
+                self.config["speed"] = [self.config["speed"]] \
+                    * len(self.config["order"])
         
         current = "" + self.name
-        code = "%s = new GameGraphics(\'%s\',%s,%s,%s,%s,%s,%s);\n" % \
+        if preload == 0:
+            code = "%s = new Graphics(\'%s\',%s,%s,%s,%s,%s,%s);\n" % \
                 ( current, self.config["symbol"], 
                 self.config["focus"][0]-1, self.config["focus"][1]-1,
                 self.config["zindex"], repr(self.config["moving"]).lower(),
                 self.config["size"][0], self.config["size"][1])
+        else: code = ""
         for size in self.image_dictionary:
                 anisteps = self.image_dictionary[size].keys()
                 anisteps.sort()
@@ -125,11 +132,17 @@ class Graphics_Element():
                     image_name = "%s_%s_%s" \
                         % (self.name,size,anistep)
                     file_name = os.path.join( OUTPUT_DIRECTORY, image_name + ".png" )
-                    code += "%s.addImage( \"%s\", %s, %s );\n" % ( current, \
-                        os.path.join("entities", image_name + ".png"), \
-                        size, step_nr)
+                    loc_name = os.path.join("entities", image_name + ".png")
+                    if preload == 0:
+                        code += "%s.addImage( \"%s\", %s, %s );\n" % ( current, \
+                            loc_name, \
+                            size, step_nr)
+                        images_count += 1
+                    else:
+                        code += "manager.load( \"%s\", Texture.class );\n" % loc_name
                     step_nr += 1
-        for size in self.image_dictionary:
+        if preload == 0:
+          for size in self.image_dictionary:
             step_nr = 0 # allways start with 0
             anisteps = self.image_dictionary[size].keys()
             assert len(self.config['speed']) == len(self.config['order']), \
@@ -271,6 +284,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.assets.AssetManager;
 
 /* class is a singleton */
 class Entities {
@@ -282,7 +296,7 @@ class Entities {
 """ )
 
 for e in entity_list:
-    f.write( "public static GameGraphics %s;\n"%e )
+    f.write( "public static Graphics %s;\n"%e )
 
 resList = SIZE_LIST[:]
 resList.sort(reverse=True)
@@ -291,20 +305,35 @@ f.write("\n    public final static int[] resolutionList={%s};\n" \
 
 f.write( \
 """
-    private Entities() {
-""")
+    public static void scheduleLoad(AssetManager manager) {
+""" )
 for e in entity_list:
     print "Working on", e
-    f.write( entity_list[e].code() )
+    f.write( entity_list[e].code(1) )
+
+f.write( \
+"""
+    } // end scheduleLoad
+""" )
+
+f.write( \
+"""
+    public static void finishLoad() {
+""" )
+for e in entity_list:
+    print "Working on", e
+    f.write( entity_list[e].code(0) )
     f.write( "%s.finishInit();\n"%e )
 
 f.write( \
 """
-    } // end constructor
+    } // end finishLoad
 """ )
+
 f.write( \
 """
+    public static int numberImages = %d;
 } // end Entities class
-""")
+""" % images_count)
 f.close()
 

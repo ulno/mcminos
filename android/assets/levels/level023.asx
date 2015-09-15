@@ -1,92 +1,92 @@
 ;	LEVEL 23
-;	FOR MAC MINOS - Versions > 0.51
+;	FOR McMINOS - Version 1.10
 
-AUTHOR:		NoPe;		Andreas Neudecker
+AUTHOR: 	NoPe;		Andreas Neudecker
 NUMBR:		23
-ACCCD:		980665
-SHAREWARE:	3
+ACCCD:		196080691
+VERSION:	1100
 
-LWID:		50
+LWID:		13
 LHI:		50
-VWID:		50
+VWID:		13
 VHI:		50
-SCROLLX:	1
-SCROLLY:	1
-BACK:		36
+SCROLLX:	0
+SCROLLY:	0
+BACK:		8
 
-LTIME:		0
-RSTRT:		1
+LTIME:		100
+RSTRT:		0
 MIRROR:		0
 
 MCSPEED:	1
 
-GHOST1:		6
+GHOST1:		3
 GHSPEED1:	1
-AGIL1:		30
-GRTIME1:	3
-
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+GRTIME1:	5
+AGIL1:		10
 
 LIVE:		0,999
 CHOC:		0,0
 BMBS:		0,0
 DYNA:		0,0
 MINE:		0,0
-MEDC:		0,0
-UMBR:		0,0
-KEYS:		0,0
+MEDC:		0,999
+UMBR:		0,999
+KEYS:		0,999
+
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
 
 LEVEL:
-ZZZZZZZ.ZZZZZZZZZZZZZZZZ.Z.ZZZZZZZZZZZZZZZZ.ZZZZZZ
-ZCC........Z.   .. . ... , .  . ..ZCC...........3Z
-ZCC........ZooooooooooooooooooooooZCC.Z.ZZZZZZZZ.Z
-ZZZZZZZDZZvZoooooooooooooooooooooo<...Z..........Z
-Zooooo...ovooZZZZoooooooooouooooooZZZZZZDZZZZDZZZZ
-Zoooooukko>  ZkfkZooooooooo oooooooZ        Z.ZooZ
-ZoooooooooZ  ZZDZZooooooooo ooooooooZoooooooZDZooZ
-ZoooooooooZ     ooooooooooo ZZZZoooooZooooooovoooZ
-.....ooooZ,^^^^ä <<<<<<<<  ,  kZooooooZoooooo.o...
-Zooo.ooooZbb ,   ,,b,,,,  ,ZZZZZooooooZoooooo.o.oZ
-Zooo.oooooZZ   ,v,,,     ZZoooooooooooZoooooo...oZ
-oooo.oooooooZZ,*     ,ZZZooZDZZZZooooZZooooooooooo
-Zooo.oooooooooZZZFZZZZoooooooooooZZZZooZoooooooooZ
-Zooo.oooooooooooooooooooooooooooooooooooZooooooooZ
-Zooo.      ooooooooooo.ooooooooooooooooooZoooooooZ
-Zooo,ooooo ooooooooooooooooooooooooooooooooooooooZ
-  .  ooooo oooooooooooooo,oooooooooooW. . .     .
-Zooo       oooo.ooooooooo,,oo3oooooooooooo6.oooooZ
-Zoooooooooooooooooooooooo,ooooooooooooooo6.ooooooZ
-Zooooooooooooooooooooo,oXooooooooooooooo7.oooooooZ
-Zoooooooooooooooooooooo,ooooooo,ooooooo8.ooooooooZ
-Zooooooo3333u3.3333o,,o,oooooo,b,ooooo9.oooooooooZ
-ZoooooooooooooooooooooXoooooooo,oooooo.ooooooooooZ
-Zoooooooooooooooooooooo,oooooooooooo.uo.oooooooooZ
-ZoooooooooooooooooooooooXooooooooooooooo.ooooooooZ
-Zoooooooooooooooo.oooooo,u.oooooooooooooo.oooooooZ
-Zooooooooooooooooooooooo,ooooooooooooooo.ooooooooZ
-Zoooooooooooooooooooooooo,oooooooooooookoooooooooZ
-ZoooooooooooooooooooooooooX,,,,ooooooo.ooooooooooZ
-Zoooooooooooooooooooooooo999ooo,,oooo.oooooooooooZ
-Zooooo.oooooooooooooooooo9o999,+bXoooo.ooooooooooZ
-Zoooooooooooooooooooooooo9oo,9+33+,oooo.ooooW...oZ
-ZoooooooooooooooX,,oo99999oo,9993b,oooooo.ooooo.oZ
-Zoooooooooooooo,++3Xo9ooooooX,b33bXoooooooooooo.oZ
-.......oooooooo,+99,o9oooooooo,bb,,oooooooooooo...
-Zooooo.ooooooooX339,o9oooooooo,,X,oooooooooooooooZ
-Zooooo.ooooooooo,,9999ooooooooooooooooooooooooooZZ
-Zooooo.oooooooooooX,9ooooooooooooooooooooooooooZkZ
-Zo.....ooooooooooooo9oooooooooooo  3oooooooooooZkZ
-Zo.ooooooou.oooooooo9999oooooooooo9ooooou.ooooZ  Z
-Zo.ooooooooooooooooo9oo999999ooooo9ooooooooooZ. ,Z
-Zo.oooooooooooooooo99ooooooo9ooo999oooo.3oooZo.o,Z
-Zo.ooooooooooooooo99oooooooo99999ooo33.,oooZ ,...Z
-ZoFooooooooooF99999ooooooooooooo9oo3uoooooZok..o.Z
-Zofo6688888889oooooooooooooooooofoo3oooooZo.o.o..Z
-Z.....6789o999999ooooooooooooooo9o12oooooZo.....oZ
-ZP........6789o 6789oooooo^Zooo 9   oooooZoo..o.oZ
-ZZZZZZZZZDZZZZZZ9o6789ooo,uZooo1 3 ooooooZLoo.o..Z
-........Z3D3D3.Z789ooooov  ZoooooooooooooZo...o...
-ZZZZZZZ.ZZZZZZZZZZZZZZZZ Z ZZZZZZZZZZZZZZZZ.ZZZZZZ
+XXXXXXXXXXXXX
+XMmMrM M MmMX
+X M MrM M MmX
+XM P MrMGMmMX
+X M M MrMGMmX
+XM M M MrM MX
+X M M M MrM X
+XM MrM McMrMX
+X M M M MrMrX
+XM M1M MrM MX
+X M M MrM1M X
+XM M MrM M MX
+X M M M MSM X
+XM M M MSM MX
+X M M MSM M X
+XM M MSM M MX
+X M MSM M$M X
+XM M M M M MX
+XpM M M M M3X
+XMpMXMXMXM MX
+X MpM M M M X
+XM MpM M M MX
+X M M M M M X
+XM M M MSM MX
+X M1M M MrM X
+XM M3M M MSMX
+X M M M<M M X
+XM M3M3M M MX
+X M M M3MäM1X
+XM M MbM M MX
+X M M M M M X
+XM M M3M M3MX
+X MöM M M M X
+XM M3M M2M$MX
+X M M M M M X
+XM M MßM M MX
+X M M M<M M X
+XM M M M M MX
+X M M^M^M MSX
+XM M M M MSMX
+X M M M MSMLX
+XM M M M^MSMX
+X M M M M M$X
+XM$M M1M M MX
+XpM M M M M X
+XMpM MpM M MX
+X MpM M M M X
+XM MpM M M MX
+XOM$MpM M MOX
+XXXXXXXXXXXXX
 #

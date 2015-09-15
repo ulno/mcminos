@@ -5,6 +5,7 @@ package com.mcminos.game;
  */
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.HashMap;
  * The class allows to retrieve corresponding textures for specific game/level objects
  */
 public class Graphics {
+    static int numberImagesLoaded = 0; // for progress-bar
     private char symbol;
     private int anchorX, anchorY; // already shifted to virtual resolution
     private int zIndex;
@@ -23,6 +25,7 @@ public class Graphics {
     private int blockWidth, blockHeight;
     private int totalAnimationLength;
     private int currentResolution = 0;
+
     /**
      * Shift how many bits to left to achieve the actual game resolution.
      * If virtualBlockResolution is 128 and actual resolution is 64 pixel per block,
@@ -102,6 +105,7 @@ public class Graphics {
 
         Texture texture = new Texture( Gdx.files.internal( file ) );
         textures.add(texture);
+        numberImagesLoaded += 1;
     }
 
     /**

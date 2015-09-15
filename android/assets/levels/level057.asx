@@ -1,0 +1,94 @@
+;	LEVEL 057 ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	29.03.93
+;	Last changes:	29.03.93
+;	Done by.....:	Andreas Neudecker
+
+;   HEADER ------------------------------------------------*
+AUTHOR:		NoPe;		Andreas Neudecker
+NUMBR:		57
+ACCCD:		5357173
+VERSION:	1100
+
+;   LEVELFORMAT -------------------------------------------*
+LWID:		35
+LHI:		28
+VWID:		35
+VHI:		28
+SCROLLX:	1
+SCROLLY:	1
+BACK:		33
+
+;   STATUS-Angaben ----------------------------------------*
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+;   McMINOS -----------------------------------------------*
+MCSPEED:	1
+
+;   GEISTER -----------------------------------------------*
+GHOST1:		0
+GHSPEED1:	1
+AGIL1:		20
+GRTIME1:	3
+
+GHOST2:		0
+GHSPEED2:	1
+AGIL2:		10
+GRTIME2:	5
+PILLMAX2:	0
+PILLFREQ2:	12
+
+GHOST3:		4
+GHSPEED3:	1
+AGIL3:		0
+GRTIME3:	10
+TRANSWALL3:	15
+
+GHOST4:		0
+GHSPEED4:	1
+AGIL4:		10
+GRTIME4:	5
+
+;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+KEYS:		0,999
+BMBS:		0,999
+DYNA:		20,999
+MINE:		0,999
+CHOC:		0,999
+MEDC:		0,999
+UMBR:		0,999
+
+;   LEVELDATEN --------------------------------------------*
+LEVEL:
+rX.X......X......X......X.X..X.X.X.
+XX.X......X.rrrr.X.XXXX.X.XXXX.X.XX
+...X,....,X.....,X......X......X...
+XXXdXXXXXXdXXXXXXdXXXXXXXXXXXXXXXXX
+...XW3W1W,X......X,............X...
+XX.X1W1W1WX.CCXX.X.XXXX.X.X.X..X.XX
+...XW1W1W1X.CCX..X.Xh.X.X.X.XX.X...
+XX.X......X.XXXX.X.X..X.X.X....X.XX
+...X.rrrrrX.X.X..X.XXXX.X.XXXX.X...
+..........X.....XX......X..........
+XXXXXXXXXXXXXXXXX..XXXXXXXXXXXXXXXX
+..................XX..........+X...
+XX.X.X.X.XX.X.XX.XX..XX.X.XXXX.X.XX
+.X.X......X.X,X..X....X.X....X.X.X.
+...XX.X.X.X.XXdX.X.XX+X.X.X..X.X.X.
+XX.X......X.X.X..X..XXX.X.XX.X.X.XX
+.....X.X.XX,.c..........X.....,X,..
+XXXXXXXX.XdXXXXX.X.XXXX.XXXXXXXdXXX
+...X......X......X......XW..r.,X,..
+XX.X.r..r.X.rrrr.X.XXXX.X.XXX..X.XX
+.X.X.rr.r.X...Pr.....rdXX.X....X.X.
+.X.X...r..X.rr.r.X.XXdX.X.X.XX.X.X.
+X..X.rr.r.X..r...X.XdX..X.X.XX.X.XX
+..XXX....,XW...r.X..,...X......X...
+XXXWXXXXXXdXXXXXXX.XXXX.XXXXXXXXXXX
+..XXX....,X......X......X......XW..
+X..X......X.rrrr.X.XXXX.X.XXXX.X.XX
+.X.X......X......X......X.X..X.X.X.
+#	; ENDE DER LEVELDATEN ---------------------------------*

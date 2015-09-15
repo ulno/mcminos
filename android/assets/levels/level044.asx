@@ -1,0 +1,98 @@
+;	LEVEL 044 ---------------------------------------------*
+;	FOR McMINOS - Version 1.10
+;	Created.....:	05.04.93
+;	Last changes:	10.04.93
+;	Done by.....:	Andreas Neudecker
+
+;   HEADER ------------------------------------------------*
+AUTHOR:		NoPe;		Andreas Neudecker
+NUMBR:		44
+ACCCD:		588124
+VERSION:	1100
+
+;   LEVELFORMAT -------------------------------------------*
+LWID:		32
+LHI:		32
+VWID:		32
+VHI:		32
+SCROLLX:	1
+SCROLLY:	1
+BACK:		28
+
+;   STATUS-Angaben ----------------------------------------*
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+;   McMINOS -----------------------------------------------*
+MCSPEED:	1
+
+;   GEISTER -----------------------------------------------*
+GHOST1:		1
+GHSPEED1:	1
+AGIL1:		45
+GRTIME1:	3
+
+GHOST2:		10
+GHSPEED2:	1
+AGIL2:		30
+GRTIME2:	5
+PILLMAX2:	350
+PILLFREQ2:	7
+
+GHOST3:		0
+GHSPEED3:	1
+AGIL3:		20
+GRTIME3:	10
+TRANSWALL3:	20
+
+GHOST4:		0
+GHSPEED4:	1
+AGIL4:		10
+GRTIME4:	5
+
+;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+KEYS:		0,999
+BMBS:		0,999
+DYNA:		0,0
+MINE:		0,999
+CHOC:		0,0
+MEDC:		0,999
+UMBR:		0,999
+
+;   LEVELDATEN --------------------------------------------*
+LEVEL:
+XXX XXX X X XXX XXX X X XXX XXX
+  X X   X X   X X   X X   X X
+X X X XXX XXX X X XXX XXX X X XX
+         O     c     W       .
+X X X XXX XXX X X XXX XXX XXX XX
+  X X  mX Xm  X X   X Xm   mX X
+XXX XXX X X XXX XXX X X X X X X
+   .           b        X X   X
+XXX XXX X X XXX XXX X XXX XXX X
+  X X  mX X  bX Xm  X    P
+X X X XXX XXX X X XXX XXX XXX.XX
+         0           rbbX X...X
+XXX X XXX XXX X X XXX XXX X.XXX
+  X X  mX X   X X   X X
+XXX XXX X X XXX XXX X X XXX XXX
+   .           1           r
+XXX XXX X XbXXX XXX X X XXX XXX
+  X XbmmX X_b_X X   X X   X X
+X X X XXX XXXbX X XXX XXX X X XX
+         2    b      +   3
+X X X XXX XXX XbX XXX XXX XXX XX
+  X XmmbX X   X_X   X X_b,..X
+XXX XXXmX X XXXbXXX X XbX X.X.X
+   3           b,     b_X CC..X
+XXX XXX X X XXX XXX X XXX CCXXX
+  X X   X X   X X   X    W
+X X X XXX XXX X X XXX XXX XXX X
+X        b           . OX X3 3X
+XXX X XXX XXX X X XXX XXX X XXX
+bbX X   X X   X X   X X
+XXX XXX X X XXX XXX X X XXX XXX
+   .           .           .
+# 	; ENDE DER LEVELDATEN ---------------------------------*

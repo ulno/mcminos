@@ -1,0 +1,91 @@
+;	LEVEL 38
+;	FOR MAC MINOS - Version 0.6
+
+AUTHOR:		NoPe;		Andreas Neudecker
+NUMBR:		38
+ACCCD:		191832
+VERSION:	1100
+
+LWID:		49
+LHI:		49
+VWID:		49
+VHI:		49
+SCROLLX:	1
+SCROLLY:	1
+BACK:		18
+
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+MCSPEED:	1
+
+GHOST1:		8
+GHSPEED1:	1
+GRTIME1:	5
+AGIL1:		20
+
+LIVE:	0,999
+CHOC:	0,1
+BMBS:	0,0
+DYNA:	0,0
+MINE:	0,10
+MEDC:	0,2
+UMBR:	0,0
+KEYS:	0,0
+
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
+
+LEVEL:
+XXXXXXXXXXXZ ZXXXXXXXXXZ ZXXXXXXXXXZbZXXXX XXXXZZ
+XZZZZZZZZZZZXZZZZZZZZZZZ ZZZZZZZZZZZdZZZZZDZZZZZZ
+XZ.       .fUF......r.WZ ZP..L....kZbZpppppppppZX
+XZ >>>>>>> ZbZ.,b,..r..ZXZ+äääääää.ZrZ.w.w.w.w.ZX
+XZ ^ G     ZbZ....,.rrrZXZ+äöööööä.ZdZU????? ??ZX
+XZ ^ >>>>v ZbZ.,.,.,.,.ZXZ+äöüüüöä.Z,Z.w.w.w.w.ZX
+XZG^ ^W. v ZbZ..,..b,..ZXZ+äöüWüöäGZrZ ???W????ZX
+XZ ^ ^<< v ZbZb,_3___..ZXZ+äöüücöä.ZdZ.w.w.w.w.ZX
+XZ ^     v ZbZb.b.,bb..ZXZ+äöööööä.Z_Z???????? ZX
+XZ ^<<<<<< ZbZ..bbb,bb.ZXZ+äääääääLZdZ.w.w.w.w.ZX
+XZ+      G.ZbZbZZZZZZZbZXZk++L.LbbbZrZ?????????ZX
+ZZZZZZZZZZZZbZZZXXZXXZZZXZZZZZZZZZZZrZZZZZZZZZZZZ
+XXXXXXXXXXXd,LddddZddddddbbbbbbbbbbbbXXXXXXXXXXXX
+ZZZZZZZZZZZZXZZZXXZXXZZZXZZZZZZZZZZZbZZZZZZZZZZZZ
+XZS??..w??SZdZW   1   WZXZ+1ddddd2+ZbZddkdddkddZX
+XZ?p.r!...?Z,Z         ZXZp ääüüäU3ZbZUUUUUUUUUZX
+XZ?.wZDZw.?ZrZ* OOUCC +ZXZdßäßßäüödZbZUUUUUUUUUZX
+XZ?..ZFZ..?ZrZ( OOUCC +ZXZdßäßßüöödZbZUUU   UUUZX
+XZ?w.ZWZ.w?D.Z)   ,   +ZXZdßüöWßäödZbZUUU W UUUZX
+XZ?..ZFZ..?ZZZ* XX rr +ZXZdßüääßäödZbZUUU   UUUZX
+XZ?.wZDZw.?ZXZ) XX rr +ZXZdßäßöääödZbZUUUUUUUUUZX
+XZ?.......?ZXZ         ZXZmUßüäöüX3ZbZUUUUUUUUUZX
+XZp???w???pZXZW d_bbb WZXZ+Lddddd3+ZbZUUUUUUUU.ZX
+ZZZZZZZZZZZZXZXXXXXXXXXZXZZZZZZZZZZZbZZZZZZZZZZZZ
+XXXXXXXXXXXX,XXddddXXXXXXXbbbbb,bbbbXXXXXbdbdXXXX
+ZZZZZZZZZZZZXZZZZZZZZZZZbZZZZZZZZZZZbZZZZZZZZZZZZ
+XZ.U      .ZXZd.d.b.d.bZbZ.bd_,+d.+ZbZd.,_d.,fdZX
+XZ U UUUUU ZXZ.,.,.,.,.ZbZ>ä<äääää<Z_Z.d.d.d.d.ZX
+XZ U     UUZXZb.b.b.b.bZbZ>äßöö^.ä<ZbZ,.d.,_d.,ZX
+XZ U UUU U ZXZ.,.,.,.,.ZbZ>,öäU.ö, Z,Z.d.XUX.d.ZX
+XZ U UWU U ZXZb.d.b.b.bFUf>ää>äävä<Z_Zd.,FWU,.dZX
+XZ   U     ZXZ.,.,.,.,.ZbZ>äääääää<ZdZ.d.XFX.d.ZX
+XZ UUUUUUUUZXZb.b.b.b.bZbZ > +++ U ZdZ,.dXDXd.,ZX
+XZ U   U   ZXZ.,.,.,.,.ZbZd. ,,, U ZbZ.d.d_d.d.ZX
+XZ.  U   U.ZXZb.b.b.d.bZbZdd ,   , Z_Zd.,bd.,.dZX
+ZZZZZZZZZZZZXZZZZZZZZZZbbZZZZZDZZZZZ,ZZZZZZZZZZZZ
+bbdbXXXXXddbdbb,ddbbXbbbrbbbbb,bbbbbrXXb_bXXXb_bb
+ZZZZZZZZZZZZXZZZZZZZZZZZXZZZZZDZZZZZXZZZZZZZZZZZZ
+XZ         ZXZOO     d ZXZdU    > .ZXZ++++dddd.ZX
+XZ O,O O O ZXZOO       ZXZUU  U ää ZXZvääääääävZX
+XZ         ZXZ         ZXZ   U ääü ZXZ>ääääüää<ZX
+XZ O     O ZXZ  rrrrr  ZXZ. U ääää<ZXZvüääöäää<ZX
+XZ    W  < XXX  rG  r  ZXZO U ääöää.X..ääääßäü<ZX
+XZ O     O ZXZ  r   r  ZXZr U äääß<ZXZ,.öäüäääüZX
+XZ ,       ZXZ  r . r  ZXZ  U* ääö ZXZ,,.äääöä<ZX
+XZ O O,O O ZXZ  rrrrr  ZXZ  UUU ää ZXZ,,..ääää<ZX
+XZ         Z Z        LZdZG     > .ZdZ,,,..>++<ZX
+ZZZZZZZZZZZZdZZZZZZZZZZZ,ZZZZZZZZZZZ ZZZZZ.ZZZZZZ
+XZXXXXXXXXXZ ZXXXXXXXXXZ ZXXXXXXXXXZ ZXXXX.XXXXZX
+#
