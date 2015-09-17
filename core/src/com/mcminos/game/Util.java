@@ -14,6 +14,9 @@ public class Util {
     }
 
     public static int shiftLeftLogical( int number, int shift) {
-        return shift > 0 ? number << shift : number >> - shift;
+        if(number > 0)
+            return shift > 0 ? number << shift : number >> - shift;
+        else
+            return shift > 0 ? -((-number) << shift) : -((-number) >> - shift);
     }
 }

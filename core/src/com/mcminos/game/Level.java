@@ -14,8 +14,8 @@ import java.util.ArrayList;
  */
 public class Level {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
-    private static int pillsNumber = 0;
-    private static int rockmeNumber = 0;
+    private int pillsNumber = 0;
+    private int rockmeNumber = 0;
     private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
     private String author = "Main";
     private int number = 199;
@@ -530,25 +530,25 @@ public class Level {
         return height;
     }
 
-    public static void increasePills() {
+    public void increasePills() {
         pillsNumber ++;
     }
 
-    public static void decreasePills() {
+    public void decreasePills() {
         pillsNumber --;
         // TODO: do we need to trigger something when we reach 0?
     }
 
-    public static void increaseRockmes() {
+    public void increaseRockmes() {
         rockmeNumber ++;
     }
 
-    public static void decreaseEockmes() {
+    public void decreaseEockmes() {
         rockmeNumber --;
         // TODO: do we need to trigger something when we reach 0?
     }
 
-    public static int getPillsNumber() {
+    public int getPillsNumber() {
         return pillsNumber;
     }
 

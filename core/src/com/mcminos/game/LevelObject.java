@@ -11,6 +11,7 @@ import java.util.Collections;
  */
 public class LevelObject implements  Comparable<LevelObject> {
 
+    private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
 
     public enum Types {Unspecified, Power1, Power2,
         IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter,
@@ -22,7 +23,6 @@ public class LevelObject implements  Comparable<LevelObject> {
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
     private Graphics gfx; // actual Graphics for the object
     private int zIndex = maxzIndex; // by default it is too high
-    private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
     private Mover mover = null;
     private LevelBlock levelBlock = null; // currently associated LevelBlock
     private int holeLevel;
@@ -30,7 +30,7 @@ public class LevelObject implements  Comparable<LevelObject> {
     private DoorTypes doorType = DoorTypes.None;
 
     /**
-     *
+     *all.
      * @param x in block coordinates
      * @param y in block coordinates (movable objects can have fraction as coordinate)
      * @param zIndex need to know zIndex to allow correct drawing order later
@@ -93,6 +93,7 @@ public class LevelObject implements  Comparable<LevelObject> {
             from.removeMovable(this);
         setXY(x,y);
         to.putMoveable(this);
+        levelBlock = to; // todo: might be not totally correct for destination
     }
 
     public void setXY(int x, int y) {
@@ -131,6 +132,10 @@ public class LevelObject implements  Comparable<LevelObject> {
     public void dispose() {
         all.remove(this);
         // TODO: think if we also have to remove from other things in level-block
+    }
+
+    public static void disposeAll() {
+        all.clear();
     }
 
     public boolean isIndestructable() {
@@ -173,5 +178,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         return type;
     }
 
-
+    public LevelBlock getLevelBlock() {
+        return levelBlock;
+    }
 }

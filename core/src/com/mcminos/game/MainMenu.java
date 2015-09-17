@@ -45,8 +45,8 @@ public class MainMenu implements Screen {
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
 
-        TextButton button = new TextButton("Start",skin);
-        button.addListener(new ClickListener() {
+        TextButton startButton = new TextButton("Start",skin);
+        startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Root.setScreen(new Play((String) sb.getSelected()));
@@ -87,7 +87,7 @@ public class MainMenu implements Screen {
                 .pad(32)
                 .minSize(160, 48)
                 .row();
-        table.add(button)
+        table.add(startButton)
                 .minSize(128, 48);
 
         stage.addActor(bgimage);
@@ -133,7 +133,6 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
-        skin.dispose();
         stage.dispose();
         bg.dispose();
     }

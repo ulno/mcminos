@@ -82,7 +82,7 @@ public class Load implements Screen {
         bar.setSize(w*3/5,h/5);
 
         // set value of progress bar
-        bar.setValue(manager.getProgress());
+        bar.setValue(manager.getProgress()*0.9f);
         stage.act(delta);
         stage.draw();
 
@@ -146,8 +146,6 @@ public class Load implements Screen {
     @Override
     public void dispose() {
         manager.dispose();
-        skin.dispose();
-        font.dispose();
         loadscreen.dispose();
     }
 }
