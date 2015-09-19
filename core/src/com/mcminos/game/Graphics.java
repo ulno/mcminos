@@ -23,7 +23,7 @@ public class Graphics {
     private int zIndex;
     private boolean moving;
     private int blockWidth, blockHeight;
-    private int totalAnimationLength;
+    private int totalAnimationLength; // total length in ms
     private int currentResolution = 0;
 
     /**
@@ -294,5 +294,9 @@ public class Graphics {
 
     public int getzIndex() {
         return zIndex;
+    }
+
+    public int getAnimationLength() {
+        return totalAnimationLength;
     }
 }

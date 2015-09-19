@@ -49,7 +49,7 @@ public class Level {
     private int medicinesMin = 0, medicinesMax = 999;
     private int umbrellasMin = 0, umbrellasMax = 999;
     private ArrayList<LevelBlock> warpHoleBlocks = new ArrayList<>();
-
+    private Object rockmes;
 
 
     Level ( String filename ) {
@@ -277,6 +277,15 @@ public class Level {
                 case 'G':
                     lb.makeGhost1();
                     break;
+                case 'g':
+                    lb.makeGhost2();
+                    break;
+                case 'H':
+                    lb.makeGhost3();
+                    break;
+                case 'h':
+                    lb.makeGhost4();
+                    break;
                 case 'L':
                     lb.makeLive();
                     break;
@@ -291,6 +300,12 @@ public class Level {
                     break;
                 case 'd':
                     lb.makeDynamite();
+                    break;
+                case '_':
+                    lb.makeLandMine();
+                    break;
+                case ',':
+                    lb.makeLandMineActivated();
                     break;
                 case 'k':
                     lb.makeKey();
@@ -365,6 +380,11 @@ public class Level {
                 case 'ß':
                     lb.makeOneWay(7);
                     break;
+                case '+':
+                    lb.makeChocolate();
+//                multipliers: MCSPEED *= 2; GHSPEEDs *= 1
+//                (does it's job for: 10 s)
+                    break;
                 /*
 ;   ? = surprise field (positive or negative)
 
@@ -389,11 +409,6 @@ public class Level {
 ;   p = poison; can be cured with medicine
 
 ;   TOOLS:
-;   _ = mine (nicht aktivated)
-;   , = mine in the ground (aktivated)
-;   + = chocolate = power pill to be carried until needed);
-        multipliers: MCSPEED *= 2; GHSPEEDs *= 1
-        (does it's job for: 10 s)
 ;   m = medicine (bottle of)
                  */
 
@@ -543,7 +558,7 @@ public class Level {
         rockmeNumber ++;
     }
 
-    public void decreaseEockmes() {
+    public void decreaseRockmes() {
         rockmeNumber --;
         // TODO: do we need to trigger something when we reach 0?
     }
@@ -557,4 +572,7 @@ public class Level {
     }
 
 
+    public int getRockmesNumber() {
+        return rockmeNumber;
+    }
 }

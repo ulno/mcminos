@@ -82,6 +82,8 @@ public class MainMenu implements Screen {
             e.printStackTrace();
         }
         sb.setItems(names.toArray());
+        if( Root.currentLevelName != null)
+            sb.setSelected(Root.currentLevelName);
 
         table.add(sb)
                 .pad(32)

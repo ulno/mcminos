@@ -19,6 +19,7 @@ public class LevelBlock {
     private HashSet<LevelObject> collectibles =new HashSet<>(); // collectibles on the field
     private LevelObject door=null; // a potential door
     private int oneWay = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
+    private boolean rockme = false;
 
 
     /**
@@ -198,6 +199,24 @@ public class LevelBlock {
         movables.add(lo);
     }
 
+    public void makeGhost2() {
+        LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
+        lo.setGfx(Entities.ghosts_panky);
+        movables.add(lo);
+    }
+
+    public void makeGhost3() {
+        LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
+        lo.setGfx(Entities.ghosts_zarathustra);
+        movables.add(lo);
+    }
+
+    public void makeGhost4() {
+        LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
+        lo.setGfx(Entities.ghosts_jumpingpill);
+        movables.add(lo);
+    }
+
     public void makeLive() {
         LevelObject lo = new LevelObject(x,y,Entities.pills_heart.getzIndex(),LevelObject.Types.Live);
         lo.setGfx(Entities.pills_heart);
@@ -223,9 +242,20 @@ public class LevelBlock {
     }
 
     public void makeDynamite() {
-        // TODO: Image by Andreas missing
         LevelObject lo = new LevelObject(x,y,Entities.extras_dynamite_default.getzIndex(),LevelObject.Types.Dynamite);
         lo.setGfx(Entities.extras_dynamite_default);
+        collectibles.add(lo);
+    }
+
+    public void makeLandMine() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_land_mine_default.getzIndex(),LevelObject.Types.LandMine);
+        lo.setGfx(Entities.extras_land_mine_default);
+        collectibles.add(lo);
+    }
+
+    public void makeLandMineActivated() {
+        LevelObject lo = new LevelObject(x,y,Entities.extras_land_mine_active.getzIndex(),LevelObject.Types.LandMineActive);
+        lo.setGfx(Entities.extras_land_mine_active);
         collectibles.add(lo);
     }
 
@@ -254,6 +284,7 @@ public class LevelBlock {
         LevelObject lo = new LevelObject(x,y,Entities.extras_rock_me.getzIndex(),LevelObject.Types.Rockme);
         lo.setGfx(Entities.extras_rock_me);
         level.increaseRockmes();
+        rockme = true;
     }
 
     public void makeDoorClosed() {
@@ -322,6 +353,11 @@ public class LevelBlock {
         return door.getDoorType() == LevelObject.DoorTypes.HorizontalClosed || door.getDoorType() == LevelObject.DoorTypes.VerticalClosed;
     }
 
+    public boolean hasDoor() {
+        return door !=  null;
+    }
+
+
     public void makeSpeedUpField() {
         LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.SpeedUpField);
         lo.setGfx(Entities.fields_field_speed_up);
@@ -385,5 +421,53 @@ public class LevelBlock {
 
     public HashSet<LevelObject> getCollectibles() {
         return collectibles;
+    }
+
+    public void makeChocolate() {
+        LevelObject lo = new LevelObject(x,y,Entities.holes_0.getzIndex(),LevelObject.Types.Chocolate);
+        lo.setGfx(Entities.pills_power_pill_chocolate);
+        collectibles.add(lo);
+    }
+
+    public boolean isRockme() {
+        return rockme;
+    }
+
+    public LevelBlock up() {
+        return level.getUp(x, y, true);
+    }
+
+    public LevelBlock right() {
+        return level.getRight(x, y, true);
+    }
+
+    public LevelBlock down() {
+        return level.getDown(x, y, true);
+    }
+
+    public LevelBlock left() {
+        return level.getLeft(x, y, true);
+    }
+
+    public void toggleDoor() {
+        if( hasClosedDoor() ) {
+            if(door.getDoorType() == LevelObject.DoorTypes.HorizontalClosed)
+                door.setDoorType(LevelObject.DoorTypes.HorizontalOpened);
+            else door.setDoorType(LevelObject.DoorTypes.VerticalOpened);
+        }
+        else {
+            if(door.getDoorType() == LevelObject.DoorTypes.HorizontalOpened)
+                door.setDoorType(LevelObject.DoorTypes.HorizontalClosed);
+            else door.setDoorType(LevelObject.DoorTypes.VerticalClosed);
+        }
+        updateDoor();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

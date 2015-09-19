@@ -51,16 +51,21 @@ public class Root {
     static Semaphore updateLock = new Semaphore(1);
     static private Timer.Task mcmMoverTask = null;
 
+    static String currentLevelName = null;
+
     // Level/Game specific statics
     // TODO: consider making these non-static
     public static Level level;
     public static LevelObject mcminos;
     private static Mover mcmMover;
+    static int chocolates; // number of chocolates carried by mcminos
     static int bombs; // number of bombs carried by mcminos
     static int dynamites; // number of dynamites carried by mcminos
     static int keys; // number of keys carried by mcminos
     static int umbrellas; // number of umbrellas carried by mcminos
+    static int landmines; // number of umbrellas carried by mcminos
     static int lives; // number of lives left
+    static int score; // current score
 
     public static HashSet<LevelObject> movables; // all moveables - i.e. mcminos
     private static LevelBlock lastBlock;
@@ -271,6 +276,7 @@ public class Root {
         keys=0; // number of keys carried by mcminos
         umbrellas = 0; // number of umbrellas carried by mcminos
         lives = 3; // number of lives left
+        landmines = 0; // number of landmines carried
         destinationSet = false;
 
         movables=new HashSet<>(); // all moveables - mcminos
@@ -280,6 +286,7 @@ public class Root {
         LevelObject.disposeAll();
         // create destination-object
         destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
+        score = 0; //TODO: recheck, when this has to be resetted
 
     }
 
@@ -473,20 +480,42 @@ public class Root {
             {
                 soundPlay("knurps");
                 currentBlock.removePill();
+                increaseScore(1);
             }
             // check, if mcminos actually moved or if it's the same field as last time
             if(currentBlock != lastBlock) {
                 for( LevelObject b:currentBlock.getCollectibles()) {
                     switch( b.getType() ) {
+                        case Chocolate:
+                            soundPlay("tools");
+                            chocolates ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            increaseScore(10);
+                            break;
                         case Bomb:
                             soundPlay("tools");
                             bombs ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            // no score as droppable increaseScore(10);
                             break;
                         case Dynamite:
                             soundPlay("tools");
                             dynamites ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            // no score as droppable increaseScore(10);
+                            break;
+                        case LandMine:
+                            soundPlay("tools");
+                            landmines ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            // no score as droppable increaseScore(10);
+                            break;
+                        case LandMineActive:
+                            // TODO: trigger explosion
                             currentBlock.removeItem(b);
                             b.dispose();
                             break;
@@ -495,18 +524,21 @@ public class Root {
                             keys ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            increaseScore(10);
                             break;
                         case Umbrella:
                             soundPlay("tools");
                             umbrellas ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            increaseScore(10);
                             break;
                         case Live:
                             soundPlay("life");
                             lives ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            increaseScore(10);
                             break;
                     }
                 }
@@ -517,9 +549,154 @@ public class Root {
         }
     }
 
+    private static void increaseScore(int increment) {
+        int old = score/5000;
+        score += increment;
+        if(score/5000 > old) { // just passed 5000
+            // earn a live
+            lives += 1;
+            soundPlay("life");
+        }
+    }
+
 
     
     /*
+     Powerpill essen
+    void powerpill( int x, int y, int mcm, int gos, int time, int draw )
+    {
+        int i;
+
+        if(draw) clearwall( x, y );
+        mcmspeed /= mcmspeedf;
+        mcmspeed *= mcm;
+        for(i=0; i<4; i++)
+        {
+            gosspeed[i] /= gosspeedf;
+            gosspeed[i] *= gos;
+        }
+        mcmspeedf = mcm;
+        gosspeedf = gos;
+        if(time)
+        {
+            timercd = &power;
+            power += time;
+            snd_power();
+            inc_score( 10 );
+        }
+    }
+
+
+    case POPILL1-1: powerpill( x, y, 2, 1, 10, 1); break;
+		case POPILL1: powerpill( x, y, 1, 2, 10,1); break;
+		case POPILL1+1: powerpill( x, y, 1, 1, 10, 1); break;
+		case MEDICINE1-1:clearwall( x, y );
+					snd_tool();
+					inc_score( 10 );
+					carry[CARRYANTIDOT]++;
+					break;
+		case CLOCKOBJ-1:clearwall( x, y );
+					snd_tool();
+					if(timeactiv) leveltime+=60;
+					inc_score( 10 );
+					break;
+		case POISON1-1:clearwall( x, y );
+					pacpoison();
+					retwert = 0;
+					break;
+		case SKULL-1: retwert = 0; spec_action = 1;
+					power = 0; kill_mcminos(); break;
+		case SURPRISE-1:clearwall( x, y );
+					choose_surprise( x, y );
+					break;
+		case LADDER-1: retwert = 0; pills_left=0; spec_action=1;
+    inc_score(10); break;
+    case TRUHE-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 500 );
+    break;
+    case GELDSACK-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 250 );
+    break;
+    case SPARSCHWEIN-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 100 );
+    break;
+    case SPEEDUP-1: snd_speedup(); speedup = 1; break;
+    case SLOWDOWN-1: snd_slowdown(); speedup = 0; break;
+    case MIRROR-1:clearwall( x, y );
+    inc_score( 10 );
+    snd_mirror();
+    mirrorflag = !mirrorflag;
+    break;
+    case WHISKEY-1:clearwall( x, y );
+    snd_drunken();
+    drunken += 16;
+    inc_score( 5 );
+    break;
+    case KILLALL-1:clearwall( x, y );
+    snd_killall();
+    inc_score( goscount[0] * 10 );
+    ghostkillflag = 1;
+    spec_action = 1;
+    break;
+    case KILLALL2-1: snd_killall();
+    inc_score( goscount[0] * 10 );
+    ghostkillflag = 1;
+    spec_action = 1;
+    break;
+    case SECRETLETTER-1:clearwall( x, y );
+    //snd_letter();
+    inc_score( 10 );
+    found_letter = 1;
+    spec_action = 1;
+    break;
+    case LOCH-1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+2: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+3: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        McMinos_hole();
+        retwert = 0;
+    }
+    break;
+    case WARP-1:spec_action = 1;
+    stop_moving = 1;
+    do_warp = 1;
+    retwert = 0;
+    break;
+    case MINEDOWN-1: mine_expl( x, y ); break;
+    case MINEUP-1:change_field( x, y, levfield(y, x).extra);
+    snd_tool();
+    inc_score( 10 );
+    carry[CARRYMINE]++;
+    break;
+}
+
+
+
     void snd_killed( void )
 {
 	play_sound( GHOSTS, 3, 300 );
