@@ -1,0 +1,36 @@
+=================================================
+Project McMinos: variants of activated land-mines
+=================================================
+
+:Author:
+  Andreas Neudecker <zapyon@gmx.net>,
+
+:Date: 2015-09-20
+
+
+land-mine
+=========
+
+This is the original SVG drawing of a dug-in, activated land-mine, based on the black-and-white pixel sprites drawn in the last decade of the previous millenium.
+
+land-mine-variant-01
+====================
+
+This variant has smaller earth lumps, a shorter part of the pin visible, but still a black outline for the upper part of earth lumps.
+
+land-mine-variant-02
+====================
+
+This variant has small earth lumps the same size as variant 1, but the partial outline is grey - and thus less prominent
+
+land-mine-variant-03
+====================
+
+This variant is a copy of variant 1, but the partial outline is black with 50% transparency (alpha 128). To my eyes it makes the mine less obvious. But still, this mainly depends on the style and colours of the background.
+
+Conclusion
+==========
+
+We should have appropriate background tiles for levels containing mines that shouldn't be too obvious to the player. We may or may not use one or several of the above variants or I can draw further variants, varying by the size of earth lumps - or with no earth lumps at all (but the pin a little more obvious in that case).
+
+
