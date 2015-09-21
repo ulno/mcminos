@@ -5,7 +5,6 @@ package com.mcminos.game;
  */
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class Graphics {
     private int zIndex;
     private boolean moving;
     private int blockWidth, blockHeight;
-    private int totalAnimationLength; // total length in ms
+    private int totalAnimationFrames; // total length in gameframes
     private int currentResolution = 0;
 
     /**
@@ -60,7 +59,7 @@ public class Graphics {
     private HashMap<String,ArrayList> animationCategorySteps = new HashMap<String, ArrayList>();
 
     private ArrayList<IntPair> stepList = new ArrayList<IntPair>();
-    // current, resolution specific Textures mapped to gametime
+    // current, resolution specific Textures mapped to gameframe
     private Texture[] currentTextures = null;
 
     /**
@@ -81,8 +80,12 @@ public class Graphics {
         this.moving = moving;
         this.blockWidth = blockWidth;
         this.blockHeight = blockHeight;
-        totalAnimationLength = 0;
+        totalAnimationFrames = 0;
         allGraphics.add(this);
+    }
+
+    long msToFrames( long ms) {
+        return ms * Root.timeResolution / 1000;
     }
 
     // Is called at end of initialisation, when all graphics has been added
@@ -90,7 +93,7 @@ public class Graphics {
         generateTimeList();
     }
 
-    // category can include subcategory and is separeted with a dot
+    // category can include subcategory and is separated with a dot
     void addImage( String file, int resolution, int step ) {
 
         ArrayList textures;
@@ -114,19 +117,20 @@ public class Graphics {
      */
     void addAnimationStep( int step, int length )
     {
-        stepList.add( new IntPair(step, length) );
-        totalAnimationLength += length;
+        long frameLength = msToFrames(length);
+        stepList.add( new IntPair(step, frameLength) );
+        totalAnimationFrames += frameLength;
     }
 
     void generateTimeList( )
     {
-        int size = (totalAnimationLength + precision - 1) / precision;
+        int size = (totalAnimationFrames + precision - 1) / precision;
         timeList = new int[size];
         int currentTime = 0;
-        int nextAnimation = stepList.get(0).second;
+        long nextAnimation = stepList.get(0).second;
         int currentAnimation = 0;
         int timeListIndex = 0;
-        while( currentTime < totalAnimationLength ) {
+        while( currentTime < totalAnimationFrames) {
             if( currentTime < nextAnimation ) {
                 timeList[timeListIndex] = currentAnimation;
                 timeListIndex ++;
@@ -139,21 +143,21 @@ public class Graphics {
         }
     }
 
-    int getAnimationIndex(long gametime) {
-        gametime %= totalAnimationLength;
-        gametime /= precision;
-        return stepList.get(timeList[(int)gametime]).first;
+    int getAnimationIndex(long gameframe) {
+        gameframe %= totalAnimationFrames;
+        gameframe /= precision;
+        return stepList.get(timeList[(int)gameframe]).first;
     }
 
     /**
      * Generic version for getting a texture for a time
      * @param resolution
-     * @param gametime
+     * @param gameframe
      * @return respective texture
      */
-    Texture getTexture(int resolution, long gametime) {
+    Texture getTexture(int resolution, long gameframe) {
         ArrayList<Texture> textures = ResolutionList.get(resolution);
-        return textures.get( getAnimationIndex(gametime) );
+        return textures.get( getAnimationIndex(gameframe) );
     }
 
     /**
@@ -173,10 +177,10 @@ public class Graphics {
         // TODO: else exception?
     }
 
-    Texture getTexture( long gametime ){
-        gametime %= totalAnimationLength;
-        gametime /= precision;
-        return currentTextures[(int)gametime];
+    Texture getTexture( long gameframe ){
+        gameframe %= totalAnimationFrames;
+        gameframe /= precision;
+        return currentTextures[(int)gameframe];
     }
 
     /**
@@ -251,7 +255,7 @@ public class Graphics {
 
         // draw different parts to physical coordinates
         // only draw if visible (some part of the rectangle is in visible area)
-        Texture t = getTexture(Root.gameTime);
+        Texture t = getTexture(Root.getGameFrame()); // TODO: add unit specific offset
         int maxww = Root.windowPixelWidth;
         int maxwh = Root.windowPixelHeight;
         // Clipping correction for small screens, TODO: think about optimization
@@ -264,7 +268,7 @@ public class Graphics {
         if(y1 >= maxwh && y1 > Root.fullPixelHeight - totalHeight )
             y1 -= Root.fullPixelHeight;
         if(  (x0 < maxww) && (y0 < Root.windowPixelHeight) ) {
-            //Root.batch.draw(getTexture(Root.gameTime), x0, y0);
+            //Root.batch.draw(getTexture(Root.gameframe), x0, y0);
             Root.batch.draw(t, x0, y0, 0, totalHeight - y0h, x0w, y0h);
         }
         if( (vx1w > 0)
@@ -296,7 +300,7 @@ public class Graphics {
         return zIndex;
     }
 
-    public int getAnimationLength() {
-        return totalAnimationLength;
+    public int getAnimationFrames() {
+        return totalAnimationFrames;
     }
 }

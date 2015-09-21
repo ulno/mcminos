@@ -174,13 +174,18 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 if( root.bombs > 0) {
                     root.bombs--;
                     root.mcminos.getLevelBlock().makeBomb();
+                    toggleToolbox(); // close toolbox
                 }
             }
         });
         bombActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: activate Bomb explosion
+                if(root.bombs > 0) {
+                    root.bombs--;
+                    new Explosion(root.mcminos.getLevelBlock(), LevelObject.Types.Bomb);
+                    toggleToolbox(); // close toolbox
+                }
             }
         });
         toolboxTable.row();
@@ -198,6 +203,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 if(root.dynamites > 0) {
                     root.dynamites--;
                     root.mcminos.getLevelBlock().makeDynamite();
+                    toggleToolbox(); // close toolbox
                 }
             }
         });
@@ -206,6 +212,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             public void clicked(InputEvent event, float x, float y) {
                 new Explosion(root.mcminos.getLevelBlock(), LevelObject.Types.Dynamite);
                 //TODO: decrease dynamite
+                toggleToolbox(); // close toolbox
             }
         });
         toolboxTable.row();
@@ -223,6 +230,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 if( root.landmines > 0 ) {
                     root.landmines--;
                     root.mcminos.getLevelBlock().makeLandMine();
+                    toggleToolbox(); // close toolbox
                 }
             }
         });
@@ -232,6 +240,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 if( root.landmines > 0 ) {
                     root.landmines--;
                     root.mcminos.getLevelBlock().makeLandMineActivated();
+                    toggleToolbox(); // close toolbox
                 }
             }
         });

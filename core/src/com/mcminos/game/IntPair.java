@@ -5,9 +5,9 @@ package com.mcminos.game;
  */
 public class IntPair {
     public int first;
-    public int second;
+    public long second;
 
-    IntPair(int a, int b){
+    IntPair(int a, long b){
         first=a;
         second=b;
     }

@@ -23,6 +23,7 @@ import java.util.concurrent.Semaphore;
 public class Root {
     // constants
     public final static int timeResolution = 128; // How often per second movements are updated?
+    private static long gameFrame = 0; // The game time - there is a getter for this
     public final static int virtualBlockResolution = 128; // How many virtual pixels is a block big (independent of actually used resolution), must be a power of 2
     public final static double baseSpeed = 2.0; // in blocks per second
     // derived constants
@@ -49,7 +50,7 @@ public class Root {
     static private float density;
     private static Main main;
     static Semaphore updateLock = new Semaphore(1);
-    static private Timer.Task mcmMoverTask = null;
+    static private Timer.Task timerTask = null;
 
     static String currentLevelName = null;
 
@@ -116,7 +117,6 @@ public class Root {
     }
 
     private static Root ourInstance = new Root();
-    public static long gameFrame = 0;
 
     public static Root getInstance() {
         return ourInstance;
@@ -262,8 +262,12 @@ public class Root {
         reset();
         // Load a level
         level = new Level(s);
-        startMover();
         resize();
+        // init movers
+        mcmMover = new Mover( mcminos, 1.0, true, moverMcminos, Entities.mcminos_default_front, Entities.mcminos_default_up,
+                Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
+        // start the own timer (which triggers also the movemnet)
+        startTimer();
     }
 
     private static void reset() {
@@ -424,13 +428,10 @@ public class Root {
     /**
      * Start the moving thread which will manage all movement of objects in the game
      */
-    public static void startMover() {
-        mcmMover = new Mover( mcminos, 1.0, true, moverMcminos, Entities.mcminos_default_front, Entities.mcminos_default_up,
-                Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
-
-        if( mcmMoverTask != null)
-            mcmMoverTask.cancel(); // cancelold one
-        mcmMoverTask = new Timer.Task() {
+    public static void startTimer() {
+        if( timerTask != null)
+            timerTask.cancel(); // cancelold one
+        timerTask = new Timer.Task() {
             @Override
             public void run() {
                 gameFrame++;
@@ -439,7 +440,15 @@ public class Root {
 
             }
         };
-        Timer.schedule(mcmMoverTask, 0, 1 / (float) timeResolution);
+        Timer.schedule(timerTask, 0, 1 / (float) timeResolution);
+    }
+
+    public static long getGameFrame() {
+        return gameFrame;
+    }
+
+    public static void pause() {
+        timerTask.cancel();
     }
 
     /**
