@@ -93,7 +93,7 @@ focus = (1, 1)
 #   000 - 099 -> reserved (for future use, just in case)
 #   100 - 199 -> background
 #   200 - 299 -> reserved
-#   300 - 399 -> fields, holes, doors
+#   300 - 399 -> fields, holes, doors, land mines
 #   400 - 499 -> walls,
 #   500 - 599 -> stuff lying on the ground (pills, extras, tools, etc.)
 #   600 - 699 -> reserved

@@ -3,15 +3,12 @@ package com.mcminos.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,21 +47,33 @@ public class Root {
     static int gameResolutionCounter;
     static int fullPixelWidth =0, fullPixelHeight =0; // Size of virtual playingfield in physical pixels (blocks * physical resolution)
     static private float density;
-    public static LevelObject mcminos = null;
-    public static LevelObject destination = null;
-    public static Level level;
-    private static Mover mcmMover;
-    public static HashSet<LevelObject> movables=new HashSet<>(); // all moveables - mcminos
-    static Semaphore updateLock = new Semaphore(1);
-    private static LevelBlock lastBlock = null;
-    static int bombs=0; // number of bombs carried by mcminos
-    static int dynamites=0; // number of dynamites carried by mcminos
-    static int keys=0; // number of keys carried by mcminos
-    static int umbrellas = 0; // number of umbrellas carried by mcminos
-    static int lives = 3; // number of lives left
-    public static HashMap<String,Sound> soundList = new HashMap<>();
     private static Main main;
+    static Semaphore updateLock = new Semaphore(1);
+    static private Timer.Task mcmMoverTask = null;
 
+    static String currentLevelName = null;
+
+    // Level/Game specific statics
+    // TODO: consider making these non-static
+    public static Level level;
+    public static LevelObject mcminos;
+    private static Mover mcmMover;
+    static int chocolates; // number of chocolates carried by mcminos
+    static int bombs; // number of bombs carried by mcminos
+    static int dynamites; // number of dynamites carried by mcminos
+    static int keys; // number of keys carried by mcminos
+    static int umbrellas; // number of umbrellas carried by mcminos
+    static int landmines; // number of umbrellas carried by mcminos
+    static int lives; // number of lives left
+    static int score; // current score
+
+    public static HashSet<LevelObject> movables; // all moveables - i.e. mcminos
+    private static LevelBlock lastBlock;
+    private static boolean toolboxShown;
+    private static boolean destinationSet; // was a destination set (and neds to be shown)
+    public static LevelObject destination;
+
+    public static HashMap<String,Sound> soundList = new HashMap<>();
     public static String[] soundNames = new String[]{"aaahhh",
             "applaus",
             "beep",
@@ -113,8 +122,17 @@ public class Root {
         return ourInstance;
     }
 
+    public static boolean isToolboxShown() {
+        return toolboxShown;
+    }
+
+    public static void setToolboxShown(boolean toolboxShown) {
+        Root.toolboxShown = toolboxShown;
+    }
+
     private Root() {
         batch = new SpriteBatch();
+
         defaultFont = new BitmapFont(Gdx.files.internal("fonts/liberation-sans-64.fnt"));
         defaultSkin = new Skin( Gdx.files.internal(UISKIN_DEFAULT) );
         density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
@@ -124,10 +142,10 @@ public class Root {
      * Update the position of the currently seen viewable window
      */
     public static void updateWindowPosition() {
-
-        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getVX(), level.getScrollX(), getLevelWidth(), windowVPixelWidth);
-        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getVY(), level.getScrollY(), getLevelHeight(), windowVPixelHeight);
-
+        if( ! toolboxShown) {
+            windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getVX(), level.getScrollX(), getLevelWidth(), windowVPixelWidth);
+            windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getVY(), level.getScrollY(), getLevelHeight(), windowVPixelHeight);
+        }
     }
 
     /**
@@ -225,7 +243,7 @@ public class Root {
 
         float scale = Math.max(w/iw, h / ih);
         img.setScale(scale);
-        img.setPosition(w/2 - iw*scale/2, h/2 - ih*scale/2);
+        img.setPosition(w / 2 - iw * scale / 2, h / 2 - ih * scale / 2);
     }
 
     public void init() {
@@ -237,16 +255,39 @@ public class Root {
         gameResolutionCounter = 0;
         resolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
         setResolution(resolution);
-        // create destination-object
-        destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
     }
 
 
     public static void loadLevel(String s) {
+        reset();
         // Load a level
         level = new Level(s);
         startMover();
         resize();
+    }
+
+    private static void reset() {
+        level=null;
+        mcminos = null;
+        mcmMover=null;
+        // TODO: make this reset dependent on level
+        bombs=0; // number of bombs carried by mcminos
+        dynamites=0; // number of dynamites carried by mcminos
+        keys=0; // number of keys carried by mcminos
+        umbrellas = 0; // number of umbrellas carried by mcminos
+        lives = 3; // number of lives left
+        landmines = 0; // number of landmines carried
+        destinationSet = false;
+
+        movables=new HashSet<>(); // all moveables - mcminos
+        lastBlock = null;
+        toolboxShown = false;
+        // Make sure global structure is empty,must happen before dest-creation
+        LevelObject.disposeAll();
+        // create destination-object
+        destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
+        score = 0; //TODO: recheck, when this has to be resetted
+
     }
 
     public static int getVisibleWidth() {
@@ -324,7 +365,7 @@ public class Root {
         @Override
         public Mover.directions[] chooseDirection(LevelObject lo) {
             // mcminos
-            if (destination.hasGfx()) { // destination is set
+            if (destinationSet) { // destination is set
                 // check screen distance
                 int x = mcminos.getVX();
                 int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
@@ -364,6 +405,9 @@ public class Root {
                     tryDirections[0] = tryDirections[1];
                     tryDirections[1] = tmp;
                 }
+                if( dircount == 0 && xdelta ==0 && ydelta ==0) {
+                    unsetDestination();
+                }
                 return tryDirections;
             }
             return new Mover.directions[]{};
@@ -378,13 +422,15 @@ public class Root {
     };
 
     /**
-     * Start the moving thread which wil manage all movement of objects in the game
+     * Start the moving thread which will manage all movement of objects in the game
      */
     public static void startMover() {
         mcmMover = new Mover( mcminos, 1.0, true, moverMcminos, Entities.mcminos_default_front, Entities.mcminos_default_up,
                 Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
 
-        Timer.schedule(new Timer.Task() {
+        if( mcmMoverTask != null)
+            mcmMoverTask.cancel(); // cancelold one
+        mcmMoverTask = new Timer.Task() {
             @Override
             public void run() {
                 gameFrame++;
@@ -392,8 +438,8 @@ public class Root {
                 doMovement();
 
             }
-        }
-                , 0, 1 / (float) timeResolution);
+        };
+        Timer.schedule(mcmMoverTask, 0, 1 / (float) timeResolution);
     }
 
     /**
@@ -406,15 +452,18 @@ public class Root {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // move everybody
-        for( LevelObject m : movables ) {
-            m.move();
+
+        if( !toolboxShown) {
+            // move everybody
+            for (LevelObject m : movables) {
+                m.move();
+            }
+
+            mcmMover.calculateDirection();
+            mcmMover.move();
+
+            checkCollisions();
         }
-
-        mcmMover.calculateDirection();
-        mcmMover.move();
-
-        checkCollisions();
 
         Root.updateLock.release();
     }
@@ -431,20 +480,42 @@ public class Root {
             {
                 soundPlay("knurps");
                 currentBlock.removePill();
+                increaseScore(1);
             }
             // check, if mcminos actually moved or if it's the same field as last time
             if(currentBlock != lastBlock) {
                 for( LevelObject b:currentBlock.getCollectibles()) {
                     switch( b.getType() ) {
+                        case Chocolate:
+                            soundPlay("tools");
+                            chocolates ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            increaseScore(10);
+                            break;
                         case Bomb:
                             soundPlay("tools");
                             bombs ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            // no score as droppable increaseScore(10);
                             break;
                         case Dynamite:
                             soundPlay("tools");
                             dynamites ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            // no score as droppable increaseScore(10);
+                            break;
+                        case LandMine:
+                            soundPlay("tools");
+                            landmines ++;
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            // no score as droppable increaseScore(10);
+                            break;
+                        case LandMineActive:
+                            // TODO: trigger explosion
                             currentBlock.removeItem(b);
                             b.dispose();
                             break;
@@ -453,27 +524,179 @@ public class Root {
                             keys ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            increaseScore(10);
                             break;
                         case Umbrella:
                             soundPlay("tools");
                             umbrellas ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            increaseScore(10);
                             break;
                         case Live:
                             soundPlay("life");
                             lives ++;
                             currentBlock.removeItem(b);
                             b.dispose();
+                            increaseScore(10);
                             break;
                     }
                 }
+
+
             }
             lastBlock = currentBlock;
         }
     }
+
+    private static void increaseScore(int increment) {
+        int old = score/5000;
+        score += increment;
+        if(score/5000 > old) { // just passed 5000
+            // earn a live
+            lives += 1;
+            soundPlay("life");
+        }
+    }
+
+
     
     /*
+     Powerpill essen
+    void powerpill( int x, int y, int mcm, int gos, int time, int draw )
+    {
+        int i;
+
+        if(draw) clearwall( x, y );
+        mcmspeed /= mcmspeedf;
+        mcmspeed *= mcm;
+        for(i=0; i<4; i++)
+        {
+            gosspeed[i] /= gosspeedf;
+            gosspeed[i] *= gos;
+        }
+        mcmspeedf = mcm;
+        gosspeedf = gos;
+        if(time)
+        {
+            timercd = &power;
+            power += time;
+            snd_power();
+            inc_score( 10 );
+        }
+    }
+
+
+    case POPILL1-1: powerpill( x, y, 2, 1, 10, 1); break;
+		case POPILL1: powerpill( x, y, 1, 2, 10,1); break;
+		case POPILL1+1: powerpill( x, y, 1, 1, 10, 1); break;
+		case MEDICINE1-1:clearwall( x, y );
+					snd_tool();
+					inc_score( 10 );
+					carry[CARRYANTIDOT]++;
+					break;
+		case CLOCKOBJ-1:clearwall( x, y );
+					snd_tool();
+					if(timeactiv) leveltime+=60;
+					inc_score( 10 );
+					break;
+		case POISON1-1:clearwall( x, y );
+					pacpoison();
+					retwert = 0;
+					break;
+		case SKULL-1: retwert = 0; spec_action = 1;
+					power = 0; kill_mcminos(); break;
+		case SURPRISE-1:clearwall( x, y );
+					choose_surprise( x, y );
+					break;
+		case LADDER-1: retwert = 0; pills_left=0; spec_action=1;
+    inc_score(10); break;
+    case TRUHE-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 500 );
+    break;
+    case GELDSACK-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 250 );
+    break;
+    case SPARSCHWEIN-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 100 );
+    break;
+    case SPEEDUP-1: snd_speedup(); speedup = 1; break;
+    case SLOWDOWN-1: snd_slowdown(); speedup = 0; break;
+    case MIRROR-1:clearwall( x, y );
+    inc_score( 10 );
+    snd_mirror();
+    mirrorflag = !mirrorflag;
+    break;
+    case WHISKEY-1:clearwall( x, y );
+    snd_drunken();
+    drunken += 16;
+    inc_score( 5 );
+    break;
+    case KILLALL-1:clearwall( x, y );
+    snd_killall();
+    inc_score( goscount[0] * 10 );
+    ghostkillflag = 1;
+    spec_action = 1;
+    break;
+    case KILLALL2-1: snd_killall();
+    inc_score( goscount[0] * 10 );
+    ghostkillflag = 1;
+    spec_action = 1;
+    break;
+    case SECRETLETTER-1:clearwall( x, y );
+    //snd_letter();
+    inc_score( 10 );
+    found_letter = 1;
+    spec_action = 1;
+    break;
+    case LOCH-1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+2: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+3: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        McMinos_hole();
+        retwert = 0;
+    }
+    break;
+    case WARP-1:spec_action = 1;
+    stop_moving = 1;
+    do_warp = 1;
+    retwert = 0;
+    break;
+    case MINEDOWN-1: mine_expl( x, y ); break;
+    case MINEUP-1:change_field( x, y, levfield(y, x).extra);
+    snd_tool();
+    inc_score( 10 );
+    carry[CARRYMINE]++;
+    break;
+}
+
+
+
     void snd_killed( void )
 {
 	play_sound( GHOSTS, 3, 300 );
@@ -634,10 +857,21 @@ public class Root {
     }
 
     public static void setScreen(Screen scr) {
-        main.setScreen( scr );
+        main.setScreen(scr);
     }
 
     public static void setMain(Main m) {
         main = m;
+    }
+
+    public void setDestination(int x, int y) {
+        destination.setGfx(Entities.destination);
+        destination.moveTo(x, y);
+        destinationSet = true;
+    }
+
+    private static void unsetDestination() {
+        destination.setGfx(null);
+        //destinationSet = false; needs to be still set
     }
 }

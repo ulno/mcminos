@@ -115,7 +115,7 @@ public class Mover {
                     if(nextBlock.hasRock()) {
                         // TODO: check that there are no ghosts
                         if(canMoveRocks) { // check if this rock could actually be moved (not if there is rock or wall)
-                            if(dir != directions.STOP && !(nextBlock2.hasWall() || nextBlock2.hasRock()))
+                            if(dir != directions.STOP && !(nextBlock2.hasWall() || nextBlock2.hasRock() || nextBlock2.hasClosedDoor()))
                             {
                                 currentDirection = dir; // start moving there
                                 // also make rock in the speed we push it
