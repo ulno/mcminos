@@ -25,8 +25,9 @@ public class FrameTimer {
     public void update(long gameFrame) {
         nowFrame = gameFrame;
         while (tasks.size() > 0 && tasks.get(0).scheduleFrame <= nowFrame) {
-            tasks.get(0).run();
+            Task t = tasks.get(0);
             tasks.remove(0);
+            t.run(); // this can create new tasks, so make sure this task has been removed from lsit before
         }
         lastFrame = gameFrame;
     }

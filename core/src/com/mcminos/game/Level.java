@@ -220,7 +220,7 @@ public class Level {
                 bggfx = Entities.backgrounds_universe_01;
                 break;
             default:
-                bggfx = Entities.backgrounds_blue_balls;
+                bggfx = Entities.backgrounds_pavement_01;
                 break;
         }
         for( int x=0; x<width; x++)

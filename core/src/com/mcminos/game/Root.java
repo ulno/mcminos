@@ -563,7 +563,7 @@ public class Root {
         }
     }
 
-    private static void increaseScore(int increment) {
+    public static void increaseScore(int increment) {
         int old = score/5000;
         score += increment;
         if(score/5000 > old) { // just passed 5000

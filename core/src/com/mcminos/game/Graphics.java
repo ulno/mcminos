@@ -66,7 +66,7 @@ public class Graphics {
      * Create a new Graphics
      * @param symbol // symbol in old Mcminos ascii representation
      * @param anchorX // center block point x (will be multiplied by virtualBlockResolution)
-     * @param anchorY // center block point y (will be multiplied by virtualBlockResolution)
+     * @param anchorY // center block point y (will be multiplied by virtualBlockResolution) - still viewed from top left, needs to be flipped
      * @param zIndex // for drawing order (layer)
      * @param moving // is this object static or does it move
      * @param blockWidth; // Width of graphics in blocks
@@ -75,7 +75,7 @@ public class Graphics {
     Graphics(char symbol, int anchorX, int anchorY, int zIndex, boolean moving, int blockWidth, int blockHeight) {
         this.symbol = symbol;
         this.anchorX = anchorX << Root.virtualBlockResolutionExponent;
-        this.anchorY = anchorY << Root.virtualBlockResolutionExponent;
+        this.anchorY = (blockHeight - anchorY - 1) << Root.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
         this.moving = moving;
         this.blockWidth = blockWidth;

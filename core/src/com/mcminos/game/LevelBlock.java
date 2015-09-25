@@ -12,6 +12,7 @@ public class LevelBlock {
     private int x,y; // Position in Level Field
     private Level level; // corresponding level
     private LevelObject wall=null; // The wall or door connected here
+    private int wallIndex = -1; // Index of the wall
     private LevelObject rock=null; // a rock connected to this field
     private LevelObject pill=null; // a potential pill on this field
     private LevelObject castle=null; // a part of a castle
@@ -20,6 +21,24 @@ public class LevelBlock {
     private LevelObject door=null; // a potential door
     private int oneWay = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
     private boolean rockme = false;
+    private Graphics[] walls = {
+            Entities.walls_default_00,
+            Entities.walls_default_01,
+            Entities.walls_default_02,
+            Entities.walls_default_03,
+            Entities.walls_default_04,
+            Entities.walls_default_05,
+            Entities.walls_default_06,
+            Entities.walls_default_07,
+            Entities.walls_default_08,
+            Entities.walls_default_09,
+            Entities.walls_default_10,
+            Entities.walls_default_11,
+            Entities.walls_default_12,
+            Entities.walls_default_13,
+            Entities.walls_default_14,
+            Entities.walls_default_15
+    };
 
 
     /**
@@ -81,25 +100,8 @@ public class LevelBlock {
                 wallNr += 4;
             if (l != null && l.hasWall())
                 wallNr += 8;
-            Graphics[] walls = { // TODO: consider how to switch to different walls (for example castle)!
-                    Entities.walls_default_00,
-                    Entities.walls_default_01,
-                    Entities.walls_default_02,
-                    Entities.walls_default_03,
-                    Entities.walls_default_04,
-                    Entities.walls_default_05,
-                    Entities.walls_default_06,
-                    Entities.walls_default_07,
-                    Entities.walls_default_08,
-                    Entities.walls_default_09,
-                    Entities.walls_default_10,
-                    Entities.walls_default_11,
-                    Entities.walls_default_12,
-                    Entities.walls_default_13,
-                    Entities.walls_default_14,
-                    Entities.walls_default_15
-            };
             wall.setGfx(walls[wallNr]);
+            wallIndex = wallNr;
         }
     }
 
@@ -474,4 +476,25 @@ public class LevelBlock {
     public int getY() {
         return y;
     }
+
+    public LevelObject getWall() {
+        return wall;
+    }
+
+    public void setWall(LevelObject wall) {
+        this.wall = wall;
+    }
+
+    public int getWallIndex() {
+        return wallIndex;
+    }
+
+    public LevelObject getDoor() {
+        return door;
+    }
+
+    public void setDoor(LevelObject door) {
+        this.door = door;
+    }
+
 }

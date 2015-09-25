@@ -1,6 +1,6 @@
 Symbol="d"
-size=(1,1)
-focus=(1,1)
+size=(2,2)
+focus=(2,2)
 zindex=800
 speed=100
 moving=False
