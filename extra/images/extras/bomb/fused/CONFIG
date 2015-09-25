@@ -2,6 +2,6 @@ Symbol="b"
 size=(2,2)
 focus=(2,2)
 zindex=800
-speed=50
+speed=100
 moving=False
 

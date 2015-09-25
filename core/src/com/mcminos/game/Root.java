@@ -529,9 +529,9 @@ public class Root {
                             // no score as droppable increaseScore(10);
                             break;
                         case LandMineActive:
-                            // TODO: trigger explosion
                             currentBlock.removeItem(b);
                             b.dispose();
+                            new Explosion(currentBlock, LevelObject.Types.LandMine);
                             break;
                         case Key:
                             soundPlay("tools");
