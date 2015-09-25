@@ -1,7 +1,5 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.utils.Timer;
-
 /**
  * Created by ulno on 19.09.15.
  */
@@ -9,7 +7,7 @@ public class Explosion {
     private final LevelBlock center;
     private final LevelObject.Types type;
     private LevelObject fuseObject;
-    private Timer.Task triggerExplosionTask;
+    private FrameTimer.Task triggerExplosionTask;
     private LevelObject explosionObject;
 
     public Explosion(LevelBlock center, LevelObject.Types type) {
@@ -28,6 +26,7 @@ public class Explosion {
 
     private void initExplosion() {
         explosionObject = new LevelObject(center, Entities.extras_bomb_exploding, LevelObject.Types.BombFused);
+        explosionObject.animationStartNow();
         Root.soundPlay("explosio");
         // TODO: take care of destruction and removal
     }
@@ -38,21 +37,22 @@ public class Explosion {
         if(type == LevelObject.Types.Bomb) {
             fuseObject = new LevelObject(center, Entities.extras_bomb_fused, LevelObject.Types.BombFused);
             Root.soundPlay("zisch");
-            animationLengthMS = Entities.extras_bomb_fused.getAnimationFrames();
+            animationLengthMS = Entities.extras_bomb_fused.getAnimationFramesLength();
         }
         else { // so it's dynamite
             fuseObject = new LevelObject(center, Entities.extras_dynamite_fused, LevelObject.Types.BombFused);
+            fuseObject.animationStartNow();
             Root.soundPlay("zisch");
-            animationLengthMS = Entities.extras_dynamite_fused.getAnimationFrames();
+            animationLengthMS = Entities.extras_dynamite_fused.getAnimationFramesLength();
         }
         // Start a timer to come back here, when fusing finished
-        triggerExplosionTask = new Timer.Task() { // TODO: usemy own timer in mover
+        triggerExplosionTask = new FrameTimer.Task() {
             @Override
             public void run() {
                 fuseObject.dispose();
                 initExplosion();
             }
         };
-        Timer.schedule(triggerExplosionTask, (float)animationLengthMS/1000 );
+        Root.frameTimer.schedule(triggerExplosionTask, animationLengthMS );
     }
 }

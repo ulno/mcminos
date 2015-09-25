@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Timer;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -51,6 +52,7 @@ public class Root {
     private static Main main;
     static Semaphore updateLock = new Semaphore(1);
     static private Timer.Task timerTask = null;
+    static private Random randomGenerator = new Random();
 
     static String currentLevelName = null;
 
@@ -109,6 +111,7 @@ public class Root {
             "tools",
             "trommeln",
             "zisch"};
+    public static FrameTimer frameTimer;
 
     public static void setResolution(int resolution) {
         Root.resolution = resolution;
@@ -429,6 +432,8 @@ public class Root {
      * Start the moving thread which will manage all movement of objects in the game
      */
     public static void startTimer() {
+        frameTimer = new FrameTimer();
+
         if( timerTask != null)
             timerTask.cancel(); // cancelold one
         timerTask = new Timer.Task() {
@@ -437,7 +442,7 @@ public class Root {
                 gameFrame++;
 
                 doMovement();
-
+                frameTimer.update(gameFrame);
             }
         };
         Timer.schedule(timerTask, 0, 1 / (float) timeResolution);
@@ -882,5 +887,9 @@ public class Root {
     private static void unsetDestination() {
         destination.setGfx(null);
         //destinationSet = false; needs to be still set
+    }
+
+    static int random(int interval) {
+        return randomGenerator.nextInt(interval);
     }
 }

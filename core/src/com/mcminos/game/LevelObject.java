@@ -26,6 +26,7 @@ public class LevelObject implements  Comparable<LevelObject> {
     private Mover mover = null;
     private LevelBlock levelBlock = null; // currently associated LevelBlock
     private int holeLevel;
+    private int animDelta = 0; // how much offset for the animation
     private Types type;
     private DoorTypes doorType = DoorTypes.None;
 
@@ -35,9 +36,9 @@ public class LevelObject implements  Comparable<LevelObject> {
         this.zIndex = zIndex;
         this.type = type;
         // add to static list
-        int index = Collections.binarySearch(all, this);
+        int index = Collections.binarySearch(all, this); // make sure it's sorted
         if(index<0)
-            index = - index - 1;
+            index = -index - 1;
         all.add(index, this);
     }
     /**
@@ -47,7 +48,7 @@ public class LevelObject implements  Comparable<LevelObject> {
      * @param zIndex need to know zIndex to allow correct drawing order later
      */
     LevelObject(int x, int y, int zIndex, Types type) {
-        construct(x,y,zIndex,type);
+        construct(x, y, zIndex, type);
     }
 
     public LevelObject(LevelBlock levelBlock, Graphics graphics, Types type) {
@@ -65,7 +66,7 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     private void draw() {
         if(gfx != null) // castle parts can be null or invisible things
-            gfx.draw(x,y);
+            gfx.draw(x,y,animDelta);
     }
 
     public static void drawAll() {
@@ -196,5 +197,15 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     public LevelBlock getLevelBlock() {
         return levelBlock;
+    }
+
+    void animationStartNow() {
+        int len = gfx.getAnimationFramesLength();
+
+        animDelta = len - (int)(Root.getGameFrame() % (long)len);
+    }
+
+    void animationStartRandom() {
+        animDelta = Root.random(gfx.getAnimationFramesLength());
     }
 }

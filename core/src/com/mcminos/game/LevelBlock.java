@@ -196,24 +196,28 @@ public class LevelBlock {
     public void makeGhost1() {
         LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
         lo.setGfx(Entities.ghosts_hanky);
+        lo.animationStartRandom();
         movables.add(lo);
     }
 
     public void makeGhost2() {
         LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
         lo.setGfx(Entities.ghosts_panky);
+        lo.animationStartRandom();
         movables.add(lo);
     }
 
     public void makeGhost3() {
         LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
         lo.setGfx(Entities.ghosts_zarathustra);
+        lo.animationStartRandom();
         movables.add(lo);
     }
 
     public void makeGhost4() {
         LevelObject lo = new LevelObject(x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
         lo.setGfx(Entities.ghosts_jumpingpill);
+        lo.animationStartRandom();
         movables.add(lo);
     }
 

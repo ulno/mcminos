@@ -189,8 +189,9 @@ public class Graphics {
      *
      * @param vx0 virtualPixel x-coordinate (level block * virtualPixelResolution)
      * @param vy0 virtualPixel y-coordinate (level block * virtualPixelResolution)
+     * @param animDelta offset to adapt animation
      */
-    void draw( int vx0, int vy0) {
+    void draw( int vx0, int vy0, int animDelta ) {
         // As we can be in a corner, clipping needs to be respected
         // Therefore compute the four pieces which could be wrapped around
         // compute them first completely in virtual coordinates
@@ -255,7 +256,7 @@ public class Graphics {
 
         // draw different parts to physical coordinates
         // only draw if visible (some part of the rectangle is in visible area)
-        Texture t = getTexture(Root.getGameFrame()); // TODO: add unit specific offset
+        Texture t = getTexture(Root.getGameFrame() + animDelta );
         int maxww = Root.windowPixelWidth;
         int maxwh = Root.windowPixelHeight;
         // Clipping correction for small screens, TODO: think about optimization
@@ -289,7 +290,7 @@ public class Graphics {
     /**
      * For the static part concerning all graphics
      */
-    static void setResolutionAll( ) {
+    static void setResolutionAll() {
         for (Graphics gfx : allGraphics) {
             gfx.setResolution();
         }
@@ -300,7 +301,7 @@ public class Graphics {
         return zIndex;
     }
 
-    public int getAnimationFrames() {
+    public int getAnimationFramesLength() {
         return totalAnimationFrames;
     }
 }
