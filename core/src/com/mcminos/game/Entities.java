@@ -3278,7 +3278,7 @@ extras_umbrella.addImage( "entities/extras_umbrella_16_0.png", 16, 0 );
 extras_umbrella.addImage( "entities/extras_umbrella_32_0.png", 32, 0 );
 extras_umbrella.addAnimationStep( 0, 100 );
 extras_umbrella.finishInit();
-castle_default = new Graphics('C',0,0,450,false,2,2);
+castle_default = new Graphics('C',0,1,450,false,2,2);
 castle_default.addImage( "entities/castle_default_128_0.png", 128, 0 );
 castle_default.addImage( "entities/castle_default_64_0.png", 64, 0 );
 castle_default.addImage( "entities/castle_default_8_0.png", 8, 0 );
