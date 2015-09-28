@@ -232,7 +232,7 @@ public class Level {
                 f.updateDoor();
                 // background
                 if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
-                    LevelObject lo = new LevelObject(x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
+                    LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
                     lo.setGfx(bggfx);
                 }
             }
@@ -328,7 +328,7 @@ public class Level {
                 case '0':
                     lb.makeRockMe();
                     lb.makeRock();
-                    decreaseRockmes(); // is already there
+                    decreaseRockmes(); // is already at destination
                     break;
                 case '6':
                     lb.makeHole(0);

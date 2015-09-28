@@ -15,10 +15,10 @@ public class FrameTimer {
      *  @param task to schedule
      * @param interval from now when it is supposed to be executed*/
     public void schedule(Task task, int interval) {
+        task.scheduleFrame = nowFrame + interval; // set search-key
         int index = Collections.binarySearch(tasks, task); // make sure it's sorted TODO: here could be a race
         if(index<0)
             index = -index - 1;
-        task.scheduleFrame = nowFrame + interval;
         tasks.add(index, task);
     }
 

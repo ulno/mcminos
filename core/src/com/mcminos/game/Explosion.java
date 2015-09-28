@@ -1,10 +1,12 @@
 package com.mcminos.game;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
  * Created by ulno on 19.09.15.
  */
+
 public class Explosion {
     private final LevelBlock center;
     private final LevelObject.Types type;
@@ -83,7 +85,7 @@ public class Explosion {
      */
     private void destroyWalls() {
         for( LevelBlock lb: getArea() ) {
-            if( lb.hasWall() ) {
+            if( lb.hasWall() && ! lb.getWall().isIndestructable()) {
                 LevelObject w = lb.getWall();
                 int wIndex = lb.getWallIndex();
                 lb.setWall(null);
@@ -93,14 +95,15 @@ public class Explosion {
                 }
             } else if (lb.hasDoor()) {
                 LevelObject d = lb.getDoor();
-                // TODO: add destroyed door
+                // TODO: add destroyed door graphics
                 d.dispose();
                 lb.setDoor(null);
             } else if (lb.hasRock()) {
                 LevelObject r = lb.getRock();
-                // TODO: add destroyed rock
-                r.dispose();
+                // TODO: add destroyed rock graphics
                 lb.setRock(null);
+                Root.movables.remove(r); // gom global movables
+                r.dispose();
             }
         }
     }
@@ -114,8 +117,14 @@ public class Explosion {
                 lb.removePill();
                 Root.increaseScore(1);
             }
+            if(lb.hasHole()) {
+                lb.getHole().increaseHole();
+            }
+            if(lb.hasOneWay()) {
+                lb.turnOneWay();
+            }
             HashSet<LevelObject> collectibles = lb.getCollectibles();
-            for( LevelObject lo: collectibles) {
+            for( LevelObject lo: collectibles ) {
                 switch(lo.getType()) {
                     case Bomb:
                         collectibles.remove(lo);

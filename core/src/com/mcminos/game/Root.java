@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
@@ -76,8 +76,9 @@ public class Root {
     private static int mcminosSpeedFactor = 1;
     private static int ghostSpeedFactor = 1;
     public static int powerDuration = 0;
+    public static int umbrellaDuration = 0;
 
-    public static HashSet<LevelObject> movables; // all moveables - i.e. mcminos
+    public static ArrayList<LevelObject> movables; // all moveables - i.e. mcminos
     private static LevelBlock lastBlock;
     private static boolean toolboxShown;
     private static boolean destinationSet; // was a destination set (and neds to be shown)
@@ -111,12 +112,14 @@ public class Root {
             "power",
             "quietsch",
             "rums",
+            "rumble",
             "slowdown",
             "speedup",
             "splash",
             "tick",
             "tools",
             "trommeln",
+            "wind",
             "zisch"};
 
     public static void setResolution(int resolution) {
@@ -271,6 +274,10 @@ public class Root {
         reset();
         // Load a level
         level = new Level(s);
+        // create destination-object
+        lastBlock = mcminos.getLevelBlock();
+        destination = new LevelObject(level,lastBlock.getX(),lastBlock.getY(),
+                Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
         resize();
         // init movers
         mcmMover = new Mover( mcminos, mcminosSpeed, true, moverMcminos);
@@ -303,14 +310,12 @@ public class Root {
         landmines = 0; // number of landmines carried
         destinationSet = false;
 
-        movables=new HashSet<>(); // all moveables - mcminos
+        movables=new ArrayList<>(); // all moveables - mcminos
         lastBlock = null;
         toolboxShown = false;
         // Make sure global structure is empty,must happen before dest-creation
         LevelObject.disposeAll();
-        // create destination-object
-        destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
-        score = 0; //TODO: recheck, when this has to be resetted
+        score = 0; //TODO: recheck, when this has to be reset
 
     }
 
@@ -366,7 +371,7 @@ public class Root {
     }
 
     public static LevelBlock getLevelBlock( int x, int y) {
-        return level.get( x, y);
+        return level.get( x, y );
     }
 
     public static LevelBlock getLevelBlockFromVPixel( int vPixelX, int vPixelY) {
@@ -473,50 +478,56 @@ public class Root {
     /**
      * This is called
      */
-    private static void nextGameFrame() {
-        // do timers
-        gameFrame++;
-        frameTimer.update(gameFrame);
-        // update durations and trigger events, if necessary
-        if(powerDuration > 1) {
-            powerDuration --;
-        }
-        else {
-            if( powerDuration == 1) { // power just ran out
-                powerDuration = 0;
-                setPowerPillValues(1,1,0); // back to normal, TODO: check, if this has to be adapted to level specifics
-                mcminosGfxNormal();
+    private static void nextGameFrame() { // to allow serialized iterations
+        if( !toolboxShown) { // if game is not paused
+            // do timers
+            gameFrame++;
+            frameTimer.update(gameFrame);
+            // update durations and trigger events, if necessary
+            if (powerDuration > 1) {
+                powerDuration--;
+            } else {
+                if (powerDuration == 1) { // power just ran out
+                    powerDuration = 0;
+                    setPowerPillValues(1, 1, 0); // back to normal, TODO: check, if this has to be adapted to level specifics
+                    mcminosGfxNormal();
+                }
             }
-        }
-        // move everybody
-        try { // needs to be synchronized against drawing
-            Root.updateLock.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if( !toolboxShown) {
+            if(umbrellaDuration > 0) {
+                umbrellaDuration --;
+            } // no else necessary as umbrellapower is checked when necessary
             // move everybody
-            for (LevelObject m : movables) {
+            try { // needs to be synchronized against drawing
+                Root.updateLock.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // TODO: check if moving order can be reversed (mcminos first)
+
+            // move everybody
+            for (int i=movables.size()-1; i>=0; i--) { // works as synchronized
+                LevelObject m = movables.get(i);
                 m.move();
+                if(m.checkCollisions())
+                    movables.remove(i);
             }
 
             mcmMover.calculateDirection();
             mcmMover.move();
-
-            checkCollisions();
+            checkMcMinosCollisions();
         }
 
         Root.updateLock.release();
     }
 
     /**
-     *     Check collisions (mainly if mcminos found something and can collect it)
+     * Check Mcminos'  collisions (mainly if mcminos found something and can collect it)
      * @return
      */
-    private static void checkCollisions() {
+    private static void checkMcMinosCollisions() {
         // check if something can be collected (only when full on field)
-        if((mcminos.getVX() % virtualBlockResolution  == 0) && (mcminos.getVY() % virtualBlockResolution == 0)) {
+        if(mcminos.fullOnBlock()) {
             LevelBlock currentBlock = getLevelBlockFromVPixel( mcminos.getVX(), mcminos.getVY() );
             if( currentBlock.hasPill() )
             {
@@ -526,6 +537,24 @@ public class Root {
             }
             // check, if mcminos actually moved or if it's the same field as last time
             if(currentBlock != lastBlock) {
+                if(umbrellaDuration == 0) { // no umbrellapower currently
+                    // check if last block had a hole -> make it bigger
+                    if (lastBlock.hasHole()) {
+                        // TODO check umbrella
+                        // try to increase
+                        lastBlock.getHole().increaseHole();
+                    }
+                    if (lastBlock.hasOneWay()) {
+                        lastBlock.turnOneWay();
+                    }
+                    // check if here is max hole
+                    if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
+                        // fall in
+                        // TODO: intiate kill sequence
+                        soundPlay("falling");
+                    }
+                }
+                // check the things lying here
                 for( LevelObject b:currentBlock.getCollectibles()) {
                     switch( b.getType() ) {
                         case Chocolate:

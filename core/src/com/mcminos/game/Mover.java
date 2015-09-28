@@ -101,30 +101,38 @@ public class Mover {
         int distance = currentPixelSpeed;
 
         // allow direction change when on block-boundaries
-        if (x % Root.virtualBlockResolution == 0 && y % Root.virtualBlockResolution == 0) {
+        if (levelObject.fullOnBlock()) {
             LevelBlock nextBlock = null, nextBlock2 = null;
-
+            LevelBlock currentBlock = Root.getLevelBlock(blockX, blockY);
+            LevelBlock.oneWayDir onewaydir = LevelBlock.oneWayDir.FREE;
+            if(levelObject.getType() != LevelObject.Types.Rock && currentBlock.hasOneWay()) {
+                onewaydir = currentBlock.getOneWayDir();
+            }
             // check all direction choices
             for (directions dir : nextDirections) {
                 // check if the new direction is actually not blocked
                 switch (dir) {
                     case STOP: // no movement so no problem
-                        nextBlock = Root.getLevelBlock(blockX, blockY);
+                        nextBlock = currentBlock;
                         nextBlock2 = nextBlock;
                         break;
                     case UP:
+                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.UP) break;
                         nextBlock = Root.level.getUp(blockX, blockY, true);
                         nextBlock2 = Root.level.getUp2(blockX, blockY); // for figuring out, if rocks are movable
                         break;
                     case RIGHT:
+                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.RIGHT) break;
                         nextBlock = Root.level.getRight(blockX, blockY, true);
                         nextBlock2 = Root.level.getRight2(blockX, blockY);
                         break;
                     case DOWN:
+                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.DOWN) break;
                         nextBlock = Root.level.getDown(blockX, blockY, true);
                         nextBlock2 = Root.level.getDown2(blockX, blockY);
                         break;
                     case LEFT:
+                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.LEFT) break;
                         nextBlock = Root.level.getLeft(blockX, blockY, true);
                         nextBlock2 = Root.level.getLeft2(blockX, blockY);
                         break;
@@ -133,12 +141,12 @@ public class Mover {
                     if(nextBlock.hasRock()) {
                         // TODO: check that there are no ghosts
                         if(canMoveRocks) { // check if this rock could actually be moved (not if there is rock or wall)
-                            if(dir != directions.STOP && !(nextBlock2.hasWall() || nextBlock2.hasRock() || nextBlock2.hasClosedDoor()))
-                            {
+                            if(dir != directions.STOP && !(nextBlock2.hasWall() || nextBlock2.hasRock()
+                                    || nextBlock2.hasClosedDoor())) {
                                 currentDirection = dir; // start moving there
                                 // also make rock in the speed we push it
                                 LevelObject rock = nextBlock.getRock();
-                                Mover mover = new Mover(rock,this.speed,false, Root.moverRock,Entities.extras_rock);
+                                Mover mover = new Mover(rock, speed, false, Root.moverRock, Entities.extras_rock);
                                 rock.setMover(mover);
                                 Root.soundPlay("moverock");
                                 mover.move(currentDirection);
@@ -156,7 +164,7 @@ public class Mover {
                 }
                 currentDirection = directions.STOP; // if we come here and don't break, then we must stop
             }
-        }
+        } // end if full on block
         // do transformations for new direction
         switch (currentDirection) {
             case STOP:
