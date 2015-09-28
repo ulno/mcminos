@@ -12,11 +12,12 @@ import java.util.Collections;
 public class LevelObject implements  Comparable<LevelObject> {
 
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
-
-    public enum Types {Unspecified, Power1, Power2,
+    public enum Types {Unspecified, Power1, Power2, Power3,
         IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter,
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
-        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay, Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion, BombExplosion, DestroyedWall, Hole};
+        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
+        Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
+        BombExplosion, DestroyedWall, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
@@ -24,15 +25,19 @@ public class LevelObject implements  Comparable<LevelObject> {
     private Graphics gfx; // actual Graphics for the object
     private int zIndex = maxzIndex; // by default it is too high
     private Mover mover = null;
+    private Level level = null;
     private LevelBlock levelBlock = null; // currently associated LevelBlock
     private int holeLevel;
+    public static final int maxHoleLevel = 4; // maximum open
     private int animDelta = 0; // how much offset for the animation
     private Types type;
     private DoorTypes doorType = DoorTypes.None;
 
-    private void construct(int x, int y, int zIndex, Types type) {
+    private void construct(Level level, int x, int y, int zIndex, Types type) {
+        this.level = level;
         this.x = x << Root.virtualBlockResolutionExponent;
         this.y = y << Root.virtualBlockResolutionExponent;
+        levelBlock = level.get(x, y);
         this.zIndex = zIndex;
         this.type = type;
         // add to static list
@@ -47,12 +52,12 @@ public class LevelObject implements  Comparable<LevelObject> {
      * @param y in block coordinates (movable objects can have fraction as coordinate)
      * @param zIndex need to know zIndex to allow correct drawing order later
      */
-    LevelObject(int x, int y, int zIndex, Types type) {
-        construct(x, y, zIndex, type);
+    LevelObject(Level level, int x, int y, int zIndex, Types type) {
+        construct(level, x, y, zIndex, type);
     }
 
     public LevelObject(LevelBlock levelBlock, Graphics graphics, Types type) {
-        construct(levelBlock.getX(), levelBlock.getY(), graphics.getzIndex(), type);
+        construct(levelBlock.getLevel(), levelBlock.getX(), levelBlock.getY(), graphics.getzIndex(), type);
         setGfx(graphics);
     }
 
@@ -99,7 +104,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         LevelBlock to = Root.getLevelBlockFromVPixel(x, y);
         // needs to be updated to check for collisions via associations
         if( from != to ) {
-            if (from != null) {
+            //if (from != null) { shoul dnot happen when prop[erly intialized
                 from.removeMovable(this);
                 // check if rock and update rockme counters
                 if (type == LevelObject.Types.Rock) {
@@ -107,7 +112,7 @@ public class LevelObject implements  Comparable<LevelObject> {
                     if (from.isRockme()) Root.level.increaseRockmes();
                     if (to.isRockme()) Root.level.decreaseRockmes();
                 }
-            }
+            //}
             to.putMoveable(this);
             levelBlock = to; // todo: might be not totally correct for destination
         }
@@ -173,7 +178,19 @@ public class LevelObject implements  Comparable<LevelObject> {
         Graphics[] holes =
                 new Graphics[]{Entities.holes_0, Entities.holes_1,
                         Entities.holes_2, Entities.holes_3, Entities.holes_4};
-        this.setGfx( holes[holeLevel]);
+        this.setGfx(holes[holeLevel]);
+    }
+
+    public boolean increaseHole() {
+        holeLevel ++;
+        if(holeLevel > maxHoleLevel) {
+            holeLevel = maxHoleLevel;
+            return false;
+        }
+        // it got bigger
+        Root.soundPlay("holegrow");
+        setHoleLevel(holeLevel);
+        return true;
     }
 
     public int getVX() {
@@ -208,4 +225,69 @@ public class LevelObject implements  Comparable<LevelObject> {
     void animationStartRandom() {
         animDelta = Root.random(gfx.getAnimationFramesLength());
     }
+
+    public boolean fullOnBlock() {
+        return (getVX() % Root.virtualBlockResolution  == 0) && (getVY() % Root.virtualBlockResolution == 0);
+    }
+
+    /**
+     * check collision of this with mcminos or other things
+     * return: true, if this object needs to be removed
+     */
+    public boolean checkCollisions() {
+        boolean isOnField = this.fullOnBlock();
+
+        switch(getType()) {
+            case Rock:
+                // check if on hole -> break hole and remove rock
+                if(isOnField) {
+                    if( levelBlock.hasHole() ) {
+                        levelBlock.getHole().setHoleLevel(maxHoleLevel);
+                        levelBlock.removeMovable(this);
+                        levelBlock.setRock(null); // remove rock
+                        dispose();
+                        Root.soundPlay("rumble");
+                        return true;
+                    }
+                }
+                break;
+        }
+        return false;
+    }
+
+    public boolean holeIsMax() {
+        return holeLevel == maxHoleLevel;
+    }
+
+    public void setOneWayGfx(int i) {
+        LevelObject lo = this;
+        switch (i) {
+            case 0:
+                lo.setGfx(Entities.arrows_static_up);
+                break;
+            case 1:
+                lo.setGfx(Entities.arrows_static_right);
+                break;
+            case 2:
+                lo.setGfx(Entities.arrows_static_down);
+                break;
+            case 3:
+                lo.setGfx(Entities.arrows_static_left);
+                break;
+            case 4:
+                lo.setGfx(Entities.arrows_rotatable_up);
+                break;
+            case 5:
+                lo.setGfx(Entities.arrows_rotatable_right);
+                break;
+            case 6:
+                lo.setGfx(Entities.arrows_rotatable_down);
+                break;
+            case 7:
+                lo.setGfx(Entities.arrows_rotatable_left);
+                break;
+        }
+
+    }
+
 }

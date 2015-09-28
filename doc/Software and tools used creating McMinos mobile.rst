@@ -16,7 +16,9 @@ Development tools, languages, etc.
 
 Java
 ----
-
+* libGDX
+* IntelliJ Community Edition
+* Android SDK
 
 Python
 ------

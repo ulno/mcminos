@@ -232,7 +232,7 @@ public class Level {
                 f.updateDoor();
                 // background
                 if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
-                    LevelObject lo = new LevelObject(x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
+                    LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
                     lo.setGfx(bggfx);
                 }
             }
@@ -270,6 +270,12 @@ public class Level {
                     break;
                 case '*':
                     lb.makePowerPill1();
+                    break;
+                case '(':
+                    lb.makePowerPill2();
+                    break;
+                case ')':
+                    lb.makePowerPill3();
                     break;
                 case 'C':
                     lb.makeCastle();
@@ -320,8 +326,9 @@ public class Level {
                     lb.makeRockMe();
                     break;
                 case '0':
-                    lb.makeRock();
                     lb.makeRockMe();
+                    lb.makeRock();
+                    decreaseRockmes(); // is already at destination
                     break;
                 case '6':
                     lb.makeHole(0);
@@ -391,10 +398,6 @@ public class Level {
 ;   USEFUL THINGS:
 ;   x = ladder
 ;   a = kill all pill
-
-;   power pills: (do their job for 10 sec)
-;   ( = mushroom; multipliers: MCSPEED *= 1; GHSPEEDs *= 2
-;   ) = bonbon; multipliers: MCSPEED *= 1; GHSPEEDs *= 1
 
 ;   $ = clock, Level time (if level time is limited:) + 60 sec.
 

@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
@@ -26,7 +26,7 @@ public class Root {
     public final static int timeResolution = 128; // How often per second movements are updated?
     private static long gameFrame = 0; // The game time - there is a getter for this
     public final static int virtualBlockResolution = 128; // How many virtual pixels is a block big (independent of actually used resolution), must be a power of 2
-    public final static double baseSpeed = 2.0; // in blocks per second
+    public final static int baseSpeed = 2; // base speed of all units (kind of the slowest anybody usually moves) in blocks per second
     // derived constants
     public final static int timeResolutionExponent = Util.log2binary(timeResolution);
     public final static int virtualBlockResolutionExponent = Util.log2binary(virtualBlockResolution);
@@ -70,7 +70,15 @@ public class Root {
     static int lives; // number of lives left
     static int score; // current score
 
-    public static HashSet<LevelObject> movables; // all moveables - i.e. mcminos
+    public static FrameTimer frameTimer;
+    private static int mcminosSpeed = baseSpeed;
+    private static int ghostSpeed[] = {baseSpeed,baseSpeed,baseSpeed,baseSpeed};
+    private static int mcminosSpeedFactor = 1;
+    private static int ghostSpeedFactor = 1;
+    public static int powerDuration = 0;
+    public static int umbrellaDuration = 0;
+
+    public static ArrayList<LevelObject> movables; // all moveables - i.e. mcminos
     private static LevelBlock lastBlock;
     private static boolean toolboxShown;
     private static boolean destinationSet; // was a destination set (and neds to be shown)
@@ -104,14 +112,15 @@ public class Root {
             "power",
             "quietsch",
             "rums",
+            "rumble",
             "slowdown",
             "speedup",
             "splash",
             "tick",
             "tools",
             "trommeln",
+            "wind",
             "zisch"};
-    public static FrameTimer frameTimer;
 
     public static void setResolution(int resolution) {
         Root.resolution = resolution;
@@ -265,12 +274,27 @@ public class Root {
         reset();
         // Load a level
         level = new Level(s);
+        // create destination-object
+        lastBlock = mcminos.getLevelBlock();
+        destination = new LevelObject(level,lastBlock.getX(),lastBlock.getY(),
+                Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
         resize();
         // init movers
-        mcmMover = new Mover( mcminos, 1.0, true, moverMcminos, Entities.mcminos_default_front, Entities.mcminos_default_up,
-                Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
+        mcmMover = new Mover( mcminos, mcminosSpeed, true, moverMcminos);
+        mcminosGfxNormal();
+
         // start the own timer (which triggers also the movemnet)
         startTimer();
+    }
+
+    public static void mcminosGfxNormal() {
+        mcmMover.setGfx(Entities.mcminos_default_front, Entities.mcminos_default_up,
+                Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
+    }
+
+    public static void mcminosGfxPowered() {
+        mcmMover.setGfx( Entities.mcminos_doped_front, Entities.mcminos_doped_up,
+                Entities.mcminos_doped_right, Entities.mcminos_doped_down, Entities.mcminos_doped_left);
     }
 
     private static void reset() {
@@ -286,14 +310,12 @@ public class Root {
         landmines = 0; // number of landmines carried
         destinationSet = false;
 
-        movables=new HashSet<>(); // all moveables - mcminos
+        movables=new ArrayList<>(); // all moveables - mcminos
         lastBlock = null;
         toolboxShown = false;
         // Make sure global structure is empty,must happen before dest-creation
         LevelObject.disposeAll();
-        // create destination-object
-        destination = new LevelObject(0,0,Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
-        score = 0; //TODO: recheck, when this has to be resetted
+        score = 0; //TODO: recheck, when this has to be reset
 
     }
 
@@ -349,7 +371,7 @@ public class Root {
     }
 
     public static LevelBlock getLevelBlock( int x, int y) {
-        return level.get( x, y);
+        return level.get( x, y );
     }
 
     public static LevelBlock getLevelBlockFromVPixel( int vPixelX, int vPixelY) {
@@ -439,10 +461,7 @@ public class Root {
         timerTask = new Timer.Task() {
             @Override
             public void run() {
-                gameFrame++;
-
-                doMovement();
-                frameTimer.update(gameFrame);
+                nextGameFrame();
             }
         };
         Timer.schedule(timerTask, 0, 1 / (float) timeResolution);
@@ -459,36 +478,56 @@ public class Root {
     /**
      * This is called
      */
-    private static void doMovement() {
-        // move everybody
-        try { // needs to be synchronized against drawing
-            Root.updateLock.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if( !toolboxShown) {
+    private static void nextGameFrame() { // to allow serialized iterations
+        if( !toolboxShown) { // if game is not paused
+            // do timers
+            gameFrame++;
+            frameTimer.update(gameFrame);
+            // update durations and trigger events, if necessary
+            if (powerDuration > 1) {
+                powerDuration--;
+            } else {
+                if (powerDuration == 1) { // power just ran out
+                    powerDuration = 0;
+                    setPowerPillValues(1, 1, 0); // back to normal, TODO: check, if this has to be adapted to level specifics
+                    mcminosGfxNormal();
+                }
+            }
+            if(umbrellaDuration > 0) {
+                umbrellaDuration --;
+            } // no else necessary as umbrellapower is checked when necessary
             // move everybody
-            for (LevelObject m : movables) {
+            try { // needs to be synchronized against drawing
+                Root.updateLock.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // TODO: check if moving order can be reversed (mcminos first)
+
+            // move everybody
+            for (int i=movables.size()-1; i>=0; i--) { // works as synchronized
+                LevelObject m = movables.get(i);
                 m.move();
+                if(m.checkCollisions())
+                    movables.remove(i);
             }
 
             mcmMover.calculateDirection();
             mcmMover.move();
-
-            checkCollisions();
+            checkMcMinosCollisions();
         }
 
         Root.updateLock.release();
     }
 
     /**
-     *     Check collisions (mainly if mcminos found something and can collect it)
+     * Check Mcminos'  collisions (mainly if mcminos found something and can collect it)
      * @return
      */
-    private static void checkCollisions() {
+    private static void checkMcMinosCollisions() {
         // check if something can be collected (only when full on field)
-        if((mcminos.getVX() % virtualBlockResolution  == 0) && (mcminos.getVY() % virtualBlockResolution == 0)) {
+        if(mcminos.fullOnBlock()) {
             LevelBlock currentBlock = getLevelBlockFromVPixel( mcminos.getVX(), mcminos.getVY() );
             if( currentBlock.hasPill() )
             {
@@ -498,6 +537,24 @@ public class Root {
             }
             // check, if mcminos actually moved or if it's the same field as last time
             if(currentBlock != lastBlock) {
+                if(umbrellaDuration == 0) { // no umbrellapower currently
+                    // check if last block had a hole -> make it bigger
+                    if (lastBlock.hasHole()) {
+                        // TODO check umbrella
+                        // try to increase
+                        lastBlock.getHole().increaseHole();
+                    }
+                    if (lastBlock.hasOneWay()) {
+                        lastBlock.turnOneWay();
+                    }
+                    // check if here is max hole
+                    if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
+                        // fall in
+                        // TODO: intiate kill sequence
+                        soundPlay("falling");
+                    }
+                }
+                // check the things lying here
                 for( LevelObject b:currentBlock.getCollectibles()) {
                     switch( b.getType() ) {
                         case Chocolate:
@@ -554,6 +611,33 @@ public class Root {
                             b.dispose();
                             increaseScore(10);
                             break;
+                        case Power1:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            setPowerPillValues(2, 1, 10);
+                            // sound played in ppill method
+                            mcminosGfxPowered(); // turn mcminos into nice graphics
+                            break;
+                        case Power2:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            setPowerPillValues(1, 2, 10);
+                            mcminosGfxPowered(); // turn mcminos into nice graphics
+                            break;
+                        case Power3:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            setPowerPillValues(1, 1, 10);
+                            mcminosGfxPowered(); // turn mcminos into nice graphics
+                            break;
+                        case SpeedUpField:
+                            mcminosSetSpeedFactor(2);
+                            soundPlay("speedup");
+                            break;
+                        case SpeedDownField:
+                            mcminosSetSpeedFactor(1);
+                            soundPlay("slowdown");
+                            break;
                     }
                 }
 
@@ -575,35 +659,35 @@ public class Root {
 
 
     
-    /*
-     Powerpill essen
-    void powerpill( int x, int y, int mcm, int gos, int time, int draw )
+    /**
+     *  consume powerpill
+     */
+    static void setPowerPillValues(int mcmNewFactor, int gosNewFactor, int duration)
     {
-        int i;
-
-        if(draw) clearwall( x, y );
-        mcmspeed /= mcmspeedf;
-        mcmspeed *= mcm;
-        for(i=0; i<4; i++)
+        mcminosSetSpeedFactor(mcmNewFactor);
+        for(int i=0; i<4; i++)
         {
-            gosspeed[i] /= gosspeedf;
-            gosspeed[i] *= gos;
+            ghostSpeed[i] /= ghostSpeedFactor;
+            ghostSpeed[i] *= gosNewFactor;
+            // TODO: set ghost speed in ghostmover
         }
-        mcmspeedf = mcm;
-        gosspeedf = gos;
-        if(time)
+        ghostSpeedFactor = gosNewFactor;
+        if(duration > 0) // something was actually consumed
         {
-            timercd = &power;
-            power += time;
-            snd_power();
-            inc_score( 10 );
+            powerDuration += duration << timeResolutionExponent;
+            soundPlay("power");
+            increaseScore(10);
         }
     }
 
+    private static void mcminosSetSpeedFactor(int mcmNewFactor) {
+        mcminosSpeed /= mcminosSpeedFactor;
+        mcminosSpeed *= mcmNewFactor;
+        mcminosSpeedFactor = mcmNewFactor;
+        mcmMover.setCurrentSpeed(mcminosSpeed);
+    }
 
-    case POPILL1-1: powerpill( x, y, 2, 1, 10, 1); break;
-		case POPILL1: powerpill( x, y, 1, 2, 10,1); break;
-		case POPILL1+1: powerpill( x, y, 1, 1, 10, 1); break;
+/*
 		case MEDICINE1-1:clearwall( x, y );
 					snd_tool();
 					inc_score( 10 );
@@ -716,11 +800,6 @@ public class Root {
 	play_sound( GHOSTS, 3, 300 );
 }
 
- Sound fr Powerpill 
-    void snd_power( void )
-    {
-        play_sound( POWER, 2, 300 );
-    }
 
      Sound fr nchsten Level
     void snd_levelend( void )
@@ -812,18 +891,6 @@ public class Root {
         play_sound( BULB, 2, 200 );
     }
 
-     Sound fr Tre ffnen 
-    void snd_opendoor( void )
-    {
-        play_sound( QUIETSCH, 2, 200 );
-    }
-
-     Sound fr Tre schlieen 
-    void snd_closedoor( void )
-    {
-        play_sound( RUMS, 2, 200 );
-    }
-
      Sound fr Geist erschlagen 
     void snd_beat( void )
     {
@@ -836,17 +903,12 @@ public class Root {
         play_sound( SND_MOVEROCK, 2, 120 );
     }
 
-     Sound fr fallenden Main
+     Sound fr fallenden McMinos
     void snd_falling( void )
     {
         play_sound( FALLING, 2, 300 );
     }
 
-     Sound fr brennende Zndschnur 
-    void snd_zisch( void )
-    {
-        play_sound( ZISCH, 2, 400 );
-    }
 
      Uhrticken 
     void snd_tick( void )

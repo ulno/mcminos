@@ -175,7 +175,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                     root.bombs--;
                     root.mcminos.getLevelBlock().makeBomb();
                     toggleToolbox(); // close toolbox
-                }
+                } else root.soundPlay("error");
             }
         });
         bombActivateButton.addListener(new ClickListener() {
@@ -185,7 +185,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                     root.bombs--;
                     new Explosion(root.mcminos.getLevelBlock(), LevelObject.Types.Bomb);
                     toggleToolbox(); // close toolbox
-                }
+                } else root.soundPlay("error");
             }
         });
         toolboxTable.row();
@@ -204,15 +204,17 @@ public class Play implements Screen, GestureListener, InputProcessor {
                     root.dynamites--;
                     root.mcminos.getLevelBlock().makeDynamite();
                     toggleToolbox(); // close toolbox
-                }
+                } else root.soundPlay("error");
             }
         });
         dynamiteActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                new Explosion(root.mcminos.getLevelBlock(), LevelObject.Types.Dynamite);
-                //TODO: decrease dynamite
-                toggleToolbox(); // close toolbox
+                if(root.dynamites > 0) {
+                    root.dynamites--;
+                    new Explosion(root.mcminos.getLevelBlock(), LevelObject.Types.Dynamite);
+                    toggleToolbox(); // close toolbox
+                } else root.soundPlay("error");
             }
         });
         toolboxTable.row();
@@ -231,7 +233,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                     root.landmines--;
                     root.mcminos.getLevelBlock().makeLandMine();
                     toggleToolbox(); // close toolbox
-                }
+                } else root.soundPlay("error");
             }
         });
         landmineActivateButton.addListener(new ClickListener() {
@@ -241,7 +243,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                     root.landmines--;
                     root.mcminos.getLevelBlock().makeLandMineActivated();
                     toggleToolbox(); // close toolbox
-                }
+                } else root.soundPlay("error");
             }
         });
         toolboxTable.row();
@@ -256,7 +258,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
         umbrellaActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: activate Umbrella
+                if( root.umbrellas > 0 ) {
+                    root.umbrellas --;
+                    root.umbrellaDuration += 10 << Root.timeResolutionExponent;
+                    root.soundPlay("wind");
+                    root.increaseScore(10);
+                    toggleToolbox(); // close toolbox
+                } else root.soundPlay("error");
             }
         });
         toolboxTable.row();
@@ -382,7 +390,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
         root.updateLock.release(); // TODO: think about moving this to the end of draw
 
         updateToolbox();
-        root.defaultFont.draw(root.batch, String.format("Score %06d",root.score), 20, Gdx.graphics.getHeight() - 20);
+        root.defaultFont.draw(root.batch, String.format("S%06d P%03d U%03d",
+                root.score,
+                root.powerDuration>>root.timeResolutionExponent,
+                root.umbrellaDuration>>root.timeResolutionExponent), 20, Gdx.graphics.getHeight() - 20);
         // add stage and menu
         root.batch.end(); // must end before menu
 
