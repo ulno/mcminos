@@ -271,6 +271,12 @@ public class Level {
                 case '*':
                     lb.makePowerPill1();
                     break;
+                case '(':
+                    lb.makePowerPill2();
+                    break;
+                case ')':
+                    lb.makePowerPill3();
+                    break;
                 case 'C':
                     lb.makeCastle();
                     break;
@@ -391,10 +397,6 @@ public class Level {
 ;   USEFUL THINGS:
 ;   x = ladder
 ;   a = kill all pill
-
-;   power pills: (do their job for 10 sec)
-;   ( = mushroom; multipliers: MCSPEED *= 1; GHSPEEDs *= 2
-;   ) = bonbon; multipliers: MCSPEED *= 1; GHSPEEDs *= 1
 
 ;   $ = clock, Level time (if level time is limited:) + 60 sec.
 

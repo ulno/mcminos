@@ -13,10 +13,12 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
 
-    public enum Types {Unspecified, Power1, Power2,
+    public enum Types {Unspecified, Power1, Power2, Power3,
         IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter,
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
-        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay, Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion, BombExplosion, DestroyedWall, Hole};
+        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
+        Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
+        BombExplosion, DestroyedWall, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution

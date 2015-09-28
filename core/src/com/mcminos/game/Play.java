@@ -382,7 +382,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         root.updateLock.release(); // TODO: think about moving this to the end of draw
 
         updateToolbox();
-        root.defaultFont.draw(root.batch, String.format("Score %06d",root.score), 20, Gdx.graphics.getHeight() - 20);
+        root.defaultFont.draw(root.batch, String.format("Score %06d Dur %03d",root.score,root.powerDuration>>root.timeResolutionExponent), 20, Gdx.graphics.getHeight() - 20);
         // add stage and menu
         root.batch.end(); // must end before menu
 
