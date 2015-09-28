@@ -170,7 +170,7 @@ public class LevelBlock {
 
     public void makePowerPill1() {
         LevelObject lo = new LevelObject(x,y,Entities.pills_power_pill_apple.getzIndex(),LevelObject.Types.Power1);
-        lo.setGfx(Entities.pills_power_pill_cookie);
+        lo.setGfx(Entities.pills_power_pill_apple);
         collectibles.add(lo);
     }
 
@@ -182,7 +182,7 @@ public class LevelBlock {
 
     public void makePowerPill3() {
         LevelObject lo = new LevelObject(x,y,Entities.pills_power_pill_milk.getzIndex(),LevelObject.Types.Power3);
-        lo.setGfx(Entities.pills_power_pill_apple);
+        lo.setGfx(Entities.pills_power_pill_cookie);
         collectibles.add(lo);
     }
 

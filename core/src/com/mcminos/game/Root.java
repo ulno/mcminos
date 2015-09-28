@@ -601,6 +601,14 @@ public class Root {
                             setPowerPillValues(1, 1, 10);
                             mcminosGfxPowered(); // turn mcminos into nice graphics
                             break;
+                        case SpeedUpField:
+                            mcminosSetSpeedFactor(2);
+                            soundPlay("speedup");
+                            break;
+                        case SpeedDownField:
+                            mcminosSetSpeedFactor(1);
+                            soundPlay("slowdown");
+                            break;
                     }
                 }
 
@@ -627,10 +635,7 @@ public class Root {
      */
     static void setPowerPillValues(int mcmNewFactor, int gosNewFactor, int duration)
     {
-        mcminosSpeed /= mcminosSpeedFactor;
-        mcminosSpeed *= mcmNewFactor;
-        mcminosSpeedFactor = mcmNewFactor;
-        mcmMover.setCurrentSpeed(mcminosSpeed);
+        mcminosSetSpeedFactor(mcmNewFactor);
         for(int i=0; i<4; i++)
         {
             ghostSpeed[i] /= ghostSpeedFactor;
@@ -644,6 +649,13 @@ public class Root {
             soundPlay("power");
             increaseScore(10);
         }
+    }
+
+    private static void mcminosSetSpeedFactor(int mcmNewFactor) {
+        mcminosSpeed /= mcminosSpeedFactor;
+        mcminosSpeed *= mcmNewFactor;
+        mcminosSpeedFactor = mcmNewFactor;
+        mcmMover.setCurrentSpeed(mcminosSpeed);
     }
 
 /*

@@ -326,8 +326,9 @@ public class Level {
                     lb.makeRockMe();
                     break;
                 case '0':
-                    lb.makeRock();
                     lb.makeRockMe();
+                    lb.makeRock();
+                    decreaseRockmes(); // is already there
                     break;
                 case '6':
                     lb.makeHole(0);
