@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="15.svg">
+  <defs id="defs4152" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="g6648" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="12" inkscape:snap-perpendicular="true" guidetolerance="10" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true" inkscape:snap-tangential="true" gridtolerance="15">
+    <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
+    <sodipodi:guide position="16,17" orientation="1,0" id="guide6597" />
+    <sodipodi:guide position="18,16" orientation="0,1" id="guide6599" />
+  </sodipodi:namedview>
+  <metadata id="metadata4155">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g6648">
+      <g id="g19503" transform="matrix(-1,0,0,-1,32,32)">
+        <rect style="opacity:1;fill:none;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="rect6646" width="32" height="32" x="0" y="0" />
+        <path style="fill:black;fill-opacity:0.1254902;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" d="M 3,0 3,3 0,3 0,4 1,4 2,4 4,4 4,2 4,1 4,0 3,0 Z m 25,0 0,1 0,1 0,2 2,0 1,0 1,0 0,-1 -3,0 0,-3 -1,0 z m -28,28 0,1 3,0 0,3 1,0 0,-1 0,-1 0,-2 -2,0 -1,0 -1,0 z m 28,0 0,2 0,1 0,1 1,0 0,-3 3,0 0,-1 -1,0 -1,0 -2,0 z" id="path7053" inkscape:connector-curvature="0" />
+        <path id="path6589" d="M 4,0 4,4 16,16 16,0 4,0 Z m 12,16 12,12 4,0 0,-12 -16,0 z m 0,0 -16,0 0,12 4,0 0,4 12,0 0,-16 z" style="opacity:1;fill:#8181ff;fill-opacity:0.1254902;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" inkscape:connector-curvature="0" />
+        <path id="path6591" d="m 16,0 0,16 16,0 0,-12 -4,0 0,-4 -12,0 z m 0,16 0,16 12,0 0,-4 L 16,16 Z M 16,16 4,4 0,4 0,16 16,16 Z" style="opacity:1;fill:navy;fill-opacity:0.12408758;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" inkscape:connector-curvature="0" />
+      </g>
+    </g>
+  </g>
+</svg>
