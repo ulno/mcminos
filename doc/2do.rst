@@ -27,3 +27,9 @@ More stuff to do
 ================
 
 * ...
+
+Issues
+======
+
+* dynamite at left border will be postioned on other side of screen - check offsets and wrap-around
+* convert single textures in atlas-maps
