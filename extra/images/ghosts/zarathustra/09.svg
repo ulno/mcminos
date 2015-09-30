@@ -1,87 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="32px"
-   height="32px"
-   id="svg3505"
-   sodipodi:version="0.32"
-   inkscape:version="0.47 r22583"
-   sodipodi:docname="09.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="/home/andreas/Dokumente/Projekte/McMinos/ghost_zarathustra.png"
-   inkscape:export-xdpi="180"
-   inkscape:export-ydpi="180"
-   version="1.1">
-  <defs
-     id="defs3507">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 16 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="32 : 16 : 1"
-       inkscape:persp3d-origin="16 : 10.666667 : 1"
-       id="perspective3513" />
-    <inkscape:perspective
-       id="perspective4690"
-       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
-       inkscape:vp_z="744.09448 : 526.18109 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 526.18109 : 1"
-       sodipodi:type="inkscape:persp3d" />
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32px" height="32px" id="svg3505" sodipodi:version="0.32" inkscape:version="0.91 r13725" sodipodi:docname="09.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/andreas/Dokumente/Projekte/McMinos/ghost_zarathustra.png" inkscape:export-xdpi="180" inkscape:export-ydpi="180" version="1.1">
+  <defs id="defs3507">
+    <inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="0 : 16 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="32 : 16 : 1" inkscape:persp3d-origin="16 : 10.666667 : 1" id="perspective3513" />
+    <inkscape:perspective id="perspective4690" inkscape:persp3d-origin="372.04724 : 350.78739 : 1" inkscape:vp_z="744.09448 : 526.18109 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_x="0 : 526.18109 : 1" sodipodi:type="inkscape:persp3d" />
   </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="18.71875"
-     inkscape:cx="16"
-     inkscape:cy="16"
-     inkscape:current-layer="layer1"
-     showgrid="true"
-     inkscape:grid-bbox="true"
-     inkscape:document-units="px"
-     objecttolerance="4"
-     gridtolerance="4"
-     guidetolerance="4"
-     inkscape:window-width="1600"
-     inkscape:window-height="840"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:object-paths="true"
-     inkscape:object-nodes="true"
-     inkscape:snap-bbox="true"
-     inkscape:snap-guide="true"
-     inkscape:window-maximized="1">
-    <inkscape:grid
-       type="xygrid"
-       id="grid3515"
-       units="px"
-       visible="true"
-       enabled="true"
-       spacingx="0.5px"
-       spacingy="0.5px"
-       empspacing="4"
-       snapvisiblegridlinesonly="true" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="4" gridtolerance="4" guidetolerance="4" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:object-paths="true" inkscape:object-nodes="true" inkscape:snap-bbox="true" inkscape:snap-guide="true" inkscape:window-maximized="1">
+    <inkscape:grid type="xygrid" id="grid3515" units="px" visible="true" enabled="true" spacingx="0.5px" spacingy="0.5px" empspacing="4" snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
-  <metadata
-     id="metadata3510">
+  <metadata id="metadata3510">
     <rdf:RDF>
-      <cc:Work
-         rdf:about="">
+      <cc:Work rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
         <dc:date>2010-08-09</dc:date>
         <dc:creator>
@@ -100,80 +32,23 @@
           </cc:Agent>
         </dc:publisher>
         <dc:identifier>ghost-zarathustra-09</dc:identifier>
-        <dc:description>Ghost "Zarathustra" for McMinos</dc:description>
+        <dc:description>Ghost &quot;Zarathustra&quot; for McMinos</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     id="layer1"
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer">
-    <path
-       sodipodi:nodetypes="czzzz"
-       id="path4706"
-       d="M 2.0347838,25 C 0.04412913,18.975221 8.1866267,1 16,1 c 7.813372,0 15.990654,17.975221 14,24 -1.990655,6.024779 -9.545691,6 -14,6 -4.454309,0 -11.9745616,0.02478 -13.9652162,-6 z"
-       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.03554487;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-    <path
-       style="fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="M 2,25 C 0.00686929,18.967574 8.1769084,1 16,1 c 7.823091,0 15.99313,17.967574 14,24 -1.993131,6.032425 -9.540151,6 -14,6 -4.459849,0 -12.0068694,0.03242 -14,-6 z"
-       id="path4696"
-       sodipodi:nodetypes="czzzz" />
-    <path
-       transform="matrix(1.1666667,0,0,1.2727273,-2.6666667,-4.8636368)"
-       d="m 22,10.5 a 6,5.5 0 1 1 -12,0 6,5.5 0 1 1 12,0 z"
-       sodipodi:ry="5.5"
-       sodipodi:rx="6"
-       sodipodi:cy="10.5"
-       sodipodi:cx="16"
-       id="path4700"
-       style="fill:#c0c000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       sodipodi:type="arc" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       id="path4698"
-       sodipodi:cx="16"
-       sodipodi:cy="10.5"
-       sodipodi:rx="6"
-       sodipodi:ry="5.5"
-       d="m 22,10.5 a 6,5.5 0 1 1 -12,0 6,5.5 0 1 1 12,0 z"
-       transform="matrix(1.0000062,0,0,1.0908783,-6.2e-5,-2.9540528)" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       id="path4702"
-       sodipodi:cx="16"
-       sodipodi:cy="13"
-       sodipodi:rx="2"
-       sodipodi:ry="2"
-       d="m 18,13 a 2,2 0 1 1 -4,0 2,2 0 1 1 4,0 z"
-       transform="matrix(-0.70711117,-0.70711117,0.70710678,-0.70710679,20.242654,31.1275)"
-       inkscape:transform-center-y="2.12132"
-       inkscape:transform-center-x="-2.1213211" />
-    <path
-       style="fill:#400000;fill-opacity:1;fill-rule:nonzero;stroke:#800000;stroke-width:1.00000310000000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
-       d="m 28,19 c -1e-6,0 -4.005192,10.5 -12,10.5 C 8.0051919,29.5 3.9999998,19 4,19 c 0,0 4.0843747,-2.5 12,-2.5 7.969048,0 12,2.5 12,2.5 z"
-       id="path4704"
-       sodipodi:nodetypes="czczc" />
-    <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       d="m 8,17.5 0,4 6,0 0,-5 -6,1 z"
-       id="rect4727"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="m 9,17.5 4,-1 0,4 -4,0 0,-3 z"
-       id="rect4723"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:#f0ffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="m 11,17 2,-0.5 0,4 -2,0 0,-3.5 z"
-       id="rect4725"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       sodipodi:nodetypes="czc"
-       id="path3875"
-       d="m 4,19 c 0,0 4.0264769,-2.5 12,-2.5 8.026916,0 12,2.5 12,2.5"
-       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#800000;stroke-width:1.00000310000000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g44102">
+      <rect y="0" x="0" height="32" width="32" id="rect44100" style="opacity:1;fill:none;fill-opacity:0.1254902;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" d="M 2.0347838,25 C 0.04412913,18.975221 8.1866267,1 16,1 c 7.813372,0 15.990654,17.975221 14,24 -1.990655,6.024779 -9.545691,6 -14,6 -4.454309,0 -11.9745616,0.02478 -13.9652162,-6 z" id="path4706" sodipodi:nodetypes="czzzz" />
+      <path sodipodi:nodetypes="czzzz" id="path4696" d="M 2,25 C 0.00686929,18.967574 8.1769084,1 16,1 c 7.823091,0 15.99313,17.967574 14,24 -1.993131,6.032425 -9.540151,6 -14,6 -4.459849,0 -12.0068694,0.03242 -14,-6 z" style="fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      <path sodipodi:type="arc" style="fill:#c0c000;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path4700" sodipodi:cx="16" sodipodi:cy="10.5" sodipodi:rx="6" sodipodi:ry="5.5" d="m 22,10.5 a 6,5.5 0 1 1 -12,0 6,5.5 0 1 1 12,0 z" transform="matrix(1.1666667,0,0,1.2727273,-2.6666667,-4.8636368)" />
+      <path transform="matrix(1.0000062,0,0,1.0908783,-6.2e-5,-2.9540528)" d="m 22,10.5 a 6,5.5 0 1 1 -12,0 6,5.5 0 1 1 12,0 z" sodipodi:ry="5.5" sodipodi:rx="6" sodipodi:cy="10.5" sodipodi:cx="16" id="path4698" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none" sodipodi:type="arc" />
+      <path inkscape:transform-center-x="-2.1213211" inkscape:transform-center-y="2.12132" transform="matrix(-0.70711117,-0.70711117,0.70710678,-0.70710679,20.242654,31.1275)" d="m 18,13 a 2,2 0 1 1 -4,0 2,2 0 1 1 4,0 z" sodipodi:ry="2" sodipodi:rx="2" sodipodi:cy="13" sodipodi:cx="16" id="path4702" style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" sodipodi:type="arc" />
+      <path sodipodi:nodetypes="czczc" id="path4704" d="m 28,19 c -1e-6,0 -4.005192,10.5 -12,10.5 C 8.0051919,29.5 3.9999998,19 4,19 c 0,0 4.0843747,-2.5 12,-2.5 7.969048,0 12,2.5 12,2.5 z" style="fill:#400000;fill-opacity:1;fill-rule:nonzero;stroke:#800000;stroke-width:1.00000310000000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
+      <path sodipodi:nodetypes="ccccc" id="rect4727" d="m 8,17.5 0,4 6,0 0,-5 -6,1 z" style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans" />
+      <path sodipodi:nodetypes="ccccc" id="rect4723" d="m 9,17.5 4,-1 0,4 -4,0 0,-3 z" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      <path sodipodi:nodetypes="ccccc" id="rect4725" d="m 11,17 2,-0.5 0,4 -2,0 0,-3.5 z" style="fill:#f0ffff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      <path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#800000;stroke-width:1.00000310000000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" d="m 4,19 c 0,0 4.0264769,-2.5 12,-2.5 8.026916,0 12,2.5 12,2.5" id="path3875" sodipodi:nodetypes="czc" />
+    </g>
   </g>
 </svg>
