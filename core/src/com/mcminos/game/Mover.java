@@ -3,32 +3,35 @@ package com.mcminos.game;
 /**
  * Created by ulno on 28.08.15.
  */
-public class Mover {
+public abstract class Mover {
     private Graphics gfxRight = null;
     private Graphics gfxUp = null;
     private Graphics gfxStill = null;
     private Graphics gfxDown = null;
     private Graphics gfxLeft = null;
-    private int speed;
+    protected int speed;
 
-
-    public enum directions {STOP,UP,RIGHT,DOWN,LEFT}
-    private directions currentDirection = directions.STOP;
-    private directions nextDirections[] = {directions.STOP};
-    private LevelObject levelObject; // corresponding LevelObject
-    private LevelBlock currentLevelBlock; // current associated LevelBlock
+    public final int STOP=0, UP=1, RIGHT=2, DOWN=4, LEFT=8, ALL=15;
+    protected int currentDirection = STOP;
+    //private int nextDirections = STOP; // This is actually a bit field
+    protected LevelObject levelObject; // corresponding LevelObject
+    protected LevelBlock currentLevelBlock; // current associated LevelBlock
     private int currentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
-    private boolean canMoveRocks = false; // This moveable can move rocks (Main for example)
-    private boolean canPassWalls = false; // Can this move through walls?
-    private MoverDirectionChooser directionChooser;
+    protected boolean canMoveRocks = false; // This moveable can move rocks (Main for example)
+    protected boolean canPassWalls = false; // Can this move through walls?
+    protected LevelBlock lastBlock = null;
 
     /**
      *
      * @param blocksPerSecond move how many blocks per second?
      */
-    public void setCurrentSpeed(int blocksPerSecond) {
+    public void setSpeed(int blocksPerSecond) {
         this.currentPixelSpeed = blocksPerSecond * Root.virtualBlockResolution / Root.timeResolution;
         this.speed = blocksPerSecond;
+    }
+
+    public int getSpeed() {
+        return this.speed;
     }
 
 
@@ -57,13 +60,14 @@ public class Mover {
      * @param lo levelobject to move
      * @param speed mulitplier for Root.baseSpeed (usually 1.0)
      */
-    public void init( LevelObject lo, int speed, boolean canMoveRocks, MoverDirectionChooser dirChooser) {
+    public void init( LevelObject lo, int speed, boolean canMoveRocks) {
         levelObject = lo;
-        setCurrentSpeed(speed);
-        lo.setMover(this);
-        this.currentLevelBlock = Root.getLevelBlockFromVPixel(lo.getVX(), lo.getVY());
+        setSpeed(speed);
         this.canMoveRocks = canMoveRocks;
-        this.directionChooser = dirChooser;
+        // obsolet lo.setMover(this);
+        //this.currentLevelBlock = Root.getLevelBlockFromVPixel(lo.getVX(), lo.getVY());
+        currentLevelBlock = lo.getLevelBlock();
+        lastBlock = currentLevelBlock;
     }
 
     /**
@@ -76,100 +80,92 @@ public class Mover {
      * @param down graphics for moving down
      * @param left  graphics for moving left
      */
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, MoverDirectionChooser dirChooser, Graphics still, Graphics up, Graphics right, Graphics down, Graphics left) {
-        init(lo, speed, canMoveRocks, dirChooser);
+    public Mover( LevelObject lo, int speed, boolean canMoveRocks, Graphics still, Graphics up, Graphics right, Graphics down, Graphics left) {
+        init(lo, speed, canMoveRocks);
         setGfx(still, up, right, down, left);
     }
 
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, MoverDirectionChooser dirChooser, Graphics gfx )
+    public Mover( LevelObject lo, int speed, boolean canMoveRocks, Graphics gfx )
     {
-        init(lo, speed, canMoveRocks, dirChooser);
+        init(lo, speed, canMoveRocks);
         setGfx(gfx);
     }
 
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, MoverDirectionChooser dirChooser )
+    public Mover( LevelObject lo, int speed, boolean canMoveRocks )
     {
-        init(lo, speed, canMoveRocks, dirChooser);
+        init(lo, speed, canMoveRocks);
     }
 
-    public void move() {
-        int x = levelObject.getVX();
-        int blockX = x >> Root.virtualBlockResolutionExponent;
-        int y = levelObject.getVY();
-        int blockY = y >> Root.virtualBlockResolutionExponent;
-        // old float calculation        double distance = Math.min(0.5, Gdx.graphics.getDeltaTime() * Root.baseSpeed * currentSpeed ); // max half block
-        int distance = currentPixelSpeed;
+    /**
+     *
+     * @param nextBlock
+     * @param nextBlock2
+     * @return true if movement of current is possible in this direction, false if not
+     */
+    private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2 ) {
+        // TODO: check that there are no ghosts behind rocks
+        if(nextBlock == null) return false;
+        if(nextBlock2 == null) return false;
+        if (nextBlock.hasRock()) { // then look forward
+            if(canMoveRocks) {
+                return !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
+            } else return false;
+        }
+        return !nextBlock.hasWall() && !nextBlock.hasClosedDoor();
+    }
 
-        // allow direction change when on block-boundaries
-        if (levelObject.fullOnBlock()) {
-            LevelBlock nextBlock = null, nextBlock2 = null;
-            LevelBlock currentBlock = Root.getLevelBlock(blockX, blockY);
-            LevelBlock.oneWayDir onewaydir = LevelBlock.oneWayDir.FREE;
-            if(levelObject.getType() != LevelObject.Types.Rock && currentBlock.hasOneWay()) {
-                onewaydir = currentBlock.getOneWayDir();
-            }
-            // check all direction choices
-            for (directions dir : nextDirections) {
-                // check if the new direction is actually not blocked
-                switch (dir) {
-                    case STOP: // no movement so no problem
-                        nextBlock = currentBlock;
-                        nextBlock2 = nextBlock;
-                        break;
-                    case UP:
-                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.UP) break;
-                        nextBlock = Root.level.getUp(blockX, blockY, true);
-                        nextBlock2 = Root.level.getUp2(blockX, blockY); // for figuring out, if rocks are movable
-                        break;
-                    case RIGHT:
-                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.RIGHT) break;
-                        nextBlock = Root.level.getRight(blockX, blockY, true);
-                        nextBlock2 = Root.level.getRight2(blockX, blockY);
-                        break;
-                    case DOWN:
-                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.DOWN) break;
-                        nextBlock = Root.level.getDown(blockX, blockY, true);
-                        nextBlock2 = Root.level.getDown2(blockX, blockY);
-                        break;
-                    case LEFT:
-                        if(onewaydir != LevelBlock.oneWayDir.FREE && onewaydir != LevelBlock.oneWayDir.LEFT) break;
-                        nextBlock = Root.level.getLeft(blockX, blockY, true);
-                        nextBlock2 = Root.level.getLeft2(blockX, blockY);
-                        break;
-                }
-                if (nextBlock != null && !nextBlock.hasWall() && !nextBlock.hasClosedDoor()) {
-                    if(nextBlock.hasRock()) {
-                        // TODO: check that there are no ghosts
-                        if(canMoveRocks) { // check if this rock could actually be moved (not if there is rock or wall)
-                            if(dir != directions.STOP && !(nextBlock2.hasWall() || nextBlock2.hasRock()
-                                    || nextBlock2.hasClosedDoor())) {
-                                currentDirection = dir; // start moving there
-                                // also make rock in the speed we push it
-                                LevelObject rock = nextBlock.getRock();
-                                Mover mover = new Mover(rock, speed, false, Root.moverRock, Entities.extras_rock);
-                                rock.setMover(mover);
-                                Root.soundPlay("moverock");
-                                mover.move(currentDirection);
-                                // move the rock to next field
-                                nextBlock.setRock( null );
-                                nextBlock2.setRock( rock );
-                                break; // stop loop
-                            }
-                        }
-                    }
-                    else {
-                        currentDirection = dir;
-                        break; // stop loop
-                    }
-                }
-                currentDirection = directions.STOP; // if we come here and don't break, then we must stop
-            }
-        } // end if full on block
+    protected int getUnblockedDirs( int filterMask, boolean checkOneway) {
+        int unblocked = 0;
+        LevelBlock lb = currentLevelBlock;
+        LevelBlock b1, b2;
+
+        if( checkOneway && lb.hasOneWay() ) {
+            filterMask &= 1 << (lb.getOneWayDir() - 1);
+        }
+
+        // Up
+        if((filterMask & UP) > 0) {
+            b1 = lb.up();
+            b2 = b1.up();
+            if (dirPossible(b1, b2)) unblocked += UP;
+        }
+        // Right
+        if((filterMask & RIGHT) > 0) {
+            b1 = lb.right();
+            b2 = b1.right();
+            if (dirPossible(b1, b2)) unblocked += RIGHT;
+        }
+        // Down
+        if((filterMask & DOWN) > 0) {
+            b1 = lb.down();
+            b2 = b1.down();
+            if (dirPossible(b1, b2)) unblocked += DOWN;
+        }
+        // Up
+        if ((filterMask & LEFT) > 0) {
+            b1 = lb.left();
+            b2 = b1.left();
+            if (dirPossible(b1, b2)) unblocked += LEFT;
+        }
+
+        return unblocked;
+    }
+
+    protected int getUnblockedDirs( ) {
+        return getUnblockedDirs(ALL,true);
+    }
+
+    /**
+     * return true, when this needs to be disposed after this call
+     */
+    public boolean move() {
+        chooseDirection();
+
+        int distance = currentPixelSpeed;
+        int x = levelObject.getVX();
+        int y = levelObject.getVY();
         // do transformations for new direction
         switch (currentDirection) {
-            case STOP:
-                levelObject.setGfx(gfxStill);
-                break;
             case UP:
                 y += distance;
                 levelObject.setGfx(gfxUp);
@@ -186,23 +182,25 @@ public class Mover {
                 x -= distance;
                 levelObject.setGfx(gfxLeft);
                 break;
+            // default case should not happen ad will be treated as no movement
+            default:
+                levelObject.setGfx(gfxStill);
+                break;
         }
-        levelObject.moveTo(x, y); // finally move to new position
+        // update current block
+        currentLevelBlock = levelObject.moveTo(x, y); // finally move to new position
+        return checkCollisions(); // check potential collisons at new position
     }
 
-    public void calculateDirection() {
-        nextDirections = directionChooser.chooseDirection(levelObject);
-    }
+    /**
+     * check collision of this with mcminos or other things
+     * return: true, if this object needs to be removed
+     */
+    protected abstract boolean checkCollisions();
 
-
-    public void move( directions dir[] ) {
-        nextDirections = dir;
-        move();
-    }
-
-    public void move( directions dir ) {
-        nextDirections = new directions[]{dir};
-        move();
-    }
+    /**
+     * This needs to set currentDirection
+     */
+    protected abstract void chooseDirection();
 
 }

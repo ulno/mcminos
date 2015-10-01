@@ -60,7 +60,8 @@ public class Root {
     // TODO: consider making these non-static
     public static Level level;
     public static LevelObject mcminos;
-    private static Mover mcmMover;
+    public static McminosMover mcmMover;
+
     static int chocolates; // number of chocolates carried by mcminos
     static int bombs; // number of bombs carried by mcminos
     static int dynamites; // number of dynamites carried by mcminos
@@ -71,15 +72,12 @@ public class Root {
     static int score; // current score
 
     public static FrameTimer frameTimer;
-    private static int mcminosSpeed = baseSpeed;
     private static int ghostSpeed[] = {baseSpeed,baseSpeed,baseSpeed,baseSpeed};
-    private static int mcminosSpeedFactor = 1;
     private static int ghostSpeedFactor = 1;
     public static int powerDuration = 0;
     public static int umbrellaDuration = 0;
 
-    public static ArrayList<LevelObject> movables; // all moveables - i.e. mcminos
-    private static LevelBlock lastBlock;
+    public static ArrayList<Mover> movables; // all moveables (not mcminos at the moment - handled seperately) - i.e. ghosts, rocks
     private static boolean toolboxShown;
     private static boolean destinationSet; // was a destination set (and neds to be shown)
     public static LevelObject destination;
@@ -258,6 +256,14 @@ public class Root {
         img.setPosition(w / 2 - iw * scale / 2, h / 2 - ih * scale / 2);
     }
 
+    public static boolean isDestinationSet() {
+        return destinationSet;
+    }
+
+    public static LevelObject getDestination() {
+        return destination;
+    }
+
     public void init() {
         gfx = Entities.getInstance();
         // Load after graphics have been loaded
@@ -268,19 +274,17 @@ public class Root {
         resolution = Entities.resolutionList[gameResolutionCounter]; // TODO: figure out resolution, for now, just use 128
         setResolution(resolution);
     }
-
-
     public static void loadLevel(String s) {
         reset();
         // Load a level
         level = new Level(s);
         // create destination-object
-        lastBlock = mcminos.getLevelBlock();
-        destination = new LevelObject(level,lastBlock.getX(),lastBlock.getY(),
+        destination = new LevelObject(level,mcminos.getLevelBlock().getX(),mcminos.getLevelBlock().getY(),
                 Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
         resize();
-        // init movers
-        mcmMover = new Mover( mcminos, mcminosSpeed, true, moverMcminos);
+        // init global movers (rocks will be initated on demand)
+        mcmMover = new McminosMover(mcminos);
+        mcminos.setMover(mcmMover); // create reference
         mcminosGfxNormal();
 
         // start the own timer (which triggers also the movemnet)
@@ -310,8 +314,7 @@ public class Root {
         landmines = 0; // number of landmines carried
         destinationSet = false;
 
-        movables=new ArrayList<>(); // all moveables - mcminos
-        lastBlock = null;
+        movables=new ArrayList<>();
         toolboxShown = false;
         // Make sure global structure is empty,must happen before dest-creation
         LevelObject.disposeAll();
@@ -390,65 +393,6 @@ public class Root {
         return level.get( roundx, roundy );
     }
 
-    public static MoverDirectionChooser moverMcminos = new MoverDirectionChooser() {
-        @Override
-        public Mover.directions[] chooseDirection(LevelObject lo) {
-            // mcminos
-            if (destinationSet) { // destination is set
-                // check screen distance
-                int x = mcminos.getVX();
-                int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
-                int xdiff = Math.abs(xdelta);
-                if (xdiff <= virtualBlockResolution >> 1 || xdiff >= getVPixelsLevelWidth() - (virtualBlockResolution >> 1))
-                    xdelta = 0;
-                else {
-                    //also allow this in non-scrolled levels
-                    //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
-                    if (xdiff >= getVPixelsLevelWidth() >> 1)
-                        xdelta = (int) Math.signum(xdelta);
-                    else
-                        xdelta = -(int) Math.signum(xdelta);
-                }
-                int y = mcminos.getVY();
-                int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
-                int ydiff = Math.abs(ydelta);
-                if (ydiff <= virtualBlockResolution >> 1 || ydiff >= getVPixelsLevelHeight() - (virtualBlockResolution >> 1))
-                    ydelta = 0;
-                else {
-                    // also in non-scroll levels
-                    //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
-                    if (ydiff >= getVPixelsLevelHeight() >> 1)
-                        ydelta = (int) Math.signum(ydelta);
-                    else
-                        ydelta = -(int) Math.signum(ydelta);
-                }
-
-                Mover.directions tryDirections[] = {Mover.directions.STOP, Mover.directions.STOP};
-                int dircount = 0;
-                if (ydelta > 0) tryDirections[dircount++] = Mover.directions.UP;
-                if (ydelta < 0) tryDirections[dircount++] = Mover.directions.DOWN;
-                if (xdelta > 0) tryDirections[dircount++] = Mover.directions.RIGHT;
-                if (xdelta < 0) tryDirections[dircount++] = Mover.directions.LEFT;
-                if (dircount > 1 && xdiff > ydiff) {
-                    Mover.directions tmp = tryDirections[0];
-                    tryDirections[0] = tryDirections[1];
-                    tryDirections[1] = tmp;
-                }
-                if( dircount == 0 && xdelta ==0 && ydelta ==0) {
-                    unsetDestination();
-                }
-                return tryDirections;
-            }
-            return new Mover.directions[]{};
-        }
-    };
-
-    public static MoverDirectionChooser moverRock = new MoverDirectionChooser() {
-        @Override
-        public Mover.directions[] chooseDirection(LevelObject lo) {
-            return new Mover.directions[]{Mover.directions.STOP};
-        }
-    };
 
     /**
      * Start the moving thread which will manage all movement of objects in the game
@@ -507,144 +451,16 @@ public class Root {
 
             // move everybody
             for (int i=movables.size()-1; i>=0; i--) { // works as synchronized
-                LevelObject m = movables.get(i);
-                m.move();
-                if(m.checkCollisions())
+                Mover m = movables.get(i);
+                if(m.move())
                     movables.remove(i);
             }
 
-            mcmMover.calculateDirection();
+
             mcmMover.move();
-            checkMcMinosCollisions();
         }
 
         Root.updateLock.release();
-    }
-
-    /**
-     * Check Mcminos'  collisions (mainly if mcminos found something and can collect it)
-     * @return
-     */
-    private static void checkMcMinosCollisions() {
-        // check if something can be collected (only when full on field)
-        if(mcminos.fullOnBlock()) {
-            LevelBlock currentBlock = getLevelBlockFromVPixel( mcminos.getVX(), mcminos.getVY() );
-            if( currentBlock.hasPill() )
-            {
-                soundPlay("knurps");
-                currentBlock.removePill();
-                increaseScore(1);
-            }
-            // check, if mcminos actually moved or if it's the same field as last time
-            if(currentBlock != lastBlock) {
-                if(umbrellaDuration == 0) { // no umbrellapower currently
-                    // check if last block had a hole -> make it bigger
-                    if (lastBlock.hasHole()) {
-                        // TODO check umbrella
-                        // try to increase
-                        lastBlock.getHole().increaseHole();
-                    }
-                    if (lastBlock.hasOneWay()) {
-                        lastBlock.turnOneWay();
-                    }
-                    // check if here is max hole
-                    if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
-                        // fall in
-                        // TODO: intiate kill sequence
-                        soundPlay("falling");
-                    }
-                }
-                // check the things lying here
-                for( LevelObject b:currentBlock.getCollectibles()) {
-                    switch( b.getType() ) {
-                        case Chocolate:
-                            soundPlay("tools");
-                            chocolates ++;
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            increaseScore(10);
-                            break;
-                        case Bomb:
-                            soundPlay("tools");
-                            bombs ++;
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            // no score as droppable increaseScore(10);
-                            break;
-                        case Dynamite:
-                            soundPlay("tools");
-                            dynamites ++;
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            // no score as droppable increaseScore(10);
-                            break;
-                        case LandMine:
-                            soundPlay("tools");
-                            landmines ++;
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            // no score as droppable increaseScore(10);
-                            break;
-                        case LandMineActive:
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            new Explosion(currentBlock, LevelObject.Types.LandMine);
-                            break;
-                        case Key:
-                            soundPlay("tools");
-                            keys ++;
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            increaseScore(10);
-                            break;
-                        case Umbrella:
-                            soundPlay("tools");
-                            umbrellas ++;
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            increaseScore(10);
-                            break;
-                        case Live:
-                            soundPlay("life");
-                            lives ++;
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            increaseScore(10);
-                            break;
-                        case Power1:
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            setPowerPillValues(2, 1, 10);
-                            // sound played in ppill method
-                            mcminosGfxPowered(); // turn mcminos into nice graphics
-                            break;
-                        case Power2:
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            setPowerPillValues(1, 2, 10);
-                            mcminosGfxPowered(); // turn mcminos into nice graphics
-                            break;
-                        case Power3:
-                            currentBlock.removeItem(b);
-                            b.dispose();
-                            setPowerPillValues(1, 1, 10);
-                            mcminosGfxPowered(); // turn mcminos into nice graphics
-                            break;
-                        case SpeedUpField:
-                            mcminosSetSpeedFactor(2);
-                            soundPlay("speedup");
-                            break;
-                        case SpeedDownField:
-                            mcminosSetSpeedFactor(1);
-                            soundPlay("slowdown");
-                            break;
-                    }
-                }
-
-
-            }
-            lastBlock = currentBlock;
-        }
     }
 
     public static void increaseScore(int increment) {
@@ -664,7 +480,7 @@ public class Root {
      */
     static void setPowerPillValues(int mcmNewFactor, int gosNewFactor, int duration)
     {
-        mcminosSetSpeedFactor(mcmNewFactor);
+        mcmMover.setSpeedFactor(mcmNewFactor);
         for(int i=0; i<4; i++)
         {
             ghostSpeed[i] /= ghostSpeedFactor;
@@ -678,13 +494,6 @@ public class Root {
             soundPlay("power");
             increaseScore(10);
         }
-    }
-
-    private static void mcminosSetSpeedFactor(int mcmNewFactor) {
-        mcminosSpeed /= mcminosSpeedFactor;
-        mcminosSpeed *= mcmNewFactor;
-        mcminosSpeedFactor = mcmNewFactor;
-        mcmMover.setCurrentSpeed(mcminosSpeed);
     }
 
 /*
@@ -946,7 +755,7 @@ public class Root {
         destinationSet = true;
     }
 
-    private static void unsetDestination() {
+    public static void unsetDestination() {
         destination.setGfx(null);
         //destinationSet = false; needs to be still set
     }
