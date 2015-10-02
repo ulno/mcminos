@@ -73,6 +73,8 @@ public class Root {
 
     public static FrameTimer frameTimer;
     private static int ghostSpeed[] = {baseSpeed,baseSpeed,baseSpeed,baseSpeed};
+    public static int ghostsActive[] = {0,0,0,0};
+    private static int[] ghostSpawnCounter = {-1,-1,-1,-1};
     private static int ghostSpeedFactor = 1;
     public static int powerDuration = 0;
     public static int umbrellaDuration = 0;
@@ -450,20 +452,53 @@ public class Root {
                 e.printStackTrace();
             }
 
-            // TODO: check if moving order can be reversed (mcminos first)
-            mcmMover.move();
+            // check, if ghosts in castles need to be spawned
+            for( int i=0; i<level.ghostMax.length; i++) {
+                if(ghostsActive[i] < level.ghostMax[i] ) {
+                    if(ghostSpawnCounter[i] == -1) { // nothing counting right now
+                        // initialize new spawn counter
+                        ghostSpawnCounter[i] = level.ghostTime[i] << timeResolutionExponent;
+                    }
+                    if(ghostSpawnCounter[i] >= 0) {
+                        ghostSpawnCounter[i] --;
+                        if( ghostSpawnCounter[i] == 0) {
+                            // Time to spawn a new ghost
+                            spawnGhost(i);
+                        }
+                    }
+                }
+            }
 
             // move everybody
+            mcmMover.move();
             for (int i=movables.size()-1; i>=0; i--) { // works as synchronized
                 Mover m = movables.get(i);
                 if(m.move())
                     movables.remove(i);
             }
 
-
         }
 
         Root.updateLock.release();
+    }
+
+    public static final LevelObject.Types ghostTypes[] = {
+        LevelObject.Types.Ghost1, LevelObject.Types.Ghost2,
+                LevelObject.Types.Ghost3, LevelObject.Types.Ghost4 };
+
+    private static void spawnGhost(int ghostnr) {
+         Graphics[] ghostEntities = {
+                Entities.ghosts_hanky, Entities.ghosts_panky,
+                Entities.ghosts_zarathustra, Entities.ghosts_jumpingpill };
+
+        LevelObject.Types ghosttype = ghostTypes[ghostnr];
+        LevelBlock block = level.getRandomCastleBlock();
+        LevelObject lo = new LevelObject(block,ghostEntities[ghostnr],ghosttype);
+        lo.animationStartRandom();
+        block.addMovables(lo);
+        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[ghostnr],ghostEntities[ghostnr]);
+        Root.movables.add(mover);
+        Root.ghostsActive[ghostnr] ++;
     }
 
     public static void increaseScore(int increment) {

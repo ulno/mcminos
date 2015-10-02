@@ -47,6 +47,10 @@ public class LevelBlock {
     };
 
 
+    public void addMovables(LevelObject lo) {
+        movables.add(lo);
+    }
+
     /**
      * @param lo check if this is in movable or collectible (connected with this field)
      * @return
@@ -165,7 +169,7 @@ public class LevelBlock {
     public void makeMcMinos() {
         // init happened before
         Root.mcminos.setLevelBlock(this);
-        Root.mcminos.setXY(x<<Root.virtualBlockResolutionExponent,y<<Root.virtualBlockResolutionExponent);
+        Root.mcminos.setXY(x << Root.virtualBlockResolutionExponent, y << Root.virtualBlockResolutionExponent);
         movables.add(Root.mcminos);
     }
 
@@ -194,6 +198,7 @@ public class LevelBlock {
     public void makeCastle() {
         castle = new LevelObject(level,x,y,Entities.castle_default.getzIndex(),LevelObject.Types.Castle);
         updateCastle();
+        level.addCastle(castle);
     }
 
     public void updateCastle() {
@@ -219,6 +224,7 @@ public class LevelBlock {
         movables.add(lo);
         Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[0],Entities.ghosts_hanky);
         Root.movables.add(mover);
+        Root.ghostsActive[0] ++;
     }
 
     public void makeGhost2() {
@@ -228,16 +234,19 @@ public class LevelBlock {
         movables.add(lo);
         Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[1],Entities.ghosts_panky);
         Root.movables.add(mover);
+        Root.ghostsActive[1] ++;
     }
 
     public void makeGhost3() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_zarathustra.getzIndex(),LevelObject.Types.Ghost3);
+        LevelObject lo = new LevelObject(level, x, y, Entities.ghosts_zarathustra.getzIndex(), LevelObject.Types.Ghost3);
         lo.setGfx(Entities.ghosts_zarathustra);
         lo.animationStartRandom();
         movables.add(lo);
-        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[2],Entities.ghosts_zarathustra);
+        Mover mover = new GhostMover(lo, Root.mcminos, level.ghostSpeed[2], Entities.ghosts_zarathustra);
         Root.movables.add(mover);
+        Root.ghostsActive[2]++;
     }
+
 
     public void makeGhost4() {
         LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_jumpingpill.getzIndex(),LevelObject.Types.Ghost4);
@@ -246,7 +255,7 @@ public class LevelBlock {
         movables.add(lo);
         Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[3],Entities.ghosts_jumpingpill);
         Root.movables.add(mover);
-
+        Root.ghostsActive[3] ++;
     }
 
     public void makeLive() {
