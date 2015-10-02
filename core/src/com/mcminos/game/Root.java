@@ -276,12 +276,15 @@ public class Root {
     }
     public static void loadLevel(String s) {
         reset();
+        // this needs to be doen before level is loaded as ghosts refer to mcminos
+
         // Load a level
         level = new Level(s);
         // create destination-object
         destination = new LevelObject(level,mcminos.getLevelBlock().getX(),mcminos.getLevelBlock().getY(),
                 Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
         resize();
+
         // init global movers (rocks will be initated on demand)
         mcmMover = new McminosMover(mcminos);
         mcminos.setMover(mcmMover); // create reference
@@ -448,6 +451,7 @@ public class Root {
             }
 
             // TODO: check if moving order can be reversed (mcminos first)
+            mcmMover.move();
 
             // move everybody
             for (int i=movables.size()-1; i>=0; i--) { // works as synchronized
@@ -457,7 +461,6 @@ public class Root {
             }
 
 
-            mcmMover.move();
         }
 
         Root.updateLock.release();

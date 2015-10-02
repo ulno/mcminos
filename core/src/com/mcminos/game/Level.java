@@ -143,6 +143,10 @@ public class Level {
                         for (int x = 0; x < width; x++)
                             for (int y = 0; y < height; y++)
                                 field[x][y] = new LevelBlock(this, x, y);
+                        // recreate our protagonist as lots of other level things (i.e. ghosts) depend on this
+                        LevelObject mcm = new LevelObject(this,0,0,Entities.mcminos_default_front.getzIndex(),LevelObject.Types.McMinos);
+                        mcm.setGfx(Entities.mcminos_default_front);
+                        Root.mcminos = mcm;
                     }
                     if( levelline < height )
                     {

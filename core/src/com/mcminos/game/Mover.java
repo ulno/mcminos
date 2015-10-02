@@ -103,12 +103,11 @@ public abstract class Mover {
      * @return true if movement of current is possible in this direction, false if not
      */
     private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2 ) {
-        // TODO: check that there are no ghosts behind rocks
         if(nextBlock == null) return false;
         if(nextBlock2 == null) return false;
         if (nextBlock.hasRock()) { // then look forward
             if(canMoveRocks) {
-                return !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
+                return !nextBlock2.hasGhost() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
             } else return false;
         }
         return !nextBlock.hasWall() && !nextBlock.hasClosedDoor();

@@ -19,6 +19,8 @@ public class LevelBlock {
     private LevelObject hole = null;
     private LevelObject oneWay = null;
     private int oneWayType = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
+
+
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};
     private final oneWayDir oneWayDirMap[] = {oneWayDir.FREE, oneWayDir.UP, oneWayDir.RIGHT, oneWayDir.DOWN, oneWayDir.LEFT};
     private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions, rocks hovering here.
@@ -161,10 +163,10 @@ public class LevelBlock {
     }
 
     public void makeMcMinos() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.mcminos_default_front.getzIndex(),LevelObject.Types.McMinos);
-        lo.setGfx(Entities.mcminos_default_front);
-        movables.add(lo);
-        Root.mcminos=lo;
+        // init happened before
+        Root.mcminos.setLevelBlock(this);
+        Root.mcminos.setXY(x<<Root.virtualBlockResolutionExponent,y<<Root.virtualBlockResolutionExponent);
+        movables.add(Root.mcminos);
     }
 
     public void makePill() {
@@ -521,4 +523,17 @@ public class LevelBlock {
 //        return oneWayDirMap[(oneWayType%4)+1];
         return (oneWayType%4)+1;
     }
+
+    public boolean hasGhost() {
+        for( LevelObject m: movables ) {
+            LevelObject.Types t = m.getType();
+            if(t == LevelObject.Types.Ghost1) return true;
+            if(t == LevelObject.Types.Ghost2) return true;
+            if(t == LevelObject.Types.Ghost3) return true;
+            if(t == LevelObject.Types.Ghost4) return true;
+        }
+
+        return false;
+    }
+
 }
