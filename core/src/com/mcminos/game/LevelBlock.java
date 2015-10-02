@@ -226,6 +226,8 @@ public class LevelBlock {
         lo.setGfx(Entities.ghosts_panky);
         lo.animationStartRandom();
         movables.add(lo);
+        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[1],Entities.ghosts_panky);
+        Root.movables.add(mover);
     }
 
     public void makeGhost3() {
@@ -233,6 +235,8 @@ public class LevelBlock {
         lo.setGfx(Entities.ghosts_zarathustra);
         lo.animationStartRandom();
         movables.add(lo);
+        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[2],Entities.ghosts_zarathustra);
+        Root.movables.add(mover);
     }
 
     public void makeGhost4() {
@@ -240,6 +244,9 @@ public class LevelBlock {
         lo.setGfx(Entities.ghosts_jumpingpill);
         lo.animationStartRandom();
         movables.add(lo);
+        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[3],Entities.ghosts_jumpingpill);
+        Root.movables.add(mover);
+
     }
 
     public void makeLive() {
@@ -527,10 +534,8 @@ public class LevelBlock {
     public boolean hasGhost() {
         for( LevelObject m: movables ) {
             LevelObject.Types t = m.getType();
-            if(t == LevelObject.Types.Ghost1) return true;
-            if(t == LevelObject.Types.Ghost2) return true;
-            if(t == LevelObject.Types.Ghost3) return true;
-            if(t == LevelObject.Types.Ghost4) return true;
+            if(t.ordinal() >= LevelObject.Types.Ghost1.ordinal() &&
+                t.ordinal() <= LevelObject.Types.Ghost4.ordinal()) return true;
         }
 
         return false;

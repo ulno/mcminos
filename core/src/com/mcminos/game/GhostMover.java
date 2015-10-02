@@ -40,7 +40,7 @@ public class GhostMover extends Mover {
                     if(dircounter > 2) {
                         // There is actually choice, so let's catch (or flee) from Mcminos
                         // Play out agility/stupidity(random)
-                        int ghostNr = 0; // TODO: figure out ghost number
+                        int ghostNr = levelObject.getType().ordinal()-LevelObject.Types.Ghost1.ordinal();
                         //Root.level.ghostAgility[ghostNr] = 0; // force intelligence
                         if(Root.level.ghostAgility[ghostNr] != 0 && Root.random(Root.level.ghostAgility[ghostNr]) == 0) {
                             newdir = dirList[Root.random(dircounter)]; // play stupid TODO: check if a turn around is allowed here
@@ -52,7 +52,7 @@ public class GhostMover extends Mover {
                             int gy = levelObject.getVY();
                             // remove reverse direction
                             dirs &= 15 - currentReverse;
-                            if(Root.powerDuration > 0) {// flee
+                            if(Root.powerDuration > 0 ^ ghostNr == 3) {// flee - reverse bahavour for jumping pill (type 3)
                                 // find best
                                 if (y < gy && (dirs & UP) > 0) newdir = UP;
                                 else if (x < gx && (dirs & RIGHT) > 0) newdir = RIGHT;

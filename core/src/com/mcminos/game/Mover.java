@@ -103,6 +103,7 @@ public abstract class Mover {
      * @return true if movement of current is possible in this direction, false if not
      */
     private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2 ) {
+        // TODO: respect the ghost which can walk through walls dependent on transwall
         if(nextBlock == null) return false;
         if(nextBlock2 == null) return false;
         if (nextBlock.hasRock()) { // then look forward
