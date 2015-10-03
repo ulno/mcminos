@@ -8,8 +8,8 @@ VERSION:	0900
 
 LWID:		24
 LHI:		12
-VWID:		12
-VHI:		12
+VWID:		50
+VHI:		50
 SCROLLX:	1
 SCROLLY:	0
 BACK:		18
@@ -20,12 +20,12 @@ MIRROR:		0
 
 MCSPEED:	1
 
-GHOST1:		0
+GHOST1:		1
 GHSPEED1:	1
 AGIL1:		15
 GRTIME1:	5
 
-GHOST2:		2
+GHOST2:		0
 GHSPEED2:	1
 AGIL2:		15
 GRTIME2:	25
@@ -34,8 +34,11 @@ PILLFREQ2:	3
 
 
 GHOST3:		0
+GHSPEED3:	2
+AGIL3:		15
+GRTIME3:	25
 
-GHOST4:		1
+GHOST4:		0
 GHSPEED4:	1
 AGIL4:		10
 GRTIME4:	5
@@ -51,12 +54,12 @@ UMBR:		0,999
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXX
-XWc  Pkkkbd  r      CCgX
-X.Z   kkkbd_ XXZX   CCGX
-X.U     ,  _ D      , HX
+XWc  Pkkkbd  r      CC X
+X.Z   kkkbd_ XXZX   CC X
+X.U     ,  _ D      ,  X
 X.   wmpu    XXXXXXXXXXX
-X.   123u    X       h X
-Xv6    W  o  U      hh X
+X.   123u    X       X X
+Xv6    W  o  UXXXXXXXXhX
 v<   X(+X    D         X
 v  r *()*  ä XXXXXXXXXXX
 >^ O X+)X 0ö M  x a S ?.

@@ -13,18 +13,18 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
     public enum Types {Unspecified, Power1, Power2, Power3,
-        IndestructableWall, InvisibleWall, Rockme, Ghost1, Live, Letter,
+        IndestructableWall, InvisibleWall, Rockme, Live, Letter,
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
         DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
         Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
-        BombExplosion, DestroyedWall, Hole};
+        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
     private Graphics gfx; // actual Graphics for the object
     private int zIndex = maxzIndex; // by default it is too high
-    private Mover mover = null;
+    private Mover mover = null; // backlink
     private Level level = null;
     private LevelBlock levelBlock = null; // currently associated LevelBlock
     private int holeLevel;
@@ -87,7 +87,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         return  zIndex - lo.zIndex;
     }
 
-    public void moveTo(int x, int y) {
+    public LevelBlock moveTo(int x, int y) {
         LevelBlock from = levelBlock;
         // check and eventually fix coordinates
         // if(Root.getScrollX()) { allways allow
@@ -104,7 +104,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         LevelBlock to = Root.getLevelBlockFromVPixel(x, y);
         // needs to be updated to check for collisions via associations
         if( from != to ) {
-            //if (from != null) { shoul dnot happen when prop[erly intialized
+            //if (from != null) { should not happen when properly intialized
                 from.removeMovable(this);
                 // check if rock and update rockme counters
                 if (type == LevelObject.Types.Rock) {
@@ -117,6 +117,7 @@ public class LevelObject implements  Comparable<LevelObject> {
             levelBlock = to; // todo: might be not totally correct for destination
         }
         setXY(x,y);
+        return levelBlock;
     }
 
     public void setXY(int x, int y) {
@@ -141,13 +142,6 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     public Mover getMover() {
         return mover;
-    }
-
-    public void move() {
-        if( mover != null) {
-            mover.calculateDirection();
-            mover.move();
-        }
     }
 
     // make sure to remove yourself from list
@@ -230,31 +224,6 @@ public class LevelObject implements  Comparable<LevelObject> {
         return (getVX() % Root.virtualBlockResolution  == 0) && (getVY() % Root.virtualBlockResolution == 0);
     }
 
-    /**
-     * check collision of this with mcminos or other things
-     * return: true, if this object needs to be removed
-     */
-    public boolean checkCollisions() {
-        boolean isOnField = this.fullOnBlock();
-
-        switch(getType()) {
-            case Rock:
-                // check if on hole -> break hole and remove rock
-                if(isOnField) {
-                    if( levelBlock.hasHole() ) {
-                        levelBlock.getHole().setHoleLevel(maxHoleLevel);
-                        levelBlock.removeMovable(this);
-                        levelBlock.setRock(null); // remove rock
-                        dispose();
-                        Root.soundPlay("rumble");
-                        return true;
-                    }
-                }
-                break;
-        }
-        return false;
-    }
-
     public boolean holeIsMax() {
         return holeLevel == maxHoleLevel;
     }
@@ -289,5 +258,17 @@ public class LevelObject implements  Comparable<LevelObject> {
         }
 
     }
+
+    public void setLevelBlock(LevelBlock levelBlock) {
+        this.levelBlock = levelBlock;
+    }
+
+    public int getGhostNr() {
+        if(type.ordinal() >= Types.Ghost1.ordinal() && type.ordinal() <= Types.Ghost4.ordinal() ) {
+            return type.ordinal() - Types.Ghost1.ordinal();
+        }
+        return -1;
+    }
+
 
 }

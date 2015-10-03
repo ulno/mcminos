@@ -1,5 +1,6 @@
 package com.mcminos.game;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -21,7 +22,7 @@ public class LevelBlock {
     private int oneWayType = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};
     private final oneWayDir oneWayDirMap[] = {oneWayDir.FREE, oneWayDir.UP, oneWayDir.RIGHT, oneWayDir.DOWN, oneWayDir.LEFT};
-    private HashSet<LevelObject> movables=new HashSet<>(); // ghosts, mcminos, explosions, rocks hovering here.
+    private ArrayList<LevelObject> movables=new ArrayList<>(); // ghosts, mcminos, explosions, rocks hovering here.
     private HashSet<LevelObject> collectibles =new HashSet<>(); // collectibles on the field
     private LevelObject door=null; // a potential door
     private boolean rockme = false;
@@ -43,6 +44,15 @@ public class LevelBlock {
             Entities.walls_default_14,
             Entities.walls_default_15
     };
+
+
+    public void addMovables(LevelObject lo) {
+        movables.add(lo);
+    }
+
+    public ArrayList<LevelObject> getMovables() {
+        return movables;
+    }
 
 
     /**
@@ -73,6 +83,8 @@ public class LevelBlock {
 
     public boolean removeMovable(LevelObject lo) {
         return movables.remove(lo);
+
+        // TODO: check efficience
     }
 
     public boolean removeItem(LevelObject lo) {
@@ -161,10 +173,10 @@ public class LevelBlock {
     }
 
     public void makeMcMinos() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.mcminos_default_front.getzIndex(),LevelObject.Types.McMinos);
-        lo.setGfx(Entities.mcminos_default_front);
-        movables.add(lo);
-        Root.mcminos=lo;
+        // init happened before
+        Root.mcminos.setLevelBlock(this);
+        Root.mcminos.setXY(x << Root.virtualBlockResolutionExponent, y << Root.virtualBlockResolutionExponent);
+        movables.add(Root.mcminos);
     }
 
     public void makePill() {
@@ -192,6 +204,7 @@ public class LevelBlock {
     public void makeCastle() {
         castle = new LevelObject(level,x,y,Entities.castle_default.getzIndex(),LevelObject.Types.Castle);
         updateCastle();
+        level.addCastle(castle);
     }
 
     public void updateCastle() {
@@ -215,27 +228,45 @@ public class LevelBlock {
         lo.setGfx(Entities.ghosts_hanky);
         lo.animationStartRandom();
         movables.add(lo);
+        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[0],Entities.ghosts_hanky);
+        lo.setMover(mover);
+        Root.movables.add(mover);
+        Root.ghostsActive[0] ++;
     }
 
     public void makeGhost2() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
+        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_panky.getzIndex(),LevelObject.Types.Ghost2);
         lo.setGfx(Entities.ghosts_panky);
         lo.animationStartRandom();
         movables.add(lo);
+        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[1],Entities.ghosts_panky);
+        lo.setMover(mover);
+        Root.movables.add(mover);
+        Root.ghostsActive[1] ++;
     }
 
     public void makeGhost3() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
+        LevelObject lo = new LevelObject(level, x, y, Entities.ghosts_zarathustra.getzIndex(), LevelObject.Types.Ghost3);
         lo.setGfx(Entities.ghosts_zarathustra);
         lo.animationStartRandom();
         movables.add(lo);
+        Mover mover = new GhostMover(lo, Root.mcminos, level.ghostSpeed[2], Entities.ghosts_zarathustra);
+        lo.setMover(mover);
+        Root.movables.add(mover);
+        Root.ghostsActive[2]++;
     }
 
+
     public void makeGhost4() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
+        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_jumpingpill.getzIndex(),LevelObject.Types.Ghost4);
         lo.setGfx(Entities.ghosts_jumpingpill);
         lo.animationStartRandom();
         movables.add(lo);
+        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[3],Entities.ghosts_jumpingpill);
+        lo.setMover(mover);
+        Root.movables.add(mover);
+        Root.ghostsActive[3] ++;
+        level.increasePills();
     }
 
     public void makeLive() {
@@ -298,7 +329,7 @@ public class LevelBlock {
         lo.setGfx(Entities.extras_rock);
         rock = lo;
         movables.add(lo);
-        Root.movables.add(lo);
+        // Root.movables.add(lo);
     }
 
     public void makeRockMe() {
@@ -515,7 +546,19 @@ public class LevelBlock {
         return false;
     }
 
-    public oneWayDir getOneWayDir() {
-        return oneWayDirMap[(oneWayType%4)+1];
+    public int getOneWayDir() {
+//        return oneWayDirMap[(oneWayType%4)+1];
+        return (oneWayType%4)+1;
     }
+
+    public boolean hasGhost() {
+        for( LevelObject m: movables ) {
+            LevelObject.Types t = m.getType();
+            if(t.ordinal() >= LevelObject.Types.Ghost1.ordinal() &&
+                t.ordinal() <= LevelObject.Types.Ghost4.ordinal()) return true;
+        }
+
+        return false;
+    }
+
 }

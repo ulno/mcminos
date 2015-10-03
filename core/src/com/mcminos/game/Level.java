@@ -30,26 +30,27 @@ public class Level {
     private boolean scrollX = false;
     private boolean scrollY = false;
     private String background = "default";
-    private int time = 0;
-    private int restart = 0;
-    private boolean mirror = false;
-    private int mcminosSpeed = 1;
-    private int[] ghost = {0,0,0,0};
-    private int[] ghostTime = {0, 0, 0, 0};
-    private int[] ghostSpeed = {0, 0, 0, 0};
-    private int[] ghostAgility = {0, 0, 0, 0};
-    private int[] ghostPillMax  = {0, 0, 0, 0};
-    private int[] ghostPillFreq  = {0, 0, 0, 0};
-    private int[] ghostTranswall  = {0, 0, 0, 0};
-    private int livesMin = 0, livesMax = 999;
-    private int keysMin = 0, keysMax = 999;
-    private int dynamitesMin = 0, dynamitesMax = 999;
-    private int minesMin = 0, minesMax = 999;
-    private int chocolatesMin = 0, chocolatesMax = 999;
-    private int medicinesMin = 0, medicinesMax = 999;
-    private int umbrellasMin = 0, umbrellasMax = 999;
+    public int time = 0;
+    public int restart = 0;
+    public boolean mirror = false;
+    public int mcminosSpeed = 1;
+    public int[] ghostMax = {0,0,0,0};
+    public int[] ghostTime = {0, 0, 0, 0};
+    public int[] ghostSpeed = {0, 0, 0, 0};
+    public int[] ghostAgility = {0, 0, 0, 0};
+    public int[] ghostPillMax  = {0, 0, 0, 0};
+    public int[] ghostPillFreq  = {0, 0, 0, 0};
+    public int[] ghostTranswall  = {0, 0, 0, 0};
+    public int livesMin = 0, livesMax = 999;
+    public int keysMin = 0, keysMax = 999;
+    public int dynamitesMin = 0, dynamitesMax = 999;
+    public int minesMin = 0, minesMax = 999;
+    public int chocolatesMin = 0, chocolatesMax = 999;
+    public int medicinesMin = 0, medicinesMax = 999;
+    public int umbrellasMin = 0, umbrellasMax = 999;
     private ArrayList<LevelBlock> warpHoleBlocks = new ArrayList<>();
     private Object rockmes;
+    private ArrayList<LevelObject> castleList = new ArrayList<>();
 
 
     Level ( String filename ) {
@@ -97,30 +98,30 @@ public class Level {
                             case "RSTRT": restart = Integer.parseInt(strList[1]); break;
                             case "MIRROR": mirror = "1".equals(strList[1]); break;
                             case "MCSPEED": mcminosSpeed = Integer.parseInt(strList[1]); break;
-                            case "GHOST1": ghost[0] = Integer.parseInt(strList[1]); break;
+                            case "GHOST1": ghostMax[0] = Integer.parseInt(strList[1]); break;
                             case "GRTIME1": ghostTime[0] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED1": ghostSpeed[0] = Integer.parseInt(strList[1]); break;
+                            case "GHSPEED1": ghostSpeed[0] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
                             case "AGIL1": ghostAgility[0] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX1": ghostPillMax[0] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ1": ghostPillFreq[0] = Integer.parseInt(strList[1]); break;
                             case "TRANSWALL1": ghostTranswall[0] = Integer.parseInt(strList[1]); break;
-                            case "GHOST2": ghost[1] = Integer.parseInt(strList[1]); break;
+                            case "GHOST2": ghostMax[1] = Integer.parseInt(strList[1]); break;
                             case "GRTIME2": ghostTime[1] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED2": ghostSpeed[1] = Integer.parseInt(strList[1]); break;
+                            case "GHSPEED2": ghostSpeed[1] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
                             case "AGIL2": ghostAgility[1] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX2": ghostPillMax[1] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ2": ghostPillFreq[1] = Integer.parseInt(strList[1]); break;
                             case "TRANSWALL2": ghostTranswall[1] = Integer.parseInt(strList[1]); break;
-                            case "GHOST3": ghost[2] = Integer.parseInt(strList[1]); break;
+                            case "GHOST3": ghostMax[2] = Integer.parseInt(strList[1]); break;
                             case "GRTIME3": ghostTime[2] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED3": ghostSpeed[2] = Integer.parseInt(strList[1]); break;
+                            case "GHSPEED3": ghostSpeed[2] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
                             case "AGIL3": ghostAgility[2] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX3": ghostPillMax[2] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ3": ghostPillFreq[2] = Integer.parseInt(strList[1]); break;
                             case "TRANSWALL3": ghostTranswall[2] = Integer.parseInt(strList[1]); break;
-                            case "GHOST4": ghost[3] = Integer.parseInt(strList[1]); break;
+                            case "GHOST4": ghostMax[3] = Integer.parseInt(strList[1]); break;
                             case "GRTIME4": ghostTime[3] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED4": ghostSpeed[3] = Integer.parseInt(strList[1]); break;
+                            case "GHSPEED4": ghostSpeed[3] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
                             case "AGIL4": ghostAgility[3] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX4": ghostPillMax[3] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ4": ghostPillFreq[3] = Integer.parseInt(strList[1]); break;
@@ -143,6 +144,10 @@ public class Level {
                         for (int x = 0; x < width; x++)
                             for (int y = 0; y < height; y++)
                                 field[x][y] = new LevelBlock(this, x, y);
+                        // recreate our protagonist as lots of other level things (i.e. ghosts) depend on this
+                        LevelObject mcm = new LevelObject(this,0,0,Entities.mcminos_default_front.getzIndex(),LevelObject.Types.McMinos);
+                        mcm.setGfx(Entities.mcminos_default_front);
+                        Root.mcminos = mcm;
                     }
                     if( levelline < height )
                     {
@@ -577,5 +582,13 @@ public class Level {
 
     public int getRockmesNumber() {
         return rockmeNumber;
+    }
+
+    public void addCastle(LevelObject castle) {
+        castleList.add(castle);
+    }
+
+    public LevelBlock getRandomCastleBlock() {
+        return castleList.get(Root.random(castleList.size())).getLevelBlock();
     }
 }

@@ -119,7 +119,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         chocolateActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: activate Power
+                if( root.chocolates > 0) {
+                    root.chocolates--;
+                    root.setPowerPillValues(2, 1, 10);
+                    root.mcminosGfxPowered(); // turn mcminos into nice graphics
+                    toggleToolbox(); // close toolbox
+                } else root.soundPlay("error");
             }
         });
         toolboxTable.add(chocolateActivateButton).prefSize(64).pad(2);
