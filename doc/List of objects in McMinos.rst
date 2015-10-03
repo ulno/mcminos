@@ -18,6 +18,8 @@ Alive
   * poisoned (still)
   * drunken (still = moving?)
   * cloaked (still = moving)
+  * success (Jubel)
+  *
 
 * Ghosts
 
