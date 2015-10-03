@@ -123,7 +123,24 @@ public class Explosion {
             if(lb.hasOneWay()) {
                 lb.turnOneWay();
             }
-            HashSet<LevelObject> collectibles = lb.getCollectibles();
+            // kill ghosts and TODO: mcminos
+            ArrayList<LevelObject> list = lb.getMovables();
+            for( int i=list.size()-1; i>=0; i--) {
+                LevelObject lo = list.get(i);
+                int ghostnr = lo.getGhostNr();
+                if (ghostnr != -1) { // THi sis a ghost
+                    if (ghostnr == 3) { // jumping pill
+                        Root.level.decreasePills();
+                        Root.soundPlay("knurps");
+                    }
+                    Root.ghostsActive[ghostnr]--;
+                    Root.movables.remove(lo.getMover());
+                    list.remove(i);
+                    lo.dispose();
+                }
+            }
+
+            HashSet<LevelObject> collectibles = lb.getCollectibles(); // cascade explosions
             for( LevelObject lo: collectibles ) {
                 switch(lo.getType()) {
                     case Bomb:

@@ -203,4 +203,7 @@ public abstract class Mover {
      */
     protected abstract void chooseDirection();
 
+    public LevelObject getLevelObject() {
+        return levelObject;
+    }
 }

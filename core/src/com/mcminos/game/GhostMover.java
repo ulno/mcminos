@@ -84,6 +84,31 @@ public class GhostMover extends Mover {
 
     @Override
     protected boolean checkCollisions() {
+        if( levelObject.fullOnBlock() ) {
+            // check the things lying here
+            LevelBlock currentBlock = currentLevelBlock;
+            // TODO: if this is the secodn ghost, drop pills
+            for( LevelObject b:currentBlock.getCollectibles()) {
+                switch( b.getType() ) {
+                    case LandMineActive:
+                        currentBlock.removeItem(b);
+                        b.dispose();
+                        new Explosion(currentBlock, LevelObject.Types.LandMine);
+                        break;
+                }
+            }
+            // check if here is max hole, because ghosts will fall in and die (even if they don't increase hole-sizes)
+            if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
+                int ghostnr = levelObject.getGhostNr();
+                if(ghostnr == 3 ) { // jumping pill
+                    Root.level.decreasePills();
+                    Root.soundPlay("knurps");
+                }
+                Root.ghostsActive[ghostnr] --;
+                // Todo: think about sound to play for mormal ghost
+                return true; // remove me
+            }
+        }
         return false;
     }
 

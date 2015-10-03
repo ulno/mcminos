@@ -266,6 +266,7 @@ public class LevelBlock {
         lo.setMover(mover);
         Root.movables.add(mover);
         Root.ghostsActive[3] ++;
+        level.increasePills();
     }
 
     public void makeLive() {

@@ -1,5 +1,7 @@
 package com.mcminos.game;
 
+import java.util.ArrayList;
+
 /**
  * Created by ulno on 01.10.15.
  */
@@ -250,8 +252,45 @@ public class McminosMover extends Mover {
             }
             lastBlock = currentBlock;
         }
+        // check always if we met a ghost
+        ArrayList<LevelObject> moveables = currentLevelBlock.getMovables();
+        for( int i=moveables.size()-1; i>=0; i--) {
+            LevelObject lo = moveables.get(i);
+            int ghostnr = lo.getGhostNr();
+            if(ghostnr != -1) {
+                if( Root.powerDuration > 0 ) {
+                    if(ghostnr == 3) { // jumping pill, will poison when powered
+                        // TODO: poison
+                        Root.soundPlay("poison");
+                    } else { // all others can be killed when powered
+                        moveables.remove(i);
+                        Root.movables.remove(lo.getMover());
+                        Root.level.decreasePills();
+                        Root.ghostsActive[ghostnr] --;
+                        lo.dispose();
+                        Root.soundPlay("gotyou");
+                        // TODO: do score
+                    }
+                } else {
+                    if(ghostnr == 3) { // jumping pill, can be eaten when not powered
+                        moveables.remove(i);
+                        Root.movables.remove(lo.getMover());
+                        Root.level.decreasePills();
+                        Root.ghostsActive[ghostnr] --;
+                        lo.dispose();
+                        Root.soundPlay("knurps");
+                    } else { // all others can be killed when powered
+                        // TODO: kill McMinos
+                        Root.soundPlay("ghosts");
+                    }
+
+                }
+            }
+
+        }
         return false; // don't remove mcminos
     }
+
 
     public void setSpeedFactor(int mcmNewFactor) {
         speed /= mcminosSpeedFactor;

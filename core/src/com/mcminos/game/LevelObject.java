@@ -12,11 +12,6 @@ import java.util.Collections;
 public class LevelObject implements  Comparable<LevelObject> {
 
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
-
-    public void setLevelBlock(LevelBlock levelBlock) {
-        this.levelBlock = levelBlock;
-    }
-
     public enum Types {Unspecified, Power1, Power2, Power3,
         IndestructableWall, InvisibleWall, Rockme, Live, Letter,
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
@@ -263,5 +258,17 @@ public class LevelObject implements  Comparable<LevelObject> {
         }
 
     }
+
+    public void setLevelBlock(LevelBlock levelBlock) {
+        this.levelBlock = levelBlock;
+    }
+
+    public int getGhostNr() {
+        if(type.ordinal() >= Types.Ghost1.ordinal() && type.ordinal() <= Types.Ghost4.ordinal() ) {
+            return type.ordinal() - Types.Ghost1.ordinal();
+        }
+        return -1;
+    }
+
 
 }

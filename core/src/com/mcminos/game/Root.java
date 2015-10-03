@@ -473,8 +473,12 @@ public class Root {
             mcmMover.move();
             for (int i=movables.size()-1; i>=0; i--) { // works as synchronized
                 Mover m = movables.get(i);
-                if(m.move())
+                if(m.move()) {
                     movables.remove(i);
+                    LevelObject lo = m.getLevelObject();
+                    lo.getLevelBlock().removeMovable(lo);
+                    lo.dispose();
+                }
             }
 
         }
@@ -497,6 +501,7 @@ public class Root {
         lo.animationStartRandom();
         block.addMovables(lo);
         Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[ghostnr],ghostEntities[ghostnr]);
+        lo.setMover(mover);
         Root.movables.add(mover);
         Root.ghostsActive[ghostnr] ++;
     }
