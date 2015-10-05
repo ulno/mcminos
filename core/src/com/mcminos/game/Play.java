@@ -3,7 +3,9 @@ package com.mcminos.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 
@@ -13,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -21,9 +22,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by ulno on 10.09.15.
  */
 public class Play implements Screen, GestureListener, InputProcessor {
-    private final Root root;
-    private final Skin skin;
-    private final BitmapFont font;
+    private final Game game;
     private final Table menuTable;
     private final Table toolboxTable;
     private final Window toolbox;
@@ -39,22 +38,40 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private final TextButton doorRightButton;
     private final TextButton doorDownButton;
     private final TextButton doorLeftButton;
+    private final PlayWindow playwindow;
+    private final Skin skin;
+    private final McMinos mcminos;
+    private final Audio audio;
+    private final BitmapFont font;
+    private final SpriteBatch batch;
+    private final Main main;
+    private Level level;
     private Stage menu;
     private int touchDownX;
     private int touchDownY;
     private long lastZoomTime = 0;
+    private int gameResolutionCounter = 0;
 
 
-    public Play(String levelName) {
-        root = Root.getInstance();
-        skin = root.defaultSkin;
-        font = root.defaultFont;
-        root.currentLevelName = levelName;
-        root.loadLevel( "levels/" + levelName + ".asx" );
+    public Play(final Main main, final String levelName) {
+        this.main = main;
+        batch = main.getBatch();
+        font = main.getFont();
+        skin = main.getSkin();
+        audio = main.getAudio();
+        game = new Game(main);
+
+        game.currentLevelName = levelName;
+        level = game.loadLevel("levels/" + levelName + ".asx");
+        mcminos = game.getMcMinos();
+        playwindow = game.getPlayWindow();
+
+        // Basically, based on density, we want to set out default zoomlevel.
+        playwindow.setResolution(gameResolutionCounter);
 
         // Init menu
-        menu = new Stage(new ScreenViewport(),root.batch);
-        menuTable = new Table(skin);
+        menu = new Stage(new ScreenViewport(), batch);
+        menuTable = new Table();
         menuTable.setWidth(menu.getWidth());
         menuTable.align(Align.center | Align.top);
         TextButton toolboxButton = new TextButton("Toolbox", skin);
@@ -119,12 +136,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
         chocolateActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if( root.chocolates > 0) {
-                    root.chocolates--;
-                    root.setPowerPillValues(2, 1, 10);
-                    root.mcminosGfxPowered(); // turn mcminos into nice graphics
+                if (mcminos.hasChocolate()) {
+                    mcminos.decreaseChocolates();
+                    mcminos.setPowerPillValues(2, 1, 10);
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         toolboxTable.add(chocolateActivateButton).prefSize(64).pad(2);
@@ -137,14 +153,14 @@ public class Play implements Screen, GestureListener, InputProcessor {
         doorUpButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                toggleDoor(root.mcminos.getLevelBlock().up());
+                toggleDoor(mcminos.getLevelBlock().up());
             }
         });toolboxTable.add(doorUpButton).prefSize(64).pad(2);
         doorRightButton = new TextButton(">",skin);
         doorRightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                toggleDoor(root.mcminos.getLevelBlock().right());
+                toggleDoor(mcminos.getLevelBlock().right());
             }
         });
         toolboxTable.add(doorRightButton).prefSize(64).pad(2);
@@ -152,7 +168,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         doorDownButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                toggleDoor(root.mcminos.getLevelBlock().down());
+                toggleDoor(mcminos.getLevelBlock().down());
             }
         });
         toolboxTable.add(doorDownButton).prefSize(64).pad(2);
@@ -160,7 +176,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         doorLeftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                toggleDoor(root.mcminos.getLevelBlock().left());
+                toggleDoor(mcminos.getLevelBlock().left());
             }
         });
         toolboxTable.add(doorLeftButton).prefSize(64).pad(2);
@@ -176,21 +192,21 @@ public class Play implements Screen, GestureListener, InputProcessor {
         bombDropButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if( root.bombs > 0) {
-                    root.bombs--;
-                    root.mcminos.getLevelBlock().makeBomb();
+                if( mcminos.hasBomb()) {
+                    mcminos.decreaseBombs();
+                    mcminos.getLevelBlock().makeBomb();
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         bombActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(root.bombs > 0) {
-                    root.bombs--;
-                    new Explosion(root.mcminos.getLevelBlock(), LevelObject.Types.Bomb);
+                if (mcminos.hasBomb()) {
+                    mcminos.decreaseBombs();
+                    new Explosion(mcminos.getLevelBlock(), LevelObject.Types.Bomb);
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         toolboxTable.row();
@@ -205,21 +221,21 @@ public class Play implements Screen, GestureListener, InputProcessor {
         dynamiteDropButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(root.dynamites > 0) {
-                    root.dynamites--;
-                    root.mcminos.getLevelBlock().makeDynamite();
+                if(mcminos.hasDynamite()) {
+                    mcminos.decreaseDynamites();
+                    mcminos.getLevelBlock().makeDynamite();
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         dynamiteActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(root.dynamites > 0) {
-                    root.dynamites--;
-                    new Explosion(root.mcminos.getLevelBlock(), LevelObject.Types.Dynamite);
+                if (mcminos.hasDynamite()) {
+                    mcminos.decreaseDynamites();
+                    new Explosion(mcminos.getLevelBlock(), LevelObject.Types.Dynamite);
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         toolboxTable.row();
@@ -234,21 +250,21 @@ public class Play implements Screen, GestureListener, InputProcessor {
         landmineDropButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if( root.landmines > 0 ) {
-                    root.landmines--;
-                    root.mcminos.getLevelBlock().makeLandMine();
+                if( mcminos.hasLandmine() ) {
+                    mcminos.decreaseLandmines();
+                    mcminos.getLevelBlock().makeLandMine();
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         landmineActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if( root.landmines > 0 ) {
-                    root.landmines--;
-                    root.mcminos.getLevelBlock().makeLandMineActivated();
+                if (mcminos.hasLandmine()) {
+                    mcminos.decreaseLandmines();
+                    mcminos.getLevelBlock().makeLandMineActivated();
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         toolboxTable.row();
@@ -263,23 +279,24 @@ public class Play implements Screen, GestureListener, InputProcessor {
         umbrellaActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if( root.umbrellas > 0 ) {
-                    root.umbrellas --;
-                    root.umbrellaDuration += 10 << Root.timeResolutionExponent;
-                    root.soundPlay("wind");
-                    root.increaseScore(10);
+                if (mcminos.hasUmbrella()) {
+                    mcminos.consumeUmbrella();
+                    audio.soundPlay("wind");
+                    mcminos.increaseScore(10);
                     toggleToolbox(); // close toolbox
-                } else root.soundPlay("error");
+                } else audio.soundPlay("error");
             }
         });
         toolboxTable.row();
 
         Button leaveButton = new TextButton("Leave Level",skin);
+        final Play thisScreen = this;
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 toggleToolbox();
-                Root.setScreen(new MainMenu());
+                thisScreen.dispose();
+                game.setScreen(new MainMenu(main,levelName));
             }
         });
         toolboxTable.add(leaveButton).pad(4).prefSize(128, 64);
@@ -324,12 +341,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private void toggleDoor(LevelBlock lb) {
         if( lb.hasDoor() ) {
             if( ! lb.hasRock() ) { // if the dor is not blocked by rock
-                if (root.keys > 0) {
-                    root.keys--;
+                if (mcminos.hasKey()) {
+                    mcminos.decreaseKeys();
                     lb.toggleDoor();
                     if (lb.hasClosedDoor()) // was opened
-                        root.soundPlay("rums");
-                    else root.soundPlay("quietsch");
+                        audio.soundPlay("rums");
+                    else audio.soundPlay("quietsch");
                     toggleToolbox(); // close toolbox
                 }
             }
@@ -337,32 +354,32 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void updateToolbox() {
-        chocolateLabel.setText(String.format("%03d", root.chocolates));
-        keyLabel.setText(String.format("%03d", root.keys));
-        bombLabel.setText(String.format("%03d", root.bombs));
-        dynamiteLabel.setText(String.format("%03d", root.dynamites));
-        landmineLabel.setText(String.format("%03d", root.landmines));
-        umbrellaLabel.setText(String.format("%03d", root.umbrellas));
-        pillLabel.setText(String.format("%05d", root.level.getPillsNumber()));
-        rockmeLabel.setText(String.format("%05d", root.level.getRockmesNumber()));
+        chocolateLabel.setText(String.format("%03d", mcminos.getChocolates()));
+        keyLabel.setText(String.format("%03d", mcminos.getKeys()));
+        bombLabel.setText(String.format("%03d", mcminos.getBombs()));
+        dynamiteLabel.setText(String.format("%03d", mcminos.getDynamites()));
+        landmineLabel.setText(String.format("%03d", mcminos.getLandmines()));
+        umbrellaLabel.setText(String.format("%03d", mcminos.getUmbrellas()));
+        pillLabel.setText(String.format("%05d", level.getPillsNumber()));
+        rockmeLabel.setText(String.format("%05d", level.getRockmesNumber()));
         // update door buttons
         // first get mcminos' position
-        LevelBlock mcmBlock = root.mcminos.getLevelBlock();
+        LevelBlock mcmBlock = mcminos.getLevelBlock();
         if(mcmBlock != null) {
-            if (root.keys > 0 && mcmBlock.up() != null && !mcmBlock.up().hasRock() && mcmBlock.up().hasDoor()) doorUpButton.setDisabled(false);
+            if (mcminos.hasKey() && mcmBlock.up() != null && !mcmBlock.up().hasRock() && mcmBlock.up().hasDoor()) doorUpButton.setDisabled(false);
             else doorUpButton.setDisabled(true);
-            if (root.keys > 0 && mcmBlock.right() != null && !mcmBlock.up().hasRock() && mcmBlock.right().hasDoor()) doorRightButton.setDisabled(false);
+            if (mcminos.hasKey() && mcmBlock.right() != null && !mcmBlock.up().hasRock() && mcmBlock.right().hasDoor()) doorRightButton.setDisabled(false);
             else doorRightButton.setDisabled(true);
-            if (root.keys > 0 && mcmBlock.down() != null && !mcmBlock.up().hasRock() && mcmBlock.down().hasDoor()) doorDownButton.setDisabled(false);
+            if (mcminos.hasKey() && mcmBlock.down() != null && !mcmBlock.up().hasRock() && mcmBlock.down().hasDoor()) doorDownButton.setDisabled(false);
             else doorDownButton.setDisabled(true);
-            if (root.keys > 0 && mcmBlock.left() != null && !mcmBlock.up().hasRock() && mcmBlock.left().hasDoor()) doorLeftButton.setDisabled(false);
+            if (mcminos.hasKey() && mcmBlock.left() != null && !mcmBlock.up().hasRock() && mcmBlock.left().hasDoor()) doorLeftButton.setDisabled(false);
             else doorLeftButton.setDisabled(true);
         }
     }
 
     public void toggleToolbox() {
-        root.setToolboxShown(!root.isToolboxShown());
-        if (root.isToolboxShown())
+        playwindow.setToolboxShown(!playwindow.isToolboxShown());
+        if (playwindow.isToolboxShown())
             menu.addActor(toolbox);
         else
             toolbox.remove();
@@ -381,26 +398,22 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         // moving is not handled in rendering method
         //
-        root.updateTime(); // TODO: so we would actually not need to track time here as moving is handled elsewhere
+        game.updateTime(); // TODO: so we would actually not need to track time here as moving is handled elsewhere
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        root.batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
-        root.batch.begin();
-        try {
-            root.updateLock.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        LevelObject.drawAll();
-        root.updateLock.release(); // TODO: think about moving this to the end of draw
+        batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
+        batch.begin();
+        game.acquireLock();
+        LevelObject.drawAll(playwindow);
+        game.releaseLock(); // TODO: think about moving this to the end of draw
 
         updateToolbox();
-        root.defaultFont.draw(root.batch, String.format("S%06d P%03d U%03d",
-                root.score,
-                root.powerDuration>>root.timeResolutionExponent,
-                root.umbrellaDuration>>root.timeResolutionExponent), 20, Gdx.graphics.getHeight() - 20);
+        font.draw(batch, String.format("S%06d P%03d U%03d",
+                mcminos.getScore(),
+                mcminos.getPowerDuration() >> game.timeResolutionExponent,
+                mcminos.getUmbrellaDuration() >> game.timeResolutionExponent), 20, Gdx.graphics.getHeight() - 20);
         // add stage and menu
-        root.batch.end(); // must end before menu
+        batch.end(); // must end before menu
 
         menu.act(delta);
         menu.draw();
@@ -410,7 +423,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        root.resize(width, height);
+        playwindow.resize(width, height);
         menuTable.setBounds(0, 0, width, height);
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
         menu.getViewport().update(width, height, true);
@@ -434,6 +447,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void dispose() {
+        game.dispose();
         menu.dispose();
     }
 
@@ -457,47 +471,47 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 zoomMinus();
                 break;
         }
-        root.setResolution( Entities.resolutionList[root.gameResolutionCounter] );
+        playwindow.setResolution(gameResolutionCounter);
         return false;
     }
 
     public void zoomPlus() {
-        root.gameResolutionCounter --;
-        if (root.gameResolutionCounter < 0) root.gameResolutionCounter = 0;
-        root.setResolution(Entities.resolutionList[root.gameResolutionCounter]);
+        gameResolutionCounter --;
+        if (gameResolutionCounter < 0) gameResolutionCounter = 0;
+        playwindow.setResolution(gameResolutionCounter);
     }
 
     public void zoomMinus() {
-        root.gameResolutionCounter ++;
-        if (root.gameResolutionCounter > Entities.resolutionList.length - 1)
-            root.gameResolutionCounter = Entities.resolutionList.length - 1;
-        root.setResolution(Entities.resolutionList[root.gameResolutionCounter]);
+        gameResolutionCounter ++;
+        if (gameResolutionCounter > Entities.resolutionList.length - 1)
+            gameResolutionCounter = Entities.resolutionList.length - 1;
+        playwindow.setResolution(gameResolutionCounter);
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if( ! root.isToolboxShown() ) { // just pan in this case -> see there
+        if( ! playwindow.isToolboxShown() ) { // just pan in this case -> see there
             if (pointer > 0) return false;
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
-            root.setDestination(x, y);
+            game.setDestination(x, y);
             return false; // nnedsto be evtl. dealt with at drag
         }
         return false;
     }
 
     public int windowToGameY(int screenY) {
-        int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY, (root.virtualBlockResolutionExponent - root.resolutionExponent))
-                + root.windowVPixelYPos - (root.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
-        //if(root.getScrollY()) { allways
-        if (y >= root.getVPixelsLevelHeight())
-            y -= root.getVPixelsLevelHeight();
-        if (y <= -(root.virtualBlockResolution >> 1))
-            y += root.getLevelHeight();
+        int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY, (PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent))
+                + playwindow.windowVPixelYPos - (PlayWindow.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
+        //if(game.getScrollY()) { allways
+        if (y >= playwindow.getVPixelsLevelHeight())
+            y -= playwindow.getVPixelsLevelHeight();
+        if (y <= -(playwindow.virtualBlockResolution >> 1))
+            y += playwindow.getLevelHeight();
         //}
         //else {
-        //    if( y >= root.windowVPixelYPos + root.getWindowVPixelHeight() - (root.virtualBlockResolution >> 1) )
-        //        y = root.windowVPixelYPos + root.getWindowVPixelHeight() - (root.virtualBlockResolution >> 1);
+        //    if( y >= game.windowVPixelYPos + game.getWindowVPixelHeight() - (game.virtualBlockResolution >> 1) )
+        //        y = game.windowVPixelYPos + game.getWindowVPixelHeight() - (game.virtualBlockResolution >> 1);
         //}
         return y;
     }
@@ -505,16 +519,17 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public int windowToGameX(int screenX) {
         // map windowVPixelXPos windowVPixelYPos to game coordinates
         // TODO: consider only first button/finger
-        int x = Util.shiftLeftLogical(screenX, root.virtualBlockResolutionExponent - root.resolutionExponent) + root.windowVPixelXPos - (root.virtualBlockResolution >> 1);
-        //if(root.getScrollX()) { allways do this
-        if (x >= root.getVPixelsLevelWidth())
-            x -= root.getVPixelsLevelWidth();
-        if (x <= -(root.virtualBlockResolution >> 1))
-            x += root.getVPixelsLevelWidth();
+        int x = Util.shiftLeftLogical(screenX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent) 
+                + playwindow.windowVPixelXPos - (PlayWindow.virtualBlockResolution >> 1);
+        //if(game.getScrollX()) { allways do this
+        if (x >= playwindow.getVPixelsLevelWidth())
+            x -= playwindow.getVPixelsLevelWidth();
+        if (x <= -(playwindow.virtualBlockResolution >> 1))
+            x += playwindow.getVPixelsLevelWidth();
         //}
         //else {
-        //    if( x >= root.windowVPixelXPos + root.getWindowVPixelWidth() - (root.virtualBlockResolution >> 1) )
-        //        x = root.windowVPixelXPos + root.getWindowVPixelWidth() - (root.virtualBlockResolution >> 1);
+        //    if( x >= game.windowVPixelXPos + game.getWindowVPixelWidth() - (game.virtualBlockResolution >> 1) )
+        //        x = game.windowVPixelXPos + game.getWindowVPixelWidth() - (game.virtualBlockResolution >> 1);
         //}
         return x;
     }
@@ -571,11 +586,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean pan(float screenX, float screenY, float deltaX, float deltaY) {
-        if( root.isToolboxShown() ) {
-            int dxi = Util.shiftLeftLogical((int) deltaX, root.virtualBlockResolutionExponent - root.resolutionExponent);
-            int dyi = Util.shiftLeftLogical((int) deltaY, root.virtualBlockResolutionExponent - root.resolutionExponent);
-            root.windowVPixelXPos = (root.windowVPixelXPos + root.getVPixelsLevelWidth() - dxi) % root.getVPixelsLevelWidth();
-            root.windowVPixelYPos = (root.windowVPixelYPos + root.getVPixelsLevelHeight() + dyi) % root.getVPixelsLevelHeight();
+        if( playwindow.isToolboxShown() ) {
+            int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
+            int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
+            playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + playwindow.getVPixelsLevelWidth() - dxi) % playwindow.getVPixelsLevelWidth();
+            playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + playwindow.getVPixelsLevelHeight() + dyi) % playwindow.getVPixelsLevelHeight();
             return true;
         }
         return false;
@@ -588,14 +603,14 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        if( root.gameTime - lastZoomTime > 500 ) { // ignore some events
-            if( initialDistance > distance + root.windowPixelHeight /4) {
+        if( game.getGameTime() - lastZoomTime > 500 ) { // ignore some events
+            if( initialDistance > distance + playwindow.windowPixelHeight /4) {
                 zoomMinus();
             }
-            else if( initialDistance < distance - root.windowPixelHeight /4) {
+            else if( initialDistance < distance - playwindow.windowPixelHeight /4) {
                 zoomPlus();
             }
-            lastZoomTime = root.gameTime;
+            lastZoomTime = game.getGameTime();
         }
         return false; // consume event
     }

@@ -10,6 +10,11 @@ import java.util.HashSet;
 public class Explosion {
     private final LevelBlock center;
     private final LevelObject.Types type;
+    private final Level level;
+    private final Game game;
+    private final Audio audio;
+    private final Ghosts ghosts;
+    private final McMinos mcminos;
     private LevelObject fuseObject;
     private FrameTimer.Task triggerExplosionTask, explosionFinishTask;
     private LevelObject explosionObject;
@@ -36,6 +41,11 @@ public class Explosion {
     public Explosion(LevelBlock center, LevelObject.Types type) {
         this.center = center;
         this.type = type;
+        level = center.getLevel();
+        game = level.getGame();
+        audio = game.getAudio();
+        ghosts = game.getGhosts();
+        mcminos = game.getMcMinos();
 
         // decide if we need to show a fuse or directly explode
         if( type != LevelObject.Types.LandMine || type != LevelObject.Types.LandMine ) {
@@ -52,20 +62,20 @@ public class Explosion {
 
         if(type == LevelObject.Types.Bomb) {
             explosionObject = new LevelObject(center, Entities.extras_bomb_exploding, LevelObject.Types.BombExplosion);
-            Root.soundPlay("explosio");
+            audio.soundPlay("explosio");
             animationLength = Entities.extras_bomb_exploding.getAnimationFramesLength();
             destroyLiving();
         }
         else if (type == LevelObject.Types.Dynamite) {
             explosionObject = new LevelObject(center, Entities.extras_dynamite_exploding, LevelObject.Types.DynamiteExplosion);
-            Root.soundPlay("explosio");
+            audio.soundPlay("explosio");
             animationLength = Entities.extras_dynamite_exploding.getAnimationFramesLength();
             destroyLiving();
             destroyWalls();
         }
         else { // land-mine
             explosionObject = new LevelObject(center, Entities.extras_dynamite_exploding, LevelObject.Types.LandMineExplosion);
-            Root.soundPlay("explosio");
+            audio.soundPlay("explosio");
             animationLength = Entities.extras_land_mine_exploding.getAnimationFramesLength();
             destroyLiving();
         }
@@ -77,7 +87,7 @@ public class Explosion {
                 explosionObject.dispose(); // just finish
             }
         };
-        Root.frameTimer.schedule(explosionFinishTask, animationLength);
+        game.schedule(explosionFinishTask, animationLength);
     }
 
     /**
@@ -102,7 +112,8 @@ public class Explosion {
                 LevelObject r = lb.getRock();
                 // TODO: add destroyed rock graphics
                 lb.setRock(null);
-                Root.movables.remove(r); // gom global movables
+                game.removeMover(r.getMover());
+                lb.removeMovable(r); // gom global movables
                 r.dispose();
             }
         }
@@ -115,7 +126,7 @@ public class Explosion {
         for( LevelBlock lb: getArea() ) {
             if( lb.hasPill()) {
                 lb.removePill();
-                Root.increaseScore(1);
+                mcminos.increaseScore(1);
             }
             if(lb.hasHole()) {
                 lb.getHole().increaseHole();
@@ -130,11 +141,11 @@ public class Explosion {
                 int ghostnr = lo.getGhostNr();
                 if (ghostnr != -1) { // THi sis a ghost
                     if (ghostnr == 3) { // jumping pill
-                        Root.level.decreasePills();
-                        Root.soundPlay("knurps");
+                        level.decreasePills();
+                        audio.soundPlay("knurps");
                     }
-                    Root.ghostsActive[ghostnr]--;
-                    Root.movables.remove(lo.getMover());
+                    ghosts.decreaseGhosts(ghostnr);
+                    game.removeMover(lo.getMover());
                     list.remove(i);
                     lo.dispose();
                 }
@@ -185,13 +196,13 @@ public class Explosion {
 
         if(type == LevelObject.Types.Bomb) {
             fuseObject = new LevelObject(center, Entities.extras_bomb_fused, LevelObject.Types.BombFused);
-            Root.soundPlay("zisch");
+            audio.soundPlay("zisch");
             animationLength = Entities.extras_bomb_fused.getAnimationFramesLength();
         }
         else { // so it's dynamite
             fuseObject = new LevelObject(center, Entities.extras_dynamite_fused, LevelObject.Types.BombFused);
             fuseObject.animationStartNow();
-            Root.soundPlay("zisch");
+            audio.soundPlay("zisch");
             animationLength = Entities.extras_dynamite_fused.getAnimationFramesLength();
         }
         // Start a timer to come back here, when fusing finished
@@ -202,6 +213,6 @@ public class Explosion {
                 initExplosion();
             }
         };
-        Root.frameTimer.schedule(triggerExplosionTask, animationLength );
+        game.schedule(triggerExplosionTask, animationLength );
     }
 }

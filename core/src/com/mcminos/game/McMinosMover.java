@@ -5,31 +5,44 @@ import java.util.ArrayList;
 /**
  * Created by ulno on 01.10.15.
  */
-public class McminosMover extends Mover {
+public class McMinosMover extends Mover {
 
+    private final Game game;
+    private final McMinos mcminos;
+    private PlayWindow playwindow;
+    private final Audio audio;
+    private final Level level;
+    private final Ghosts ghosts;
     private int mcminosSpeedFactor = 1;
 
-    public McminosMover( LevelObject mcminos ) {
-        super(mcminos, Root.baseSpeed, true);
+    public McMinosMover(Game game) {
+        super(game.getMcMinos().getLevelObject(), Game.baseSpeed, true);
+        this.game = game;
+        audio = game.getAudio();
+        mcminos = game.getMcMinos();
+        this.playwindow = game.getPlayWindow();
+        this.level = game.getLevel();
+        ghosts = game.getGhosts();
+        mcminos.setMover(this);
+        mcminos.gfxNormal();
     }
 
-
     @Override
-    public void chooseDirection() {
-        // allow direction change when on block-boundaries
-        if (levelObject.fullOnBlock() && Root.isDestinationSet()) {
+    public LevelBlock chooseDirection() {
+        // this is only called, when on block boundaries
+        if ( playwindow.isDestinationSet()) {
             int directions = 0; // direction bit field
-            LevelObject destination = Root.getDestination();
+            LevelObject destination = playwindow.getDestination();
             // check screen distance
             int x = levelObject.getVX();
             int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
             int xdiff = Math.abs(xdelta);
-            if (xdiff <= Root.virtualBlockResolution >> 1 || xdiff >= Root.getVPixelsLevelWidth() - (Root.virtualBlockResolution >> 1))
+            if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
                 xdelta = 0;
             else {
                 //also allow this in non-scrolled levels
                 //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
-                if (xdiff >= Root.getVPixelsLevelWidth() >> 1)
+                if (xdiff >= playwindow.getVPixelsLevelWidth() >> 1)
                     xdelta = (int) Math.signum(xdelta);
                 else
                     xdelta = -(int) Math.signum(xdelta);
@@ -37,12 +50,12 @@ public class McminosMover extends Mover {
             int y = levelObject.getVY();
             int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
             int ydiff = Math.abs(ydelta);
-            if (ydiff <= Root.virtualBlockResolution >> 1 || ydiff >= Root.getVPixelsLevelHeight() - (Root.virtualBlockResolution >> 1))
+            if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
                 ydelta = 0;
             else {
                 // also in non-scroll levels
                 //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
-                if (ydiff >= Root.getVPixelsLevelHeight() >> 1)
+                if (ydiff >= playwindow.getVPixelsLevelHeight() >> 1)
                     ydelta = (int) Math.signum(ydelta);
                 else
                     ydelta = -(int) Math.signum(ydelta);
@@ -53,7 +66,7 @@ public class McminosMover extends Mover {
             if (xdelta > 0) directions += RIGHT;
             if (xdelta < 0) directions += LEFT;
             if (directions == 0) {
-                Root.unsetDestination();
+                playwindow.unsetDestination();
             }
 
             // refine with possible directions
@@ -76,7 +89,7 @@ public class McminosMover extends Mover {
                 case STOP:
                     //nextBlock = currentLevelBlock;
                     // actually done here
-                    return;
+                    return currentLevelBlock;
                 //break;
                 case UP:
                     nextBlock = currentLevelBlock.up();
@@ -111,22 +124,24 @@ public class McminosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if( m == null ) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, speed, currentDirection);
+                    RockMover mover = new RockMover(rock, speed, currentDirection, nextBlock2);
                     rock.setMover(mover);
-                    Root.movables.add(mover);
+                    game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
-                    Root.soundPlay("moverock");
+                    audio.soundPlay("moverock");
                 } else if(  ! m.isMoving() ) {
                     // let it move again
-                    m.triggerMove(currentDirection, speed);
+                    m.triggerMove(currentDirection, speed, nextBlock2);
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
-                    Root.soundPlay("moverock");
+                    audio.soundPlay("moverock");
                 }
             }
+            return nextBlock;
         }
+        return currentLevelBlock;
     }
 
     /**
@@ -136,17 +151,17 @@ public class McminosMover extends Mover {
     @Override
     protected boolean checkCollisions() {
         // check if something can be collected (only when full on field)
-        if(Root.mcminos.fullOnBlock()) {
-            LevelBlock currentBlock = Root.getLevelBlockFromVPixel(Root.mcminos.getVX(), Root.mcminos.getVY());
+        if(mcminos.fullOnBlock()) {
+            LevelBlock currentBlock = game.getLevelBlockFromVPixel(mcminos.getVX(), mcminos.getVY());
             if( currentBlock.hasPill() )
             {
-                Root.soundPlay("knurps");
+                audio.soundPlay("knurps");
                 currentBlock.removePill();
-                Root.increaseScore(1);
+                mcminos.increaseScore(1);
             }
             // check, if mcminos actually moved or if it's the same field as last time
             if(currentBlock != lastBlock) {
-                if(Root.umbrellaDuration == 0) { // no umbrellapower currently
+                if(! mcminos.umbrellaActive()) { // no umbrellapower currently
                     // check if last block had a hole -> make it bigger
                     if (lastBlock.hasHole()) {
                         // TODO check umbrella
@@ -160,36 +175,36 @@ public class McminosMover extends Mover {
                     if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
                         // fall in
                         // TODO: intiate kill sequence
-                        Root.soundPlay("falling");
+                        audio.soundPlay("falling");
                     }
                 }
                 // check the things lying here
                 for( LevelObject b:currentBlock.getCollectibles()) {
                     switch( b.getType() ) {
                         case Chocolate:
-                            Root.soundPlay("tools");
-                            Root.chocolates ++;
+                            audio.soundPlay("tools");
+                            mcminos.increaseChocolates();;
                             currentBlock.removeItem(b);
                             b.dispose();
-                            Root.increaseScore(10);
+                            mcminos.increaseScore(10);
                             break;
                         case Bomb:
-                            Root.soundPlay("tools");
-                            Root.bombs ++;
+                            audio.soundPlay("tools");
+                            mcminos.increaseBombs();;
                             currentBlock.removeItem(b);
                             b.dispose();
                             // no score as droppable increaseScore(10);
                             break;
                         case Dynamite:
-                            Root.soundPlay("tools");
-                            Root.dynamites ++;
+                            audio.soundPlay("tools");
+                            mcminos.increaseDynamites();;
                             currentBlock.removeItem(b);
                             b.dispose();
                             // no score as droppable increaseScore(10);
                             break;
                         case LandMine:
-                            Root.soundPlay("tools");
-                            Root.landmines ++;
+                            audio.soundPlay("tools");
+                            mcminos.increaseLandmines();;
                             currentBlock.removeItem(b);
                             b.dispose();
                             // no score as droppable increaseScore(10);
@@ -200,52 +215,48 @@ public class McminosMover extends Mover {
                             new Explosion(currentBlock, LevelObject.Types.LandMine);
                             break;
                         case Key:
-                            Root.soundPlay("tools");
-                            Root.keys ++;
+                            audio.soundPlay("tools");
+                            mcminos.increaseKeys();;
                             currentBlock.removeItem(b);
                             b.dispose();
-                            Root.increaseScore(10);
+                            mcminos.increaseScore(10);
                             break;
                         case Umbrella:
-                            Root.soundPlay("tools");
-                            Root.umbrellas ++;
+                            audio.soundPlay("tools");
+                            mcminos.increaseUmbrellas();;
                             currentBlock.removeItem(b);
                             b.dispose();
-                            Root.increaseScore(10);
+                            mcminos.increaseScore(10);
                             break;
                         case Live:
-                            Root.soundPlay("life");
-                            Root.lives ++;
+                            mcminos.increaseLives();
                             currentBlock.removeItem(b);
                             b.dispose();
-                            Root.increaseScore(10);
+                            mcminos.increaseScore(10);
                             break;
                         case Power1:
                             currentBlock.removeItem(b);
                             b.dispose();
-                            Root.setPowerPillValues(2, 1, 10);
+                            mcminos.setPowerPillValues(2, 1, 10);
                             // sound played in ppill method
-                            Root.mcminosGfxPowered(); // turn mcminos into nice graphics
                             break;
                         case Power2:
                             currentBlock.removeItem(b);
                             b.dispose();
-                            Root.setPowerPillValues(1, 2, 10);
-                            Root.mcminosGfxPowered(); // turn mcminos into nice graphics
+                            mcminos.setPowerPillValues(1, 2, 10);
                             break;
                         case Power3:
                             currentBlock.removeItem(b);
                             b.dispose();
-                            Root.setPowerPillValues(1, 1, 10);
-                            Root.mcminosGfxPowered(); // turn mcminos into nice graphics
+                            mcminos.setPowerPillValues(1, 1, 10);
                             break;
                         case SpeedUpField:
                             setSpeedFactor(2);
-                            Root.soundPlay("speedup");
+                            audio.soundPlay("speedup");
                             break;
                         case SpeedDownField:
                             setSpeedFactor(1);
-                            Root.soundPlay("slowdown");
+                            audio.soundPlay("slowdown");
                             break;
                     }
                 }
@@ -258,30 +269,29 @@ public class McminosMover extends Mover {
             LevelObject lo = moveables.get(i);
             int ghostnr = lo.getGhostNr();
             if(ghostnr != -1) {
-                if( Root.powerDuration > 0 ) {
+                if( mcminos.isPowered() ) {
                     if(ghostnr == 3) { // jumping pill, will poison when powered
                         // TODO: poison
-                        Root.soundPlay("poison");
+                        audio.soundPlay("poison");
                     } else { // all others can be killed when powered
+                        game.removeMover(lo.getMover());
                         moveables.remove(i);
-                        Root.movables.remove(lo.getMover());
-                        Root.level.decreasePills();
-                        Root.ghostsActive[ghostnr] --;
+                        ghosts.decreaseGhosts(ghostnr);
                         lo.dispose();
-                        Root.soundPlay("gotyou");
+                        audio.soundPlay("gotyou");
                         // TODO: do score
                     }
                 } else {
                     if(ghostnr == 3) { // jumping pill, can be eaten when not powered
+                        game.removeMover(lo.getMover());
                         moveables.remove(i);
-                        Root.movables.remove(lo.getMover());
-                        Root.level.decreasePills();
-                        Root.ghostsActive[ghostnr] --;
+                        level.decreasePills();
+                        ghosts.decreaseGhosts(ghostnr);
                         lo.dispose();
-                        Root.soundPlay("knurps");
+                        audio.soundPlay("knurps");
                     } else { // all others can be killed when powered
                         // TODO: kill McMinos
-                        Root.soundPlay("ghosts");
+                        audio.soundPlay("ghosts");
                     }
 
                 }
@@ -300,3 +310,112 @@ public class McminosMover extends Mover {
     }
 
 }
+
+/*
+		case MEDICINE1-1:clearwall( x, y );
+					snd_tool();
+					inc_score( 10 );
+					carry[CARRYANTIDOT]++;
+					break;
+		case CLOCKOBJ-1:clearwall( x, y );
+					snd_tool();
+					if(timeactiv) leveltime+=60;
+					inc_score( 10 );
+					break;
+		case POISON1-1:clearwall( x, y );
+					pacpoison();
+					retwert = 0;
+					break;
+		case SKULL-1: retwert = 0; spec_action = 1;
+					power = 0; kill_mcminos(); break;
+		case SURPRISE-1:clearwall( x, y );
+					choose_surprise( x, y );
+					break;
+		case LADDER-1: retwert = 0; pills_left=0; spec_action=1;
+    inc_score(10); break;
+    case TRUHE-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 500 );
+    break;
+    case GELDSACK-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 250 );
+    break;
+    case SPARSCHWEIN-1:clearwall( x, y );
+    snd_tool();
+    inc_score( 100 );
+    break;
+    case SPEEDUP-1: snd_speedup(); speedup = 1; break;
+    case SLOWDOWN-1: snd_slowdown(); speedup = 0; break;
+    case MIRROR-1:clearwall( x, y );
+    inc_score( 10 );
+    snd_mirror();
+    mirrorflag = !mirrorflag;
+    break;
+    case WHISKEY-1:clearwall( x, y );
+    snd_drunken();
+    drunken += 16;
+    inc_score( 5 );
+    break;
+    case KILLALL-1:clearwall( x, y );
+    snd_killall();
+    inc_score( goscount[0] * 10 );
+    ghostkillflag = 1;
+    spec_action = 1;
+    break;
+    case KILLALL2-1: snd_killall();
+    inc_score( goscount[0] * 10 );
+    ghostkillflag = 1;
+    spec_action = 1;
+    break;
+    case SECRETLETTER-1:clearwall( x, y );
+    //snd_letter();
+    inc_score( 10 );
+    found_letter = 1;
+    spec_action = 1;
+    break;
+    case LOCH-1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+2: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        change_field( x, y, levfield( y, x).type+1 );
+        snd_hole();
+    }
+    break;
+    case LOCH+3: if(!umbrflag) // Wenn kein Regenschirm aktiviert
+    {
+        McMinos_hole();
+        retwert = 0;
+    }
+    break;
+    case WARP-1:spec_action = 1;
+    stop_moving = 1;
+    do_warp = 1;
+    retwert = 0;
+    break;
+    case MINEDOWN-1: mine_expl( x, y ); break;
+    case MINEUP-1:change_field( x, y, levfield(y, x).extra);
+    snd_tool();
+    inc_score( 10 );
+    carry[CARRYMINE]++;
+    break;
+}
+
+
+*/

@@ -10,6 +10,10 @@ import java.util.HashSet;
  *
  */
 public class LevelBlock {
+    private final Game game;
+    private final Audio audio;
+    private final McMinos mcminos;
+    private final Ghosts ghosts;
     private int x,y; // Position in Level Field
     private Level level; // corresponding level
     private LevelObject wall=null; // The wall or door connected here
@@ -93,6 +97,10 @@ public class LevelBlock {
 
     public LevelBlock(Level level, int x, int y) {
         this.level = level;
+        game = level.getGame();
+        audio = game.getAudio();
+        mcminos = game.getMcMinos();
+        ghosts = game.getGhosts();
         this.x = x;
         this.y = y;
 
@@ -173,10 +181,8 @@ public class LevelBlock {
     }
 
     public void makeMcMinos() {
-        // init happened before
-        Root.mcminos.setLevelBlock(this);
-        Root.mcminos.setXY(x << Root.virtualBlockResolutionExponent, y << Root.virtualBlockResolutionExponent);
-        movables.add(Root.mcminos);
+        mcminos.initLevelBlock(level,x,y); // creates levelobject and relation to levelblock
+        movables.add(mcminos.getLevelObject());
     }
 
     public void makePill() {
@@ -224,49 +230,19 @@ public class LevelBlock {
     }
 
     public void makeGhost1() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_hanky.getzIndex(),LevelObject.Types.Ghost1);
-        lo.setGfx(Entities.ghosts_hanky);
-        lo.animationStartRandom();
-        movables.add(lo);
-        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[0],Entities.ghosts_hanky);
-        lo.setMover(mover);
-        Root.movables.add(mover);
-        Root.ghostsActive[0] ++;
+        ghosts.create(this, 0);
     }
 
     public void makeGhost2() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_panky.getzIndex(),LevelObject.Types.Ghost2);
-        lo.setGfx(Entities.ghosts_panky);
-        lo.animationStartRandom();
-        movables.add(lo);
-        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[1],Entities.ghosts_panky);
-        lo.setMover(mover);
-        Root.movables.add(mover);
-        Root.ghostsActive[1] ++;
+        ghosts.create(this, 1);
     }
 
     public void makeGhost3() {
-        LevelObject lo = new LevelObject(level, x, y, Entities.ghosts_zarathustra.getzIndex(), LevelObject.Types.Ghost3);
-        lo.setGfx(Entities.ghosts_zarathustra);
-        lo.animationStartRandom();
-        movables.add(lo);
-        Mover mover = new GhostMover(lo, Root.mcminos, level.ghostSpeed[2], Entities.ghosts_zarathustra);
-        lo.setMover(mover);
-        Root.movables.add(mover);
-        Root.ghostsActive[2]++;
+        ghosts.create(this, 2);
     }
 
-
     public void makeGhost4() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.ghosts_jumpingpill.getzIndex(),LevelObject.Types.Ghost4);
-        lo.setGfx(Entities.ghosts_jumpingpill);
-        lo.animationStartRandom();
-        movables.add(lo);
-        Mover mover=new GhostMover(lo,Root.mcminos,level.ghostSpeed[3],Entities.ghosts_jumpingpill);
-        lo.setMover(mover);
-        Root.movables.add(mover);
-        Root.ghostsActive[3] ++;
-        level.increasePills();
+        ghosts.create(this, 3);
     }
 
     public void makeLive() {
@@ -329,7 +305,7 @@ public class LevelBlock {
         lo.setGfx(Entities.extras_rock);
         rock = lo;
         movables.add(lo);
-        // Root.movables.add(lo);
+        // game.addMover(lo);
     }
 
     public void makeRockMe() {
@@ -540,7 +516,7 @@ public class LevelBlock {
             oneWayType++;
             if(oneWayType >=8) oneWayType = 4;
             oneWay.setOneWayGfx(oneWayType);
-            Root.soundPlay("hihat");
+            audio.soundPlay("hihat");
             return true;
         }
         return false;

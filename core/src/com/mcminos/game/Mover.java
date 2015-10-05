@@ -20,13 +20,14 @@ public abstract class Mover {
     protected boolean canMoveRocks = false; // This moveable can move rocks (Main for example)
     protected boolean canPassWalls = false; // Can this move through walls?
     protected LevelBlock lastBlock = null;
+    private LevelBlock headingTo;  // Block this object is heading to
 
     /**
      *
      * @param blocksPerSecond move how many blocks per second?
      */
     public void setSpeed(int blocksPerSecond) {
-        this.currentPixelSpeed = blocksPerSecond * Root.virtualBlockResolution / Root.timeResolution;
+        this.currentPixelSpeed = blocksPerSecond * PlayWindow.virtualBlockResolution / Game.timeResolution;
         this.speed = blocksPerSecond;
     }
 
@@ -58,14 +59,14 @@ public abstract class Mover {
     /**
      *
      * @param lo levelobject to move
-     * @param speed mulitplier for Root.baseSpeed (usually 1.0)
+     * @param speed mulitplier for Game.baseSpeed (usually 1.0)
      */
     public void init( LevelObject lo, int speed, boolean canMoveRocks) {
         levelObject = lo;
         setSpeed(speed);
         this.canMoveRocks = canMoveRocks;
         // obsolet lo.setMover(this);
-        //this.currentLevelBlock = Root.getLevelBlockFromVPixel(lo.getVX(), lo.getVY());
+        //this.currentLevelBlock = Game.getLevelBlockFromVPixel(lo.getVX(), lo.getVY());
         currentLevelBlock = lo.getLevelBlock();
         lastBlock = currentLevelBlock;
     }
@@ -73,7 +74,7 @@ public abstract class Mover {
     /**
      *
      * @param lo levelobject to move
-     * @param speed mulitplier for Root.baseSpeed (usually 1.0)
+     * @param speed mulitplier for Game.baseSpeed (usually 1.0)
      * @param still graphics for standing still
      * @param up graphics for moving up
      * @param right graphics for moving right
@@ -152,14 +153,17 @@ public abstract class Mover {
     }
 
     protected int getUnblockedDirs( ) {
-        return getUnblockedDirs(ALL,true);
+        return getUnblockedDirs(ALL, true);
     }
 
     /**
      * return true, when this needs to be disposed after this call
      */
     public boolean move() {
-        chooseDirection();
+        // allow direction change when on block-boundaries
+        if( levelObject.fullOnBlock() ) {
+            headingTo = chooseDirection();
+        }
 
         int distance = currentPixelSpeed;
         int x = levelObject.getVX();
@@ -182,13 +186,15 @@ public abstract class Mover {
                 x -= distance;
                 levelObject.setGfx(gfxLeft);
                 break;
-            // default case should not happen ad will be treated as no movement
+            // default case should not happen and will be treated as no movement
             default:
                 levelObject.setGfx(gfxStill);
                 break;
         }
         // update current block
-        currentLevelBlock = levelObject.moveTo(x, y); // finally move to new position
+        // does not work because of rounding errors currentLevelBlock = levelObject.moveTo(x, y); // finally move to new position
+        currentLevelBlock = levelObject.moveTo(x, y, headingTo);
+
         return checkCollisions(); // check potential collisons at new position
     }
 
@@ -199,9 +205,9 @@ public abstract class Mover {
     protected abstract boolean checkCollisions();
 
     /**
-     * This needs to set currentDirection
+     * This needs to set currentDirection and return the LevelBlock where this is headed
      */
-    protected abstract void chooseDirection();
+    protected abstract LevelBlock chooseDirection();
 
     public LevelObject getLevelObject() {
         return levelObject;

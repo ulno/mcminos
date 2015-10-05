@@ -12,13 +12,6 @@ import java.util.Collections;
 public class LevelObject implements  Comparable<LevelObject> {
 
     private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
-    public enum Types {Unspecified, Power1, Power2, Power3,
-        IndestructableWall, InvisibleWall, Rockme, Live, Letter,
-        Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
-        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
-        Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
-        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, Hole};
-    public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
@@ -32,12 +25,25 @@ public class LevelObject implements  Comparable<LevelObject> {
     private int animDelta = 0; // how much offset for the animation
     private Types type;
     private DoorTypes doorType = DoorTypes.None;
+    private Game game;
+    private Audio audio;
 
-    private void construct(Level level, int x, int y, int zIndex, Types type) {
-        this.level = level;
-        this.x = x << Root.virtualBlockResolutionExponent;
-        this.y = y << Root.virtualBlockResolutionExponent;
-        levelBlock = level.get(x, y);
+    public enum Types {Unspecified, Power1, Power2, Power3,
+        IndestructableWall, InvisibleWall, Rockme, Live, Letter,
+        Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
+        DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
+        Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
+        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, Hole};
+    public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
+
+    private void construct(LevelBlock levelBlock, int zIndex, Types type) {
+        level = levelBlock.getLevel();
+        this.levelBlock = levelBlock;
+        game = level.getGame();
+        audio = game.getAudio();
+        // does not exist here playwindow = game.getPlayWindow();
+        x = levelBlock.getX() << PlayWindow.virtualBlockResolutionExponent;
+        y = levelBlock.getY() << PlayWindow.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
         this.type = type;
         // add to static list
@@ -53,11 +59,12 @@ public class LevelObject implements  Comparable<LevelObject> {
      * @param zIndex need to know zIndex to allow correct drawing order later
      */
     LevelObject(Level level, int x, int y, int zIndex, Types type) {
-        construct(level, x, y, zIndex, type);
+        LevelBlock lb = level.get(x,y);
+        construct(lb, zIndex, type);
     }
 
     public LevelObject(LevelBlock levelBlock, Graphics graphics, Types type) {
-        construct(levelBlock.getLevel(), levelBlock.getX(), levelBlock.getY(), graphics.getzIndex(), type);
+        construct(levelBlock, graphics.getzIndex(), type);
         setGfx(graphics);
     }
 
@@ -69,16 +76,16 @@ public class LevelObject implements  Comparable<LevelObject> {
         this.gfx = gfx;
     }
 
-    private void draw() {
+    private void draw(PlayWindow playwindow) {
         if(gfx != null) // castle parts can be null or invisible things
-            gfx.draw(x,y,animDelta);
+            gfx.draw(playwindow,x,y,animDelta);
     }
 
-    public static void drawAll() {
+    public static void drawAll(PlayWindow playwindow) {
         for (LevelObject lo : all) {
             if( lo.zIndex >= maxzIndex)
                 break; // can be stopped, as null is infinity and therefore only null in the end
-            lo.draw();
+            lo.draw(playwindow);
         }
     }
 
@@ -87,35 +94,35 @@ public class LevelObject implements  Comparable<LevelObject> {
         return  zIndex - lo.zIndex;
     }
 
-    public LevelBlock moveTo(int x, int y) {
+    public LevelBlock moveTo(int x, int y, LevelBlock headingTo ) {
         LevelBlock from = levelBlock;
         // check and eventually fix coordinates
-        // if(Root.getScrollX()) { allways allow
-            if (x < 0) x += Root.getLevelWidth() << Root.virtualBlockResolutionExponent;
-            if (x >= Root.getLevelWidth() << Root.virtualBlockResolutionExponent)
-                x -= Root.getLevelWidth() << Root.virtualBlockResolutionExponent;
+        // if(Game.getScrollX()) { always allow
+        if (x < 0) x += level.getWidth() << PlayWindow.virtualBlockResolutionExponent;
+        if (x >= level.getWidth() << PlayWindow.virtualBlockResolutionExponent)
+            x -= level.getWidth() << PlayWindow.virtualBlockResolutionExponent;
         //}
-        //if(Root.getScrollY()) {
-            if (y < 0) y += Root.getLevelHeight() << Root.virtualBlockResolutionExponent;
-            if (y >= Root.getLevelHeight() << Root.virtualBlockResolutionExponent)
-                y -= Root.getLevelHeight() << Root.virtualBlockResolutionExponent;
+        //if(Game.getScrollY()) {
+        if (y < 0) y += level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
+        if (y >= level.getHeight() << PlayWindow.virtualBlockResolutionExponent)
+            y -= level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
         //}
 
-        LevelBlock to = Root.getLevelBlockFromVPixel(x, y);
+//        LevelBlock to = game.getLevelBlockFromVPixel(x, y);
         // needs to be updated to check for collisions via associations
-        if( from != to ) {
+        if( from != headingTo ) {
             //if (from != null) { should not happen when properly intialized
                 from.removeMovable(this);
                 // check if rock and update rockme counters
                 if (type == LevelObject.Types.Rock) {
                     // Check, if we are on a rockme
-                    if (from.isRockme()) Root.level.increaseRockmes();
-                    if (to.isRockme()) Root.level.decreaseRockmes();
+                    if (from.isRockme()) level.increaseRockmes();
+                    if (headingTo.isRockme()) level.decreaseRockmes();
                 }
             //}
-            to.putMoveable(this);
-            levelBlock = to; // todo: might be not totally correct for destination
+            headingTo.putMoveable(this);
         }
+        levelBlock = headingTo; // todo: might be not totally correct for destination
         setXY(x,y);
         return levelBlock;
     }
@@ -129,7 +136,7 @@ public class LevelObject implements  Comparable<LevelObject> {
      * assign a matching LevelBlock based on th ecurrent coordinates
      */
     public void assignLevelBlock() {
-        levelBlock = Root.getLevelBlockFromVPixel(x, y);
+        levelBlock = game.getLevelBlockFromVPixel(x, y);
     }
 
     public boolean hasGfx() {
@@ -182,7 +189,7 @@ public class LevelObject implements  Comparable<LevelObject> {
             return false;
         }
         // it got bigger
-        Root.soundPlay("holegrow");
+        audio.soundPlay("holegrow");
         setHoleLevel(holeLevel);
         return true;
     }
@@ -213,15 +220,15 @@ public class LevelObject implements  Comparable<LevelObject> {
     void animationStartNow() {
         int len = gfx.getAnimationFramesLength();
 
-        animDelta = len - (int)(Root.getGameFrame() % (long)len);
+        animDelta = len - (int)(game.getGameFrame() % (long)len);
     }
 
     void animationStartRandom() {
-        animDelta = Root.random(gfx.getAnimationFramesLength());
+        animDelta = game.random(gfx.getAnimationFramesLength());
     }
 
     public boolean fullOnBlock() {
-        return (getVX() % Root.virtualBlockResolution  == 0) && (getVY() % Root.virtualBlockResolution == 0);
+        return (getVX() % PlayWindow.virtualBlockResolution  == 0) && (getVY() % PlayWindow.virtualBlockResolution == 0);
     }
 
     public boolean holeIsMax() {

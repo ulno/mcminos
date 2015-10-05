@@ -5,31 +5,34 @@ package com.mcminos.game;
  */
 public class RockMover extends Mover {
 
-   /* public RockMover(LevelObject rock, int speed) {
-        super(rock, speed, false, Entities.extras_rock);
-    }
-*/
-    public RockMover(LevelObject rock, int speed, int currentDirection) {
+    private final Audio audio;
+    private LevelBlock headingTo;
+
+    /* public RockMover(LevelObject rock, int speed) {
+            super(rock, speed, false, Entities.extras_rock);
+        }
+    */
+    public RockMover(LevelObject rock, int speed, int currentDirection, LevelBlock headingTo) {
         super(rock, speed, false, Entities.extras_rock);
         this.currentDirection = currentDirection;
+        this.headingTo = headingTo;
+        audio = rock.getLevelBlock().getLevel().getGame().getAudio();
     }
 
     @Override
     protected boolean checkCollisions() {
-        boolean isOnField = levelObject.fullOnBlock();
-
         // check if on hole -> break hole and remove rock
-        if (isOnField) {
+        if (levelObject.fullOnBlock()) {
             if (currentLevelBlock.hasHole()) {
                 currentLevelBlock.getHole().setHoleLevel(LevelObject.maxHoleLevel);
                 currentLevelBlock.removeMovable(levelObject);
                 currentLevelBlock.setRock(null); // remove rock
                 levelObject.dispose();
-                Root.soundPlay("rumble");
+                audio.soundPlay("rumble");
                 return true;
             } else {
-                for( LevelObject lo: currentLevelBlock.getCollectibles() ) {
-                    if( lo.getType() == LevelObject.Types.LandMineActive ) { // rock triggers active landmine
+                for (LevelObject lo : currentLevelBlock.getCollectibles()) {
+                    if (lo.getType() == LevelObject.Types.LandMineActive) { // rock triggers active landmine
                         currentLevelBlock.removeItem(lo);
                         lo.dispose();
                         new Explosion(currentLevelBlock, LevelObject.Types.LandMine);
@@ -44,8 +47,9 @@ public class RockMover extends Mover {
     }
 
     @Override
-    protected void chooseDirection() {
+    protected LevelBlock chooseDirection() {
         // direction is already set in constructor
+        return headingTo;
     }
 
     public boolean isMoving() {
@@ -53,8 +57,11 @@ public class RockMover extends Mover {
     }
 
 
-    public void triggerMove(int dir, int speed) {
+    public void triggerMove(int dir, int speed, LevelBlock headingTo) {
+        // TODO: check speed is applied correctly
         currentDirection = dir;
         this.speed = speed;
+        this.headingTo = headingTo;
     }
+
 }
