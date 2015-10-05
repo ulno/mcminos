@@ -6,25 +6,23 @@ package com.mcminos.game;
 public class RockMover extends Mover {
 
     private final Audio audio;
-    private LevelBlock destination;
+    private LevelBlock headingTo;
 
     /* public RockMover(LevelObject rock, int speed) {
             super(rock, speed, false, Entities.extras_rock);
         }
     */
-    public RockMover(LevelObject rock, int speed, int currentDirection, LevelBlock destination) {
+    public RockMover(LevelObject rock, int speed, int currentDirection, LevelBlock headingTo) {
         super(rock, speed, false, Entities.extras_rock);
         this.currentDirection = currentDirection;
-        this.destination = destination;
+        this.headingTo = headingTo;
         audio = rock.getLevelBlock().getLevel().getGame().getAudio();
     }
 
     @Override
     protected boolean checkCollisions() {
-        boolean isOnField = levelObject.fullOnBlock();
-
         // check if on hole -> break hole and remove rock
-        if (isOnField) {
+        if (levelObject.fullOnBlock()) {
             if (currentLevelBlock.hasHole()) {
                 currentLevelBlock.getHole().setHoleLevel(LevelObject.maxHoleLevel);
                 currentLevelBlock.removeMovable(levelObject);
@@ -51,7 +49,7 @@ public class RockMover extends Mover {
     @Override
     protected LevelBlock chooseDirection() {
         // direction is already set in constructor
-        return destination;
+        return headingTo;
     }
 
     public boolean isMoving() {
@@ -59,10 +57,11 @@ public class RockMover extends Mover {
     }
 
 
-    public void triggerMove(int dir, int speed) {
+    public void triggerMove(int dir, int speed, LevelBlock headingTo) {
         // TODO: check speed is applied correctly
         currentDirection = dir;
         this.speed = speed;
+        this.headingTo = headingTo;
     }
 
 }

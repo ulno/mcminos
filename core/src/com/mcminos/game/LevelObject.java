@@ -121,8 +121,8 @@ public class LevelObject implements  Comparable<LevelObject> {
                 }
             //}
             headingTo.putMoveable(this);
-            levelBlock = headingTo; // todo: might be not totally correct for destination
         }
+        levelBlock = headingTo; // todo: might be not totally correct for destination
         setXY(x,y);
         return levelBlock;
     }
