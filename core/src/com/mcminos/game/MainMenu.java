@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -30,26 +31,36 @@ public class MainMenu implements Screen {
     private final Texture bg;
     private final Image bgimage;
     private final SelectBox sb;
+    private final BitmapFont font;
+    private final SpriteBatch batch;
+    private final Main main;
 
-    public MainMenu() {
+    public MainMenu(final Main main, String levelPreselect) {
+        this.main = main;
+        batch = main.getBatch();
+        font = main.getFont();
+        skin = main.getSkin();
+
         bg = new Texture( Gdx.files.internal("images/loadscreen.png"));
         bgimage = new Image(bg);
         bgimage.setZIndex(0);
         bgimage.setScaling(Scaling.none);
-        Root.scaleBackground(bgimage);
+        Util.scaleBackground(bgimage);
 
-        skin = Root.defaultSkin;
-        stage = new Stage(new ScreenViewport(),Root.batch);
+        stage = new Stage(new ScreenViewport(), batch);
+
         // table for buttons
         table = new Table();
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
 
         TextButton startButton = new TextButton("Start",skin);
+        final MainMenu thisScreen = this;
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Root.setScreen(new Play((String) sb.getSelected()));
+                thisScreen.dispose();
+                main.setScreen(new Play(main, (String) sb.getSelected()));
             }
         });
 
@@ -82,8 +93,8 @@ public class MainMenu implements Screen {
             e.printStackTrace();
         }
         sb.setItems(names.toArray());
-        if( Root.currentLevelName != null)
-            sb.setSelected(Root.currentLevelName);
+        if( levelPreselect != null && levelPreselect != "" )
+            sb.setSelected(levelPreselect);
 
         table.add(sb)
                 .pad(32)
@@ -113,7 +124,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        Root.scaleBackground(bgimage);
+        Util.scaleBackground(bgimage);
         table.setBounds(0,0,width,height);
         stage.getViewport().update(width, height, true);
     }

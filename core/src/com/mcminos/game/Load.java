@@ -6,7 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Scaling;
@@ -21,11 +23,17 @@ public class Load implements Screen {
     private final Skin skin;
     private final Texture loadscreen;
     private final Image loadimage;
+    private final Main main;
+    private final SpriteBatch batch;
+    private final Audio audio;
     private AssetManager manager;
     private ProgressBar bar;
     private boolean loadingDone = false;
 
-    public Load() {
+    public Load(Main main) {
+        
+        this.main = main;
+        audio = main.getAudio();
 
         // initialize and load necessary elements, we need to show progress
         // TODO: also bg image?
@@ -37,19 +45,20 @@ public class Load implements Screen {
         loadimage = new Image(loadscreen);
         loadimage.setZIndex(0);
         loadimage.setScaling(Scaling.none);
-        Root.scaleBackground(loadimage);
+        Util.scaleBackground(loadimage);
 
         // Set up everything for the current screen
-        skin = Root.defaultSkin;
-        font = Root.defaultFont;
-        stage = new Stage(new ScreenViewport(),Root.batch);
+        skin = main.getSkin();
+        font = main.getFont();
+        batch = main.getBatch();
+        stage = new Stage(new ScreenViewport(), batch);
 
         // build stage
         stage.addActor(loadimage);
 
 
         //int percentLoaded = Math.round(manager.getProgress() * 100);
-        //font.draw(Root.batch, "Loading resources " + percentLoaded + "%", 20, (Gdx.graphics.getHeight() - 64) / 2);
+        //font.draw(Game.batch, "Loading resources " + percentLoaded + "%", 20, (Gdx.graphics.getHeight() - 64) / 2);
 
         /*ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), textureBar);
         barStyle.knobBefore = barStyle.knob;
@@ -76,7 +85,7 @@ public class Load implements Screen {
         //Gdx.gl.glClearColor(0, 0, 0, 1);
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        Root.scaleBackground(loadimage);
+        Util.scaleBackground(loadimage);
 
         bar.setPosition(w / 5, 0);
         bar.setSize(w*3/5,h/5);
@@ -93,11 +102,11 @@ public class Load implements Screen {
                 loadingDone = true;
                 Entities.finishLoad();
                 finishLoads();
-                Root root = Root.getInstance();
-                root.init();
+                //game.init();
                 // Then switch screen
-                MainMenu screen = new MainMenu();
-                root.setScreen(screen);
+                this.dispose();
+                MainMenu screen = new MainMenu(main,null);
+                main.setScreen(screen);
             }
         }
     }
@@ -106,21 +115,21 @@ public class Load implements Screen {
         // Graphics
         Entities.scheduleLoad(manager);
         // Sounds
-        for( String s:Root.soundNames) {
+        for( String s: Audio.soundNames) {
             manager.load("sounds/" + s + ".wav", Sound.class);
         }
         // UIs
-        // manager.load(UISKIN_DEFAULT, Skin.class); needs to be pre-loaded
+        // manager.load(DEFAULT_UISKIN, Skin.class); needs to be pre-loaded
     }
 
     public void finishLoads() {
         // Sounds
-        for( String s:Root.soundNames ) {
+        for( String s: Audio.soundNames ) {
             Sound sound = manager.get("sounds/" + s + ".wav");
-            Root.soundList.put(s, sound);
+            audio.addSound(s, sound);
         }
         // UIs
-        // Root.defaultSkin =  manager.get(UISKIN_DEFAULT); needs to be pre-laoded
+        // Game.skin =  manager.get(DEFAULT_UISKIN); needs to be pre-laoded
     }
 
     @Override
@@ -145,7 +154,7 @@ public class Load implements Screen {
 
     @Override
     public void dispose() {
-        manager.dispose();
+        //manager.dispose(); disables the sounds
         loadscreen.dispose();
     }
 }

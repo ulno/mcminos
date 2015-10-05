@@ -49,12 +49,13 @@ public class Level {
     public int medicinesMin = 0, medicinesMax = 999;
     public int umbrellasMin = 0, umbrellasMax = 999;
     private ArrayList<LevelBlock> warpHoleBlocks = new ArrayList<>();
-    private Object rockmes;
     private ArrayList<LevelObject> castleList = new ArrayList<>();
+    private Game game;
 
 
-    Level ( String filename ) {
-        load( filename);
+    Level ( Game game, String filename ) {
+        this.game = game;
+        load( filename );
     }
 
     private void load(String filename) {
@@ -100,28 +101,28 @@ public class Level {
                             case "MCSPEED": mcminosSpeed = Integer.parseInt(strList[1]); break;
                             case "GHOST1": ghostMax[0] = Integer.parseInt(strList[1]); break;
                             case "GRTIME1": ghostTime[0] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED1": ghostSpeed[0] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
+                            case "GHSPEED1": ghostSpeed[0] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
                             case "AGIL1": ghostAgility[0] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX1": ghostPillMax[0] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ1": ghostPillFreq[0] = Integer.parseInt(strList[1]); break;
                             case "TRANSWALL1": ghostTranswall[0] = Integer.parseInt(strList[1]); break;
                             case "GHOST2": ghostMax[1] = Integer.parseInt(strList[1]); break;
                             case "GRTIME2": ghostTime[1] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED2": ghostSpeed[1] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
+                            case "GHSPEED2": ghostSpeed[1] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
                             case "AGIL2": ghostAgility[1] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX2": ghostPillMax[1] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ2": ghostPillFreq[1] = Integer.parseInt(strList[1]); break;
                             case "TRANSWALL2": ghostTranswall[1] = Integer.parseInt(strList[1]); break;
                             case "GHOST3": ghostMax[2] = Integer.parseInt(strList[1]); break;
                             case "GRTIME3": ghostTime[2] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED3": ghostSpeed[2] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
+                            case "GHSPEED3": ghostSpeed[2] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
                             case "AGIL3": ghostAgility[2] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX3": ghostPillMax[2] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ3": ghostPillFreq[2] = Integer.parseInt(strList[1]); break;
                             case "TRANSWALL3": ghostTranswall[2] = Integer.parseInt(strList[1]); break;
                             case "GHOST4": ghostMax[3] = Integer.parseInt(strList[1]); break;
                             case "GRTIME4": ghostTime[3] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED4": ghostSpeed[3] = Integer.parseInt(strList[1]) * Root.baseSpeed; break;
+                            case "GHSPEED4": ghostSpeed[3] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
                             case "AGIL4": ghostAgility[3] = Integer.parseInt(strList[1]); break;
                             case "PILLMAX4": ghostPillMax[3] = Integer.parseInt(strList[1]); break;
                             case "PILLFREQ4": ghostPillFreq[3] = Integer.parseInt(strList[1]); break;
@@ -144,10 +145,6 @@ public class Level {
                         for (int x = 0; x < width; x++)
                             for (int y = 0; y < height; y++)
                                 field[x][y] = new LevelBlock(this, x, y);
-                        // recreate our protagonist as lots of other level things (i.e. ghosts) depend on this
-                        LevelObject mcm = new LevelObject(this,0,0,Entities.mcminos_default_front.getzIndex(),LevelObject.Types.McMinos);
-                        mcm.setGfx(Entities.mcminos_default_front);
-                        Root.mcminos = mcm;
                     }
                     if( levelline < height )
                     {
@@ -242,8 +239,8 @@ public class Level {
                 }
             }
         // update some related variables
-        vPixelsWidth = width << Root.virtualBlockResolutionExponent;
-        vPixelsHeight = height << Root.virtualBlockResolutionExponent;
+        vPixelsWidth = width << PlayWindow.virtualBlockResolutionExponent;
+        vPixelsHeight = height << PlayWindow.virtualBlockResolutionExponent;
     }
 
     /**
@@ -589,6 +586,10 @@ public class Level {
     }
 
     public LevelBlock getRandomCastleBlock() {
-        return castleList.get(Root.random(castleList.size())).getLevelBlock();
+        return castleList.get(game.random(castleList.size())).getLevelBlock();
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

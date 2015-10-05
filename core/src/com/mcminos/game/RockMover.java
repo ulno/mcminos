@@ -5,13 +5,18 @@ package com.mcminos.game;
  */
 public class RockMover extends Mover {
 
-   /* public RockMover(LevelObject rock, int speed) {
-        super(rock, speed, false, Entities.extras_rock);
-    }
-*/
-    public RockMover(LevelObject rock, int speed, int currentDirection) {
+    private final Audio audio;
+    private LevelBlock destination;
+
+    /* public RockMover(LevelObject rock, int speed) {
+            super(rock, speed, false, Entities.extras_rock);
+        }
+    */
+    public RockMover(LevelObject rock, int speed, int currentDirection, LevelBlock destination) {
         super(rock, speed, false, Entities.extras_rock);
         this.currentDirection = currentDirection;
+        this.destination = destination;
+        audio = rock.getLevelBlock().getLevel().getGame().getAudio();
     }
 
     @Override
@@ -25,11 +30,11 @@ public class RockMover extends Mover {
                 currentLevelBlock.removeMovable(levelObject);
                 currentLevelBlock.setRock(null); // remove rock
                 levelObject.dispose();
-                Root.soundPlay("rumble");
+                audio.soundPlay("rumble");
                 return true;
             } else {
-                for( LevelObject lo: currentLevelBlock.getCollectibles() ) {
-                    if( lo.getType() == LevelObject.Types.LandMineActive ) { // rock triggers active landmine
+                for (LevelObject lo : currentLevelBlock.getCollectibles()) {
+                    if (lo.getType() == LevelObject.Types.LandMineActive) { // rock triggers active landmine
                         currentLevelBlock.removeItem(lo);
                         lo.dispose();
                         new Explosion(currentLevelBlock, LevelObject.Types.LandMine);
@@ -44,8 +49,9 @@ public class RockMover extends Mover {
     }
 
     @Override
-    protected void chooseDirection() {
+    protected LevelBlock chooseDirection() {
         // direction is already set in constructor
+        return destination;
     }
 
     public boolean isMoving() {
@@ -54,7 +60,9 @@ public class RockMover extends Mover {
 
 
     public void triggerMove(int dir, int speed) {
+        // TODO: check speed is applied correctly
         currentDirection = dir;
         this.speed = speed;
     }
+
 }
