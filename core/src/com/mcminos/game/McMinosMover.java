@@ -164,7 +164,6 @@ public class McMinosMover extends Mover {
                 if(! mcminos.umbrellaActive()) { // no umbrellapower currently
                     // check if last block had a hole -> make it bigger
                     if (lastBlock.hasHole()) {
-                        // TODO check umbrella
                         // try to increase
                         lastBlock.getHole().increaseHole();
                     }
@@ -319,17 +318,24 @@ public class McMinosMover extends Mover {
                         audio.soundPlay("knurps");
                         mcminos.increaseScore(30);
                     } else { // all others can be killed when powered
-                        // TODO: kill McMinos
-                        audio.soundPlay("ghosts");
+                        mcminos.kill("ghosts",Entities.mcminos_dying);
                     }
 
                 }
             }
 
         }
+        // check winning condition
+        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
+            mcminos.win();
+        }
         return false; // don't remove mcminos
     }
 
+
+    public void setLevelBlock(LevelBlock levelBlock) {
+        this.currentLevelBlock = levelBlock;
+    }
 }
 
 /*

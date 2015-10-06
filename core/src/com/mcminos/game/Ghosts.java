@@ -97,7 +97,7 @@ public class Ghosts {
         level = game.getLevel();
     }
 
-    public void killall() {
+    public void removeAll(boolean score) {
         ArrayList<Mover> movers = game.getMovers();
         for( int i=movers.size()-1; i>=0; i--) {
             Mover m = movers.get(i);
@@ -106,14 +106,21 @@ public class Ghosts {
             if( ghostnr != -1) {
                 if (ghostnr == 3) { // jumping pill
                     level.decreasePills();
-                    audio.soundPlay("knurps");
                 }
                 decreaseGhosts(ghostnr);
                 movers.remove(i);
                 lo.getLevelBlock().removeMovable(lo);
                 lo.dispose();
-                mcminos.increaseScore(30);
+                if(score) mcminos.increaseScore(30);
             }
         }
+    }
+
+    public void killall() {
+        removeAll(true);
+    }
+
+    public void dispose() {
+        removeAll(false);
     }
 }

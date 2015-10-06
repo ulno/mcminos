@@ -150,6 +150,9 @@ public class Explosion {
                     lo.dispose();
                     mcminos.increaseScore(30);
                 }
+                if(lo.getType() == LevelObject.Types.McMinos) {
+                    mcminos.kill("",Entities.mcminos_dying);
+                }
             }
 
             HashSet<LevelObject> collectibles = lb.getCollectibles(); // cascade explosions

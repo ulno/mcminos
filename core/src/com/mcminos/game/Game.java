@@ -24,6 +24,7 @@ public class Game {
 
     private final Audio audio;
     private final SpriteBatch batch;
+    private final Play playScreen;
     private long gameFrame = 0; // The game time - there is a getter for this
     private long gameTime = 0;
     private Main main;
@@ -43,8 +44,9 @@ public class Game {
         return playwindow;
     }
 
-    public Game(Main main) {
+    public Game(Main main, Play playScreen) {
         this.main = main;
+        this.playScreen = playScreen;
         movers = new ArrayList<>();
         audio = main.getAudio();
         mcminos = new McMinos(this);
@@ -234,5 +236,13 @@ public class Game {
 
     public ArrayList<Mover> getMovers() {
         return movers;
+    }
+
+    public void clearMovers() {
+        movers.clear();
+    }
+
+    public Play getPlayScreen() {
+        return playScreen;
     }
 }

@@ -49,7 +49,8 @@ public class Audio {
     public HashMap<String,com.badlogic.gdx.audio.Sound> soundList = new HashMap<>();
 
     public void soundPlay(String s) {
-        soundList.get(s).play(1.0f);
+        if(s != null && s != "")
+            soundList.get(s).play(1.0f);
     }
 
     public void addSound(String s, Sound sound) {

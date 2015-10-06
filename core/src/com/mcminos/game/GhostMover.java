@@ -10,6 +10,7 @@ public class GhostMover extends Mover {
     private final Audio audio;
     private final Level level;
     private McMinos mcminos;
+    private LevelBlock rememberedBlock;
 
     public GhostMover(Game game, LevelObject ghost, int speed, Graphics gfx) {
         super(ghost, speed, false, gfx);
@@ -18,6 +19,7 @@ public class GhostMover extends Mover {
         ghosts = game.getGhosts();
         mcminos = game.getMcMinos();
         level = game.getLevel();
+        this.rememberedBlock = currentLevelBlock;
     }
 
     @Override
@@ -103,6 +105,12 @@ public class GhostMover extends Mover {
     @Override
     protected boolean checkCollisions() {
         if( levelObject.fullOnBlock() ) {
+            if (currentLevelBlock != rememberedBlock) {
+                if (rememberedBlock.hasOneWay()) { // let ghosts turn the oneways
+                    rememberedBlock.turnOneWay();
+                }
+            }
+            rememberedBlock = currentLevelBlock;
             // check the things lying here
             LevelBlock currentBlock = currentLevelBlock;
             // TODO: if this is the second ghost, drop pills
@@ -113,6 +121,9 @@ public class GhostMover extends Mover {
                         b.dispose();
                         new Explosion(currentBlock, LevelObject.Types.LandMine);
                         break;
+                    case OneWay:
+                        break;
+
                 }
             }
             // check if here is max hole, because ghosts will fall in and die (even if they don't increase hole-sizes)
@@ -123,14 +134,11 @@ public class GhostMover extends Mover {
                     audio.soundPlay("knurps");
                 }
                 ghosts.decreaseGhosts(ghostnr);
-                // Todo: think about sound to play for mormal ghost
+                // Todo: think about sound to play for normal ghost
                 return true; // remove me
             }
         }
         return false;
     }
-
-
-
 
 }
