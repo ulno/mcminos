@@ -130,3 +130,9 @@ libgdx-*.zip.MD5
 
 # Entieties.java is generated, so ignore
 /core/src/com/mcminos/game/Entities.java
+
+# Hidden images from generation of test animated gifs
+.*png
+
+# ancient gif images as base for new sketches
+*.gif
