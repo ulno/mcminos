@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Ghosts {
     private final Game game;
     private final McMinos mcminos;
+    private final Audio audio;
     private Level level;
     private int ghostSpeed[] = {Game.baseSpeed,Game.baseSpeed,Game.baseSpeed,Game.baseSpeed};
     private int ghostsActive[] = {0,0,0,0};
@@ -25,6 +26,7 @@ public class Ghosts {
     public Ghosts(Game game) {
         this.game = game;
         mcminos = game.getMcMinos();
+        audio = game.getAudio();
         // usually still null here needs to be read in create level = game.getLevel();
         // call init to read it
     }
@@ -93,5 +95,25 @@ public class Ghosts {
 
     public void init() {
         level = game.getLevel();
+    }
+
+    public void killall() {
+        ArrayList<Mover> movers = game.getMovers();
+        for( int i=movers.size()-1; i>=0; i--) {
+            Mover m = movers.get(i);
+            LevelObject lo = m.getLevelObject();
+            int ghostnr = lo.getGhostNr();
+            if( ghostnr != -1) {
+                if (ghostnr == 3) { // jumping pill
+                    level.decreasePills();
+                    audio.soundPlay("knurps");
+                }
+                decreaseGhosts(ghostnr);
+                movers.remove(i);
+                lo.getLevelBlock().removeMovable(lo);
+                lo.dispose();
+                mcminos.increaseScore(30);
+            }
+        }
     }
 }

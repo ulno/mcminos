@@ -16,7 +16,7 @@ public class Level {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
     private int pillsNumber = 0;
     private int rockmeNumber = 0;
-    private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
+    private LevelBlock[][] field; // on each level field are usually several objects, first is windowVPixelXPos, second windowVPixelYPos
     private String author = "Main";
     private int number = 199;
     private int showNumber = 199;
@@ -362,6 +362,9 @@ public class Level {
                 case 'W':
                     lb.makeWarpHole();
                     break;
+                case 'a':
+                    lb.makeKillAllPill();
+                    break;
                 case 'A':
                     lb.makeKillAllField();
                     break;
@@ -394,19 +397,38 @@ public class Level {
 //                multipliers: MCSPEED *= 2; GHSPEEDs *= 1
 //                (does it's job for: 10 s)
                     break;
-                /*
-;   ? = surprise field (positive or negative)
+                case 'x':
+                    lb.makeLadder();
+                    break;
+                case '1':
+                    lb.makeBonus1();
+                    break;
+                case '2':
+                    lb.makeBonus2();
+                    break;
+                case '3':
+                    lb.makeBonus3();
+                    break;
+                case '?':
+                    lb.makeSurprise();
+                    break;
+                case 'w':
+                    lb.makeWhisky();
+                    break;
+                case 'M':
+                    lb.makeMirror();
+                    break;
+                case 'p':
+                    lb.makePoison();
+                    break;
+                case 'm':
+                    lb.makeMedicine();
+                    break;
 
-;   USEFUL THINGS:
-;   x = ladder
-;   a = kill all pill
+
+                /*
 
 ;   $ = clock, Level time (if level time is limited:) + 60 sec.
-
-;   Boni:
-;   1 = Bonus 100 Pt
-;   2 = Bonus 250 Pt
-;   3 = Bonus 500 Pt
 
 ;   BAD THINGS:
 ;   w = Whisky

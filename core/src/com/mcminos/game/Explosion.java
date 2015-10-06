@@ -148,6 +148,7 @@ public class Explosion {
                     game.removeMover(lo.getMover());
                     list.remove(i);
                     lo.dispose();
+                    mcminos.increaseScore(30);
                 }
             }
 

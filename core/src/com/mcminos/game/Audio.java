@@ -42,6 +42,7 @@ public class Audio {
             "tick",
             "tools",
             "trommeln",
+            "treasure",
             "wind",
             "zisch"};
 
@@ -81,12 +82,6 @@ Sound fr nchsten Level
         void snd_drunken( void )
         {
         play_sound( ETHANOLE, 2, 200 );
-        }
-
-        Sound fr killall
-        void snd_killall( void )
-        {
-        play_sound( KILLALL, 2, 100 );
         }
 
         Sound fr letter

@@ -24,6 +24,7 @@ public class LevelBlock {
     private LevelObject hole = null;
     private LevelObject oneWay = null;
     private int oneWayType = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
+
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};
     private final oneWayDir oneWayDirMap[] = {oneWayDir.FREE, oneWayDir.UP, oneWayDir.RIGHT, oneWayDir.DOWN, oneWayDir.LEFT};
     private ArrayList<LevelObject> movables=new ArrayList<>(); // ghosts, mcminos, explosions, rocks hovering here.
@@ -388,29 +389,92 @@ public class LevelBlock {
 
 
     public void makeSpeedUpField() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.holes_0.getzIndex(),LevelObject.Types.SpeedUpField);
+        LevelObject lo = new LevelObject(level,x,y,Entities.fields_field_speed_up.getzIndex(),LevelObject.Types.SpeedUpField);
         lo.setGfx(Entities.fields_field_speed_up);
         collectibles.add(lo);
     }
 
     public void makeSpeedDownField() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.holes_0.getzIndex(),LevelObject.Types.SpeedDownField);
+        LevelObject lo = new LevelObject(level,x,y,Entities.fields_field_speed_down.getzIndex(),LevelObject.Types.SpeedDownField);
         lo.setGfx(Entities.fields_field_speed_down);
         collectibles.add(lo);
     }
 
     public void makeWarpHole() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.holes_0.getzIndex(),LevelObject.Types.WarpHole);
+        LevelObject lo = new LevelObject(level,x,y,Entities.fields_field_warp_hole.getzIndex(),LevelObject.Types.WarpHole);
         lo.setGfx(Entities.fields_field_warp_hole);
         level.addWarpHole(this);
         collectibles.add(lo);
     }
 
-    public void makeKillAllField() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.holes_0.getzIndex(),LevelObject.Types.KillAllField);
-        lo.setGfx(Entities.fields_field_skull);
+    public void makeKillAllPill() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_kill_all_ghosts.getzIndex(),LevelObject.Types.KillAllPill);
+        lo.setGfx(Entities.extras_kill_all_ghosts);
         collectibles.add(lo);
     }
+
+    public void makeKillAllField() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.fields_field_kill_all_ghosts.getzIndex(),LevelObject.Types.KillAllField);
+        lo.setGfx(Entities.fields_field_kill_all_ghosts);
+        collectibles.add(lo);
+    }
+
+    public void makeLadder() {
+        // TODO: add images - missing
+        //LevelObject lo = new LevelObject(level,x,y,Entities..getzIndex(),LevelObject.Types.Ladder);
+        //lo.setGfx(Entities.fields_field_kill_all_ghosts);
+        //collectibles.add(lo);
+    }
+
+    public void makeBonus1() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus_piggy_bank.getzIndex(),LevelObject.Types.Bonus1);
+        lo.setGfx(Entities.extras_bonus_piggy_bank);
+        collectibles.add(lo);
+    }
+
+    public void makeBonus2() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus_piggy_bank.getzIndex(),LevelObject.Types.Bonus2);
+        lo.setGfx(Entities.extras_bonus_piggy_bank);
+        collectibles.add(lo);
+    }
+
+    public void makeBonus3() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus_piggy_bank.getzIndex(),LevelObject.Types.Bonus3);
+        lo.setGfx(Entities.extras_bonus_piggy_bank);
+        collectibles.add(lo);
+    }
+
+    public void makeSurprise() {
+        // TODO: add images - missing
+        /*LevelObject lo = new LevelObject(level,x,y,Entities..getzIndex(),LevelObject.Types.Bonus3);
+        lo.setGfx(Entities.extras_bonus_piggy_bank);
+        collectibles.add(lo);*/
+    }
+
+    public void makeWhisky() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_whisky.getzIndex(),LevelObject.Types.Whisky);
+        lo.setGfx(Entities.extras_whisky);
+        collectibles.add(lo);
+    }
+
+    public void makeMirror() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_mirror.getzIndex(),LevelObject.Types.Mirror);
+        lo.setGfx(Entities.extras_mirror);
+        collectibles.add(lo);
+    }
+
+    public void makePoison() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_poison.getzIndex(),LevelObject.Types.Poison);
+        lo.setGfx(Entities.extras_poison);
+        collectibles.add(lo);
+    }
+
+    public void makeMedicine() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_medicine.getzIndex(),LevelObject.Types.Medicine);
+        lo.setGfx(Entities.extras_medicine);
+        collectibles.add(lo);
+    }
+
 
     /**
      * Make a one-way street. 0: up, 1: right, 2: down, 3: left, +4 rotatable

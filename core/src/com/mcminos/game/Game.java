@@ -226,6 +226,12 @@ public class Game {
         return audio;
     }
 
+    public void stopAllMovers() {
+        for(Mover m: movers) {
+            m.setSpeed(0);
+        }
+    }
+
     public ArrayList<Mover> getMovers() {
         return movers;
     }
