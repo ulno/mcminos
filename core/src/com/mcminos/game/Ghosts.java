@@ -1,11 +1,14 @@
 package com.mcminos.game;
 
+import java.util.ArrayList;
+
 /**
  * Created by ulno on 05.10.15.
  */
 public class Ghosts {
     private final Game game;
     private final McMinos mcminos;
+    private final Audio audio;
     private Level level;
     private int ghostSpeed[] = {Game.baseSpeed,Game.baseSpeed,Game.baseSpeed,Game.baseSpeed};
     private int ghostsActive[] = {0,0,0,0};
@@ -23,6 +26,7 @@ public class Ghosts {
     public Ghosts(Game game) {
         this.game = game;
         mcminos = game.getMcMinos();
+        audio = game.getAudio();
         // usually still null here needs to be read in create level = game.getLevel();
         // call init to read it
     }
@@ -70,15 +74,19 @@ public class Ghosts {
     }
 
 
-    public void setGhostSpeedFactor(int gosNewFactor) {
-        for(int i=0; i<4; i++)
+    public void setSpeedFactor(int gosNewFactor) {
+        /*for(int i=0; i<4; i++)
         {
             ghostSpeed[i] /= ghostSpeedFactor;
             ghostSpeed[i] *= gosNewFactor;
-            // TODO: set ghost speed in ghostmover
         }
-        ghostSpeedFactor = gosNewFactor;
-
+        ghostSpeedFactor = gosNewFactor;*/
+        ArrayList<Mover> movers = game.getMovers();
+        for(Mover m: movers) {
+            if(m.getLevelObject().getGhostNr() != -1) {
+                ((GhostMover)m).setSpeedFactor(gosNewFactor);
+            }
+        }
     }
 
     public boolean evalAgility(int ghostNr) {
@@ -87,5 +95,32 @@ public class Ghosts {
 
     public void init() {
         level = game.getLevel();
+    }
+
+    public void removeAll(boolean score) {
+        ArrayList<Mover> movers = game.getMovers();
+        for( int i=movers.size()-1; i>=0; i--) {
+            Mover m = movers.get(i);
+            LevelObject lo = m.getLevelObject();
+            int ghostnr = lo.getGhostNr();
+            if( ghostnr != -1) {
+                if (ghostnr == 3) { // jumping pill
+                    level.decreasePills();
+                }
+                decreaseGhosts(ghostnr);
+                movers.remove(i);
+                lo.getLevelBlock().removeMovable(lo);
+                lo.dispose();
+                if(score) mcminos.increaseScore(30);
+            }
+        }
+    }
+
+    public void killall() {
+        removeAll(true);
+    }
+
+    public void dispose() {
+        removeAll(false);
     }
 }

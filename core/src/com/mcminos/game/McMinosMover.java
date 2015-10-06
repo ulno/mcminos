@@ -13,7 +13,7 @@ public class McMinosMover extends Mover {
     private final Audio audio;
     private final Level level;
     private final Ghosts ghosts;
-    private int mcminosSpeedFactor = 1;
+    private int speedFactor = 1;
 
     public McMinosMover(Game game) {
         super(game.getMcMinos().getLevelObject(), Game.baseSpeed, true);
@@ -124,7 +124,7 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if( m == null ) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, speed, currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(rock, getSpeed(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
@@ -133,7 +133,7 @@ public class McMinosMover extends Mover {
                     audio.soundPlay("moverock");
                 } else if(  ! m.isMoving() ) {
                     // let it move again
-                    m.triggerMove(currentDirection, speed, nextBlock2);
+                    m.triggerMove(currentDirection, getSpeed(), nextBlock2);
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
@@ -164,7 +164,6 @@ public class McMinosMover extends Mover {
                 if(! mcminos.umbrellaActive()) { // no umbrellapower currently
                     // check if last block had a hole -> make it bigger
                     if (lastBlock.hasHole()) {
-                        // TODO check umbrella
                         // try to increase
                         lastBlock.getHole().increaseHole();
                     }
@@ -258,6 +257,34 @@ public class McMinosMover extends Mover {
                             setSpeedFactor(1);
                             audio.soundPlay("slowdown");
                             break;
+                        case KillAllField:
+                            ghosts.killall();
+                            audio.soundPlay("killall");
+                            break;
+                        case KillAllPill:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            ghosts.killall();
+                            audio.soundPlay("killall");
+                            break;
+                        case Bonus1:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            mcminos.increaseScore(100);
+                            audio.soundPlay("treasure");
+                            break;
+                        case Bonus2:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            mcminos.increaseScore(200);
+                            audio.soundPlay("treasure");
+                            break;
+                        case Bonus3:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            mcminos.increaseScore(300);
+                            audio.soundPlay("treasure");
+                            break;
                     }
                 }
             }
@@ -279,7 +306,7 @@ public class McMinosMover extends Mover {
                         ghosts.decreaseGhosts(ghostnr);
                         lo.dispose();
                         audio.soundPlay("gotyou");
-                        // TODO: do score
+                        mcminos.increaseScore(30);
                     }
                 } else {
                     if(ghostnr == 3) { // jumping pill, can be eaten when not powered
@@ -289,26 +316,26 @@ public class McMinosMover extends Mover {
                         ghosts.decreaseGhosts(ghostnr);
                         lo.dispose();
                         audio.soundPlay("knurps");
+                        mcminos.increaseScore(30);
                     } else { // all others can be killed when powered
-                        // TODO: kill McMinos
-                        audio.soundPlay("ghosts");
+                        mcminos.kill("ghosts",Entities.mcminos_dying);
                     }
 
                 }
             }
 
         }
+        // check winning condition
+        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
+            mcminos.win();
+        }
         return false; // don't remove mcminos
     }
 
 
-    public void setSpeedFactor(int mcmNewFactor) {
-        speed /= mcminosSpeedFactor;
-        speed *= mcmNewFactor;
-        mcminosSpeedFactor = mcmNewFactor;
-        setSpeed(speed);
+    public void setLevelBlock(LevelBlock levelBlock) {
+        this.currentLevelBlock = levelBlock;
     }
-
 }
 
 /*

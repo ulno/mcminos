@@ -24,6 +24,7 @@ public class Game {
 
     private final Audio audio;
     private final SpriteBatch batch;
+    private final Play playScreen;
     private long gameFrame = 0; // The game time - there is a getter for this
     private long gameTime = 0;
     private Main main;
@@ -43,8 +44,9 @@ public class Game {
         return playwindow;
     }
 
-    public Game(Main main) {
+    public Game(Main main, Play playScreen) {
         this.main = main;
+        this.playScreen = playScreen;
         movers = new ArrayList<>();
         audio = main.getAudio();
         mcminos = new McMinos(this);
@@ -174,7 +176,7 @@ public class Game {
 
     public void setDestination(int x, int y) {
         playwindow.destination.setGfx(Entities.destination);
-        playwindow.destination.moveTo(x, y, getLevelBlockFromVPixelRounded(x,y));
+        playwindow.destination.moveTo(x, y, getLevelBlockFromVPixelRounded(x, y));
         playwindow.destinationSet = true;
     }
 
@@ -224,5 +226,23 @@ public class Game {
 
     public Audio getAudio() {
         return audio;
+    }
+
+    public void stopAllMovers() {
+        for(Mover m: movers) {
+            m.setSpeed(0);
+        }
+    }
+
+    public ArrayList<Mover> getMovers() {
+        return movers;
+    }
+
+    public void clearMovers() {
+        movers.clear();
+    }
+
+    public Play getPlayScreen() {
+        return playScreen;
     }
 }

@@ -59,10 +59,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
         font = main.getFont();
         skin = main.getSkin();
         audio = main.getAudio();
-        game = new Game(main);
+        game = new Game(main,this);
 
         game.currentLevelName = levelName;
-        level = game.loadLevel("levels/" + levelName + ".asx");
+        level = game.loadLevel(levelName);
         mcminos = game.getMcMinos();
         playwindow = game.getPlayWindow();
 
@@ -295,8 +295,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 toggleToolbox();
-                thisScreen.dispose();
-                game.setScreen(new MainMenu(main,levelName));
+                backToMenu();
             }
         });
         toolboxTable.add(leaveButton).pad(4).prefSize(128, 64);
@@ -336,6 +335,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
         GestureDetector gd = new GestureDetector(this);
         InputMultiplexer im = new InputMultiplexer(menu,gd,this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
+    }
+
+    public void backToMenu() {
+        this.dispose();
+        game.setScreen(new MainMenu(main,level.getLevelName()));
     }
 
     private void toggleDoor(LevelBlock lb) {
@@ -408,10 +412,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game.releaseLock(); // TODO: think about moving this to the end of draw
 
         updateToolbox();
-        font.draw(batch, String.format("S%06d P%03d U%03d",
+        font.draw(batch, String.format("S%06d P%03d U%03d L%02d",
                 mcminos.getScore(),
                 mcminos.getPowerDuration() >> game.timeResolutionExponent,
-                mcminos.getUmbrellaDuration() >> game.timeResolutionExponent), 20, Gdx.graphics.getHeight() - 20);
+                mcminos.getUmbrellaDuration() >> game.timeResolutionExponent,
+                mcminos.getLives()),
+                20, Gdx.graphics.getHeight() - 20);
         // add stage and menu
         batch.end(); // must end before menu
 

@@ -19,6 +19,9 @@ public class McMinos {
     private int score=0; // current score
     private final Audio audio;
     private LevelObject levelObject;
+    private boolean killed = false;
+    private boolean winning = false;
+
 
     public McMinos(Game game) {
         this.game = game;
@@ -76,7 +79,7 @@ public class McMinos {
     void setPowerPillValues(int mcmNewFactor, int gosNewFactor, int duration)
     {
         mover.setSpeedFactor(mcmNewFactor);
-        game.getGhosts().setGhostSpeedFactor(gosNewFactor);
+        game.getGhosts().setSpeedFactor(gosNewFactor);
         if(duration > 0) // something was actually consumed
         {
             powerDuration += duration << game.timeResolutionExponent;
@@ -253,5 +256,98 @@ public class McMinos {
     public void setMover(McMinosMover mover) {
         this.mover = mover;
         levelObject.setMover(mover);
+    }
+
+    public void teleportToBlock( LevelBlock block ) {
+        //setLevelBlock( block );
+        levelObject.moveTo(block.getX() << PlayWindow.virtualBlockResolutionExponent,
+                block.getY() << PlayWindow.virtualBlockResolutionExponent, block);
+        mover.setLevelBlock(block);
+    }
+
+    /**
+     * remove all association to this and the corresponding level-object
+     */
+    public void dispose() {
+        levelObject.dispose();
+        // rest should be handled by gc
+    }
+
+    public void decreaseLives() {
+        lives --;
+    }
+
+    public void kill(String sound, Graphics gfx) {
+        // don't multikill
+        if( ! isKilled() ) {
+            audio.soundPlay(sound);
+            game.stopAllMovers();
+            stop();
+            killed = true;
+            // show kill-animation
+            mover.setGfx(null); // hide
+            final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
+            animation.animationStartNow();
+
+            // schedule level-end and grave-stone setting after animation
+            game.schedule(new FrameTimer.Task() {
+                @Override
+                public void run() {
+                    animation.dispose();
+                    decreaseLives();
+                    if(getLives() > 0) {
+                        level.killReset();
+                        killed = false;
+                        resume();
+                    } else {
+                        game.getPlayScreen().backToMenu();
+                        // TODO: check why sometimes non-dangerous ghosts re-appear
+                    }
+                }
+            }, gfx.getAnimationFramesLength());
+        }
+    }
+
+    /**
+     * Stop all movement
+     */
+    private void stop() {
+        mover.setSpeed(0);
+    }
+
+    private void resume() {
+        mover.setSpeed(Game.baseSpeed);
+    }
+
+    public boolean isKilled() {
+        return killed;
+    }
+
+    public void win() {
+        if( ! isWinning() ) {
+            audio.soundPlay("applaus");
+            game.stopAllMovers();
+            stop();
+            winning = true;
+            // show kill-animation
+            mover.setGfx(null); // hide
+            // TODO: winning animation
+            Graphics gfx = Entities.mcminos_doped_front;
+            final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
+            animation.animationStartNow();
+
+            // schedule level-end and grave-stone setting after animation
+            game.schedule(new FrameTimer.Task() {
+                @Override
+                public void run() {
+                    animation.dispose();
+                    game.getPlayScreen().backToMenu();
+                }
+            }, gfx.getAnimationFramesLength());
+        }
+    }
+
+    public boolean isWinning() {
+        return winning;
     }
 }

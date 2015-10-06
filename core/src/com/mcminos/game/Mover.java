@@ -9,14 +9,17 @@ public abstract class Mover {
     private Graphics gfxStill = null;
     private Graphics gfxDown = null;
     private Graphics gfxLeft = null;
-    protected int speed;
+    private int speed = 1;
+    private int currentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
+    private int newSpeed = 1; // only applied when on field
+    private int newCurrentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
+    private int speedFactor = 1;
 
     public final int STOP=0, UP=1, RIGHT=2, DOWN=4, LEFT=8, ALL=15;
     protected int currentDirection = STOP;
     //private int nextDirections = STOP; // This is actually a bit field
     protected LevelObject levelObject; // corresponding LevelObject
     protected LevelBlock currentLevelBlock; // current associated LevelBlock
-    private int currentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
     protected boolean canMoveRocks = false; // This moveable can move rocks (Main for example)
     protected boolean canPassWalls = false; // Can this move through walls?
     protected LevelBlock lastBlock = null;
@@ -27,14 +30,20 @@ public abstract class Mover {
      * @param blocksPerSecond move how many blocks per second?
      */
     public void setSpeed(int blocksPerSecond) {
-        this.currentPixelSpeed = blocksPerSecond * PlayWindow.virtualBlockResolution / Game.timeResolution;
-        this.speed = blocksPerSecond;
+        this.newCurrentPixelSpeed = blocksPerSecond * PlayWindow.virtualBlockResolution / Game.timeResolution;
+        this.newSpeed = blocksPerSecond;
     }
 
     public int getSpeed() {
-        return this.speed;
+        return this.newSpeed;
     }
 
+    public void setSpeedFactor(int newFactor) {
+        int tmpSpeed = newSpeed / speedFactor;
+        tmpSpeed *= newFactor;
+        speedFactor = newFactor;
+        setSpeed(tmpSpeed);
+    }
 
     /**
      *
@@ -109,7 +118,7 @@ public abstract class Mover {
         if(nextBlock2 == null) return false;
         if (nextBlock.hasRock()) { // then look forward
             if(canMoveRocks) {
-                return !nextBlock2.hasGhost() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
+                return !nextBlock2.hasGhost() && !nextBlock2.hasRock() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
             } else return false;
         }
         return !nextBlock.hasWall() && !nextBlock.hasClosedDoor();
@@ -162,6 +171,9 @@ public abstract class Mover {
     public boolean move() {
         // allow direction change when on block-boundaries
         if( levelObject.fullOnBlock() ) {
+            // set new speed as here it's allowed and should not cause problems
+            speed = newSpeed;
+            currentPixelSpeed = newCurrentPixelSpeed;
             headingTo = chooseDirection();
         }
 

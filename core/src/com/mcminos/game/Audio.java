@@ -42,13 +42,15 @@ public class Audio {
             "tick",
             "tools",
             "trommeln",
+            "treasure",
             "wind",
             "zisch"};
 
     public HashMap<String,com.badlogic.gdx.audio.Sound> soundList = new HashMap<>();
 
     public void soundPlay(String s) {
-        soundList.get(s).play(1.0f);
+        if(s != null && s != "")
+            soundList.get(s).play(1.0f);
     }
 
     public void addSound(String s, Sound sound) {
@@ -81,12 +83,6 @@ Sound fr nchsten Level
         void snd_drunken( void )
         {
         play_sound( ETHANOLE, 2, 200 );
-        }
-
-        Sound fr killall
-        void snd_killall( void )
-        {
-        play_sound( KILLALL, 2, 100 );
         }
 
         Sound fr letter

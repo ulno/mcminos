@@ -14,9 +14,10 @@ import java.util.ArrayList;
  */
 public class Level {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
+    private Game game;
     private int pillsNumber = 0;
     private int rockmeNumber = 0;
-    private LevelBlock[][] field; // on each level field are usally several objects, first is windowVPixelXPos, second windowVPixelYPos
+    private LevelBlock[][] field; // on each level field are usually several objects, first is windowVPixelXPos, second windowVPixelYPos
     private String author = "Main";
     private int number = 199;
     private int showNumber = 199;
@@ -30,9 +31,9 @@ public class Level {
     private boolean scrollX = false;
     private boolean scrollY = false;
     private String background = "default";
-    public int time = 0;
-    public int restart = 0;
-    public boolean mirror = false;
+    private int time = 0;
+    private int restart = 0;
+    private boolean mirror = false;
     public int mcminosSpeed = 1;
     public int[] ghostMax = {0,0,0,0};
     public int[] ghostTime = {0, 0, 0, 0};
@@ -41,16 +42,18 @@ public class Level {
     public int[] ghostPillMax  = {0, 0, 0, 0};
     public int[] ghostPillFreq  = {0, 0, 0, 0};
     public int[] ghostTranswall  = {0, 0, 0, 0};
-    public int livesMin = 0, livesMax = 999;
-    public int keysMin = 0, keysMax = 999;
-    public int dynamitesMin = 0, dynamitesMax = 999;
-    public int minesMin = 0, minesMax = 999;
-    public int chocolatesMin = 0, chocolatesMax = 999;
-    public int medicinesMin = 0, medicinesMax = 999;
-    public int umbrellasMin = 0, umbrellasMax = 999;
+    private int livesMin = 0, livesMax = 999;
+    private int keysMin = 0, keysMax = 999;
+    private int dynamitesMin = 0, dynamitesMax = 999;
+    private int minesMin = 0, minesMax = 999;
+    private int chocolatesMin = 0, chocolatesMax = 999;
+    private int medicinesMin = 0, medicinesMax = 999;
+    private int umbrellasMin = 0, umbrellasMax = 999;
     private ArrayList<LevelBlock> warpHoleBlocks = new ArrayList<>();
     private ArrayList<LevelObject> castleList = new ArrayList<>();
-    private Game game;
+    private ArrayList<LevelBlock> ghostStart[] = new ArrayList[4];
+    private LevelBlock mcminosStart;
+    private String levelName;
 
 
     Level ( Game game, String filename ) {
@@ -58,7 +61,18 @@ public class Level {
         load( filename );
     }
 
-    private void load(String filename) {
+    private void load(String levelName) {
+        // save name
+        this.levelName = levelName;
+
+        // construct filename
+        String filename = "levels/" + levelName + ".asx";
+
+        // reset start positions
+        for(int i=0; i<4; i++) {
+            ghostStart[i] = new ArrayList<>();
+        }
+
         //Construct BufferedReader from InputStreamReader
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(Gdx.files.internal(filename).read()), 2048);
@@ -241,6 +255,7 @@ public class Level {
         // update some related variables
         vPixelsWidth = width << PlayWindow.virtualBlockResolutionExponent;
         vPixelsHeight = height << PlayWindow.virtualBlockResolutionExponent;
+        // TODO: make a snapshot of ghosts, their positions, and mcminos position
     }
 
     /**
@@ -257,6 +272,7 @@ public class Level {
             switch(c) {
                 case 'P':
                     lb.makeMcMinos();
+                    mcminosStart = lb;
                     break;
                 case 'X':
                     lb.makeWall();
@@ -284,15 +300,19 @@ public class Level {
                     break;
                 case 'G':
                     lb.makeGhost1();
+                    ghostStart[0].add(lb);
                     break;
                 case 'g':
                     lb.makeGhost2();
+                    ghostStart[1].add(lb);
                     break;
                 case 'H':
                     lb.makeGhost3();
+                    ghostStart[2].add(lb);
                     break;
                 case 'h':
                     lb.makeGhost4();
+                    ghostStart[3].add(lb);
                     break;
                 case 'L':
                     lb.makeLive();
@@ -362,6 +382,9 @@ public class Level {
                 case 'W':
                     lb.makeWarpHole();
                     break;
+                case 'a':
+                    lb.makeKillAllPill();
+                    break;
                 case 'A':
                     lb.makeKillAllField();
                     break;
@@ -394,27 +417,40 @@ public class Level {
 //                multipliers: MCSPEED *= 2; GHSPEEDs *= 1
 //                (does it's job for: 10 s)
                     break;
-                /*
-;   ? = surprise field (positive or negative)
+                case 'x':
+                    lb.makeLadder();
+                    break;
+                case '1':
+                    lb.makeBonus1();
+                    break;
+                case '2':
+                    lb.makeBonus2();
+                    break;
+                case '3':
+                    lb.makeBonus3();
+                    break;
+                case '?':
+                    lb.makeSurprise();
+                    break;
+                case 'w':
+                    lb.makeWhisky();
+                    break;
+                case 'M':
+                    lb.makeMirror();
+                    break;
+                case 'p':
+                    lb.makePoison();
+                    break;
+                case 'm':
+                    lb.makeMedicine();
+                    break;
 
-;   USEFUL THINGS:
-;   x = ladder
-;   a = kill all pill
+
+                /*
+Missing:
 
 ;   $ = clock, Level time (if level time is limited:) + 60 sec.
 
-;   Boni:
-;   1 = Bonus 100 Pt
-;   2 = Bonus 250 Pt
-;   3 = Bonus 500 Pt
-
-;   BAD THINGS:
-;   w = Whisky
-;   M = mirror
-;   p = poison; can be cured with medicine
-
-;   TOOLS:
-;   m = medicine (bottle of)
                  */
 
             }
@@ -517,7 +553,6 @@ public class Level {
         return field[(x-2+width)%width][y];
     }
 
-
     public int getVPixelsWidth() {
         return vPixelsWidth;
     }
@@ -568,17 +603,17 @@ public class Level {
         // TODO: do we need to trigger something when we reach 0?
     }
 
+
+    public int getRockmesNumber() {
+        return rockmeNumber;
+    }
+
     public int getPillsNumber() {
         return pillsNumber;
     }
 
     public void addWarpHole(LevelBlock warpHoleBlock) {
         warpHoleBlocks.add(warpHoleBlock);
-    }
-
-
-    public int getRockmesNumber() {
-        return rockmeNumber;
     }
 
     public void addCastle(LevelObject castle) {
@@ -591,5 +626,56 @@ public class Level {
 
     public Game getGame() {
         return game;
+    }
+
+    public void killReset() {
+        // reset all things necessary in case of a death
+        /* restart:      0       ; (0,1,2,4,8,16 256, 257, 258, 260,
+                    ; 264, 272)
+                    ; Mode of restarting a level after death
+                    ; of McMinos: (Default = 0)
+                    ; 0 = ghosts + McMinos start in their
+                    ; original positions.
+                    ; 1 = Level is completely restarted.
+                    ; 2 = ghosts restart from castle(s).
+                    ; 4 = McMinos restarts from the position
+                    ; he died, ghosts restart from their
+                    ; original positions.
+                    ; 8 = Bonus level
+                    ; 16= McMinos and all ghosts
+                    ;     restart from where they were
+                    ;     in the moment of McMinos' death.
+                    ; 256 = Last level and RSTRT = 0
+                    ; 257 = Last level and RSTRT = 1
+                    ; 258 = Last level and RSTRT = 2
+                    ; 260 = Last level and RSTRT = 4
+                    ; 264 = Last level and RSTRT = 8
+                    ; 272 = Last level and RSTRT = 16 !!! */
+        if((restart & 1) > 0) { // complete restart requested
+            game.getGhosts().dispose(); // remove ghosts
+            // discard mcminos
+            game.getMcMinos().dispose();
+            // empty movers
+            game.clearMovers();
+            // reload
+            load(levelName);
+        } else { // "normal" restart
+            // restore graphics of mcminos
+            game.getMcMinos().gfxNormal();
+            if((restart & 16) == 0) {
+                game.getGhosts().dispose(); // remove ghosts
+            }
+            if ((restart & 2) == 0) {
+                for (LevelBlock b : ghostStart[0]) b.makeGhost1();
+                for (LevelBlock b : ghostStart[1]) b.makeGhost2();
+                for (LevelBlock b : ghostStart[2]) b.makeGhost3();
+                for (LevelBlock b : ghostStart[3]) b.makeGhost4();
+            }
+            if ((restart & 4) == 0) game.getMcMinos().teleportToBlock(mcminosStart);
+        }
+    }
+
+    public String getLevelName() {
+        return levelName;
     }
 }
