@@ -255,7 +255,6 @@ public class Level {
         // update some related variables
         vPixelsWidth = width << PlayWindow.virtualBlockResolutionExponent;
         vPixelsHeight = height << PlayWindow.virtualBlockResolutionExponent;
-        // TODO: make a snapshot of ghosts, their positions, and mcminos position
     }
 
     /**
