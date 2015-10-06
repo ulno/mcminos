@@ -1,5 +1,7 @@
 package com.mcminos.game;
 
+import java.util.ArrayList;
+
 /**
  * Created by ulno on 05.10.15.
  */
@@ -70,15 +72,19 @@ public class Ghosts {
     }
 
 
-    public void setGhostSpeedFactor(int gosNewFactor) {
-        for(int i=0; i<4; i++)
+    public void setSpeedFactor(int gosNewFactor) {
+        /*for(int i=0; i<4; i++)
         {
             ghostSpeed[i] /= ghostSpeedFactor;
             ghostSpeed[i] *= gosNewFactor;
-            // TODO: set ghost speed in ghostmover
         }
-        ghostSpeedFactor = gosNewFactor;
-
+        ghostSpeedFactor = gosNewFactor;*/
+        ArrayList<Mover> movers = game.getMovers();
+        for(Mover m: movers) {
+            if(m.getLevelObject().getGhostNr() != -1) {
+                ((GhostMover)m).setSpeedFactor(gosNewFactor);
+            }
+        }
     }
 
     public boolean evalAgility(int ghostNr) {

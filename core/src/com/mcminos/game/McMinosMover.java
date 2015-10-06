@@ -13,7 +13,7 @@ public class McMinosMover extends Mover {
     private final Audio audio;
     private final Level level;
     private final Ghosts ghosts;
-    private int mcminosSpeedFactor = 1;
+    private int speedFactor = 1;
 
     public McMinosMover(Game game) {
         super(game.getMcMinos().getLevelObject(), Game.baseSpeed, true);
@@ -124,7 +124,7 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if( m == null ) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, speed, currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(rock, getSpeed(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
@@ -133,7 +133,7 @@ public class McMinosMover extends Mover {
                     audio.soundPlay("moverock");
                 } else if(  ! m.isMoving() ) {
                     // let it move again
-                    m.triggerMove(currentDirection, speed, nextBlock2);
+                    m.triggerMove(currentDirection, getSpeed(), nextBlock2);
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
@@ -299,14 +299,6 @@ public class McMinosMover extends Mover {
 
         }
         return false; // don't remove mcminos
-    }
-
-
-    public void setSpeedFactor(int mcmNewFactor) {
-        speed /= mcminosSpeedFactor;
-        speed *= mcmNewFactor;
-        mcminosSpeedFactor = mcmNewFactor;
-        setSpeed(speed);
     }
 
 }

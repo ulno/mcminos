@@ -76,7 +76,7 @@ public class McMinos {
     void setPowerPillValues(int mcmNewFactor, int gosNewFactor, int duration)
     {
         mover.setSpeedFactor(mcmNewFactor);
-        game.getGhosts().setGhostSpeedFactor(gosNewFactor);
+        game.getGhosts().setSpeedFactor(gosNewFactor);
         if(duration > 0) // something was actually consumed
         {
             powerDuration += duration << game.timeResolutionExponent;

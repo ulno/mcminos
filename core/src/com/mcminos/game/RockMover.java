@@ -60,7 +60,7 @@ public class RockMover extends Mover {
     public void triggerMove(int dir, int speed, LevelBlock headingTo) {
         // TODO: check speed is applied correctly
         currentDirection = dir;
-        this.speed = speed;
+        this.setSpeed( speed );
         this.headingTo = headingTo;
     }
 

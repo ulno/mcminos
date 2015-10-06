@@ -174,7 +174,7 @@ public class Game {
 
     public void setDestination(int x, int y) {
         playwindow.destination.setGfx(Entities.destination);
-        playwindow.destination.moveTo(x, y, getLevelBlockFromVPixelRounded(x,y));
+        playwindow.destination.moveTo(x, y, getLevelBlockFromVPixelRounded(x, y));
         playwindow.destinationSet = true;
     }
 
@@ -224,5 +224,9 @@ public class Game {
 
     public Audio getAudio() {
         return audio;
+    }
+
+    public ArrayList<Mover> getMovers() {
+        return movers;
     }
 }
