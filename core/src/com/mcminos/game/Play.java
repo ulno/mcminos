@@ -3,7 +3,6 @@ package com.mcminos.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
@@ -339,7 +338,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void backToMenu() {
         this.dispose();
-        game.setScreen(new MainMenu(main,level.getLevelName()));
+        main.setScreen(new MainMenu(main,level.getLevelName()));
     }
 
     private void toggleDoor(LevelBlock lb) {
@@ -408,7 +407,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
         batch.begin();
         game.acquireLock();
-        LevelObject.drawAll(playwindow);
+        level.draw(playwindow);
         game.releaseLock(); // TODO: think about moving this to the end of draw
 
         updateToolbox();

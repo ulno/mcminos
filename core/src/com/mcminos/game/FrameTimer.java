@@ -12,7 +12,7 @@ public class FrameTimer {
     ArrayList<Task> tasks = new ArrayList<>();
 
     /**
-     *  @param task to schedule
+     * @param task to schedule
      * @param interval from now when it is supposed to be executed*/
     public void schedule(Task task, int interval) {
         task.scheduleFrame = nowFrame + interval; // set search-key
@@ -32,14 +32,30 @@ public class FrameTimer {
         lastFrame = gameFrame;
     }
 
+    public void dispose() {
+        for( Task t: tasks) {
+            t.dispose();
+        }
+        tasks.clear();
+    }
+
     static abstract public class Task implements Runnable,Comparable<Task> {
         long scheduleFrame=-1; // The frame where this should be executed
+        LevelObject levelObject;
+
+        public Task(LevelObject lo) {
+            levelObject = lo;
+        }
 
         abstract public void run ();
 
         @Override
         public int compareTo(Task task) {
             return  (int)(scheduleFrame - task.scheduleFrame); // TODO: consider overrun
+        }
+
+        public void dispose() {
+            levelObject.dispose();
         }
     }
 

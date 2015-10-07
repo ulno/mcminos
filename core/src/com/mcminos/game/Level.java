@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by ulno on 17.08.15.
@@ -14,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Level {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
+    private ArrayList<LevelObject> allLevelObjects = new ArrayList<>(); // sorted list of all levelobjects (for drawing at once)
     private Game game;
     private int pillsNumber = 0;
     private int rockmeNumber = 0;
@@ -59,6 +61,27 @@ public class Level {
     Level ( Game game, String filename ) {
         this.game = game;
         load( filename );
+    }
+
+    public void draw(PlayWindow playwindow) {
+        for (LevelObject lo : allLevelObjects) {
+            if( lo.getzIndex() >= LevelObject.maxzIndex)
+                break; // can be stopped, as null is infinity and therefore only null in the end
+            lo.draw(playwindow);
+        }
+    }
+
+    public void dispose() {
+        allLevelObjects.clear();
+    }
+
+    public void addToAllLevelObjects( LevelObject lo ) {
+        // add to static list
+        int index = Collections.binarySearch(allLevelObjects, lo); // make sure it's sorted
+        if(index<0)
+            index = -index - 1;
+
+        allLevelObjects.add(index, lo);
     }
 
     private void load(String levelName) {
@@ -255,7 +278,6 @@ public class Level {
         // update some related variables
         vPixelsWidth = width << PlayWindow.virtualBlockResolutionExponent;
         vPixelsHeight = height << PlayWindow.virtualBlockResolutionExponent;
-        // TODO: make a snapshot of ghosts, their positions, and mcminos position
     }
 
     /**
@@ -651,6 +673,7 @@ Missing:
                     ; 260 = Last level and RSTRT = 4
                     ; 264 = Last level and RSTRT = 8
                     ; 272 = Last level and RSTRT = 16 !!! */
+        game.disposeFrameTimer();
         if((restart & 1) > 0) { // complete restart requested
             game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
@@ -677,5 +700,9 @@ Missing:
 
     public String getLevelName() {
         return levelName;
+    }
+
+    public void removeFromAllLevelObjects(LevelObject levelObject) {
+        allLevelObjects.remove(levelObject);
     }
 }
