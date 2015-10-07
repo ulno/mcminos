@@ -81,7 +81,7 @@ public class Explosion {
         }
         explosionObject.animationStartNow();
         // Start a timer to come back here, when explosion finished
-        explosionFinishTask = new FrameTimer.Task() {
+        explosionFinishTask = new FrameTimer.Task(explosionObject) {
             @Override
             public void run() {
                 explosionObject.dispose(); // just finish
@@ -210,7 +210,7 @@ public class Explosion {
             animationLength = Entities.extras_dynamite_fused.getAnimationFramesLength();
         }
         // Start a timer to come back here, when fusing finished
-        triggerExplosionTask = new FrameTimer.Task() {
+        triggerExplosionTask = new FrameTimer.Task(fuseObject) {
             @Override
             public void run() {
                 fuseObject.dispose();

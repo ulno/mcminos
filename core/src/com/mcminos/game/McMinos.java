@@ -290,7 +290,7 @@ public class McMinos {
             animation.animationStartNow();
 
             // schedule level-end and grave-stone setting after animation
-            game.schedule(new FrameTimer.Task() {
+            game.schedule(new FrameTimer.Task(animation) {
                 @Override
                 public void run() {
                     animation.dispose();
@@ -337,7 +337,7 @@ public class McMinos {
             animation.animationStartNow();
 
             // schedule level-end and grave-stone setting after animation
-            game.schedule(new FrameTimer.Task() {
+            game.schedule(new FrameTimer.Task(animation) {
                 @Override
                 public void run() {
                     animation.dispose();

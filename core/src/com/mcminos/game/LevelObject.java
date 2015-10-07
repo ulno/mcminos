@@ -1,6 +1,5 @@
 package com.mcminos.game;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -11,7 +10,6 @@ import java.util.Collections;
  */
 public class LevelObject implements  Comparable<LevelObject> {
 
-    private static ArrayList<LevelObject> all = new ArrayList<LevelObject>();
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
@@ -46,11 +44,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         y = levelBlock.getY() << PlayWindow.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
         this.type = type;
-        // add to static list
-        int index = Collections.binarySearch(all, this); // make sure it's sorted
-        if(index<0)
-            index = -index - 1;
-        all.add(index, this);
+        level.addToAllLevelObjects(this);
     }
     /**
      *all.
@@ -76,17 +70,9 @@ public class LevelObject implements  Comparable<LevelObject> {
         this.gfx = gfx;
     }
 
-    private void draw(PlayWindow playwindow) {
+    public void draw(PlayWindow playwindow) {
         if(gfx != null) // castle parts can be null or invisible things
             gfx.draw(playwindow,x,y,animDelta);
-    }
-
-    public static void drawAll(PlayWindow playwindow) {
-        for (LevelObject lo : all) {
-            if( lo.zIndex >= maxzIndex)
-                break; // can be stopped, as null is infinity and therefore only null in the end
-            lo.draw(playwindow);
-        }
     }
 
     @Override
@@ -153,12 +139,8 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     // make sure to remove yourself from list
     public void dispose() {
-        all.remove(this);
+        level.removeFromAllLevelObjects(this);
         // TODO: think if we also have to remove from other things in level-block
-    }
-
-    public static void disposeAll() {
-        all.clear();
     }
 
     public boolean isIndestructable() {
@@ -277,5 +259,8 @@ public class LevelObject implements  Comparable<LevelObject> {
         return -1;
     }
 
+    public int getzIndex() {
+        return zIndex;
+    }
 
 }

@@ -2,7 +2,6 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 
@@ -125,10 +124,6 @@ public class Game {
         return gameFrame;
     }
 
-    public void pause() {
-        timerTask.cancel();
-    }
-
     /**
      * This is called
      */
@@ -165,13 +160,21 @@ public class Game {
         updateLock.release();
     }
 
-    public void dispose() {
-        movers.clear();
-        LevelObject.disposeAll();
+    public void disposeFrameTimer() {
+        frameTimer.dispose();
     }
 
-    public void setScreen(Screen scr) {
-        main.setScreen(scr);
+    public void disposeTimerTask() {
+        timerTask.cancel();
+    }
+
+    public void dispose() {
+        disposeFrameTimer();
+        disposeTimerTask();
+        mcminos.dispose();
+        ghosts.dispose();
+        movers.clear();
+        level.dispose();
     }
 
     public void setDestination(int x, int y) {
