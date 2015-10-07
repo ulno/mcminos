@@ -14,7 +14,7 @@
    id="svg3505"
    sodipodi:version="0.32"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="08.svg"
+   sodipodi:docname="02.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.1">
   <defs
@@ -94,8 +94,8 @@
             <dc:title>Andreas Neudecker</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:identifier>vorlage-32x32-mcminos</dc:identifier>
-        <dc:description>Vorlage für 32x32-Pixel-Icons für McMinos. Metadaten jeweils entsprechend anpassen!</dc:description>
+        <dc:identifier>mcminos-front-02</dc:identifier>
+        <dc:description>McMinos, frontal, animation step 02.</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -132,7 +132,7 @@
        sodipodi:rx="4.1570387"
        sodipodi:ry="3.8238845"
        d="M 32.314078,51.823883 A 4.1570387,3.8238845 0 1 1 24.000001,51.823883"
-       transform="matrix(3.127226,0,0,3.3996825,-72.05343,-160.18474)"
+       transform="matrix(3.127226,0,0,0.5230265,-72.05343,-11.105257)"
        sodipodi:start="0"
        sodipodi:end="3.1415927"
        sodipodi:open="true" />
@@ -158,27 +158,27 @@
        transform="matrix(2,0,0,2,6.999997,-5.1161847e-6)" />
     <path
        sodipodi:type="arc"
-       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="path3409"
        sodipodi:cx="8"
        sodipodi:cy="5"
        sodipodi:rx="1"
        sodipodi:ry="1"
-       d="M 9,5 A 1,1 0 1 1 7,5 A 1,1 0 1 1 9,5 z"
+       d="M 9,5 A 1,1 0 1 1 7,5 1,1 0 1 1 9,5 z"
        transform="matrix(2,0,0,2,-7,0)" />
     <path
        transform="matrix(2,0,0,2,7,0)"
-       d="M 9,5 A 1,1 0 1 1 7,5 A 1,1 0 1 1 9,5 z"
+       d="M 9,5 A 1,1 0 1 1 7,5 1,1 0 1 1 9,5 z"
        sodipodi:ry="1"
        sodipodi:rx="1"
        sodipodi:cy="5"
        sodipodi:cx="8"
        id="path3427"
-       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none"
        sodipodi:type="arc" />
     <path
        style="fill:#f0ffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 3 16 C 3 17.758994 3.3659966 19.438089 4 20.96875 L 4 16 L 3 16 z M 8 16 L 8 26.25 C 9.1865572 27.176219 10.535541 27.903022 12 28.375 L 12 16 L 8 16 z M 16 16 L 16 29 C 17.390897 29 18.743253 28.780035 20 28.375 L 20 16 L 16 16 z M 24 16 L 24 26.25 C 25.760916 24.87544 27.133036 23.061843 28 20.96875 L 28 16 L 24 16 z "
+       d="M 3 16 C 3 16.271835 3.3605599 16.544907 4 16.78125 L 4 16 L 3 16 z M 8 16 L 8 17.5625 C 9.1870459 17.706153 10.532202 17.832814 12 17.90625 L 12 16 L 8 16 z M 16 16 L 16 18 C 17.402849 18 18.733901 17.969595 20 17.90625 L 20 16 L 16 16 z M 24 16 L 24 17.5625 C 25.737055 17.352286 27.138739 17.09958 28 16.78125 L 28 16 L 24 16 z "
        id="rect3449" />
     <path
        sodipodi:end="6.2831853"
@@ -192,6 +192,31 @@
        id="path3443"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        sodipodi:type="arc"
+       sodipodi:open="true" />
+    <path
+       d="M 6,4.9999999 A 2,2 0 0 1 10,5 L 8,5 z"
+       sodipodi:ry="2"
+       sodipodi:rx="2"
+       sodipodi:cy="5"
+       sodipodi:cx="8"
+       id="path5535"
+       style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(2,0,0,2,-7.0000028,-5e-6)"
+       sodipodi:start="3.1415927"
+       sodipodi:end="6.2831853" />
+    <path
+       transform="matrix(2,0,0,2,6.999997,-5e-6)"
+       sodipodi:type="arc"
+       style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="path5537"
+       sodipodi:cx="8"
+       sodipodi:cy="5"
+       sodipodi:rx="2"
+       sodipodi:ry="2"
+       d="M 6,4.9999999 A 2,2 0 0 1 10,5"
+       sodipodi:start="3.1415927"
+       sodipodi:end="6.2831853"
        sodipodi:open="true" />
   </g>
 </svg>

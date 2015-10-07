@@ -6,7 +6,7 @@ Project McMinos: List of level elements
   Andreas Neudecker <zapyon@gmx.net>
 
 :Date: 2015-09-08
-
+:Changed: 2015-10-05
 
 Alive
 =====
@@ -24,10 +24,11 @@ Alive
 * Ghosts
 
   * Ghost 1, Hanky
-  * Ghost 2, Panky
+  * ~~Ghost 2, Panky~~ -- replaced by ghost 6
   * Ghost 3, Zarathustra
   * Ghost 4, JumpingPill
-  * Ghost 5 (?)
+  * Ghost 5, --
+  * Ghost 6, Perry (Big Mac)
 
 Inanimate
 =========
@@ -36,17 +37,17 @@ Inanimate
 
   * default, 16 types (see graphics)
   * InvisibleWall
-  * IndestructibleWall -- TODO: select existing sketch or redraw
-  * Door -- TODO: fix problem with indestructable walls
-  * Castle
+  * IndestructibleWall -- TODO: ~~select existing sketch or~~ redraw
+  * Door -- ~~TODO: fix problem with indestructable walls~~
+  * ~~Castle~~
   * Gravestone -- TODO: redraw, possibly as a cross again (see ATARI version)
-  * Hole -- TODO: draw graphics for areas of connected holes
+  * Hole -- ~~TODO: draw graphics for areas of connected holes~~
   * Field
 
     + SpeedUp
     + SpeedDown
-    + Arrow
-    + RevolvingArrow
+    + Arrows
+    + RevolvingArrows
     + DeathField
         (i.e. skull field)
     + WarpHole -- TODO: try different animation
@@ -78,10 +79,16 @@ Item
   * Medicine
   * Poison
   * PowerPill
-  * Whiskey -- TODO: draw
+  * Whiskey -- ~~TODO: draw~~
 
 Background
 ==========
 
 * diverse background tiles -- TODO: select usable background among existing sketches, draw new ones.
+
+
+
+
+
+
 

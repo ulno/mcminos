@@ -10,8 +10,7 @@ Non-development tasks
   Andreas Neudecker <zapyon@gmx.net>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-09-08
-
+:Date: 2015-10-07
 
 
 Marketing & Advertising
@@ -26,10 +25,24 @@ Marketing & Advertising
 More stuff to do
 ================
 
-* ...
+* Legal matters
+  * Video game content ratings | Altersfreigabe (DE)
+    * https://de.wikipedia.org/wiki/Altersfreigabe#Computer-_und_Videospiele
+    * https://en.wikipedia.org/wiki/Video_game_content_rating_system
+    * Are we going to apply (and pay) for a rating/ratings? Or are we just going to deal with the fact we can only sell to peope of legal age?
 
-Issues
-======
+Distribution channels
+=====================
 
-* dynamite at left border will be postioned on other side of screen - check offsets and wrap-around
-* convert single textures in atlas-maps
+* Google App Store
+* Apple App Store
+* own website?
+
+Merchandising
+=============
+
+* T-shirts
+* cups
+* desktop backgrounds?
+
+
