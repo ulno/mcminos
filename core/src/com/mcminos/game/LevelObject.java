@@ -31,7 +31,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
         DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
         Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
-        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Ladder, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, Hole};
+        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Exit, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, SkullField, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
 
     private void construct(LevelBlock levelBlock, int zIndex, Types type) {
@@ -80,21 +80,21 @@ public class LevelObject implements  Comparable<LevelObject> {
         return  zIndex - lo.zIndex;
     }
 
-    public LevelBlock moveTo(int x, int y, LevelBlock headingTo ) {
+    public LevelBlock moveTo(int vpx, int vpy, LevelBlock headingTo ) {
         LevelBlock from = levelBlock;
         // check and eventually fix coordinates
         // if(Game.getScrollX()) { always allow
-        if (x < 0) x += level.getWidth() << PlayWindow.virtualBlockResolutionExponent;
-        if (x >= level.getWidth() << PlayWindow.virtualBlockResolutionExponent)
-            x -= level.getWidth() << PlayWindow.virtualBlockResolutionExponent;
+        if (vpx < 0) vpx += level.getWidth() << PlayWindow.virtualBlockResolutionExponent;
+        if (vpx >= level.getWidth() << PlayWindow.virtualBlockResolutionExponent)
+            vpx -= level.getWidth() << PlayWindow.virtualBlockResolutionExponent;
         //}
         //if(Game.getScrollY()) {
-        if (y < 0) y += level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
-        if (y >= level.getHeight() << PlayWindow.virtualBlockResolutionExponent)
-            y -= level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
+        if (vpy < 0) vpy += level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
+        if (vpy >= level.getHeight() << PlayWindow.virtualBlockResolutionExponent)
+            vpy -= level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
         //}
 
-//        LevelBlock to = game.getLevelBlockFromVPixel(x, y);
+//        LevelBlock to = game.getLevelBlockFromVPixel(vpx, vpy);
         // needs to be updated to check for collisions via associations
         if( from != headingTo ) {
             //if (from != null) { should not happen when properly intialized
@@ -109,7 +109,7 @@ public class LevelObject implements  Comparable<LevelObject> {
             headingTo.putMoveable(this);
         }
         levelBlock = headingTo; // todo: might be not totally correct for destination
-        setXY(x,y);
+        setXY(vpx,vpy);
         return levelBlock;
     }
 

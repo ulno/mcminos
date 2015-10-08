@@ -151,7 +151,7 @@ public class Explosion {
                     mcminos.increaseScore(30);
                 }
                 if(lo.getType() == LevelObject.Types.McMinos) {
-                    mcminos.kill("",Entities.mcminos_dying);
+                    mcminos.kill("skullkill",Entities.mcminos_dying);
                 }
             }
 

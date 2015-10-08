@@ -36,6 +36,7 @@ public class Audio {
             "quietsch",
             "rums",
             "rumble",
+            "skullkill",
             "slowdown",
             "speedup",
             "splash",

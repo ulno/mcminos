@@ -345,6 +345,9 @@ public class Level {
                 case 'S':
                     lb.makeSkull();
                     break;
+                case 'T':
+                    lb.makeSkullField();
+                    break;
                 case 'b':
                     lb.makeBomb();
                     break;
@@ -440,7 +443,7 @@ public class Level {
 //                (does it's job for: 10 s)
                     break;
                 case 'x':
-                    lb.makeLadder();
+                    lb.makeExit();
                     break;
                 case '1':
                     lb.makeBonus1();
@@ -638,11 +641,40 @@ Missing:
         warpHoleBlocks.add(warpHoleBlock);
     }
 
+    public LevelBlock getFreeWarpHole( LevelBlock origin ) {
+        LevelBlock returnBlock = null;
+
+        for( int i=0; i<5; i++ ) { // Try 5 times random
+            LevelBlock testBlock = warpHoleBlocks.get(game.random(warpHoleBlocks.size()));
+            if( !testBlock.hasRock() && testBlock != origin) {
+                returnBlock = testBlock;
+                break;
+            }
+        }
+        // if random was not successfull, try linear
+        if( returnBlock == null) {
+            for( int i=0; i<warpHoleBlocks.size(); i++ ) { // Try 5 times random
+                LevelBlock testBlock = warpHoleBlocks.get(i);
+                if( !testBlock.hasRock() && testBlock != origin) {
+                    returnBlock = testBlock;
+                    break;
+                }
+            }
+        }
+        if( returnBlock == null) { // only origin is possible
+            return origin;
+        }
+        return returnBlock;
+    }
+
     public void addCastle(LevelObject castle) {
         castleList.add(castle);
     }
 
     public LevelBlock getRandomCastleBlock() {
+        if(castleList.size() == 0) {
+            return null;
+        }
         return castleList.get(game.random(castleList.size())).getLevelBlock();
     }
 
@@ -681,7 +713,7 @@ Missing:
             // empty movers
             game.clearMovers();
             // reload
-            load(levelName);
+            game.loadFromPlay(levelName);
         } else { // "normal" restart
             // restore graphics of mcminos
             game.getMcMinos().gfxNormal();

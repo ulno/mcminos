@@ -264,6 +264,12 @@ public class LevelBlock {
         collectibles.add(lo);
     }
 
+    public void makeSkullField() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.fields_field_skull.getzIndex(),LevelObject.Types.SkullField);
+        lo.setGfx(Entities.fields_field_skull);
+        collectibles.add(lo);
+    }
+
     public void makeBomb() {
         LevelObject lo = new LevelObject(level,x,y,Entities.extras_bomb_default.getzIndex(),LevelObject.Types.Bomb);
         lo.setGfx(Entities.extras_bomb_default);
@@ -419,11 +425,10 @@ public class LevelBlock {
         collectibles.add(lo);
     }
 
-    public void makeLadder() {
-        // TODO: add images - missing
-        //LevelObject lo = new LevelObject(level,x,y,Entities..getzIndex(),LevelObject.Types.Ladder);
-        //lo.setGfx(Entities.fields_field_kill_all_ghosts);
-        //collectibles.add(lo);
+    public void makeExit() {
+        LevelObject lo = new LevelObject(level,x,y,Entities.fields_field_level_up.getzIndex(),LevelObject.Types.Exit);
+        lo.setGfx(Entities.fields_field_level_up);
+        collectibles.add(lo);
     }
 
     public void makeBonus1() {

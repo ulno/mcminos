@@ -21,25 +21,25 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by ulno on 10.09.15.
  */
 public class Play implements Screen, GestureListener, InputProcessor {
-    private final Game game;
-    private final Table menuTable;
-    private final Table toolboxTable;
-    private final Window toolbox;
-    private final Label bombLabel;
-    private final Label dynamiteLabel;
-    private final Label landmineLabel;
-    private final Label chocolateLabel;
-    private final Label pillLabel;
-    private final Label keyLabel;
-    private final Label rockmeLabel;
-    private final Label umbrellaLabel;
-    private final TextButton doorUpButton;
-    private final TextButton doorRightButton;
-    private final TextButton doorDownButton;
-    private final TextButton doorLeftButton;
-    private final PlayWindow playwindow;
+    private Game game;
+    private Table menuTable;
+    private Table toolboxTable;
+    private Window toolbox;
+    private Label bombLabel;
+    private Label dynamiteLabel;
+    private Label landmineLabel;
+    private Label chocolateLabel;
+    private Label pillLabel;
+    private Label keyLabel;
+    private Label rockmeLabel;
+    private Label umbrellaLabel;
+    private TextButton doorUpButton;
+    private TextButton doorRightButton;
+    private TextButton doorDownButton;
+    private TextButton doorLeftButton;
+    private PlayWindow playwindow;
     private final Skin skin;
-    private final McMinos mcminos;
+    private McMinos mcminos;
     private final Audio audio;
     private final BitmapFont font;
     private final SpriteBatch batch;
@@ -51,15 +51,17 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private long lastZoomTime = 0;
     private int gameResolutionCounter = 0;
 
-
-    public Play(final Main main, final String levelName) {
+    public Play( final Main main, String levelName) {
         this.main = main;
         batch = main.getBatch();
         font = main.getFont();
         skin = main.getSkin();
         audio = main.getAudio();
-        game = new Game(main,this);
+        init( levelName );
+    }
 
+    public void init( String levelName) {
+        game = new Game(main,this);
         game.currentLevelName = levelName;
         level = game.loadLevel(levelName);
         mcminos = game.getMcMinos();
@@ -122,6 +124,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 }
             }
         });
+
 
         toolboxTable = new Table(skin);
         //toolboxTable.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent, sems to be applied already
@@ -499,7 +502,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             if (pointer > 0) return false;
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
-            game.setDestination(x, y);
+            mcminos.setDestination(x, y);
             return false; // nnedsto be evtl. dealt with at drag
         }
         return false;
