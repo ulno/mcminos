@@ -30,9 +30,9 @@ public class McMinosMover extends Mover {
     @Override
     public LevelBlock chooseDirection() {
         // this is only called, when on block boundaries
-        if ( playwindow.isDestinationSet()) {
+        if ( mcminos.isDestinationSet()) {
             int directions = 0; // direction bit field
-            LevelObject destination = playwindow.getDestination();
+            LevelObject destination = mcminos.getDestination();
             // check screen distance
             int x = levelObject.getVX();
             int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
@@ -66,7 +66,7 @@ public class McMinosMover extends Mover {
             if (xdelta > 0) directions += RIGHT;
             if (xdelta < 0) directions += LEFT;
             if (directions == 0) {
-                playwindow.unsetDestination();
+                mcminos.hideDestination();
             }
 
             // refine with possible directions
@@ -141,6 +141,8 @@ public class McMinosMover extends Mover {
             }
             return nextBlock;
         }
+        // nothing found or no direction set so return currentblock and no direction possibility
+        currentDirection = STOP;
         return currentLevelBlock;
     }
 
@@ -172,9 +174,8 @@ public class McMinosMover extends Mover {
                     }
                     // check if here is max hole
                     if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
-                        // fall in
-                        // TODO: intiate kill sequence
                         audio.soundPlay("falling");
+                        mcminos.fall();
                     }
                 }
                 // check the things lying here
@@ -285,6 +286,12 @@ public class McMinosMover extends Mover {
                             mcminos.increaseScore(300);
                             audio.soundPlay("treasure");
                             break;
+                        case WarpHole:
+                            if (currentDirection != STOP) { // only teleport when moving onto field
+                                audio.soundPlay("blub");
+                                mcminos.teleportToBlock(level.getFreeWarpHole(currentBlock));
+                            }
+                            break;
                     }
                 }
             }
@@ -330,11 +337,6 @@ public class McMinosMover extends Mover {
             mcminos.win();
         }
         return false; // don't remove mcminos
-    }
-
-
-    public void setLevelBlock(LevelBlock levelBlock) {
-        this.currentLevelBlock = levelBlock;
     }
 }
 

@@ -137,8 +137,24 @@ public class GhostMover extends Mover {
                 // Todo: think about sound to play for normal ghost
                 return true; // remove me
             }
+            // check the things lying here
+            for( LevelObject b:currentBlock.getCollectibles()) {
+                switch( b.getType() ) {
+                    case WarpHole:
+                        if (currentDirection != STOP) { // only teleport when moving onto field
+                            teleportToBlock(level.getFreeWarpHole(currentBlock));
+                        }
+                        break;
+                }
+            }
         }
         return false;
+    }
+
+    public void teleportToBlock( LevelBlock block ) {
+        levelObject.moveTo(block.getX() << PlayWindow.virtualBlockResolutionExponent,
+                block.getY() << PlayWindow.virtualBlockResolutionExponent, block);
+        setLevelBlock(block);
     }
 
 }

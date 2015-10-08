@@ -638,6 +638,32 @@ Missing:
         warpHoleBlocks.add(warpHoleBlock);
     }
 
+    public LevelBlock getFreeWarpHole( LevelBlock origin ) {
+        LevelBlock returnBlock = null;
+
+        for( int i=0; i<5; i++ ) { // Try 5 times random
+            LevelBlock testBlock = warpHoleBlocks.get(game.random(warpHoleBlocks.size()));
+            if( !testBlock.hasRock() && testBlock != origin) {
+                returnBlock = testBlock;
+                break;
+            }
+        }
+        // if random was not successfull, try linear
+        if( returnBlock == null) {
+            for( int i=0; i<warpHoleBlocks.size(); i++ ) { // Try 5 times random
+                LevelBlock testBlock = warpHoleBlocks.get(i);
+                if( !testBlock.hasRock() && testBlock != origin) {
+                    returnBlock = testBlock;
+                    break;
+                }
+            }
+        }
+        if( returnBlock == null) { // only origin is possible
+            return origin;
+        }
+        return returnBlock;
+    }
+
     public void addCastle(LevelObject castle) {
         castleList.add(castle);
     }
@@ -681,7 +707,7 @@ Missing:
             // empty movers
             game.clearMovers();
             // reload
-            load(levelName);
+            game.loadFromPlay(levelName);
         } else { // "normal" restart
             // restore graphics of mcminos
             game.getMcMinos().gfxNormal();

@@ -21,19 +21,28 @@ public class McMinos {
     private LevelObject levelObject;
     private boolean killed = false;
     private boolean winning = false;
+    private LevelObject destination;
+    private boolean destinationSet; // was a destination set (and needs to be shown)
+    private boolean falling;
+    private LevelBlock startBlock = null;
 
 
     public McMinos(Game game) {
         this.game = game;
         this.audio = game.getAudio();
-        // is null anyway at that point, that;s why init needs to be called
+        // is null anyway at that point, that's why init needs to be called
         // this.level = game.getLevel();
     }
 
+    /*
+     This is called when levelobjects can be used.
+      */
     public void initLevelBlock(Level level, int x, int y) {
         this.level = level;
         levelObject = new LevelObject(level, x, y, Entities.mcminos_default_front.getzIndex(), LevelObject.Types.McMinos);
+        startBlock = levelObject.getLevelBlock();
         levelObject.setGfx(Entities.mcminos_default_front);
+        initDestination();
     }
 
     public void increaseScore(int increment) {
@@ -259,6 +268,7 @@ public class McMinos {
     }
 
     public void teleportToBlock( LevelBlock block ) {
+        unsetDestination();
         //setLevelBlock( block );
         levelObject.moveTo(block.getX() << PlayWindow.virtualBlockResolutionExponent,
                 block.getY() << PlayWindow.virtualBlockResolutionExponent, block);
@@ -293,6 +303,7 @@ public class McMinos {
             game.schedule(new FrameTimer.Task(animation) {
                 @Override
                 public void run() {
+                    new LevelObject(animation.getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
                     animation.dispose();
                     decreaseLives();
                     if(getLives() > 0) {
@@ -301,11 +312,43 @@ public class McMinos {
                         resume();
                     } else {
                         game.getPlayScreen().backToMenu();
-                        // TODO: check why sometimes non-dangerous ghosts re-appear
                     }
                 }
             }, gfx.getAnimationFramesLength());
         }
+    }
+
+    public void fall() {
+        // don't multifall
+        Graphics gfx = Entities.mcminos_dying; // TODO: replace with falling
+        if (!isFalling()) {
+            audio.soundPlay("falling");
+            //game.stopAllMovers();
+            stop();
+            falling = true;
+            // show fall-animation
+            mover.setGfx(null); // hide
+            final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
+            animation.animationStartNow();
+
+            // schedule level-end and grave-stone setting after animation
+            game.schedule(new FrameTimer.Task(animation) {
+                @Override
+                public void run() {
+                    animation.dispose();
+                    //decreaseLives();
+                    teleportToBlock(startBlock);
+                    falling=false;
+                    gfxSelect();
+                    resume();
+                }
+            }, gfx.getAnimationFramesLength());
+        }
+    }
+
+    private void gfxSelect() {
+        if(powerDuration > 0) gfxPowered();
+        else gfxNormal();
     }
 
     /**
@@ -349,5 +392,41 @@ public class McMinos {
 
     public boolean isWinning() {
         return winning;
+    }
+
+    public void setDestination(int x, int y) {
+        destination.setGfx(Entities.destination);
+        destination.moveTo(x, y, game.getLevelBlockFromVPixelRounded(x, y));
+        destinationSet = true;
+    }
+
+    public boolean isDestinationSet() {
+        return destinationSet;
+    }
+
+    public LevelObject getDestination() {
+        return destination;
+    }
+
+    public void hideDestination() {
+        destination.setGfx(null);
+    }
+
+    public void unsetDestination() {
+        hideDestination();
+        destinationSet = false; // TODO: or does it need to be still set?
+    }
+
+    /**
+     * create graphical object for destination
+     */
+    private void initDestination() {
+        destination = new LevelObject(level,getLevelBlock().getX(),getLevelBlock().getY(),
+                Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
+        // playwindow.resize();
+    }
+
+    public boolean isFalling() {
+        return falling;
     }
 }

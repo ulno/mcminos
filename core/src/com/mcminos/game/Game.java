@@ -53,6 +53,10 @@ public class Game {
         batch = main.getBatch();
     }
 
+    public void loadFromPlay(String levelName) {
+        playScreen.init(levelName);
+    }
+
     public void updateTime() {
         gameTime += (long)(Gdx.graphics.getDeltaTime() * 1000);
         playwindow.updateWindowPosition();
@@ -145,13 +149,17 @@ public class Game {
 
             // move everybody
             mcminos.move();
-            for (int i= movers.size()-1; i>=0; i--) { // works as synchronized
-                Mover m = movers.get(i);
-                if(m.move()) {
-                    movers.remove(i);
-                    LevelObject lo = m.getLevelObject();
-                    lo.getLevelBlock().removeMovable(lo);
-                    lo.dispose();
+            for (int i = movers.size()-1; i>=0; i--) { // works as synchronized
+                // current could already be destroyed by last mover
+                if(i <= movers.size()-1 ) {
+                    // TODO: check if this makes sense
+                    Mover m = movers.get(i);
+                    if (m.move()) {
+                        movers.remove(i);
+                        LevelObject lo = m.getLevelObject();
+                        lo.getLevelBlock().removeMovable(lo);
+                        lo.dispose();
+                    }
                 }
             }
 
@@ -175,12 +183,6 @@ public class Game {
         ghosts.dispose();
         movers.clear();
         level.dispose();
-    }
-
-    public void setDestination(int x, int y) {
-        playwindow.destination.setGfx(Entities.destination);
-        playwindow.destination.moveTo(x, y, getLevelBlockFromVPixelRounded(x, y));
-        playwindow.destinationSet = true;
     }
 
     int random(int interval) {

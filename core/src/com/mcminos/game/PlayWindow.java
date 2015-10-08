@@ -20,7 +20,6 @@ public class PlayWindow {
     public SpriteBatch batch;
     public BitmapFont defaultFont;
     public Skin skin;
-    public LevelObject destination;
     Entities gfx = null;
     int windowVPixelXPos; // windowVPixelXPos-position (left) of game window in main game-screen in virtual pixels
     int windowVPixelYPos; // windowVPixelYPos-position (bottom) of game window n main game-screen in virtual pixels
@@ -34,7 +33,6 @@ public class PlayWindow {
     int fullPixelHeight =0; // Size of virtual playingfield in physical pixels (blocks * physical resolution)
     float density;
     boolean toolboxShown;
-    boolean destinationSet; // was a destination set (and neds to be shown)
     Level level;
     private Game game;
 
@@ -44,7 +42,6 @@ public class PlayWindow {
         this.level = level;
         this.game = level.getGame();
         this.mcminos = mcminos;
-        initDestination();
     }
 
     public void init() {
@@ -58,7 +55,7 @@ public class PlayWindow {
     public void setResolution(int resolutionCounter) {
         resolution = Entities.resolutionList[resolutionCounter];
         resolutionExponent = Util.log2binary(resolution);
-        Graphics.setResolutionAll(this,resolution);
+        Graphics.setResolutionAll(this, resolution);
     }
 
     public boolean isToolboxShown() {
@@ -154,14 +151,6 @@ public class PlayWindow {
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
-    public boolean isDestinationSet() {
-        return destinationSet;
-    }
-
-    public LevelObject getDestination() {
-        return destination;
-    }
-
     public int getVisibleWidth() {
         return level.getVisibleWidth();
     }
@@ -208,17 +197,6 @@ public class PlayWindow {
 
     public int getWindowPixelHeight() {
         return windowPixelHeight;
-    }
-
-    public void unsetDestination() {
-        destination.setGfx(null);
-        //destinationSet = false; needs to be still set
-    }
-
-    private void initDestination() {
-        destination = new LevelObject(mcminos.getLevelBlock().getLevel(),mcminos.getLevelBlock().getX(),mcminos.getLevelBlock().getY(),
-                Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
-        resize();
     }
 
     public Skin getSkin() {

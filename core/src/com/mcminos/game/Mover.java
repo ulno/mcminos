@@ -224,4 +224,9 @@ public abstract class Mover {
     public LevelObject getLevelObject() {
         return levelObject;
     }
+
+    public void setLevelBlock(LevelBlock levelBlock) {
+        this.currentLevelBlock = levelBlock;
+    }
+
 }
