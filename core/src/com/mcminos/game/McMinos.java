@@ -40,6 +40,8 @@ public class McMinos {
       */
     public void initLevelBlock(Level level, int x, int y) {
         this.level = level;
+        if(levelObject != null)
+            levelObject.dispose();
         levelObject = new LevelObject(level, x, y, Entities.mcminos_default_front.getzIndex(), LevelObject.Types.McMinos);
         startBlock = levelObject.getLevelBlock();
         levelObject.setGfx(Entities.mcminos_default_front);
@@ -308,7 +310,7 @@ public class McMinos {
                     animation.dispose();
                     decreaseLives();
                     if(getLives() > 0) {
-                        level.killReset();
+                        level.killRestart();
                         killed = false;
                         resume();
                     } else {

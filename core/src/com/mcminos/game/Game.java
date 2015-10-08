@@ -67,13 +67,19 @@ public class Game {
         level = new Level(this, s);
         // is al done in load level mcminos.init(); // trigger update
         playwindow = new PlayWindow(batch,level,mcminos);
-        ghosts.init(); // update references
-        Mover mover = new McMinosMover(this);
-        // done in mover creation mcminos.setMover(mover); // needs to be created this late
+        initAfterLoad();
 
         // start the own timer (which triggers also the movemnet)
         startTimer();
         return level;
+    }
+
+    private void initAfterLoad() {
+        // Now init some of the level elements
+        getGhosts().init(); // update references
+        Mover mover = new McMinosMover(this);
+        // done in mover creation mcminos.setMover(mover); // needs to be created this late
+
     }
 
     public LevelBlock getLevelBlock( int x, int y) {
@@ -185,6 +191,15 @@ public class Game {
         level.dispose();
     }
 
+    public void reset() {
+        disposeFrameTimer();
+        //disposeTimerTask();
+        //mcminos.dispose(); // will be reused
+        ghosts.dispose();
+        movers.clear();
+        level.dispose();
+    }
+
     int random(int interval) {
         return randomGenerator.nextInt(interval);
     }
@@ -249,5 +264,14 @@ public class Game {
 
     public Play getPlayScreen() {
         return playScreen;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public void reload() {
+        level.load(currentLevelName);
+        initAfterLoad();
     }
 }

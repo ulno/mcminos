@@ -18,7 +18,7 @@ public class GhostMover extends Mover {
         audio = game.getAudio();
         ghosts = game.getGhosts();
         mcminos = game.getMcMinos();
-        level = game.getLevel();
+        level = game.getLevel(); // TODO: check why this is null
         this.rememberedBlock = currentLevelBlock;
     }
 
@@ -121,8 +121,8 @@ public class GhostMover extends Mover {
                         b.dispose();
                         new Explosion(currentBlock, LevelObject.Types.LandMine);
                         break;
-                    case OneWay:
-                        break;
+                    /* already dealt with case OneWay:
+                        break; */
 
                 }
             }
