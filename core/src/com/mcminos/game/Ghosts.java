@@ -47,7 +47,9 @@ public class Ghosts {
     }
 
     public LevelObject spawn(int ghostnr) {
-        return create( level.getRandomCastleBlock(), ghostnr );
+        LevelBlock randomBlock = level.getRandomCastleBlock();
+        if(randomBlock != null ) return create( randomBlock, ghostnr );
+        return null;
     }
 
     public void checkSpawn() {

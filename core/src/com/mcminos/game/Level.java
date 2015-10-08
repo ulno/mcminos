@@ -672,6 +672,9 @@ Missing:
     }
 
     public LevelBlock getRandomCastleBlock() {
+        if(castleList.size() == 0) {
+            return null;
+        }
         return castleList.get(game.random(castleList.size())).getLevelBlock();
     }
 
