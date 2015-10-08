@@ -10,8 +10,13 @@ Non-development tasks
   Andreas Neudecker <zapyon@gmx.net>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-10-07
+:Date: 2015-10-078
 
+
+Website
+=======
+
+* relaunch? Static pages? Generator? nodb-CMS?
 
 Marketing & Advertising
 =======================
