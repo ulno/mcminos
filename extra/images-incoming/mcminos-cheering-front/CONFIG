@@ -1,0 +1,8 @@
+symbol="P"
+order=[1,2,3,4]
+zindex=750
+moving=True
+size = (3, 3)
+focus = (1, 1)
+speed = 250
+
