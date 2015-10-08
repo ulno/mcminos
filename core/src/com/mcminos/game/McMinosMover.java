@@ -292,6 +292,12 @@ public class McMinosMover extends Mover {
                                 mcminos.teleportToBlock(level.getFreeWarpHole(currentBlock));
                             }
                             break;
+                        case Skull:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                        case SkullField:
+                            mcminos.kill("skullkill",Entities.mcminos_dying);
+                            break;
                     }
                 }
             }

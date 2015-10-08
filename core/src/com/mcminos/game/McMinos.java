@@ -25,6 +25,7 @@ public class McMinos {
     private boolean destinationSet; // was a destination set (and needs to be shown)
     private boolean falling;
     private LevelBlock startBlock = null;
+    private boolean destinationEnabled = true;
 
 
     public McMinos(Game game) {
@@ -356,10 +357,14 @@ public class McMinos {
      */
     private void stop() {
         mover.setSpeed(0);
+        // disable destination selection
+        unsetDestination();
+        destinationEnabled = false;
     }
 
     private void resume() {
         mover.setSpeed(Game.baseSpeed);
+        destinationEnabled = true;
     }
 
     public boolean isKilled() {
@@ -395,9 +400,11 @@ public class McMinos {
     }
 
     public void setDestination(int x, int y) {
-        destination.setGfx(Entities.destination);
-        destination.moveTo(x, y, game.getLevelBlockFromVPixelRounded(x, y));
-        destinationSet = true;
+        if(destinationEnabled) {
+            destination.setGfx(Entities.destination);
+            destination.moveTo(x, y, game.getLevelBlockFromVPixelRounded(x, y));
+            destinationSet = true;
+        }
     }
 
     public boolean isDestinationSet() {

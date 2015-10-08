@@ -345,6 +345,9 @@ public class Level {
                 case 'S':
                     lb.makeSkull();
                     break;
+                case 'T':
+                    lb.makeSkullField();
+                    break;
                 case 'b':
                     lb.makeBomb();
                     break;
@@ -440,7 +443,7 @@ public class Level {
 //                (does it's job for: 10 s)
                     break;
                 case 'x':
-                    lb.makeLadder();
+                    lb.makeExit();
                     break;
                 case '1':
                     lb.makeBonus1();
