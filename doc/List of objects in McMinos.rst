@@ -57,7 +57,10 @@ Inanimate
 Item
 ====
 
-* Bonus -- TODO: piggy bank exists, add others according to ATARI version
+* Bonuses
+  * piggy bank
+  * TODO: bonus 2
+  * TODO: bonus 3
 * Cloak (disguises McMinos as ghost)
 * Clock (increases available time in time-limited levels) -- TODO: clock + animations
 * Explosive
@@ -72,7 +75,8 @@ Item
 * Mirror
 * NextLevelTool (was ladder on Atari, may be different item now) -- TODO: draw
 * Skull
-* Surprise -- TODO: do we still need this? If so, draw nicely wrapped present or similar
+* TODO: Surprise
+* TODO: Ladder
 * Edible
 
   * Pill
