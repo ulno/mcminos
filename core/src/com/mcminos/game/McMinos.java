@@ -9,12 +9,14 @@ public class McMinos {
     private McMinosMover mover;
     private int powerDuration = 0;
     private int umbrellaDuration = 0;
+    private int poisonDuration = 0;
     private int umbrellas=0; // number of umbrellas carried by mcminos
     private int chocolates; // number of chocolates carried by mcminos
     private int bombs=0; // number of bombs carried by mcminos
     private int dynamites=0; // number of dynamites carried by mcminos
     private int keys=0; // number of keys carried by mcminos
     private int landmines=0; // number of umbrellas carried by mcminos
+    private int medicines=0; // number of medicines carried by mcminos
     private int lives=3; // number of lives left
     private int score=0; // current score
     private final Audio audio;
@@ -26,7 +28,15 @@ public class McMinos {
     private boolean falling;
     private LevelBlock startBlock = null;
     private boolean destinationEnabled = true;
+    private boolean mirrored = false;
 
+    public boolean isMirrored() {
+        return mirrored;
+    }
+
+    public void toggleMirrored() {
+        mirrored = ! mirrored;
+    }
 
     public McMinos(Game game) {
         this.game = game;
@@ -77,12 +87,18 @@ public class McMinos {
             if (powerDuration == 1) { // power just ran out
                 powerDuration = 0;
                 setPowerPillValues(1, 1, 0); // back to normal, TODO: check, if this has to be adapted to level specifics
-                gfxNormal();
+                if(poisonDuration == 0) gfxNormal(); // poison tops unpowering
             }
         }
         if(umbrellaDuration > 0) {
             umbrellaDuration --;
         } // no else necessary as umbrellapower is checked when necessary
+        if(poisonDuration > 0) {
+            poisonDuration --;
+            if(poisonDuration == 0) {
+                kill("skullkill", Entities.mcminos_dying);
+            }
+        }
     }
 
     /**
@@ -323,7 +339,7 @@ public class McMinos {
 
     public void fall() {
         // don't multifall
-        Graphics gfx = Entities.mcminos_dying; // TODO: replace with falling
+        Graphics gfx = Entities.mcminos_frightened;
         if (!isFalling()) {
             audio.soundPlay("falling");
             //game.stopAllMovers();
@@ -341,11 +357,23 @@ public class McMinos {
                     animation.dispose();
                     //decreaseLives();
                     teleportToBlock(startBlock);
-                    falling=false;
+                    falling = false;
                     gfxSelect();
                     resume();
                 }
             }, gfx.getAnimationFramesLength());
+        }
+    }
+
+    public void poison() {
+        // don't multifall
+        Graphics gfx = Entities.mcminos_dying; // TODO: replace with falling
+        if (poisonDuration == 0) { // not already poisoned
+            poisonDuration = 10 << Game.timeResolutionExponent;
+            audio.soundPlay("poison");
+            stop();
+            // show poison-animation
+            mover.setGfx(Entities.mcminos_poisoned_front);
         }
     }
 
@@ -403,6 +431,10 @@ public class McMinos {
 
     public void setDestination(int x, int y) {
         if(destinationEnabled) {
+            if(isMirrored()) { // if this goes out of range it's corrected in moveto
+                x = getVX() - (x - getVX());
+                y = getVY() - (y - getVY());
+            }
             destination.setGfx(Entities.destination);
             destination.moveTo(x, y, game.getLevelBlockFromVPixelRounded(x, y));
             destinationSet = true;
@@ -437,5 +469,36 @@ public class McMinos {
 
     public boolean isFalling() {
         return falling;
+    }
+
+    public int getPoisonDuration() {
+        return poisonDuration;
+    }
+
+    public boolean hasMedicine() {
+        return medicines > 0;
+    }
+
+    public void increaseMedicines() {
+        medicines ++;
+    }
+
+    public int getMedicines() {
+        return medicines;
+    }
+
+    public void consumeMedicine() {
+        poisonDuration = 0;
+        resume();
+        gfxSelect();
+    }
+
+    public void reset() {
+        //TODO: check to eventually re-create start values
+        mirrored = false;
+        poisonDuration = 0;
+        powerDuration = 0;
+        umbrellaDuration = 0;
+        setPowerPillValues(1,1,0);
     }
 }

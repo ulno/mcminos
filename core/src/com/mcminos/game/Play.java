@@ -50,6 +50,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private int touchDownY;
     private long lastZoomTime = 0;
     private int gameResolutionCounter = 0;
+    private Label medicineLabel;
 
     public Play(final Main main, String levelName) {
         this.main = main;
@@ -139,7 +140,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         chocolateActivateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (mcminos.hasChocolate()) {
+                if (mcminos.hasChocolate() && mcminos.getPoisonDuration() == 0) {
                     mcminos.decreaseChocolates();
                     mcminos.setPowerPillValues(2, 1, 10);
                     toggleToolbox(); // close toolbox
@@ -293,6 +294,26 @@ public class Play implements Screen, GestureListener, InputProcessor {
         });
         toolboxTable.row();
 
+        toolboxTable.add(new Image(Entities.extras_medicine.getTexture(64, 0)));
+        medicineLabel = new Label("000", skin);
+        toolboxTable.add(medicineLabel);
+        TextButton medicineDropButton = new TextButton("v", skin);
+        toolboxTable.add(medicineDropButton).prefSize(64).pad(2);
+        TextButton medicineActivateButton = new TextButton("*", skin);
+        toolboxTable.add(medicineActivateButton).prefSize(64).pad(2);
+        medicineActivateButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (mcminos.hasMedicine() && mcminos.getPoisonDuration() > 0) {
+                    mcminos.consumeMedicine();
+                    audio.soundPlay("panflute");
+                    mcminos.increaseScore(10);
+                    toggleToolbox(); // close toolbox
+                } else audio.soundPlay("error");
+            }
+        });
+        toolboxTable.row();
+
         Button leaveButton = new TextButton("Leave Level", skin);
         final Play thisScreen = this;
         leaveButton.addListener(new ClickListener() {
@@ -368,6 +389,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         dynamiteLabel.setText(String.format("%03d", mcminos.getDynamites()));
         landmineLabel.setText(String.format("%03d", mcminos.getLandmines()));
         umbrellaLabel.setText(String.format("%03d", mcminos.getUmbrellas()));
+        medicineLabel.setText(String.format("%03d", mcminos.getMedicines()));
         pillLabel.setText(String.format("%05d", level.getPillsNumber()));
         rockmeLabel.setText(String.format("%05d", level.getRockmesNumber()));
         // update door buttons
@@ -420,11 +442,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game.releaseLock(); // TODO: think about moving this to the end of draw
 
         updateToolbox();
-        font.draw(batch, String.format("S%06d P%03d U%03d L%02d",
+        font.draw(batch, String.format("S%06d P%03d U%03d T%02d L%02d ",
                         mcminos.getScore(),
                         mcminos.getPowerDuration() >> game.timeResolutionExponent,
                         mcminos.getUmbrellaDuration() >> game.timeResolutionExponent,
-                        mcminos.getLives()),
+                        mcminos.getPoisonDuration()  >> game.timeResolutionExponent,
+                        mcminos.getLives()) +
+                        (mcminos.isMirrored()?" M":""),
                 20, Gdx.graphics.getHeight() - 20);
         // add stage and menu
         batch.end(); // must end before menu
