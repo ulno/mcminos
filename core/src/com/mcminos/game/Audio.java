@@ -74,18 +74,6 @@ Sound fr nchsten Level
         }
 
 
-        Sound fr Spiegel
-        void snd_mirror( void )
-        {
-        play_sound( FADE, 2, 200 );
-        }
-
-        Sound fr drunken
-        void snd_drunken( void )
-        {
-        play_sound( ETHANOLE, 2, 200 );
-        }
-
         Sound fr letter
         void snd_letter( void )
         {

@@ -72,6 +72,7 @@ public class Level {
     }
 
     public void dispose() {
+        warpHoleBlocks.clear();
         allLevelObjects.clear();
     }
 
@@ -84,7 +85,11 @@ public class Level {
         allLevelObjects.add(index, lo);
     }
 
-    private void load(String levelName) {
+    /**
+     *
+     * @param levelName
+     */
+    public void load(String levelName) {
         // save name
         this.levelName = levelName;
 
@@ -100,7 +105,7 @@ public class Level {
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(Gdx.files.internal(filename).read()), 2048);
 
-        String line = null;
+        String line;
         try {
             boolean readLevel = false; // set to true, when level keyword was found
             int levelline = 0; // current nr of line read
@@ -119,6 +124,7 @@ public class Level {
                                 max = Integer.parseInt(minmax[1]);
                             }
                         }
+                        // TODO: apply minmax on existing mcminos
                         switch(strList[0]) {
                             case "LEVEL": readLevel=true; break;
                             case "AUTHOR": author = strList[1]; break;
@@ -278,6 +284,7 @@ public class Level {
         // update some related variables
         vPixelsWidth = width << PlayWindow.virtualBlockResolutionExponent;
         vPixelsHeight = height << PlayWindow.virtualBlockResolutionExponent;
+
     }
 
     /**
@@ -682,7 +689,7 @@ Missing:
         return game;
     }
 
-    public void killReset() {
+    public void killRestart() {
         // reset all things necessary in case of a death
         /* restart:      0       ; (0,1,2,4,8,16 256, 257, 258, 260,
                     ; 264, 272)
@@ -705,15 +712,19 @@ Missing:
                     ; 260 = Last level and RSTRT = 4
                     ; 264 = Last level and RSTRT = 8
                     ; 272 = Last level and RSTRT = 16 !!! */
+        game.disableMovement();
+        game.getMcMinos().reset();
         game.disposeFrameTimer();
         if((restart & 1) > 0) { // complete restart requested
+            // TODO: make sure to take things away McMinos just found in this Level
             game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
-            game.getMcMinos().dispose();
+            //game.getMcMinos().dispose();
             // empty movers
-            game.clearMovers();
+            //game.clearMovers();
+            game.reset();
             // reload
-            game.loadFromPlay(levelName);
+            reload();
         } else { // "normal" restart
             // restore graphics of mcminos
             game.getMcMinos().gfxNormal();
@@ -728,6 +739,10 @@ Missing:
             }
             if ((restart & 4) == 0) game.getMcMinos().teleportToBlock(mcminosStart);
         }
+    }
+
+    private void reload() {
+        game.reload();
     }
 
     public String getLevelName() {

@@ -13,7 +13,6 @@ public class McMinosMover extends Mover {
     private final Audio audio;
     private final Level level;
     private final Ghosts ghosts;
-    private int speedFactor = 1;
 
     public McMinosMover(Game game) {
         super(game.getMcMinos().getLevelObject(), Game.baseSpeed, true);
@@ -124,7 +123,7 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if( m == null ) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, getSpeed(), currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(rock, getFullSpeed(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
@@ -133,7 +132,7 @@ public class McMinosMover extends Mover {
                     audio.soundPlay("moverock");
                 } else if(  ! m.isMoving() ) {
                     // let it move again
-                    m.triggerMove(currentDirection, getSpeed(), nextBlock2);
+                    m.triggerMove(currentDirection, getFullSpeed(), nextBlock2);
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
@@ -298,6 +297,23 @@ public class McMinosMover extends Mover {
                         case SkullField:
                             mcminos.kill("skullkill",Entities.mcminos_dying);
                             break;
+                        case Poison:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            mcminos.poison();
+                            break;
+                        case Medicine:
+                            audio.soundPlay("tools");
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            mcminos.increaseMedicines();
+                            break;
+                        case Mirror:
+                            audio.soundPlay("fade");
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            mcminos.toggleMirrored();
+                            break;
                     }
                 }
             }
@@ -311,8 +327,7 @@ public class McMinosMover extends Mover {
             if(ghostnr != -1) {
                 if( mcminos.isPowered() ) {
                     if(ghostnr == 3) { // jumping pill, will poison when powered
-                        // TODO: poison
-                        audio.soundPlay("poison");
+                        mcminos.poison();
                     } else { // all others can be killed when powered
                         game.removeMover(lo.getMover());
                         moveables.remove(i);

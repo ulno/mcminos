@@ -38,6 +38,10 @@ public class Game {
     private PlayWindow playwindow = null;
 
     private Random randomGenerator = new Random();
+    private boolean movement = false; // only do animations but don't move anything
+    boolean toolboxShown = false;
+
+
 
     public PlayWindow getPlayWindow() {
         return playwindow;
@@ -67,13 +71,19 @@ public class Game {
         level = new Level(this, s);
         // is al done in load level mcminos.init(); // trigger update
         playwindow = new PlayWindow(batch,level,mcminos);
-        ghosts.init(); // update references
-        Mover mover = new McMinosMover(this);
-        // done in mover creation mcminos.setMover(mover); // needs to be created this late
+        initAfterLoad();
 
         // start the own timer (which triggers also the movemnet)
         startTimer();
         return level;
+    }
+
+    private void initAfterLoad() {
+        // Now init some of the level elements
+        getGhosts().init(); // update references
+        Mover mover = new McMinosMover(this);
+        // done in mover creation mcminos.setMover(mover); // needs to be created this late
+
     }
 
     public LevelBlock getLevelBlock( int x, int y) {
@@ -132,40 +142,42 @@ public class Game {
      * This is called
      */
     private void nextGameFrame() { // to allow serialized iterations
-        if( !playwindow.toolboxShown) { // if game is not paused
+        if( !toolboxShown) { // if game is not paused
             // do timers
             gameFrame++;
-            frameTimer.update(gameFrame);
-            // update durations and trigger events, if necessary
-            mcminos.updateDurations();
-            // move everybody
+            // get lock
             try { // needs to be synchronized against drawing
                 updateLock.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            frameTimer.update(gameFrame);
 
-            ghosts.checkSpawn();
 
-            // move everybody
-            mcminos.move();
-            for (int i = movers.size()-1; i>=0; i--) { // works as synchronized
-                // current could already be destroyed by last mover
-                if(i <= movers.size()-1 ) {
-                    // TODO: check if this makes sense
-                    Mover m = movers.get(i);
-                    if (m.move()) {
-                        movers.remove(i);
-                        LevelObject lo = m.getLevelObject();
-                        lo.getLevelBlock().removeMovable(lo);
-                        lo.dispose();
+            if(movement) {
+                // update durations and trigger events, if necessary
+                mcminos.updateDurations();
+                ghosts.checkSpawn();
+
+                // move everybody
+                mcminos.move();
+                for (int i = movers.size() - 1; i >= 0; i--) { // works as synchronized
+                    // current could already be destroyed by last mover
+                    if (i <= movers.size() - 1) {
+                        // TODO: check if this makes sense
+                        Mover m = movers.get(i);
+                        if (m.move()) {
+                            movers.remove(i);
+                            LevelObject lo = m.getLevelObject();
+                            lo.getLevelBlock().removeMovable(lo);
+                            lo.dispose();
+                        }
                     }
                 }
             }
-
+            updateLock.release(); // release lock
         }
 
-        updateLock.release();
     }
 
     public void disposeFrameTimer() {
@@ -180,6 +192,15 @@ public class Game {
         disposeFrameTimer();
         disposeTimerTask();
         mcminos.dispose();
+        ghosts.dispose();
+        movers.clear();
+        level.dispose();
+    }
+
+    public void reset() {
+        disposeFrameTimer();
+        //disposeTimerTask();
+        //mcminos.dispose(); // will be reused
         ghosts.dispose();
         movers.clear();
         level.dispose();
@@ -234,9 +255,10 @@ public class Game {
     }
 
     public void stopAllMovers() {
-        for(Mover m: movers) {
+        /*for(Mover m: movers) {
             m.setSpeed(0);
-        }
+        }*/
+        movement = false;
     }
 
     public ArrayList<Mover> getMovers() {
@@ -249,5 +271,34 @@ public class Game {
 
     public Play getPlayScreen() {
         return playScreen;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public void reload() {
+        level.load(currentLevelName);
+        initAfterLoad();
+    }
+
+    public boolean isToolboxShown() {
+        return toolboxShown;
+    }
+
+    public void setToolboxShown(boolean toolboxShown) {
+        this.toolboxShown = toolboxShown;
+    }
+
+    public boolean getMovement() {
+        return movement;
+    }
+
+    public void enableMovement() {
+        movement = true;
+    }
+
+    public void disableMovement() {
+        movement = false;
     }
 }
