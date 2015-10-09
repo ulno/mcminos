@@ -9,6 +9,7 @@ import java.util.HashMap;
  */
 public class Audio {
     public static String[] soundNames = new String[]{"aaahhh",
+            "antidot",
             "applaus",
             "beep",
             "blub",
