@@ -13,7 +13,6 @@ public class Ghosts {
     private int ghostSpeed[] = {Game.baseSpeed,Game.baseSpeed,Game.baseSpeed,Game.baseSpeed};
     private int ghostsActive[] = {0,0,0,0};
     private int[] ghostSpawnCounter = {-1,-1,-1,-1};
-    private int ghostSpeedFactor = 1;
 
     public final LevelObject.Types ghostTypes[] = {
             LevelObject.Types.Ghost1, LevelObject.Types.Ghost2,

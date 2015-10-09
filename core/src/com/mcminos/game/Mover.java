@@ -17,7 +17,6 @@ public abstract class Mover {
 
     public final int STOP=0, UP=1, RIGHT=2, DOWN=4, LEFT=8, ALL=15;
     protected int currentDirection = STOP;
-    //private int nextDirections = STOP; // This is actually a bit field
     protected LevelObject levelObject; // corresponding LevelObject
     protected LevelBlock currentLevelBlock; // current associated LevelBlock
     protected boolean canMoveRocks = false; // This moveable can move rocks (Main for example)
@@ -25,12 +24,13 @@ public abstract class Mover {
     protected LevelBlock lastBlock = null;
     private LevelBlock headingTo;  // Block this object is heading to
 
+
     /**
      *
      * @param blocksPerSecond move how many blocks per second?
      */
     public void setSpeed(int blocksPerSecond) {
-        this.newCurrentPixelSpeed = blocksPerSecond * PlayWindow.virtualBlockResolution / Game.timeResolution;
+        this.newCurrentPixelSpeed = blocksPerSecond * PlayWindow.virtualBlockResolution / Game.timeResolution *speedFactor;
         this.newSpeed = blocksPerSecond;
     }
 
@@ -59,6 +59,7 @@ public abstract class Mover {
         this.gfxRight = right;
         this.gfxDown = down;
         this.gfxLeft = left;
+        levelObject.setGfx(still); // make sure the first is active as it might else not be chosen
     }
 
     public void setGfx( Graphics allDirections) {

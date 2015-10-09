@@ -32,9 +32,8 @@ public class PlayWindow {
     int fullPixelWidth =0;
     int fullPixelHeight =0; // Size of virtual playingfield in physical pixels (blocks * physical resolution)
     float density;
-    boolean toolboxShown;
     Level level;
-    private Game game;
+    Game game;
 
     public PlayWindow(SpriteBatch batch, Level level, McMinos mcminos) {
         this.batch = batch;
@@ -58,19 +57,11 @@ public class PlayWindow {
         Graphics.setResolutionAll(this, resolution);
     }
 
-    public boolean isToolboxShown() {
-        return toolboxShown;
-    }
-
-    public void setToolboxShown(boolean toolboxShown) {
-        this.toolboxShown = toolboxShown;
-    }
-
     /**
      * Update the position of the currently seen viewable window
      */
     public void updateWindowPosition() {
-        if( ! toolboxShown) {
+        if( ! game.isToolboxShown()) {
             windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), windowVPixelWidth);
             windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), windowVPixelHeight);
         }

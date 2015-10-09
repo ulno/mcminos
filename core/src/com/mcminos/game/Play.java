@@ -62,6 +62,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void init( String levelName) {
         game = new Game(main,this);
+        game.disableMovement();
         game.currentLevelName = levelName;
         level = game.loadLevel(levelName);
         mcminos = game.getMcMinos();
@@ -384,8 +385,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void toggleToolbox() {
-        playwindow.setToolboxShown(!playwindow.isToolboxShown());
-        if (playwindow.isToolboxShown())
+        game.setToolboxShown(!game.isToolboxShown());
+        if (playwindow.game.isToolboxShown())
             menu.addActor(toolbox);
         else
             toolbox.remove();
@@ -498,7 +499,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if( ! playwindow.isToolboxShown() ) { // just pan in this case -> see there
+        if( !mcminos.isKilled() && !mcminos.isFalling() ) {
+            game.enableMovement();
+        }
+        if( ! game.isToolboxShown() ) { // just pan in this case -> see there
             if (pointer > 0) return false;
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
@@ -594,7 +598,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean pan(float screenX, float screenY, float deltaX, float deltaY) {
-        if( playwindow.isToolboxShown() ) {
+        if( playwindow.game.isToolboxShown() ) {
             int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + playwindow.getVPixelsLevelWidth() - dxi) % playwindow.getVPixelsLevelWidth();

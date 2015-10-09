@@ -711,6 +711,8 @@ Missing:
                     ; 260 = Last level and RSTRT = 4
                     ; 264 = Last level and RSTRT = 8
                     ; 272 = Last level and RSTRT = 16 !!! */
+        game.disableMovement();
+        game.getMcMinos().setPowerPillValues(1,1,0);
         game.disposeFrameTimer();
         if((restart & 1) > 0) { // complete restart requested
             game.getGhosts().dispose(); // remove ghosts
