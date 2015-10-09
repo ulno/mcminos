@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg4150"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   viewBox="0 0 32 32"
+   sodipodi:docname="00.svg">
+  <defs
+     id="defs4152" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="16.375"
+     inkscape:cx="16"
+     inkscape:cy="16"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="10000"
+     inkscape:snap-perpendicular="true"
+     guidetolerance="10000"
+     inkscape:window-width="1024"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
+     inkscape:window-y="2"
+     inkscape:window-maximized="1"
+     showguides="false"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4698"
+       empspacing="4" />
+    <sodipodi:guide
+       position="16,32"
+       orientation="1,0"
+       id="guide4769" />
+    <sodipodi:guide
+       position="-4,16"
+       orientation="0,1"
+       id="guide4771" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="-0.70710678,0.70710678"
+       id="guide4773" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="0.70710678,0.70710678"
+       id="guide4775" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4155">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g4537">
+      <rect
+         y="0"
+         x="0"
+         height="32"
+         width="32"
+         id="rect4535"
+         style="fill:none;fill-opacity:1;stroke:none" />
+      <path
+         d="M 28,16 A 12,12 0 1 1 4,16 12,12 0 1 1 28,16 z"
+         sodipodi:ry="12"
+         sodipodi:rx="12"
+         sodipodi:cy="16"
+         sodipodi:cx="16"
+         id="path4500"
+         style="fill:black;fill-opacity:1;stroke:none"
+         sodipodi:type="arc"
+         transform="matrix(1.25,0,0,1.25,-3.9999988,-3.9999988)" />
+      <path
+         transform="matrix(1.1666667,0,0,1.1666667,-2.6666667,-2.6666667)"
+         sodipodi:type="arc"
+         style="fill:#ffb400;fill-opacity:1;stroke:none"
+         id="path4481"
+         sodipodi:cx="16"
+         sodipodi:cy="16"
+         sodipodi:rx="12"
+         sodipodi:ry="12"
+         d="M 28,16 A 12,12 0 1 1 4,16 12,12 0 1 1 28,16 z" />
+      <path
+         id="path3971"
+         d="M 16 4 C 13.997431 4 11.988242 4.5036877 10.1875 5.5 C 14.643896 4.2178603 19.64516 5.3326599 23.15625 8.84375 C 26.66734 12.35484 27.78214 17.356104 26.5 21.8125 C 29.024221 17.250205 28.371054 11.371054 24.5 7.5 C 22.156854 5.1568543 19.071068 3.9999999 16 4 z "
+         style="fill:#a07100;fill-opacity:1;stroke:none" />
+      <path
+         inkscape:transform-center-y="3.09375"
+         inkscape:transform-center-x="3.0944821"
+         inkscape:connector-curvature="0"
+         style="fill:#ffda81;fill-opacity:1;stroke:none"
+         d="m 16,28 c 2.002569,0 4.011758,-0.503688 5.8125,-1.5 C 17.356104,27.78214 12.35484,26.66734 8.84375,23.15625 5.33266,19.64516 4.21786,14.643896 5.5,10.1875 2.975779,14.749795 3.628946,20.628946 7.5,24.5 9.843146,26.843146 12.928932,28 16,28 z"
+         id="path4486" />
+      <text
+         xml:space="preserve"
+         style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffda81;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
+         x="17.000437"
+         y="22"
+         id="text4496"><tspan
+           sodipodi:role="line"
+           id="tspan4498"
+           x="17.000437"
+           y="22"
+           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffda81;fill-opacity:1;font-family:Liberation Serif;-inkscape-font-specification:Liberation Serif Bold">1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#a07100;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
+         x="15.000438"
+         y="23"
+         id="text4492"><tspan
+           sodipodi:role="line"
+           id="tspan4494"
+           x="15.000438"
+           y="23"
+           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#a07100;fill-opacity:1;font-family:Liberation Serif;-inkscape-font-specification:Liberation Serif Bold">1</tspan></text>
+      <text
+         id="text4488"
+         y="22"
+         x="16"
+         style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffb400;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
+         xml:space="preserve"><tspan
+           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffb400;fill-opacity:1;font-family:Liberation Serif;-inkscape-font-specification:Liberation Serif Bold"
+           y="22"
+           x="16"
+           id="tspan4490"
+           sodipodi:role="line">1</tspan></text>
+    </g>
+  </g>
+</svg>
