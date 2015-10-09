@@ -72,6 +72,7 @@ public class Level {
     }
 
     public void dispose() {
+        warpHoleBlocks.clear();
         allLevelObjects.clear();
     }
 
