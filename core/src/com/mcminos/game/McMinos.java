@@ -488,6 +488,7 @@ public class McMinos {
     }
 
     public void consumeMedicine() {
+        audio.soundPlay("antidot");
         poisonDuration = 0;
         resume();
         gfxSelect();

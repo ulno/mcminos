@@ -306,7 +306,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
             public void clicked(InputEvent event, float x, float y) {
                 if (mcminos.hasMedicine() && mcminos.getPoisonDuration() > 0) {
                     mcminos.consumeMedicine();
-                    audio.soundPlay("panflute");
                     mcminos.increaseScore(10);
                     toggleToolbox(); // close toolbox
                 } else audio.soundPlay("error");
