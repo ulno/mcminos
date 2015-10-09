@@ -18,7 +18,7 @@ public class GhostMover extends Mover {
         audio = game.getAudio();
         ghosts = game.getGhosts();
         mcminos = game.getMcMinos();
-        level = game.getLevel(); // TODO: check why this is null
+        level = ghost.getLevelBlock().getLevel(); // need to get it from here as else null
         this.rememberedBlock = currentLevelBlock;
     }
 
