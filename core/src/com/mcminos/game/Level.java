@@ -716,6 +716,7 @@ Missing:
         game.getMcMinos().setPowerPillValues(1,1,0);
         game.disposeFrameTimer();
         if((restart & 1) > 0) { // complete restart requested
+            // TODO: make sure to take things away McMinos just found in this Level
             game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
             //game.getMcMinos().dispose();

@@ -30,19 +30,17 @@ public abstract class Mover {
      * @param blocksPerSecond move how many blocks per second?
      */
     public void setSpeed(int blocksPerSecond) {
-        this.newCurrentPixelSpeed = blocksPerSecond * PlayWindow.virtualBlockResolution / Game.timeResolution *speedFactor;
+        this.newCurrentPixelSpeed = blocksPerSecond  * speedFactor * PlayWindow.virtualBlockResolution / Game.timeResolution;
         this.newSpeed = blocksPerSecond;
     }
 
-    public int getSpeed() {
-        return this.newSpeed;
+    public int getFullSpeed() {
+        return this.newSpeed * speedFactor;
     }
 
     public void setSpeedFactor(int newFactor) {
-        int tmpSpeed = newSpeed / speedFactor;
-        tmpSpeed *= newFactor;
         speedFactor = newFactor;
-        setSpeed(tmpSpeed);
+        setSpeed(newSpeed);
     }
 
     /**
