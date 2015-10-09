@@ -5,7 +5,7 @@
   <defs id="defs4">
     <inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="0 : 526.18109 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="744.09448 : 526.18109 : 1" inkscape:persp3d-origin="372.04724 : 350.78739 : 1" id="perspective10" />
   </defs>
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="88.5" inkscape:cx="4" inkscape:cy="4" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="true" objecttolerance="10000" gridtolerance="10000" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:snap-perpendicular="true" inkscape:snap-tangential="true" showguides="true" inkscape:guide-bbox="true" inkscape:window-maximized="1">
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="62.57895" inkscape:cx="4" inkscape:cy="4" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="true" objecttolerance="10000" gridtolerance="10000" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:snap-perpendicular="true" inkscape:snap-tangential="true" showguides="true" inkscape:guide-bbox="true" inkscape:window-maximized="1">
     <inkscape:grid type="xygrid" id="grid2383" units="px" visible="true" enabled="true" empspacing="4" spacingx="1" spacingy="1" />
     <sodipodi:guide position="4,12" orientation="1,0" id="guide5299" />
     <sodipodi:guide position="12,4" orientation="0,1" id="guide5301" />
@@ -22,16 +22,19 @@
     </rdf:RDF>
   </metadata>
   <g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-8)">
-    <g id="g5981" transform="matrix(-1,0,0,-1,8,24)">
-      <path style="opacity:1;fill:aqua;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 1,8 4,8 4,12 1,9 Z" id="path5983" inkscape:connector-curvature="0" />
-    </g>
-    <g transform="matrix(-1,0,0,1,8,0)" id="g6058" inkscape:transform-center-y="-2.0004193">
-      <path style="opacity:1;fill:aqua;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 1,8 4,8 4,12 1,9 Z" id="path6060" inkscape:connector-curvature="0" />
-      <path style="opacity:1;fill:blue;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="m 4,8 3,0 0,8.001744 -3,-0.0031 z" id="path6062" inkscape:connector-curvature="0" sodipodi:nodetypes="ccccc" />
-    </g>
-    <g id="g6064" transform="matrix(0,1,-1,0,16.000419,8.000419)" inkscape:transform-center-x="-2.000419">
-      <path inkscape:connector-curvature="0" id="path6066" d="M 1,8 4,8 4,12 1,9 Z" style="opacity:1;fill:aqua;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <path inkscape:connector-curvature="0" id="path6068" d="M 4,8 7,8 7,9 4,12 Z" style="opacity:1;fill:blue;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <g id="g15817">
+      <rect y="8" x="0" height="8" width="8" id="rect15815" style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <g transform="matrix(-1,0,0,-1,8,24)" id="g5981">
+        <path inkscape:connector-curvature="0" id="path5983" d="M 1,8 4,8 4,12 1,9 Z" style="opacity:1;fill:aqua;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      </g>
+      <g inkscape:transform-center-y="-2.0004193" id="g6058" transform="matrix(-1,0,0,1,8,0)">
+        <path inkscape:connector-curvature="0" id="path6060" d="M 1,8 4,8 4,12 1,9 Z" style="opacity:1;fill:aqua;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="path6062" d="m 4,8 3,0 0,8.001744 -3,-0.0031 z" style="opacity:1;fill:blue;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      </g>
+      <g inkscape:transform-center-x="-2.000419" transform="matrix(0,1,-1,0,16.000419,8.000419)" id="g6064">
+        <path style="opacity:1;fill:aqua;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 1,8 4,8 4,12 1,9 Z" id="path6066" inkscape:connector-curvature="0" />
+        <path style="opacity:1;fill:blue;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 4,8 7,8 7,9 4,12 Z" id="path6068" inkscape:connector-curvature="0" />
+      </g>
     </g>
   </g>
 </svg>
