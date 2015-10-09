@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="08.svg"
+   sodipodi:docname="02.svg"
    inkscape:export-filename="/home/andreas/Dokumente/Projekte/McMinos/repository/extra/images-incoming/mcminos-cheering-front/mcminos-cheering-front-384x384.png"
    inkscape:export-xdpi="360"
    inkscape:export-ydpi="360">
@@ -99,7 +99,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -109,7 +109,7 @@
      id="layer1"
      transform="translate(32,-988.36218)">
     <g
-       id="g7826">
+       id="g8382">
       <use
          height="96"
          width="96"
@@ -259,7 +259,7 @@
          d="M 9,5 A 1,1 0 1 1 7,5 1,1 0 1 1 9,5 z"
          transform="matrix(2,0,0,2,7,1018.3622)" />
       <path
-         transform="translate(0,1017.3622)"
+         transform="translate(0,1016.3622)"
          d="m 17,22 a 1,2 0 1 1 -2,0 1,2 0 1 1 2,0 z"
          sodipodi:ry="2"
          sodipodi:rx="1"
