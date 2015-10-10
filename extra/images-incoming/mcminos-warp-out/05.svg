@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32px" height="32px" id="svg3505" sodipodi:version="0.32" inkscape:version="0.91 r13725" sodipodi:docname="05.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" version="1.1">
+  <defs id="defs3507">
+    <inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="0 : 16 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="32 : 16 : 1" inkscape:persp3d-origin="16 : 10.666667 : 1" id="perspective3513" />
+    <inkscape:perspective id="perspective4690" inkscape:persp3d-origin="372.04724 : 350.78739 : 1" inkscape:vp_z="744.09448 : 526.18109 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_x="0 : 526.18109 : 1" sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="20.972656" inkscape:cx="15.16558" inkscape:cy="16" inkscape:current-layer="g4612" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="4" gridtolerance="4" guidetolerance="4" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:object-paths="true" inkscape:object-nodes="true" inkscape:snap-bbox="true" inkscape:snap-guide="true" inkscape:window-maximized="1">
+    <inkscape:grid type="xygrid" id="grid3515" units="px" visible="true" enabled="true" spacingx="1px" spacingy="1px" />
+  </sodipodi:namedview>
+  <metadata id="metadata3510">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:date>2010-04-26</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>vorlage-32x32-mcminos</dc:identifier>
+        <dc:description>Vorlage für 32x32-Pixel-Icons für McMinos. Metadaten jeweils entsprechend anpassen!</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g4612">
+      <g id="g7928" transform="matrix(-1,0,0,1,32,0)">
+        <rect style="fill:none;fill-opacity:1;stroke:none" id="rect4610" width="32" height="32" x="0" y="0" />
+        <rect style="fill:none;stroke:none" id="rect6553" width="32" height="32" x="0" y="0" />
+        <g id="g7914">
+          <path id="path6549" d="M 6.8076119,6.8076118 C 5.1307738,8.4844499 4.0253617,10.510855 3.4562203,12.648608 c -2.0688741,2.383289 -1.9788258,5.987911 0.2872622,8.253999 0.1223703,0.12237 0.253197,0.234985 0.3830161,0.344715 0.6306033,1.42572 1.5126584,2.776611 2.6811133,3.945066 5.0768161,5.076816 13.3079601,5.076816 18.3847761,0 5.076817,-5.076816 5.076817,-13.30796 0,-18.3847762 -5.076816,-5.076816 -13.30796,-5.0768163 -18.3847761,0 z" style="fill:black;fill-opacity:1;stroke:none" inkscape:connector-curvature="0" />
+          <circle r="6.0666671" cy="17.427418" cx="6.0666671" style="fill:black;fill-opacity:1;stroke:none" id="path6551" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" />
+          <circle r="12.133333" cy="22.627413" cx="-2.9632345e-06" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" id="path3403" style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+          <path sodipodi:open="true" sodipodi:end="3.1415927" sodipodi:start="0" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" d="m 11.266662,22.627422 a 11.266666,11.266661 0 0 1 -5.6333334,9.757215 11.266666,11.266661 0 0 1 -11.2666666,0 11.266666,11.266661 0 0 1 -5.633333,-9.757215" sodipodi:ry="11.266661" sodipodi:rx="11.266666" sodipodi:cy="22.627422" sodipodi:cx="-4.4726585e-06" id="path3429" style="fill:maroon;fill-opacity:1;fill-rule:nonzero;stroke:none" sodipodi:type="arc" />
+          <ellipse ry="4.2850356" rx="6.9333334" cy="26.960751" cx="4.2426407e-08" id="path5770" style="fill:#500;fill-opacity:1;stroke:none" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" />
+          <circle r="5.2000027" cy="17.427412" cx="-6.0666695" id="path3407" style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" />
+          <circle r="5.2000027" cy="17.427412" cx="6.0666647" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3425" />
+          <circle r="2.5999999" cy="17.427416" cx="-6.0666676" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" id="path3409" style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+          <circle r="2.5999999" cy="17.427416" cx="6.0666666" style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3427" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" />
+          <ellipse ry="1.7333333" rx="0.86666667" cy="26.358715" cx="-2.4041631e-07" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" id="path5707" style="fill:red;fill-opacity:1;stroke:none" />
+          <path sodipodi:open="true" sodipodi:type="arc" style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3443" sodipodi:cx="-1.2787406e-06" sodipodi:cy="22.627415" sodipodi:rx="12.133335" sodipodi:ry="1.1667648e-06" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" sodipodi:start="3.1415927" sodipodi:end="6.2831853" />
+          <ellipse ry="0.18244144" rx="0.0032561368" cy="22.868385" cx="0.47959194" id="path5772" style="fill:#500;fill-opacity:1;stroke:none" transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

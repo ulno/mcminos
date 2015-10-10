@@ -1,20 +1,16 @@
-=========================
-Project McMinos: bug list
-=========================
-
----------------------
-Non-development tasks
----------------------
+====================================
+Project McMinos: bugs, issues, ideas
+====================================
 
 :Authors:
   Andreas Neudecker <zapyon@gmx.net>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-10-08
+:Date: 2015-10-10
 
 
 
-2015-10-08
+2015-10-08 — Andreas
 
 [ ] Level 0: McMinos cannot walk accross destroyed walls.
 
@@ -29,4 +25,17 @@ Non-development tasks
 
 This way, McMinos is beneath ghosts, unless he has had power pill or similar power-up. Then, while hunting ghosts, he will be on top.
 
-[ ]
+
+2015-10-10 — Andreas
+
+[ ] use cheering McMinos for level end
+
+[ ] replace current holes with new variant with shading/visible scarps
+
+[ ] new animation of McMinos falling into warp hole! Animations of ghosts falling in shall follow soon
+
+[ ] do we have a distinction between cycling and non-cycling animations? If so, we should add a switch to the CONFIG definition. If not, I would like to introduce them. This would allow new kinds of animations.
+
+
+
+
