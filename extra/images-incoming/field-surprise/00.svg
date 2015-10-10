@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg3505"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="00.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
+  <title
+     id="title3332">Surprise field</title>
+  <defs
+     id="defs3507">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective3159" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="9.44"
+     inkscape:cx="16"
+     inkscape:cy="16"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="10000"
+     gridtolerance="10000"
+     guidetolerance="10000"
+     inkscape:window-width="1024"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
+     inkscape:window-y="2"
+     inkscape:object-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-guide="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3515"
+       units="px"
+       visible="true"
+       enabled="true"
+       spacingx="1px"
+       spacingy="1px"
+       empspacing="4"
+       snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="16,36"
+       id="guide3073" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="32,16"
+       id="guide3075" />
+    <sodipodi:guide
+       orientation="-0.70710678,0.70710678"
+       position="32,32"
+       id="guide3077" />
+    <sodipodi:guide
+       orientation="0.70710678,0.70710678"
+       position="0,32"
+       id="guide3079" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3510">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Surprise field</dc:title>
+        <dc:date>2010-05-08</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>icon-missing-00</dc:identifier>
+        <dc:description>Surprise!
+2015-10-09: going to abuse this as template; added some guides, fixed the grid (4 pixels, not 5)</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g4127">
+      <rect
+         y="0"
+         x="0"
+         height="32"
+         width="32"
+         id="rect3334"
+         style="fill:white;fill-opacity:1;stroke:none" />
+      <rect
+         y="2"
+         x="2"
+         height="28"
+         width="28"
+         id="rect4125"
+         style="fill:#8181ff;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:connector-curvature="0"
+         id="path3345"
+         d="m 3,3 c 6.3164916,6.8849587 12.011337,3.1272304 12,0 1.708172,2.6452907 2.777629,6.2455496 13,2 -2.923817,4.9356864 -8.061512,10.733922 1,11 -5.412049,2.555089 -5.981539,6.701304 0,13 C 24.074058,25.986838 18.32657,18.334359 16,30 14.025239,26.028996 12.017997,22.110988 4,28 8.3512106,22.731269 13.793956,17.166915 3,16 13.272801,14.523967 7.7583389,8.7810821 3,3 z"
+         style="fill:yellow;fill-opacity:1;stroke:none" />
+      <path
+         d="m 15.3125,6.3125 c -0.875051,0.9847127 -2.120613,1.7184104 -3.59375,2.03125 -0.779023,0.1654355 -1.627565,0.1713351 -2.5,0.0625 0.4151536,0.7338516 0.7449103,1.4892002 0.96875,2.25 0.447679,1.5216 0.212379,3.406757 -1.0625,4.65625 -0.2217487,0.217333 -0.5832266,0.317382 -0.84375,0.5 0.3436907,0.188918 0.7733443,0.326142 1.0625,0.5625 1.371636,1.121183 1.783893,2.97574 1.40625,4.46875 -0.237359,0.938395 -0.688074,1.845875 -1.21875,2.71875 1.224324,-0.198816 2.395929,-0.163654 3.375,0.25 1.119951,0.473175 1.927569,1.233692 2.59375,2.09375 0.458696,-1.085163 1.011885,-1.937101 1.71875,-2.59375 1.379959,-1.281926 3.340337,-1.377231 4.84375,-0.84375 0.464924,0.164977 0.867472,0.516082 1.3125,0.75 -0.193173,-0.727489 -0.305061,-1.470591 -0.28125,-2.1875 0.05405,-1.62736 0.823225,-3.004468 1.96875,-4.1875 -0.541642,-0.2218 -1.112154,-0.380734 -1.53125,-0.75 C 22.294574,15.004114 22.100347,13.243775 22.4375,11.875 22.780017,10.48445 23.480744,9.1178922 24.28125,7.8125 21.574553,8.4984538 19.314917,8.7290941 17.71875,8.09375 16.657649,7.6713854 15.908753,7.002737 15.3125,6.3125 z"
+         id="path4123"
+         style="fill:white;fill-opacity:1;stroke:none"
+         inkscape:original="M 3 3 C 7.7583389 8.7810821 13.272801 14.523967 3 16 C 13.793956 17.166915 8.3512106 22.731269 4 28 C 12.017997 22.110988 14.025239 26.028996 16 30 C 18.32657 18.334359 24.074058 25.986838 29 29 C 23.018461 22.701304 23.587951 18.555089 29 16 C 19.938488 15.733922 25.076183 9.9356864 28 5 C 17.777629 9.2455496 16.708172 5.6452907 15 3 C 15.011337 6.1272304 9.3164916 9.8849587 3 3 z "
+         inkscape:radius="-1.6201572"
+         sodipodi:type="inkscape:offset" />
+      <path
+         id="rect3336"
+         d="M 1 1 L 1 31 L 31 31 L 31 1 L 1 1 z M 2 2 L 30 2 L 30 30 L 2 30 L 2 2 z "
+         style="fill:black;fill-opacity:1;stroke:none" />
+      <text
+         id="text3341"
+         y="23.421875"
+         x="15.953238"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;font-family:Liberation Serif;-inkscape-font-specification:Liberation Serif Bold"
+         xml:space="preserve"><tspan
+           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:black;fill-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Bold"
+           y="23.421875"
+           x="15.953238"
+           id="tspan3343"
+           sodipodi:role="line">?</tspan></text>
+    </g>
+  </g>
+</svg>
