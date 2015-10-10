@@ -14,7 +14,7 @@
    id="svg3505"
    sodipodi:version="0.32"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="05.svg"
+   sodipodi:docname="03.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.1">
   <defs
@@ -42,7 +42,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="16.375"
-     inkscape:cx="14.931298"
+     inkscape:cx="16"
      inkscape:cy="16"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -79,7 +79,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Vorlage für 32x32-Pixel-Icons für McMinos</dc:title>
+        <dc:title>McMinos frontal 0</dc:title>
         <dc:date>2010-04-26</dc:date>
         <dc:creator>
           <cc:Agent>
@@ -106,13 +106,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <g
-       id="g7775">
+       id="g7720">
       <rect
          y="0"
          x="0"
          height="32"
          width="32"
-         id="rect7773"
+         id="rect7718"
          style="fill:none;stroke:none" />
       <path
          transform="matrix(1.0440591,0,0,0.9999439,-255.76471,-120.05549)"
@@ -138,14 +138,14 @@
          sodipodi:open="true"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         transform="matrix(3.127226,0,0,2.0921113,-72.05343,-92.421323)"
+         transform="matrix(3.127226,0,0,1.0460546,-72.05343,-38.210605)"
          d="M 32.314078,51.823883 A 4.1570387,3.8238845 0 1 1 24.000001,51.823883"
          sodipodi:ry="3.8238845"
          sodipodi:rx="4.1570387"
          sodipodi:cy="51.823883"
          sodipodi:cx="28.15704"
          id="path3429"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         style="fill:#800000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          sodipodi:type="arc" />
       <path
          d="M 10,5 A 2,2 0 1 1 6,5 A 2,2 0 1 1 10,5 z"
@@ -188,10 +188,6 @@
          d="M 9,5 A 1,1 0 1 1 7,5 1,1 0 1 1 9,5 z"
          transform="matrix(2,0,0,2,7,0)" />
       <path
-         id="rect3449"
-         d="M 3 16 C 3 17.081833 3.3666898 18.120994 4 19.0625 L 4 16 L 3 16 z M 8 16 L 8 22.3125 C 9.1856739 22.882397 10.536596 23.303031 12 23.59375 L 12 16 L 8 16 z M 16 16 L 16 24 C 17.393086 24 18.741538 23.843756 20 23.59375 L 20 16 L 16 16 z M 24 16 L 24 22.3125 C 25.760253 21.46643 27.133609 20.350515 28 19.0625 L 28 16 L 24 16 z "
-         style="fill:#f0ffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
          sodipodi:open="true"
          sodipodi:type="arc"
          style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -204,6 +200,20 @@
          transform="matrix(3.3677824,0,0,1.7603396e-6,-78.826783,15.999905)"
          sodipodi:start="3.1415927"
          sodipodi:end="6.2831853" />
+      <path
+         style="fill:#500;fill-opacity:1;stroke:none"
+         d="M 16 16 C 13.238576 16 11 17.567003 11 19.5 C 11 19.566348 11.026045 19.622063 11.03125 19.6875 C 12.562641 19.882655 14.239317 20 16 20 C 17.760683 20 19.437359 19.882655 20.96875 19.6875 C 20.973955 19.622063 21 19.566348 21 19.5 C 21 17.567003 18.761424 16 16 16 z "
+         id="path5770" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#ff0001;fill-opacity:1;stroke:none"
+         id="path5707"
+         sodipodi:cx="16"
+         sodipodi:cy="22"
+         sodipodi:rx="1"
+         sodipodi:ry="2"
+         d="m 17,22 a 1,2 0 1 1 -2,0 1,2 0 1 1 2,0 z"
+         transform="matrix(0.75,0,0,1,4,-4)" />
     </g>
   </g>
 </svg>
