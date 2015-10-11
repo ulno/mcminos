@@ -38,4 +38,4 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 [ ] CONFIG for animation images: In Python, the 'order' sequence (actually a Python list) may stretch over several lines. Is that still allowed, or do we used the CONFIG files anywhere else where that might cause problems? Using multiple lines allows me to group stuff by sub-animations (check mcminos-default-front-new's CONFIG, for example)
 
-
+[ ]
