@@ -6,6 +6,10 @@
 ##  This sample CONFIG file is ment to be a fully functional config, decorated
 #   with substantial documentation so it may be used as template for your own
 #   CONFIG files. Keep this in mind when editing this sample file.
+#
+#   It is also valid Python code, as the converters (for test generation of
+#   animated GIFs and generation of production PNG graphics) are written
+#   in Python. (2010 .. 2015-10)
 
 
 
@@ -27,8 +31,6 @@
 #
 #   Any text following a hash character ('#') will be ignored, just as in
 #   Python.
-#   Importance: optional
-#   Default: no default
 
 
 
@@ -79,11 +81,11 @@ size = (3, 3)
 #
 #   type: tuple (integer, integer) [level square coordinates relative to icon]
 #   importance: optional
-#   default: (0, 0) (upper left corner)
+#   default: (1, 1) (upper left corner)
 #   error handling: if the x,y values of the tuple are larger than the actual
 #   dimensions of the icon (see 'size' above), a warning/error message shall
 #   be issued and the value set to the default
-focus = (1, 1)
+focus = (2, 2)
 
 ##  zindex:
 #   Define the order in which the entity is displayed relative to other
