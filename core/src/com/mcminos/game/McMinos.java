@@ -410,7 +410,7 @@ public class McMinos {
             // show kill-animation
             mover.setGfx(null); // hide
             // TODO: winning animation
-            Graphics gfx = Entities.mcminos_doped_front;
+            Graphics gfx = Entities.mcminos_cheering;
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
             animation.animationStartNow();
 
