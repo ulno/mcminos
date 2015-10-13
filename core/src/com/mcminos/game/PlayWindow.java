@@ -10,12 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * Created by ulno on 05.10.15.
- * Handles all drawing-realted to the Play-Screen Window
+ * Handles all drawing-related to the Play-Screen Window
  */
 public class PlayWindow {
     public final static int virtualBlockResolution = 128; // How many virtual pixels is a block big (independent of actually used resolution), must be a power of 2
     public final static int virtualBlockResolutionExponent = Util.log2binary(virtualBlockResolution);
-    // not needed (yet?) public final static int baseVPixelSpeedPerFrame = (int) Math.round(baseSpeed * virtualBlockResolution / timeResolution);
     private final McMinos mcminos;
     public SpriteBatch batch;
     public BitmapFont defaultFont;
