@@ -38,4 +38,19 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 [ ] CONFIG for animation images: In Python, the 'order' sequence (actually a Python list) may stretch over several lines. Is that still allowed, or do we used the CONFIG files anywhere else where that might cause problems? Using multiple lines allows me to group stuff by sub-animations (check mcminos-default-front-new's CONFIG, for example)
 
+
+2015-10-11 — Andreas
+
+[ ] Level 1: I remember ghosts running over McMinos (and on) when killing McMinos. Now, ghost Hanky stops where he touched McMinos and McMinos is dead. I liked the old behaviour better. And perhaps even the malevolent laughter they used to laugh. Though the organ sound is also nice. Perhaps both can go together ... — Thinking about changing the animation for dying/dead McMinos. I like the current version, but think the change from live McMinos to dead is too instantaneous.
+
+[ ] Level 1: McMinos cannot walk across destroyed walls.
+
+[ ] Any level: wouldn't it make sense to limit zooming out to the point where the whole level is visible at current screen size?
+
+[ ] Level number: it would be good to have the level number shown somewhere in the level, at least for testing.
+
+[ ] Level 2, desktop: it is impossible to cross the level border (to enter the other side again): clicking on the edge field will bring you just there. The only way to reach the other side is by zooming out until the complete level is visible and then clicking on the edge field on the other side. May be we can introduce an invisble function-field that pushes McMinos over the edge in desktop version? Like a special version of warp that has a specific corresponding target field?
+
 [ ]
+
+
