@@ -74,6 +74,8 @@ public class Level {
     public void dispose() {
         warpHoleBlocks.clear();
         allLevelObjects.clear();
+        pillsNumber = 0;
+        rockmeNumber = 0;
     }
 
     public void addToAllLevelObjects( LevelObject lo ) {

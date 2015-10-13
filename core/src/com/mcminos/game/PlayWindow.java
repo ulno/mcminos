@@ -70,21 +70,21 @@ public class PlayWindow {
      *
      * @param inputPos current window corner position in virtual pixels
      * @param mcmPos current mcminos position in virtual pixels
-     * @param scroll is scrolling for current level switched on?
+     * @param scroll is scrolling for current level and respective coordinate switched on?
      * @param totalBlocks total number of blocks for this coordinate (level block width or height)
      * @param visibleVPixels total number of visible virtual pixels in this coordinate
      * @return
      */
     private int computeWindowCoordinate(int inputPos, int mcmPos, boolean scroll, int totalBlocks, int visibleVPixels) {
-        // We compute the view based on Main' position
-        // when we are calling this, we try to make sure Main is visible near the center of the screen
+        // We compute the view based on McMinos' position
+        // when we are calling this, we try to make sure McMinos is visible near the center of the screen
         // However, scrollability of the level needs to be respected.
-        // compute the distance of mcminos from the center
-        // TODO: factor in delta time to make scrolling smooth or move to normal game movement mechanics
+
         int totalVPixels = totalBlocks << virtualBlockResolutionExponent;
         if ( totalVPixels > visibleVPixels) { // if it is not totally visible
             int center = (inputPos + (visibleVPixels >> 1)) % totalVPixels; // center of the visible screen
-            int delta = mcmPos - center; // < 0 means mcminos is under center
+            // compute the distance of mcminos from the center
+            int delta = mcmPos - center; // < 0 means mcminos is under/left of center
             if (scroll) { // the level scrolls in this direction
                 if (Math.abs(delta) > totalBlocks << (virtualBlockResolutionExponent - 1))
                     delta = (int) Math.signum(delta) * (Math.abs(delta) - totalVPixels);
@@ -96,20 +96,24 @@ public class PlayWindow {
                         inputPos -= totalVPixels;
                 }
             } else { // not all is visible, so we can scroll, but not as far as in the scrolling case
-                // the corner should still stay a corner
                 inputPos += delta;
                 if (inputPos < 0)
                     inputPos = 0;
                 else {
-                    if (inputPos >= (totalVPixels) - visibleVPixels)
-                        inputPos = (totalVPixels) - visibleVPixels;
+                    if (inputPos >= totalVPixels - visibleVPixels)
+                        inputPos = totalVPixels - visibleVPixels;
                 }
             }
         }
-        else {
-            // TODO: reconsider scrolling policy
+        else { // the visible area is bigger than the actual level
+            // if level is small, it needs to be centered
+            // When no scrolling is enabled, we
+            // also need to account for some black borders to allow giving the direction by setting the
+            // destination field
+            // TODO: implement
             // if( ! scroll )// not scroll and not too small -> make sure level aligned
-                inputPos = 0;
+            // inputPos = 0
+            inputPos = - (visibleVPixels - totalVPixels ) / 2;
         }
         return inputPos;
     }
