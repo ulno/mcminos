@@ -1,11 +1,9 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -19,20 +17,23 @@ public class PlayWindow {
     public SpriteBatch batch;
     public BitmapFont defaultFont;
     public Skin skin;
-    Entities gfx = null;
+//    Entities gfx = null;
+    int projectionX, projectionY;
     int windowVPixelXPos; // windowVPixelXPos-position (left) of game window in main game-screen in virtual pixels
     int windowVPixelYPos; // windowVPixelYPos-position (bottom) of game window n main game-screen in virtual pixels
-    int windowPixelWidth; // width of game-window in physical pixels
-    int windowPixelHeight; // height of game-window in physical pixels
-    int windowVPixelWidth; // width of game-window in virtual pixels
-    int windowVPixelHeight; // height of game-window in virtual pixels
+    int widthInPixels; // width of game-window in physical pixels
+    int heightInPixels; // height of game-window in physical pixels
+    int widthInVPixels; // width of game-window in virtual pixels
+    int heightInVPixels; // height of game-window in virtual pixels
     int resolution;
     int resolutionExponent;
-    int fullPixelWidth =0;
-    int fullPixelHeight =0; // Size of virtual playingfield in physical pixels (blocks * physical resolution)
+    int levelWidthInPixels =0;
+    int levelHeightInPixels =0; // Size of virtual playingfield in physical pixels (blocks * physical resolution)
     float density;
     Level level;
     Game game;
+    private int visibleWidthInBlocks; // Number of blocks visible (even fractions off)
+    private int visibleHeightInBlocks; // Number of blocks visible (even fractions off)
 
     public PlayWindow(SpriteBatch batch, Level level, McMinos mcminos) {
         this.batch = batch;
@@ -42,29 +43,21 @@ public class PlayWindow {
         this.mcminos = mcminos;
     }
 
-    public void init() {
+/*    seems obsolete public void init() {
         gfx = Entities.getInstance();
         // Load after graphics have been loaded
         windowVPixelXPos = 0;
         windowVPixelYPos = 0; // TODO: this might have to be initialized from a saved state or just computed based on mcminos position
-    }
+    }*/
 
 
     public void setResolution(int resolutionCounter) {
         resolution = Entities.resolutionList[resolutionCounter];
         resolutionExponent = Util.log2binary(resolution);
         Graphics.setResolutionAll(this, resolution);
+        resize();
     }
 
-    /**
-     * Update the position of the currently seen viewable window
-     */
-    public void updateWindowPosition() {
-        if( ! game.isToolboxShown()) {
-            windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), windowVPixelWidth);
-            windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), windowVPixelHeight);
-        }
-    }
 
     /**
      *
@@ -112,33 +105,57 @@ public class PlayWindow {
             // destination field
             // TODO: implement
             // if( ! scroll )// not scroll and not too small -> make sure level aligned
-            // inputPos = 0
-            inputPos = - (visibleVPixels - totalVPixels ) / 2;
+            inputPos = 0;
+            //inputPos = ((totalBlocks << virtualBlockResolutionExponent) -( visibleVPixels - totalVPixels ) / 2 ) % (totalBlocks << virtualBlockResolutionExponent);
         }
         return inputPos;
     }
 
+    /**
+     * Update the position of the currently seen viewable window
+     */
+    public void updateCoordinates() {
+        if( ! game.isToolboxShown()) {
+            windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), widthInVPixels);
+            windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), heightInVPixels);
+        }
+    }
+
     public void resize(int width, int height) {
+        // apply globally
+        widthInPixels = width;
+        heightInPixels = height;
+        widthInVPixels = Util.shiftLeftLogical(widthInPixels, virtualBlockResolutionExponent - resolutionExponent );
+        heightInVPixels = Util.shiftLeftLogical(heightInPixels, virtualBlockResolutionExponent - resolutionExponent );
+        // eventually restrict visibility from Levelsettings
+        if (widthInVPixels > level.getVisibleWidth() << virtualBlockResolutionExponent) {
+            widthInVPixels = level.getVisibleWidth() << virtualBlockResolutionExponent;
+            widthInPixels = level.getVisibleWidth() << resolutionExponent;
+        }
+        if (heightInVPixels > level.getVisibleHeight() << virtualBlockResolutionExponent) {
+            heightInVPixels = level.getVisibleHeight() << virtualBlockResolutionExponent;
+            heightInPixels = level.getVisibleHeight() << resolutionExponent;
+        }
+        // eventually restrict visibility by level-size
+        if (widthInVPixels > level.getWidth() << virtualBlockResolutionExponent) {
+            widthInVPixels = level.getWidth() << virtualBlockResolutionExponent;
+            widthInPixels = level.getWidth() << resolutionExponent;
+        }
+        if (heightInVPixels > level.getHeight() << virtualBlockResolutionExponent) {
+            heightInVPixels = level.getHeight() << virtualBlockResolutionExponent;
+            heightInPixels = level.getHeight() << resolutionExponent;
+        }
+        levelWidthInPixels = getLevelWidth() << resolutionExponent;
+        levelHeightInPixels = getLevelHeight() << resolutionExponent;
+        visibleWidthInBlocks = (widthInVPixels + virtualBlockResolution - 1)  >> virtualBlockResolutionExponent;
+        visibleHeightInBlocks = (heightInVPixels + virtualBlockResolution - 1)  >> virtualBlockResolutionExponent;
         // Solution from here: http://gamedev.stackexchange.com/questions/68785/why-does-resizing-my-game-window-move-and-distort-my-rendering
         Matrix4 matrix = new Matrix4();
-        matrix.setToOrtho2D(0, 0, width, height); // TODO: eventually respect centering here, if level too small
+        projectionX = (width - widthInPixels) / 2;
+        projectionY = (height - heightInPixels) / 2;
+        matrix.setToOrtho2D(-projectionX, -projectionY, widthInPixels + 2*projectionX, heightInPixels + 2*projectionY);
+//        matrix.setToOrtho2D(0, 0, width, height);
         batch.setProjectionMatrix(matrix);
-        // apply globally
-        windowPixelWidth = width;
-        windowPixelHeight = height;
-        windowVPixelWidth = Util.shiftLeftLogical(windowPixelWidth, virtualBlockResolutionExponent - resolutionExponent );
-        windowVPixelHeight = Util.shiftLeftLogical(windowPixelHeight, virtualBlockResolutionExponent - resolutionExponent );
-        // eventually restrict visibility
-        if (windowVPixelWidth > level.getVisibleWidth() << virtualBlockResolutionExponent) {
-            windowVPixelWidth = level.getVisibleWidth() << virtualBlockResolutionExponent;
-            windowPixelWidth = level.getVisibleWidth() << resolutionExponent;
-        }
-        if (windowVPixelHeight > level.getVisibleHeight() << virtualBlockResolutionExponent) {
-            windowVPixelHeight = level.getVisibleHeight() << virtualBlockResolutionExponent;
-            windowPixelHeight = level.getVisibleHeight() << resolutionExponent;
-        }
-        fullPixelWidth = getLevelWidth() << resolutionExponent;
-        fullPixelHeight = getLevelHeight() << resolutionExponent;
     }
 
     public void resize() {
@@ -177,20 +194,20 @@ public class PlayWindow {
         return level.getVPixelsHeight();
     }
 
-    public int getWindowVPixelWidth() {
-        return windowVPixelWidth;
+    public int getWidthInVPixels() {
+        return widthInVPixels;
     }
 
-    public int getWindowVPixelHeight() {
-        return windowVPixelHeight;
+    public int getHeightInVPixels() {
+        return heightInVPixels;
     }
 
-    public int getWindowPixelWidth() {
-        return windowPixelWidth;
+    public int getWidthInPixels() {
+        return widthInPixels;
     }
 
-    public int getWindowPixelHeight() {
-        return windowPixelHeight;
+    public int getHeightInPixels() {
+        return heightInPixels;
     }
 
     public Skin getSkin() {
@@ -203,5 +220,13 @@ public class PlayWindow {
 
     public BitmapFont getFont() {
         return defaultFont;
+    }
+
+    public int getProjectionX() {
+        return projectionX;
+    }
+
+    public int getProjectionY() {
+        return projectionY;
     }
 }

@@ -63,7 +63,6 @@ public class Game {
 
     public void updateTime() {
         gameTime += (long)(Gdx.graphics.getDeltaTime() * 1000);
-        playwindow.updateWindowPosition();
     }
 
     public Level loadLevel(String s) {

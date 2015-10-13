@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by ulno on 10.09.15.
  */
 public class Play implements Screen, GestureListener, InputProcessor {
+    private final SpriteBatch menubatch;
     private Game game;
     private Table menuTable;
     private Table toolboxTable;
@@ -58,6 +59,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         font = main.getFont();
         skin = main.getSkin();
         audio = main.getAudio();
+        menubatch = new SpriteBatch(); // don't conflict with gaming batch
         init(levelName);
     }
 
@@ -73,7 +75,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         playwindow.setResolution(gameResolutionCounter);
 
         // Init menu
-        menu = new Stage(new ScreenViewport(), batch);
+        menu = new Stage(new ScreenViewport(), menubatch);
         menuTable = new Table();
         menuTable.setWidth(menu.getWidth());
         menuTable.align(Align.center | Align.top);
@@ -445,9 +447,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
                         mcminos.getScore(),
                         mcminos.getPowerDuration() >> game.timeResolutionExponent,
                         mcminos.getUmbrellaDuration() >> game.timeResolutionExponent,
-                        mcminos.getPoisonDuration()  >> game.timeResolutionExponent,
+                        mcminos.getPoisonDuration() >> game.timeResolutionExponent,
                         mcminos.getLives()) +
-                        (mcminos.isMirrored()?" M":""),
+                        (mcminos.isMirrored() ? " M" : ""),
                 20, Gdx.graphics.getHeight() - 20);
         // add stage and menu
         batch.end(); // must end before menu
@@ -484,6 +486,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void dispose() {
+        menubatch.dispose();
         game.dispose();
         menu.dispose();
     }
@@ -551,7 +554,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public int windowToGameY(int screenY) {
-        int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY, (PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent))
+        int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY - playwindow.getProjectionY(), (PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent))
                 + playwindow.windowVPixelYPos - (PlayWindow.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
         //if(game.getScrollY()) { allways
         if (y >= playwindow.getVPixelsLevelHeight())
@@ -560,8 +563,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             y += playwindow.getLevelHeight();
         //}
         //else {
-        //    if( y >= game.windowVPixelYPos + game.getWindowVPixelHeight() - (game.virtualBlockResolution >> 1) )
-        //        y = game.windowVPixelYPos + game.getWindowVPixelHeight() - (game.virtualBlockResolution >> 1);
+        //    if( y >= game.windowVPixelYPos + game.getHeightInVPixels() - (game.virtualBlockResolution >> 1) )
+        //        y = game.windowVPixelYPos + game.getHeightInVPixels() - (game.virtualBlockResolution >> 1);
         //}
         return y;
     }
@@ -569,7 +572,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public int windowToGameX(int screenX) {
         // map windowVPixelXPos windowVPixelYPos to game coordinates
         // TODO: consider only first button/finger
-        int x = Util.shiftLeftLogical(screenX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent)
+        int x = Util.shiftLeftLogical(screenX-playwindow.getProjectionX(), PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent)
                 + playwindow.windowVPixelXPos - (PlayWindow.virtualBlockResolution >> 1);
         //if(game.getScrollX()) { allways do this
         if (x >= playwindow.getVPixelsLevelWidth())
@@ -578,8 +581,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             x += playwindow.getVPixelsLevelWidth();
         //}
         //else {
-        //    if( x >= game.windowVPixelXPos + game.getWindowVPixelWidth() - (game.virtualBlockResolution >> 1) )
-        //        x = game.windowVPixelXPos + game.getWindowVPixelWidth() - (game.virtualBlockResolution >> 1);
+        //    if( x >= game.windowVPixelXPos + game.getWidthInVPixels() - (game.virtualBlockResolution >> 1) )
+        //        x = game.windowVPixelXPos + game.getWidthInVPixels() - (game.virtualBlockResolution >> 1);
         //}
         return x;
     }
@@ -666,9 +669,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean zoom(float initialDistance, float distance) {
         if (game.getGameTime() - lastZoomTime > 500) { // ignore some events
-            if (initialDistance > distance + playwindow.windowPixelHeight / 4) {
+            if (initialDistance > distance + playwindow.heightInPixels / 4) {
                 zoomMinus();
-            } else if (initialDistance < distance - playwindow.windowPixelHeight / 4) {
+            } else if (initialDistance < distance - playwindow.heightInPixels / 4) {
                 zoomPlus();
             }
             lastZoomTime = game.getGameTime();
