@@ -52,6 +52,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private long lastZoomTime = 0;
     private int gameResolutionCounter = 0;
     private Label medicineLabel;
+    Graphics background;
 
     public Play(final Main main, String levelName) {
         this.main = main;
@@ -65,6 +66,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void init(String levelName) {
         game = new Game(main, this);
+        background = Entities.backgrounds_hexagon_03;
         game.disableMovement();
         game.currentLevelName = levelName;
         level = game.loadLevel(levelName);
@@ -434,16 +436,27 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // moving is not handled in rendering method
         //
         game.updateTime(); // TODO: so we would actually not need to track time here as moving is handled elsewhere
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        menubatch.begin();
+        for( int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution ) {
+            for( int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution ) {
+                background.draw(playwindow,menubatch,x,y);
+            }
+        }
+        menubatch.end();
+
         batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
         batch.begin();
+
         game.acquireLock();
         level.draw(playwindow);
         game.releaseLock(); // TODO: think about moving this to the end of draw
+        batch.end(); // must end before menu
 
         updateToolbox();
-        font.draw(batch, String.format("S%06d P%03d U%03d T%02d L%02d ",
+        menubatch.begin();
+        font.draw(menubatch, String.format("S%06d P%03d U%03d T%02d L%02d ",
                         mcminos.getScore(),
                         mcminos.getPowerDuration() >> game.timeResolutionExponent,
                         mcminos.getUmbrellaDuration() >> game.timeResolutionExponent,
@@ -452,7 +465,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                         (mcminos.isMirrored() ? " M" : ""),
                 20, Gdx.graphics.getHeight() - 20);
         // add stage and menu
-        batch.end(); // must end before menu
+        menubatch.end();
 
         menu.act(delta);
         menu.draw();
@@ -669,9 +682,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean zoom(float initialDistance, float distance) {
         if (game.getGameTime() - lastZoomTime > 500) { // ignore some events
-            if (initialDistance > distance + playwindow.heightInPixels / 4) {
+            if (initialDistance > distance + playwindow.visibleHeightInPixels / 4) {
                 zoomMinus();
-            } else if (initialDistance < distance - playwindow.heightInPixels / 4) {
+            } else if (initialDistance < distance - playwindow.visibleHeightInPixels / 4) {
                 zoomPlus();
             }
             lastZoomTime = game.getGameTime();

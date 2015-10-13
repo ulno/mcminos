@@ -21,8 +21,8 @@ public class PlayWindow {
     int projectionX, projectionY;
     int windowVPixelXPos; // windowVPixelXPos-position (left) of game window in main game-screen in virtual pixels
     int windowVPixelYPos; // windowVPixelYPos-position (bottom) of game window n main game-screen in virtual pixels
-    int widthInPixels; // width of game-window in physical pixels
-    int heightInPixels; // height of game-window in physical pixels
+    int visibleWidthInPixels; // width of game-window in physical pixels
+    int visibleHeightInPixels; // height of game-window in physical pixels
     int widthInVPixels; // width of game-window in virtual pixels
     int heightInVPixels; // height of game-window in virtual pixels
     int resolution;
@@ -34,6 +34,8 @@ public class PlayWindow {
     Game game;
     private int visibleWidthInBlocks; // Number of blocks visible (even fractions off)
     private int visibleHeightInBlocks; // Number of blocks visible (even fractions off)
+    private int widthInPixel;
+    private int heightInpixel;
 
     public PlayWindow(SpriteBatch batch, Level level, McMinos mcminos) {
         this.batch = batch;
@@ -123,27 +125,29 @@ public class PlayWindow {
 
     public void resize(int width, int height) {
         // apply globally
-        widthInPixels = width;
-        heightInPixels = height;
-        widthInVPixels = Util.shiftLeftLogical(widthInPixels, virtualBlockResolutionExponent - resolutionExponent );
-        heightInVPixels = Util.shiftLeftLogical(heightInPixels, virtualBlockResolutionExponent - resolutionExponent );
+        widthInPixel = width;
+        heightInpixel = height;
+        visibleWidthInPixels = width;
+        visibleHeightInPixels = height;
+        widthInVPixels = Util.shiftLeftLogical(visibleWidthInPixels, virtualBlockResolutionExponent - resolutionExponent );
+        heightInVPixels = Util.shiftLeftLogical(visibleHeightInPixels, virtualBlockResolutionExponent - resolutionExponent );
         // eventually restrict visibility from Levelsettings
         if (widthInVPixels > level.getVisibleWidth() << virtualBlockResolutionExponent) {
             widthInVPixels = level.getVisibleWidth() << virtualBlockResolutionExponent;
-            widthInPixels = level.getVisibleWidth() << resolutionExponent;
+            visibleWidthInPixels = level.getVisibleWidth() << resolutionExponent;
         }
         if (heightInVPixels > level.getVisibleHeight() << virtualBlockResolutionExponent) {
             heightInVPixels = level.getVisibleHeight() << virtualBlockResolutionExponent;
-            heightInPixels = level.getVisibleHeight() << resolutionExponent;
+            visibleHeightInPixels = level.getVisibleHeight() << resolutionExponent;
         }
         // eventually restrict visibility by level-size
         if (widthInVPixels > level.getWidth() << virtualBlockResolutionExponent) {
             widthInVPixels = level.getWidth() << virtualBlockResolutionExponent;
-            widthInPixels = level.getWidth() << resolutionExponent;
+            visibleWidthInPixels = level.getWidth() << resolutionExponent;
         }
         if (heightInVPixels > level.getHeight() << virtualBlockResolutionExponent) {
             heightInVPixels = level.getHeight() << virtualBlockResolutionExponent;
-            heightInPixels = level.getHeight() << resolutionExponent;
+            visibleHeightInPixels = level.getHeight() << resolutionExponent;
         }
         levelWidthInPixels = getLevelWidth() << resolutionExponent;
         levelHeightInPixels = getLevelHeight() << resolutionExponent;
@@ -151,9 +155,9 @@ public class PlayWindow {
         visibleHeightInBlocks = (heightInVPixels + virtualBlockResolution - 1)  >> virtualBlockResolutionExponent;
         // Solution from here: http://gamedev.stackexchange.com/questions/68785/why-does-resizing-my-game-window-move-and-distort-my-rendering
         Matrix4 matrix = new Matrix4();
-        projectionX = (width - widthInPixels) / 2;
-        projectionY = (height - heightInPixels) / 2;
-        matrix.setToOrtho2D(-projectionX, -projectionY, widthInPixels + 2*projectionX, heightInPixels + 2*projectionY);
+        projectionX = (width - visibleWidthInPixels) / 2;
+        projectionY = (height - visibleHeightInPixels) / 2;
+        matrix.setToOrtho2D(-projectionX, -projectionY, visibleWidthInPixels + 2*projectionX, visibleHeightInPixels + 2*projectionY);
 //        matrix.setToOrtho2D(0, 0, width, height);
         batch.setProjectionMatrix(matrix);
     }
@@ -202,12 +206,12 @@ public class PlayWindow {
         return heightInVPixels;
     }
 
-    public int getWidthInPixels() {
-        return widthInPixels;
+    public int getVisibleWidthInPixels() {
+        return visibleWidthInPixels;
     }
 
-    public int getHeightInPixels() {
-        return heightInPixels;
+    public int getVisibleHeightInPixels() {
+        return visibleHeightInPixels;
     }
 
     public Skin getSkin() {
@@ -228,5 +232,13 @@ public class PlayWindow {
 
     public int getProjectionY() {
         return projectionY;
+    }
+
+    public int getWidthInPixels() {
+        return widthInPixel;
+    }
+
+    public int getHeightInPixels() {
+        return heightInpixel;
     }
 }
