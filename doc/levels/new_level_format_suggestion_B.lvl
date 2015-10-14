@@ -1,0 +1,98 @@
+# McMinos level source
+
+level_properties = {
+
+  "author":  "Andrea Neudecker",
+  "version": 3.14,
+
+  "level_series": "Tutorial",
+  "level_number": 1,
+  "show_number":  1,
+  "accessCode":   1,
+
+
+  "dimensions": {
+    "width":          7,
+    "height":         7,
+    "visible_width":  7,
+    "visible_height": 7,
+
+    "torus_x":        False,
+    "torus_y":        False,
+  },
+
+  "background":       1,
+  "level_time":       0,
+  "restart_mode":     0,
+  "mirror":           False,
+
+
+  # McMINOS
+  "mcspeed":          1,
+
+
+  # ghosts
+  "ghost1": {
+    "name":        "Hanky",
+    "max_number":  1,
+    "speed":       1,
+    "agility":     15,
+    "return_time": 15,
+  },
+
+  "ghost2": {
+    "name":        "Perry",
+    "max_number":  0,
+    "speed":       1,
+    "agility":     15,
+    "return_time": 3,
+    "pills_max":   100,
+    "pills_freq":  1,
+  },
+
+  "ghost3": {
+    "name":        "Zarathustra",
+    "max_number":  0,
+    "speed":       1,
+    "agility":     15,
+    "return_time": 3,
+    "walls_pass":  3,
+  },
+
+  "ghost4": {
+    "name":        "Jumping Pill",
+    "max_number":  0,
+    "speed":       1,
+    "agility":     15,
+    "return_time": 3,
+  },
+
+  "tools_min_max": {
+    "live":      (0,999),
+    "keys":      (0,0),
+    "bomb":      (0,0),
+    "dynamite":  (0,0),
+    "mine":      (0,0),
+    "chocolate": (0,0),
+    "medicine":  (0,0),
+    "umbrella":  (0,0),
+  },
+
+  # description
+  "title": "Title of the Level",
+
+  "description": """McMinos level have walls and pills. You cannot pass through
+  walls. Go and eat all pills.""",
+}
+
+
+level_data = """
+XXXXXXX
+X.....X
+X.XXX.X
+X..PX.X
+X.X.X.X
+X.....X
+XXXXXXX
+"""
+

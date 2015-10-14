@@ -9,6 +9,8 @@ Project McMinos: bugs, issues, ideas
 :Date: 2015-10-10
 
 
+Bugs and Issues
+================================================================================
 
 2015-10-08 — Andreas
 
@@ -54,3 +56,39 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 [ ]
 
 
+
+Ideas, Brainstorming
+================================================================================
+
+GUI design
+----------
+
+* Toolbox
+  * Extras should only be shown after they have been selected
+  * Show options as Icons (tooltips optional)
+    * Bomb, Dynamite, mine
+      * show overlay ring with options "put down" or "ignite/dig in"
+    * key
+      * show (un)locking direction in the level or in an overlay ring with direction-buttons
+
+
+
+Tutorial-Levels
+---------------
+
+* level size of 7 x 7 fields (using 64 pixel sprites this results in 448 x 448 pixel levels)
+* before starting a level, display introductory text (incl. graphics where required)
+* these introductions/explanations should be accessible always, e.g. from within the toolbox
+* explain most important features one by one, one feature each level
+* features to explain (in no specific order; should be ordered sensibly in the final version):
+
+  * eat pills
+  * avoid ghosts
+  * use power cookies do get (temporarily) rid of ghosts
+  * hunt jumping pills (unless you have eaten a cookie)
+  * use keys and doors
+  * use rocks and rock-me fields
+  * use explosives
+  * avoid holes
+  * collect bonuses
+  *

@@ -1,0 +1,83 @@
+; LEVEL NEW ---------------------------------------------+
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-14
+; Last changes: 2015-10-14
+; Done by.....: Andreas Neudecker
+
+; HEADER ------------------------------------------------+
+AUTHOR:   NoPe;   Andreas Neudecker
+VERSION:  3.14;
+SHAREWARE:  0
+
+NUMBR:    3
+SHOWNR:   3
+ACCCD:    3
+
+; LEVELFORMAT -------------------------------------------+
+LWID:   7
+LHI:    7
+VWID:   7
+VHI:    7
+SCROLLX:  0
+SCROLLY:  0
+BACK:   1
+
+; STATUS-Angaben ----------------------------------------+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+; McMINOS -----------------------------------------------+
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  15
+
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:    15
+GRTIME2:  3
+PILLMAX2: 100
+PILLFREQ2:  1
+
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    15
+GRTIME3:  3
+TRANSWALL3: 3
+
+GHOST4:   0
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  3
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,0
+
+; DESCRIPTION -------------------------------------------+
+
+TITLE: "More ghosts. And Chocolate"
+
+DESCRIPTION: "There are different types of ghosts that can do different things. One will put new pills in the levels, another is a jumping pill himself, yet another walks through walls from time to time. Chocolate is like cookies, except that you can collect it in your toolbox until you need it to hunt ghost. But be careful to avoid jumping pills while hunting ghosts on chocolate!"
+
+
+; LEVELDATEN --------------------------------------------+
+LEVEL:
+XXXXXXX
+X.....X
+X.....X
+X...X.X
+X.XXP.X
+X.....X
+XXXXXXX
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*
