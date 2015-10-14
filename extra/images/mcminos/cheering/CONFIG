@@ -1,8 +1,8 @@
 symbol="P"
-order=[1,2,3,4]
+order=[1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4]
 zindex=750
 moving=True
 size = (3, 3)
-focus = (1, 1)
+focus = (2, 2)
 speed = 250
 

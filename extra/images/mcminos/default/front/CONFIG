@@ -1,5 +1,16 @@
+##  McMinos, default, front (new)
+#   Last changes: 2015-10-10
+
 symbol="P"
-order=[1,2,3,4,5,6,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,7,6,5,4,3,22,21,22,3,4,5,6,7,8,7,6,5,4,3,2]
+
+##  Animation sub-sequences within mcminos-default-front:
+#   1,.., 8    -> opening the mouth
+#   21, 22     -> blinking with both eyes (usually use 22, 21, 22 for one blink)
+#   51,..,58   -> opening the mouth, and grinning
+#   59, 60, 61 -> grinning, mouth wide open, blinking star on theeth, left side
+#   62, 63, 64 -> grinning, mouth wide open, blinking star on theeth, left side
+#   65, 66     -> grinning, mouth wide open, winking with right eye
+order=[ 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 22, 21, 22, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 22, 21, 22, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 51, 53, 55, 58, 58, 58, 58, 59, 60, 61, 58, 58, 58, 62, 63, 64, 65, 66, 66, 66, 65, 58, 58, 58, 58, 55, 53, 72, 71, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, ]
 zindex=750
 moving=True
 

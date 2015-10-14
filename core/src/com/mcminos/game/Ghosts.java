@@ -18,7 +18,7 @@ public class Ghosts {
             LevelObject.Types.Ghost1, LevelObject.Types.Ghost2,
             LevelObject.Types.Ghost3, LevelObject.Types.Ghost4 };
     public final Graphics[] ghostEntities = {
-            Entities.ghosts_hanky, Entities.ghosts_panky,
+            Entities.ghosts_hanky, Entities.ghosts_perry,
             Entities.ghosts_zarathustra, Entities.ghosts_jumpingpill };
 
 

@@ -70,8 +70,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="18.59375"
-     inkscape:cx="12.521292"
-     inkscape:cy="15.5768"
+     inkscape:cx="16"
+     inkscape:cy="16"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -109,7 +109,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:date>2010-05-08</dc:date>
         <dc:creator>
           <cc:Agent>
@@ -136,38 +136,45 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <g
-       id="g3835">
-      <rect
-         y="0"
-         x="0"
-         height="32"
-         width="32"
-         id="rect2827"
-         style="fill:none;stroke:none" />
+       id="g4008">
+      <g
+         id="g3835">
+        <rect
+           style="fill:none;stroke:none"
+           id="rect2827"
+           width="32"
+           height="32"
+           x="0"
+           y="0" />
+      </g>
+      <path
+         sodipodi:nodetypes="ccccccccccccccccccccc"
+         id="path3685"
+         d="M 22,6 19,3 12,4 3,2 4,10 1,16 5.2520483,20 2,24 4,28 8.232605,29.883697 16,26 l 3,4 9,0 2,-7 -2,-1 -1,-5 4,-4 L 27,11 28,8.7689076 28,4 22,6 z"
+         style="fill:#000000;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:1" />
+      <path
+         id="path2841"
+         d="M 3,2 4,10 1,16 5.25,20 2,24 4,28 8.21875,29.875 16,26 l 3,4 9,0 0.5625,-2 L 21,28 18,24 10.21875,27.875 6,26 4,22 7.25,18 3,14 6,8 5.3125,2.5 3,2 z"
+         style="fill:#808080;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccccccc"
+         id="path3641"
+         d="M 4,28 2,24 5.2520483,20 1,16 4,10 3,2 12,4 19,3"
+         style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <path
+         sodipodi:nodetypes="cc"
+         id="path3808"
+         d="M 4,10 1,11"
+         style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <path
+         id="path3812"
+         d="M 31,6 28,4 28,1"
+         style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <path
+         style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+         d="m 1,29 3,-1 4,2 8,-4 3,4 9,0 2,-7 -2,-1 -1,-5 4,-4 L 27,11 28,8.7689076 28,4 22,6 19,3 17,1"
+         id="path3755"
+         sodipodi:nodetypes="cccc" />
     </g>
-    <path
-       style="fill:#000000;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:1"
-       d="M 22,6 19,3 12,4 3,2 4,10 1,16 5.2520483,20 2,24 4,28 8.232605,29.883697 16,26 l 3,4 9,0 2,-7 -2,-1 -1,-5 4,-4 L 27,11 28,8.7689076 28,4 22,6 z"
-       id="path3685"
-       sodipodi:nodetypes="ccccccccccccccccccccc" />
-    <path
-       style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       d="M 4,28 2,24 5.2520483,20 1,16 4,10 3,2 12,4 19,3"
-       id="path3641"
-       sodipodi:nodetypes="cccccccc" />
-    <path
-       style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       d="M 4,10 1,11"
-       id="path3808"
-       sodipodi:nodetypes="cc" />
-    <path
-       style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       d="M 31,6 28,4 28,1"
-       id="path3812" />
-    <path
-       sodipodi:nodetypes="cccc"
-       id="path3755"
-       d="m 1,29 3,-1 4,2 8,-4 3,4 9,0 2,-7 -2,-1 -1,-5 4,-4 L 27,11 28,8.7689076 28,4 22,6 19,3 17,1"
-       style="fill:none;stroke:#404040;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
   </g>
 </svg>

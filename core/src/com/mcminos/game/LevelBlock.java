@@ -407,8 +407,8 @@ public class LevelBlock {
     }
 
     public void makeWarpHole() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.fields_field_warp_hole.getzIndex(),LevelObject.Types.WarpHole);
-        lo.setGfx(Entities.fields_field_warp_hole);
+        LevelObject lo = new LevelObject(level,x,y,Entities.fields_warp_hole.getzIndex(),LevelObject.Types.WarpHole);
+        lo.setGfx(Entities.fields_warp_hole);
         level.addWarpHole(this);
         collectibles.add(lo);
     }
@@ -432,20 +432,20 @@ public class LevelBlock {
     }
 
     public void makeBonus1() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus_piggy_bank.getzIndex(),LevelObject.Types.Bonus1);
-        lo.setGfx(Entities.extras_bonus_piggy_bank);
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus1.getzIndex(),LevelObject.Types.Bonus1);
+        lo.setGfx(Entities.extras_bonus1);
         collectibles.add(lo);
     }
 
     public void makeBonus2() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus_piggy_bank.getzIndex(),LevelObject.Types.Bonus2);
-        lo.setGfx(Entities.extras_bonus_piggy_bank);
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus2.getzIndex(),LevelObject.Types.Bonus2);
+        lo.setGfx(Entities.extras_bonus2);
         collectibles.add(lo);
     }
 
     public void makeBonus3() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus_piggy_bank.getzIndex(),LevelObject.Types.Bonus3);
-        lo.setGfx(Entities.extras_bonus_piggy_bank);
+        LevelObject lo = new LevelObject(level,x,y,Entities.extras_bonus3.getzIndex(),LevelObject.Types.Bonus3);
+        lo.setGfx(Entities.extras_bonus3);
         collectibles.add(lo);
     }
 

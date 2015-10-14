@@ -64,6 +64,7 @@ public class Level {
     }
 
     public void draw(PlayWindow playwindow) {
+        playwindow.updateCoordinates(); // fix coordinates and compute scrolling
         for (LevelObject lo : allLevelObjects) {
             if( lo.getzIndex() >= LevelObject.maxzIndex)
                 break; // can be stopped, as null is infinity and therefore only null in the end
@@ -74,6 +75,8 @@ public class Level {
     public void dispose() {
         warpHoleBlocks.clear();
         allLevelObjects.clear();
+        pillsNumber = 0;
+        rockmeNumber = 0;
     }
 
     public void addToAllLevelObjects( LevelObject lo ) {

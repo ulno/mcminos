@@ -6,6 +6,7 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -184,6 +185,13 @@ public class Graphics {
     }
 
     /**
+     * directly draw a Texture in given batch
+     */
+    public void draw( PlayWindow playwindow, SpriteBatch b, int x, int y) {
+        b.draw(getTexture(playwindow.getGame().getGameFrame()), x, y);
+    }
+
+    /**
      * Draw with offset to a batch in current resolution
      * Remember, level(0,0) is lower left corner due to libgdx' flipped windowVPixelYPos-axis
      *
@@ -191,7 +199,7 @@ public class Graphics {
      * @param vy0 virtualPixel y-coordinate (level block * virtualPixelResolution)
      * @param animDelta offset to adapt animation
      */
-    void draw( PlayWindow playwindow, int vx0, int vy0, int animDelta ) {
+    public void draw( PlayWindow playwindow, int vx0, int vy0, int animDelta ) {
         // As we can be in a corner, clipping needs to be respected
         // Therefore compute the four pieces which could be wrapped around
         // compute them first completely in virtual coordinates
@@ -201,17 +209,18 @@ public class Graphics {
         // if x1 and y1 used they will be usually 0, the split will be decided via value!=0 in vx1w or vy1h
         // there is a problem when window is too small and the drawing should start left or under the current windowcorner
 
-        int gamew = playwindow.fullPixelWidth;
-        int gameh = playwindow.fullPixelHeight;
+        int gamew = playwindow.levelWidthInPixels;
+        int gameh = playwindow.levelHeightInPixels;
 
         // first look at x
-        int vTotalWidth = blockWidth << playwindow.virtualBlockResolutionExponent; // virtual size of graphics
+        int vTotalWidth = blockWidth << PlayWindow.virtualBlockResolutionExponent; // virtual size of graphics
         int totalWidth = blockWidth << playwindow.resolutionExponent; // physical size of graphics
-        int vx0w=vTotalWidth, vx1w=0;
+        int vx0w = vTotalWidth;
+        int vx1w = 0;
         int vlw = playwindow.getVPixelsLevelWidth(); // virtual levelwidth
         vx0 = (vx0 - anchorX + vlw) % vlw; // make sure it's not negative and apply anchor
         int vx1 = (vlw - anchorX) % vlw;
-        if( vx0 + vTotalWidth > vlw ) { // if it's outside the level bounds
+        if (vx0 + vTotalWidth > vlw) { // if it's outside the level bounds
             // vx1 = 0; will always be 0
             vx0w = vlw - vx0;
             vx1w = vTotalWidth - vx0w;
@@ -222,8 +231,8 @@ public class Graphics {
         // always wrap around if( Game.getScrollX() ) {
         //x0 = (x0 + gamew + totalWidth - 1) % gamew - totalWidth + 1;
         //x1 = (x1 + gamew + totalWidth - 1) % gamew - totalWidth + 1;
-        x0 = (x0 + gamew ) % gamew;
-        x1 = (x1 + gamew ) % gamew;
+        x0 = (x0 + gamew) % gamew;
+        x1 = (x1 + gamew) % gamew;
         //}
         // get physical widths
         int x0w = Util.shiftLeftLogical(vx0w, currentResolutionBitsLeftShifter);
@@ -257,18 +266,18 @@ public class Graphics {
         // draw different parts to physical coordinates
         // only draw if visible (some part of the rectangle is in visible area)
         Texture t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
-        int maxww = playwindow.windowPixelWidth;
-        int maxwh = playwindow.windowPixelHeight;
+        int maxww = playwindow.visibleWidthInPixels;
+        int maxwh = playwindow.visibleHeightInPixels;
         // Clipping correction for small screens, TODO: think about optimization
-        if(x0 >= maxww && x0 > playwindow.fullPixelWidth - totalWidth )
-            x0 -= playwindow.fullPixelWidth;
-        if(x1 >= maxww && x1 > playwindow.fullPixelWidth - totalWidth )
-            x1 -= playwindow.fullPixelWidth;
-        if(y0 >= maxwh && y0 > playwindow.fullPixelHeight - totalHeight )
-            y0 -= playwindow.fullPixelHeight;
-        if(y1 >= maxwh && y1 > playwindow.fullPixelHeight - totalHeight )
-            y1 -= playwindow.fullPixelHeight;
-        if(  (x0 < maxww) && (y0 < playwindow.windowPixelHeight) ) {
+        if(x0 >= maxww && x0 > playwindow.levelWidthInPixels - totalWidth )
+            x0 -= playwindow.levelWidthInPixels;
+        if(x1 >= maxww && x1 > playwindow.levelWidthInPixels - totalWidth )
+            x1 -= playwindow.levelWidthInPixels;
+        if(y0 >= maxwh && y0 > playwindow.levelHeightInPixels - totalHeight )
+            y0 -= playwindow.levelHeightInPixels;
+        if(y1 >= maxwh && y1 > playwindow.levelHeightInPixels - totalHeight )
+            y1 -= playwindow.levelHeightInPixels;
+        if(  (x0 < maxww) && (y0 < playwindow.visibleHeightInPixels) ) {
             //Game.batch.draw(getTexture(Game.gameframe), x0, y0);
             playwindow.batch.draw(t, x0, y0, 0, totalHeight - y0h, x0w, y0h);
         }

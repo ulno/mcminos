@@ -102,7 +102,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:date>2010-05-08</dc:date>
         <dc:creator>
           <cc:Agent>
@@ -129,7 +129,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <g
-       id="g3838">
+       id="g3868">
       <rect
          y="0"
          x="0"
@@ -141,6 +141,10 @@
          id="path3685"
          d="m 8,12 8,4 4,0 -4,-8 -8,4 z"
          style="fill:#000000;fill-opacity:1;stroke:none" />
+      <path
+         id="path3842"
+         d="M 11 10.5 L 8 12 L 16 16 L 20 16 L 19 14 L 18 14 L 11 10.5 z "
+         style="fill:#808080;fill-opacity:1;stroke:none" />
       <path
          id="path3635"
          d="m 28,4 -12,4 4,8 -4,0 4,8 -12,6"
