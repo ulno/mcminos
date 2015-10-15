@@ -72,8 +72,21 @@ GUI design
       * show (un)locking direction in the level or in an overlay ring with direction-buttons
 
 
+Game navigation
+---------------
 
-Tutorial-Levels
+* navigation using a method similar to a joystick might be a usable alternative
+* opening (closing) the toolbox is currently possible via
+  * touchscreen (and desktop): tapping/clicking the toolbox button
+  * keyboard: pressing either the [Space] or the [Esc] key
+  * with the mouse: right-clicking
+* zooming in and out of the level
+  * touchscreen: tapping + or - buttons in the toolbox
+  * keyboard: + or - keys
+  * mouse: scroll-wheel up or down to zoom in or out
+
+
+Tutorial levels
 ---------------
 
 * level size of 7 x 7 fields (using 64 pixel sprites this results in 448 x 448 pixel levels)

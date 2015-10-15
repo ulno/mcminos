@@ -6,7 +6,7 @@ Project McMinos: Software and tools used creating McMinos mobile
   Andreas Neudecker <zapyon@gmx.net>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-10-08
+:Date: 2015-10-15
 
 Remember to include due credits and URLs!
 
@@ -16,12 +16,17 @@ Development tools, languages, etc.
 
 Java
 ----
-* libGDX
+
+* OpenJDK
 * IntelliJ Community Edition
 * Android SDK
+* libGDX
+* GDX Skin Editor
 
 Python
 ------
+
+* Python 2.7
 
 Homepage:
 
