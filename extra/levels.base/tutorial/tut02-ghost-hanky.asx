@@ -66,9 +66,9 @@ UMBR:   0,0
 
 ; DESCRIPTION -------------------------------------------+
 
-TITLE: "Avoid the ghosts"
+;TITLE: "Avoid the ghosts"
 
-DESCRIPTION: "Ghosts live in the castle(s). When they come out, they hunt you. Don't lose your head, just get away in time. Eating a cookie gives you enough power to hunt the ghosts - for a while."
+;DESCRIPTION: "Ghosts live in the castle(s). When they come out, they hunt you. Don't lose your head, just get away in time. Eating a cookie gives you enough power to hunt the ghosts - for a while."
 
 
 ; LEVELDATEN --------------------------------------------+
