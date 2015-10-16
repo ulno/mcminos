@@ -74,10 +74,10 @@ DESCRIPTION: "There are different types of ghosts that can do different things. 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
 XXXXXXX
-X.....X
-X.....X
-X...X.X
-X.XXP.X
-X.....X
+XCCX. X
+XCCXXcX
+X     X
+X XXX X
+Xc  cPX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
