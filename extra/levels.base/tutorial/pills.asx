@@ -66,9 +66,9 @@ UMBR:   0,0
 
 ; DESCRIPTION -------------------------------------------+
 
-TITLE: "Walls and pills"
+;TITLE: "Walls and pills"
 
-DESCRIPTION: "McMinos level have walls and pills. You cannot pass through walls. Go and eat all pills."
+;DESCRIPTION: "McMinos level have walls and pills. You cannot pass through walls. Go and eat all pills."
 
 
 ; LEVELDATEN --------------------------------------------+

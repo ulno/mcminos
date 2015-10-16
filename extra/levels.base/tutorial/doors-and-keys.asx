@@ -66,9 +66,9 @@ UMBR:   0,0
 
 ; DESCRIPTION -------------------------------------------+
 
-TITLE: "Of doors and keys"
+;TITLE: "Of doors and keys"
 
-DESCRIPTION: "Collect all keys you find in a level. You may need them to open doors. Or close them again to stop ghosts from hunting you."
+;DESCRIPTION: "Collect all keys you find in a level. You may need them to open doors. Or close them again to stop ghosts from hunting you."
 
 
 ; LEVELDATEN --------------------------------------------+
