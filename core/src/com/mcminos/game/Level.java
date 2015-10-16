@@ -122,9 +122,16 @@ public class Level {
                         String[] strList = line.split("\\s*:\\s*");
                         if(strList.length > 1) { // if two params,  try min,max split
                             String[] minmax = strList[1].split("\\s*,\\s*");
-                            if (minmax.length > 1) {
-                                min = Integer.parseInt(minmax[0]);
-                                max = Integer.parseInt(minmax[1]);
+                            if ( minmax.length > 1) {
+                                try
+                                {
+                                    min = Integer.parseInt(minmax[0]);
+                                    max = Integer.parseInt(minmax[1]);
+                                }
+                                catch(NumberFormatException nfe)
+                                {
+                                    continue; // TODO: this might be string we need to catch
+                                }
                             }
                         }
                         // TODO: apply minmax on existing mcminos
