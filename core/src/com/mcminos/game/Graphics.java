@@ -209,10 +209,9 @@ public class Graphics {
         // if x1 and y1 used they will be usually 0, the split will be decided via value!=0 in vx1w or vy1h
         // there is a problem when window is too small and the drawing should start left or under the current windowcorner
 
-        int gamew = playwindow.levelWidthInPixels;
-        int gameh = playwindow.levelHeightInPixels;
 
-        // first look at x
+        ///////// first look at x
+        int gamew = playwindow.levelWidthInPixels;
         int vTotalWidth = blockWidth << PlayWindow.virtualBlockResolutionExponent; // virtual size of graphics
         int totalWidth = blockWidth << playwindow.resolutionExponent; // physical size of graphics
         int vx0w = vTotalWidth;
@@ -238,7 +237,8 @@ public class Graphics {
         int x0w = Util.shiftLeftLogical(vx0w, currentResolutionBitsLeftShifter);
         int x1w = Util.shiftLeftLogical(vx1w, currentResolutionBitsLeftShifter);
 
-        // do same for y
+        /////////// do same for y
+        int gameh = playwindow.levelHeightInPixels;
         int vTotalHeight = blockHeight << playwindow.virtualBlockResolutionExponent; // virtual size of graphics
         int totalHeight = blockHeight << playwindow.resolutionExponent; // physical size of graphics
         int vy0h = vTotalHeight, vy1h=0;

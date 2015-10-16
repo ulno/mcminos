@@ -180,6 +180,9 @@ public class Level {
                             case "CHOC": chocolatesMin = min; chocolatesMax = max; break;
                             case "MEDC": medicinesMin = min; medicinesMax = max; break;
                             case "UMBR": umbrellasMin = min; umbrellasMax = max; break;
+                            default:
+                                // TODO: eventually throw error again
+                                break;
                         }
                     }
                 }
@@ -217,6 +220,10 @@ public class Level {
                 break;
             case "3":
             case "pavement-03":
+                bggfx = Entities.backgrounds_pavement_03;
+                break;
+            case "4":
+            case "pavement-04":
                 bggfx = Entities.backgrounds_pavement_03;
                 break;
             case "amoeboid-01":

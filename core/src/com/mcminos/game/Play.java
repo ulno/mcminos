@@ -3,6 +3,7 @@ package com.mcminos.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -22,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class Play implements Screen, GestureListener, InputProcessor {
     private final SpriteBatch menubatch;
+    private final OrthographicCamera camera;
     private Game game;
     private Table menuTable;
     private Table toolboxTable;
@@ -57,6 +60,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public Play(final Main main, String levelName) {
         this.main = main;
         batch = main.getBatch();
+        camera = new OrthographicCamera();
         font = main.getFont();
         skin = main.getSkin();
         audio = main.getAudio();
@@ -65,8 +69,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void init(String levelName) {
-        game = new Game(main, this);
-        background = Entities.backgrounds_hexagon_03;
+        game = new Game(main, this, camera);
+//        background = Entities.backgrounds_hexagon_03;
+        background = Entities.backgrounds_pavement_04;
         game.disableMovement();
         game.currentLevelName = levelName;
         level = game.loadLevel(levelName);
@@ -449,9 +454,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
         batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
         batch.begin();
 
+        ScissorStack.pushScissors(playwindow.getScissors());
         game.acquireLock();
         level.draw(playwindow);
         game.releaseLock(); // TODO: think about moving this to the end of draw
+
+        batch.flush();
+        ScissorStack.popScissors();
         batch.end(); // must end before menu
 
         updateToolbox();
@@ -576,8 +585,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             y += playwindow.getLevelHeight();
         //}
         //else {
-        //    if( y >= game.windowVPixelYPos + game.getHeightInVPixels() - (game.virtualBlockResolution >> 1) )
-        //        y = game.windowVPixelYPos + game.getHeightInVPixels() - (game.virtualBlockResolution >> 1);
+        //    if( y >= game.windowVPixelYPos + game.getVisibleHeightInVPixels() - (game.virtualBlockResolution >> 1) )
+        //        y = game.windowVPixelYPos + game.getVisibleHeightInVPixels() - (game.virtualBlockResolution >> 1);
         //}
         return y;
     }
@@ -594,8 +603,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             x += playwindow.getVPixelsLevelWidth();
         //}
         //else {
-        //    if( x >= game.windowVPixelXPos + game.getWidthInVPixels() - (game.virtualBlockResolution >> 1) )
-        //        x = game.windowVPixelXPos + game.getWidthInVPixels() - (game.virtualBlockResolution >> 1);
+        //    if( x >= game.windowVPixelXPos + game.getVisibleWidthInVPixels() - (game.virtualBlockResolution >> 1) )
+        //        x = game.windowVPixelXPos + game.getVisibleWidthInVPixels() - (game.virtualBlockResolution >> 1);
         //}
         return x;
     }
