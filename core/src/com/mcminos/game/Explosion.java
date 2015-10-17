@@ -1,5 +1,7 @@
 package com.mcminos.game;
 
+import com.sun.org.apache.xerces.internal.impl.dv.dtd.ENTITYDatatypeValidator;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -87,6 +89,8 @@ public class Explosion {
                 explosionObject.dispose(); // just finish
             }
         };
+        // crater
+        new LevelObject(center,Entities.walls_destroyed_crater, LevelObject.Types.Unspecified);
         game.schedule(explosionFinishTask, animationLength);
     }
 
@@ -104,10 +108,16 @@ public class Explosion {
                     LevelObject destroyedWall = new LevelObject(lb,destroyedWalls[wIndex], LevelObject.Types.DestroyedWall);
                 }
             } else if (lb.hasDoor()) {
+                Graphics g;
                 LevelObject d = lb.getDoor();
-                // TODO: add destroyed door graphics
                 d.dispose();
                 lb.setDoor(null);
+                if(d.getDoorType() == LevelObject.DoorTypes.HorizontalOpened || d.getDoorType() == LevelObject.DoorTypes.HorizontalClosed ) {
+                    g = Entities.walls_door_destroyed_horizontal;
+                } else {
+                    g = Entities.walls_door_destroyed_vertical;
+                }
+                new LevelObject(lb,g, LevelObject.Types.Unspecified);
             } else if (lb.hasRock()) {
                 LevelObject r = lb.getRock();
                 // TODO: add destroyed rock graphics

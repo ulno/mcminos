@@ -2,6 +2,7 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 
@@ -24,6 +25,7 @@ public class Game {
     private final Audio audio;
     private final SpriteBatch batch;
     private final Play playScreen;
+    private final OrthographicCamera camera;
     private long gameFrame = 0; // The game time - there is a getter for this
     private long gameTime = 0;
     private Main main;
@@ -47,7 +49,7 @@ public class Game {
         return playwindow;
     }
 
-    public Game(Main main, Play playScreen) {
+    public Game(Main main, Play playScreen, OrthographicCamera camera) {
         this.main = main;
         this.playScreen = playScreen;
         movers = new ArrayList<>();
@@ -55,6 +57,7 @@ public class Game {
         mcminos = new McMinos(this);
         ghosts = new Ghosts(this);
         batch = main.getBatch();
+        this.camera = camera;
     }
 
     public void loadFromPlay(String levelName) {
@@ -69,7 +72,7 @@ public class Game {
         // Load a level
         level = new Level(this, s);
         // is al done in load level mcminos.init(); // trigger update
-        playwindow = new PlayWindow(batch,level,mcminos);
+        playwindow = new PlayWindow(batch,camera,level,mcminos);
         initAfterLoad();
 
         // start the own timer (which triggers also the movemnet)

@@ -41,7 +41,7 @@ public class McMinosMover extends Mover {
             else {
                 //also allow this in non-scrolled levels
                 //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
-                if (xdiff >= playwindow.getVPixelsLevelWidth() >> 1)
+                if (xdiff >= playwindow.getVPixelsLevelWidth() * 4 / 5)
                     xdelta = (int) Math.signum(xdelta);
                 else
                     xdelta = -(int) Math.signum(xdelta);
@@ -54,7 +54,7 @@ public class McMinosMover extends Mover {
             else {
                 // also in non-scroll levels
                 //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
-                if (ydiff >= playwindow.getVPixelsLevelHeight() >> 1)
+                if (ydiff >= playwindow.getVPixelsLevelHeight() * 4 / 5)
                     ydelta = (int) Math.signum(ydelta);
                 else
                     ydelta = -(int) Math.signum(ydelta);
