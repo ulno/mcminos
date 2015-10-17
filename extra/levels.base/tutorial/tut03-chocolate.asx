@@ -55,7 +55,7 @@ AGIL4:    15
 GRTIME4:  3
 
 ; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   0,999
+LIVE:   999,999
 KEYS:   0,0
 BMBS:   0,0
 DYNA:   0,0
@@ -66,18 +66,18 @@ UMBR:   0,0
 
 ; DESCRIPTION -------------------------------------------+
 
-TITLE: "More ghosts. And Chocolate"
+;TITLE: "More ghosts. And Chocolate"
 
-DESCRIPTION: "There are different types of ghosts that can do different things. One will put new pills in the levels, another is a jumping pill himself, yet another walks through walls from time to time. Chocolate is like cookies, except that you can collect it in your toolbox until you need it to hunt ghost. But be careful to avoid jumping pills while hunting ghosts on chocolate!"
+;DESCRIPTION: "There are different types of ghosts that can do different things. One will put new pills in the levels, another is a jumping pill himself, yet another walks through walls from time to time. Chocolate is like cookies, except that you can collect it in your toolbox until you need it to hunt ghost. But be careful to avoid jumping pills while hunting ghosts on chocolate!"
 
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
 XXXXXXX
 XCCX. X
-XCCXXcX
+XCCXX+X
 X     X
 X XXX X
-Xc  cPX
+X+  +PX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
