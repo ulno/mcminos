@@ -3,7 +3,7 @@ Project McMinos: bugs, issues, ideas
 ====================================
 
 :Authors:
-  Andreas Neudecker <zapyon@gmx.net>,
+  Andreas Neudecker <andreas.mcminos@googlemail.com>,
   Ulrich Norbisrath <ulno@ulno.net>
 
 :Date: 2015-10-10
@@ -30,15 +30,10 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 2015-10-10 — Andreas
 
-[x] use cheering McMinos for level end
-
-[ ] replace current holes with new variant with shading/visible scarps
-
-[ ] new animation of McMinos falling into warp hole! Animations of ghosts falling in shall follow soon
-
 [ ] do we have a distinction between cycling and non-cycling animations? If so, we should add a switch to the CONFIG definition. If not, I would like to introduce them. This would allow new kinds of animations.
 
 [ ] CONFIG for animation images: In Python, the 'order' sequence (actually a Python list) may stretch over several lines. Is that still allowed, or do we used the CONFIG files anywhere else where that might cause problems? Using multiple lines allows me to group stuff by sub-animations (check mcminos-default-front-new's CONFIG, for example)
+  *
 
 
 2015-10-11 — Andreas
@@ -58,6 +53,9 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 [ ] 2DO: When bomb, dynamite or mine explode, the field under the explosive should be decorated with a crater, using /extra/images/walls/destroyed/00/00.svg
 
+2015-10-17 - Andreas
+
+[ ] 2DO: I just realise, that the current way of walking across level borders is totally different from what we were having in the Atari version: Due to the centering of McMinos, the level would simply scroll on to show (e.g.) the left side of the level when closing in on the right edge of the level, so that
 
 
 

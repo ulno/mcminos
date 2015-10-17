@@ -1,7 +1,7 @@
 ; LEVEL NEW ---------------------------------------------+
 ; FOR McMINOS - Version 3.14
-; Created.....: 2015-10-14
-; Last changes: 2015-10-14
+; Created.....: 2015-10-17
+; Last changes: 2015-10-17
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------+
@@ -9,9 +9,9 @@ AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 
-NUMBR:    4
-SHOWNR:   4
-ACCCD:    4
+NUMBR:    6
+SHOWNR:   6
+ACCCD:    6
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
@@ -24,7 +24,7 @@ BACK:   1
 
 ; STATUS-Angaben ----------------------------------------+
 LTIME:    0
-RSTRT:    0
+RSTRT:    1
 MIRROR:   0
 
 ; McMINOS -----------------------------------------------+
@@ -66,18 +66,18 @@ UMBR:   0,0
 
 ; DESCRIPTION -------------------------------------------+
 
-;TITLE: "Rock, rock me, baby!"
+;TITLE: "Go, get the jumping pills!"
 
-;DESCRIPTION: "Push around the rocks to fence-in the ghosts. Or push them on the corresponding rock-me fields to finish the level. But mind you: do not push a rock into a corner without thought, as you will not be able to pull it out again."
+;DESCRIPTION: "It's easy to eat the pills along the way to finish a level, right? Well, not if they run away. Go, get them!"
 
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
 XXXXXXX
-Xg O  X
-X O O X
-XrrrrrX
-X     X
-X    PX
+Xh   hX
+X XXX X
+X XP  X
+X X X X
+Xh   hX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
