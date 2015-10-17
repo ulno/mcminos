@@ -53,7 +53,12 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 [ ] Level 2, desktop: it is impossible to cross the level border (to enter the other side again): clicking on the edge field will bring you just there. The only way to reach the other side is by zooming out until the complete level is visible and then clicking on the edge field on the other side. May be we can introduce an invisble function-field that pushes McMinos over the edge in desktop version? Like a special version of warp that has a specific corresponding target field?
 
-[ ]
+
+2015-10-16 - Andreas
+
+[ ] 2DO: When bomb, dynamite or mine explode, the field under the explosive should be decorated with a crater, using /extra/images/walls/destroyed/00/00.svg
+
+
 
 
 
