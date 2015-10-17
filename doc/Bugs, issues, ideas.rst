@@ -30,7 +30,7 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 2015-10-10 — Andreas
 
-[ ] use cheering McMinos for level end
+[x] use cheering McMinos for level end
 
 [ ] replace current holes with new variant with shading/visible scarps
 
