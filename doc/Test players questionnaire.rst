@@ -41,6 +41,7 @@ Hardware
 
 * Amount of internal memory (RAM) your device has:
 
+* Amount of installed extension memory (e.g. microSD, microSDHC card):
 
 Software
 ========
@@ -75,7 +76,9 @@ Player status
 
 * Are you an experienced video game player?
 
-  [ ] yes          [ ] no
+  [ ] yes
+
+  [ ] no
 
 * If yes, what kinds of games do you like to play?
 
@@ -220,6 +223,8 @@ Main level set
   [ ] yes (please give level number(s) and describe your problem(s)):
 
   [ ] no
+
+* Which level did you like best, and why (please provide level no.)?
 
 *
 

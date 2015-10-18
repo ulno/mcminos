@@ -1,7 +1,7 @@
 ; LEVEL NEW ---------------------------------------------+
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-14
-; Last changes: 2015-10-14
+; Last changes: 2015-10-17
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------+
@@ -24,7 +24,7 @@ BACK:   1
 
 ; STATUS-Angaben ----------------------------------------+
 LTIME:    0
-RSTRT:    0
+RSTRT:    1
 MIRROR:   0
 
 ; McMINOS -----------------------------------------------+
@@ -74,7 +74,7 @@ UMBR:   0,0
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
 XXXXXXX
-Xg O  X
+XG O  X
 X O O X
 XrrrrrX
 X     X

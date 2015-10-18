@@ -51,7 +51,7 @@ TRANSWALL3: 3
 
 GHOST4:   0
 GHSPEED4: 1
-AGIL4:    15
+AGIL4:    0
 GRTIME4:  3
 
 ; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
@@ -76,8 +76,8 @@ LEVEL:
 XXXXXXX
 Xh   hX
 X XXX X
-X XP  X
+X XPk X
 X X X X
-Xh   hX
+Xh|  hX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
