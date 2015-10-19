@@ -1,7 +1,7 @@
 ; LEVEL NEW ---------------------------------------------+
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-19
-; Last changes: 2015-10-19
+; Last changes: 2015-10-20
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------+
@@ -76,8 +76,8 @@ LEVEL:
 XXXXXXX
 X3   hX
 XfXXX X
-XaX3 FX
-XvX x X
+XAX3 FX
+XvX X X
 X.gGXPX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
