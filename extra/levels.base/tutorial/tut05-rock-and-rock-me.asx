@@ -41,7 +41,7 @@ GHSPEED2: 1
 AGIL2:    15
 GRTIME2:  3
 PILLMAX2: 100
-PILLFREQ2:  1
+PILLFREQ2: 0
 
 GHOST3:   0
 GHSPEED3: 1
@@ -76,8 +76,8 @@ LEVEL:
 XXXXXXX
 XG O  X
 X O O X
-XrrrrrX
 X     X
+XrrrrrX
 X    PX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
