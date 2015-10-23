@@ -96,6 +96,26 @@ would lead to a sequence of <indestructible wall>,<default wall 02>,<default wal
 <indestructible wall>,_<default wall 10>_,<default wall 10>,<default wall 8>
 
 
+2015-10-20
+
+[ ] BUG: Level testing, tut17-inifinite-world: In a level with infinite world, when McMinos finishes the level on an edge field (have seen this on the right edge), McMinos has sort of 2½ arms on the left side.
+
+[ ] BUG: At typo in the level name causes a crash immediately once the level is started in the program. It would be nicer if the program simply returned to the main menu.
+
+2015-10-22
+
+[ ] BUG: Level tut17-infinite-world: SCROLLX and SCROLLY are on. If the player is in a position where the castle is visible at the bottom accross the level edges, but only the two top field quarters of the castle should be visible, the castle is not drawn at all. If a little more than the two top fields are shown, the castle is visible. — Addendum: this only happens at maximum size of the fields (128x128) in a 1280x878 pixel window.
+
+  UPDATE (2015-10-23): The same happens with background pavement-01 (now a 3x3 field object with corresponding CONFIG), level tut17-infinite-world: the bottom row of fields should show the upper third of the background. It shows the frame background (currently pavement-04) instead. 
+
+[ ] ISSUE: (sample) level: tut06-jumping-pills: the jpills are too stupid: simply waiting in a corner or closing the door and waiting in the middle of the level is enough to have all jpills jump in your mouth - unless they have all done that already before you managed to close the door. It would be great if the jpills could be set to a difficulty where they can also turn in their own path to evade the player.
+
+[ ] ISSUE: we need a more obvious connection between background numbers in the level sources and the real background names. Should we move to background names in the level sources? And, if not found (i.e.: nobody cared to change the level source, YET) default background is used?
+
+2015-10-23
+
+[ ] BUG level tut17-infinite-worlds: player eats last pill on left edge field (passage to right edge; field coord.: (1; 2)), jumps cheering(ly) to the right edge
+
 Ideas, Brainstorming
 ================================================================================
 
@@ -147,5 +167,5 @@ Tutorial levels
   * [x] avoid holes
   * ~~[ ] collect bonuses~~
   * [x] poison and medicine (may be it should be renamed antidote)
-  * [ ] whisky
+  * [x] whisky - done, but not yet implemented
   * [X] oneways
