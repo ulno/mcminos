@@ -466,10 +466,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
         menubatch.begin();
         font.draw(menubatch,
                 "S" + Util.formatInteger(mcminos.getScore(), 6)
-                        + "P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
-                        + "U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 3)
-                        + "T" + Util.formatInteger(mcminos.getPoisonDuration() >> game.timeResolutionExponent, 2)
-                        + "L" + Util.formatInteger(mcminos.getLives(), 2)
+                        + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
+                        + " U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 3)
+                        + " T" + Util.formatInteger(mcminos.getPoisonDuration() >> game.timeResolutionExponent, 2)
+                        + " L" + Util.formatInteger(mcminos.getLives(), 2)
                         + (mcminos.isMirrored() ? " M" : ""),
                 20, Gdx.graphics.getHeight() - 20);
         // " P%03d U%03d T%02d L%02d ",
