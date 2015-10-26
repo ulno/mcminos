@@ -40,7 +40,7 @@ public class PlayWindow {
     private int visibleHeightInBlocks; // Number of blocks visible (even fractions off)
     private int viewWidthInPixels;
     private int viewHeightInPixels;
-    private Rectangle scissors;
+    private Rectangle scissors = new Rectangle();
 
     public PlayWindow(SpriteBatch batch, OrthographicCamera camera, Level level, McMinos mcminos) {
         this.batch = batch;
@@ -157,11 +157,11 @@ public class PlayWindow {
         }
         // eventually restrict due to non scrolling
         if(!getScrollX() && visibleWidthInPixels > viewWidthInPixels - resolution) {
-            visibleWidthInPixels = viewWidthInPixels - resolution; // cut off a block on both sides
+            visibleWidthInPixels = viewWidthInPixels - resolution; // cut off a block
             visibleWidthInVPixels = Util.shiftLeftLogical(visibleWidthInPixels, virtualBlockResolutionExponent - resolutionExponent );
         }
         if(!getScrollY() && visibleWidthInPixels > viewHeightInPixels - resolution) {
-            visibleHeightInPixels = viewHeightInPixels - resolution; // cut off a block on both sides
+            visibleHeightInPixels = viewHeightInPixels - resolution; // cut off a block
             visibleHeightInVPixels = Util.shiftLeftLogical(visibleHeightInPixels, virtualBlockResolutionExponent - resolutionExponent );
         }
 
@@ -174,14 +174,13 @@ public class PlayWindow {
         Matrix4 matrix = new Matrix4();
         projectionX = (width - visibleWidthInPixels) / 2;
         projectionY = (height - visibleHeightInPixels) / 2;
-        matrix.setToOrtho2D(-projectionX, -projectionY, visibleWidthInPixels + 2*projectionX, visibleHeightInPixels + 2*projectionY);
+        matrix.setToOrtho2D(-projectionX, -projectionY, visibleWidthInPixels + 2 * projectionX, visibleHeightInPixels + 2 * projectionY);
 //        matrix.setToOrtho2D(0, 0, width, height);
         batch.setProjectionMatrix(matrix);
         camera.setToOrtho(false,viewWidthInPixels,viewHeightInPixels);
 
         // add clipping
-        scissors = new Rectangle();
-        Rectangle clipBounds = new Rectangle(projectionX,projectionY,visibleWidthInPixels,visibleHeightInPixels);
+        Rectangle clipBounds = new Rectangle( projectionX, projectionY, visibleWidthInPixels, visibleHeightInPixels);
         ScissorStack.calculateScissors(camera, batch.getTransformMatrix(), clipBounds, scissors);
     }
 
