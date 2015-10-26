@@ -391,15 +391,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void updateToolbox() {
-        chocolateLabel.setText(String.format("%03d", mcminos.getChocolates()));
-        keyLabel.setText(String.format("%03d", mcminos.getKeys()));
-        bombLabel.setText(String.format("%03d", mcminos.getBombs()));
-        dynamiteLabel.setText(String.format("%03d", mcminos.getDynamites()));
-        landmineLabel.setText(String.format("%03d", mcminos.getLandmines()));
-        umbrellaLabel.setText(String.format("%03d", mcminos.getUmbrellas()));
-        medicineLabel.setText(String.format("%03d", mcminos.getMedicines()));
-        pillLabel.setText(String.format("%05d", level.getPillsNumber()));
-        rockmeLabel.setText(String.format("%05d", level.getRockmesNumber()));
+        chocolateLabel.setText(Util.formatInteger(mcminos.getChocolates(), 3));
+        keyLabel.setText(Util.formatInteger(mcminos.getKeys(),3));
+        bombLabel.setText(Util.formatInteger(mcminos.getBombs(),3));
+        dynamiteLabel.setText(Util.formatInteger(mcminos.getDynamites(),3));
+        landmineLabel.setText(Util.formatInteger(mcminos.getLandmines(),3));
+        umbrellaLabel.setText(Util.formatInteger(mcminos.getUmbrellas(),3));
+        medicineLabel.setText(Util.formatInteger(mcminos.getMedicines(),3));
+        pillLabel.setText(Util.formatInteger(level.getPillsNumber(),5));
+        rockmeLabel.setText(Util.formatInteger(level.getRockmesNumber(),5));
         // update door buttons
         // first get mcminos' position
         LevelBlock mcmBlock = mcminos.getLevelBlock();
@@ -455,9 +455,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         batch.begin();
 
         ScissorStack.pushScissors(playwindow.getScissors());
-        game.acquireLock();
-        level.draw(playwindow);
-        game.releaseLock(); // TODO: think about moving this to the end of draw
+
+        game.synchronizedDraw();
 
         batch.flush();
         ScissorStack.popScissors();
@@ -465,14 +464,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         updateToolbox();
         menubatch.begin();
-        font.draw(menubatch, String.format("S%06d P%03d U%03d T%02d L%02d ",
-                        mcminos.getScore(),
-                        mcminos.getPowerDuration() >> game.timeResolutionExponent,
-                        mcminos.getUmbrellaDuration() >> game.timeResolutionExponent,
-                        mcminos.getPoisonDuration() >> game.timeResolutionExponent,
-                        mcminos.getLives()) +
-                        (mcminos.isMirrored() ? " M" : ""),
+        font.draw(menubatch,
+                "S" + Util.formatInteger(mcminos.getScore(), 6)
+                        + "P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
+                        + "U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 3)
+                        + "T" + Util.formatInteger(mcminos.getPoisonDuration() >> game.timeResolutionExponent, 2)
+                        + "L" + Util.formatInteger(mcminos.getLives(), 2)
+                        + (mcminos.isMirrored() ? " M" : ""),
                 20, Gdx.graphics.getHeight() - 20);
+        // " P%03d U%03d T%02d L%02d ",
         // add stage and menu
         menubatch.end();
 
