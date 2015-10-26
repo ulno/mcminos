@@ -1,0 +1,12 @@
+##  McMinos, drunken, front (new)
+#   Last changes: 2015-10-20
+
+symbol="P"
+
+##  Animation sub-sequences within mcminos-default-front:
+#   1,.., 8    -> opening the mouth
+#   21, 22     -> blinking with both eyes (use 22, 21, 22 for one blink)
+order=[ 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 22, 21, 22, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 22, 21, 22, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, ]
+zindex=750
+moving=True
+

@@ -1,7 +1,7 @@
 ; LEVEL NEW ---------------------------------------------+
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-13
-; Last changes: 2015-10-13
+; Last changes: 2015-10-17
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------+
@@ -24,7 +24,7 @@ BACK:   1
 
 ; STATUS-Angaben ----------------------------------------+
 LTIME:    0
-RSTRT:    0
+RSTRT:    1
 MIRROR:   0
 
 ; McMINOS -----------------------------------------------+
@@ -55,7 +55,7 @@ AGIL4:    15
 GRTIME4:  3
 
 ; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   0,999
+LIVE:   999,999
 KEYS:   0,0
 BMBS:   0,0
 DYNA:   0,0
@@ -66,9 +66,9 @@ UMBR:   0,0
 
 ; DESCRIPTION -------------------------------------------+
 
-TITLE: "Walls and pills"
+;TITLE: "Walls and pills"
 
-DESCRIPTION: "McMinos level have walls and pills. You cannot pass through walls. Go and eat all pills."
+;DESCRIPTION: "McMinos level have walls and pills. You cannot pass through walls. Go and eat all pills."
 
 
 ; LEVELDATEN --------------------------------------------+

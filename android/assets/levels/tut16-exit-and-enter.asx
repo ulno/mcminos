@@ -1,0 +1,83 @@
+; LEVEL NEW ---------------------------------------------+
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-20
+; Last changes: 2015-10-20
+; Done by.....: Andreas Neudecker
+
+; HEADER ------------------------------------------------+
+AUTHOR:   NoPe;   Andreas Neudecker
+VERSION:  3.14;
+SHAREWARE:  0
+
+NUMBR:    16
+SHOWNR:   16
+ACCCD:    16
+
+; LEVELFORMAT -------------------------------------------+
+LWID:   7
+LHI:    7
+VWID:   7
+VHI:    7
+SCROLLX:  0
+SCROLLY:  0
+BACK:   1
+
+; STATUS-Angaben ----------------------------------------+
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+; McMINOS -----------------------------------------------+
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    10
+GRTIME1:  5
+
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:    15
+GRTIME2:  3
+PILLMAX2: 100
+PILLFREQ2:  1
+
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    15
+GRTIME3:  3
+TRANSWALL3: 3
+
+GHOST4:   0
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  3
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
+LIVE:   999,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,0
+
+; DESCRIPTION -------------------------------------------+
+
+;TITLE: "Exit and enter"
+
+;DESCRIPTION: "Imagine a stage. Where you exit on the left and reappear on the right. Instantly."
+
+
+; LEVELDATEN --------------------------------------------+
+LEVEL:
+XXX.XXX
+XG..CCX
+X.XXCCX
+.......
+X.XXX.X
+X....PX
+XXX.XXX
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

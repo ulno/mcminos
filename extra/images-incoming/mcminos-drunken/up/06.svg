@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32px" height="32px" id="svg3505" sodipodi:version="0.32" inkscape:version="0.91 r13725" sodipodi:docname="06.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" version="1.1">
+  <defs id="defs3507">
+    <inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="0 : 16 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="32 : 16 : 1" inkscape:persp3d-origin="16 : 10.666667 : 1" id="perspective3513" />
+    <inkscape:perspective id="perspective4690" inkscape:persp3d-origin="372.04724 : 350.78739 : 1" inkscape:vp_z="744.09448 : 526.18109 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_x="0 : 526.18109 : 1" sodipodi:type="inkscape:persp3d" />
+    <linearGradient inkscape:collect="always" id="blue2red">
+      <stop style="stop-color:red;stop-opacity:1;" offset="0" id="stop4259" />
+      <stop style="stop-color:blue;stop-opacity:1" offset="1" id="stop4261" />
+    </linearGradient>
+    <linearGradient inkscape:collect="always" id="redEyes">
+      <stop style="stop-color:fuchsia;stop-opacity:1" offset="0" id="stop4273" />
+      <stop style="stop-color:white;stop-opacity:1" offset="1" id="stop4275" />
+    </linearGradient>
+    <radialGradient inkscape:collect="always" xlink:href="#redEyes" id="radialGradient4838" cx="-15.999993" cy="10.000868" fx="-15.999993" fy="10.000868" r="3.9994216" gradientUnits="userSpaceOnUse" />
+    <linearGradient inkscape:collect="always" xlink:href="#blue2red" id="linearGradient4846" x1="-16" y1="0" x2="-16" y2="32" gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" gridtolerance="10000" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:object-paths="true" inkscape:object-nodes="true" inkscape:snap-bbox="true" inkscape:snap-guide="true" inkscape:snap-perpendicular="true" inkscape:snap-tangential="true" inkscape:window-maximized="1">
+    <inkscape:grid type="xygrid" id="grid3515" units="px" visible="true" enabled="true" spacingx="1px" spacingy="1px" empspacing="4" />
+  </sodipodi:namedview>
+  <metadata id="metadata3510">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>McMinos right 06</dc:title>
+        <dc:date>2010-04-26</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>mcminos-right-06</dc:identifier>
+        <dc:description>McMinos moving right, animation step 06.</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g4848" transform="matrix(0,-1,1,0,0,32)">
+      <rect y="0" x="0" height="32" width="32" id="rect4147" style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path transform="scale(-1,1)" d="M -28.686471,10.0842 A 13.997975,13.997975 0 0 1 -12.970281,2.3338326 13.997975,13.997975 0 0 1 -2.0020218,16 13.997975,13.997975 0 0 1 -12.97028,29.666167 13.997975,13.997975 0 0 1 -28.686471,21.915801 L -15.999997,16 Z" sodipodi:ry="13.997975" sodipodi:rx="13.997975" sodipodi:cy="16" sodipodi:cx="-15.999997" id="path2902" style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:black;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" sodipodi:type="arc" sodipodi:start="3.577925" sodipodi:end="2.7052603" />
+      <path sodipodi:end="2.7052603" sodipodi:start="3.577925" sodipodi:type="arc" style="fill:url(#linearGradient4846);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path3287" sodipodi:cx="-15.999997" sodipodi:cy="16" sodipodi:rx="13.997975" sodipodi:ry="13.997975" d="M -28.686471,10.0842 A 13.997975,13.997975 0 0 1 -12.970281,2.3338326 13.997975,13.997975 0 0 1 -2.0020218,16 13.997975,13.997975 0 0 1 -12.97028,29.666167 13.997975,13.997975 0 0 1 -28.686471,21.915801 L -15.999997,16 Z" transform="scale(-1,1)" />
+      <circle transform="scale(-1,1)" style="fill:url(#radialGradient4838);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path3289" cx="-15.999993" cy="10.000868" r="3.9994216" />
+      <circle style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path3291" transform="scale(-1,1)" cx="-15.999704" cy="10.000868" r="1.9997108" />
+    </g>
+  </g>
+</svg>

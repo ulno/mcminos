@@ -1,7 +1,7 @@
 ; LEVEL NEW ---------------------------------------------+
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-14
-; Last changes: 2015-10-14
+; Last changes: 2015-10-17
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------+
@@ -24,7 +24,7 @@ BACK:   1
 
 ; STATUS-Angaben ----------------------------------------+
 LTIME:    0
-RSTRT:    0
+RSTRT:    1
 MIRROR:   0
 
 ; McMINOS -----------------------------------------------+
@@ -34,7 +34,7 @@ MCSPEED:  1
 GHOST1:   1
 GHSPEED1: 1
 AGIL1:    15
-GRTIME1:  15
+GRTIME1:  1
 
 GHOST2:   0
 GHSPEED2: 1
@@ -55,7 +55,7 @@ AGIL4:    15
 GRTIME4:  3
 
 ; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   0,999
+LIVE:   999,999
 KEYS:   0,0
 BMBS:   0,0
 DYNA:   0,0
@@ -75,9 +75,9 @@ UMBR:   0,0
 LEVEL:
 XXXXXXX
 XCCX. X
-XCCXXcX
-X     X
+XCCXX+X
+XG    X
 X XXX X
-Xc  cPX
+X+  +PX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
