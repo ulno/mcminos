@@ -6,7 +6,7 @@ Project McMinos: bugs, issues, ideas
   Andreas Neudecker <andreas.mcminos@googlemail.com>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-10-19
+:Date: 2015-10-23
 
 
 Keywords: 2DO, BUG, IDEA, ISSUE (implies discussion), TESTING
@@ -96,13 +96,13 @@ would lead to a sequence of <indestructible wall>,<default wall 02>,<default wal
 <indestructible wall>,_<default wall 10>_,<default wall 10>,<default wall 8>
 
 
-2015-10-20
+2015-10-20 - Andreas
 
 [ ] BUG: Level testing, tut17-inifinite-world: In a level with infinite world, when McMinos finishes the level on an edge field (have seen this on the right edge), McMinos has sort of 2½ arms on the left side.
 
 [ ] BUG: At typo in the level name causes a crash immediately once the level is started in the program. It would be nicer if the program simply returned to the main menu.
 
-2015-10-22
+2015-10-22 - Andreas
 
 [ ] BUG: Level tut17-infinite-world: SCROLLX and SCROLLY are on. If the player is in a position where the castle is visible at the bottom accross the level edges, but only the two top field quarters of the castle should be visible, the castle is not drawn at all. If a little more than the two top fields are shown, the castle is visible. — Addendum: this only happens at maximum size of the fields (128x128) in a 1280x878 pixel window.
 
@@ -112,9 +112,15 @@ would lead to a sequence of <indestructible wall>,<default wall 02>,<default wal
 
 [ ] ISSUE: we need a more obvious connection between background numbers in the level sources and the real background names. Should we move to background names in the level sources? And, if not found (i.e.: nobody cared to change the level source, YET) default background is used?
 
-2015-10-23
+2015-10-23 - Andreas
 
 [ ] BUG level tut17-infinite-worlds: player eats last pill on left edge field (passage to right edge; field coord.: (1; 2)), jumps cheering(ly) to the right edge
+
+2015-10-24 - Andreas
+
+[ ] ISSUE: I think we need some visual and/or acoustic feedback that announces the end of effect of power pills, may be for poison, too. Would it be much work for you to integrate a separate animation for, let's say, the last 1 to 3 seconds of effect time? For the power pills I could remove the stars from McMinos and flip colours between orange and red.
+
+
 
 Ideas, Brainstorming
 ================================================================================
