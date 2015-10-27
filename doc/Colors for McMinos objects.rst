@@ -10,7 +10,7 @@ For use with inkscape
   Andreas Neudecker <zapyon@gmx.net>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-10-10
+:Date: 2015-10-24
 
 
 
@@ -32,6 +32,12 @@ Creatures
 Walls and parts
 ===============
 
+* wall, default
+
+* wall, destroyed
+
+* .
+
 
 * Bomb holes (ex-walls):
 
@@ -40,4 +46,37 @@ Walls and parts
   * lighted wall: cccccc80
   * wall traces: 00000080
 
+Extras
+======
+
+* bomb
+
+  * default
+  
+    * base colour: 808080ff
+    * lighter: 909090ff
+    * light spot: c0c0c0ff
+    * shadow: 606060ff
+    
+    * fuse (contour): e00000ff
+
+* dynamite
+
+  * default
+    
+    * base colour: c04040ff
+    * lighter: d07070ff
+    * lightest: da8e8eff
+    
+    * fuse (contour): e00000ff
+
+
+4x4 objects for radar screen
+----------------------------
+
+* Walls
+  * default
+    * light side: 00ffffff
+    * shady side: 0000ffff
+  * destroyed: aaaaaa60
 
