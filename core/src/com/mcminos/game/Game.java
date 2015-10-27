@@ -28,7 +28,7 @@ public class Game {
     private long gameTime = 0;
     private Main main;
     //private Semaphore updateLock = new Semaphore(1);
-    private Timer.Task timerTask = null;
+    //private Timer.Task timerTask = null;
     String currentLevelName = null;
     private Level level;
     private McMinos mcminos;
@@ -40,6 +40,8 @@ public class Game {
     private Random randomGenerator = new Random();
     private boolean movement = false; // only do animations but don't move anything
     boolean toolboxShown = false;
+    private long lastDeltaTimeLeft = 0;
+    private boolean timerTaskActive = false;
 
 
 
@@ -62,8 +64,25 @@ public class Game {
         playScreen.init(levelName);
     }
 
-    public void updateTime() {
-        gameTime += (long)(Gdx.graphics.getDeltaTime() * 1000);
+    /**
+     *
+     * @return usually true, when game continues, if next level or return to menu, return false
+     */
+    public boolean updateTime() {
+        // use square to be more precise
+        float gdxtime = Gdx.graphics.getDeltaTime();
+        gameTime += (long)( gdxtime* 1000);
+
+        if(timerTaskActive) {
+            long deltaTime = (long) (gdxtime * Game.timeResolution * Game.timeResolution);
+            deltaTime += lastDeltaTimeLeft; // apply what is left
+            while (deltaTime >= Game.timeResolution) {
+                if(! nextGameFrame() ) return false;
+                deltaTime -= Game.timeResolution;
+            }
+            lastDeltaTimeLeft = deltaTime;
+        }
+        return true;
     }
 
     public Level loadLevel(String s) {
@@ -73,7 +92,7 @@ public class Game {
         playwindow = new PlayWindow(batch,camera,level,mcminos);
         initAfterLoad();
 
-        // start the own timer (which triggers also the movemnet)
+        // start the own timer (which triggers also the movement)
         startTimer();
         return level;
     }
@@ -123,15 +142,19 @@ public class Game {
     public void startTimer() {
         frameTimer = new FrameTimer();
 
+        timerTaskActive = true;
+
+        /*
+            updates now handled in render based on deltaTime
         if( timerTask != null)
-            timerTask.cancel(); // cancelold one
+            timerTask.cancel(); // cancel old one
         timerTask = new Timer.Task() {
             @Override
             public void run() {
-                synchronizedNextGameFrame();
+                nextGameFrame();
             }
         };
-        Timer.schedule(timerTask, 0, 1 / (float) timeResolution);
+        Timer.schedule(timerTask, 0, 1 / (float) timeResolution); */
     }
 
     public long getGameFrame() {
@@ -139,10 +162,15 @@ public class Game {
     }
 
     /**
-     * This is called
+     * This is called all the time to trigger movements and events
+     * returns false, if back to menu or next level
+     * else should return true
      */
-    private synchronized void synchronizedNextGameFrame() { // to allow serialized iterations
-        if( !toolboxShown) { // if game is not paused
+    public boolean nextGameFrame() {
+        if( level.isFinished() ) {
+            return false;
+        }
+        if( !toolboxShown) { // if game is not suspended with toolbox
             // do timers
             gameFrame++;
             /* done with synchronize // get lock
@@ -172,12 +200,15 @@ public class Game {
                             lo.getLevelBlock().removeMovable(lo);
                             lo.dispose();
                         }
+                        if( level.isFinished() ) {
+                            return false;
+                        }
                     }
                 }
             }
             /* done with synchronize updateLock.release(); // release lock */
         }
-
+        return true;
     }
 
     public void disposeFrameTimer() {
@@ -185,7 +216,8 @@ public class Game {
     }
 
     public void disposeTimerTask() {
-        timerTask.cancel();
+        //timerTask.cancel();
+        timerTaskActive = false;
     }
 
     public void dispose() {
@@ -199,8 +231,8 @@ public class Game {
 
     public void reset() {
         disposeFrameTimer();
-        //disposeTimerTask();
-        //mcminos.dispose(); // will be reused
+        // disposeTimerTask(); // will be reused
+        // mcminos.dispose(); // will be reused
         ghosts.dispose();
         movers.clear();
         level.dispose();
@@ -302,7 +334,7 @@ public class Game {
         movement = false;
     }
 
-    synchronized public void synchronizedDraw() {
+    public void draw() {
         // not in gwt game.acquireLock();
         level.draw(playwindow);
         // not in gwt game.releaseLock(); // TODO: think about moving this to the end of draw
