@@ -121,6 +121,15 @@ would lead to a sequence of <indestructible wall>,<default wall 02>,<default wal
 [ ] ISSUE: I think we need some visual and/or acoustic feedback that announces the end of effect of power pills, may be for poison, too. Would it be much work for you to integrate a separate animation for, let's say, the last 1 to 3 seconds of effect time? For the power pills I could remove the stars from McMinos and flip colours between orange and red.
 
 
+2015-10-27 Phone talk Andreas + Uli
+
+* minimap/radar screen, base size 4x4, is to be integrated into /extra/images as "minimap" ()or "radar"? A.)
+* UI possibly done without skins, similar to Atari version: icons + text, where required
+* minimap directory will replicate the directory structure of /extra/images for now
+* for now, only static images and very short animations where required will be done for minimap
+* LEVEL SOURCES: no extras are transferred to the next level; all tools will be converted to extra points. Exception: extra lives will be transferred. Corresponding variables in the level sources are deprecated and will be ignored. Levels need to be adapted accordingly (i.e.: provide required extras at level start - inside the level)
+
+
 
 Ideas, Brainstorming
 ================================================================================
