@@ -434,51 +434,51 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void render(float delta) {
-        double deltaTime = Gdx.graphics.getDeltaTime();
-        //double offsetX = -0.2;
-        //double offsetY = -0.5;
+        /////// Handle timing events (like moving and events)
+        if( game.updateTime() ) { // not finished
 
-        // moving is not handled in rendering method
-        //
-        game.updateTime(); // TODO: so we would actually not need to track time here as moving is handled elsewhere
+            // Handle drawing
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        menubatch.begin();
-        for( int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution ) {
-            for( int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution ) {
-                background.draw(playwindow,menubatch,x,y);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            menubatch.begin();
+            for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution) {
+                for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution) {
+                    background.draw(playwindow, menubatch, x, y);
+                }
             }
+            menubatch.end();
+
+            batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
+            batch.begin();
+
+            ScissorStack.pushScissors(playwindow.getScissors());
+
+            game.draw();
+
+            batch.flush();
+            ScissorStack.popScissors();
+            batch.end(); // must end before menu
+
+            updateToolbox();
+            menubatch.begin();
+            font.draw(menubatch,
+                    "S" + Util.formatInteger(mcminos.getScore(), 6)
+                            + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
+                            + " U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 3)
+                            + " T" + Util.formatInteger(mcminos.getPoisonDuration() >> game.timeResolutionExponent, 2)
+                            + " L" + Util.formatInteger(mcminos.getLives(), 2)
+                            + (mcminos.isMirrored() ? " M" : ""),
+                    20, Gdx.graphics.getHeight() - 20);
+            // " P%03d U%03d T%02d L%02d ",
+            // add stage and menu
+            menubatch.end();
+
+            menu.act(delta);
+            menu.draw();
+        } // else level is finished
+        else {
+            backToMenu();
         }
-        menubatch.end();
-
-        batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
-        batch.begin();
-
-        ScissorStack.pushScissors(playwindow.getScissors());
-
-        game.synchronizedDraw();
-
-        batch.flush();
-        ScissorStack.popScissors();
-        batch.end(); // must end before menu
-
-        updateToolbox();
-        menubatch.begin();
-        font.draw(menubatch,
-                "S" + Util.formatInteger(mcminos.getScore(), 6)
-                        + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
-                        + " U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 3)
-                        + " T" + Util.formatInteger(mcminos.getPoisonDuration() >> game.timeResolutionExponent, 2)
-                        + " L" + Util.formatInteger(mcminos.getLives(), 2)
-                        + (mcminos.isMirrored() ? " M" : ""),
-                20, Gdx.graphics.getHeight() - 20);
-        // " P%03d U%03d T%02d L%02d ",
-        // add stage and menu
-        menubatch.end();
-
-        menu.act(delta);
-        menu.draw();
-
 
     }
 
@@ -562,7 +562,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (!mcminos.isKilled() && !mcminos.isFalling()) {
+        if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
             game.enableMovement();
         }
         if (!game.isToolboxShown()) { // just pan in this case -> see there

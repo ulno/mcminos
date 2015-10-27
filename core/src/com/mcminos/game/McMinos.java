@@ -310,12 +310,14 @@ public class McMinos {
         // don't multikill
         if( ! isKilled() ) {
             audio.soundPlay(sound);
+            game.disableMovement();
             game.stopAllMovers();
             stop();
             killed = true;
             // show kill-animation
             mover.setGfx(null); // hide
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
+            animation.setXY(getVX(),getVY());
             animation.animationStartNow();
 
             // schedule level-end and grave-stone setting after animation
@@ -329,8 +331,9 @@ public class McMinos {
                         level.killRestart();
                         killed = false;
                         resume();
+                        // will be enabled at beginning of game: game.enableMovement();
                     } else {
-                        game.getPlayScreen().backToMenu();
+                        level.finish();
                     }
                 }
             }, gfx.getAnimationFramesLength());
@@ -387,6 +390,7 @@ public class McMinos {
      */
     private void stop() {
         mover.setSpeed(0);
+
         // disable destination selection
         unsetDestination();
         destinationEnabled = false;
@@ -404,8 +408,10 @@ public class McMinos {
     public void win() {
         if( ! isWinning() ) {
             audio.soundPlay("applaus");
+            game.disableMovement();
             game.stopAllMovers();
             stop();
+
             winning = true;
             // show kill-animation
             mover.setGfx(null); // hide
@@ -419,7 +425,7 @@ public class McMinos {
                 @Override
                 public void run() {
                     animation.dispose();
-                    game.getPlayScreen().backToMenu();
+                    level.finish();
                 }
             }, gfx.getAnimationFramesLength());
         }

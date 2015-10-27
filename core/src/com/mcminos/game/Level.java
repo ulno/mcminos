@@ -56,6 +56,7 @@ public class Level {
     private ArrayList<LevelBlock> ghostStart[] = new ArrayList[4];
     private LevelBlock mcminosStart;
     private String levelName;
+    private boolean finished = false;
 
 
     Level ( Game game, String filename ) {
@@ -135,62 +136,174 @@ public class Level {
                             }
                         }
                         // TODO: apply minmax on existing mcminos
-                        switch(strList[0]) {
-                            case "LEVEL": readLevel=true; break;
-                            case "AUTHOR": author = strList[1]; break;
-                            case "NUMBR": number = Integer.parseInt(strList[1]); break;
-                            case "SHOWNR": showNumber = Integer.parseInt(strList[1]); break;
-                            case "ACCCD": accessCode = strList[1]; break;
-                            case "LWID": width = Integer.parseInt(strList[1]); break;
-                            case "LHI": height = Integer.parseInt(strList[1]); break;
-                            case "VWID": VisibleWidth = Integer.parseInt(strList[1]); break;
-                            case "VHI": visibleHeight = Integer.parseInt(strList[1]); break;
-                            case "SCROLLX": scrollX = "1".equals(strList[1]); break;
-                            case "SCROLLY": scrollY = "1".equals(strList[1]); break;
-                            case "BACK": background = strList[1]; break;
-                            case "LTIME": time = Integer.parseInt(strList[1]); break;
-                            case "RSTRT": restart = Integer.parseInt(strList[1]); break;
-                            case "MIRROR": mirror = "1".equals(strList[1]); break;
-                            case "MCSPEED": mcminosSpeed = Integer.parseInt(strList[1]); break;
-                            case "GHOST1": ghostMax[0] = Integer.parseInt(strList[1]); break;
-                            case "GRTIME1": ghostTime[0] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED1": ghostSpeed[0] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
-                            case "AGIL1": ghostAgility[0] = Integer.parseInt(strList[1]); break;
-                            case "PILLMAX1": ghostPillMax[0] = Integer.parseInt(strList[1]); break;
-                            case "PILLFREQ1": ghostPillFreq[0] = Integer.parseInt(strList[1]); break;
-                            case "TRANSWALL1": ghostTranswall[0] = Integer.parseInt(strList[1]); break;
-                            case "GHOST2": ghostMax[1] = Integer.parseInt(strList[1]); break;
-                            case "GRTIME2": ghostTime[1] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED2": ghostSpeed[1] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
-                            case "AGIL2": ghostAgility[1] = Integer.parseInt(strList[1]); break;
-                            case "PILLMAX2": ghostPillMax[1] = Integer.parseInt(strList[1]); break;
-                            case "PILLFREQ2": ghostPillFreq[1] = Integer.parseInt(strList[1]); break;
-                            case "TRANSWALL2": ghostTranswall[1] = Integer.parseInt(strList[1]); break;
-                            case "GHOST3": ghostMax[2] = Integer.parseInt(strList[1]); break;
-                            case "GRTIME3": ghostTime[2] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED3": ghostSpeed[2] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
-                            case "AGIL3": ghostAgility[2] = Integer.parseInt(strList[1]); break;
-                            case "PILLMAX3": ghostPillMax[2] = Integer.parseInt(strList[1]); break;
-                            case "PILLFREQ3": ghostPillFreq[2] = Integer.parseInt(strList[1]); break;
-                            case "TRANSWALL3": ghostTranswall[2] = Integer.parseInt(strList[1]); break;
-                            case "GHOST4": ghostMax[3] = Integer.parseInt(strList[1]); break;
-                            case "GRTIME4": ghostTime[3] = Integer.parseInt(strList[1]); break;
-                            case "GHSPEED4": ghostSpeed[3] = Integer.parseInt(strList[1]) * Game.baseSpeed; break;
-                            case "AGIL4": ghostAgility[3] = Integer.parseInt(strList[1]); break;
-                            case "PILLMAX4": ghostPillMax[3] = Integer.parseInt(strList[1]); break;
-                            case "PILLFREQ4": ghostPillFreq[3] = Integer.parseInt(strList[1]); break;
-                            case "TRANSWALL4": ghostTranswall[3] = Integer.parseInt(strList[1]); break;
-                            case "LIVE": livesMin = min; livesMax = max; break;
-                            case "KEYS": keysMin = min; keysMax = max; break;
-                            case "DYNA": dynamitesMin = min; dynamitesMax = max; break;
-                            case "MINE": minesMin = min; minesMax = max; break;
-                            case "CHOC": chocolatesMin = min; chocolatesMax = max; break;
-                            case "MEDC": medicinesMin = min; medicinesMax = max; break;
-                            case "UMBR": umbrellasMin = min; umbrellasMax = max; break;
-                            default:
-                                // TODO: eventually throw error again
-                                break;
-                        }
+                        if(strList[0].equals("LEVEL") ) {
+                            readLevel = true;
+                        } else {
+                            if( strList.length > 1 && ! strList[1].equals("") ) { // enough data?
+                                switch (strList[0]) {
+                                    case "AUTHOR":
+                                        author = strList[1];
+                                        break;
+                                    case "NUMBR":
+                                        number = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "SHOWNR":
+                                        showNumber = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "ACCCD":
+                                        accessCode = strList[1];
+                                        break;
+                                    case "LWID":
+                                        width = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "LHI":
+                                        height = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "VWID":
+                                        VisibleWidth = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "VHI":
+                                        visibleHeight = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "SCROLLX":
+                                        scrollX = "1".equals(strList[1]);
+                                        break;
+                                    case "SCROLLY":
+                                        scrollY = "1".equals(strList[1]);
+                                        break;
+                                    case "BACK":
+                                        background = strList[1];
+                                        break;
+                                    case "LTIME":
+                                        time = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "RSTRT":
+                                        restart = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "MIRROR":
+                                        mirror = "1".equals(strList[1]);
+                                        break;
+                                    case "MCSPEED":
+                                        mcminosSpeed = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHOST1":
+                                        ghostMax[0] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GRTIME1":
+                                        ghostTime[0] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHSPEED1":
+                                        ghostSpeed[0] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        break;
+                                    case "AGIL1":
+                                        ghostAgility[0] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLMAX1":
+                                        ghostPillMax[0] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLFREQ1":
+                                        ghostPillFreq[0] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "TRANSWALL1":
+                                        ghostTranswall[0] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHOST2":
+                                        ghostMax[1] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GRTIME2":
+                                        ghostTime[1] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHSPEED2":
+                                        ghostSpeed[1] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        break;
+                                    case "AGIL2":
+                                        ghostAgility[1] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLMAX2":
+                                        ghostPillMax[1] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLFREQ2":
+                                        ghostPillFreq[1] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "TRANSWALL2":
+                                        ghostTranswall[1] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHOST3":
+                                        ghostMax[2] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GRTIME3":
+                                        ghostTime[2] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHSPEED3":
+                                        ghostSpeed[2] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        break;
+                                    case "AGIL3":
+                                        ghostAgility[2] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLMAX3":
+                                        ghostPillMax[2] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLFREQ3":
+                                        ghostPillFreq[2] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "TRANSWALL3":
+                                        ghostTranswall[2] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHOST4":
+                                        ghostMax[3] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GRTIME4":
+                                        ghostTime[3] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "GHSPEED4":
+                                        ghostSpeed[3] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        break;
+                                    case "AGIL4":
+                                        ghostAgility[3] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLMAX4":
+                                        ghostPillMax[3] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "PILLFREQ4":
+                                        ghostPillFreq[3] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "TRANSWALL4":
+                                        ghostTranswall[3] = Integer.parseInt(strList[1]);
+                                        break;
+                                    case "LIVE":
+                                        livesMin = min;
+                                        livesMax = max;
+                                        break;
+                                    case "KEYS":
+                                        keysMin = min;
+                                        keysMax = max;
+                                        break;
+                                    case "DYNA":
+                                        dynamitesMin = min;
+                                        dynamitesMax = max;
+                                        break;
+                                    case "MINE":
+                                        minesMin = min;
+                                        minesMax = max;
+                                        break;
+                                    case "CHOC":
+                                        chocolatesMin = min;
+                                        chocolatesMax = max;
+                                        break;
+                                    case "MEDC":
+                                        medicinesMin = min;
+                                        medicinesMax = max;
+                                        break;
+                                    case "UMBR":
+                                        umbrellasMin = min;
+                                        umbrellasMax = max;
+                                        break;
+                                    default:
+                                        // TODO: eventually throw error again
+                                        break;
+                                } // end switch
+                            } // end if enough data (strList.length > 1)
+                        } // end check "LEVEL"-keyword
                     }
                 }
                 else { // just read level-data
@@ -734,7 +847,7 @@ Missing:
         game.disposeFrameTimer();
         if((restart & 1) > 0) { // complete restart requested
             // TODO: make sure to take things away McMinos just found in this Level
-            game.getGhosts().dispose(); // remove ghosts
+            // done in reset game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
             //game.getMcMinos().dispose();
             // empty movers
@@ -768,5 +881,16 @@ Missing:
 
     public void removeFromAllLevelObjects(LevelObject levelObject) {
         allLevelObjects.remove(levelObject);
+    }
+
+    /**
+     * :eve; is finished, either by win or death
+     */
+    public void finish() {
+        finished = true;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }

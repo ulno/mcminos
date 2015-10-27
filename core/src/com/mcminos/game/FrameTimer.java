@@ -27,7 +27,7 @@ public class FrameTimer {
         while (tasks.size() > 0 && tasks.get(0).scheduleFrame <= nowFrame) {
             Task t = tasks.get(0);
             tasks.remove(0);
-            t.run(); // this can create new tasks, so make sure this task has been removed from lsit before
+            t.run(); // this can create new tasks, so make sure this task has been removed from list before
         }
         lastFrame = gameFrame;
     }
