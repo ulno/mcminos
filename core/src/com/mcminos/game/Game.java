@@ -1,14 +1,12 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created by ulno on 27.08.15.
@@ -29,7 +27,7 @@ public class Game {
     private long gameFrame = 0; // The game time - there is a getter for this
     private long gameTime = 0;
     private Main main;
-    private Semaphore updateLock = new Semaphore(1);
+    //private Semaphore updateLock = new Semaphore(1);
     private Timer.Task timerTask = null;
     String currentLevelName = null;
     private Level level;
@@ -130,7 +128,7 @@ public class Game {
         timerTask = new Timer.Task() {
             @Override
             public void run() {
-                nextGameFrame();
+                synchronizedNextGameFrame();
             }
         };
         Timer.schedule(timerTask, 0, 1 / (float) timeResolution);
@@ -143,16 +141,16 @@ public class Game {
     /**
      * This is called
      */
-    private void nextGameFrame() { // to allow serialized iterations
+    private synchronized void synchronizedNextGameFrame() { // to allow serialized iterations
         if( !toolboxShown) { // if game is not paused
             // do timers
             gameFrame++;
-            // get lock
+            /* done with synchronize // get lock
             try { // needs to be synchronized against drawing
                 updateLock.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             frameTimer.update(gameFrame);
 
 
@@ -177,7 +175,7 @@ public class Game {
                     }
                 }
             }
-            updateLock.release(); // release lock
+            /* done with synchronize updateLock.release(); // release lock */
         }
 
     }
@@ -232,7 +230,7 @@ public class Game {
         movers.remove(mover);
     }
 
-    public void acquireLock() {
+    /*does not work in gwt/web public void acquireLock() {
         try {
             updateLock.acquire();
         } catch (InterruptedException e) {
@@ -242,7 +240,7 @@ public class Game {
 
     public void releaseLock() {
         updateLock.release();
-    }
+    }*/
 
     public long getGameTime() {
         return gameTime;
@@ -302,5 +300,12 @@ public class Game {
 
     public void disableMovement() {
         movement = false;
+    }
+
+    synchronized public void synchronizedDraw() {
+        // not in gwt game.acquireLock();
+        level.draw(playwindow);
+        // not in gwt game.releaseLock(); // TODO: think about moving this to the end of draw
+
     }
 }

@@ -38,4 +38,47 @@ public class Util {
         img.setPosition(w / 2 - iw * scale / 2, h / 2 - ih * scale / 2);
     }
 
+    /**
+     *
+     * @param in input number
+     * @param fill align with leading zeros to thi slength
+     * @return
+     *
+     * taken from: http://stackoverflow.com/questions/473282/how-can-i-pad-an-integers-with-zeros-on-the-left
+     */
+    public static String formatInteger( int in, int fill ) {
+        boolean negative = false;
+        int value, len = 0;
+
+        if(in >= 0){
+            value = in;
+        } else {
+            negative = true;
+            value = - in;
+            in = - in;
+            len ++;
+        }
+
+        if(value == 0){
+            len = 1;
+        } else{
+            for(; value != 0; len ++){
+                value /= 10;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if(negative){
+            sb.append('-');
+        }
+
+        for(int i = fill; i > len; i--){
+            sb.append('0');
+        }
+
+        sb.append(in);
+
+        return sb.toString();
+    }
 }
