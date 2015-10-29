@@ -268,7 +268,16 @@ Old levels from the ATARI version
 * level056
 * level057
 * level058
+
+  * huge square level, just rocks and ghosts
+  * A: medium difficulty; interesting but may be too large => reduce size?
+
 * level059
+
+  * square level with four quarter squares, mines, no ghosts, 1 imprisoned jpill + 1 corresponding bomb
+  * one quarter square with rotating oneways gets McMinos stuck
+  * A: medium difficulty, no fun => remove
+
 * level060
 * level061
 * level062
