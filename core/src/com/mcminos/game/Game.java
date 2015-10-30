@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
@@ -42,7 +43,6 @@ public class Game {
     boolean toolboxShown = false;
     private long lastDeltaTimeLeft = 0;
     private boolean timerTaskActive = false;
-
 
 
     public PlayWindow getPlayWindow() {
@@ -340,4 +340,5 @@ public class Game {
         // not in gwt game.releaseLock(); // TODO: think about moving this to the end of draw
 
     }
+
 }

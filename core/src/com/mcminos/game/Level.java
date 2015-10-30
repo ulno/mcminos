@@ -405,7 +405,8 @@ public class Level {
                 f.updateWall();
                 f.updateCastle();
                 f.updateDoor();
-                // background
+                // create background
+                // TODO: check, why the border of bg is not drawn -> clipping problem as it is created here
                 if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
                     LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
                     lo.setGfx(bggfx);
