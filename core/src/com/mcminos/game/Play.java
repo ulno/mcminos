@@ -516,11 +516,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-            game.enableMovement();
-        }
-        if (!game.isToolboxShown()) { // just pan in this case -> see there
+        if (!game.isToolboxShown()) {
             mcminos.updateKeyDirections();
+            if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                game.enableMovement();
+            }
         }
         return false;
     }
@@ -570,11 +570,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-            game.enableMovement();
-        }
         if (!game.isToolboxShown()) { // just pan in this case -> see there
             if (button > 0) return false;
+            if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                game.enableMovement();
+            }
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
             mcminos.setDestination(x, y);

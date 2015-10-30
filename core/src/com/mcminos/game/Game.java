@@ -288,7 +288,7 @@ public class Game {
 
     public void stopAllMovers() {
         /*for(Mover m: movers) {
-            m.setSpeed(0);
+            m.computeSpeeds(0);
         }*/
         movement = false;
     }

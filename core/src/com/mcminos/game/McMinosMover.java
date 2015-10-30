@@ -35,7 +35,7 @@ public class McMinosMover extends Mover {
     public LevelBlock chooseDirection() {
         // this is only called, when on block boundaries
         int directions = getKeyDirections(); // direction bit field
-        if ( directions == 0 && mcminos.isDestinationSet()) { // try to get from destination
+        if ( directions == 0 && mcminos.isDestinationSet()) { // if no key, then try to get from destination
             LevelObject destination = mcminos.getDestination();
             // check screen distance
             int x = levelObject.getVX();
@@ -82,17 +82,18 @@ public class McMinosMover extends Mover {
                 }
             }
         }
-        if( directions > 0) { // got somthing
+        if( directions > 0) { // got something in directions
             // refine with possible directions
             directions = getUnblockedDirs(directions,true);
 
             LevelBlock nextBlock=null;
 
-            // TODO: there could be more from keyboard, take into account
             switch (directions) {
+                // do one direction fast
                 case STOP:
                     //nextBlock = currentLevelBlock;
                     // actually done here
+                    currentDirection = STOP;
                     return currentLevelBlock;
                 //break;
                 case UP:
@@ -107,7 +108,7 @@ public class McMinosMover extends Mover {
                 case LEFT:
                     nextBlock = currentLevelBlock.left();
                     break;
-                default: // more than one given
+                default: // more than one given, select first possible
                     if((directions & UP) > 0) {
                         nextBlock = currentLevelBlock.up();
                         directions = UP;
@@ -147,7 +148,7 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if( m == null ) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, getFullSpeed(), currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(rock, getVPixelSpeed(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
@@ -156,7 +157,7 @@ public class McMinosMover extends Mover {
                     audio.soundPlay("moverock");
                 } else if(  ! m.isMoving() ) {
                     // let it move again
-                    m.triggerMove(currentDirection, getFullSpeed(), nextBlock2);
+                    m.triggerMove(currentDirection, getVPixelSpeed(), nextBlock2);
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");

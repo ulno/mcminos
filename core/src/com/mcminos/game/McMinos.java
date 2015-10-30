@@ -389,7 +389,7 @@ public class McMinos {
      * Stop all movement
      */
     private void stop() {
-        mover.setSpeed(0);
+        mover.stop();
 
         // disable destination selection
         unsetDestination();
@@ -397,8 +397,8 @@ public class McMinos {
     }
 
     private void resume() {
-        mover.setSpeed(Game.baseSpeed);
-        destinationEnabled = true;
+        mover.resume();
+        if( mover.getKeyDirections() == 0) destinationEnabled = true;
     }
 
     public boolean isKilled() {
@@ -511,5 +511,9 @@ public class McMinos {
 
     public boolean updateKeyDirections() {
         return mover.updateKeyDirections();
+    }
+
+    public int getKeyDirections() {
+        return mover.getKeyDirections();
     }
 }
