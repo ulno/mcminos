@@ -21,12 +21,37 @@ For use with inkscape
 Creatures
 =========
 
-* McMinos
+McMinos
+-------
+
+* default
 
   * base:  ff0000ff
   * mouth: 800000ff
   * inner mouth: 550000ff
   * uvula: ff0001ff
+
+* doped
+
+* drunken
+
+* poisoned
+
+* dying
+
+* frightened
+
+
+Ghosts
+------
+
+* Hanky
+
+* Perry
+
+* Zarathustra
+
+* Jumping Pill
 
 
 Walls and parts
@@ -39,7 +64,7 @@ Walls and parts
 * .
 
 Castle
-======
+------
 
 * default
 
@@ -77,34 +102,54 @@ Castle
 Extras
 ======
 
-* bomb
+Bomb
+----
 
-  * default
+* default
+
+  * base colour: 808080ff
+  * lighter: 909090ff
+  * light spot: c0c0c0ff
+  * shadow: 606060ff
   
-    * base colour: 808080ff
-    * lighter: 909090ff
-    * light spot: c0c0c0ff
-    * shadow: 606060ff
-    
-    * fuse (contour): e00000ff
+  * fuse (contour): e00000ff
 
-* dynamite
+Dynamite
+--------
 
-  * default
-    
-    * base colour: c04040ff
-    * lighter: d07070ff
-    * lightest: da8e8eff
-    
-    * fuse (contour): e00000ff
+* default
+  
+  * base colour: c04040ff
+  * lighter: d07070ff
+  * lightest: da8e8eff
+  
+  * fuse (contour): e00000ff
+
+Rock
+----
+
+* base: b3b3b3ff
+* light: e6e6e6ff
+* highlights: ffffffff
+* dark: 666666ff
+* darker: 4d4d4dff
+* darkest: 333333ff
+
+Rock me
+-------
+
+* base: ff0000ff
 
 
 4x4 objects for radar screen
-----------------------------
+============================
+
 
 * Walls
   * default
     * light side: 00ffffff
     * shady side: 0000ffff
   * destroyed: aaaaaa60
+  
+Extras
 

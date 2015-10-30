@@ -29,25 +29,25 @@ MIRROR:   0
 MCSPEED:  1
 
 ; GEISTER -----------------------------------------------+
-GHOST1:   1
+GHOST1:   10
 GHSPEED1: 1
 AGIL1:    15
 GRTIME1:  5
 
-GHOST2:   1
+GHOST2:   10
 GHSPEED2: 1
 AGIL2:    15
 GRTIME2:  15
 PILLMAX2: 100
 PILLFREQ2:  1
 
-GHOST3:   1
+GHOST3:   10
 GHSPEED3: 1
 AGIL3:    15
 GRTIME3:  5
 TRANSWALL3: 3
 
-GHOST4:   1
+GHOST4:   10
 GHSPEED4: 1
 AGIL4:    15
 GRTIME4:  5
@@ -68,10 +68,10 @@ UMBR:   0,0
 LEVEL:
 .........|.........|.........|.........|.........|
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-XP..............................................*X
+XP.k.k.k........................................*X
 X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X
-X.X............................................X.X
-X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X
+XkX............................................X.X
+X|X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X
 X.X.X........................................X.X.X
 X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X
 X.X.X.X....................................X.X.X.X
