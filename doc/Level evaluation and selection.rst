@@ -258,7 +258,15 @@ Old levels from the ATARI version
 * level046
 * level047
 * level048
+
+  * Classic pills and ghosts level, square with two warp holes.
+  * A: medium difficulty, action
+
 * level049
+
+  * Walls of rocks and ghosts, just one power cookie, one chocolate
+  * A: medium difficulty, longish, but fun
+
 * level050
 * level051
 * level052

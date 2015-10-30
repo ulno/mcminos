@@ -1,0 +1,121 @@
+; LEVEL NEW ---------------------------------------------+
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-23
+; Last changes: 2015-10-30
+; Done by.....: Andreas Neudecker
+
+; HEADER ------------------------------------------------+
+AUTHOR:   NoPe;   Andreas Neudecker
+VERSION:  3.14;
+SHAREWARE:  0
+
+NUMBR:    78
+SHOWNR:   78
+ACCCD:    78
+
+; LEVELFORMAT -------------------------------------------+
+LWID:   50
+LHI:    50
+SCROLLX:  0
+SCROLLY:  0
+BACK:   1
+
+; STATUS-Angaben ----------------------------------------+
+LTIME:    0
+RSTRT:    16
+MIRROR:   0
+
+; McMINOS -----------------------------------------------+
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  5
+
+GHOST2:   1
+GHSPEED2: 1
+AGIL2:    15
+GRTIME2:  15
+PILLMAX2: 100
+PILLFREQ2:  1
+
+GHOST3:   1
+GHSPEED3: 1
+AGIL3:    15
+GRTIME3:  5
+TRANSWALL3: 3
+
+GHOST4:   1
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  5
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,0
+
+; DESCRIPTION -------------------------------------------+
+
+; LEVELDATEN --------------------------------------------+
+LEVEL:
+.........|.........|.........|.........|.........|
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XP..............................................*X
+X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X
+X.X............................................X.X
+X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X
+X.X.X........................................X.X.X
+X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X
+X.X.X.X....................................X.X.X.X
+X.X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X.X
+X.X.X.X.X................................X.X.X.X.X
+X.X.X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X.X.X
+X.X.X.X.X.X............................X.X.X.X.X.X
+X.X.X.X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X.X.X.X
+X.X.X.X.X.X.X........................X.X.X.X.X.X.X
+X.X.X.X.X.X.X.XXXXXXXXXXXXXXXXXXXXXX.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X....................X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.XXXXXXXXXXXXXXXXXX.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X................X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.XXXXXXXXXXXXXX.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X............X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X..ZZZZZZZZ..X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X.Z........Z.X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X.Z..ZZZZ..Z.X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X.Z.Z....Z.Z.X.X.X.X.X.X.X.X.X.X
+XGX.XGX.XGX.XGX.XGX.Z.Z.CC.Z.ZgX.XgX.XgX.XgX.XgX.X
+X.XGX.XGX.XGX.XGX.XGZ.Z.CC.Z.Z.XgX.XgX.XgX.XgX.XgX
+X.X.X.X.X.X.X.X.X.X.Z.Z....Z.Z.X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X.Z..ZZZZ..Z.X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X.Z........Z.X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X..ZZZZZZZZ..X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.X......H.....X.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.XXXXXXXXXXXXXX.X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.X.......H........X.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X.XXXXXXXXXXXXXXXXXX.X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.X..........H.........X.X.X.X.X.X.X.X
+X.X.X.X.X.X.X.XXXXXXXXXXXXXXXXXXXXXX.X.X.X.X.X.X.X
+X.X.X.X.X.X.X...........H............X.X.X.X.X.X.X
+X.X.X.X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X.X.X.X
+X.X.X.X.X.X..............H.............X.X.X.X.X.X
+X.X.X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X.X.X
+X.X.X.X.X...............H................X.X.X.X.X
+X.X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X.X
+X.X.X.X..................H.................X.X.X.X
+X.X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X.X
+X.X.X...................H....................X.X.X
+X.X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.X
+X.X......................H.....................X.X
+X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X
+X*......................H.......................+X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

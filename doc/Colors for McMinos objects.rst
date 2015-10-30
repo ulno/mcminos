@@ -38,6 +38,34 @@ Walls and parts
 
 * .
 
+Castle
+======
+
+* default
+
+  * base: c0c0c0ff
+  * darker stones: a0a0a0ff
+  * lighter stones: dededeff
+  * shadows: 00000040
+  * door
+    * base: d0aa00ff
+    * shadows: 805500ff
+    * lights: e6be00ff
+    * door knob
+      * base: b3b3b3ff
+      * shadows: 808080ff
+      * lights: ccccccff
+      * glare: ffffffc0 
+      * door knob ball
+        * base: a0a0a0ff
+        * shadow: 606060ff
+        * light: ffffffff
+    * door hole
+      * shadow: 00000041
+  * window
+    * pane: 00ffff40
+    * cross: 4d4d4dff
+
 
 * Bomb holes (ex-walls):
 
