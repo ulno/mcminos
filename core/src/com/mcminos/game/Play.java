@@ -516,11 +516,18 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+            game.enableMovement();
+        }
+        if (!game.isToolboxShown()) { // just pan in this case -> see there
+            mcminos.updateKeyDirections();
+        }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        mcminos.updateKeyDirections();
         return false;
     }
 

@@ -317,7 +317,7 @@ public class McMinos {
             // show kill-animation
             mover.setGfx(null); // hide
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
-            animation.setXY(getVX(),getVY());
+            animation.setXY(getVX(), getVY());
             animation.animationStartNow();
 
             // schedule level-end and grave-stone setting after animation
@@ -507,5 +507,9 @@ public class McMinos {
         powerDuration = 0;
         umbrellaDuration = 0;
         setPowerPillValues(1,1,0);
+    }
+
+    public boolean updateKeyDirections() {
+        return mover.updateKeyDirections();
     }
 }

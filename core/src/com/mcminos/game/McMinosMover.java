@@ -1,5 +1,8 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
 import java.util.ArrayList;
 
 /**
@@ -13,6 +16,8 @@ public class McMinosMover extends Mover {
     private final Audio audio;
     private final Level level;
     private final Ghosts ghosts;
+    private int keyDirections = 0;
+
 
     public McMinosMover(Game game) {
         super(game.getMcMinos().getLevelObject(), Game.baseSpeed, true);
@@ -29,8 +34,8 @@ public class McMinosMover extends Mover {
     @Override
     public LevelBlock chooseDirection() {
         // this is only called, when on block boundaries
-        if ( mcminos.isDestinationSet()) {
-            int directions = 0; // direction bit field
+        int directions = getKeyDirections(); // direction bit field
+        if ( directions == 0 && mcminos.isDestinationSet()) { // try to get from destination
             LevelObject destination = mcminos.getDestination();
             // check screen distance
             int x = levelObject.getVX();
@@ -68,9 +73,6 @@ public class McMinosMover extends Mover {
                 mcminos.hideDestination();
             }
 
-            // refine with possible directions
-            directions = getUnblockedDirs(directions,true);
-
             // prefer longer distance (narrow down to one choice)
             if( (directions & (UP+DOWN)) > 0 && (directions & (LEFT+RIGHT)) > 0 ) {
                 if (xdiff > ydiff) {
@@ -79,12 +81,15 @@ public class McMinosMover extends Mover {
                     directions &= UP + DOWN;
                 }
             }
+        }
+        if( directions > 0) { // got somthing
+            // refine with possible directions
+            directions = getUnblockedDirs(directions,true);
 
             LevelBlock nextBlock=null;
 
-            // only one direction should be left now.
-            currentDirection = directions; // start moving there
-            switch (currentDirection) {
+            // TODO: there could be more from keyboard, take into account
+            switch (directions) {
                 case STOP:
                     //nextBlock = currentLevelBlock;
                     // actually done here
@@ -102,7 +107,26 @@ public class McMinosMover extends Mover {
                 case LEFT:
                     nextBlock = currentLevelBlock.left();
                     break;
+                default: // more than one given
+                    if((directions & UP) > 0) {
+                        nextBlock = currentLevelBlock.up();
+                        directions = UP;
+                    }
+                    else if((directions & RIGHT) > 0) {
+                        nextBlock = currentLevelBlock.right();
+                        directions = RIGHT;
+                    }
+                    else if((directions & DOWN) > 0) {
+                        nextBlock = currentLevelBlock.down();
+                        directions = DOWN;
+                    }
+                    else /* LEFT */ {
+                        nextBlock = currentLevelBlock.left();
+                        directions = LEFT;
+                    }
+                    break;
             }
+            currentDirection = directions; // start moving there
             if (nextBlock.hasRock()) {
                 LevelBlock nextBlock2=null;
                 switch (currentDirection) {
@@ -359,6 +383,29 @@ public class McMinosMover extends Mover {
         }
         return false; // don't remove mcminos
     }
+
+    /**
+     * Check status of arrow-keys and save it
+     * if none is pressed, return false
+     * @return
+     */
+    public boolean updateKeyDirections() {
+        keyDirections = 0;
+        if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP) ) keyDirections += 1;
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) keyDirections += 2;
+        if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN) ) keyDirections += 4;
+        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) keyDirections += 8;
+        if(keyDirections > 0) {
+            mcminos.unsetDestination();
+            return true;
+        }
+        return false;
+    }
+
+    public int getKeyDirections() {
+        return keyDirections;
+    }
+
 }
 
 /*
