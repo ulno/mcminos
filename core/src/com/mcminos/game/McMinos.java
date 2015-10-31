@@ -516,4 +516,8 @@ public class McMinos {
     public int getKeyDirections() {
         return mover.getKeyDirections();
     }
+
+    public int updateTouchpadDirections(float knobPercentX, float knobPercentY) {
+        return mover.updateTouchpadDirections( knobPercentX, knobPercentY );
+    }
 }

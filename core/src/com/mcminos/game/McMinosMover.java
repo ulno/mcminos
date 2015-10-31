@@ -17,6 +17,7 @@ public class McMinosMover extends Mover {
     private final Level level;
     private final Ghosts ghosts;
     private int keyDirections = 0;
+    private int touchpadDirections = 0;
 
 
     public McMinosMover(Game game) {
@@ -405,9 +406,23 @@ public class McMinosMover extends Mover {
 
     private final int mirrorTransform[] = {0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15};
     public int getKeyDirections() {
-        return mcminos.isMirrored() ? mirrorTransform[keyDirections] : keyDirections;
+        int returnDirections = keyDirections;
+        if(returnDirections == 0) returnDirections = touchpadDirections;
+        return mcminos.isMirrored() ? mirrorTransform[returnDirections] : returnDirections;
     }  // TODO: think if mirror should be better handled in chooseDirection
 
+    public int updateTouchpadDirections(float knobPercentX, float knobPercentY) {
+        int directions = 0;
+        if(knobPercentX > 0.2) directions += RIGHT;
+        else if(knobPercentX < -0.2) directions += LEFT;
+        if(knobPercentY > 0.2) directions += UP;
+        else if(knobPercentY < -0.2) directions += DOWN;
+        touchpadDirections = directions;
+        if(touchpadDirections > 0) {
+            mcminos.unsetDestination();
+        }
+        return touchpadDirections;
+    }
 }
 
 /*

@@ -10,9 +10,11 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
@@ -56,6 +58,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private int gameResolutionCounter = 0;
     private Label medicineLabel;
     Graphics background;
+    private Touchpad touchpad;
 
     public Play(final Main main, String levelName) {
         this.main = main;
@@ -365,10 +368,38 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         toolbox.add(toolboxTable);
 
+        // virtual joystick (called touchpad in libgdx)
+        touchpad = new Touchpad(32,skin);
+        Color tpColor = touchpad.getColor();
+        touchpad.setColor(tpColor.r,tpColor.g,tpColor.b,0.7f);
+        resizeTouchpad();
+        touchpad.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (!game.isToolboxShown()) {
+                    mcminos.updateTouchpadDirections( touchpad.getKnobPercentX(), touchpad.getKnobPercentY() );
+                    if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                        game.enableMovement();
+                    }
+                }
+            }
+        });
+        menu.addActor( touchpad );
+
         // InputProcessor
         GestureDetector gd = new GestureDetector(this);
         InputMultiplexer im = new InputMultiplexer(menu, gd, this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
+    }
+
+    private void resizeTouchpad() {
+        int width = Gdx.graphics.getWidth();
+        int tpwidth = width / 4;
+        int height = Gdx.graphics.getHeight();
+        touchpad.setSize( tpwidth, tpwidth );
+        touchpad.setDeadzone( tpwidth/5 );
+        touchpad.setPosition( width * 3 / 4, 0 );
     }
 
     public void backToMenu() {
@@ -378,7 +409,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private void toggleDoor(LevelBlock lb) {
         if (lb.hasDoor()) {
-            if (!lb.hasRock()) { // if the dor is not blocked by rock
+            if (!lb.hasRock()) { // if the door is not blocked by rock
                 if (mcminos.hasKey()) {
                     mcminos.decreaseKeys();
                     lb.toggleDoor();
@@ -490,6 +521,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
         menu.getViewport().update(width, height, true);
         toolbox.setSize(width / 3, height * 4 / 5);
+        resizeTouchpad();
     }
 
     @Override
