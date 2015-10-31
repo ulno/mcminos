@@ -440,7 +440,7 @@ public class McMinos {
             if(isMirrored()) { // if this goes out of range it's corrected in moveto
                 x = getVX() - (x - getVX());
                 y = getVY() - (y - getVY());
-            }
+            } // TODO: think if this shoudl be better handled in chooseDirection
             destination.setGfx(Entities.destination);
             destination.moveTo(x, y, game.getLevelBlockFromVPixelRounded(x, y));
             destinationSet = true;
