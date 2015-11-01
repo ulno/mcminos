@@ -432,7 +432,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         medicineLabel.setText(Util.formatInteger(mcminos.getMedicines(),3));
         pillLabel.setText(Util.formatInteger(level.getPillsNumber(),5));
         rockmeLabel.setText(Util.formatInteger(level.getRockmesNumber(),5));
-        // update door buttons
+/*        // update door buttons
         // first get mcminos' position
         LevelBlock mcmBlock = mcminos.getLevelBlock();
         if (mcmBlock != null) {
@@ -448,7 +448,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             if (mcminos.hasKey() && mcmBlock.left() != null && !mcmBlock.up().hasRock() && mcmBlock.left().hasDoor())
                 doorLeftButton.setDisabled(false);
             else doorLeftButton.setDisabled(true);
-        }
+        }*/
     }
 
     public void toggleToolbox() {
@@ -618,16 +618,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public int windowToGameY(int screenY) {
         int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY - playwindow.getProjectionY(), (PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent))
                 + playwindow.windowVPixelYPos - (PlayWindow.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
-        //if(game.getScrollY()) { allways
-        if (y >= playwindow.getVPixelsLevelHeight())
-            y -= playwindow.getVPixelsLevelHeight();
-        if (y <= -(playwindow.virtualBlockResolution >> 1))
-            y += playwindow.getLevelHeight();
-        //}
-        //else {
-        //    if( y >= game.windowVPixelYPos + game.getVisibleHeightInVPixels() - (game.virtualBlockResolution >> 1) )
-        //        y = game.windowVPixelYPos + game.getVisibleHeightInVPixels() - (game.virtualBlockResolution >> 1);
-        //}
+        if (level.getScrollY()) {
+            if (y >= playwindow.getVPixelsLevelHeight())
+                y -= playwindow.getVPixelsLevelHeight();
+            if (y <= -(playwindow.virtualBlockResolution >> 1))
+                y += playwindow.getLevelHeight();
+        } else {
+            if (y >= playwindow.getVPixelsLevelHeight() - PlayWindow.virtualBlockResolution )
+                y = playwindow.getVPixelsLevelHeight() - PlayWindow.virtualBlockResolution - 1;
+            if (y <= 0) y = 0;
+        }
         return y;
     }
 
@@ -636,16 +636,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // TODO: consider only first button/finger
         int x = Util.shiftLeftLogical(screenX-playwindow.getProjectionX(), PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent)
                 + playwindow.windowVPixelXPos - (PlayWindow.virtualBlockResolution >> 1);
-        //if(game.getScrollX()) { allways do this
-        if (x >= playwindow.getVPixelsLevelWidth())
-            x -= playwindow.getVPixelsLevelWidth();
-        if (x <= -(playwindow.virtualBlockResolution >> 1))
-            x += playwindow.getVPixelsLevelWidth();
-        //}
-        //else {
-        //    if( x >= game.windowVPixelXPos + game.getVisibleWidthInVPixels() - (game.virtualBlockResolution >> 1) )
-        //        x = game.windowVPixelXPos + game.getVisibleWidthInVPixels() - (game.virtualBlockResolution >> 1);
-        //}
+        if (level.getScrollX()) {
+            if (x >= playwindow.getVPixelsLevelWidth())
+                x -= playwindow.getVPixelsLevelWidth();
+            if (x <= -(playwindow.virtualBlockResolution >> 1))
+                x += playwindow.getVPixelsLevelWidth();
+        } else {
+            if (x >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution) )
+                x = playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution) - 1;
+            if (x <= 0) x = 0;
+        }
         return x;
     }
 

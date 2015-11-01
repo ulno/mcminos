@@ -166,6 +166,7 @@ public class Level {
                                         visibleHeight = Integer.parseInt(strList[1]);
                                         break;
                                     case "SCROLLX":
+                                        // for adapting this game to a mobile platform allowing infinite levels only makes sense, when scrolling is enabled in the respective direction
                                         scrollX = "1".equals(strList[1]);
                                         break;
                                     case "SCROLLY":
@@ -638,16 +639,13 @@ Missing:
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getDown( int x, int y, boolean sy ) {
+    public LevelBlock getDown( int x, int y ) {
         y--;
         if(y<0) {
-            if (sy) y += height;
+            if (scrollY) y += height;
             else return null;
         }
         return field[x][y];
-    }
-    public LevelBlock getDown( int x, int y ) {
-        return getDown( x, y, scrollY);
     }
     public LevelBlock getDown2(int x, int y) {
         return field[x][(y-2+height)%height];
@@ -680,16 +678,13 @@ Missing:
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getUp( int x, int y, boolean sy) {
+    public LevelBlock getUp( int x, int y ) {
         y++;
         if(y>=height) {
-            if (sy) y -= height;
+            if (scrollY) y -= height;
             else return null;
         }
         return field[x][y];
-    }
-    public LevelBlock getUp( int x, int y ) {
-        return getUp( x, y, scrollY);
     }
     public LevelBlock getUp2(int x, int y) {
         return field[x][(y+2)%height];
@@ -701,16 +696,13 @@ Missing:
      * @param y
      * @return return levelblock or null if there is no one.
      */
-    public LevelBlock getLeft( int x, int y, boolean sx) {
+    public LevelBlock getLeft( int x, int y) {
         x--;
         if(x<0) {
-            if (sx) x += width;
+            if (scrollX) x += width;
             else return null;
         }
         return field[x][y];
-    }
-    public LevelBlock getLeft( int x, int y ) {
-        return getLeft( x, y, scrollX);
     }
     public LevelBlock getLeft2(int x, int y) {
         return field[(x-2+width)%width][y];

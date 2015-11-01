@@ -45,9 +45,7 @@ public class McMinosMover extends Mover {
             if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
                 xdelta = 0;
             else {
-                //also allow this in non-scrolled levels
-                //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
-                if (xdiff >= playwindow.getVPixelsLevelWidth() * 4 / 5)
+                if( level.getScrollX() && xdiff >= playwindow.getVPixelsLevelWidth() / 2 )
                     xdelta = (int) Math.signum(xdelta);
                 else
                     xdelta = -(int) Math.signum(xdelta);
@@ -58,9 +56,7 @@ public class McMinosMover extends Mover {
             if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
                 ydelta = 0;
             else {
-                // also in non-scroll levels
-                //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
-                if (ydiff >= playwindow.getVPixelsLevelHeight() * 4 / 5)
+                if( level.getScrollY() && ydiff >= playwindow.getVPixelsLevelHeight() / 2 )
                     ydelta = (int) Math.signum(ydelta);
                 else
                     ydelta = -(int) Math.signum(ydelta);
@@ -351,30 +347,34 @@ public class McMinosMover extends Mover {
             LevelObject lo = moveables.get(i);
             int ghostnr = lo.getGhostNr();
             if(ghostnr != -1) {
-                if( mcminos.isPowered() ) {
-                    if(ghostnr == 3) { // jumping pill, will poison when powered
-                        mcminos.poison();
-                    } else { // all others can be killed when powered
-                        game.removeMover(lo.getMover());
-                        moveables.remove(i);
-                        ghosts.decreaseGhosts(ghostnr);
-                        lo.dispose();
-                        audio.soundPlay("gotyou");
-                        mcminos.increaseScore(30);
-                    }
-                } else {
-                    if(ghostnr == 3) { // jumping pill, can be eaten when not powered
-                        game.removeMover(lo.getMover());
-                        moveables.remove(i);
-                        level.decreasePills();
-                        ghosts.decreaseGhosts(ghostnr);
-                        lo.dispose();
-                        audio.soundPlay("knurps");
-                        mcminos.increaseScore(30);
-                    } else { // all others can be killed when powered
-                        mcminos.kill("ghosts",Entities.mcminos_dying);
-                    }
+                // check if ghost is really near enough
+                if (Math.abs((playwindow.getVPixelsLevelWidth() + mcminos.getVX() - lo.getVX()) % playwindow.getVPixelsLevelWidth()) < (PlayWindow.virtualBlockResolution >> 1)
+                        && Math.abs((playwindow.getVPixelsLevelHeight() + mcminos.getVY() - lo.getVY()) % playwindow.getVPixelsLevelHeight()) < (PlayWindow.virtualBlockResolution >> 1)) {
+                    if (mcminos.isPowered()) {
+                        if (ghostnr == 3) { // jumping pill, will poison when powered
+                            mcminos.poison();
+                        } else { // all others can be killed when powered
+                            game.removeMover(lo.getMover());
+                            moveables.remove(i);
+                            ghosts.decreaseGhosts(ghostnr);
+                            lo.dispose();
+                            audio.soundPlay("gotyou");
+                            mcminos.increaseScore(30);
+                        }
+                    } else {
+                        if (ghostnr == 3) { // jumping pill, can be eaten when not powered
+                            game.removeMover(lo.getMover());
+                            moveables.remove(i);
+                            level.decreasePills();
+                            ghosts.decreaseGhosts(ghostnr);
+                            lo.dispose();
+                            audio.soundPlay("knurps");
+                            mcminos.increaseScore(30);
+                        } else { // all others can be killed when powered
+                            mcminos.kill("ghosts", Entities.mcminos_dying);
+                        }
 
+                    }
                 }
             }
 

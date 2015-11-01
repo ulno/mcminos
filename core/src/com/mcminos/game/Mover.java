@@ -115,9 +115,9 @@ public abstract class Mover {
     private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2 ) {
         // TODO: respect the ghost which can walk through walls dependent on transwall
         if(nextBlock == null) return false;
-        if(nextBlock2 == null) return false;
         if (nextBlock.hasRock()) { // then look forward
             if(canMoveRocks) {
+                if(nextBlock2 == null) return false;
                 return !nextBlock2.hasGhost() && !nextBlock2.hasRock() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
             } else return false;
         }
@@ -136,25 +136,25 @@ public abstract class Mover {
         // Up
         if((filterMask & UP) > 0) {
             b1 = lb.up();
-            b2 = b1.up();
+            b2 = lb.up2();
             if (dirPossible(b1, b2)) unblocked += UP;
         }
         // Right
         if((filterMask & RIGHT) > 0) {
             b1 = lb.right();
-            b2 = b1.right();
+            b2 = lb.right2();
             if (dirPossible(b1, b2)) unblocked += RIGHT;
         }
         // Down
         if((filterMask & DOWN) > 0) {
             b1 = lb.down();
-            b2 = b1.down();
+            b2 = lb.down2();
             if (dirPossible(b1, b2)) unblocked += DOWN;
         }
         // Up
         if ((filterMask & LEFT) > 0) {
             b1 = lb.left();
-            b2 = b1.left();
+            b2 = lb.left2();
             if (dirPossible(b1, b2)) unblocked += LEFT;
         }
 

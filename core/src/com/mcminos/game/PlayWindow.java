@@ -82,7 +82,7 @@ public class PlayWindow {
         // However, scrollability of the level needs to be respected.
 
         int totalVPixels = totalBlocks << virtualBlockResolutionExponent;
-        if ( totalVPixels > visibleVPixels) { // if it is not totally visible
+/*        if ( totalVPixels > visibleVPixels) { // if it is not totally visible -- now we scroll allways */
             int center = (inputPos + (visibleVPixels >> 1)) % totalVPixels; // center of the visible screen
             // compute the distance of mcminos from the center
             int delta = mcmPos - center; // < 0 means mcminos is under/left of center
@@ -105,17 +105,16 @@ public class PlayWindow {
                         inputPos = totalVPixels - visibleVPixels;
                 }
             }
-        }
+/*        }
         else { // the visible area is bigger than the actual level
             // if level is small, it needs to be centered
             // When no scrolling is enabled, we
             // also need to account for some black borders to allow giving the direction by setting the
             // destination field
-            // TODO: implement
             // if( ! scroll )// not scroll and not too small -> make sure level aligned
             inputPos = 0;
             //inputPos = ((totalBlocks << virtualBlockResolutionExponent) -( visibleVPixels - totalVPixels ) / 2 ) % (totalBlocks << virtualBlockResolutionExponent);
-        }
+        } */
         return inputPos;
     }
 
