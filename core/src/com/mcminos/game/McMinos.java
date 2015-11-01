@@ -389,7 +389,7 @@ public class McMinos {
      * Stop all movement
      */
     private void stop() {
-        mover.setSpeed(0);
+        mover.stop();
 
         // disable destination selection
         unsetDestination();
@@ -397,8 +397,8 @@ public class McMinos {
     }
 
     private void resume() {
-        mover.setSpeed(Game.baseSpeed);
-        destinationEnabled = true;
+        mover.resume();
+        if( mover.getKeyDirections() == 0) destinationEnabled = true;
     }
 
     public boolean isKilled() {
@@ -440,7 +440,7 @@ public class McMinos {
             if(isMirrored()) { // if this goes out of range it's corrected in moveto
                 x = getVX() - (x - getVX());
                 y = getVY() - (y - getVY());
-            }
+            } // TODO: think if this shoudl be better handled in chooseDirection
             destination.setGfx(Entities.destination);
             destination.moveTo(x, y, game.getLevelBlockFromVPixelRounded(x, y));
             destinationSet = true;
@@ -511,5 +511,13 @@ public class McMinos {
 
     public boolean updateKeyDirections() {
         return mover.updateKeyDirections();
+    }
+
+    public int getKeyDirections() {
+        return mover.getKeyDirections();
+    }
+
+    public int updateTouchpadDirections(float knobPercentX, float knobPercentY) {
+        return mover.updateTouchpadDirections( knobPercentX, knobPercentY );
     }
 }

@@ -10,9 +10,8 @@ public abstract class Mover {
     private Graphics gfxDown = null;
     private Graphics gfxLeft = null;
     private int speed = 1;
-    private int currentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
-    private int newSpeed = 1; // only applied when on field
-    private int newCurrentPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
+    private int vPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
+    private int pixelSpeedAnder = 0x1000000 - vPixelSpeed;
     private int speedFactor = 1;
 
     public final int STOP=0, UP=1, RIGHT=2, DOWN=4, LEFT=8, ALL=15;
@@ -29,18 +28,20 @@ public abstract class Mover {
      *
      * @param blocksPerSecond move how many blocks per second?
      */
-    public void setSpeed(int blocksPerSecond) {
-        this.newCurrentPixelSpeed = blocksPerSecond  * speedFactor * PlayWindow.virtualBlockResolution / Game.timeResolution;
-        this.newSpeed = blocksPerSecond;
+    protected void computeSpeeds(int blocksPerSecond) {
+        vPixelSpeed = blocksPerSecond  * speedFactor * PlayWindow.virtualBlockResolution / Game.timeResolution;
+        // set new speed as here it's allowed and should not cause problems
+        speed = blocksPerSecond;
+        pixelSpeedAnder = 0x1000000 - vPixelSpeed;
     }
 
-    public int getFullSpeed() {
-        return this.newSpeed * speedFactor;
+    public int getVPixelSpeed() {
+        return vPixelSpeed;
     }
 
     public void setSpeedFactor(int newFactor) {
         speedFactor = newFactor;
-        setSpeed(newSpeed);
+        computeSpeeds(speed); // apply speedfactor
     }
 
     /**
@@ -71,7 +72,7 @@ public abstract class Mover {
      */
     public void init( LevelObject lo, int speed, boolean canMoveRocks) {
         levelObject = lo;
-        setSpeed(speed);
+        computeSpeeds(speed);
         this.canMoveRocks = canMoveRocks;
         // obsolet lo.setMover(this);
         //this.currentLevelBlock = Game.getLevelBlockFromVPixel(lo.getVX(), lo.getVY());
@@ -114,9 +115,9 @@ public abstract class Mover {
     private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2 ) {
         // TODO: respect the ghost which can walk through walls dependent on transwall
         if(nextBlock == null) return false;
-        if(nextBlock2 == null) return false;
         if (nextBlock.hasRock()) { // then look forward
             if(canMoveRocks) {
+                if(nextBlock2 == null) return false;
                 return !nextBlock2.hasGhost() && !nextBlock2.hasRock() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
             } else return false;
         }
@@ -135,25 +136,25 @@ public abstract class Mover {
         // Up
         if((filterMask & UP) > 0) {
             b1 = lb.up();
-            b2 = b1.up();
+            b2 = lb.up2();
             if (dirPossible(b1, b2)) unblocked += UP;
         }
         // Right
         if((filterMask & RIGHT) > 0) {
             b1 = lb.right();
-            b2 = b1.right();
+            b2 = lb.right2();
             if (dirPossible(b1, b2)) unblocked += RIGHT;
         }
         // Down
         if((filterMask & DOWN) > 0) {
             b1 = lb.down();
-            b2 = b1.down();
+            b2 = lb.down2();
             if (dirPossible(b1, b2)) unblocked += DOWN;
         }
         // Up
         if ((filterMask & LEFT) > 0) {
             b1 = lb.left();
-            b2 = b1.left();
+            b2 = lb.left2();
             if (dirPossible(b1, b2)) unblocked += LEFT;
         }
 
@@ -170,31 +171,31 @@ public abstract class Mover {
     public boolean move() {
         // allow direction change when on block-boundaries
         if( levelObject.fullOnBlock() ) {
-            // set new speed as here it's allowed and should not cause problems
-            speed = newSpeed;
-            currentPixelSpeed = newCurrentPixelSpeed;
             headingTo = chooseDirection();
         }
 
-        int distance = currentPixelSpeed;
         int x = levelObject.getVX();
         int y = levelObject.getVY();
         // do transformations for new direction
         switch (currentDirection) {
             case UP:
-                y += distance;
+                y &= pixelSpeedAnder;
+                y += vPixelSpeed;
                 levelObject.setGfx(gfxUp);
                 break;
             case RIGHT:
-                x += distance;
+                x &= pixelSpeedAnder;
+                x += vPixelSpeed;
                 levelObject.setGfx(gfxRight);
                 break;
             case DOWN:
-                y -= distance;
+                y &= pixelSpeedAnder;
+                y -= vPixelSpeed;
                 levelObject.setGfx(gfxDown);
                 break;
             case LEFT:
-                x -= distance;
+                x &= pixelSpeedAnder;
+                x -= vPixelSpeed;
                 levelObject.setGfx(gfxLeft);
                 break;
             // default case should not happen and will be treated as no movement
@@ -228,4 +229,12 @@ public abstract class Mover {
         this.currentLevelBlock = levelBlock;
     }
 
+    public void stop() {
+        vPixelSpeed = 0;
+        pixelSpeedAnder = 0xffffff;
+    }
+
+    public void resume() {
+        computeSpeeds(speed);
+    }
 }

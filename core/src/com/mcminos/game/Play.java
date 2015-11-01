@@ -10,9 +10,11 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
@@ -56,6 +58,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private int gameResolutionCounter = 0;
     private Label medicineLabel;
     Graphics background;
+    private Touchpad touchpad;
 
     public Play(final Main main, String levelName) {
         this.main = main;
@@ -365,10 +368,38 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         toolbox.add(toolboxTable);
 
+        // virtual joystick (called touchpad in libgdx)
+        touchpad = new Touchpad(32,skin);
+        Color tpColor = touchpad.getColor();
+        touchpad.setColor(tpColor.r,tpColor.g,tpColor.b,0.7f);
+        resizeTouchpad();
+        touchpad.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (!game.isToolboxShown()) {
+                    mcminos.updateTouchpadDirections( touchpad.getKnobPercentX(), touchpad.getKnobPercentY() );
+                    if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                        game.enableMovement();
+                    }
+                }
+            }
+        });
+        menu.addActor( touchpad );
+
         // InputProcessor
         GestureDetector gd = new GestureDetector(this);
         InputMultiplexer im = new InputMultiplexer(menu, gd, this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
+    }
+
+    private void resizeTouchpad() {
+        int width = Gdx.graphics.getWidth();
+        int tpwidth = width / 4;
+        int height = Gdx.graphics.getHeight();
+        touchpad.setSize( tpwidth, tpwidth );
+        touchpad.setDeadzone( tpwidth/5 );
+        touchpad.setPosition( width * 3 / 4, 0 );
     }
 
     public void backToMenu() {
@@ -378,7 +409,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private void toggleDoor(LevelBlock lb) {
         if (lb.hasDoor()) {
-            if (!lb.hasRock()) { // if the dor is not blocked by rock
+            if (!lb.hasRock()) { // if the door is not blocked by rock
                 if (mcminos.hasKey()) {
                     mcminos.decreaseKeys();
                     lb.toggleDoor();
@@ -401,7 +432,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         medicineLabel.setText(Util.formatInteger(mcminos.getMedicines(),3));
         pillLabel.setText(Util.formatInteger(level.getPillsNumber(),5));
         rockmeLabel.setText(Util.formatInteger(level.getRockmesNumber(),5));
-        // update door buttons
+/*        // update door buttons
         // first get mcminos' position
         LevelBlock mcmBlock = mcminos.getLevelBlock();
         if (mcmBlock != null) {
@@ -417,7 +448,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             if (mcminos.hasKey() && mcmBlock.left() != null && !mcmBlock.up().hasRock() && mcmBlock.left().hasDoor())
                 doorLeftButton.setDisabled(false);
             else doorLeftButton.setDisabled(true);
-        }
+        }*/
     }
 
     public void toggleToolbox() {
@@ -490,6 +521,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
         menu.getViewport().update(width, height, true);
         toolbox.setSize(width / 3, height * 4 / 5);
+        resizeTouchpad();
     }
 
     @Override
@@ -516,11 +548,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-            game.enableMovement();
-        }
-        if (!game.isToolboxShown()) { // just pan in this case -> see there
-            mcminos.updateKeyDirections();
+        mcminos.updateKeyDirections();
+        if (!game.isToolboxShown()) {
+            if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                game.enableMovement();
+            }
         }
         return false;
     }
@@ -570,11 +602,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-            game.enableMovement();
-        }
         if (!game.isToolboxShown()) { // just pan in this case -> see there
             if (button > 0) return false;
+            if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                game.enableMovement();
+            }
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
             mcminos.setDestination(x, y);
@@ -586,16 +618,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public int windowToGameY(int screenY) {
         int y = Util.shiftLeftLogical(Gdx.graphics.getHeight() - screenY - playwindow.getProjectionY(), (PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent))
                 + playwindow.windowVPixelYPos - (PlayWindow.virtualBlockResolution >> 1); // flip windowVPixelYPos-axis
-        //if(game.getScrollY()) { allways
-        if (y >= playwindow.getVPixelsLevelHeight())
-            y -= playwindow.getVPixelsLevelHeight();
-        if (y <= -(playwindow.virtualBlockResolution >> 1))
-            y += playwindow.getLevelHeight();
-        //}
-        //else {
-        //    if( y >= game.windowVPixelYPos + game.getVisibleHeightInVPixels() - (game.virtualBlockResolution >> 1) )
-        //        y = game.windowVPixelYPos + game.getVisibleHeightInVPixels() - (game.virtualBlockResolution >> 1);
-        //}
+        if (level.getScrollY()) {
+            if (y >= playwindow.getVPixelsLevelHeight())
+                y -= playwindow.getVPixelsLevelHeight();
+            if (y <= -(playwindow.virtualBlockResolution >> 1))
+                y += playwindow.getLevelHeight();
+        } else {
+            if (y >= playwindow.getVPixelsLevelHeight() - PlayWindow.virtualBlockResolution )
+                y = playwindow.getVPixelsLevelHeight() - PlayWindow.virtualBlockResolution - 1;
+            if (y <= 0) y = 0;
+        }
         return y;
     }
 
@@ -604,16 +636,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // TODO: consider only first button/finger
         int x = Util.shiftLeftLogical(screenX-playwindow.getProjectionX(), PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent)
                 + playwindow.windowVPixelXPos - (PlayWindow.virtualBlockResolution >> 1);
-        //if(game.getScrollX()) { allways do this
-        if (x >= playwindow.getVPixelsLevelWidth())
-            x -= playwindow.getVPixelsLevelWidth();
-        if (x <= -(playwindow.virtualBlockResolution >> 1))
-            x += playwindow.getVPixelsLevelWidth();
-        //}
-        //else {
-        //    if( x >= game.windowVPixelXPos + game.getVisibleWidthInVPixels() - (game.virtualBlockResolution >> 1) )
-        //        x = game.windowVPixelXPos + game.getVisibleWidthInVPixels() - (game.virtualBlockResolution >> 1);
-        //}
+        if (level.getScrollX()) {
+            if (x >= playwindow.getVPixelsLevelWidth())
+                x -= playwindow.getVPixelsLevelWidth();
+            if (x <= -(playwindow.virtualBlockResolution >> 1))
+                x += playwindow.getVPixelsLevelWidth();
+        } else {
+            if (x >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution) )
+                x = playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution) - 1;
+            if (x <= 0) x = 0;
+        }
         return x;
     }
 

@@ -17,6 +17,7 @@ public class McMinosMover extends Mover {
     private final Level level;
     private final Ghosts ghosts;
     private int keyDirections = 0;
+    private int touchpadDirections = 0;
 
 
     public McMinosMover(Game game) {
@@ -35,7 +36,7 @@ public class McMinosMover extends Mover {
     public LevelBlock chooseDirection() {
         // this is only called, when on block boundaries
         int directions = getKeyDirections(); // direction bit field
-        if ( directions == 0 && mcminos.isDestinationSet()) { // try to get from destination
+        if ( directions == 0 && mcminos.isDestinationSet()) { // if no key, then try to get from destination
             LevelObject destination = mcminos.getDestination();
             // check screen distance
             int x = levelObject.getVX();
@@ -44,9 +45,7 @@ public class McMinosMover extends Mover {
             if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
                 xdelta = 0;
             else {
-                //also allow this in non-scrolled levels
-                //if (getScrollX() && xdiff >= getVPixelsLevelWidth() >> 1)
-                if (xdiff >= playwindow.getVPixelsLevelWidth() * 4 / 5)
+                if( level.getScrollX() && xdiff >= playwindow.getVPixelsLevelWidth() / 2 )
                     xdelta = (int) Math.signum(xdelta);
                 else
                     xdelta = -(int) Math.signum(xdelta);
@@ -57,9 +56,7 @@ public class McMinosMover extends Mover {
             if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
                 ydelta = 0;
             else {
-                // also in non-scroll levels
-                //if( getScrollY() && ydiff >= getVPixelsLevelHeight() >> 1 )
-                if (ydiff >= playwindow.getVPixelsLevelHeight() * 4 / 5)
+                if( level.getScrollY() && ydiff >= playwindow.getVPixelsLevelHeight() / 2 )
                     ydelta = (int) Math.signum(ydelta);
                 else
                     ydelta = -(int) Math.signum(ydelta);
@@ -82,17 +79,18 @@ public class McMinosMover extends Mover {
                 }
             }
         }
-        if( directions > 0) { // got somthing
+        if( directions > 0) { // got something in directions
             // refine with possible directions
             directions = getUnblockedDirs(directions,true);
 
             LevelBlock nextBlock=null;
 
-            // TODO: there could be more from keyboard, take into account
             switch (directions) {
+                // do one direction fast
                 case STOP:
                     //nextBlock = currentLevelBlock;
                     // actually done here
+                    currentDirection = STOP;
                     return currentLevelBlock;
                 //break;
                 case UP:
@@ -107,7 +105,7 @@ public class McMinosMover extends Mover {
                 case LEFT:
                     nextBlock = currentLevelBlock.left();
                     break;
-                default: // more than one given
+                default: // more than one given, select first possible
                     if((directions & UP) > 0) {
                         nextBlock = currentLevelBlock.up();
                         directions = UP;
@@ -147,7 +145,7 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if( m == null ) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, getFullSpeed(), currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(rock, getVPixelSpeed(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
@@ -156,7 +154,7 @@ public class McMinosMover extends Mover {
                     audio.soundPlay("moverock");
                 } else if(  ! m.isMoving() ) {
                     // let it move again
-                    m.triggerMove(currentDirection, getFullSpeed(), nextBlock2);
+                    m.triggerMove(currentDirection, getVPixelSpeed(), nextBlock2);
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
@@ -349,30 +347,33 @@ public class McMinosMover extends Mover {
             LevelObject lo = moveables.get(i);
             int ghostnr = lo.getGhostNr();
             if(ghostnr != -1) {
-                if( mcminos.isPowered() ) {
-                    if(ghostnr == 3) { // jumping pill, will poison when powered
-                        mcminos.poison();
-                    } else { // all others can be killed when powered
-                        game.removeMover(lo.getMover());
-                        moveables.remove(i);
-                        ghosts.decreaseGhosts(ghostnr);
-                        lo.dispose();
-                        audio.soundPlay("gotyou");
-                        mcminos.increaseScore(30);
+                // check if ghost is really near enough
+                if (Math.abs((playwindow.getVPixelsLevelWidth() + mcminos.getVX() - lo.getVX()) % playwindow.getVPixelsLevelWidth()) < (PlayWindow.virtualBlockResolution >> 1)
+                        && Math.abs((playwindow.getVPixelsLevelHeight() + mcminos.getVY() - lo.getVY()) % playwindow.getVPixelsLevelHeight()) < (PlayWindow.virtualBlockResolution >> 1)) {
+                    if (mcminos.isPowered()) {
+                        if (ghostnr == 3) { // jumping pill, will poison when powered
+                            mcminos.poison();
+                        } else { // all others can be killed when powered
+                            game.removeMover(lo.getMover());
+                            moveables.remove(i);
+                            ghosts.decreaseGhosts(ghostnr);
+                            lo.dispose();
+                            audio.soundPlay("gotyou");
+                            mcminos.increaseScore(30);
+                        }
+                    } else {
+                        if (ghostnr == 3) { // jumping pill, can be eaten when not powered
+                            game.removeMover(lo.getMover());
+                            moveables.remove(i);
+                            level.decreasePills();
+                            ghosts.decreaseGhosts(ghostnr);
+                            lo.dispose();
+                            audio.soundPlay("knurps");
+                            mcminos.increaseScore(30);
+                        } else { // all others can be killed when powered
+                            mcminos.kill("ghosts", Entities.mcminos_dying);
+                        }
                     }
-                } else {
-                    if(ghostnr == 3) { // jumping pill, can be eaten when not powered
-                        game.removeMover(lo.getMover());
-                        moveables.remove(i);
-                        level.decreasePills();
-                        ghosts.decreaseGhosts(ghostnr);
-                        lo.dispose();
-                        audio.soundPlay("knurps");
-                        mcminos.increaseScore(30);
-                    } else { // all others can be killed when powered
-                        mcminos.kill("ghosts",Entities.mcminos_dying);
-                    }
-
                 }
             }
 
@@ -402,10 +403,25 @@ public class McMinosMover extends Mover {
         return false;
     }
 
+    private final int mirrorTransform[] = {0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15};
     public int getKeyDirections() {
-        return keyDirections;
-    }
+        int returnDirections = keyDirections;
+        if(returnDirections == 0) returnDirections = touchpadDirections;
+        return mcminos.isMirrored() ? mirrorTransform[returnDirections] : returnDirections;
+    }  // TODO: think if mirror should be better handled in chooseDirection
 
+    public int updateTouchpadDirections(float knobPercentX, float knobPercentY) {
+        int directions = 0;
+        if(knobPercentX > 0.2) directions += RIGHT;
+        else if(knobPercentX < -0.2) directions += LEFT;
+        if(knobPercentY > 0.2) directions += UP;
+        else if(knobPercentY < -0.2) directions += DOWN;
+        touchpadDirections = directions;
+        if(touchpadDirections > 0) {
+            mcminos.unsetDestination();
+        }
+        return touchpadDirections;
+    }
 }
 
 /*

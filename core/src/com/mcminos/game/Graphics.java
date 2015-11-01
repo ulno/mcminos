@@ -200,100 +200,60 @@ public class Graphics {
      * @param animDelta offset to adapt animation
      */
     public void draw( PlayWindow playwindow, int vx0, int vy0, int animDelta ) {
-        // As we can be in a corner, clipping needs to be respected
-        // Therefore compute the four pieces which could be wrapped around
-        // compute them first completely in virtual coordinates
-        // there are basically two important x coordinates (left and middle, x0 and x1)
-        // and two important y coordinates (down and middle, y0 and y1)
-        // lower left corner is given as vx0 and vy0
-        // if x1 and y1 used they will be usually 0, the split will be decided via value!=0 in vx1w or vy1h
-        // there is a problem when window is too small and the drawing should start left or under the current windowcorner
-
-
+        // let the installed scissor do the clipping, we just draw the respective image max 4 times
         ///////// first look at x
         int gamew = playwindow.levelWidthInPixels;
-        int vTotalWidth = blockWidth << PlayWindow.virtualBlockResolutionExponent; // virtual size of graphics
         int totalWidth = blockWidth << playwindow.resolutionExponent; // physical size of graphics
-        int vx0w = vTotalWidth;
-        int vx1w = 0;
         int vlw = playwindow.getVPixelsLevelWidth(); // virtual levelwidth
         vx0 = (vx0 - anchorX + vlw) % vlw; // make sure it's not negative and apply anchor
-        int vx1 = (vlw - anchorX) % vlw;
-        if (vx0 + vTotalWidth > vlw) { // if it's outside the level bounds
-            // vx1 = 0; will always be 0
-            vx0w = vlw - vx0;
-            vx1w = vTotalWidth - vx0w;
-        }
         // get physical coordinates
         int x0 = Util.shiftLeftLogical(vx0 - playwindow.windowVPixelXPos, currentResolutionBitsLeftShifter);
-        int x1 = Util.shiftLeftLogical(vx1 - playwindow.windowVPixelXPos, currentResolutionBitsLeftShifter);
-        // always wrap around if( Game.getScrollX() ) {
-        //x0 = (x0 + gamew + totalWidth - 1) % gamew - totalWidth + 1;
-        //x1 = (x1 + gamew + totalWidth - 1) % gamew - totalWidth + 1;
         x0 = (x0 + gamew) % gamew;
-        x1 = (x1 + gamew) % gamew;
-        //}
-        // get physical widths
-        int x0w = Util.shiftLeftLogical(vx0w, currentResolutionBitsLeftShifter);
-        int x1w = Util.shiftLeftLogical(vx1w, currentResolutionBitsLeftShifter);
 
         /////////// do same for y
         int gameh = playwindow.levelHeightInPixels;
-        int vTotalHeight = blockHeight << playwindow.virtualBlockResolutionExponent; // virtual size of graphics
         int totalHeight = blockHeight << playwindow.resolutionExponent; // physical size of graphics
-        int vy0h = vTotalHeight, vy1h=0;
         int vlh = playwindow.getVPixelsLevelHeight(); // virtual levelwidth
         vy0 = (vy0 - anchorY + vlh) % vlh; // make sure it's not negative and apply anchor
-        int vy1 = (vlh - anchorY) % vlh;
-        if( vy0 + vTotalHeight > vlh ) { // if it's outside the level bounds
-            // vy1 = 0; will always be 0
-            vy0h = vlh - vy0;
-            vy1h = vTotalHeight - vy0h;
-        }
         // get physical coordinates
         int y0 = Util.shiftLeftLogical(vy0  - playwindow.windowVPixelYPos, currentResolutionBitsLeftShifter);
-        int y1 = Util.shiftLeftLogical(vy1  - playwindow.windowVPixelYPos, currentResolutionBitsLeftShifter);
-        // if( Game.getScrollY() ) { // allways wrap around
-        //y0 = (y0 + gameh + totalHeight -1) % gameh  - totalHeight + 1;
-        //y1 = (y1 + gameh + totalHeight -1) % gameh  - totalHeight + 1;
         y0 = (y0 + gameh) % gameh;
-        y1 = (y1 + gameh) % gameh;
-        // }
-        // get physical heights
-        int y0h = Util.shiftLeftLogical(vy0h, currentResolutionBitsLeftShifter);
-        int y1h = Util.shiftLeftLogical(vy1h, currentResolutionBitsLeftShifter);
 
         // draw different parts to physical coordinates
-        // only draw if visible (some part of the rectangle is in visible area)
         Texture t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
-        int maxww = playwindow.visibleWidthInPixels;
-        int maxwh = playwindow.visibleHeightInPixels;
+        /*int maxww = playwindow.visibleWidthInPixels;
+        int maxwh = playwindow.visibleHeightInPixels;*/
+        // clipping shoudl be done by scissors in playscreen
+        playwindow.batch.draw(t, x0, y0);
+        playwindow.batch.draw(t, x0 - gamew, y0);
+        playwindow.batch.draw(t, x0, y0 - gameh);
+        playwindow.batch.draw(t, x0 - gamew, y0 - gameh);
+/*        if( x0 < maxww && y0 < maxwh ) { // lower left corner in visible
+            playwindow.batch.draw(t, x0, y0);
+        }
+        if( (x0 + totalWidth) % gamew < maxww && y0 < maxwh ) { // lower right corner visible
+            playwindow.batch.draw(t, x0 - gamew, y0);
+        }
+        if( x0 < maxww && (x0 + totalWidth) % gamew < maxww && y0 < maxwh ) { // upper left corner visible
+            playwindow.batch.draw(t, x0 - gamew, y0);
+        }
+
+
+
         // Clipping correction for small screens, TODO: think about optimization
         if(x0 >= maxww && x0 > playwindow.levelWidthInPixels - totalWidth )
             x0 -= playwindow.levelWidthInPixels;
-        if(x1 >= maxww && x1 > playwindow.levelWidthInPixels - totalWidth )
-            x1 -= playwindow.levelWidthInPixels;
         if(y0 >= maxwh && y0 > playwindow.levelHeightInPixels - totalHeight )
             y0 -= playwindow.levelHeightInPixels;
-        if(y1 >= maxwh && y1 > playwindow.levelHeightInPixels - totalHeight )
-            y1 -= playwindow.levelHeightInPixels;
         if(  (x0 < maxww) && (y0 < playwindow.visibleHeightInPixels) ) {
-            //Game.batch.draw(getTexture(Game.gameframe), x0, y0);
-            playwindow.batch.draw(t, x0, y0, 0, totalHeight - y0h, x0w, y0h);
+            playwindow.batch.draw(t, x0, y0, 0, totalHeight, x0w, y0h);
         }
-        if( (vx1w > 0)
-                && (x1 < maxww) && (y0 < maxwh)) {
-            playwindow.batch.draw(t, x1, y0, x0w, totalHeight - y0h, x1w, y0h);
-        }
-        if(vy1h > 0) {
-            if( (x0 < maxww) && (y1 < maxwh)) {
+        if( (x0 < maxww) && (y1 < maxwh)) {
                 playwindow.batch.draw(t, x0, y1, 0, 0, x0w, y1h); }
             if( (vx1w > 0)
                     && (x1 < maxww) && (y1 < maxwh)) {
                 playwindow.batch.draw(t, x1, y1, x0w, 0, x1w, y1h);
-            }
-        }
-
+            }*/
     }
 
     /**

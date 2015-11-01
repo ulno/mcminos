@@ -507,19 +507,35 @@ public class LevelBlock {
     }
 
     public LevelBlock up() {
-        return level.getUp(x, y, true);
+        return level.getUp(x, y);
+    }
+
+    public LevelBlock up2() {
+        return level.getUp2(x, y);
     }
 
     public LevelBlock right() {
-        return level.getRight(x, y, true);
+        return level.getRight(x, y);
+    }
+
+    public LevelBlock right2() {
+        return level.getRight2(x, y);
     }
 
     public LevelBlock down() {
-        return level.getDown(x, y, true);
+        return level.getDown(x, y);
+    }
+
+    public LevelBlock down2() {
+        return level.getDown2(x, y);
     }
 
     public LevelBlock left() {
-        return level.getLeft(x, y, true);
+        return level.getLeft(x, y);
+    }
+
+    public LevelBlock left2() {
+        return level.getLeft2(x, y);
     }
 
     public void toggleDoor() {
