@@ -348,8 +348,8 @@ public class McMinosMover extends Mover {
             int ghostnr = lo.getGhostNr();
             if(ghostnr != -1) {
                 // check if ghost is really near enough
-                if (Math.abs((playwindow.getVPixelsLevelWidth() + mcminos.getVX() - lo.getVX()) % playwindow.getVPixelsLevelWidth()) < (PlayWindow.virtualBlockResolution >> 1)
-                        && Math.abs((playwindow.getVPixelsLevelHeight() + mcminos.getVY() - lo.getVY()) % playwindow.getVPixelsLevelHeight()) < (PlayWindow.virtualBlockResolution >> 1)) {
+                if (Math.abs((playwindow.getVPixelsLevelWidth() + mcminos.getVX() - lo.getVX()) % playwindow.getVPixelsLevelWidth()) < (PlayWindow.virtualBlockResolution * 9 / 10)
+                        && Math.abs((playwindow.getVPixelsLevelHeight() + mcminos.getVY() - lo.getVY()) % playwindow.getVPixelsLevelHeight()) < (PlayWindow.virtualBlockResolution * 9 / 10)) {
                     if (mcminos.isPowered()) {
                         if (ghostnr == 3) { // jumping pill, will poison when powered
                             mcminos.poison();
