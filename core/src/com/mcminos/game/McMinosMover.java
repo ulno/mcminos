@@ -373,7 +373,6 @@ public class McMinosMover extends Mover {
                         } else { // all others can be killed when powered
                             mcminos.kill("ghosts", Entities.mcminos_dying);
                         }
-
                     }
                 }
             }
