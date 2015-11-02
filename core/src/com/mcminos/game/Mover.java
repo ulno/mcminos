@@ -14,7 +14,7 @@ public abstract class Mover {
     private int pixelSpeedAnder = 0x1000000 - vPixelSpeed;
     private int speedFactor = 1;
 
-    public final int STOP=0, UP=1, RIGHT=2, DOWN=4, LEFT=8, ALL=15;
+    public final static int STOP=0, UP=1, RIGHT=2, DOWN=4, LEFT=8, ALL=15;
     protected int currentDirection = STOP;
     protected LevelObject levelObject; // corresponding LevelObject
     protected LevelBlock currentLevelBlock; // current associated LevelBlock
@@ -106,59 +106,9 @@ public abstract class Mover {
         init(lo, speed, canMoveRocks);
     }
 
-    /**
-     *
-     * @param nextBlock
-     * @param nextBlock2
-     * @return true if movement of current is possible in this direction, false if not
-     */
-    private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2 ) {
-        // TODO: respect the ghost which can walk through walls dependent on transwall
-        if(nextBlock == null) return false;
-        if (nextBlock.hasRock()) { // then look forward
-            if(canMoveRocks) {
-                if(nextBlock2 == null) return false;
-                return !nextBlock2.hasGhost() && !nextBlock2.hasRock() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
-            } else return false;
-        }
-        return !nextBlock.hasWall() && !nextBlock.hasClosedDoor();
-    }
 
-    protected int getUnblockedDirs( int filterMask, boolean checkOneway) {
-        int unblocked = 0;
-        LevelBlock lb = currentLevelBlock;
-        LevelBlock b1, b2;
-
-        if( checkOneway && lb.hasOneWay() ) {
-            filterMask &= 1 << (lb.getOneWayDir() - 1);
-        }
-
-        // Up
-        if((filterMask & UP) > 0) {
-            b1 = lb.up();
-            b2 = lb.up2();
-            if (dirPossible(b1, b2)) unblocked += UP;
-        }
-        // Right
-        if((filterMask & RIGHT) > 0) {
-            b1 = lb.right();
-            b2 = lb.right2();
-            if (dirPossible(b1, b2)) unblocked += RIGHT;
-        }
-        // Down
-        if((filterMask & DOWN) > 0) {
-            b1 = lb.down();
-            b2 = lb.down2();
-            if (dirPossible(b1, b2)) unblocked += DOWN;
-        }
-        // Up
-        if ((filterMask & LEFT) > 0) {
-            b1 = lb.left();
-            b2 = lb.left2();
-            if (dirPossible(b1, b2)) unblocked += LEFT;
-        }
-
-        return unblocked;
+    protected int getUnblockedDirs(int filterMask, boolean checkOneway) {
+        return currentLevelBlock.getUnblockedDirs( filterMask, checkOneway, canMoveRocks);
     }
 
     protected int getUnblockedDirs( ) {

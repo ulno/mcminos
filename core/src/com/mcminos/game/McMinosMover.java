@@ -30,22 +30,28 @@ public class McMinosMover extends Mover {
         ghosts = game.getGhosts();
         mcminos.setMover(this);
         mcminos.gfxNormal();
+        for (int y = 0; y < mazeSize; y++) {
+            for (int x = 0; x < mazeSize; x++) {
+                mazeBlocks[y][x] = new MazeBlock();
+            }
+        }
+
     }
 
     @Override
     public LevelBlock chooseDirection() {
         // this is only called, when on block boundaries
         int directions = getKeyDirections(); // direction bit field
-        if ( directions == 0 ) { // the following includes the call to unblocked dirs already
+        if (directions == 0) { // if no key, then try to get from destination
+            // the following includes the call to unblocked dirs already
             directions = getDirectionsFromDestination();
-        }
-        else { // got keyboard directions
+        } else { // got keyboard directions
             // refine with possible directions
-            directions = getUnblockedDirs(directions,true);
+            directions = getUnblockedDirs(directions, true);
         }
-        if( directions > 0) { // got something in directions
+        if (directions > 0) { // got something in directions
 
-            LevelBlock nextBlock=null;
+            LevelBlock nextBlock = null;
 
             switch (directions) {
                 // do one direction fast
@@ -68,19 +74,16 @@ public class McMinosMover extends Mover {
                     nextBlock = currentLevelBlock.left();
                     break;
                 default: // more than one given, select first possible
-                    if((directions & UP) > 0) {
+                    if ((directions & UP) > 0) {
                         nextBlock = currentLevelBlock.up();
                         directions = UP;
-                    }
-                    else if((directions & RIGHT) > 0) {
+                    } else if ((directions & RIGHT) > 0) {
                         nextBlock = currentLevelBlock.right();
                         directions = RIGHT;
-                    }
-                    else if((directions & DOWN) > 0) {
+                    } else if ((directions & DOWN) > 0) {
                         nextBlock = currentLevelBlock.down();
                         directions = DOWN;
-                    }
-                    else /* LEFT */ {
+                    } else /* LEFT */ {
                         nextBlock = currentLevelBlock.left();
                         directions = LEFT;
                     }
@@ -88,7 +91,7 @@ public class McMinosMover extends Mover {
             }
             currentDirection = directions; // start moving there
             if (nextBlock.hasRock()) {
-                LevelBlock nextBlock2=null;
+                LevelBlock nextBlock2 = null;
                 switch (currentDirection) {
                     case UP:
                         nextBlock2 = currentLevelBlock.up2();
@@ -105,7 +108,7 @@ public class McMinosMover extends Mover {
                 }
                 LevelObject rock = nextBlock.getRock();
                 RockMover m = (RockMover) rock.getMover();
-                if( m == null ) {
+                if (m == null) {
                     // also make rock in the speed we push it
                     RockMover mover = new RockMover(rock, getVPixelSpeed(), currentDirection, nextBlock2);
                     rock.setMover(mover);
@@ -114,7 +117,7 @@ public class McMinosMover extends Mover {
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
-                } else if(  ! m.isMoving() ) {
+                } else if (!m.isMoving()) {
                     // let it move again
                     m.triggerMove(currentDirection, getVPixelSpeed(), nextBlock2);
                     nextBlock.setRock(null);
@@ -129,57 +132,173 @@ public class McMinosMover extends Mover {
         return currentLevelBlock;
     }
 
-    public int getDirectionsFromDestination() {
-        int directions = 0;
+    private class MazeBlock {
+        public int directions;
+        public int distance;
+        public int mhDistanceToDestination;
+        // from where was this field reached
+        public int fromX = -1;
+        public int fromY = -1;
+        public int fromDir = 0;
+    }
 
-        if (mcminos.isDestinationSet()) { // if no key, then try to get from destination
+    private final int mazeSize = 11;
+    private final int mazeCenter = mazeSize / 2;
+    private final int mazeMaxDist = mazeSize * mazeSize;
+    private MazeBlock mazeBlocks[][] = new MazeBlock[mazeSize][mazeSize];
+
+    private int getDirectionsFromDestination() {
+        //int directions = 0;
+
+        if (mcminos.isDestinationSet()) {
+            /* Try to find unobstructed path to destination */
             LevelObject destination = mcminos.getDestination();
-            // check screen distance
-            int x = levelObject.getVX();
-            int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
-            int xdiff = Math.abs(xdelta);
-            if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
-                xdelta = 0;
-            else {
-                if (level.getScrollX() && xdiff >= playwindow.getVPixelsLevelWidth() / 2)
-                    xdelta = (int) Math.signum(xdelta);
-                else
-                    xdelta = -(int) Math.signum(xdelta);
-            }
-            int y = levelObject.getVY();
-            int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
-            int ydiff = Math.abs(ydelta);
-            if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
-                ydelta = 0;
-            else {
-                if (level.getScrollY() && ydiff >= playwindow.getVPixelsLevelHeight() / 2)
-                    ydelta = (int) Math.signum(ydelta);
-                else
-                    ydelta = -(int) Math.signum(ydelta);
-            }
-
-            if (ydelta > 0) directions += UP;
-            if (ydelta < 0) directions += DOWN;
-            if (xdelta > 0) directions += RIGHT;
-            if (xdelta < 0) directions += LEFT;
-            if (directions == 0) {
-                mcminos.hideDestination();
-            }
-
-            // refine with possible directions
-            directions = getUnblockedDirs(directions,true);
-
-            // prefer longer distance (narrow down to one choice)
-            if ((directions & (UP + DOWN)) > 0 && (directions & (LEFT + RIGHT)) > 0) {
-                if (xdiff > ydiff) {
-                    directions &= LEFT + RIGHT;
-                } else {
-                    directions &= UP + DOWN;
+            LevelBlock destBlock = destination.getLevelBlock();
+            int destX = destBlock.getX();
+            int destY = destBlock.getY();
+            int mx = currentLevelBlock.getX();
+            int my = currentLevelBlock.getY();
+            int shortestDestDistance = level.getHeight() * level.getHeight();
+            int closestX = -1;
+            int closestY = -1;
+            // select 11x11 field with mcminos being the center
+            // fill the field with the unobstructed directions from each position and
+            // distance travelled to 0
+            for (int y = 0, ly = my - mazeCenter; y < mazeSize; y++, ly++) {
+                for (int x = 0, lx = mx - mazeCenter; x < mazeSize; x++, lx++) {
+                    MazeBlock b = mazeBlocks[y][x];
+                    LevelBlock lb = level.get(lx, ly);
+                    if (lb == null) {
+                        b.directions = 0;
+                    } else {
+                        b.directions = lb.getUnblockedDirs(canMoveRocks);
+                    }
+                    b.distance = mazeMaxDist;
                 }
             }
+            // find shortest paths and compute reachability
+            recurseMazeFromHere(mazeCenter, mazeCenter, -1, -1, 0, 0);
 
+            // select closest reachable field to destination from search block
+            int shortestDistance = mazeMaxDist;
+            for (int y = 0, ly = my - mazeCenter; y < mazeSize; y++, ly++) {
+                for (int x = 0, lx = mx - mazeCenter; x < mazeSize; x++, lx++) {
+                    MazeBlock b = mazeBlocks[y][x];
+                    if (b.distance < mazeMaxDist) { // if reachable
+                        int xdist = distanceWithScroll(level.getScrollX(), lx, destX, level.getWidth());
+                        int ydist = distanceWithScroll(level.getScrollY(), ly, destY, level.getHeight());
+                        b.mhDistanceToDestination = xdist + ydist;
+                        if (b.mhDistanceToDestination <= shortestDestDistance) { // equal as there might be several destinations in small levels
+                            if(b.mhDistanceToDestination < shortestDestDistance) { // really smaller
+                                shortestDistance = mazeMaxDist; // reset distance as we really want to go somewhere close
+                            }
+                            if( b.distance < shortestDistance) {
+                                shortestDestDistance = b.mhDistanceToDestination;
+                                shortestDistance = b.distance;
+                                closestX = x;
+                                closestY = y;
+                            }
+                        }
+                    }
+                }
+            }
+            // trace way back to center and then select destination we were coming from
+            int traceDir = 0;
+            while (closestX != mazeCenter || closestY != mazeCenter) {
+                MazeBlock b = mazeBlocks[closestY][closestX];
+                closestX = b.fromX;
+                closestY = b.fromY;
+                traceDir = b.fromDir;
+            }
+            return traceDir;
+            // TODO: consider ingnoring rocks in way calculation
         }
-        return directions;
+        return STOP;
+
+
+//            // old direction selection code follows
+//
+//            // check screen distance
+//            int x = levelObject.getVX();
+//            int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
+//            int xdiff = Math.abs(xdelta);
+//            if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
+//                xdelta = 0;
+//            else {
+//                if (level.getScrollX() && xdiff >= playwindow.getVPixelsLevelWidth() / 2)
+//                    xdelta = (int) Math.signum(xdelta);
+//                else
+//                    xdelta = -(int) Math.signum(xdelta);
+//            }
+//            int y = levelObject.getVY();
+//            int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
+//            int ydiff = Math.abs(ydelta);
+//            if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
+//                ydelta = 0;
+//            else {
+//                if (level.getScrollY() && ydiff >= playwindow.getVPixelsLevelHeight() / 2)
+//                    ydelta = (int) Math.signum(ydelta);
+//                else
+//                    ydelta = -(int) Math.signum(ydelta);
+//            }
+//
+//            if (ydelta > 0) directions += UP;
+//            if (ydelta < 0) directions += DOWN;
+//            if (xdelta > 0) directions += RIGHT;
+//            if (xdelta < 0) directions += LEFT;
+//            if (directions == 0) {
+//                mcminos.hideDestination();
+//            }
+//
+//            // refine with possible directions
+//            directions = getUnblockedDirs(directions,true);
+//
+//            // prefer longer distance (narrow down to one choice)
+//            if ((directions & (UP + DOWN)) > 0 && (directions & (LEFT + RIGHT)) > 0) {
+//                if (xdiff > ydiff) {
+//                    directions &= LEFT + RIGHT;
+//                } else {
+//                    directions &= UP + DOWN;
+//                }
+//            }
+//        }
+//        return directions;
+    }
+
+    private int distanceWithScroll(boolean scroll, int p1, int p2, int size) {
+        if (scroll) {
+            p1 = (p1 + (size >> 2)) % size;
+            p2 = (p2 + (size >> 2)) % size;
+            int delta = Math.abs(p1 - p2);
+            if (delta >= (size >> 1)) {
+                delta = size - delta;
+            }
+            return delta;
+        }
+        return  Math.abs(p1-p2);
+    }
+
+    private void recurseMazeFromHere(int x, int y, int fromX, int fromY, int fromDir, int distanceTravelled) {
+        MazeBlock mb = mazeBlocks[y][x];
+        if( distanceTravelled >= mb.distance ) // no need to continue
+            return;
+        mb.distance = distanceTravelled; // ok, we made it faster
+        mb.fromX = fromX;
+        mb.fromY = fromY;
+        mb.fromDir = fromDir;
+        distanceTravelled += 1;
+        if((mb.directions & UP) > 0) {
+            if(y<mazeSize-1) recurseMazeFromHere(x,y+1,x,y,UP,distanceTravelled);
+        }
+        if((mb.directions & RIGHT) > 0) {
+            if(x<mazeSize-1) recurseMazeFromHere(x+1,y,x,y,RIGHT,distanceTravelled);
+        }
+        if((mb.directions & DOWN) > 0) {
+            if(y>0) recurseMazeFromHere(x,y-1,x,y,DOWN,distanceTravelled);
+        }
+        if((mb.directions & LEFT) > 0) {
+            if(x>0) recurseMazeFromHere(x-1,y,x,y,LEFT,distanceTravelled);
+        }
     }
 
     /**
@@ -356,15 +475,30 @@ public class McMinosMover extends Mover {
             }
             lastBlock = currentBlock;
         }
+        checkGhosts(currentLevelBlock);
+        checkGhosts(currentLevelBlock.up());
+        checkGhosts(currentLevelBlock.right());
+        checkGhosts(currentLevelBlock.down());
+        checkGhosts(currentLevelBlock.left());
+
+        // check winning condition
+        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
+            mcminos.win();
+        }
+        return false; // don't remove mcminos
+    }
+
+    private void checkGhosts(LevelBlock lb) {
+        if(lb==null) return;
         // check always if we met a ghost
-        ArrayList<LevelObject> moveables = currentLevelBlock.getMovables();
+        ArrayList<LevelObject> moveables = lb.getMovables(); // TODO: check all ghosts
         for( int i=moveables.size()-1; i>=0; i--) {
             LevelObject lo = moveables.get(i);
             int ghostnr = lo.getGhostNr();
             if(ghostnr != -1) {
                 // check if ghost is really near enough
-                if (Math.abs((playwindow.getVPixelsLevelWidth() + mcminos.getVX() - lo.getVX()) % playwindow.getVPixelsLevelWidth()) < (PlayWindow.virtualBlockResolution * 9 / 10)
-                        && Math.abs((playwindow.getVPixelsLevelHeight() + mcminos.getVY() - lo.getVY()) % playwindow.getVPixelsLevelHeight()) < (PlayWindow.virtualBlockResolution * 9 / 10)) {
+                if (distanceWithScroll(level.getScrollX(),mcminos.getVX(),lo.getVX(),playwindow.getVPixelsLevelWidth())
+                        + distanceWithScroll(level.getScrollY(), mcminos.getVY(), lo.getVY(), playwindow.getVPixelsLevelHeight()) < (PlayWindow.virtualBlockResolution)) {
                     if (mcminos.isPowered()) {
                         if (ghostnr == 3) { // jumping pill, will poison when powered
                             mcminos.poison();
@@ -391,13 +525,8 @@ public class McMinosMover extends Mover {
                     }
                 }
             }
+        }
 
-        }
-        // check winning condition
-        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
-            mcminos.win();
-        }
-        return false; // don't remove mcminos
     }
 
     /**

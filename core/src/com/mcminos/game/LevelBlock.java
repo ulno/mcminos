@@ -25,6 +25,66 @@ public class LevelBlock {
     private LevelObject oneWay = null;
     private int oneWayType = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
 
+    /**
+     *
+     * @param nextBlock
+     * @param nextBlock2
+     * @return true if movement of current is possible in this direction, false if not
+     */
+    private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2, boolean canMoveRocks ) {
+        // TODO: respect the ghost which can walk through walls dependent on transwall
+        if(nextBlock == null) return false;
+        if (nextBlock.hasRock()) { // then look forward
+            if(canMoveRocks) {
+                if(nextBlock2 == null) return false;
+                return !nextBlock2.hasGhost() && !nextBlock2.hasRock() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
+            } else return false;
+        }
+        return !nextBlock.hasWall() && !nextBlock.hasClosedDoor();
+    }
+
+    public int getUnblockedDirs( int filterMask, boolean checkOneway, boolean canMoveRocks ) {
+        int unblocked = 0;
+        LevelBlock lb = this;
+        LevelBlock b1, b2;
+
+        if( checkOneway && lb.hasOneWay() ) {
+            filterMask &= 1 << (lb.getOneWayDir() - 1);
+        }
+
+        // Up
+        if((filterMask & Mover.UP) > 0) {
+            b1 = lb.up();
+            b2 = lb.up2();
+            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.UP;
+        }
+        // Right
+        if((filterMask & Mover.RIGHT) > 0) {
+            b1 = lb.right();
+            b2 = lb.right2();
+            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.RIGHT;
+        }
+        // Down
+        if((filterMask & Mover.DOWN) > 0) {
+            b1 = lb.down();
+            b2 = lb.down2();
+            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.DOWN;
+        }
+        // Up
+        if ((filterMask & Mover.LEFT) > 0) {
+            b1 = lb.left();
+            b2 = lb.left2();
+            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.LEFT;
+        }
+
+        return unblocked;
+
+    }
+
+    public int getUnblockedDirs(boolean canMoveRocks) {
+        return getUnblockedDirs(Mover.ALL, true, canMoveRocks);
+    }
+
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};
     private final oneWayDir oneWayDirMap[] = {oneWayDir.FREE, oneWayDir.UP, oneWayDir.RIGHT, oneWayDir.DOWN, oneWayDir.LEFT};
     private ArrayList<LevelObject> movables=new ArrayList<>(); // ghosts, mcminos, explosions, rocks hovering here.

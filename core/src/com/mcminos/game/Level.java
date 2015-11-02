@@ -630,7 +630,12 @@ Missing:
      * @return return levelblock or null if there is no one.
      */
     public LevelBlock get( int x, int y ) {
-        return field[x][y];
+        if(scrollX) x = (x+(width<<2)) % width;
+        if(scrollY) y = (y+(height<<2)) % height;
+        if(x>=0 && x<width && y>=0 && y<height)
+            return field[x][y];
+        else
+            return null;
     }
 
     /**
