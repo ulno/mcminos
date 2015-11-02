@@ -2,12 +2,17 @@
 Project McMinos: Level evaluation and selection
 ===============================================
 
+--------------------------------------------------------------------------------
+DO NOT USE THIS FILE ANY MORE!
+USE SPREADSHEET "Level evaluation and selection.ods" INSTEAD!
+IT HAS ULI'S RATINGS, TOO, AND CAN TAKE MORE DATA IN A NICER WAY.
+--------------------------------------------------------------------------------
 
 :Authors:
   Andreas Neudecker <andreas.mcminos@googlemail.com>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-10-25
+:Date: 2015-11-01
 
 
 After my opinion we should drop all peep-hole levels (VWID, WHI much smaller than the actual level dimensions), unless they are fun when played with the peep-hole removed. Please add your comments.
@@ -25,7 +30,7 @@ Test levels for development
 Tutorial levels
 ===============
 
-All tutorial levels should be 7x7 fiels in size. 
+All tutorial levels should be 7x7 fiels in size.
 Except the last ones they don't have scrolling.
 
 Seeing we have now 17 tutorial levels available
@@ -68,7 +73,7 @@ Seeing we have now 17 tutorial levels available
 * tut08-holes
 
   * easy, I guess
-  
+
 * tut09-warp-holes
 
   * just to understand how warp holes work, and that ghosts (1 jpill) can go through, too.
@@ -79,7 +84,7 @@ Seeing we have now 17 tutorial levels available
   * very easy
 
 * tut11-dynamite
-  
+
   * chain exploisions, careful positioning of explosions and player
   * use 1 bomb to get rid of ghost (or run)
   * medium easy
@@ -98,25 +103,31 @@ Seeing we have now 17 tutorial levels available
 
   * very easy one way maze, can be played in seconds
 
-* tut16-exit-and-enter
+* ~~tut15-whisky~~
+
+  * DROPPED after decision to postpone implementation of whisky to future version. (2015-11-01)
+
+* ~~tut16-exit-and-enter~~
 
   * introduce level exits and entries (no scrolling of the level)
   * medium difficulty
+  * DROPPED after decision to make SCROLLX|Y=1 compulsory for levels with exits (2015-11-01)
 
 * tut17-infinite-world
 
   * medium difficulty, may be a little too difficult for a tutorial - it's currently the final tutorial level after all. Your call!
-  
 
 
-Old levels from the ATARI version
-=================================
+
+Old levels from the ATARI versions
+==================================
 
 * level000
-  
+
   * square symmetrical level, castle in the centre, 4 apples
   * A: quite difficult for a starter, rather put this somewhere later. - But then, there are no special effects, is it good enough?
   * A: may be we should simply reduce the size of this level (removing the outer ways)
+  * U: hard, classic, big, boring, frustrating
 
 * level001
 
@@ -134,7 +145,7 @@ Old levels from the ATARI version
   * A: easy, fun
 
 * level004
-  
+
   * doors + keys level from ATARI version 0.8.15
   * A: medium to high difficulty, could do it yet on the desktop, nor on the tablet, possibly too difficult?
 
@@ -169,7 +180,7 @@ Old levels from the ATARI version
 
   * very wide level, pills, one-ways
   * A: easy, a little boring; any idea how to spice it up?
-  
+
 * level011
 
   * (yet non-scrolling) infinite-world level with sparse walls, jpills, rocks
@@ -189,12 +200,12 @@ Old levels from the ATARI version
 
 * level014
 
-  * extremely wide x-scrolling level  
+  * extremely wide x-scrolling level
   * A: yet unplayed
 
 * level015
 
-  * 
+  *
 
 * level016
 * level017
@@ -236,7 +247,7 @@ Old levels from the ATARI version
   * A: easy but pointless, except as a joke; should be finished/fixed or dropped.
 
 * level037
-  
+
   * big level, many tasks, hanky, jpill, zarathustra
   * A: difficult, but interesting
 
@@ -248,7 +259,7 @@ Old levels from the ATARI version
 
 * level040
 
-  * 
+  *
 
 * level041
 * level042

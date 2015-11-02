@@ -1,65 +1,66 @@
-;	LEVEL 018 ---------------------------------------------*
-;	FOR McMINOS - Version 1.10
-;	Created.....:	08.04.93
-;	Last changes:	08.04.93
-;	Done by.....:	Andreas Neudecker
+;    LEVEL 018 ---------------------------------------------*
+;    FOR McMINOS - Version 1.10
+;    Created.....:  08.04.93
+;    Last changes:  08.04.93
+;    Done by.....:  Andreas Neudecker
 
 ;   HEADER ------------------------------------------------*
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		18
-ACCCD:		723462
-VERSION:	1100
+AUTHOR:        NoPe;          Andreas Neudecker
+NUMBR:         18
+ACCCD:         723462
+VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-LWID:		12
-LHI:		29
-VWID:		12
-VHI:		29
-SCROLLX:	0
-SCROLLY:	1
-BACK:		16
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
+LWID:          12
+LHI:      29
+VWID:          12
+VHI:      29
+SCROLLX:  1
+SCROLLY:  1
+BACK:          16
 
 ;   STATUS-Angaben ----------------------------------------*
-LTIME:		300
-RSTRT:		0
-MIRROR:		0
+LTIME:         300
+RSTRT:         0
+MIRROR:        0
 
 ;   McMINOS -----------------------------------------------*
-MCSPEED:	1
+MCSPEED:  1
 
 ;   GEISTER -----------------------------------------------*
-GHOST1:		2
-GHSPEED1:	1
-AGIL1:		30
-GRTIME1:	50
+GHOST1:        2
+GHSPEED1: 1
+AGIL1:         30
+GRTIME1:  50
 
-GHOST2:		0
-GHSPEED2:	1
-AGIL2:		10
-GRTIME2:	5
-PILLMAX2:	0
-PILLFREQ2:	12
+GHOST2:        0
+GHSPEED2: 1
+AGIL2:         10
+GRTIME2:  5
+PILLMAX2: 0
+PILLFREQ2:     12
 
-GHOST3:		0
-GHSPEED3:	1
-AGIL3:		20
-GRTIME3:	10
-TRANSWALL3:	20
+GHOST3:        0
+GHSPEED3: 1
+AGIL3:         20
+GRTIME3:  10
+TRANSWALL3:    20
 
-GHOST4:		0
-GHSPEED4:	1
-AGIL4:		10
-GRTIME4:	5
+GHOST4:        0
+GHSPEED4: 1
+AGIL4:         10
+GRTIME4:  5
 
 ;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,999
-BMBS:		0,0
-DYNA:		0,0
-MINE:		0,0
-CHOC:		0,0
-MEDC:		0,999
-UMBR:		0,999
+LIVE:          0,999
+KEYS:          0,999
+BMBS:          0,0
+DYNA:          0,0
+MINE:          0,0
+CHOC:          0,0
+MEDC:          0,999
+UMBR:          0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
@@ -92,4 +93,4 @@ XX XXXXXX XX
  c  OCCOb
  3  OCCOk
 XXX XXXXXX X
-# 	; ENDE DER LEVELDATEN ---------------------------------*
+#    ; ENDE DER LEVELDATEN ---------------------------------*

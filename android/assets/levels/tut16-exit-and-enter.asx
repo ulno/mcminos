@@ -18,8 +18,8 @@ LWID:   7
 LHI:    7
 VWID:   7
 VHI:    7
-SCROLLX:  0
-SCROLLY:  0
+SCROLLX:  1
+SCROLLY:  1
 BACK:   1
 
 ; STATUS-Angaben ----------------------------------------+
