@@ -610,7 +610,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
             mcminos.setDestination(x, y);
-            return false; // nnedsto be evtl. dealt with at drag
+            return false; // needs to be evtl. dealt with at drag
         }
         return false;
     }

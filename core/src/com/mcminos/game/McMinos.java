@@ -442,7 +442,8 @@ public class McMinos {
                 y = getVY() - (y - getVY());
             } // TODO: think if this shoudl be better handled in chooseDirection
             destination.setGfx(Entities.destination);
-            destination.moveTo(x, y, game.getLevelBlockFromVPixelRounded(x, y));
+            LevelBlock lb = game.getLevelBlockFromVPixelRounded(x, y);
+            destination.moveTo(lb.getX() << PlayWindow.virtualBlockResolutionExponent, lb.getY() << PlayWindow.virtualBlockResolutionExponent, lb);
             destinationSet = true;
         }
     }
