@@ -1,7 +1,6 @@
 ; LEVEL 040 ---------------------------------------------*
 ; FOR McMINOS - Version 1.10
 ; Created.....: 16.7.93
-; Last changes: 16.7.93
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------*
@@ -13,8 +12,6 @@ VERSION:  1100
 ; LEVELFORMAT -------------------------------------------*
 LWID:   20
 LHI:    20
-VWID:   20
-VHI:    20
 SCROLLX:  0
 SCROLLY:  0
 BACK:   0

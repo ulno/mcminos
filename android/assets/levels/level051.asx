@@ -1,73 +1,72 @@
-;	LEVEL 51
-;	FOR MAC MINOS - Version 1.10
+; LEVEL 51
+; FOR MAC MINOS - Version 1.10
 
-AUTHOR:		NoPe_+_TWoT;		Andreas Neudecker
-NUMBR:		51
-ACCCD:		1551000
-VERSION:	1100
+AUTHOR:   NoPe_+_TWoT;    Andreas Neudecker
+NUMBR:    51
+ACCCD:    1551000
+VERSION:  1100
 
-LWID:		31
-LHI:		31
-VWID:		31
-VHI:		31
-SCROLLX:	1
-SCROLLY:	1
-BACK:		38
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
 
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LWID:   3
+LHI:    3
+SCROLLX:  1
+SCROLLY:  1
+BACK:   38
 
-MCSPEED:	1
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-GHOST1:		10
-GHSPEED1:	1
-AGIL1:		15
-GRTIME1:	10
+MCSPEED:  1
 
-LIVE:		0,999
-CHOC:		0,999
-BMBS:		0,999
-DYNA:		0,0
-MINE:		0,999
-MEDC:		0,0
-UMBR:		0,999
-KEYS:		0,999
+GHOST1:   10
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  10
 
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+LIVE:   0,999
+CHOC:   0,999
+BMBS:   0,999
+DYNA:   0,0
+MINE:   0,999
+MEDC:   0,0
+UMBR:   0,999
+KEYS:   0,999
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
 
 LEVEL:
-XXXXXXXXXXXXX.XXXXXXXXXXXXXXXXX
-X...CCX.G...D.....X.....X...>kX
-X.r+CCX.Xrr.X.rpr.X.Xpp.X.X.XvX
-X.+r..D.Xkp.X.pkp.X.pkX.XPX+..X
-X..+r.X.XXX.X.rpr.X.ppp.X.XXX.X
-X.....X.....X.....D.....D....mX
-XXXvXXXXX^XXXXXXXXXrrrrrXXX^XXX
-X.....X.....>.....X.....D....kX
-X.XXX.X.XDX.X.XXX.X..X..X.XXXkX
-X.XkD.X.r.X.X>>.X.X..X..X.>.<kX
-X.XXX.X.X.X.XCCvX.X..X..X.XDX.X
-X.....>>>^<<XCC...X+.G.LD...mmX
-X^XXXvXXXXXXXXXXXDXXXXXXXXXXXXX
-X.....X   CCXCC...X.<...X    .X
-XX.XX.X X CCXCC...X.XXX.X r   X
-<D....X Xk  r..*..D..kX.<     <
-XX.XX.X XXX X.....XCC.X.X G X X
-X.....X  .  X.....XCC.<.X     X
-XrrrrrXXXXXXXXXrXXXXXXXXXXXXXXX
-XCC...rp    X...rGX.....D.....X
-XCC...r  c  X.X...X.XXX.X.XXX.X
-X..*..r  .  X.Xk..X>kkk^X.X.p.X
-X.....r G CCXvXXX^X.XXX.X.XXX.X
-d.....r   CCX.....X.....D.m>...
-XXX^XXXXXXXXXXXXXXXXXXXXXXXXXXX
-X.....<.S...X.....D....kX.>..GX
-X.XXX.X...S.X.XXX.X.+X.kX..v..X
-X.X.X.X.p<..X.G...X.XXX.X.>.>vX
-X.XDX.X...S.XXXXXpX.+X+.X..^XDX
-......>.S.^.X.....Xmm...>...X..
-XXXXXXXXXXXXX.XXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXX.XXXXXXXXXXXXXXXX
+X...CCX.G...D.....X.....X...>k
+X.r+CCX.Xrr.X.rpr.X.Xpp.X.X.Xv
+X.+r..D.Xkp.X.pkp.X.pkX.XPX+..
+X..+r.X.XXX.X.rpr.X.ppp.X.XXX.
+X.....X.....X.....D.....D....m
+XXXvXXXXX^XXXXXXXXXrrrrrXXX^XX
+X.....X.....>.....X.....D....k
+X.XXX.X.XDX.X.XXX.X..X..X.XXXk
+X.XkD.X.r.X.X>>.X.X..X..X.>.<k
+X.XXX.X.X.X.XCCvX.X..X..X.XDX.
+X.....>>>^<<XCC...X+.G.LD...mm
+X^XXXvXXXXXXXXXXXDXXXXXXXXXXXX
+X.....X   CCXCC...X.<...X    .
+XX.XX.X X CCXCC...X.XXX.X r   
+<D....X Xk  r..*..D..kX.<     
+XX.XX.X XXX X.....XCC.X.X G X 
+X.....X  .  X.....XCC.<.X     
+XrrrrrXXXXXXXXXrXXXXXXXXXXXXXX
+XCC...rp    X...rGX.....D.....
+XCC...r  c  X.X...X.XXX.X.XXX.
+X..*..r  .  X.Xk..X>kkk^X.X.p.
+X.....r G CCXvXXX^X.XXX.X.XXX.
+d.....r   CCX.....X.....D.m>..
+XXX^XXXXXXXXXXXXXXXXXXXXXXXXXX
+X.....<.S...X.....D....kX.>..G
+X.XXX.X...S.X.XXX.X.+X.kX..v..
+X.X.X.X.p<..X.G...X.XXX.X.>.>v
+X.XDX.X...S.XXXXXpX.+X+.X..^XD
+......>.S.^.X.....Xmm...>...X.
 #

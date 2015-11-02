@@ -1,42 +1,42 @@
-;	LEVEL 52
-;	FOR MAC MINOS - Versions > 0.51
+; LEVEL 52
+; FOR MAC MINOS - Versions > 0.51
 
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		52
-ACCCD:		650172
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    52
+ACCCD:    650172
+VERSION:  1100
 
-LWID:		50
-LHI:		50
-VWID:		50
-VHI:		50
-SCROLLX:	0
-SCROLLY:	1
-BACK:		43
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
 
-LTIME:		123
-RSTRT:		0
-MIRROR:		0
+LWID:   50
+LHI:    49
+SCROLLX:  0
+SCROLLY:  1
+BACK:   43
 
-MCSPEED:	2
+LTIME:    123
+RSTRT:    0
+MIRROR:   0
 
-GHOST1:		16
-GHSPEED1:	2
-AGIL1:		20
-GRTIME1:	1
+MCSPEED:  2
 
-LIVE:		0,999
-CHOC:		0,0
-BMBS:		0,0
-DYNA:		0,0
-MINE:		0,0
-MEDC:		0,999
-UMBR:		0,999
-KEYS:		0,999
+GHOST1:   16
+GHSPEED1: 2
+AGIL1:    20
+GRTIME1:  1
 
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+LIVE:   0,999
+CHOC:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+MEDC:   0,999
+UMBR:   0,999
+KEYS:   0,999
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X X
@@ -88,5 +88,4 @@ Xwwwwwwwwwwwwww w w wwwwwwwwww w w   w       w X X
 X               w w            w w wwwwwwwww w XGX
 X wwwwwwwwwwwwwww^wwwwwwwwwwwwww w w   w   w w X X
 X                                w   w   w   w X X
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X X
 #
