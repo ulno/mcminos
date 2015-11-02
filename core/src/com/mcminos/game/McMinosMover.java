@@ -211,6 +211,7 @@ public class McMinosMover extends Mover {
                 traceDir = b.fromDir;
             }
             return traceDir;
+            // TODO: consider ingnoring rocks in way calculation
         }
         return STOP;
 
@@ -474,8 +475,23 @@ public class McMinosMover extends Mover {
             }
             lastBlock = currentBlock;
         }
+        checkGhosts(currentLevelBlock);
+        checkGhosts(currentLevelBlock.up());
+        checkGhosts(currentLevelBlock.right());
+        checkGhosts(currentLevelBlock.down());
+        checkGhosts(currentLevelBlock.left());
+
+        // check winning condition
+        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
+            mcminos.win();
+        }
+        return false; // don't remove mcminos
+    }
+
+    private void checkGhosts(LevelBlock lb) {
+        if(lb==null) return;
         // check always if we met a ghost
-        ArrayList<LevelObject> moveables = currentLevelBlock.getMovables();
+        ArrayList<LevelObject> moveables = lb.getMovables(); // TODO: check all ghosts
         for( int i=moveables.size()-1; i>=0; i--) {
             LevelObject lo = moveables.get(i);
             int ghostnr = lo.getGhostNr();
@@ -510,11 +526,7 @@ public class McMinosMover extends Mover {
                 }
             }
         }
-        // check winning condition
-        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
-            mcminos.win();
-        }
-        return false; // don't remove mcminos
+
     }
 
     /**
