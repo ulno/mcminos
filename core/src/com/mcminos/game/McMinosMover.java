@@ -36,52 +36,14 @@ public class McMinosMover extends Mover {
     public LevelBlock chooseDirection() {
         // this is only called, when on block boundaries
         int directions = getKeyDirections(); // direction bit field
-        if ( directions == 0 && mcminos.isDestinationSet()) { // if no key, then try to get from destination
-            LevelObject destination = mcminos.getDestination();
-            // check screen distance
-            int x = levelObject.getVX();
-            int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
-            int xdiff = Math.abs(xdelta);
-            if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
-                xdelta = 0;
-            else {
-                if( level.getScrollX() && xdiff >= playwindow.getVPixelsLevelWidth() / 2 )
-                    xdelta = (int) Math.signum(xdelta);
-                else
-                    xdelta = -(int) Math.signum(xdelta);
-            }
-            int y = levelObject.getVY();
-            int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
-            int ydiff = Math.abs(ydelta);
-            if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
-                ydelta = 0;
-            else {
-                if( level.getScrollY() && ydiff >= playwindow.getVPixelsLevelHeight() / 2 )
-                    ydelta = (int) Math.signum(ydelta);
-                else
-                    ydelta = -(int) Math.signum(ydelta);
-            }
-
-            if (ydelta > 0) directions += UP;
-            if (ydelta < 0) directions += DOWN;
-            if (xdelta > 0) directions += RIGHT;
-            if (xdelta < 0) directions += LEFT;
-            if (directions == 0) {
-                mcminos.hideDestination();
-            }
-
-            // prefer longer distance (narrow down to one choice)
-            if( (directions & (UP+DOWN)) > 0 && (directions & (LEFT+RIGHT)) > 0 ) {
-                if (xdiff > ydiff) {
-                    directions &= LEFT + RIGHT;
-                } else {
-                    directions &= UP + DOWN;
-                }
-            }
+        if ( directions == 0 ) { // the following includes the call to unblocked dirs already
+            directions = getDirectionsFromDestination();
         }
-        if( directions > 0) { // got something in directions
+        else { // got keyboard directions
             // refine with possible directions
             directions = getUnblockedDirs(directions,true);
+        }
+        if( directions > 0) { // got something in directions
 
             LevelBlock nextBlock=null;
 
@@ -129,16 +91,16 @@ public class McMinosMover extends Mover {
                 LevelBlock nextBlock2=null;
                 switch (currentDirection) {
                     case UP:
-                        nextBlock2 = nextBlock.up();
+                        nextBlock2 = currentLevelBlock.up2();
                         break;
                     case RIGHT:
-                        nextBlock2 = nextBlock.right();
+                        nextBlock2 = currentLevelBlock.right2();
                         break;
                     case DOWN:
-                        nextBlock2 = nextBlock.down();
+                        nextBlock2 = currentLevelBlock.down2();
                         break;
                     case LEFT:
-                        nextBlock2 = nextBlock.left();
+                        nextBlock2 = currentLevelBlock.left2();
                         break;
                 }
                 LevelObject rock = nextBlock.getRock();
@@ -165,6 +127,59 @@ public class McMinosMover extends Mover {
         // nothing found or no direction set so return currentblock and no direction possibility
         currentDirection = STOP;
         return currentLevelBlock;
+    }
+
+    public int getDirectionsFromDestination() {
+        int directions = 0;
+
+        if (mcminos.isDestinationSet()) { // if no key, then try to get from destination
+            LevelObject destination = mcminos.getDestination();
+            // check screen distance
+            int x = levelObject.getVX();
+            int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
+            int xdiff = Math.abs(xdelta);
+            if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
+                xdelta = 0;
+            else {
+                if (level.getScrollX() && xdiff >= playwindow.getVPixelsLevelWidth() / 2)
+                    xdelta = (int) Math.signum(xdelta);
+                else
+                    xdelta = -(int) Math.signum(xdelta);
+            }
+            int y = levelObject.getVY();
+            int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
+            int ydiff = Math.abs(ydelta);
+            if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
+                ydelta = 0;
+            else {
+                if (level.getScrollY() && ydiff >= playwindow.getVPixelsLevelHeight() / 2)
+                    ydelta = (int) Math.signum(ydelta);
+                else
+                    ydelta = -(int) Math.signum(ydelta);
+            }
+
+            if (ydelta > 0) directions += UP;
+            if (ydelta < 0) directions += DOWN;
+            if (xdelta > 0) directions += RIGHT;
+            if (xdelta < 0) directions += LEFT;
+            if (directions == 0) {
+                mcminos.hideDestination();
+            }
+
+            // refine with possible directions
+            directions = getUnblockedDirs(directions,true);
+
+            // prefer longer distance (narrow down to one choice)
+            if ((directions & (UP + DOWN)) > 0 && (directions & (LEFT + RIGHT)) > 0) {
+                if (xdiff > ydiff) {
+                    directions &= LEFT + RIGHT;
+                } else {
+                    directions &= UP + DOWN;
+                }
+            }
+
+        }
+        return directions;
     }
 
     /**
