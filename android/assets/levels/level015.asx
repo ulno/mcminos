@@ -1,67 +1,65 @@
-;	LEVEL 015 ---------------------------------------------*
-;	FOR McMINOS - Version 1.10
-;	Created.....:	10.04.93
-;	Last changes:	10.04.93
-;	Done by.....:	Andreas Neudecker
+; LEVEL 015 ---------------------------------------------*
+; FOR McMINOS - Version 1.10
+; Created.....: 10.04.93
+; Last changes: 10.04.93
+; Done by.....: Andreas Neudecker
 
-;	HEADER ------------------------------------------------*
-AUTHOR: 	NoPe;		Andreas Neudecker
-NUMBR:		15
-ACCCD:		913482
-VERSION:	1100
+; HEADER ------------------------------------------------*
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    15
+ACCCD:    913482
+VERSION:  1100
 
-;	LEVELFORMAT -------------------------------------------*
-LWID:		25
-LHI:		25
-VWID:		25
-VHI:		25
-SCROLLX:	0
-SCROLLY:	0
-BACK:		10
+; LEVELFORMAT -------------------------------------------*
+LWID:   25
+LHI:    25
+SCROLLX:  0
+SCROLLY:  0
+BACK:   10
 
-;	STATUS-Angaben ----------------------------------------*
-LTIME:		30
-RSTRT:		8
-MIRROR: 	0
+; STATUS-Angaben ----------------------------------------*
+LTIME:    30
+RSTRT:    8
+MIRROR:   0
 
-;	McMINOS -----------------------------------------------*
-MCSPEED:	2
+; McMINOS -----------------------------------------------*
+MCSPEED:  2
 
-;	GEISTER -----------------------------------------------*
-GHOST1: 	0
-GHSPEED1:	1
-AGIL1:		20
-GRTIME1:	6
+; GEISTER -----------------------------------------------*
+GHOST1:   0
+GHSPEED1: 1
+AGIL1:    20
+GRTIME1:  6
 
-GHOST2: 	0
-GHSPEED2:	1
-AGIL2:		20
-GRTIME2:	45
-PILLMAX2:	25
-PILLFREQ2:	10
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:    20
+GRTIME2:  45
+PILLMAX2: 25
+PILLFREQ2:  10
 
-GHOST3: 	0
-GHSPEED3:	1
-AGIL3:		20
-GRTIME3:	10
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    20
+GRTIME3:  10
 TRANSWALL3: 20
 
-GHOST4: 	0
-GHSPEED4:	1
-AGIL4:		10
-GRTIME4:	5
+GHOST4:   0
+GHSPEED4: 1
+AGIL4:    10
+GRTIME4:  5
 
-;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,999
-BMBS:		0,999
-DYNA:		0,0
-MINE:		0,999
-CHOC:		0,999
-MEDC:		0,999
-UMBR:		0,999
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,999
+BMBS:   0,999
+DYNA:   0,0
+MINE:   0,999
+CHOC:   0,999
+MEDC:   0,999
+UMBR:   0,999
 
-;	LEVELDATEN --------------------------------------------*
+; LEVELDATEN --------------------------------------------*
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXX
 X......  h 1   2 2 3   3X
@@ -88,4 +86,4 @@ X3    1X  3X  3  1 XW X1X
 X XXXXXXXXXXXXXXXXXXXXX X
 X   3   3     h     2   X
 XXXXXXXXXXXXXXXXXXXXXXXXX
-#	;_ENDE_DER_LEVELDATEN_---------------------------------*
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

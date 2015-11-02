@@ -1,63 +1,62 @@
-;	LEVEL 27
-;	FOR MAC MINOS - Version 1.10
+; LEVEL 27
+; FOR MAC MINOS - Version 1.10
 
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		27
-ACCCD:		18813
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    27
+ACCCD:    18813
+VERSION:  1100
 
-LWID:		30
-LHI:		30
-VWID:		30
-VHI:		30
-SCROLLX:	1
-SCROLLY:	1
-BACK:		39
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
 
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LWID:   29
+LHI:    29
+SCROLLX:  1
+SCROLLY:  1
+BACK:   39
 
-MCSPEED:	1
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-GHOST1:		3
-GHSPEED1:	1
-AGIL1:		10
-GRTIME1:	3
+MCSPEED:  1
 
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+GHOST1:   3
+GHSPEED1: 1
+AGIL1:    10
+GRTIME1:  3
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
 
 LEVEL:
-XXXXXXX.XXXXXXXXX.XXXXXXXXXXXX
-X............................X
-X.r.XDXXXXX.XXXXXDXXXXXXXX.r.X
-X...X....r.....P..r......Xc..X
-X.XXX.XX.XXXXX.XXXXX.XXX.XXX.X
-X.X+......................+X.X
-X.X.X.XOOOX.XDXXXX.XXXXX.X.X.X
-X.X.X.X...X..r.....XbbbX.X.X.X
-X.X.X.X.+.X.X.XXXX.XbbbD.X.X.X
-....X.XkkkX...Lr...X...X.X3X..
-X.X.X.XXDXX.XXXDXX.XOOOX.X.X.X
-X.X.X....................X.X.X
-X3X.X.X.X.X.XXXOXX.X.r.X.X.X.X
-X.X.X.XrX.X.X*..kX.XrX.D.....X
-X.X.....Xr..O.CC.X.X.X.X.X.X.X
-X.X.X.X.X.X.X.CC.O.X.XrX.X.X.X
-X...X.X.....X3..*X.X.X.X.X.XrX
-..X.X.X.X.X.XXOXXX.X.X.X.....X
-X.X.r....r.....L.........X.X.X
-X.X.X.XXXXX.XXDXXX.XXXXX.X.X.X
-....X.X...O.r......XkkkX.X.X..
-X.X.X.X.b.O.rXDXDX.Dk+kX.X3X.X
-X.X.X.X...O.....r..XkkkX.X.X.X
-X.X.X.XXXXX.XXXXDX.XXXXX.X.X.X
-X.X........................X.X
-X.XXX.XXX.XXXXXXXXXXX.XX.XXX.X
-X...Xb..................bX...X
-X.r.XXXXX.XXXXXXXXXXX.XXXX.r.X
-X.............b..............X
-XXXXXXX.XXXXXXXXX.XXXXXXXXXXXX
+XXXXXXX.XXXXXXXXX.XXXXXXXXXXX
+X............................
+X.r.XDXXXXX.XXXXXDXXXXXXXX.r.
+X...X....r.....P..r......Xc..
+X.XXX.XX.XXXXX.XXXXX.XXX.XXX.
+X.X+......................+X.
+X.X.X.XOOOX.XDXXXX.XXXXX.X.X.
+X.X.X.X...X..r.....XbbbX.X.X.
+X.X.X.X.+.X.X.XXXX.XbbbD.X.X.
+....X.XkkkX...Lr...X...X.X3X.
+X.X.X.XXDXX.XXXDXX.XOOOX.X.X.
+X.X.X....................X.X.
+X3X.X.X.X.X.XXXOXX.X.r.X.X.X.
+X.X.X.XrX.X.X*..kX.XrX.D.....
+X.X.....Xr..O.CC.X.X.X.X.X.X.
+X.X.X.X.X.X.X.CC.O.X.XrX.X.X.
+X...X.X.....X3..*X.X.X.X.X.Xr
+..X.X.X.X.X.XXOXXX.X.X.X.....
+X.X.r....r.....L.........X.X.
+X.X.X.XXXXX.XXDXXX.XXXXX.X.X.
+....X.X...O.r......XkkkX.X.X.
+X.X.X.X.b.O.rXDXDX.Dk+kX.X3X.
+X.X.X.X...O.....r..XkkkX.X.X.
+X.X.X.XXXXX.XXXXDX.XXXXX.X.X.
+X.X........................X.
+X.XXX.XXX.XXXXXXXXXXX.XX.XXX.
+X...Xb..................bX...
+X.r.XXXXX.XXXXXXXXXXX.XXXX.r.
+X.............b..............
 #

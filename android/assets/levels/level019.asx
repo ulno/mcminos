@@ -12,8 +12,6 @@ VERSION:    1100
 
 LWID:       26
 LHI:        21
-VWID:       26
-VHI:        21
 SCROLLX:    1
 SCROLLY:    1
 BACK:       1

@@ -1,65 +1,64 @@
-;	LEVEL 044 ---------------------------------------------*
-;	FOR McMINOS - Version 1.10
-;	Created.....:	05.04.93
-;	Last changes:	10.04.93
-;	Done by.....:	Andreas Neudecker
+; LEVEL 044 ---------------------------------------------*
+; FOR McMINOS - Version 1.10
+; Created.....: 05.04.93
+; Last changes: 10.04.93
+; Done by.....: Andreas Neudecker
 
 ;   HEADER ------------------------------------------------*
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		44
-ACCCD:		588124
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    44
+ACCCD:    588124
+VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-LWID:		32
-LHI:		32
-VWID:		32
-VHI:		32
-SCROLLX:	1
-SCROLLY:	1
-BACK:		28
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
+LWID:   32
+LHI:    32
+SCROLLX:  1
+SCROLLY:  1
+BACK:   28
 
 ;   STATUS-Angaben ----------------------------------------*
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
 ;   McMINOS -----------------------------------------------*
-MCSPEED:	1
+MCSPEED:  1
 
 ;   GEISTER -----------------------------------------------*
-GHOST1:		1
-GHSPEED1:	1
-AGIL1:		45
-GRTIME1:	3
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    45
+GRTIME1:  3
 
-GHOST2:		10
-GHSPEED2:	1
-AGIL2:		30
-GRTIME2:	5
-PILLMAX2:	350
-PILLFREQ2:	7
+GHOST2:   10
+GHSPEED2: 1
+AGIL2:    30
+GRTIME2:  5
+PILLMAX2: 350
+PILLFREQ2:  7
 
-GHOST3:		0
-GHSPEED3:	1
-AGIL3:		20
-GRTIME3:	10
-TRANSWALL3:	20
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    20
+GRTIME3:  10
+TRANSWALL3: 20
 
-GHOST4:		0
-GHSPEED4:	1
-AGIL4:		10
-GRTIME4:	5
+GHOST4:   0
+GHSPEED4: 1
+AGIL4:    10
+GRTIME4:  5
 
 ;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,999
-BMBS:		0,999
-DYNA:		0,0
-MINE:		0,999
-CHOC:		0,0
-MEDC:		0,999
-UMBR:		0,999
+LIVE:   0,999
+KEYS:   0,999
+BMBS:   0,999
+DYNA:   0,0
+MINE:   0,999
+CHOC:   0,0
+MEDC:   0,999
+UMBR:   0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
@@ -95,4 +94,4 @@ XXX X XXX XXX X X XXX XXX X XXX
 bbX X   X X   X X   X X
 XXX XXX X X XXX XXX X X XXX XXX
    .           .           .
-# 	; ENDE DER LEVELDATEN ---------------------------------*
+#   ; ENDE DER LEVELDATEN ---------------------------------*

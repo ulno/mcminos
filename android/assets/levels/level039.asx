@@ -1,72 +1,71 @@
-;	LEVEL 039
-;	FOR MAC MINOS - Version 1.10
+; LEVEL 039
+; FOR MAC MINOS - Version 1.10
 
-AUTHOR: 	NoPe;		Andreas Neudecker
-NUMBR:		39
-ACCCD:		1110000
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    39
+ACCCD:    1110000
+VERSION:  1100
 
-LWID:		24
-LHI:		24
-VWID:		24
-VHI:		24
-SCROLLX:	1
-SCROLLY:	1
-BACK:		31
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
 
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LWID:   23
+LHI:    23
+SCROLLX:  1
+SCROLLY:  1
+BACK:   31
 
-MCSPEED:	1
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-GHOST1:		4
-GHSPEED1:	1
-AGIL1:		25
-GRTIME1:	5
+MCSPEED:  1
 
-GHOST2:		0
-GHOST4:		0
+GHOST1:   4
+GHSPEED1: 1
+AGIL1:    25
+GRTIME1:  5
 
-GHOST3:		0
-GHSPEED3:	1
-AGIL3:		20
-GRTIME3:	3
-TRANSWALL:	2
+GHOST2:   0
+GHOST4:   0
+
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    20
+GRTIME3:  3
+TRANSWALL:  2
 
 
-LIVE:		0,999
-KEYS:		0,999
-BMBS:		0,999
-DYNA:		0,999
-MINE:		0,999
-CHOC:		0,999
-MEDC:		0,999
-UMBR:		0,999
+LIVE:   0,999
+KEYS:   0,999
+BMBS:   0,999
+DYNA:   0,999
+MINE:   0,999
+CHOC:   0,999
+MEDC:   0,999
+UMBR:   0,999
 
 LEVEL:
-XXXXXXXXXXX..XXXXXXXXXXX
-Xb.......X....X.......*X
-X.XXXXrX.X.XX.X.XXXrXX.X
-X.XG.......XX........X.X
-X.X.XXXXXX.XX.XXXXXX.r.X
-X.X........SS....P...X.X
-X.r.XXXX.X.XX.XXXXXX.X.X
-X.X.X*.X.X.XX.Xc..X..X.X
-X...X..X.X.XX.X.X......X
-XXX.XX.X.X.XX.X.XXXX.XXX
-X...........X..........X
-..XXXXSXXXXCC.XXXXXXXX..
-..XXXXSXXX.CCXXXXXXXXX..
-X..........X...........X
-XXX.X.X.XX.XX.XX.X.X.XXX
-X..........XX.X..X.X...X
-X.XX.X.XX.XXX...XX.X.X.X
-X.X........XX.XXX..X.X.X
-X.X.XXX.XX.XX.....XX.r.X
-X.X.X..r.X.XX.XXXXXb.X.X
-X.XG..X....XX.......GX.X
-X.XXXXXX.X.XX.X.XXrXXX.X
-X).......X....X.......)X
-XXXXXXXXXXX..XXXXXXXXXXX
+XXXXXXXXXXX..XXXXXXXXXX
+Xb.......X....X.......*
+X.XXXXrX.X.XX.X.XXXrXX.
+X.XG.......X.........X.
+X.X.XXXXXX.XX.XXXXXX.r.
+X.X........SS....P...X.
+X.r.XXXX.X.XX.XXXXXX.X.
+X.X.X*.X.X..X.Xc..X..X.
+X...X..X.X..X.X.X......
+XXX.XX.X.X.XX.X.XXXX.XX
+X...........X..........
+..X...S..XXCC.XXXXXXXX.
+..XXXXSXXX.CCXX......X.
+X..........X...........
+XXX.X.X.XX.XX.XX.X.X.XX
+X...........X.X..X.X...
+X.XX.X.XX.XXX...XX.X.X.
+X.X.........X.XXX..X.X.
+X.X.XXX.XX.XX.....XX.r.
+X.X.X..r.X.X..XXXXXb.X.
+X.XG..X....X........GX.
+X.XXXXXX.X.XX.X.XXrXXX.
+X).......X....X.......)
 #

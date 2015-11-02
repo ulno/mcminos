@@ -15,8 +15,6 @@ VERSION:  1100
 ; (REMOVE DOUBLE WALLS)
 LWID:          12
 LHI:      18
-VWID:          12
-VHI:      18
 SCROLLX:  0
 SCROLLY:  0
 BACK:          29

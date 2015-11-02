@@ -1,43 +1,41 @@
-;	HEADER ------------------------------------------------*
-AUTHOR: 	TWoT		; Ulrich Norbisrath
-NUMBR:		36
-ACCCD:		8080
-VERSION:	1100
+; HEADER ------------------------------------------------*
+AUTHOR:   TWoT    ; Ulrich Norbisrath
+NUMBR:    36
+ACCCD:    8080
+VERSION:  1100
 
-;	LEVELFORMAT -------------------------------------------*
-LWID:		42
-LHI:		7
-VWID:		42
-VHI:		7
-SCROLLX:	1
-SCROLLY:	0
-BACK:		43
+; LEVELFORMAT -------------------------------------------*
+LWID:   42
+LHI:    7
+SCROLLX:  1
+SCROLLY:  0
+BACK:   43
 
-;	STATUS-Angaben ----------------------------------------*
-LTIME:		0
-RSTRT:		0
-MIRROR: 	0
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-;	McMINOS -----------------------------------------------*
-MCSPEED:	2
+; McMINOS -----------------------------------------------*
+MCSPEED:  2
 
-;	GEISTER -----------------------------------------------*
-GHOST2: 	1
-GHSPEED2:	2
-AGIL2:		0
-PILLMAX2:	979
-PILLFREQ2:	1
+; GEISTER -----------------------------------------------*
+GHOST2:   1
+GHSPEED2: 2
+AGIL2:    0
+PILLMAX2: 979
+PILLFREQ2:  1
 
-;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-BMBS:		0,0
-DYNA:		0,0
-MINE:		0,0
-CHOC:		0,0
-MEDC:		0,0
-UMBR:		0,999
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
 
-;	LEVELDATEN --------------------------------------------*
+; LEVELDATEN --------------------------------------------*
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 (*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)
@@ -46,4 +44,4 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 (*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-#	;_ENDE_DER_LEVELDATEN_---------------------------------*
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

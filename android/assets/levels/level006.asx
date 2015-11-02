@@ -11,8 +11,6 @@ VERSION: 0900
 
 LWID:    23
 LHI:     12
-VWID:    23
-VHI:     12
 SCROLLX: 1
 SCROLLY: 0
 BACK:    18

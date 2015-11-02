@@ -1,65 +1,63 @@
-;	LEVEL 032 ---------------------------------------------*
-;	FOR McMINOS - Version 1.10
-;	Created.....:	xx.xx.92
-;	Last changes:	23.03.93
-;	Done by.....:	Andreas Neudecker
+; LEVEL 032 ---------------------------------------------*
+; FOR McMINOS - Version 1.10
+; Created.....: xx.xx.92
+; Last changes: 23.03.93
+; Done by.....: Andreas Neudecker
 
 ;   HEADER ------------------------------------------------*
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		32
-ACCCD:		389132
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    32
+ACCCD:    389132
+VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-LWID:		20
-LHI:		20
-VWID:		20
-VHI:		20
-SCROLLX:	1
-SCROLLY:	1
-BACK:		29
+LWID:   20
+LHI:    20
+SCROLLX:  1
+SCROLLY:  1
+BACK:   29
 
 ;   STATUS-Angaben ----------------------------------------*
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
 ;   McMINOS -----------------------------------------------*
-MCSPEED:	1
+MCSPEED:  1
 
 ;   GEISTER -----------------------------------------------*
-GHOST1:		0
-GHSPEED1:	1
-AGIL1:		20
-GRTIME1:	5
+GHOST1:   0
+GHSPEED1: 1
+AGIL1:    20
+GRTIME1:  5
 
-GHOST2:		0
-GHSPEED2:	1
-AGIL2:		10
-GRTIME2:	5
-PILLMAX2:	0
-PILLFREQ2:	10
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:    10
+GRTIME2:  5
+PILLMAX2: 0
+PILLFREQ2:  10
 
-GHOST3:		0
-GHSPEED3:	1
-AGIL3:		10
-GRTIME3:	5
-TRANSWALL3:	10
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    10
+GRTIME3:  5
+TRANSWALL3: 10
 
-GHOST4:		15
-GHSPEED4:	1
-AGIL4:		10
-GRTIME4:	8
+GHOST4:   15
+GHSPEED4: 1
+AGIL4:    10
+GRTIME4:  8
 
 ;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,999
-BMBS:		0,999
-DYNA:		0,999
-MINE:		0,999
-CHOC:		0,999
-MEDC:		0,999
-UMBR:		0,999
+LIVE:   0,999
+KEYS:   0,999
+BMBS:   0,999
+DYNA:   0,999
+MINE:   0,999
+CHOC:   0,999
+MEDC:   0,999
+UMBR:   0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
@@ -83,4 +81,4 @@ rX  _ X X rX  hhX Xr
  XXX   XO  XXX   XO
 rXOXXX XX  XOXXX XX
      r     r   h   r
-#	; ENDE DER LEVELDATEN ---------------------------------*
+# ; ENDE DER LEVELDATEN ---------------------------------*

@@ -1,67 +1,65 @@
-;	LEVEL 009 ---------------------------------------------*
-;	FOR McMINOS - Version 1.10
-;	Created.....:	09.06.93
-;	Last changes:	12.06.93
-;	Done by.....:	Andreas Neudecker
+; LEVEL 009 ---------------------------------------------*
+; FOR McMINOS - Version 1.10
+; Created.....: 09.06.93
+; Last changes: 12.06.93
+; Done by.....: Andreas Neudecker
 
-;	HEADER ------------------------------------------------*
-AUTHOR: 	NoPe;		Andreas Neudecker
-NUMBR:		9
-ACCCD:		401475
-VERSION:	0900
+; HEADER ------------------------------------------------*
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    9
+ACCCD:    401475
+VERSION:  0900
 
-;	LEVELFORMAT -------------------------------------------*
-LWID:		21
-LHI:		11
-VWID:		21
-VHI:		11
-SCROLLX:	0
-SCROLLY:	0
-BACK:		6
+; LEVELFORMAT -------------------------------------------*
+LWID:   21
+LHI:    11
+SCROLLX:  0
+SCROLLY:  0
+BACK:   6
 
-;	STATUS-Angaben ----------------------------------------*
-LTIME:		0
-RSTRT:		0
-MIRROR: 	0
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-;	McMINOS -----------------------------------------------*
-MCSPEED:	1
+; McMINOS -----------------------------------------------*
+MCSPEED:  1
 
-;	GEISTER -----------------------------------------------*
-GHOST1: 	0
-GHSPEED1:	1
-AGIL1:		90
-GRTIME1:	30
+; GEISTER -----------------------------------------------*
+GHOST1:   0
+GHSPEED1: 1
+AGIL1:    90
+GRTIME1:  30
 
-GHOST2: 	0
-GHSPEED2:	1
-AGIL2:		0
-GRTIME2:	30
-PILLMAX2:	222
-PILLFREQ2:	4
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:    0
+GRTIME2:  30
+PILLMAX2: 222
+PILLFREQ2:  4
 
-GHOST3: 	0
-GHSPEED3:	1
-AGIL3:		20
-GRTIME3:	10
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    20
+GRTIME3:  10
 TRANSWALL3: 20
 
-GHOST4: 	9
-GHSPEED4:	1
-AGIL4:		50
-GRTIME4:	10
+GHOST4:   9
+GHSPEED4: 1
+AGIL4:    50
+GRTIME4:  10
 
-;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,0
-BMBS:		0,0
-DYNA:		0,0
-MINE:		0,0
-CHOC:		0,0
-MEDC:		0,0
-UMBR:		0,999
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
 
-;	LEVELDATEN --------------------------------------------*
+; LEVELDATEN --------------------------------------------*
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXX
 X                   X
@@ -74,4 +72,4 @@ X                   X
 X h r h r h r h r h X
 X                   X
 XXXXXXXXXXXXXXXXXXXXX
-#	;_ENDE_DER_LEVELDATEN_---------------------------------*
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

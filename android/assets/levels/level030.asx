@@ -13,8 +13,6 @@ VERSION:  1100
 ; LEVELFORMAT -------------------------------------------*
 LWID:   32
 LHI:    17
-VWID:   32
-VHI:    17
 SCROLLX:  0
 SCROLLY:  0
 BACK:   3

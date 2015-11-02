@@ -1,73 +1,74 @@
-;	LEVEL 26
-;	FOR MAC MINOS - Version 0.6
+; LEVEL 26
+; FOR MAC MINOS - Version 0.6
 
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		26
-ACCCD:		2081342
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    26
+ACCCD:    2081342
+VERSION:  1100
 
-LWID:		29
-LHI:		29
-VLWID:		29
-VHI:		29
-SCROLLX:	1
-SCROLLY:	1
-BACK:		36
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
 
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LWID:   30
+LHI:    30
+SCROLLX:  1
+SCROLLY:  1
+BACK:   36
 
-MCSPEED:	1
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-GHOST1:		8
-GHSPEED1:	1
-GRTIME1:	30
-AGIL1:		15
+MCSPEED:  1
 
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+GHOST1:   8
+GHSPEED1: 1
+GRTIME1:  30
+AGIL1:    15
 
-;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,0
-BMBS:		0,0
-DYNA:		0,0
-MINE:		0,0
-CHOC:		0,0
-MEDC:		0,0
-UMBR:		0,0
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
 
-;	LEVELDATEN --------------------------------------------*
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,0
+
+; LEVELDATEN --------------------------------------------*
 LEVEL:
-ZZZZZ.XXXXX.XXXXX.XXXXX.XXXXX
-ZCC.Z.X...X.X . X.XkkkX.X...X
-ZCC.D.X.m.X.X G X.XCC.X.X.!.X
-Z...Z.X...X.X   X.XCC.X.X...X
-ZZZZZ.XXXXX.XrrrX.XXXXX.XXXXX
-.....ä.....ä.....ä.....ß.....
-XXXXX.XXXXX.XXXXX.XXXXX.XXXXX
-Xk..X.XdddX.X...X.X..OX.X...X
-X.+ä .Xd.dX.X.r......OX.X.?.X
-XG..X.X1ddX.X...X.X..OX.X...X
-XXXXX.XXXXX.XXXXX.XXXXX.XXXXX
-.....a.....6.....?...........
-XXXXX.ZZZZZ.XXXXX.ZZZZZ.XXXXX
-X...X.ZG..Z.XCC.X.Z...Z.Xb.bX
-X.c.X.Z.W.Z.XCC.X.Z.W.Z.XCC.X
-X...X.Z...Z.X...X.ZG..Z.XCC.X
-XXXXX.ZZZZZ.XXXXX.ZZZZZ.XXXXX
-.....ö.....ß.....^...........
-XXXXX.ZZZZZ.XX^XX.ZZZZZ.XXXXX
-X...X.Z..dZ.X...X.Z...Z.X...X
-X.>.r.D.O.Z.X.X.X.D.m.Z.X.m.X
-X...X.Z...Z.X...X.Z...Z.X...X
-XXXXX.ZZZZZpXX^XX.ZZZZZ.XXXXX
-.....6....pWp....6.....P.....
-ZZZZZ.ZZZZZpZZZZZ.XXXXX.XXXXX
-Z...Z.Z.  Z.Z...Z.XbbbX.X...X
-Z.W.ZvZ   D.Z.W.Z.X+++X.X.m.X
-Z...Z.Z   Z.Z...Z.XLLLX.X...X
-ZZZZZ.ZZZZZ.ZZZZZ.XXXXX.XXXXX
+ZZZZZ.XXXXX.XXXXX.XXXXX.XXXXX.
+ZCC.Z.X...X.X . X.XkkkX.X...X.
+ZCC.D.X.m.X.X G X.XCC.X.X.!.X.
+Z...Z.X...X.X   X.XCC.X.X...X.
+ZZZZZ.XXXXX.XrrrX.XXXXX.XXXXX.
+.....ä.....ä.....ä.....ß......
+XXXXX.XXXXX.XXXXX.XXXXX.XXXXX.
+Xk..X.XdddX.X...X.X..OX.X...X.
+X.+ä .Xd.dX.X.r......OX.X.?.X.
+XG..X.X1ddX.X...X.X..OX.X...X.
+XXXXX.XXXXX.XXXXX.XXXXX.XXXXX.
+.....a.....6.....?............
+XXXXX.ZZZZZ.XXXXX.ZZZZZ.XXXXX.
+X...X.ZG..Z.XCC.X.Z...Z.Xb.bX.
+X.c.X.Z.W.Z.XCC.X.Z.W.Z.XCC.X.
+X...X.Z...Z.X...X.ZG..Z.XCC.X.
+XXXXX.ZZZZZ.XXXXX.ZZZZZ.XXXXX.
+.....ö.....ß.....^............
+XXXXX.ZZZZZ.XX^XX.ZZZZZ.XXXXX.
+X...X.Z..dZ.X...X.Z...Z.X...X.
+X.>.r.D.O.Z.X.X.X.D.m.Z.X.m.X.
+X...X.Z...Z.X...X.Z...Z.X...X.
+XXXXX.ZZZZZpXX^XX.ZZZZZ.XXXXX.
+.....6....pWp....6.....P......
+ZZZZZ.ZZZZZpZZZZZ.XXXXX.XXXXX.
+Z...Z.Z.  Z.Z...Z.XbbbX.X...X.
+Z.W.ZvZ   D.Z.W.Z.X+++X.X.m.X.
+Z...Z.Z   Z.Z...Z.XLLLX.X...X.
+ZZZZZ.ZZZZZ.ZZZZZ.XXXXX.XXXXX.
+..............................
 #
