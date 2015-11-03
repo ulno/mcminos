@@ -8,6 +8,7 @@ ACCCD:    1001782
 VERSION:  1100
 
 ; 2DO: edit to get rid of double walls (if possible without breaking the level)
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 
 LWID:   21
 LHI:    21

@@ -18,6 +18,7 @@ ACCCD:    76
 ; LEVELFORMAT -------------------------------------------+
 LWID:   12
 LHI:    7
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 SCROLLX:  1
 SCROLLY:  0
 BACK:   1

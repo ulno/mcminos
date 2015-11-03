@@ -10,7 +10,7 @@ ACCCD:    1867167
 VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-; FIX FOR SCROLLX|Y NOT REQUIRED. OK.
+; FIX FOR WRAP-AROUND NOT REQUIRED. OK.
 
 LWID:   50
 LHI:    8

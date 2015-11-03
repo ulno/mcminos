@@ -6,8 +6,9 @@ NUMBR:    64
 ACCCD:    36777372
 VERSION:  1100
 
-LWID:   19
-LHI:    19
+LWID:   20
+LHI:    20
+; UN-FIXED WRAP-AROUND FIXES
 SCROLLX:  1
 SCROLLY:  1
 BACK:   13
@@ -28,23 +29,24 @@ GHOST3:   0
 GHOST3:   0
 
 LEVEL:
-XXXXXXXXX.X.XXXXXXX
-.........*X........
-XXXXXXXXX.X.XXXXXXX
-.G........X........
-XXXXXXXXX.XXXX.XXXX
-..........X........
-XXXXX.XXXXXXXXXXXX.
-X.G.......X......X.
-X.XXXXXXX.X.XXXX.X.
-X..................
-X.XXXXX.XXXX.CC..X.
-X.XGX...X*LX.CCX.X.
-X.XbX.X.XG.X.....X.
-X.X.XcX.X..XX.XXXX.
-X.X.X.X.XX..X......
-X.X.X.X..X..X.X..X.
-X........X..X..P...
-X.XXXXXX.X..X.X..X.
-X.................b
+XXXXXXXXX.X.XXXXXXXX
+.........*X.........
+XXXXXXXXX.X.XXXXXXXX
+.G........X.........
+XXXXXXXXX.XXXX.XXXXX
+..........X.........
+XXXXX.XXXXXXXXXXXX.X
+X.G.......X......X.X
+X.XXXXXXX.X.XXXX.X.X
+X..................X
+X.XXXXX.XXXX.CC..X.X
+X.XGX...X*LX.CCX.X.X
+X.XbX.X.XG.X.....X.X
+X.X.XcX.X..XX.XXXX.X
+X.X.X.X.XX..X......X
+X.X.X.X..X..X.X..X.X
+X........X..X..P...X
+X.XXXXXX.X..X.X..X.X
+X.................bX
+XXXXXXXXX.X.XXXXXXXX
 #

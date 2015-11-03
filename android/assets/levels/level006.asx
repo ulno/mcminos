@@ -6,10 +6,10 @@ NUMBR:      6
 ACCCD:      6410070
 VERSION: 0900
 
-; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
+; UN-FIXED WRAP-AROUND FIXES
 ; REMOVED PEEP HOLE (VWID, VHI)
 
-LWID:    23
+LWID:    24
 LHI:     12
 SCROLLX: 1
 SCROLLY: 0
@@ -51,15 +51,15 @@ MEDC:    0,999
 UMBR:    0,999
 
 LEVEL:
-XXXXXXXXXXXXXXXXXXXXXXX
-X    P rXrrrrrrrXmmmmmk
-X       Xrrrd,rrch  X
-       XXXrdrrdXXX XXX
-X   h    Xdrrh dhX
-Xd   h   XrarrXXXXDXXXX
-XXXXXXXXDXXXXXX
- XdkX  h X
- XXXXXXXXX           CC
-   rX       XX       CC
-   bX       X.X
-XXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXX
+ X    P rXrrrrrrrXmmmmmk
+ X       Xrrrd,rrch  X
+        XXXrdrrdXXX XXX
+ X   h    Xdrrh dhX
+ Xd   h   XrarrXXXXDXXXX
+XXXXXXXXXDXXXXXX
+  XdkX  h X
+  XXXXXXXXX           CC
+    rX       XX       CC
+    bX       X.X
+XXXXXXXXXXXXXXXXXXXXXXXX

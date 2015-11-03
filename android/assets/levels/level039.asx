@@ -6,10 +6,10 @@ NUMBR:    39
 ACCCD:    1110000
 VERSION:  1100
 
-; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
+; UN-FIXED WRAP-AROUND FIXES
 
-LWID:   23
-LHI:    23
+LWID:   24
+LHI:    24
 SCROLLX:  1
 SCROLLY:  1
 BACK:   31
@@ -45,27 +45,28 @@ MEDC:   0,999
 UMBR:   0,999
 
 LEVEL:
-XXXXXXXXXXX..XXXXXXXXXX
-Xb.......X....X.......*
-X.XXXXrX.X.XX.X.XXXrXX.
-X.XG.......X.........X.
-X.X.XXXXXX.XX.XXXXXX.r.
-X.X........SS....P...X.
-X.r.XXXX.X.XX.XXXXXX.X.
-X.X.X*.X.X..X.Xc..X..X.
-X...X..X.X..X.X.X......
-XXX.XX.X.X.XX.X.XXXX.XX
-X...........X..........
-..X...S..XXCC.XXXXXXXX.
-..XXXXSXXX.CCXX......X.
-X..........X...........
-XXX.X.X.XX.XX.XX.X.X.XX
-X...........X.X..X.X...
-X.XX.X.XX.XXX...XX.X.X.
-X.X.........X.XXX..X.X.
-X.X.XXX.XX.XX.....XX.r.
-X.X.X..r.X.X..XXXXXb.X.
-X.XG..X....X........GX.
-X.XXXXXX.X.XX.X.XXrXXX.
-X).......X....X.......)
+XXXXXXXXXXX..XXXXXXXXXXX
+Xb.......X....X.......*X
+X.XXXXrX.X.XX.X.XXXrXX.X
+X.XG.......X.........X.X
+X.X.XXXXXX.XX.XXXXXX.r.X
+X.X........SS....P...X.X
+X.r.XXXX.X.XX.XXXXXX.X.X
+X.X.X*.X.X..X.Xc..X..X.X
+X...X..X.X..X.X.X......X
+XXX.XX.X.X.XX.X.XXXX.XXX
+X...........X..........X
+..X...S..XXCC.XXXXXXXX..
+..XXXXSXXX.CCXX......X..
+X..........X...........X
+XXX.X.X.XX.XX.XX.X.X.XXX
+X...........X.X..X.X...X
+X.XX.X.XX.XXX...XX.X.X.X
+X.X.........X.XXX..X.X.X
+X.X.XXX.XX.XX.....XX.r.X
+X.X.X..r.X.X..XXXXXb.X.X
+X.XG..X....X........GX.X
+X.XXXXXX.X.XX.X.XXrXXX.X
+X).......X....X.......)X
+XXXXXXXXXXX..XXXXXXXXXXX
 #

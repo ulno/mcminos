@@ -10,9 +10,9 @@ ACCCD:    6012341
 VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
-LWID:   24
-LHI:    14
+; UN-FIXED WRAP-AROUND FIXES
+LWID:   25
+LHI:    15
 SCROLLX:  1
 SCROLLY:  1
 BACK:   9
@@ -61,18 +61,19 @@ UMBR:   0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
-XXXXXXXXXXXXXXXXXXXXXXXX
-X       1X+   3X1      c
-X XXX CC X XXX X OO XXX 
-X   X CC X     X OO X3  
-X XrX      XXX      X X 
-X X X XXXX X+X XXXX X X 
-X X X               X X 
-  X   XXXXXXXXXXXXX   X
-X X X ...r......... X X 
-X X X XXXXXXXXXXXXX X X 
-X X X               XrX 
-X  2X XXXdXXXdXXXrXPX   
-X XXX XdXXXdXXX.XXX XXX 
-X                       
+XXXXXXXXXXXXXXXXXXXXXXXXX
+X       1X+   3X1      cX
+X XXX CC X XXX X OO XXX X
+X   X CC X     X OO X3  X
+X XrX      XXX      X X X
+X X X XXXX X+X XXXX X X X
+X X X               X X X
+  X   XXXXXXXXXXXXX   X  
+X X X ...r......... X X X
+X X X XXXXXXXXXXXXX X X X
+X X X               XrX X
+X  2X XXXdXXXdXXXrXPX   X
+X XXX XdXXXdXXX.XXX XXX X
+X                       X
+XXXXXXXXXXXXXXXXXXXXXXXXX
 #   ; ENDE DER LEVELDATEN ---------------------------------*

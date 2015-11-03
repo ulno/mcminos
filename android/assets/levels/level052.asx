@@ -6,10 +6,10 @@ NUMBR:    52
 ACCCD:    650172
 VERSION:  1100
 
-; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
+; UN-FIXED WRAP-AROUND FIXES
 
 LWID:   50
-LHI:    49
+LHI:    50
 SCROLLX:  0
 SCROLLY:  1
 BACK:   43
@@ -88,4 +88,5 @@ Xwwwwwwwwwwwwww w w wwwwwwwwww w w   w       w X X
 X               w w            w w wwwwwwwww w XGX
 X wwwwwwwwwwwwwww^wwwwwwwwwwwwww w w   w   w w X X
 X                                w   w   w   w X X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X X
 #

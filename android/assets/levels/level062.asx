@@ -7,6 +7,7 @@ VERSION:  1100
 ; LEVELFORMAT -------------------------------------------*
 LWID:   42
 LHI:    9
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 SCROLLX:  1
 SCROLLY:  0
 BACK:   43

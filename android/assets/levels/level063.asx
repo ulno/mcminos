@@ -6,8 +6,9 @@ NUMBR:    63
 ACCCD:    300020163
 VERSION:  1100
 
-LWID:   29
-LHI:    29
+LWID:   30
+LHI:    30
+; UN-FIXED WRAP-AROUND FIXES
 SCROLLX:  1
 SCROLLY:  1
 BACK:   7
@@ -37,33 +38,34 @@ GHOST3:   0
 GHOST4:   0
 
 LEVEL:
-XXXXX.XXXXXXXXXXXXXXXXXX.XXXX
-X*.........>*...............P
-X.XvXXXXXXXXXXX^XXXXXXXXXXvX.
-X.X........................X.
-X.X.X.X>vXXXXXXXXXXXXXXX.X.X.
-X.X.X.X....X..........*X.X.X.
-X.X.X.X.XX.X.XXXXXXXXX.X.X.X.
-X.>...X....>k<.......<.X...<.
-X.X.X.X.XX.X.XXXXXXXXX.X.X.X.
-X.X.X.X....X...........X.X.X.
-X.X.X.XXXXXXXXXXXXXXXXXX.X.X.
-X.X........................X.
-X.X^XXXXXXXXXXXXXXXXXXXXXX^X.
-.*...........................
-X.XXX.XLX.X.r.XXXDX.r^XXXXXX.
-X...X.XXX.X.X..X..X.X.X..*XX.
-X.X.X...>...X.+X+.X.X...X..<.
-X.X.X.XXX.X.XXXXXXX.XXXXXXXX.
-X.X.....X.X..................
-X.XXX.X.X.X.XXXXXvXXXXX^XXXX.
-X............................
-X.XX.XXXXXXX.XXXXXXX.XXX^XXX.
-X.XX.X.....X.X.....X.X.....X.
-X....X.XXX.X.X.XXX.X.X.XvX.X.
-X.XX.X.<.X.X.X.<.<.>.X.XkX.X.
-X....X.X^X.X.X.XXX.XrX.XvX.X.
-X.CC.X.....X.X.....X.X.....X.
-X.CC.XXDXXXX.r^XXXXX.XXX^XXX.
-X............................
+XXXXX.XXXXXXXXXXXXXXXXXX.XXXXX
+X*.........>*...............PX
+X.XvXXXXXXXXXXX^XXXXXXXXXXvX.X
+X.X........................X.X
+X.X.X.X>vXXXXXXXXXXXXXXX.X.X.X
+X.X.X.X....X..........*X.X.X.X
+X.X.X.X.XX.X.XXXXXXXXX.X.X.X.X
+X.>...X....>k<.......<.X...<.X
+X.X.X.X.XX.X.XXXXXXXXX.X.X.X.X
+X.X.X.X....X...........X.X.X.X
+X.X.X.XXXXXXXXXXXXXXXXXX.X.X.X
+X.X........................X.X
+X.X^XXXXXXXXXXXXXXXXXXXXXX^X.X
+.*............................
+X.XXX.XLX.X.r.XXXDX.r^XXXXXX.X
+X...X.XXX.X.X..X..X.X.X..*XX.X
+X.X.X...>...X.+X+.X.X...X..<.X
+X.X.X.XXX.X.XXXXXXX.XXXXXXXX.X
+X.X.....X.X..................X
+X.XXX.X.X.X.XXXXXvXXXXX^XXXX.X
+X............................X
+X.XX.XXXXXXX.XXXXXXX.XXX^XXX.X
+X.XX.X.....X.X.....X.X.....X.X
+X....X.XXX.X.X.XXX.X.X.XvX.X.X
+X.XX.X.<.X.X.X.<.<.>.X.XkX.X.X
+X....X.X^X.X.X.XXX.XrX.XvX.X.X
+X.CC.X.....X.X.....X.X.....X.X
+X.CC.XXDXXXX.r^XXXXX.XXX^XXX.X
+X............................X
+XXXXX.XXXXXXXXXXXXXXXXXX.XXXXX
 #

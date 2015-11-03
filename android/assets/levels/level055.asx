@@ -11,7 +11,7 @@ VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
 ; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
-LWID:   29
+LWID:   30
 LHI:    21
 SCROLLX:  1
 SCROLLY:  0
@@ -61,25 +61,25 @@ UMBR:   0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X............................
-X.X.XXX.XXXXXXCCXXXXXX.XXX.X.
-X.X...X......XCCX......X...X.
-..X.X.X.X.XX......XX.X.X.X.X.
-X.X*....X..XXXXXXXX..X....*X.
-X.XXXXX.XX.....G....XX.XXXXX.
-X........XXXX.XX.XXXX........
-X.XXXXX................XXXXX.
-X.Xc....XXXX.XXXX.XXXX.....X.
-X.X.XXX.......P........XXX.X.
-X.X.....XXXX.XXXX.XXXX.....X.
-X.XXXXX................XXXXX.
-X........XXXX.XX.XXXX........
-X.XXXXX.XX....G.....XX.XXXXX.
-X.X*....X..XXXXXXXX..X....*X.
-..X.X.X.X.XX......XX.X.X.X.X.
-X.X...X......XCCX......X...X.
-X.X.XXX.XXXXXXCCXXXXXX.XXX.X.
-X............................
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X............................X
+X.X.XXX.XXXXXXCCXXXXXX.XXX.X.X
+X.X...X......XCCX......X...X.X
+..X.X.X.X.XX......XX.X.X.X.X..
+X.X*....X..XXXXXXXX..X....*X.X
+X.XXXXX.XX.....G....XX.XXXXX.X
+X........XXXX.XX.XXXX........X
+X.XXXXX................XXXXX.X
+X.Xc....XXXX.XXXX.XXXX.....X.X
+X.X.XXX.......P........XXX.X.X
+X.X.....XXXX.XXXX.XXXX.....X.X
+X.XXXXX................XXXXX.X
+X........XXXX.XX.XXXX........X
+X.XXXXX.XX....G.....XX.XXXXX.X
+X.X*....X..XXXXXXXX..X....*X.X
+..X.X.X.X.XX......XX.X.X.X.X..
+X.X...X......XCCX......X...X.X
+X.X.XXX.XXXXXXCCXXXXXX.XXX.X.X
+X............................X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 #   ; ENDE DER LEVELDATEN ---------------------------------*

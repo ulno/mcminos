@@ -6,10 +6,10 @@ NUMBR:    4
 ACCCD:    666
 VERSION:  0900
 
-; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
+; UN-FIXED WRAP-AROUND FIXES
 
-LWID:   12
-LHI:    19
+LWID:   13
+LHI:    20
 SCROLLX:  1
 SCROLLY:  1
 BACK:   4
@@ -39,23 +39,24 @@ UMBR:   0,999
 KEYS:   0,999
 
 LEVEL:
-X.XXX..XXXXD
-X......L....
-X.XXXX.XXXX.
-..kkb..>..D.
-X.XXXX.XXXX.
-X.D..<..kkk.
-X.XXXX.XXXXG
-X.kk.k.>k.D.
-X.XXXX.XXXX.
-..D..<b.kkk.
-X.XXXX.XXXXk
-X.>..D..kkk.
-X.XXXX.XXXX.
-..kkk..>b.D.
-X.XXXX.XXXX.
-X.kkk.P>..D.
-X.XXXXXXXXX.
-....XCC...c.
-X....CCXb...
+X.XXX..XXXXDX
+X......L....X
+X.XXXX.XXXX.X
+..kkb..>..D..
+X.XXXX.XXXX.X
+X.D..<..kkk.X
+X.XXXX.XXXXGX
+X.kk.k.>k.D.X
+X.XXXX.XXXX.X
+..D..<b.kkk..
+X.XXXX.XXXXkX
+X.>..D..kkk.X
+X.XXXX.XXXX.X
+..kkk..>b.D..
+X.XXXX.XXXX.X
+X.kkk.P>..D.X
+X.XXXXXXXXX.X
+....XCC...c..
+X....CCXb...X
+X.XXX..XXXXDX
 #
