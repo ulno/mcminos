@@ -122,7 +122,7 @@ public class PlayWindow {
      * Update the position of the currently seen viewable window
      */
     public void updateCoordinates() {
-        if( ! game.isToolboxShown()) {
+        if( ! game.isToolboxActivated()) {
             windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), visibleWidthInVPixels);
             windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), visibleHeightInVPixels);
         }
@@ -154,6 +154,10 @@ public class PlayWindow {
             visibleHeightInVPixels = level.getHeight() << virtualBlockResolutionExponent;
             visibleHeightInPixels = level.getHeight() << resolutionExponent;
         }
+        /* obsolete due to new restriction concerning scrolling
+         The following code also had a bug in cutting of the block (not from enough?)
+         causing weird artifacts in some resolutions
+
         // eventually restrict due to non scrolling
         if(!getScrollX() && visibleWidthInPixels > viewWidthInPixels - resolution) {
             visibleWidthInPixels = viewWidthInPixels - resolution; // cut off a block
@@ -162,7 +166,7 @@ public class PlayWindow {
         if(!getScrollY() && visibleWidthInPixels > viewHeightInPixels - resolution) {
             visibleHeightInPixels = viewHeightInPixels - resolution; // cut off a block
             visibleHeightInVPixels = Util.shiftLeftLogical(visibleHeightInPixels, virtualBlockResolutionExponent - resolutionExponent );
-        }
+        }*/
 
         // finish up in computing related variables
         levelWidthInPixels = getLevelWidth() << resolutionExponent;

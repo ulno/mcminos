@@ -187,4 +187,8 @@ public abstract class Mover {
     public void resume() {
         computeSpeeds(speed);
     }
+
+    public LevelBlock getLastBlock() {
+        return lastBlock;
+    }
 }

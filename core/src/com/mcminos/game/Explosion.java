@@ -208,6 +208,7 @@ public class Explosion {
 
         if(type == LevelObject.Types.Bomb) {
             fuseObject = new LevelObject(center, Entities.extras_bomb_fused, LevelObject.Types.BombFused);
+            fuseObject.animationStartNow();
             audio.soundPlay("zisch");
             animationLength = Entities.extras_bomb_fused.getAnimationFramesLength();
         }

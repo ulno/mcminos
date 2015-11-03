@@ -203,6 +203,10 @@ public class McMinos {
         return levelObject.getLevelBlock();
     }
 
+    public LevelBlock getFromLevelBlock() {
+        return mover.getLastBlock();
+    }
+
     public void setLevelBlock(LevelBlock levelBlock) {
         levelObject.setLevelBlock(levelBlock);
     }
@@ -490,11 +494,18 @@ public class McMinos {
         medicines ++;
     }
 
+    public void decreaseMedicines() {
+        if(medicines > 0)
+            medicines --;
+    }
+
+
     public int getMedicines() {
         return medicines;
     }
 
     public void consumeMedicine() {
+        decreaseMedicines();
         audio.soundPlay("antidot");
         poisonDuration = 0;
         resume();
