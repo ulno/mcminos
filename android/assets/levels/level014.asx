@@ -1,65 +1,64 @@
-;	LEVEL 014 ---------------------------------------------*
-;	FOR McMINOS - Version 1.10
-;	Created.....:	30.03.93
-;	Last changes:	30.03.93
-;	Done by.....:	Andreas Neudecker
+; LEVEL 014 ---------------------------------------------*
+; FOR McMINOS - Version 1.10
+; Created.....: 30.03.93
+; Done by.....: Andreas Neudecker
 
 ;   HEADER ------------------------------------------------*
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		14
-ACCCD:		1867167
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    14
+ACCCD:    1867167
+VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-LWID:		50
-LHI:		8
-VWID:		50
-VHI:		8
-SCROLLX:	1
-SCROLLY:	0
-BACK:		37
+; FIX FOR WRAP-AROUND NOT REQUIRED. OK.
+
+LWID:   50
+LHI:    8
+SCROLLX:  1
+SCROLLY:  0
+BACK:   37
 
 ;   STATUS-Angaben ----------------------------------------*
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
 ;   McMINOS -----------------------------------------------*
-MCSPEED:	2
+MCSPEED:  2
 
 ;   GEISTER -----------------------------------------------*
-GHOST1:		1
-GHSPEED1:	2
-AGIL1:		12
-GRTIME1:	5
+GHOST1:   1
+GHSPEED1: 2
+AGIL1:    12
+GRTIME1:  5
 
-GHOST2:		0
-GHSPEED2:	1
-AGIL2:		10
-GRTIME2:	5
-PILLMAX2:	0
-PILLFREQ2:	12
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:    10
+GRTIME2:  5
+PILLMAX2: 0
+PILLFREQ2:  12
 
-GHOST3:		1
-GHSPEED3:	1
-AGIL3:		20
-GRTIME3:	10
-TRANSWALL3:	15
+GHOST3:   1
+GHSPEED3: 1
+AGIL3:    20
+GRTIME3:  10
+TRANSWALL3: 15
 
-GHOST4:		0
-GHSPEED4:	1
-AGIL4:		10
-GRTIME4:	5
+GHOST4:   0
+GHSPEED4: 1
+AGIL4:    10
+GRTIME4:  5
 
 ;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,0
-BMBS:		0,0
-DYNA:		0,0
-MINE:		0,0
-CHOC:		1,1
-MEDC:		0,999
-UMBR:		0,999
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   1,1
+MEDC:   0,999
+UMBR:   0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
@@ -71,4 +70,4 @@ XX.X.XXXXX.Xb...bX.<.XrXXXXXXrX...X...X.XX...X..kX
 .......X...XXXDXXX.X...X.c.X....X.X.X.X..ä.X.XXXXX
 .X...X...X.........X.X...X...r..X...X...X.........
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-#	; ENDE DER LEVELDATEN ---------------------------------*
+# ; ENDE DER LEVELDATEN ---------------------------------*

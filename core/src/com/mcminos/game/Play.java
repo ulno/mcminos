@@ -83,7 +83,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game = new Game(main, this, camera);
 //        background = Entities.backgrounds_hexagon_03;
 //        background = Entities.backgrounds_pavement_04;
-        background = Entities.backgrounds_punched_plate_02;
+        background = Entities.backgrounds_punched_plate_03;
         game.disableMovement();
         game.currentLevelName = levelName;
         level = game.loadLevel(levelName);

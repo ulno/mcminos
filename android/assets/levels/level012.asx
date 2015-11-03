@@ -7,11 +7,11 @@ NUMBR:    12
 ACCCD:    8151
 VERSION:  1100
 
+; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
+
 LWID:   12
 LHI:    12
-VWID:   12
-VHI:    12
-SCROLLX:  1
+SCROLLX:  0
 SCROLLY:  0
 BACK:   1
 
@@ -56,15 +56,15 @@ KEYS:   0,999
 
 LEVEL:
 XXXXXXXXXXXX
-X....P....cX
-X.XX.XX.XX.X
-X.X......X.X
-X...XXXX...X
-XXX......XXX
-....XXXX....
-X.XXXCCXXX.X
-X....CC....X
-X.XX.XX.XX.X
-X*.G.......X
+X.....P....c
+X.XX.XXX.XX.
+X.X.......X.
+X...XXXXX...
+XXX.......XX
+....XXXXX...
+X.XXXCC.XXX.
+X....CC.....
+X.XX.XXX.XX.
+X*.G........
 XXXXXXXXXXXX
 #

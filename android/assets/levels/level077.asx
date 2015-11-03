@@ -1,7 +1,6 @@
 ; LEVEL NEW ---------------------------------------------+
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-23
-; Last changes: 2015-10-23
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------+
@@ -9,13 +8,14 @@ AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 
-NUMBR:    77
+NUMBR:    77z
 SHOWNR:   77
 ACCCD:    77
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   16
 LHI:    9
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 SCROLLX:  1
 SCROLLY:  1
 BACK:   1

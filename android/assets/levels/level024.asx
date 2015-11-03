@@ -1,53 +1,54 @@
-;	LEVEL 24
-;	FOR MAC MINOS - Version 0.51
+; LEVEL 24
+; FOR MAC MINOS - Version 0.51
 
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		24
-ACCCD:		91523245
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    24
+ACCCD:    91523245
+VERSION:  1100
 
-LWID:		20
-LHI:		20
-BACK:		23
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LWID:   19
+LHI:    19
+BACK:   23
 
-MCSPEED:	1
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-GHOST1:		5
-GHSPEED1:	1
-AGIL1:		10
-GRTIME1:	3
+MCSPEED:  1
 
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+GHOST1:   5
+GHSPEED1: 1
+AGIL1:    10
+GRTIME1:  3
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
 
 SCROLLX:    1
 SCROLLY:    1
 
 
 LEVEL:
-X.XXXXXXXX.X.X.X.X.X
-X...X......X...X...X
-XXX.X.X.XXXXXXXXXXXX
-..X.X.X...P.........
-X.X.X.X.XXXXXX.XXXXX
-X.....X....X......cX
-XXXXXXXXXX.X.XXXXXXX
-...........X........
-X.XXX.XXXXXXXX.XXX.X
-X.X+X...LCCX...X*X.X
-....X...XCCL...X....
-XXX.XXXXXXXXXXXX.XXX
-X............X.....X
-X.XXXXXXXXXX.X.X.X.X
-......X......X......
-X.X.X.X.XXXXXXXXXXXX
-..X.X.X.X*...X...X1.
-X.X.X.X.XXXX.X.X.XXX
-..X.....X3.X.X.X.X..
-X.XXXXXXXX.X.X.X.X.X
+X.XXXXXXXX.X.X.X.X.
+X...X......X...X...
+XXX.X.X.XXXXXXXXXXX
+..X.X.X...P........
+X.X.X.X.XXXXXX.XXXX
+X.....X....X......c
+XXXXXXXXXX.X.XXXXXX
+...........X.......
+X.XXX.XXXXXXXX.XXX.
+X.X+X...LCCX...X*X.
+....X...XCCL...X...
+XXX.XXXXXXXXXXXX.XX
+X............X.....
+X.XXXXXXXXXX.X.X.X.
+......X......X.....
+X.X.X.X.XXXXXXXXXXX
+..X.X.X.X*...X...X1
+X.X.X.X.XXXX.X.X.XX
+..X.....X3.X.X.X.X.
 #

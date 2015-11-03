@@ -1,63 +1,59 @@
-;	LEVEL 5
-;	FOR McMINOS - Version 1.10
+; LEVEL 5
+; FOR McMINOS - Version 1.10
 
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		5
-ACCCD:		32
-VERSION:	0900
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    5
+ACCCD:    32
+VERSION:  0900
 
-LWID:		20
-LHI:		20
-VWID:		20
-VHI:		20
-BACK:		4
+; UN-FIXED WRAP-AROUND FIXES
 
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
+LWID:   19
+LHI:    19
+BACK:   4
 
-SCROLLX:    1
-SCROLLY:    1
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
 
-MCSPEED:	1
+MCSPEED:  1
 
-GHOST1:		5
-AGIL1:		10
-GHSPEED1:	1
-GRTIME1:	1
+GHOST1:   5
+AGIL1:    10
+GHSPEED1: 1
+GRTIME1:  1
 
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
 
-LIVE:		0,999
-CHOC:		0,999
-BMBS:		0,999
-DYNA:		0,999
-MINE:		0,999
-MEDC:		0,999
-UMBR:		0,999
-KEYS:		0,999
+LIVE:   0,999
+CHOC:   0,999
+BMBS:   0,999
+DYNA:   0,999
+MINE:   0,999
+MEDC:   0,999
+UMBR:   0,999
+KEYS:   0,999
 
 LEVEL:
-X.XXXXXXXXXXXXXXXXXX
-X.................*X
-X.XXXX.X.XX.XXXX.X.X
-X.X*.X.X..X.X.PX.X.X
-X.X....X..X.X..X.X.X
-X.XXXX.XXXX.XX.X.X.X
-X..................X
-XXXXXX.XXXXXXX.XXXXX
-.....X.......X.X....
-....cX.XXXXX.X...X..
-XXXXXX.X.X.X.X.XXXXX
-X..........X*X.....X
-X.XXXX.XXX.XXXX.CC.X
-X...*X.X........CC.X
-X...*X.XXX.XXXX....X
-X.XXXX.........XXXXX
-.......XXXXXXXXX....
-XXXXXXXX...X...X.X.X
-X........X...X.....X
-X.XXXXXXXXXXXXXXXXXX
+X.XXXXXXXXXXXXXXXXX
+X.................*
+X.XXXX.X.XX.XXXX.X.
+X.X*.X.X..X.X.PX.X.
+X.X....X..X.X..X.X.
+X.XXXX.XXXX.XX.X.X.
+X..................
+XXXXXX.XXXXXXX.XXXX
+.....X.......X.X...
+....cX.XXXXX.X...X.
+XXXXXX.X.X.X.X.XXXX
+X..........X*X.....
+X.XXXX.XXX.XXXX.CC.
+X...*X.X........CC.
+X...*X.XXX.XXXX....
+X.XXXX.........XXXX
+.......XXXXXXXXX...
+XXXXXXXX...X...X.X.
+X........X...X.....
 #

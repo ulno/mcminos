@@ -27,7 +27,7 @@
      inkscape:window-height="741"
      id="namedview14170"
      showgrid="true"
-     inkscape:zoom="131"
+     inkscape:zoom="132"
      inkscape:cx="2"
      inkscape:cy="2"
      inkscape:window-x="0"
@@ -60,17 +60,6 @@
        cx="2"
        cy="2"
        r="2" />
-    <circle
-       id="path3243"
-       style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       cx="1"
-       cy="1.25"
-       r="0.5"
-       sodipodi:cx="1"
-       sodipodi:cy="1.25"
-       sodipodi:rx="0.5"
-       sodipodi:ry="0.5"
-       transform="translate(0,0.25)" />
     <path
        cx="1.25"
        cy="13"
@@ -79,16 +68,5 @@
        id="circle6506"
        d=""
        inkscape:connector-curvature="0" />
-    <circle
-       r="0.5"
-       cy="1.25"
-       cx="3"
-       style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       id="circle6508"
-       sodipodi:cx="3"
-       sodipodi:cy="1.25"
-       sodipodi:rx="0.5"
-       sodipodi:ry="0.5"
-       transform="translate(0,0.25)" />
   </g>
 </svg>

@@ -1,42 +1,43 @@
-;	LEVEL 28
-;	FOR MAC MINOS - Version 1.10
-;	Created: 29.9.92
+; LEVEL 28
+; FOR MAC MINOS - Version 1.10
+; Created: 29.9.92
 
-AUTHOR:		NoPe;		Andreas Neudecker
-NUMBR:		28
-ACCCD:		1001782
-VERSION:	1100
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    28
+ACCCD:    1001782
+VERSION:  1100
 
-LWID:		21
-LHI:		21
-VWID:		21
-VHI:		21
-SCROLLX:	1
-SCROLLY:	1
-BACK:		44
+; 2DO: edit to get rid of double walls (if possible without breaking the level)
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 
-LTIME:		0
-RSTRT:		0
-MIRROR:		0
-MCSPEED:	1
+LWID:   21
+LHI:    21
+SCROLLX:  1
+SCROLLY:  1
+BACK:   44
 
-GHOST1:		5
-GHSPEED1:	1
-AGIL1:		15
-GRTIME1:	5
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+MCSPEED:  1
 
-LIVE:		0,999
-CHOC:		0,999
-BMBS:		0,999
-DYNA:		0,999
-MINE:		0,999
-MEDC:		0,999
-UMBR:		0,999
-KEYS:		0,999
+GHOST1:   5
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  5
 
-GHOST2:		0
-GHOST3:		0
-GHOST4:		0
+LIVE:   0,999
+CHOC:   0,999
+BMBS:   0,999
+DYNA:   0,999
+MINE:   0,999
+MEDC:   0,999
+UMBR:   0,999
+KEYS:   0,999
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
 
 LEVEL:
 dXXXdXXXdXXXdXXXbXXXd

@@ -1,67 +1,66 @@
-;	LEVEL 17 ---------------------------------------------*
-;	FOR McMINOS - Version 1.10
-;	Created.....:	08.04.93
-;	Last changes:	26.10.93
-;	Done by.....:	Andreas Neudecker
+;    LEVEL 17 ---------------------------------------------*
+;    FOR McMINOS - Version 1.10
+;    Created.....:  08.04.93
+;    Done by.....:  Andreas Neudecker
 
-;	HEADER ------------------------------------------------*
-AUTHOR: 	NoPe;		Andreas Neudecker
-NUMBR:		17
-ACCCD:		68000
-VERSION:	1100
+;    HEADER ------------------------------------------------*
+AUTHOR:   NoPe;          Andreas Neudecker
+NUMBR:         17
+ACCCD:         68000
+VERSION:  1100
 
-;	LEVELFORMAT -------------------------------------------*
-LWID:		12
-LHI:		18
-VWID:		12
-VHI:		18
-SCROLLX:	1
-SCROLLY:	0
-BACK:		29
+;    LEVELFORMAT -------------------------------------------*
+; 2DO: REQUIRES EDITING & TESTING TO COMPLY WITH SCROLLX AGREEMENT 
+; (REMOVE DOUBLE WALLS)
+LWID:          12
+LHI:      18
+SCROLLX:  0
+SCROLLY:  0
+BACK:          29
 
-;	STATUS-Angaben ----------------------------------------*
-LTIME:		0
-RSTRT:		0
-MIRROR: 	0
+;    STATUS-Angaben ----------------------------------------*
+LTIME:         0
+RSTRT:         0
+MIRROR:   0
 
-;	McMINOS -----------------------------------------------*
-MCSPEED:	1
+;    McMINOS -----------------------------------------------*
+MCSPEED:  1
 
-;	GEISTER -----------------------------------------------*
-GHOST1: 	2
-GHSPEED1:	1
-AGIL1:		20
-GRTIME1:	5
+;    GEISTER -----------------------------------------------*
+GHOST1:   2
+GHSPEED1: 1
+AGIL1:         20
+GRTIME1:  5
 
-GHOST2: 	0
-GHSPEED2:	1
-AGIL2:		20
-GRTIME2:	45
-PILLMAX2:	25
-PILLFREQ2:	10
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:         20
+GRTIME2:  45
+PILLMAX2: 25
+PILLFREQ2:     10
 
-GHOST3: 	0
-GHSPEED3:	1
-AGIL3:		20
-GRTIME3:	10
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:         20
+GRTIME3:  10
 TRANSWALL3: 20
 
-GHOST4: 	0
-GHSPEED4:	1
-AGIL4:		10
-GRTIME4:	5
+GHOST4:   0
+GHSPEED4: 1
+AGIL4:         10
+GRTIME4:  5
 
-;	MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:		0,999
-KEYS:		0,999
-BMBS:		0,0
-DYNA:		0,0
-MINE:		0,0
-CHOC:		0,0
-MEDC:		0,999
-UMBR:		0,999
+;    MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:          0,999
+KEYS:          0,999
+BMBS:          0,0
+DYNA:          0,0
+MINE:          0,0
+CHOC:          0,0
+MEDC:          0,999
+UMBR:          0,999
 
-;	LEVELDATEN --------------------------------------------*
+;    LEVELDATEN --------------------------------------------*
 LEVEL:
 XXXXXXXXXXXX
 X.........*X
@@ -81,4 +80,4 @@ X  ,dXd, d,X
 X r U U   cX
 UX  U.  UPXU
 UXXXXXXXXXXU
-#	;_ENDE_DER_LEVELDATEN_---------------------------------*
+#    ;_ENDE_DER_LEVELDATEN_---------------------------------*

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg3505" sodipodi:version="0.32" inkscape:version="0.91 r13725" sodipodi:docname="right-00.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" version="1.1">
+  <defs id="defs3507">
+    <linearGradient inkscape:collect="always" id="linearGradient4240">
+      <stop style="stop-color:yellow;stop-opacity:1;" offset="0" id="stop4242" />
+      <stop style="stop-color:yellow;stop-opacity:0;" offset="1" id="stop4244" />
+    </linearGradient>
+    <inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="0 : 16 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="32 : 16 : 1" inkscape:persp3d-origin="16 : 10.666667 : 1" id="perspective3513" />
+    <inkscape:perspective id="perspective4690" inkscape:persp3d-origin="372.04724 : 350.78739 : 1" inkscape:vp_z="744.09448 : 526.18109 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_x="0 : 526.18109 : 1" sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective id="perspective4555" inkscape:persp3d-origin="372.04724 : 350.78739 : 1" inkscape:vp_z="744.09448 : 526.18109 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_x="0 : 526.18109 : 1" sodipodi:type="inkscape:persp3d" />
+    <linearGradient inkscape:collect="always" xlink:href="#linearGradient4240" id="linearGradient4246" x1="48" y1="-16" x2="96" y2="-16" gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="7.375" inkscape:cx="48" inkscape:cy="48" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" gridtolerance="10000" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:object-paths="true" inkscape:object-nodes="true" inkscape:snap-bbox="true" inkscape:snap-guide="true" showguides="true" inkscape:guide-bbox="true" inkscape:snap-perpendicular="true" inkscape:snap-tangential="true" inkscape:window-maximized="1">
+    <inkscape:grid type="xygrid" id="grid3515" units="px" visible="true" enabled="true" spacingx="1px" spacingy="1px" empspacing="4" />
+    <sodipodi:guide orientation="1,0" position="32,96" id="guide4736" />
+    <sodipodi:guide position="-12,0" orientation="0,1" id="guide4226" />
+    <sodipodi:guide position="64,96" orientation="1,0" id="guide4228" />
+    <sodipodi:guide position="-24,32" orientation="0,1" id="guide4230" />
+    <sodipodi:guide position="-20,64" orientation="0,1" id="guide4232" />
+    <sodipodi:guide position="96,96" orientation="1,0" id="guide4234" />
+  </sodipodi:namedview>
+  <metadata id="metadata3510">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:date>2010-04-05</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Andreas Neudecker</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>vorlage-32x32-mcminos</dc:identifier>
+        <dc:description>Vorlage für 32x32-Pixel-Icons für McMinos. Metadaten jeweils entsprechend anpassen!</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer" transform="translate(0,64)">
+    <g id="g5586">
+      <rect y="-64" x="0" height="96" width="96" id="rect4248" style="opacity:1;fill:none;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path d="m 89.569219,-40.000001 a 48,48 0 0 1 0,48.0000012 L 48,-16 Z" sodipodi:end="0.52359878" sodipodi:start="5.7595865" sodipodi:ry="48" sodipodi:rx="48" sodipodi:cy="-16" sodipodi:cx="48" sodipodi:type="arc" id="path4238" style="opacity:1;fill:url(#linearGradient4246);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <g transform="translate(32,-32)" id="g4804" inkscape:transform-center-x="-0.5">
+        <path inkscape:connector-curvature="0" id="path4611" d="m 23.5,9 0,5 -4.0625,0 C 18.745161,12.806213 17.478446,12 16,12 c -1.478446,0 -2.745161,0.806213 -3.4375,2 L 5,14 l 0,-4 -4,0 0,12 4,0 0,-4 7.5625,0 c 0.692339,1.193787 1.959054,2 3.4375,2 1.478446,0 2.745161,-0.806213 3.4375,-2 l 4.0625,0 0,5 1.5,0 7,-7 -7,-7 -1.5,0 z" style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <path inkscape:connector-curvature="0" id="path4613" d="m 24.5,10 0,5 -5.6875,0 C 18.396794,13.84184 17.30065,13 16,13 c -1.30065,0 -2.396794,0.84184 -2.8125,2 L 4,15 l 0,-4 -2,0 0,10 2,0 0,-4 9.1875,0 c 0.415706,1.15816 1.51185,2 2.8125,2 1.30065,0 2.396794,-0.84184 2.8125,-2 l 5.6875,0 0,5 6,-6 -6,-6 z" style="fill:#ffc000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <circle r="1" cy="16" cx="16" id="path4620" style="opacity:1;fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>
