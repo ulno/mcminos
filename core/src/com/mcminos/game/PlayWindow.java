@@ -41,6 +41,7 @@ public class PlayWindow {
     private int viewWidthInPixels;
     private int viewHeightInPixels;
     private Rectangle scissors = new Rectangle();
+    private int currentResolutionBitsLeftShifter;
 
     public PlayWindow(SpriteBatch batch, OrthographicCamera camera, Level level, McMinos mcminos) {
         this.batch = batch;
@@ -63,6 +64,7 @@ public class PlayWindow {
         resolution = Entities.resolutionList[resolutionCounter];
         resolutionExponent = Util.log2binary(resolution);
         Graphics.setResolutionAll(this, resolution);
+        currentResolutionBitsLeftShifter = Util.log2binary(resolution) - PlayWindow.virtualBlockResolutionExponent;
         resize();
     }
 
@@ -270,4 +272,21 @@ public class PlayWindow {
     public Rectangle getScissors() {
         return scissors;
     }
+
+    public int getCurrentResolutionBitsLeftShifter() {
+        return currentResolutionBitsLeftShifter;
+    }
+
+    public int vPixelToScreen( int v, int vpixelpos, int levelPixelSize) {
+        return  Graphics.vPixelToScreen(v,vpixelpos,levelPixelSize,currentResolutionBitsLeftShifter);
+    }
+
+    public int vPixelToScreenX( int v ) {
+        return vPixelToScreen( v, windowVPixelXPos, levelWidthInPixels );
+    }
+
+    public int vPixelToScreenY( int v ) {
+        return vPixelToScreen( v, windowVPixelYPos, levelHeightInPixels );
+    }
+
 }

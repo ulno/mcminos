@@ -191,7 +191,7 @@ public class Graphics {
         b.draw(getTexture(playwindow.getGame().getGameFrame()), x, y);
     }
 
-    public int vPixelToScreen( int v, int vpixelpos, int levelPixelSize) {
+    public static int vPixelToScreen( int v, int vpixelpos, int levelPixelSize, int currentResolutionBitsLeftShifter) {
         int screen = Util.shiftLeftLogical(v - vpixelpos, currentResolutionBitsLeftShifter);
         screen = (screen + levelPixelSize) % levelPixelSize;
         return screen;
@@ -212,7 +212,7 @@ public class Graphics {
         int vlw = playwindow.getVPixelsLevelWidth(); // virtual levelwidth
         vx0 = (vx0 - anchorX + vlw) % vlw; // make sure it's not negative and apply anchor
         // get physical coordinates
-        int x0 = vPixelToScreen(vx0, playwindow.windowVPixelXPos,gamew);
+        int x0 = vPixelToScreen(vx0, playwindow.windowVPixelXPos,gamew,currentResolutionBitsLeftShifter);
 
         /////////// do same for y
         int gameh = playwindow.levelHeightInPixels;
@@ -220,7 +220,7 @@ public class Graphics {
         int vlh = playwindow.getVPixelsLevelHeight(); // virtual levelwidth
         vy0 = (vy0 - anchorY + vlh) % vlh; // make sure it's not negative and apply anchor
         // get physical coordinates
-        int y0 = vPixelToScreen(vy0, playwindow.windowVPixelYPos,gameh);
+        int y0 = vPixelToScreen(vy0, playwindow.windowVPixelYPos,gameh,currentResolutionBitsLeftShifter);
 
         // draw different parts to physical coordinates
         Texture t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
