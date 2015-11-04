@@ -99,6 +99,25 @@ Castle
   * lighted wall: cccccc80
   * wall traces: 00000080
 
+Arrows (= one-ways)
+===================
+
+New version with white stripes
+------------------------------
+
+* static
+
+  * base color: ffffffff
+
+* rotatable
+
+  * base color: ffffffff
+  * glass base: 0000ff20
+  * screw: ccccccff
+  * shadow: 00000040
+  * light: ffffff66
+  * darker shade: 00000066
+
 Extras
 ======
 
@@ -113,6 +132,25 @@ Bomb
   * shadow: 606060ff
   
   * fuse (contour): e00000ff
+
+Bonus1 + Bonus2
+---------------
+
+* default
+
+  * base colour: 
+  * shadow:
+  * light:
+
+Bonus3 (piggy bank)
+-------------------
+
+* default
+
+  * base colour: ff8162ff
+  * shadow: ff8162ff
+  * eye:
+  * eye highlight:
 
 Dynamite
 --------
