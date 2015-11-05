@@ -174,8 +174,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         menuButtonImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                deactivateToolbox();
-                backToMenu();
+                gameMenu();
             }
         });
         menuButton.addActor(menuButtonImage);
@@ -291,42 +290,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
             }
         });
 
-
-/*        toolbox.add(new Image(Entities.pills_pill_default.getTexture(64, 0)));
-        pillLabel = new Label("00000", skin);
-        toolbox.add(pillLabel);
-        toolbox.row();
-
-        toolbox.add(new Image(Entities.extras_rock_me.getTexture(64, 0)));
-        rockmeLabel = new Label("00000", skin);
-        toolbox.add(rockmeLabel);
-        toolbox.row();
-
-        Button plusButton = new TextButton("+", skin);
-        plusButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                zoomPlus();
-            }
-        });
-        Button minusButton = new TextButton("-", skin);
-        minusButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                zoomMinus();
-            }
-        });
-        toolbox.add(plusButton).pad(4).prefSize(64, 64);
-        toolbox.add(minusButton).pad(4).prefSize(64, 64);
-        toolbox.row();
-
-        toolbox.add(toolbox); */
-
-
-//        toolboxTable.setWidth(playwindow.resolution + 4);
-//        toolboxTable.setHeight(playwindow.getHeightInPixels() + 4);
-
-
         toolboxImages();
         toolboxUpdate();
 
@@ -347,12 +310,158 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 }
             }
         });
-        stage.addActor(touchpad);
+        // load this from settings
+        //stage.addActor(touchpad);
 
         // InputProcessor
         GestureDetector gd = new GestureDetector(this);
         InputMultiplexer im = new InputMultiplexer(stage, gd, this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
+    }
+
+    private void gameMenu() {
+        toolboxDialogRemove(); // make sure any other one is gone
+        Table d = new Table();
+        int res = playwindow.resolution;
+        d.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
+        d.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
+        d.setSize(Gdx.graphics.getWidth()-res,Gdx.graphics.getHeight()-res);
+        d.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2,Align.center);
+        // Basic layout
+        Table topMenu = new Table(skin);
+        topMenu.setHeight(res);
+        ScrollPane scrollPane = new ScrollPane(topMenu);
+        d.add(scrollPane).colspan(2).expandX().top().row();
+        Table statisticsTable = new Table(skin);
+        d.add(statisticsTable).fill().expand();
+        Table storyTable = new Table(skin);
+        d.add(storyTable).fill().expand();
+        d.row();
+
+        // Fill topMenu
+        final Button soundButton = new TextButton("Sound\n" + (audio.getSound()?"on":"off"), skin);
+        soundButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                audio.toggleSound();
+                ((Label) soundButton.getChildren().first()).setText("Sound\n" + (audio.getSound() ? "on" : "off"));
+            }
+        });
+        topMenu.add(soundButton).left().prefSize(res, res);
+
+        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
+        musicButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                audio.toggleMusic();
+                ((Label) musicButton.getChildren().first()).setText("Sound\n" + (audio.getMusic() ? "on" : "off"));
+            }
+        });
+        topMenu.add(musicButton).prefSize(res, res);
+
+        Button touchpadButton = new TextButton("D-Pad", skin);
+        touchpadButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toogleTouchpad();
+            }
+        });
+        topMenu.add(touchpadButton).prefSize(res, res);
+
+        Button plusButton = new TextButton("+", skin);
+        plusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toolboxDialogRemove();
+                zoomPlus();
+                gameMenu(); // TODO: check if this leaks too much memory
+            }
+        });
+        topMenu.add(plusButton).prefSize(res, res);
+
+        Button minusButton = new TextButton("-", skin);
+        minusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toolboxDialogRemove();
+                zoomMinus();
+                gameMenu(); // TODO: check if this leaks too much memory
+            }
+        });
+        topMenu.add(minusButton).prefSize(res, res);
+
+        Button leaveButton = new TextButton("Leave", skin);
+        leaveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toolboxDialogRemove();
+                backToMenu();
+            }
+        });
+        topMenu.add(leaveButton).prefSize(res,res);
+
+        Button viewButton = new TextButton("View", skin);
+        viewButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toolboxDialogRemove();
+            }
+        });
+        topMenu.add(viewButton).prefSize(res,res);
+
+        Image exitImage = new Image(Entities.extras_missing.getTexture(res, 0));
+        exitImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toolboxDialogRemove();
+                deactivateToolbox();
+                //super.clicked(event, x, y);
+            }
+        });
+        topMenu.add(exitImage).prefSize(res, res);
+
+        ///// Fill statistics
+        statisticsTable.add(new Label("Statistics", skin)).top().colspan(2).center().padBottom(res / 4).row();
+        // Levelname
+        statisticsTable.add(new Label("Levelname: " + level.getLevelName(),skin)).colspan(2).left().row();
+        // Zoomlevel + Resolution
+        statisticsTable.add(new Label("Zoom: " + Util.formatInteger(gameResolutionCounter,0), skin)).left();
+        statisticsTable.add(new Label("Resolution: " + Util.formatInteger(playwindow.resolution,0), skin)).left().row();
+        // Remaining pills
+        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res, 0))).left();
+        pillLabel = new Label(Util.formatInteger(level.getPillsNumber(),5), skin);
+        statisticsTable.add(pillLabel).left();
+        statisticsTable.row();
+        // Remaining rockmes
+        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res, 0))).left();
+        rockmeLabel = new Label(Util.formatInteger(level.getRockmesNumber(),5), skin);
+        statisticsTable.add(rockmeLabel).left();
+        statisticsTable.row();
+
+        //// Fill the story
+
+        storyTable.add(new Label("Story", skin)).top().center().padBottom(res / 4).row();
+        Label story = new Label("Here we will have at one point a beautiful " +
+                "story explaing everything in this Level. " +
+                "This is only some example text at this point.\n\n" +
+                "Stay tuned\n\nulno + nope", skin);
+        story.setWrap(true);
+        storyTable.add(story).top().left().width(d.getWidth() / 2);
+
+//        toolboxTable.setWidth(playwindow.resolution + 4);
+//        toolboxTable.setHeight(playwindow.getHeightInPixels() + 4);
+
+        toolboxDialog = d;
+        stage.addActor( toolboxDialog );
+    }
+
+    private void toogleTouchpad() {
+        if(touchpad.hasParent())
+            touchpad.remove();
+        else {
+            touchpadResize();
+            stage.addActor(touchpad);
+        }
     }
 
     private void activateMedicine() {
