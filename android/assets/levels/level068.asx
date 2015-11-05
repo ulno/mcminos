@@ -25,6 +25,9 @@ GHOST2:   0
 GHOST3:   0
 GHOST3:   0
 
+SCROLLX:  1
+SCROLLY:  1
+
 LEVEL:
 XXXXXXXXX..XXXXXXXX
 X..................
