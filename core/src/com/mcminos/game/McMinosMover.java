@@ -148,7 +148,7 @@ public class McMinosMover extends Mover {
     private MazeBlock mazeBlocks[][] = new MazeBlock[mazeSize][mazeSize];
 
     private int getDirectionsFromDestination() {
-        //int directions = 0;
+        int directions = STOP;
 
         if (mcminos.isDestinationSet()) {
             /* Try to find unobstructed path to destination */
@@ -210,10 +210,13 @@ public class McMinosMover extends Mover {
                 closestY = b.fromY;
                 traceDir = b.fromDir;
             }
-            return traceDir;
-            // TODO: consider ingnoring rocks in way calculation
+            directions = traceDir;
+            // TODO: consider ingnoring or giving panelty to rocks (or even doors?) in way calculation
         }
-        return STOP;
+        if (directions == STOP) {
+            mcminos.hideDestination();
+        }
+        return directions;
 
 
 //            // old direction selection code follows
