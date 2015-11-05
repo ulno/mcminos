@@ -191,6 +191,11 @@ public class Graphics {
         b.draw(getTexture(playwindow.getGame().getGameFrame()), x, y);
     }
 
+    public static int vPixelToScreen( int v, int vpixelpos, int levelPixelSize, int currentResolutionBitsLeftShifter) {
+        int screen = Util.shiftLeftLogical(v - vpixelpos, currentResolutionBitsLeftShifter);
+        screen = (screen + levelPixelSize) % levelPixelSize;
+        return screen;
+    }
     /**
      * Draw with offset to a batch in current resolution
      * Remember, level(0,0) is lower left corner due to libgdx' flipped windowVPixelYPos-axis
@@ -207,8 +212,7 @@ public class Graphics {
         int vlw = playwindow.getVPixelsLevelWidth(); // virtual levelwidth
         vx0 = (vx0 - anchorX + vlw) % vlw; // make sure it's not negative and apply anchor
         // get physical coordinates
-        int x0 = Util.shiftLeftLogical(vx0 - playwindow.windowVPixelXPos, currentResolutionBitsLeftShifter);
-        x0 = (x0 + gamew) % gamew;
+        int x0 = vPixelToScreen(vx0, playwindow.windowVPixelXPos,gamew,currentResolutionBitsLeftShifter);
 
         /////////// do same for y
         int gameh = playwindow.levelHeightInPixels;
@@ -216,14 +220,14 @@ public class Graphics {
         int vlh = playwindow.getVPixelsLevelHeight(); // virtual levelwidth
         vy0 = (vy0 - anchorY + vlh) % vlh; // make sure it's not negative and apply anchor
         // get physical coordinates
-        int y0 = Util.shiftLeftLogical(vy0  - playwindow.windowVPixelYPos, currentResolutionBitsLeftShifter);
-        y0 = (y0 + gameh) % gameh;
+        int y0 = vPixelToScreen(vy0, playwindow.windowVPixelYPos,gameh,currentResolutionBitsLeftShifter);
 
         // draw different parts to physical coordinates
         Texture t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
         /*int maxww = playwindow.visibleWidthInPixels;
         int maxwh = playwindow.visibleHeightInPixels;*/
-        // clipping shoudl be done by scissors in playscreen
+        // clipping should be done by scissors in playscreen
+        // TODO: this seems slow optimize
         playwindow.batch.draw(t, x0, y0);
         playwindow.batch.draw(t, x0 - gamew, y0);
         playwindow.batch.draw(t, x0, y0 - gameh);

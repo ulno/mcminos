@@ -1,10 +1,8 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,7 +38,7 @@ public class Game {
 
     private Random randomGenerator = new Random();
     private boolean movement = false; // only do animations but don't move anything
-    boolean toolboxShown = false;
+    boolean toolboxActivated = false;
     private long lastDeltaTimeLeft = 0;
     private boolean timerTaskActive = false;
 
@@ -170,7 +168,7 @@ public class Game {
         if( level.isFinished() ) {
             return false;
         }
-        if( !toolboxShown) { // if game is not suspended with toolbox
+        if( !toolboxActivated) { // if game is not suspended with toolbox
             // do timers
             gameFrame++;
             /* done with synchronize // get lock
@@ -314,12 +312,12 @@ public class Game {
         initAfterLoad();
     }
 
-    public boolean isToolboxShown() {
-        return toolboxShown;
+    public boolean isToolboxActivated() {
+        return toolboxActivated;
     }
 
-    public void setToolboxShown(boolean toolboxShown) {
-        this.toolboxShown = toolboxShown;
+    public void setToolboxActivated(boolean toolboxActivated) {
+        this.toolboxActivated = toolboxActivated;
     }
 
     public boolean getMovement() {

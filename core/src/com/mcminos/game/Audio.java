@@ -48,15 +48,34 @@ public class Audio {
             "wind",
             "zisch"};
 
-    public HashMap<String,com.badlogic.gdx.audio.Sound> soundList = new HashMap<>();
+    boolean sound = true; // TODO: load from settings
+    boolean music = true; // TODO: load from settings
+
+    public HashMap<String, com.badlogic.gdx.audio.Sound> soundList = new HashMap<>();
 
     public void soundPlay(String s) {
-        if(s != null && s != "")
+        if (sound && s != null && s != "")
             soundList.get(s).play(1.0f);
     }
 
     public void addSound(String s, Sound sound) {
         soundList.put(s, sound);
+    }
+
+    public void toggleSound() {
+        sound = !sound;
+    }
+
+    public void toggleMusic() {
+        music = !music;
+    }
+
+    public boolean getSound() {
+        return sound;
+    }
+
+    public boolean getMusic() {
+        return music;
     }
 }
 
