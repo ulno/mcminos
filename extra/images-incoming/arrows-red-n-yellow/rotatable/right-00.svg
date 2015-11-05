@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="right-00.svg">
+  <defs id="defs4152" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="false" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="false" inkscape:guide-bbox="true" inkscape:snap-tangential="true">
+    <inkscape:grid type="xygrid" id="grid4698" empspacing="8" spacingx="0.5" spacingy="0.5" />
+    <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
+    <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
+    <sodipodi:guide position="16,16" orientation="-0.70710678,0.70710678" id="guide4773" />
+    <sodipodi:guide position="16,16" orientation="0.70710678,0.70710678" id="guide4775" />
+    <sodipodi:guide position="25,16" orientation="0.70710678,0.70710678" id="guide5670" />
+  </sodipodi:namedview>
+  <metadata id="metadata4155">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g5725">
+      <g transform="matrix(0,-1,1,0,0,32)" id="g5716">
+        <path style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 0,28 16,32 32,28 32,24 16,28 0,24 Z" id="path4700" inkscape:connector-curvature="0" />
+        <path inkscape:connector-curvature="0" id="path4702" d="M 0,20 16,24 32,20 32,16 16,20 0,16 Z" style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <path style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 0,12 16,16 32,12 32,8 16,12 0,8 Z" id="path4704" inkscape:connector-curvature="0" />
+        <path inkscape:connector-curvature="0" id="path4706" d="M 0,4 16,8 32,4 32,0 16,4 0,0 Z" style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <path inkscape:connector-curvature="0" id="path4709" d="M 0,24 16,28 32,24 32,20 16,24 0,20 Z" style="opacity:1;fill:yellow;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <path style="opacity:1;fill:yellow;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 0,16 16,20 32,16 32,12 16,16 0,12 Z" id="path4711" inkscape:connector-curvature="0" />
+        <path inkscape:connector-curvature="0" id="path4713" d="M 0,8 16,12 32,8 32,4 16,8 0,4 Z" style="opacity:1;fill:yellow;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      </g>
+      <path id="path5635" d="M 25.1875,6.8046875 21.650391,10.337891 A 8,8 0 0 0 16.117188,8 a 8,8 0 0 0 -5.773438,2.34375 8,8 0 0 0 0,11.3125 8,8 0 0 0 11.3125,0 l -2.121094,-2.121094 a 5,5 0 0 1 -7.070312,0 5,5 0 0 1 0,-7.070312 5,5 0 0 1 7.0625,-0.0059 l -3.542969,3.539063 9.201172,0.002 0.002,-9.1953125 z" style="opacity:1;fill:navy;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" inkscape:connector-curvature="0" />
+    </g>
+    <g id="g5656" transform="translate(-28,0)">
+      <path style="opacity:1;fill:lime;fill-opacity:0.25098039;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path5658" sodipodi:type="arc" sodipodi:cx="16" sodipodi:cy="16" sodipodi:rx="8" sodipodi:ry="8" sodipodi:start="0.78539816" sodipodi:end="5.4977871" d="m 21.656854,21.656854 a 8,8 0 0 1 -11.313708,0 8,8 0 0 1 0,-11.313708 8,8 0 0 1 11.313708,0 L 16,16 Z" />
+      <path style="opacity:1;fill:lime;fill-opacity:0.25098039;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="m 25.187856,6.8048408 -9.203762,9.1932962 9.201291,0.0014 z" id="path5660" inkscape:connector-curvature="0" sodipodi:nodetypes="cccc" inkscape:transform-center-x="-4.5934053" inkscape:transform-center-y="-4.5987175" />
+      <path style="opacity:1;fill:lime;fill-opacity:0.25098039;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path5662" sodipodi:type="arc" sodipodi:cx="16" sodipodi:cy="16" sodipodi:rx="5" sodipodi:ry="5" sodipodi:start="0.78539816" sodipodi:end="5.4977871" d="m 19.535534,19.535534 a 5,5 0 0 1 -7.071068,0 5,5 0 0 1 0,-7.071068 5,5 0 0 1 7.071068,0 L 16,16 Z" />
+    </g>
+  </g>
+</svg>
