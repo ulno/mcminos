@@ -10,7 +10,7 @@ VERSION:  0900
 
 LWID:   12
 LHI:    12
-SCROLLX:  0
+SCROLLX:  1
 SCROLLY:  0
 BACK:   46
 
@@ -44,15 +44,15 @@ UMBR:   0,999
 
 LEVEL:
 XXXXXXXXXXXX
-X.....P.....
-X.rr.XXX.rr.
-X...........
-X...........
-XXX...G...XX
-....0OOOO...
-X.XXX.CCXXX.
-X.....CC....
-X...XXXXX...
-X*.........c
+X....P.....X
+X.rr.XX.rr.X
+X..........X
+X..........X
+XXX..G...XXX
+....0OOO....
+X.XXXCCXXX.X
+X....CC....X
+X...XXXX...X
+X*........cX
 XXXXXXXXXXXX
 #
