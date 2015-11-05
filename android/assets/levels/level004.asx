@@ -38,6 +38,9 @@ MEDC:   0,999
 UMBR:   0,999
 KEYS:   0,999
 
+SCROLLX:  1
+SCROLLY:  1
+
 LEVEL:
 X.XXX..XXXXDX
 X......L....X
