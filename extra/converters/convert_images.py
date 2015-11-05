@@ -20,6 +20,8 @@ IMAGE_DIRECTORY=os.path.join("..","images")
 
 # the directory where the images will be saved
 OUTPUT_DIRECTORY=os.path.join("..","..","android","assets","entities")
+# this will be the intermediate directory for serving as the input for the texture packer
+#OUTPUT_DIRECTORY=os.path.join("..","images-packer-input")
 
 # the generated source-file to load and access the images
 OUTPUT_FILE=os.path.join("..","..","core","src","com","mcminos","game","Entities.java")
@@ -255,7 +257,8 @@ config: %(config)s
                             image_name = "%s_%s_%s" \
                                 % (name,resolution,animation_number)
                             output_file = os.path.join( OUTPUT_DIRECTORY, image_name + ".png" ) # check if destination already exists and skip
-                            if not os.path.isfile(output_file): # TODO: check date too to react to changes
+                            # only change if not exists or source is newer
+                            if not os.path.isfile(output_file) or os.path.getmtime(os.path.join(root,file)) > os.path.getmtime(output_file):
                                 p = subprocess.Popen(["inkscape",
                                             "-w", "%d"%(int(resolution)*multiple_w),
                                             "-h", "%d"%(int(resolution)*multiple_h),
