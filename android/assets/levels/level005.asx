@@ -10,6 +10,8 @@ VERSION:  0900
 
 LWID:   19
 LHI:    19
+SCROLLX: 1
+SCROLLY: 1
 BACK:   4
 
 LTIME:    0
@@ -40,23 +42,24 @@ SCROLLX:  1
 SCROLLY:  1
 
 LEVEL:
-X.XXXXXXXXXXXXXXXXX
-X.................*
-X.XXXX.X.XX.XXXX.X.
-X.X*.X.X..X.X.PX.X.
-X.X....X..X.X..X.X.
-X.XXXX.XXXX.XX.X.X.
-X..................
-XXXXXX.XXXXXXX.XXXX
-.....X.......X.X...
-....cX.XXXXX.X...X.
-XXXXXX.X.X.X.X.XXXX
-X..........X*X.....
-X.XXXX.XXX.XXXX.CC.
-X...*X.X........CC.
-X...*X.XXX.XXXX....
-X.XXXX.........XXXX
-.......XXXXXXXXX...
-XXXXXXXX...X...X.X.
-X........X...X.....
+X.XXXXXXXXXXXXXXXXXX
+X.................*X
+X.XXXX.X.XX.XXXX.X.X
+X.X*.X.X..X.X.PX.X.X
+X.X....X..X.X..X.X.X
+X.XXXX.XXXX.XX.X.X.X
+X..................X
+XXXXXX.XXXXXXX.XXXXX
+.....X.......X.X....
+....cX.XXXXX.X...X..
+XXXXXX.X.X.X.X.XXXXX
+X..........X*X.....X
+X.XXXX.XXX.XXXX.CC.X
+X...*X.X........CC.X
+X...*X.XXX.XXXX....X
+X.XXXX.........XXXXX
+.......XXXXXXXXX....
+XXXXXXXX...X...X.X.X
+X........X...X.....X
+X.XXXXXXXXXXXXXXXXXX
 #
