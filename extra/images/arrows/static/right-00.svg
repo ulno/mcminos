@@ -20,14 +20,11 @@
     </rdf:RDF>
   </metadata>
   <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
-    <g id="g4715" transform="matrix(-1,0,0,-1,32,32)">
-      <path inkscape:connector-curvature="0" id="path4700" d="M 4,0 0,16 4,32 8,32 4,16 8,0 Z" style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <path style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 12,0 8,16 12,32 16,32 12,16 16,0 Z" id="path4702" inkscape:connector-curvature="0" />
-      <path inkscape:connector-curvature="0" id="path4704" d="m 20,0 -4,16 4,16 4,0 -4,-16 4,-16 z" style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <path style="opacity:1;fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="m 28,0 -4,16 4,16 4,0 -4,-16 4,-16 z" id="path4706" inkscape:connector-curvature="0" />
-      <path style="opacity:1;fill:yellow;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 8,0 4,16 8,32 12,32 8,16 12,0 Z" id="path4709" inkscape:connector-curvature="0" />
-      <path inkscape:connector-curvature="0" id="path4711" d="m 16,0 -4,16 4,16 4,0 -4,-16 4,-16 z" style="opacity:1;fill:yellow;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <path style="opacity:1;fill:yellow;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="m 24,0 -4,16 4,16 4,0 -4,-16 4,-16 z" id="path4713" inkscape:connector-curvature="0" />
+    <g id="g4153">
+      <path inkscape:connector-curvature="0" id="path4700" d="M 28,32 32,16 28,0 24,0 28,16 24,32 Z" style="opacity:1;fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path style="opacity:1;fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 20,32 24,16 20,0 16,0 20,16 16,32 Z" id="path4702" inkscape:connector-curvature="0" />
+      <path inkscape:connector-curvature="0" id="path4704" d="M 12,32 16,16 12,0 8,0 12,16 8,32 Z" style="opacity:1;fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path style="opacity:1;fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 4,32 8,16 4,0 0,0 4,16 0,32 Z" id="path4706" inkscape:connector-curvature="0" />
     </g>
   </g>
 </svg>
