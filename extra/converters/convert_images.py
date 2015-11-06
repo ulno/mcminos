@@ -13,15 +13,17 @@ import sys
 import os
 import re
 import subprocess
+import distutils.dir_util
 import pygame
 
 # the source images in SVG
+
 IMAGE_DIRECTORY=os.path.join("..","images")
 
 # the directory where the images will be saved
-OUTPUT_DIRECTORY=os.path.join("..","..","android","assets","entities")
+#OUTPUT_DIRECTORY=os.path.join("..","..","android","assets","entities")
 # this will be the intermediate directory for serving as the input for the texture packer
-#OUTPUT_DIRECTORY=os.path.join("..","images-packer-input")
+OUTPUT_DIRECTORY=os.path.join("..","images-packer-input")
 
 # the generated source-file to load and access the images
 OUTPUT_FILE=os.path.join("..","..","core","src","com","mcminos","game","Entities.java")
@@ -131,12 +133,13 @@ class Graphics_Element():
                 step_nr = 0 # allways start with 0
                 for anistep in anisteps:
                     (img, _) = self.image_dictionary[size][anistep].get()
-                    image_name = "%s_%s_%s" \
-                        % (self.name,size,anistep)
-                    file_name = os.path.join( OUTPUT_DIRECTORY, image_name + ".png" )
-                    loc_name = os.path.join("entities", image_name + ".png")
+                    image_name = "%s_%s" \
+                        % (self.name,anistep)
+                    #file_name = os.path.join( OUTPUT_DIRECTORY, image_name + ".png" )
+                    #loc_name = os.path.join("entities", image_name + ".png")
+                    loc_name = os.path.join(image_name)
                     if preload == 0:
-                        code += "%s.addImage( \"%s\", %s, %s );\n" % ( current, \
+                        code += "%s.addImage( atlas, \"%s\", %s, %s );\n" % ( current, \
                             loc_name, \
                             size, step_nr)
                         images_count += 1
@@ -173,27 +176,28 @@ for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
         # construct the name
         short_root_elements = short_root.split(os.path.sep)
         root_class_name = "_".join(short_root_elements)
-        complete_name = re.sub(invalid_name_chars,"_",root_class_name)  # replace . and - with _
+        complete_name = re.sub(invalid_name_chars,"_",root_class_name)  # replace . and - with
+        #  find parent
+        parent_path = "_".join(short_root_elements[:-1])
+        parent_name = re.sub(invalid_name_chars, "_", parent_path)  # replace . and - with _
+        # as top-down, needs to exist
+        #config_dictionary[complete_name] = config_dictionary[parent_name].copy()
+        new_config = config_dictionary[parent_name].copy()
+        print "Taking initial configuration from parent_path", parent_path, "Config:", new_config
         # We are in a new directory -> Parse CONFIG, if available
         if CONFIG_FILE in files:
-            for option in config_options:
-                exec( "%s=%s" % (option, repr(config_options[option]) ))
+            # make config active in current scope
+            for option in new_config:
+                exec( "%s=%s" % (option, repr(new_config[option]) ))
             # we execute any python code here, nothing for the enduser (TODO: maybe check format here)
             exec(open(os.path.join(root,CONFIG_FILE)).read())
-            new_config = {}
-            for option in config_options:
+            #new_config = {}
+            # write back to dictionary
+            for option in new_config:
                 new_config[option]=eval(option)
             config_dictionary[complete_name]=new_config
-        else: # config file not available -> take the one from parent or defaults
-            if len(root) > 0: # so, this is not the top
-                # find parent
-                parent_path = "_".join(short_root_elements[:-1])
-                print "parent_path", parent_path
-                parent_name = re.sub(invalid_name_chars,"_",parent_path) # replace . and - with _
-                # as top-down, needs to exist
-                config_dictionary[complete_name] = config_dictionary[parent_name].copy()
-            else:
-                config_dictionary[complete_name] = config_options.copy()
+            print "Parsed configuration in ", root, "for ",complete_name,":", new_config
+        config_dictionary[complete_name] = new_config
         config = config_dictionary[complete_name]
         # check scaling parameter
         if not isinstance(config["size"],tuple): # probably two coordinates
@@ -251,12 +255,20 @@ config: %(config)s
                         multiple_w=scaling[0]
                         multiple_h=scaling[1]
                         assert multiple_w>0 and multiple_h>0, "Wrong scaling."
-                        for resolution in SIZE_LIST: 
+                        for resolution in SIZE_LIST:
+                            # make sure destination directory exists
+                            distutils.dir_util.mkpath( os.path.join( OUTPUT_DIRECTORY, str(resolution) ) )
+                            packfile = os.path.join( OUTPUT_DIRECTORY, str(resolution), "pack.json" )
+                            if not os.path.isfile(packfile): # create if necessary
+                                res = max(1024,int(resolution)*16)
+                                pf=open(packfile,"w")
+                                pf.write("{\nuseIndexes: false,\nmaxWidth: %s,\nmaxHeight: %s\n}"%(res,res))
+                                pf.close()
                             # convert file with inkscape
                             #print "width",width,"mutiples",multiple_w,multiple_h,"total",int(width)*multiple_w,int(width)*multiple_h
-                            image_name = "%s_%s_%s" \
-                                % (name,resolution,animation_number)
-                            output_file = os.path.join( OUTPUT_DIRECTORY, image_name + ".png" ) # check if destination already exists and skip
+                            image_name = "%s_%s" \
+                                % (name,animation_number)
+                            output_file = os.path.join( OUTPUT_DIRECTORY, str(resolution), image_name + ".png" ) # check if destination already exists and skip
                             # only change if not exists or source is newer
                             if not os.path.isfile(output_file) or os.path.getmtime(os.path.join(root,file)) > os.path.getmtime(output_file):
                                 p = subprocess.Popen(["inkscape",
@@ -288,6 +300,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
 
 /* class is a singleton */
 class Entities {
@@ -310,9 +324,10 @@ f.write( \
 """
     public static void scheduleLoad(AssetManager manager) {
 """ )
-for e in entity_list:
-    print "Working on", e
-    f.write( entity_list[e].code(1) )
+#for e in entity_list:
+#    print "Working on", e
+#    f.write( entity_list[e].code(1) )
+f.write("manager.load(\"entities/pack.atlas\",TextureAtlas.class);")
 
 f.write( \
 """
@@ -321,7 +336,7 @@ f.write( \
 
 f.write( \
 """
-    public static void finishLoad() {
+    public static void finishLoad(TextureAtlas atlas) {
 """ )
 for e in entity_list:
     print "Working on", e
@@ -340,3 +355,8 @@ f.write( \
 """ % images_count)
 f.close()
 
+# now call teh packer
+print "============= Now packing textures ============"
+os.chdir("..")
+os.chdir("..")
+os.system("./gradlew texturePacker --stacktrace")

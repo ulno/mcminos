@@ -7,6 +7,8 @@ package com.mcminos.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +63,7 @@ public class Graphics {
 
     private ArrayList<IntPair> stepList = new ArrayList<IntPair>();
     // current, resolution specific Textures mapped to gameframe
-    private Texture[] currentTextures = null;
+    private TextureRegion[] currentTextures = null;
 
     /**
      * Create a new Graphics
@@ -95,7 +97,7 @@ public class Graphics {
     }
 
     // category can include subcategory and is separated with a dot
-    void addImage( String file, int resolution, int step ) {
+    void addImage( TextureAtlas atlas, String file, int resolution, int step ) {
 
         ArrayList textures;
 
@@ -107,8 +109,10 @@ public class Graphics {
             ResolutionList.put(resolution, textures);
         }
 
-        Texture texture = new Texture( Gdx.files.internal( file ) );
-        textures.add(texture);
+        TextureRegion ar = atlas.findRegion(resolution + "/" + file);
+
+//        Texture texture = new Texture( Gdx.files.internal( file ) );
+        textures.add(ar);
         numberImagesLoaded += 1;
     }
 
@@ -156,8 +160,8 @@ public class Graphics {
      * @param gameframe
      * @return respective texture
      */
-    Texture getTexture(int resolution, long gameframe) {
-        ArrayList<Texture> textures = ResolutionList.get(resolution);
+    TextureRegion getTexture(int resolution, long gameframe) {
+        ArrayList<TextureRegion> textures = ResolutionList.get(resolution);
         return textures.get( getAnimationIndex(gameframe) );
     }
 
@@ -165,20 +169,20 @@ public class Graphics {
      * Set a specific resolution and extract corresponding tables to speed things up a bit
      */
     void setResolution( int resolution ) {
-        currentTextures = new Texture[timeList.length]; // think if re-init necessary -> leak?
+        currentTextures = new TextureRegion[timeList.length]; // think if re-init necessary -> leak?
         if( ResolutionList.containsKey(resolution)) {
             currentResolution = resolution;
             currentResolutionBitsLeftShifter = Util.log2binary(currentResolution) - PlayWindow.virtualBlockResolutionExponent;
 
             for (int i = 0; i < timeList.length; i++) {
-                currentTextures[i] = ((ArrayList<Texture>)ResolutionList.get(currentResolution))
+                currentTextures[i] = ((ArrayList<TextureRegion>)ResolutionList.get(currentResolution))
                         .get(stepList.get(timeList[i]).first);
             }
         }
         // TODO: else exception?
     }
 
-    Texture getTexture( long gameframe ){
+    TextureRegion getTexture( long gameframe ){
         gameframe %= totalAnimationFrames;
         gameframe /= precision;
         return currentTextures[(int)gameframe];
@@ -223,7 +227,7 @@ public class Graphics {
         int y0 = vPixelToScreen(vy0, playwindow.windowVPixelYPos,gameh,currentResolutionBitsLeftShifter);
 
         // draw different parts to physical coordinates
-        Texture t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
+        TextureRegion t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
         /*int maxww = playwindow.visibleWidthInPixels;
         int maxwh = playwindow.visibleHeightInPixels;*/
         // clipping should be done by scissors in playscreen

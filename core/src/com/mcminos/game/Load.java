@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Scaling;
@@ -100,7 +101,7 @@ public class Load implements Screen {
             if( ! loadingDone ) {
                 // finish initialization
                 loadingDone = true;
-                Entities.finishLoad();
+                Entities.finishLoad(manager.get("entities/pack.atlas", TextureAtlas.class));
                 finishLoads();
                 //game.init();
                 // Then switch screen
