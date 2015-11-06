@@ -353,23 +353,8 @@ public class Level {
             case "autumn-leaves-02":
                 bggfx = Entities.backgrounds_autumn_leaves_02;
                 break;
-            case "lawn-autumn-leaves":
-                bggfx = Entities.backgrounds_lawn_autumn_leaves;
-                break;
-            case "blue-balls":
-                bggfx = Entities.backgrounds_blue_balls;
-                break;
-            case "dry-grass":
-                bggfx = Entities.backgrounds_dry_grass;
-                break;
-            case "flecktarn":
-                bggfx = Entities.backgrounds_flecktarn;
-                break;
             case "flowers-03":
                 bggfx = Entities.backgrounds_flowers_03;
-                break;
-            case "flowers-xl-03":
-                bggfx = Entities.backgrounds_flowers_xl_03;
                 break;
             case "gravel-01":
                 bggfx = Entities.backgrounds_gravel_01;
@@ -377,23 +362,14 @@ public class Level {
             case "gravel-02":
                 bggfx = Entities.backgrounds_gravel_02;
                 break;
-            case "hexagon-01":
-                bggfx = Entities.backgrounds_hexagon_01_hexagon;
-                break;
-            case "hexagon-03":
-                bggfx = Entities.backgrounds_hexagon_03;
-                break;
-            case "lawn-02":
-                bggfx = Entities.backgrounds_lawn_02;
+            case "gravel-03":
+                bggfx = Entities.backgrounds_gravel_03;
                 break;
             case "meadow-flowers":
                 bggfx = Entities.backgrounds_meadow_flowers;
                 break;
             case "sand-01":
                 bggfx = Entities.backgrounds_sand_01_sand;
-                break;
-            case "universe-01":
-                bggfx = Entities.backgrounds_universe_01;
                 break;
             default:
                 bggfx = Entities.backgrounds_pavement_01;
@@ -409,7 +385,7 @@ public class Level {
                 // create background
                 // TODO: check, why the border of bg is not drawn -> clipping problem as it is created here
                 if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
-                    LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_blue_balls.getzIndex(),LevelObject.Types.Background);
+                    LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_pavement_01.getzIndex(),LevelObject.Types.Background);
                     lo.setGfx(bggfx);
                 }
             }
