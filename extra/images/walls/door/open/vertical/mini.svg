@@ -10,14 +10,14 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="4"
-   height="4"
+   height="12"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.91 r13725"
    version="1.0"
-   sodipodi:docname="00.svg"
+   sodipodi:docname="mini.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   viewBox="0 0 4 4">
+   viewBox="0 0 4 12">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -35,19 +35,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="131"
-     inkscape:cx="2"
-     inkscape:cy="2"
+     inkscape:zoom="17.550675"
+     inkscape:cx="0.8129771"
+     inkscape:cy="1.9847328"
      inkscape:document-units="px"
      inkscape:current-layer="g3800"
      showgrid="true"
      objecttolerance="10000"
      gridtolerance="10000"
      guidetolerance="10000"
-     inkscape:window-width="1024"
-     inkscape:window-height="741"
-     inkscape:window-x="0"
-     inkscape:window-y="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1021"
+     inkscape:window-x="1440"
+     inkscape:window-y="30"
      inkscape:snap-perpendicular="true"
      inkscape:snap-tangential="true"
      showguides="true"
@@ -99,13 +99,13 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-12)">
+     transform="translate(0,-4)">
     <g
        id="g3800"
        transform="translate(-12,-8)">
       <g
          id="g3774"
-         transform="matrix(0,1,-1,0,36,8)">
+         transform="matrix(0,1,-1,0,36,4)">
         <rect
            transform="translate(12,20)"
            y="0"

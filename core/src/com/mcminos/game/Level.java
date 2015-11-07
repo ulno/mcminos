@@ -357,12 +357,12 @@ public class Level {
             case "amoeboid-01":
                 bggfx = Entities.backgrounds_amoeboid_01;
                 break;
-            case "autumn-leaves-02":
+            /*case "autumn-leaves-02":
                 bggfx = Entities.backgrounds_autumn_leaves_02;
                 break;
             case "flowers-03":
                 bggfx = Entities.backgrounds_flowers_03;
-                break;
+                break;*/
             case "gravel-01":
                 bggfx = Entities.backgrounds_gravel_01;
                 break;

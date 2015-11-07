@@ -877,17 +877,7 @@ allows cheating */
             game.drawMini(miniBatch);
             miniBatch.end();
 
-            // visible area
-            Gdx.gl.glEnable(GL20.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
-            miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-            miniScreenBackground.setColor(255,0,0,0.5f); // red transparent
-            miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow,0,0),
-                    Graphics.virtualToMiniY(playwindow,0,0),
-                    32,
-                    32 );
-            miniScreenBackground.end();
+            drawVisibleMarker();
 
 
             stageBatch.begin();
@@ -911,6 +901,55 @@ allows cheating */
         else {
             backToMenu();
         }
+
+    }
+
+    private void drawVisibleMarker() {
+
+        // visible area
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+        miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
+        miniScreenBackground.setColor(255,0,0,0.5f); // red transparent
+
+        // These are up to 8 lines (4 corners) to draw
+        int t = playwindow.virtual2MiniResolution / 4; // line thickness
+        int t2 = t * 2;
+        int thickness = 1+t;
+        // compute the visible area lower left corner
+        int x0 = Graphics.virtualToMiniX(playwindow,playwindow.windowVPixelXPos,0);
+        int y0 = Graphics.virtualToMiniY(playwindow,playwindow.windowVPixelYPos,0);
+        // compute the upper right corner
+        int x1 = Graphics.virtualToMiniX(playwindow,((playwindow.windowVPixelXPos + playwindow.getVisibleWidthInVPixels() - 1) % playwindow.getVPixelsLevelWidth()),0);
+        int y1 = Graphics.virtualToMiniY(playwindow,((playwindow.windowVPixelYPos + playwindow.getVisibleHeightInVPixels() - 1) % playwindow.getVPixelsLevelHeight()),0);
+        // lower left corner of mini-screen
+        int mx0 = Graphics.virtualToMiniX(playwindow,0,0);
+        int my0 = Graphics.virtualToMiniY(playwindow,0,0);
+        // upper right corner of mini-screen
+        int mx1 = Graphics.virtualToMiniX(playwindow,playwindow.getVPixelsLevelWidth()-1,0);
+        int my1 = Graphics.virtualToMiniY(playwindow,playwindow.getVPixelsLevelHeight()-1,0);
+
+        if(x0<x1) { // normal, no split
+            miniScreenBackground.rect( x0-t,y0-t,x1-x0+t2+1,thickness );
+            miniScreenBackground.rect( x0-t,y1,x1-x0+t2+1,thickness );
+        } else { // split necessary x1 < x0
+            miniScreenBackground.rect( mx0-t,y0-t,x1-mx0+t,thickness );
+            miniScreenBackground.rect( x0-t,y0-t,mx1-x0+t2,thickness );
+            miniScreenBackground.rect( mx0-t,y1,x1-mx0+t,thickness );
+            miniScreenBackground.rect( x0-t,y1,mx1-x0+t2,thickness );
+        }
+        if(y0<y1) { // normal, no split
+            miniScreenBackground.rect( x0-t,y0+1,thickness,y1-y0-1 );
+            miniScreenBackground.rect( x1,y0+1,thickness,y1-y0-1 );
+        } else { // split necessary y1 < y0
+            miniScreenBackground.rect( x0-t,my0+1,thickness,y1-my0-1 );
+            miniScreenBackground.rect( x0-t,y0+1,thickness,my1-y0-1);
+            miniScreenBackground.rect( x1,my0+1,thickness,y1-my0-1 );
+            miniScreenBackground.rect( x1,y0+1,thickness,my1-y0-1 );
+        }
+
+        miniScreenBackground.end();
 
     }
 
