@@ -280,7 +280,8 @@ for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
                 description = cleanup_description(m.group("minidesc"))
                 name = generate_name(name, description)
                 print "Found mini-file for", name ,"for configuration", config
-                convert_images(SIZE_LIST_MINI,name,animation_number,root,file)
+#                convert_images(SIZE_LIST_MINI,name,animation_number,root,file)
+                convert_images(SIZE_LIST_MINI,name,0,root,file)
             else:  # seems to be a regular image
                 description=m.group("description")
                 animation_number=int(m.group("animation_number"))
