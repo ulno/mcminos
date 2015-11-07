@@ -1,5 +1,15 @@
 ############ project specific stuff #####################
 **/assets/entities/
+**/extra/images-packer-input/
+# Entities.java is generated, so ignore
+/core/src/com/mcminos/game/Entities.java
+
+# Hidden images from generation of test animated gifs
+.*png
+
+# ancient gif images as base for new sketches
+*.gif
+
 
 ############ generic options for gradle and Java ########
 # Unix-stuff
@@ -128,11 +138,3 @@ libgdx-*.zip.MD5
 #ensure gdx-setup.jar works properly
 !/extensions/gdx-setup/src/com/badlogic/gdx/setup/resources/gwt/war
 
-# Entieties.java is generated, so ignore
-/core/src/com/mcminos/game/Entities.java
-
-# Hidden images from generation of test animated gifs
-.*png
-
-# ancient gif images as base for new sketches
-*.gif
