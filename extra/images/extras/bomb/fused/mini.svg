@@ -9,15 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="4"
-   height="12"
+   width="8"
+   height="8"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.91 r13725"
    version="1.0"
    sodipodi:docname="mini.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   viewBox="0 0 4 12">
+   viewBox="0 0 8 8">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -35,9 +35,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="53.207708"
-     inkscape:cx="0.8129771"
-     inkscape:cy="1.9847328"
+     inkscape:zoom="177"
+     inkscape:cx="2.5480226"
+     inkscape:cy="2.2146893"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -60,8 +60,8 @@
        visible="true"
        enabled="true"
        empspacing="4"
-       spacingx="1"
-       spacingy="1" />
+       spacingx="0.5"
+       spacingy="0.5" />
     <sodipodi:guide
        position="2,8"
        orientation="1,0"
@@ -95,27 +95,32 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-4)">
-    <g
-       id="g3800"
-       transform="matrix(0,1,-1,0,24,-4)">
-      <path
-         inkscape:connector-curvature="0"
-         style="fill:#d0aa00;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="m 14,20 c -1.104569,0 -2,0.895431 -2,2 l 0,2 2,0 2,0 0,-2 c 0,-1.104569 -0.895431,-2 -2,-2 z"
-         id="path2923" />
-      <path
-         inkscape:connector-curvature="0"
-         style="fill:#805500;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="M 13,20.267565 C 12.403104,20.613608 12,21.260396 12,22 l 0,2 1,0 0,-3.732435 z"
-         id="path3728"
-         sodipodi:nodetypes="ccccc" />
-      <path
-         inkscape:connector-curvature="0"
-         style="fill:#805500;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="m 14,20 0,4 1,0 0,-3.736633 C 14.705456,20.092609 14.364965,20 14,20 Z"
-         id="path3733"
-         sodipodi:nodetypes="ccccc" />
-    </g>
+     transform="translate(0,-8)">
+    <ellipse
+       style="opacity:1;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path8556"
+       cx="6.5"
+       cy="14.810735"
+       rx="1.5"
+       ry="1.1892655" />
+    <rect
+       style="opacity:1;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect9178"
+       width="1"
+       height="2"
+       x="6"
+       y="13" />
+    <path
+       style="opacity:1;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:#e00000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 4.9915254,12.742938 6.5,13.5"
+       id="path9248"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <circle
+       style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path14106"
+       cx="5"
+       cy="13"
+       r="1" />
   </g>
 </svg>

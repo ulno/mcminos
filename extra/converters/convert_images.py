@@ -44,8 +44,10 @@ config_options={
     }
 
 # w equals h, so only one value here, to speed up gaming, resolutions must be powers of 2
-SIZE_LIST = [128,64,32,16,8]
+SIZE_LIST = [128,64,32,16]
+# 8 and 4 are generated from mini
 #SIZE_LIST = [128,64,16] # for testing
+SIZE_LIST_MINI = [8,4]
 
 #try:
 #    os.rmdir(OUTPUT_DIRECTORY)
@@ -55,8 +57,10 @@ SIZE_LIST = [128,64,32,16,8]
 
 filename_format = re.compile("(?P<config>"+CONFIG_FILE+")|" + # can be config
                              "(?P<readme>"+README_FILE+")|" + # or readme
+                             "(?P<minidesc>.*)" + # some descriptive stuff, which will be moved to the naming part
+                             "(?P<mini>mini\.svg)|" + # or mini image
                              "(?:" + # or
-                             "(?P<description>.*)" + # some descriptive stuff, which will be ignored
+                             "(?P<description>.*)" + # some descriptive stuff, which will be moved to the naming part
                              "(?P<animation_number>\d\d)" + # animation number
                              "(?:\.(?P<svg>svg)|-(?P<width>\d\d)x(?P<height>\d\d)\.png)" + # extension
                              ")$") 
@@ -170,6 +174,65 @@ class Graphics_Element():
         return code
 
 # main program -- walk input directory
+def cleanup_description(desc):
+    if description == "": return ""
+    # cut non-numerical letters from left and right
+    while(not desc[0].isalpha()):
+        desc= desc[1:]
+    while(not desc[-1].isalpha()):
+        desc= desc[:-1]
+    # transform all weird letters in between
+    desc=re.sub(invalid_name_chars, "_", desc) # replace . and - with _
+    return desc
+
+
+def generate_name(name, description):
+    if name == "":
+        name = description
+    else:
+        if description != "":
+            name = name + "_" + description
+    return name
+
+
+def convert_images(sizes, name, animation_number, root, file):
+    # check if entity exists
+    if not name in entity_list:
+        entity_list[name] = Graphics_Element(name,config)
+    current_entity = entity_list[name]
+    scaling=config["size"]
+    multiple_w=scaling[0]
+    multiple_h=scaling[1]
+    assert multiple_w>0 and multiple_h>0, "Wrong scaling."
+    for resolution in sizes:
+        # make sure destination directory exists
+        distutils.dir_util.mkpath( os.path.join( OUTPUT_DIRECTORY, str(resolution) ) )
+        packfile = os.path.join( OUTPUT_DIRECTORY, str(resolution), "pack.json" )
+        if not os.path.isfile(packfile): # create if necessary
+            res = max(1024,int(resolution)*16)
+            pf=open(packfile,"w")
+            pf.write("{\nuseIndexes: false,\nmaxWidth: %s,\nmaxHeight: %s\n}"%(res,res))
+            pf.close()
+        # convert file with inkscape
+        #print "width",width,"mutiples",multiple_w,multiple_h,"total",int(width)*multiple_w,int(width)*multiple_h
+        image_name = "%s_%s" \
+                     % (name,animation_number)
+        output_file = os.path.join( OUTPUT_DIRECTORY, str(resolution), image_name + ".png" ) # check if destination already exists and skip
+        # only change if not exists or source is newer
+        if not os.path.isfile(output_file) or os.path.getmtime(os.path.join(root,file)) > os.path.getmtime(output_file):
+            p = subprocess.Popen(["inkscape",
+                                  "-w", "%d"%(int(resolution)*multiple_w),
+                                  "-h", "%d"%(int(resolution)*multiple_h),
+                                  "-e", output_file,
+                                  os.path.join(root,file)],
+                                 stdout=subprocess.PIPE)
+            p.wait()
+        current_entity.add_image(output_file,
+                                 int(resolution),
+                                 multiple_w,multiple_h,
+                                 animation_step = animation_number)
+
+
 for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
     short_root = root[len(IMAGE_DIRECTORY)+1:] # cut off root
     if len(short_root) > 0: # not main directory - any sub-directory, only folders in main-directory are read
@@ -204,16 +267,21 @@ for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
             scaling=config["size"]
             config["size"]=(scaling,scaling)
         for file in files:
-            name = complete_name # intit base-name
+            name = complete_name # init base-name
             print "Working on: path:", short_root, "File name:", file
             m = filename_format.match(file) # analyze filename
             if m==None:
                 print "wrong filename format"
             elif m.group("config") != None \
-              or  m.group("readme") != None: # ignore config and readme
+              or  m.group("readme") != None: # ignore config, readme
                 print "ignored or parsed before"
                 print
-            else:
+            elif m.group("mini") != None: # This is the mini file
+                description = cleanup_description(m.group("minidesc"))
+                name = generate_name(name, description)
+                print "Found mini-file for", name ,"for configuration", config
+                convert_images(SIZE_LIST_MINI,name,animation_number,root,file)
+            else:  # seems to be a regular image
                 description=m.group("description")
                 animation_number=int(m.group("animation_number"))
                 svg = m.group("svg") != None
@@ -224,17 +292,8 @@ for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
                     height = int(m.group("height"))
                 # if there is a description add it to the name
                 if description != "":
-                    # cut non-numerical letters from left and right
-                    while(not description[0].isalpha()):
-                        description=description[1:]
-                    while(not description[-1].isalpha()):
-                        description=description[:-1]
-                    # transform all weird letters in between
-                    description=re.sub(invalid_name_chars,"_",description) # replace . and - with _
-                    if name == "":
-                        name = description
-                    else:
-                        name = name + "_" + description
+                    description = cleanup_description( description )
+                    name = generate_name( name, description )
                 # print report
                 print \
 """name: %(name)s
@@ -246,43 +305,9 @@ config: %(config)s
 """%locals()
                 # if there is a name, convert images
                 if name != "":
-                    # check if entity exists
-                    if not name in entity_list:
-                        entity_list[name] = Graphics_Element(name,config)
-                    current_entity = entity_list[name]
                     if svg: # if this is an svg, create all missing sizes
-                        scaling=config["size"]
-                        multiple_w=scaling[0]
-                        multiple_h=scaling[1]
-                        assert multiple_w>0 and multiple_h>0, "Wrong scaling."
-                        for resolution in SIZE_LIST:
-                            # make sure destination directory exists
-                            distutils.dir_util.mkpath( os.path.join( OUTPUT_DIRECTORY, str(resolution) ) )
-                            packfile = os.path.join( OUTPUT_DIRECTORY, str(resolution), "pack.json" )
-                            if not os.path.isfile(packfile): # create if necessary
-                                res = max(1024,int(resolution)*16)
-                                pf=open(packfile,"w")
-                                pf.write("{\nuseIndexes: false,\nmaxWidth: %s,\nmaxHeight: %s\n}"%(res,res))
-                                pf.close()
-                            # convert file with inkscape
-                            #print "width",width,"mutiples",multiple_w,multiple_h,"total",int(width)*multiple_w,int(width)*multiple_h
-                            image_name = "%s_%s" \
-                                % (name,animation_number)
-                            output_file = os.path.join( OUTPUT_DIRECTORY, str(resolution), image_name + ".png" ) # check if destination already exists and skip
-                            # only change if not exists or source is newer
-                            if not os.path.isfile(output_file) or os.path.getmtime(os.path.join(root,file)) > os.path.getmtime(output_file):
-                                p = subprocess.Popen(["inkscape",
-                                            "-w", "%d"%(int(resolution)*multiple_w),
-                                            "-h", "%d"%(int(resolution)*multiple_h),
-                                            "-e", output_file,
-                                            os.path.join(root,file)],
-                                            stdout=subprocess.PIPE)
-                                p.wait()
-                            current_entity.add_image(output_file,
-                                                     int(resolution),
-                                                     multiple_w,multiple_h,
-                                                     animation_step = animation_number)
-                    else: # This is already a pixel-graphics
+                        convert_images(SIZE_LIST,name,animation_number,root,file)
+                    else: # This is already a pixel-graphics (no svg)
                         pass # TODO: overwrite or add this
 
 ####### all parsed, now print code
