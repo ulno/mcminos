@@ -175,7 +175,7 @@ class Graphics_Element():
 
 # main program -- walk input directory
 def cleanup_description(desc):
-    if description == "": return ""
+    if desc == "": return ""
     # cut non-numerical letters from left and right
     while(not desc[0].isalpha()):
         desc= desc[1:]
