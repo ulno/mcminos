@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -20,7 +22,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by ulno on 10.09.15.
  */
 public class Play implements Screen, GestureListener, InputProcessor {
-    private final SpriteBatch stageBatch;
     private final OrthographicCamera camera;
     private Game game;
     private Table toolboxTable;
@@ -37,10 +38,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private McMinos mcminos;
     private final Audio audio;
     private final BitmapFont font;
-    private final SpriteBatch batch;
+    private final SpriteBatch stageBatch;
+    private final SpriteBatch gameBatch;
+    private final SpriteBatch backgroundBatch;
+    private final SpriteBatch miniBatch;
+    private final ShapeRenderer miniScreenBackground;
+
+    private Stage stage;
     private final Main main;
     private Level level;
-    private Stage stage;
     private int touchDownX;
     private int touchDownY;
     private long lastZoomTime = 0;
@@ -67,12 +73,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public Play(final Main main, String levelName) {
         this.main = main;
-        batch = main.getBatch();
+        gameBatch = main.getBatch();
         camera = new OrthographicCamera();
         font = main.getFont();
         skin = main.getSkin();
         audio = main.getAudio();
-        stageBatch = new SpriteBatch(); // don't conflict with gaming batch
+        // don't conflict with gameBatch
+        stageBatch = new SpriteBatch();
+        backgroundBatch = new SpriteBatch();
+        miniBatch = new SpriteBatch();
+        miniScreenBackground = new ShapeRenderer();
         init(levelName);
     }
 
@@ -820,31 +830,68 @@ allows cheating */
     public void render(float delta) {
         /////// Handle timing events (like moving and events)
         if (game.updateTime()) { // not finished
+            int w = Gdx.graphics.getWidth();
+            int h = Gdx.graphics.getHeight();
 
             // Handle drawing
-//        Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            stageBatch.begin();
+
+            SpriteBatch testBatch = backgroundBatch;
+            testBatch.begin();
             for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution) {
                 for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution) {
-                    background.draw(playwindow, stageBatch, x, y);
+                    background.draw(playwindow, testBatch, x, y);
                 }
             }
-            stageBatch.end();
+            testBatch.end();
 
-            batch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
-            batch.begin();
+//            gameBatch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
+            gameBatch.begin();
 
             ScissorStack.pushScissors(playwindow.getScissors());
 
             game.draw();
 
-            batch.flush();
+            gameBatch.flush();
             ScissorStack.popScissors();
-            batch.end(); // must end before menu
+
+
+            gameBatch.end(); // must end before other layers
+
+            // draw a dark transparent rectangle to have some background for mini screen
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+            miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
+            miniScreenBackground.setColor(0,0,0,0.5f); // a little transparent
+            miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow,0,0)- playwindow.virtual2MiniResolution,
+                    Graphics.virtualToMiniY(playwindow,0,0)- playwindow.virtual2MiniResolution,
+                    Graphics.virtualToMiniX(playwindow,playwindow.getVPixelsLevelWidth()-1,0),
+                    Graphics.virtualToMiniX(playwindow,playwindow.getVPixelsLevelHeight()-1,0));
+            miniScreenBackground.end();
+
+            // mini screen
+//            miniBatch.setColor(1,1,1,0.7f); // TODO: can this be moved to initialization
+            miniBatch.begin();
+            game.drawMini(miniBatch);
+            miniBatch.end();
+
+            // visible area
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+            miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
+            miniScreenBackground.setColor(255,0,0,0.5f); // red transparent
+            miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow,0,0),
+                    Graphics.virtualToMiniY(playwindow,0,0),
+                    32,
+                    32 );
+            miniScreenBackground.end();
 
 
             stageBatch.begin();
+            // score etc.
             font.draw(stageBatch,
                     "S" + Util.formatInteger(mcminos.getScore(), 6)
                             + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
@@ -869,6 +916,13 @@ allows cheating */
 
     @Override
     public void resize(int width, int height) {
+        Matrix4 matrix = new Matrix4();
+        matrix.setToOrtho2D(0,0,width,height);
+        backgroundBatch.setProjectionMatrix(matrix);
+        miniBatch.setProjectionMatrix(matrix);
+        stageBatch.setProjectionMatrix(matrix);
+        miniScreenBackground.setProjectionMatrix(matrix);
+
         playwindow.resize(width, height);
         //menuTable.setBounds(0, 0, width, height);
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
@@ -895,7 +949,7 @@ allows cheating */
 
     @Override
     public void dispose() {
-        stageBatch.dispose();
+        //stageBatch.dispose();
         game.dispose();
         stage.dispose();
     }

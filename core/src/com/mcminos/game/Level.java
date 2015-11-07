@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -70,6 +71,12 @@ public class Level {
             if( lo.getzIndex() >= LevelObject.maxzIndex)
                 break; // can be stopped, as null is infinity and therefore only null in the end
             lo.draw(playwindow);
+        }
+    }
+
+    public void drawMini(PlayWindow playwindow, SpriteBatch batch) {
+        for (LevelObject lo : allLevelObjects) {
+            lo.drawMini(playwindow, batch);
         }
     }
 

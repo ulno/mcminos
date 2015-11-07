@@ -333,10 +333,11 @@ public class Game {
     }
 
     public void draw() {
-        // not in gwt game.acquireLock();
         level.draw(playwindow);
-        // not in gwt game.releaseLock(); // TODO: think about moving this to the end of draw
+    }
 
+    public void drawMini(SpriteBatch batch) {
+        level.drawMini(playwindow, batch);
     }
 
 }

@@ -31,6 +31,7 @@ public class PlayWindow {
     int visibleHeightInVPixels; // height of visible game-window in virtual pixels
     int resolution;
     int resolutionExponent;
+    public int virtual2MiniExponent;
     int levelWidthInPixels =0;
     int levelHeightInPixels =0; // Size of virtual playingfield in physical pixels (blocks * physical resolution)
     float density;
@@ -42,6 +43,7 @@ public class PlayWindow {
     private int viewHeightInPixels;
     private Rectangle scissors = new Rectangle();
     private int currentResolutionBitsLeftShifter;
+    public int virtual2MiniResolution;
 
     public PlayWindow(SpriteBatch batch, OrthographicCamera camera, Level level, McMinos mcminos) {
         this.batch = batch;
@@ -63,6 +65,8 @@ public class PlayWindow {
     public void setResolution(int resolutionCounter) {
         resolution = Entities.resolutionList[resolutionCounter];
         resolutionExponent = Util.log2binary(resolution);
+        virtual2MiniResolution = resolution >=64 ? 8 : 4;
+        virtual2MiniExponent = virtualBlockResolutionExponent - Util.log2binary(virtual2MiniResolution);
         Graphics.setResolutionAll(this, resolution);
         currentResolutionBitsLeftShifter = Util.log2binary(resolution) - PlayWindow.virtualBlockResolutionExponent;
         resize();

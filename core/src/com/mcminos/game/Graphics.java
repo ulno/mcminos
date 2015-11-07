@@ -57,7 +57,7 @@ public class Graphics {
     private int[] timeList = null;
 
     /** Hierarchy here is: Hashmap of sizes mapped to to ArrayList of Images */
-    private HashMap<Integer,ArrayList> ResolutionList = new HashMap<Integer, ArrayList>();
+    private HashMap<Integer,ArrayList> resolutionList = new HashMap<Integer, ArrayList>();
     // the reference step-list (each step references the correct image number) for animating this entity per category
     private HashMap<String,ArrayList> animationCategorySteps = new HashMap<String, ArrayList>();
 
@@ -101,12 +101,12 @@ public class Graphics {
 
         ArrayList textures;
 
-        if( ResolutionList.containsKey(resolution)) {
-            textures = ResolutionList.get( resolution );
+        if( resolutionList.containsKey(resolution)) {
+            textures = resolutionList.get( resolution );
         }
         else { // Resolution not in there
             textures = new ArrayList<Texture>();
-            ResolutionList.put(resolution, textures);
+            resolutionList.put(resolution, textures);
         }
 
         TextureRegion ar = atlas.findRegion(resolution + "/" + file);
@@ -161,7 +161,7 @@ public class Graphics {
      * @return respective texture
      */
     TextureRegion getTexture(int resolution, long gameframe) {
-        ArrayList<TextureRegion> textures = ResolutionList.get(resolution);
+        ArrayList<TextureRegion> textures = resolutionList.get(resolution);
         return textures.get( getAnimationIndex(gameframe) );
     }
 
@@ -170,12 +170,12 @@ public class Graphics {
      */
     void setResolution( int resolution ) {
         currentTextures = new TextureRegion[timeList.length]; // think if re-init necessary -> leak?
-        if( ResolutionList.containsKey(resolution)) {
+        if( resolutionList.containsKey(resolution)) {
             currentResolution = resolution;
             currentResolutionBitsLeftShifter = Util.log2binary(currentResolution) - PlayWindow.virtualBlockResolutionExponent;
 
             for (int i = 0; i < timeList.length; i++) {
-                currentTextures[i] = ((ArrayList<TextureRegion>)ResolutionList.get(currentResolution))
+                currentTextures[i] = ((ArrayList<TextureRegion>) resolutionList.get(currentResolution))
                         .get(stepList.get(timeList[i]).first);
             }
         }
@@ -188,9 +188,22 @@ public class Graphics {
         return currentTextures[(int)gameframe];
     }
 
-    /**
-     * directly draw a Texture in given batch
-     */
+    TextureRegion getTextureMini( int miniResolution ) {
+        ArrayList textures;
+
+        if( resolutionList.containsKey(miniResolution)) {
+            textures = resolutionList.get( miniResolution );
+        } else {
+            return null;
+        }
+        if( textures.size() > 0)
+            return (TextureRegion) textures.get(0);
+        return null;
+    }
+
+        /**
+         * directly draw a Texture in given batch
+         */
     public void draw( PlayWindow playwindow, SpriteBatch b, int x, int y) {
         b.draw(getTexture(playwindow.getGame().getGameFrame()), x, y);
     }
@@ -231,7 +244,7 @@ public class Graphics {
         /*int maxww = playwindow.visibleWidthInPixels;
         int maxwh = playwindow.visibleHeightInPixels;*/
         // clipping should be done by scissors in playscreen
-        // TODO: this seems slow optimize
+        // TODO: this seems slow, optimize in figuring out what is (at least partly) visible
         playwindow.batch.draw(t, x0, y0);
         playwindow.batch.draw(t, x0 - gamew, y0);
         playwindow.batch.draw(t, x0, y0 - gameh);
@@ -264,9 +277,26 @@ public class Graphics {
             }*/
     }
 
-    /**
-     * For the static part concerning all graphics
-     */
+    public static int virtualToMiniX( PlayWindow playwindow, int vx, int anchorX ) {
+        return Gdx.graphics.getWidth() - ((playwindow.getVPixelsLevelWidth() - vx + anchorX ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+    }
+
+    public static int virtualToMiniY( PlayWindow playwindow, int vy, int anchorY ) {
+        return Gdx.graphics.getHeight() - ((playwindow.getVPixelsLevelHeight() - vy + anchorY ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+    }
+
+    public void drawMini( PlayWindow playwindow, SpriteBatch minibatch, int vx, int vy, int animDelta ) {
+        // compute for upper right corner
+        int x = virtualToMiniX(playwindow, vx, anchorX);
+        int y = virtualToMiniY(playwindow, vy, anchorY);
+        TextureRegion t = getTextureMini( playwindow.virtual2MiniResolution );
+        if( t != null )
+            minibatch.draw(t,x,y);
+    }
+
+        /**
+         * For the static part concerning all graphics
+         */
     static void setResolutionAll( PlayWindow playwindow, int resolution ) {
         for (Graphics gfx : allGraphics) {
             gfx.setResolution( resolution );

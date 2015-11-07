@@ -1,5 +1,7 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import java.util.Collections;
 
 /**
@@ -73,6 +75,11 @@ public class LevelObject implements  Comparable<LevelObject> {
     public void draw(PlayWindow playwindow) {
         if(gfx != null) // castle parts can be null or invisible things
             gfx.draw(playwindow,x,y,animDelta);
+    }
+
+    public void drawMini(PlayWindow playwindow, SpriteBatch batch) {
+        if(gfx != null) // castle parts can be null or invisible things
+            gfx.drawMini(playwindow,batch,x,y,animDelta);
     }
 
     @Override
