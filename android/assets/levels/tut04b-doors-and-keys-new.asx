@@ -8,16 +8,16 @@ AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 
-NUMBR:    3
-SHOWNR:   3
-ACCCD:    3
+NUMBR:    4
+SHOWNR:   4
+ACCCD:    4
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7
 SCROLLX:  0
 SCROLLY:  0
-BACK:   3
+BACK: pavement-04
 
 ; STATUS-Angaben ----------------------------------------+
 LTIME:    0
@@ -31,7 +31,7 @@ MCSPEED:  1
 GHOST1:   1
 GHSPEED1: 1
 AGIL1:    15
-GRTIME1:  1
+GRTIME1:  15
 
 GHOST2:   0
 GHSPEED2: 1
@@ -63,18 +63,18 @@ UMBR:   0,0
 
 ; DESCRIPTION -------------------------------------------+
 
-;TITLE: "More ghosts. And Chocolate"
+;TITLE: "Of doors and keys"
 
-;DESCRIPTION: "Collect chocolate in your toolbox. Eat it when needed to hunt ghosts."
+;DESCRIPTION: "Collect all keys you find in a level. You may need them to open doors. Or close them again to stop ghosts from hunting you."
 
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
 XXXXXXX
-XCCX. X
-XCCXX+X
-XG    X
-X XXX X
-X+  +PX
+Xk.X3.X
+XXDXDXX
+X.kDk.X
+XXDXDXX
+XPkXk.X
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
