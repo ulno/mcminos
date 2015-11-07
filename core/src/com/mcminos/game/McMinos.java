@@ -72,8 +72,8 @@ public class McMinos {
     }
 
     public void gfxPowered() {
-        mover.setGfx(Entities.mcminos_doped_front, Entities.mcminos_doped_up,
-                Entities.mcminos_doped_right, Entities.mcminos_doped_down, Entities.mcminos_doped_left);
+        mover.setGfx(Entities.mcminos_powered_front, Entities.mcminos_powered_up,
+                Entities.mcminos_powered_right, Entities.mcminos_powered_down, Entities.mcminos_powered_left);
     }
 
     public LevelObject getLevelObject() {
