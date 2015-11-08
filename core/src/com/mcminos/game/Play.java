@@ -911,7 +911,7 @@ allows cheating */
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-        miniScreenBackground.setColor(255,0,0,0.5f); // red transparent
+        miniScreenBackground.setColor(255,128,0,0.5f); // orange transparent
 
         // These are up to 8 lines (4 corners) to draw
         int t = playwindow.virtual2MiniResolution / 2; // line thickness

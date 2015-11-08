@@ -29,8 +29,8 @@ public class Level {
     private int vPixelsWidth = 0;
     private int height = 20;
     private int vPixelsHeight = 0;
-    private int VisibleWidth = 20;
-    private int visibleHeight = 20;
+    private int VisibleWidth = 100;
+    private int visibleHeight = 100;
     private boolean scrollX = false;
     private boolean scrollY = false;
     private String background = "default";

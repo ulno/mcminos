@@ -1,0 +1,69 @@
+;	LEVEL 21
+;	FOR MAC MINOS - Version 0.6
+
+AUTHOR:		NoPe;		Andreas Neudecker
+NUMBR:		21
+ACCCD:		100200300
+
+LWID:		50
+LHI:		30
+VWID:		50
+VHI:		30
+SCROLLX:	1
+SCROLLY:	1
+BACK:		63
+
+LTIME:		0
+RSTRT:		0
+MIRROR:		0
+
+MCSPEED:	1
+GHOST1:		6
+GHSPEED1:	1
+AGIL1:		20
+GRTIME1:	1
+GHOST2:		0
+GHOST3:		0
+GHOST4:		0
+
+LIVE:		0,999
+CHOC:		0,999
+BMBS:		0,999
+DYNA:		0,999
+MINE:		0,999
+MEDC:		0,999
+UMBR:		0,999
+KEYS:		0,999
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXfXXXXXXXXXXXXXXfXXXXXXXXXXX
+X................k.......<.......................X
+X.XXXXXXXXX^XXXXXXXXXXXX.X.XXXXXXXXXXX^XXXXXXXXX.X
+X........................X.......................X
+X.X.XXXXXXXXvXXXXXX.X.XXXX.XXXXXXvXXXXXX,XXXXXfX.X
+..X.X...D..........vXv.......................XFX..
+X.X.X.XXXDX^XXXXXXXaXaXXXXXX^XXXXXX.XXXX^XXXXX.XXX
+X.X.X.XdX.X.U.......Z.......A...OWX.............WX
+X.X.X.XkX.X.U.XXX.X.Z.UUU.......OOXDXXXXXXXXDXXXXX
+X.X.X.....X......kX.Z.............XF?w?w?wwkw..k.X
+X.X.XXXXXXX.XXXvXXX.Z..A..r.XDXXXXX.,.,.,.,F,.,.,X
+X.XG......X.........ZZ...r.kX.....XF.k.b..k..b.?.X
+X.X.XvX^X.X.XXXvXXU.<>..r.XOX.XXX.X,.,.,.,.,.,.,.X
+X.X.XFXfX>a........Z^^Z...XXX...r.X.A.d..?..b.?.fX
+X.X.X.X.X.XZZZZZZZ^<CC>^Z.........a<..,.,.,.,.,.,X
+X.X.X.X.X.ZW.....Zv<CC>vZZZZZDZZZZZf.d..f.ß...XXXX
+..X.X.X.X>a.XXXX...ZvvZ.....ZkZ...a<.,.,.,.,.,D...
+XXX.X.X.X.Z......X..<>O.XXX.ZDZ.X.ZZXXXXXXXXXXXXXX
+....XfX.X.Z..XXXXXX.ZZ....X.Z.Z...Z.>.............
+XXXXXvX.X.ZZ.........Z.rr.X.ZDZ..ZZ.XXXXXXXXXXXXvX
+X.....XFX.<D.XXXXXXX.Z.OO.X......D>.Xbb...+b.bbX.X
+X..X..X^X.ZZ...X...X.Z.rr.XXXXXX.ZZ.X.XXXXXXXX.X.X
+X...X...X.Z..X...X...Z...........OZ.X.>W.>.D.D.D.X
+X.X..X..X.ZZZZZaZZZZZZZZZZZZaZZZZZZ.X.XXXXXXXX.X.X
+XfXX..X........^.....X......^.......X...++..LLLX.X
+X^XWX..XXXXXXX.XXXXX.X.XXXXXX.XXXXX.XXXXXXXXXXXX.X
+X.X.<................P....b............bbbbbb....X
+X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X
+X.....L.............A............++............F<X
+XXXXXXXXXXXXXXXXXXXXXXXFXXXXXXXXXXXXXXFXXXXXXXXXXX
+#

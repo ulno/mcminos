@@ -1,0 +1,94 @@
+;	LEVEL 026 ---------------------------------------------*
+;	FOR MAC MINOS - Versions >= 0.815
+
+;   HEADER ------------------------------------------------*
+AUTHOR:		NoPe	;	Andreas Neudecker
+NUMBR:		26
+ACCCD:		1002
+
+;   LEVELFORMAT -------------------------------------------*
+LWID:		31
+LHI:		31
+VWID:		31
+VHI:		31
+SCROLLX:	0
+SCROLLY:	0
+BACK:		33
+
+;   STATUS-Angaben ----------------------------------------*
+LTIME:		0
+RSTRT:		264		; letztes Level, RSTRT = 8 -> Bonus-L.
+MIRROR:		0
+
+;   McMINOS -----------------------------------------------*
+MCSPEED:	2
+
+;   GEISTER -----------------------------------------------*
+GHOST1:		0
+GHSPEED1:	1
+AGIL1:		20
+GRTIME1:	5
+
+GHOST2:		0
+GHSPEED2:	1
+AGIL2:		10
+GRTIME2:	5
+PILLMAX2:	50
+PILLFREQ2:	10
+
+GHOST3:		0
+GHSPEED3:	1
+AGIL3:		10
+GRTIME3:	5
+TRANSWALL3:	2
+
+GHOST4:		0
+GHSPEED4:	1
+AGIL4:		10
+GRTIME1:	5
+
+;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:		0,999
+
+KEYS:		0,999
+BMBS:		0,999
+DYNA:		0,0
+MINE:		0,0
+CHOC:		0,0
+MEDC:		0,999
+UMBR:		0,999
+
+;   LEVELDATEN --------------------------------------------*
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z.                           .Z
+Z ZZZZZZZZZZZZZ  XXXXXXXXXXXX Z
+Z Z.bXbXbXbXdXZ  X   X   X XX Z
+Z ZbXbXbXbXdXbZ  X X   X    X Z
+Z bZZZZZZZXHXbZ XX XXXXXXXX X Z
+Z      k ZX.bXD  D X   .    X Z
+Z ZZZZZZZXXbXXZ XX X XXXXXXXX Z
+Z ZdXdX.XXdXXXZ  XgX X     mDmZ
+Z ZXdXHXbbXXHXZX XXX X XXXXmX Z
+Z ZdXdXbZZZH.XZ  X X X X  m X Z
+Z ZXHXb.ZkZXXXZ ,X X   X XXXX Z
+Z ZZZZZZZDZZZZZ  X XXXXX Xx3D Z
+Z                X       X33X Z
+Z XXXDXXXXX  P   XDXXXXXXXXXX Z
+Z Xh  XhX XW  k     f   F     Z
+Z X h     X         F   f     Z
+Z XXXXXh XX   XXXXXXXXXXXXXXX Z
+Z X     r    XGbdbdbdbdbdbbdX Z
+Z X hX X    XXXXXXXXXXXXXXXbX Z
+Z XXXXXX   XbdbdbdbdbdbdbdXdX Z
+Z         XbdXXXXXXXXZZZZbXbXkZ
+Z XXXXXX   XbbXbbd.X.ZW1ZbXdX Z
+Z X  X X    XdbXbXbb,Z23ZbXbX Z
+Z X h   r    XdXdXXXXZZZZbXdX Z
+Z XXXXX  XX  XbXbdbddbdbdbXbX Z
+Z X h     X  XbXXXXXXXXXXXXdX Z
+Z Xh  XhX X  Xdbdbdbdbdbdbd2X Z
+Z XXXDXXXXX  XXXXXXXXXXXXXXXX Z
+Z.         k                 .Z
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+# 	; ENDE DER LEVELDATEN ---------------------------------*
