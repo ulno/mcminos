@@ -201,7 +201,7 @@ public class Level {
                                         ghostTime[0] = Integer.parseInt(strList[1]);
                                         break;
                                     case "GHSPEED1":
-                                        ghostSpeed[0] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        ghostSpeed[0] = Integer.parseInt(strList[1]);
                                         break;
                                     case "AGIL1":
                                         ghostAgility[0] = Integer.parseInt(strList[1]);
@@ -216,7 +216,7 @@ public class Level {
                                         ghostTime[1] = Integer.parseInt(strList[1]);
                                         break;
                                     case "GHSPEED2":
-                                        ghostSpeed[1] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        ghostSpeed[1] = Integer.parseInt(strList[1]);
                                         break;
                                     case "AGIL2":
                                         ghostAgility[1] = Integer.parseInt(strList[1]);
@@ -237,7 +237,7 @@ public class Level {
                                         ghostTime[2] = Integer.parseInt(strList[1]);
                                         break;
                                     case "GHSPEED3":
-                                        ghostSpeed[2] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        ghostSpeed[2] = Integer.parseInt(strList[1]);
                                         break;
                                     case "AGIL3":
                                         ghostAgility[2] = Integer.parseInt(strList[1]);
@@ -252,7 +252,7 @@ public class Level {
                                         ghostTime[3] = Integer.parseInt(strList[1]);
                                         break;
                                     case "GHSPEED4":
-                                        ghostSpeed[3] = Integer.parseInt(strList[1]) * Game.baseSpeed;
+                                        ghostSpeed[3] = Integer.parseInt(strList[1]);
                                         break;
                                     case "AGIL4":
                                         ghostAgility[3] = Integer.parseInt(strList[1]);

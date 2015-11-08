@@ -10,7 +10,7 @@ public class Ghosts {
     private final McMinos mcminos;
     private final Audio audio;
     private Level level;
-    private int ghostSpeed[] = {Game.baseSpeed,Game.baseSpeed,Game.baseSpeed,Game.baseSpeed};
+    private int ghostSpeed[] = {1,1,1,1};
     private int ghostsActive[] = {0,0,0,0};
     private int[] ghostSpawnCounter = {-1,-1,-1,-1};
 

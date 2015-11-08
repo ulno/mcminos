@@ -12,8 +12,9 @@ public class RockMover extends Mover {
             super(rock, speed, false, Entities.extras_rock);
         }
     */
-    public RockMover(LevelObject rock, int speed, int currentDirection, LevelBlock headingTo) {
+    public RockMover(LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingTo) {
         super(rock, speed, false, Entities.extras_rock);
+        setSpeedAccelerated(accelerated);
         this.currentDirection = currentDirection;
         this.headingTo = headingTo;
         audio = rock.getLevelBlock().getLevel().getGame().getAudio();
@@ -57,10 +58,11 @@ public class RockMover extends Mover {
     }
 
 
-    public void triggerMove(int dir, int speed, LevelBlock headingTo) {
+    public void triggerMove(int dir, int speed, boolean accelerated, LevelBlock headingTo) {
         // TODO: check speed is applied correctly
         currentDirection = dir;
-        this.computeSpeeds(speed);
+        this.setSpeedFactor(speed);
+        this.setSpeedAccelerated(accelerated);
         this.headingTo = headingTo;
     }
 

@@ -575,4 +575,8 @@ public class McMinos {
     public int getDrunkLevel() {
         return drunkLevel;
     }
+
+    public void setSpeedAccelerated(boolean b) {
+        mover.setSpeedAccelerated(b);
+    }
 }

@@ -21,7 +21,7 @@ public class McMinosMover extends Mover {
 
 
     public McMinosMover(Game game) {
-        super(game.getMcMinos().getLevelObject(), Game.baseSpeed, true);
+        super(game.getMcMinos().getLevelObject(), 1, true);
         this.game = game;
         audio = game.getAudio();
         mcminos = game.getMcMinos();
@@ -43,9 +43,9 @@ public class McMinosMover extends Mover {
         // this is only called, when on block boundaries
         int directions = getKeyDirections(); // direction bit field
         int level = mcminos.getDrunkLevel();
-        if( level > 0) /* Wenn betrunken */
-            if( game.random(Math.max(1, 10 - (level >> Game.timeResolutionExponent)) ) == 0 )
-                directions = game.random( 15 ) + 1;
+        if (level > 0) /* Wenn betrunken */
+            if (game.random(Math.max(1, 10 - (level >> Game.timeResolutionExponent))) == 0)
+                directions = game.random(15) + 1;
 
         if (directions == 0) { // if no key, then try to get from destination
             // the following includes the call to unblocked dirs already
@@ -115,7 +115,7 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if (m == null) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, getVPixelSpeed(), currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
@@ -124,7 +124,7 @@ public class McMinosMover extends Mover {
                     audio.soundPlay("moverock");
                 } else if (!m.isMoving()) {
                     // let it move again
-                    m.triggerMove(currentDirection, getVPixelSpeed(), nextBlock2);
+                    m.triggerMove(currentDirection, getSpeedFactor(), isAccelerated(), nextBlock2);
                     nextBlock.setRock(null);
                     nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
@@ -414,11 +414,11 @@ public class McMinosMover extends Mover {
                             mcminos.setPowerPillValues(1, 1, 10);
                             break;
                         case SpeedUpField:
-                            setSpeedFactor(2);
+                            mcminos.setSpeedAccelerated(true);
                             audio.soundPlay("speedup");
                             break;
                         case SpeedDownField:
-                            setSpeedFactor(1);
+                            mcminos.setSpeedAccelerated(false);
                             audio.soundPlay("slowdown");
                             break;
                         case KillAllField:
@@ -467,6 +467,7 @@ public class McMinosMover extends Mover {
                             mcminos.poison();
                             break;
                         case Whisky:
+                            mcminos.increaseScore(5);
                             currentBlock.removeItem(b);
                             b.dispose();
                             mcminos.makeDrunk();
@@ -482,6 +483,9 @@ public class McMinosMover extends Mover {
                             currentBlock.removeItem(b);
                             b.dispose();
                             mcminos.toggleMirrored();
+                            break;
+                        case Exit:
+                            mcminos.win();
                             break;
                     }
                 }

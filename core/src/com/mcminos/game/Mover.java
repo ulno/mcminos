@@ -9,7 +9,6 @@ public abstract class Mover {
     private Graphics gfxStill = null;
     private Graphics gfxDown = null;
     private Graphics gfxLeft = null;
-    private int speed = 1;
     private int vPixelSpeed = 2; // move how many pixels per frame (needs to be a power of two)
     private int pixelSpeedAnder = 0x1000000 - vPixelSpeed;
     private int speedFactor = 1;
@@ -22,16 +21,16 @@ public abstract class Mover {
     protected boolean canPassWalls = false; // Can this move through walls?
     protected LevelBlock lastBlock = null;
     private LevelBlock headingTo;  // Block this object is heading to
+    private boolean accelerated = false;
 
 
     /**
      *
-     * @param blocksPerSecond move how many blocks per second?
+     * compute from factor set
      */
-    protected void computeSpeeds(int blocksPerSecond) {
-        vPixelSpeed = blocksPerSecond  * speedFactor * PlayWindow.virtualBlockResolution / Game.timeResolution;
-        // set new speed as here it's allowed and should not cause problems
-        speed = blocksPerSecond;
+    protected void computeSpeeds() {
+        int accelerator = accelerated ? 2 : 1;
+        vPixelSpeed = Game.baseSpeed * accelerator * speedFactor * PlayWindow.virtualBlockResolution / Game.timeResolution;
         pixelSpeedAnder = 0x1000000 - vPixelSpeed;
     }
 
@@ -41,7 +40,16 @@ public abstract class Mover {
 
     public void setSpeedFactor(int newFactor) {
         speedFactor = newFactor;
-        computeSpeeds(speed); // apply speedfactor
+        computeSpeeds(); // apply speedfactor
+    }
+
+    public void setSpeedAccelerated( boolean accelerated) {
+        this.accelerated = accelerated;
+        computeSpeeds();
+    }
+
+    public boolean isAccelerated() {
+        return accelerated;
     }
 
     /**
@@ -72,7 +80,8 @@ public abstract class Mover {
      */
     public void init( LevelObject lo, int speed, boolean canMoveRocks) {
         levelObject = lo;
-        computeSpeeds(speed);
+        speedFactor = speed;
+        computeSpeeds();
         this.canMoveRocks = canMoveRocks;
         // obsolet lo.setMover(this);
         //this.currentLevelBlock = Game.getLevelBlockFromVPixel(lo.getVX(), lo.getVY());
@@ -185,10 +194,15 @@ public abstract class Mover {
     }
 
     public void resume() {
-        computeSpeeds(speed);
+        computeSpeeds();
     }
 
     public LevelBlock getLastBlock() {
         return lastBlock;
     }
+
+    public int getSpeedFactor() {
+        return speedFactor;
+    }
+
 }
