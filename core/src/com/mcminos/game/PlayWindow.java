@@ -34,7 +34,6 @@ public class PlayWindow {
     public int virtual2MiniExponent;
     int levelWidthInPixels =0;
     int levelHeightInPixels =0; // Size of virtual playingfield in physical pixels (blocks * physical resolution)
-    float density;
     Level level;
     Game game;
     private int visibleWidthInBlocks; // Number of blocks visible (even fractions off)
@@ -48,7 +47,6 @@ public class PlayWindow {
     public PlayWindow(SpriteBatch batch, OrthographicCamera camera, Level level, McMinos mcminos) {
         this.batch = batch;
         this.camera = camera;
-        density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
         this.level = level;
         this.game = level.getGame();
         this.mcminos = mcminos;
@@ -65,11 +63,23 @@ public class PlayWindow {
     public void setResolution(int resolutionCounter) {
         resolution = Entities.resolutionList[resolutionCounter];
         resolutionExponent = Util.log2binary(resolution);
-        virtual2MiniResolution = resolution >=64 ? 8 : 4;
-        virtual2MiniExponent = virtualBlockResolutionExponent - Util.log2binary(virtual2MiniResolution);
         Graphics.setResolutionAll(this, resolution);
         currentResolutionBitsLeftShifter = Util.log2binary(resolution) - PlayWindow.virtualBlockResolutionExponent;
         resize();
+    }
+
+    public int setClosestResolution( int resolutionValue ) {
+        int delta = 0x1000000;
+        int counter = -1;
+        for( int i=0; i<Entities.resolutionList.length; i++ ) {
+            int diff = Math.abs( resolutionValue - Entities.resolutionList[i] );
+            if( diff < delta) {
+                delta = diff;
+                counter = i;
+            }
+        }
+        setResolution(counter);
+        return counter;
     }
 
 
@@ -191,6 +201,15 @@ public class PlayWindow {
         // add clipping
         Rectangle clipBounds = new Rectangle( projectionX, projectionY, visibleWidthInPixels, visibleHeightInPixels);
         ScissorStack.calculateScissors(camera, batch.getTransformMatrix(), clipBounds, scissors);
+
+        // resize minimap
+        //virtual2MiniResolution = resolution >=64 ? 8 : 4;
+        // set resolution based on size of level in relation to screen
+        int hint = Math.min(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()) / Math.max(level.getWidth(),level.getHeight());
+        if(hint < 16) virtual2MiniResolution = 4;
+        else if(hint < 40) virtual2MiniResolution = 8;
+        else virtual2MiniResolution = 16;
+        virtual2MiniExponent = virtualBlockResolutionExponent - Util.log2binary(virtual2MiniResolution);
     }
 
     public void resize() {

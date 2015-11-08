@@ -42,6 +42,11 @@ public class McMinosMover extends Mover {
     public LevelBlock chooseDirection() {
         // this is only called, when on block boundaries
         int directions = getKeyDirections(); // direction bit field
+        int level = mcminos.getDrunkLevel();
+        if( level > 0) /* Wenn betrunken */
+            if( game.random(Math.max(1, 10 - (level >> Game.timeResolutionExponent)) ) == 0 )
+                directions = game.random( 15 ) + 1;
+
         if (directions == 0) { // if no key, then try to get from destination
             // the following includes the call to unblocked dirs already
             directions = getDirectionsFromDestination();
@@ -461,6 +466,11 @@ public class McMinosMover extends Mover {
                             b.dispose();
                             mcminos.poison();
                             break;
+                        case Whisky:
+                            currentBlock.removeItem(b);
+                            b.dispose();
+                            mcminos.makeDrunk();
+                            break;
                         case Medicine:
                             audio.soundPlay("tools");
                             currentBlock.removeItem(b);
@@ -513,7 +523,7 @@ public class McMinosMover extends Mover {
                             audio.soundPlay("gotyou");
                             mcminos.increaseScore(30);
                         }
-                    } else {
+                    } else { // all others can be killed when powered
                         if (ghostnr == 3) { // jumping pill, can be eaten when not powered
                             game.removeMover(lo.getMover());
                             moveables.remove(i);
@@ -522,8 +532,12 @@ public class McMinosMover extends Mover {
                             lo.dispose();
                             audio.soundPlay("knurps");
                             mcminos.increaseScore(30);
-                        } else { // all others can be killed when powered
-                            mcminos.kill("ghosts", Entities.mcminos_dying);
+                        } else {
+                            if(ghostnr == 2) {
+                                mcminos.poison();
+                            } else {
+                                mcminos.kill("ghosts", Entities.mcminos_dying);
+                            }
                         }
                     }
                 }

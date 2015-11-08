@@ -105,6 +105,7 @@ public class GhostMover extends Mover {
     @Override
     protected boolean checkCollisions() {
         if( levelObject.fullOnBlock() ) {
+            int ghostnr = levelObject.getGhostNr();
             if (currentLevelBlock != rememberedBlock) {
                 if (rememberedBlock.hasOneWay()) { // let ghosts turn the oneways
                     rememberedBlock.turnOneWay();
@@ -113,7 +114,14 @@ public class GhostMover extends Mover {
             rememberedBlock = currentLevelBlock;
             // check the things lying here
             LevelBlock currentBlock = currentLevelBlock;
-            // TODO: if this is the second ghost, drop pills
+            if(ghostnr == 1 ) { // pill dropper
+                if(level.getGhostPillDrop() > 0) {
+                    if(!currentBlock.hasPill() && game.random(level.getGhostPillFreq()) == 0) {
+                        currentBlock.makePill();
+                        level.decreaseGhostPillDrop();
+                    }
+                }
+            }
             for( LevelObject b:currentBlock.getCollectibles()) {
                 switch( b.getType() ) {
                     case LandMineActive:
@@ -128,7 +136,6 @@ public class GhostMover extends Mover {
             }
             // check if here is max hole, because ghosts will fall in and die (even if they don't increase hole-sizes)
             if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
-                int ghostnr = levelObject.getGhostNr();
                 if(ghostnr == 3 ) { // jumping pill
                     level.decreasePills();
                     audio.soundPlay("knurps");

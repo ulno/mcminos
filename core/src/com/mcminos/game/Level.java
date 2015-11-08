@@ -42,8 +42,8 @@ public class Level {
     public int[] ghostTime = {0, 0, 0, 0};
     public int[] ghostSpeed = {0, 0, 0, 0};
     public int[] ghostAgility = {0, 0, 0, 0};
-    public int[] ghostPillMax  = {0, 0, 0, 0};
-    public int[] ghostPillFreq  = {0, 0, 0, 0};
+    public int ghostPillDrop = 0;
+    public int ghostPillFreq  = 0;
     public int[] ghostTranswall  = {0, 0, 0, 0};
     private int livesMin = 0, livesMax = 999;
     private int keysMin = 0, keysMax = 999;
@@ -206,12 +206,6 @@ public class Level {
                                     case "AGIL1":
                                         ghostAgility[0] = Integer.parseInt(strList[1]);
                                         break;
-                                    case "PILLMAX1":
-                                        ghostPillMax[0] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "PILLFREQ1":
-                                        ghostPillFreq[0] = Integer.parseInt(strList[1]);
-                                        break;
                                     case "TRANSWALL1":
                                         ghostTranswall[0] = Integer.parseInt(strList[1]);
                                         break;
@@ -228,10 +222,10 @@ public class Level {
                                         ghostAgility[1] = Integer.parseInt(strList[1]);
                                         break;
                                     case "PILLMAX2":
-                                        ghostPillMax[1] = Integer.parseInt(strList[1]);
+                                        ghostPillDrop = Integer.parseInt(strList[1]);
                                         break;
                                     case "PILLFREQ2":
-                                        ghostPillFreq[1] = Integer.parseInt(strList[1]);
+                                        ghostPillFreq = Integer.parseInt(strList[1]);
                                         break;
                                     case "TRANSWALL2":
                                         ghostTranswall[1] = Integer.parseInt(strList[1]);
@@ -248,12 +242,6 @@ public class Level {
                                     case "AGIL3":
                                         ghostAgility[2] = Integer.parseInt(strList[1]);
                                         break;
-                                    case "PILLMAX3":
-                                        ghostPillMax[2] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "PILLFREQ3":
-                                        ghostPillFreq[2] = Integer.parseInt(strList[1]);
-                                        break;
                                     case "TRANSWALL3":
                                         ghostTranswall[2] = Integer.parseInt(strList[1]);
                                         break;
@@ -268,12 +256,6 @@ public class Level {
                                         break;
                                     case "AGIL4":
                                         ghostAgility[3] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "PILLMAX4":
-                                        ghostPillMax[3] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "PILLFREQ4":
-                                        ghostPillFreq[3] = Integer.parseInt(strList[1]);
                                         break;
                                     case "TRANSWALL4":
                                         ghostTranswall[3] = Integer.parseInt(strList[1]);
@@ -390,10 +372,18 @@ public class Level {
                 f.updateCastle();
                 f.updateDoor();
                 // create background
-                // TODO: check, why the border of bg is not drawn -> clipping problem as it is created here
                 if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
                     LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_pavement_01.getzIndex(),LevelObject.Types.Background);
                     lo.setGfx(bggfx);
+                }
+                // create wrap-around fields
+                if(scrollX && x==width-1) {
+                    LevelObject lo = new LevelObject(this, x, y, Entities.extras_wrap_around_horizontal.getzIndex(), LevelObject.Types.Background);
+                    lo.setGfx(Entities.extras_wrap_around_horizontal);
+                }
+                if(scrollY && y==height-1) {
+                    LevelObject lo = new LevelObject(this, x, y, Entities.extras_wrap_around_vertical.getzIndex(), LevelObject.Types.Background);
+                    lo.setGfx(Entities.extras_wrap_around_vertical);
                 }
             }
         // update some related variables
@@ -873,5 +863,18 @@ Missing:
 
     public boolean isFinished() {
         return finished;
+    }
+
+    public int getGhostPillDrop() {
+        return ghostPillDrop;
+    }
+
+    public void decreaseGhostPillDrop() {
+        if(ghostPillDrop > 0)
+            ghostPillDrop --;
+    }
+
+    public int getGhostPillFreq() {
+        return ghostPillFreq;
     }
 }

@@ -10,6 +10,7 @@ public class McMinos {
     private int powerDuration = 0;
     private int umbrellaDuration = 0;
     private int poisonDuration = 0;
+    private int drunkLevel = 0;
     private int umbrellas=0; // number of umbrellas carried by mcminos
     private int chocolates; // number of chocolates carried by mcminos
     private int bombs=0; // number of bombs carried by mcminos
@@ -76,6 +77,15 @@ public class McMinos {
                 Entities.mcminos_powered_right, Entities.mcminos_powered_down, Entities.mcminos_powered_left);
     }
 
+    public void gfxPoisoned() {
+        mover.setGfx(Entities.mcminos_poisoned_front);
+    }
+
+    public void gfxDrunk() {
+        mover.setGfx(Entities.mcminos_drunk_front, Entities.mcminos_drunk_up,
+                Entities.mcminos_drunk_right, Entities.mcminos_drunk_down, Entities.mcminos_drunk_left);
+    }
+
     public LevelObject getLevelObject() {
         return levelObject;
     }
@@ -87,7 +97,7 @@ public class McMinos {
             if (powerDuration == 1) { // power just ran out
                 powerDuration = 0;
                 setPowerPillValues(1, 1, 0); // back to normal, TODO: check, if this has to be adapted to level specifics
-                if(poisonDuration == 0) gfxNormal(); // poison tops unpowering
+                gfxSelect();
             }
         }
         if(umbrellaDuration > 0) {
@@ -97,6 +107,12 @@ public class McMinos {
             poisonDuration --;
             if(poisonDuration == 0) {
                 kill("skullkill", Entities.mcminos_dying);
+            }
+        }
+        if(drunkLevel > 0) {
+            drunkLevel -= 1;
+            if(drunkLevel == 0) {
+                gfxSelect();
             }
         }
     }
@@ -373,19 +389,29 @@ public class McMinos {
     }
 
     public void poison() {
-        // don't multifall
-        Graphics gfx = Entities.mcminos_dying; // TODO: replace with falling
         if (poisonDuration == 0) { // not already poisoned
             poisonDuration = 10 << Game.timeResolutionExponent;
             audio.soundPlay("poison");
             stop();
-            // show poison-animation
-            mover.setGfx(Entities.mcminos_poisoned_front);
+            gfxPoisoned();
         }
     }
 
+    public void makeDrunk() {
+        drunkLevel += 16 << Game.timeResolutionExponent;
+        audio.soundPlay("ethanole");
+        gfxDrunk();
+    }
+
+
     private void gfxSelect() {
-        if(powerDuration > 0) gfxPowered();
+        if(poisonDuration > 0) {
+            gfxPoisoned();
+        }
+        else if(drunkLevel > 0) {
+            gfxDrunk();
+        }
+        else if(powerDuration > 0) gfxPowered();
         else gfxNormal();
     }
 
@@ -508,14 +534,27 @@ public class McMinos {
         decreaseMedicines();
         audio.soundPlay("antidot");
         poisonDuration = 0;
+        drunkLevel = 0;
         resume();
         gfxSelect();
+    }
+
+    public void clearInventory() {
+        // Take away all things apart lives and score
+        umbrellas = 0;
+        chocolates =0;
+        keys = 0;
+        medicines = 0;
+        bombs = 0;
+        dynamites = 0;
+        landmines = 0;
     }
 
     public void reset() {
         //TODO: check to eventually re-create start values
         mirrored = false;
         poisonDuration = 0;
+        drunkLevel = 0;
         powerDuration = 0;
         umbrellaDuration = 0;
         setPowerPillValues(1,1,0);
@@ -531,5 +570,9 @@ public class McMinos {
 
     public int updateTouchpadDirections(float knobPercentX, float knobPercentY) {
         return mover.updateTouchpadDirections( knobPercentX, knobPercentY );
+    }
+
+    public int getDrunkLevel() {
+        return drunkLevel;
     }
 }

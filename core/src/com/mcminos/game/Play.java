@@ -97,8 +97,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
         mcminos = game.getMcMinos();
         playwindow = game.getPlayWindow();
 
-        // Basically, based on density, we want to set out default zoomlevel.
-        playwindow.setResolution(gameResolutionCounter);
+        //  Basically, based on density and screensize, we want to set out default zoomlevel.
+        float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
+
+        int preferredResolution =  Math.max( (int) (density * 32),
+                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() ) / 16
+                );
+        gameResolutionCounter = playwindow.setClosestResolution(preferredResolution);
 
         // Init stage
         stage = new Stage(new ScreenViewport(), stageBatch);
@@ -126,7 +131,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
         toolbox.setMovable(false);
         toolbox.setResizable(false);
         //toolbox.setResizeBorder(8); // big border so it works also onphones
-        // TODO: add x-close button
         toolbox.setSize(stage.getWidth() / 3, stage.getWidth() * 4 / 5);
         toolbox.setPosition(stage.getWidth(), 0, Align.bottomRight);
         toolbox.align(Align.topLeft); // stuff in here move to top left
@@ -475,7 +479,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     private void activateMedicine() {
-        if (mcminos.hasMedicine() && mcminos.getPoisonDuration() > 0) {
+        if (mcminos.hasMedicine() && (mcminos.getPoisonDuration() > 0 || mcminos.getDrunkLevel() > 0)) {
             mcminos.consumeMedicine();
             mcminos.increaseScore(10);
             deactivateToolbox(); // close toolbox
@@ -872,7 +876,6 @@ allows cheating */
             miniScreenBackground.end();
 
             // mini screen
-//            miniBatch.setColor(1,1,1,0.7f); // TODO: can this be moved to initialization
             miniBatch.begin();
             game.drawMini(miniBatch);
             miniBatch.end();
@@ -886,7 +889,7 @@ allows cheating */
                     "S" + Util.formatInteger(mcminos.getScore(), 6)
                             + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
                             + " U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 3)
-                            + " T" + Util.formatInteger(mcminos.getPoisonDuration() >> game.timeResolutionExponent, 2)
+                            + " T" + Util.formatInteger((mcminos.getPoisonDuration()+mcminos.getDrunkLevel()) >> game.timeResolutionExponent, 2)
                             + " L" + Util.formatInteger(mcminos.getLives(), 2)
                             + (mcminos.isMirrored() ? " M" : ""),
                     20, Gdx.graphics.getHeight() - 20);
@@ -934,9 +937,9 @@ allows cheating */
             miniScreenBackground.rect( x0-t,y0-t,x1-x0+t2+1,thickness );
             miniScreenBackground.rect( x0-t,y1,x1-x0+t2+1,thickness );
         } else { // split necessary x1 < x0
-            miniScreenBackground.rect( mx0-t,y0-t,x1-mx0+t,thickness );
+            miniScreenBackground.rect( mx0-t,y0-t,x1-mx0+t2+1,thickness );
             miniScreenBackground.rect( x0-t,y0-t,mx1-x0+t2,thickness );
-            miniScreenBackground.rect( mx0-t,y1,x1-mx0+t,thickness );
+            miniScreenBackground.rect( mx0-t,y1,x1-mx0+t2+1,thickness );
             miniScreenBackground.rect( x0-t,y1,mx1-x0+t2,thickness );
         }
         if(y0<y1) { // normal, no split

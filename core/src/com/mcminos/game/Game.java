@@ -234,6 +234,8 @@ public class Game {
         ghosts.dispose();
         movers.clear();
         level.dispose();
+        mcminos.clearInventory();
+        mcminos.reset();
     }
 
     int random(int interval) {

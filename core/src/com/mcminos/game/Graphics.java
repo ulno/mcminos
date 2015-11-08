@@ -286,12 +286,14 @@ public class Graphics {
     }
 
     public void drawMini( PlayWindow playwindow, SpriteBatch minibatch, int vx, int vy, int animDelta ) {
-        // compute for upper right corner
-        int x = virtualToMiniX(playwindow, vx, anchorX);
-        int y = virtualToMiniY(playwindow, vy, anchorY);
-        TextureRegion t = getTextureMini( playwindow.virtual2MiniResolution );
-        if( t != null )
-            minibatch.draw(t,x,y);
+        if(zIndex>=200) { // only draw non-backgrounds
+            // compute for upper right corner
+            int x = virtualToMiniX(playwindow, vx, anchorX);
+            int y = virtualToMiniY(playwindow, vy, anchorY);
+            TextureRegion t = getTextureMini(playwindow.virtual2MiniResolution);
+            if (t != null)
+                minibatch.draw(t, x, y);
+        }
     }
 
         /**
