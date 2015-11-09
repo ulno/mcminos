@@ -31,19 +31,24 @@ public class LevelBlock {
      * @param nextBlock2
      * @return true if movement of current is possible in this direction, false if not
      */
-    private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2, boolean canMoveRocks ) {
-        // TODO: respect the ghost which can walk through walls dependent on transwall
+    private boolean dirPossible( LevelBlock nextBlock, LevelBlock nextBlock2, boolean canMoveRocks, boolean transwall ) {
         if(nextBlock == null) return false;
+        if(nextBlock.hasClosedDoor()) return false;
         if (nextBlock.hasRock()) { // then look forward
             if(canMoveRocks) {
                 if(nextBlock2 == null) return false;
                 return !nextBlock2.hasGhost() && !nextBlock2.hasRock() && !nextBlock2.hasWall() && !nextBlock2.hasClosedDoor();
             } else return false;
         }
-        return !nextBlock.hasWall() && !nextBlock.hasClosedDoor();
+        if( transwall ) { // only indestructable wall stops this guy now
+            if (nextBlock.hasWall() )
+                return nextBlock.getWall().getType() != LevelObject.Types.IndestructableWall;
+            else return true;
+        }
+        return !nextBlock.hasWall();
     }
 
-    public int getUnblockedDirs( int filterMask, boolean checkOneway, boolean canMoveRocks ) {
+    public int getUnblockedDirs( int filterMask, boolean checkOneway, boolean canMoveRocks, boolean transwall ) {
         int unblocked = 0;
         LevelBlock lb = this;
         LevelBlock b1, b2;
@@ -56,33 +61,33 @@ public class LevelBlock {
         if((filterMask & Mover.UP) > 0) {
             b1 = lb.up();
             b2 = lb.up2();
-            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.UP;
+            if (dirPossible(b1, b2, canMoveRocks, transwall)) unblocked += Mover.UP;
         }
         // Right
         if((filterMask & Mover.RIGHT) > 0) {
             b1 = lb.right();
             b2 = lb.right2();
-            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.RIGHT;
+            if (dirPossible(b1, b2, canMoveRocks, transwall)) unblocked += Mover.RIGHT;
         }
         // Down
         if((filterMask & Mover.DOWN) > 0) {
             b1 = lb.down();
             b2 = lb.down2();
-            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.DOWN;
+            if (dirPossible(b1, b2, canMoveRocks, transwall)) unblocked += Mover.DOWN;
         }
         // Up
         if ((filterMask & Mover.LEFT) > 0) {
             b1 = lb.left();
             b2 = lb.left2();
-            if (dirPossible(b1, b2, canMoveRocks)) unblocked += Mover.LEFT;
+            if (dirPossible(b1, b2, canMoveRocks, transwall)) unblocked += Mover.LEFT;
         }
 
         return unblocked;
 
     }
 
-    public int getUnblockedDirs(boolean canMoveRocks) {
-        return getUnblockedDirs(Mover.ALL, true, canMoveRocks);
+    public int getUnblockedDirs(boolean canMoveRocks, boolean transwall) {
+        return getUnblockedDirs(Mover.ALL, true, canMoveRocks, transwall);
     }
 
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};

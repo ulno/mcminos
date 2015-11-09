@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
+
 /**
  * Created by ulno on 05.10.15.
  * Handles all drawing-related to the Play-Screen Window

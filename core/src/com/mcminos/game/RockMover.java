@@ -7,13 +7,14 @@ public class RockMover extends Mover {
 
     private final Audio audio;
     private LevelBlock headingTo;
+    private LevelBlock lastBlockChecked = null;
 
     /* public RockMover(LevelObject rock, int speed) {
             super(rock, speed, false, Entities.extras_rock);
         }
     */
     public RockMover(LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingTo) {
-        super(rock, speed, false, Entities.extras_rock);
+        super(rock, speed, false, 0, Entities.extras_rock);
         setSpeedAccelerated(accelerated);
         this.currentDirection = currentDirection;
         this.headingTo = headingTo;
@@ -22,9 +23,13 @@ public class RockMover extends Mover {
 
     @Override
     protected boolean checkCollisions() {
-        // check if on hole -> break hole and remove rock
-        if (levelObject.fullOnBlock()) {
-            if (currentLevelBlock.hasHole()) {
+        if (levelObject.fullOnBlock() && lastBlockChecked != currentLevelBlock) {
+            lastBlockChecked = currentLevelBlock;
+            // check if on hole -> break hole and remove rock
+            if(currentLevelBlock.isRockme()) {
+                currentLevelBlock.getLevel().decreaseRockmes();
+            }
+            if(currentLevelBlock.hasHole()) {
                 currentLevelBlock.getHole().setHoleLevel(LevelObject.maxHoleLevel);
                 currentLevelBlock.removeMovable(levelObject);
                 currentLevelBlock.setRock(null); // remove rock

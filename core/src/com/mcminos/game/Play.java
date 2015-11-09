@@ -439,8 +439,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // Levelname
         statisticsTable.add(new Label("Levelname: " + level.getLevelName(),skin)).colspan(2).left().row();
         // Zoomlevel + Resolution
-        statisticsTable.add(new Label("Zoom: " + Util.formatInteger(gameResolutionCounter,0), skin)).left();
-        statisticsTable.add(new Label("Resolution: " + Util.formatInteger(playwindow.resolution,0), skin)).left().row();
+        statisticsTable.add(new Label("Density: " + Util.formatInteger((int)(Gdx.graphics.getDensity()*160),0), skin)).left().row();
+        statisticsTable.add(new Label("Zoom Level: " + Util.formatInteger(gameResolutionCounter,0), skin)).left().row();
+        statisticsTable.add(new Label("Sprite Size: " + Util.formatInteger(playwindow.resolution,0), skin)).left().row();
+        statisticsTable.add(new Label("Resolution: " + Util.formatInteger(Gdx.graphics.getWidth(),0) + "x" + Util.formatInteger(Gdx.graphics.getHeight(),0) , skin)).left().row();
+        statisticsTable.add(new Label("Minimap Sprite Size: " + Util.formatInteger(playwindow.virtual2MiniResolution,0) , skin)).left().row();
         // Remaining pills
         statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res, 0))).left();
         pillLabel = new Label(Util.formatInteger(level.getPillsNumber(),5), skin);

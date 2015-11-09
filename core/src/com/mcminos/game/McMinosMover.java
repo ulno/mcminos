@@ -21,7 +21,7 @@ public class McMinosMover extends Mover {
 
 
     public McMinosMover(Game game) {
-        super(game.getMcMinos().getLevelObject(), 1, true);
+        super(game.getMcMinos().getLevelObject(), 1, true, 0);
         this.game = game;
         audio = game.getAudio();
         mcminos = game.getMcMinos();
@@ -52,7 +52,7 @@ public class McMinosMover extends Mover {
             directions = getDirectionsFromDestination();
         } else { // got keyboard directions
             // refine with possible directions
-            directions = getUnblockedDirs(directions, true);
+            directions = getUnblockedDirs(directions, true, false);
         }
         if (directions > 0) { // got something in directions
 
@@ -163,9 +163,12 @@ public class McMinosMover extends Mover {
             int destY = destBlock.getY();
             int mx = currentLevelBlock.getX();
             int my = currentLevelBlock.getY();
+            int lw = level.getWidth();
+            int lh = level.getHeight();
             int shortestDestDistance = level.getHeight() * level.getHeight();
             int closestX = -1;
             int closestY = -1;
+            int rockRadius = 1; // in which radius are you allowed to move rocks
             // select 11x11 field with mcminos being the center
             // fill the field with the unobstructed directions from each position and
             // distance travelled to 0
@@ -176,7 +179,13 @@ public class McMinosMover extends Mover {
                     if (lb == null) {
                         b.directions = 0;
                     } else {
-                        b.directions = lb.getUnblockedDirs(canMoveRocks);
+                        // TODO: check, if the dealing with rocks is good like this
+                        int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
+                        int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
+                        if( xdist + ydist <= rockRadius )
+                            b.directions = lb.getUnblockedDirs(true,false);
+                        else
+                            b.directions = lb.getUnblockedDirs(false,false);
                     }
                     b.distance = mazeMaxDist;
                 }
@@ -190,8 +199,8 @@ public class McMinosMover extends Mover {
                 for (int x = 0, lx = mx - mazeCenter; x < mazeSize; x++, lx++) {
                     MazeBlock b = mazeBlocks[y][x];
                     if (b.distance < mazeMaxDist) { // if reachable
-                        int xdist = distanceWithScroll(level.getScrollX(), lx, destX, level.getWidth());
-                        int ydist = distanceWithScroll(level.getScrollY(), ly, destY, level.getHeight());
+                        int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
+                        int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
                         b.mhDistanceToDestination = xdist + ydist;
                         if (b.mhDistanceToDestination <= shortestDestDistance) { // equal as there might be several destinations in small levels
                             if(b.mhDistanceToDestination < shortestDestDistance) { // really smaller
@@ -537,9 +546,9 @@ public class McMinosMover extends Mover {
                             audio.soundPlay("knurps");
                             mcminos.increaseScore(30);
                         } else {
-                            if(ghostnr == 2) {
+                            if(ghostnr == 1) { // perry only poisons
                                 mcminos.poison();
-                            } else {
+                            } else { // zara kills
                                 mcminos.kill("ghosts", Entities.mcminos_dying);
                             }
                         }
