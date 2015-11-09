@@ -1,0 +1,6 @@
+symbol='C'
+size=(2,2)
+focus=(1,2)
+zindex=450
+order=[1,2,3,4,5,6,7,8,7,6,5,4,3,2]
+speed=80
