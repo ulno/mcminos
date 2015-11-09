@@ -21,7 +21,7 @@ public class McMinosMover extends Mover {
 
 
     public McMinosMover(Game game) {
-        super(game.getMcMinos().getLevelObject(), 1, true);
+        super(game.getMcMinos().getLevelObject(), 1, true, 0);
         this.game = game;
         audio = game.getAudio();
         mcminos = game.getMcMinos();
@@ -52,7 +52,7 @@ public class McMinosMover extends Mover {
             directions = getDirectionsFromDestination();
         } else { // got keyboard directions
             // refine with possible directions
-            directions = getUnblockedDirs(directions, true);
+            directions = getUnblockedDirs(directions, true, false);
         }
         if (directions > 0) { // got something in directions
 
@@ -183,9 +183,9 @@ public class McMinosMover extends Mover {
                         int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
                         int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
                         if( xdist + ydist <= rockRadius )
-                            b.directions = lb.getUnblockedDirs(true);
+                            b.directions = lb.getUnblockedDirs(true,false);
                         else
-                            b.directions = lb.getUnblockedDirs(false);
+                            b.directions = lb.getUnblockedDirs(false,false);
                     }
                     b.distance = mazeMaxDist;
                 }

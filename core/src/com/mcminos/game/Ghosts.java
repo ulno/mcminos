@@ -35,12 +35,14 @@ public class Ghosts {
         LevelObject lo = new LevelObject( block, ghostEntities[ghostnr], ghosttype );
         lo.animationStartRandom();
         block.addMovables(lo);
-        Mover mover = new GhostMover(game, lo, ghostSpeed[ghostnr], ghostEntities[ghostnr]);
+        level = block.getLevel();
+        Mover mover = new GhostMover(game, lo, ghostSpeed[ghostnr],
+                level.ghostTranswall[ghostnr], ghostEntities[ghostnr]);
         lo.setMover(mover);
         game.addMover(mover);
         ghostsActive[ghostnr] ++;
         if(ghostnr == 3) {
-            block.getLevel().increasePills(); // don't use level yet as it might be uninitialized
+            level.increasePills(); // don't use level yet as it might be uninitialized
         }
         return lo;
     }

@@ -18,7 +18,7 @@ public abstract class Mover {
     protected LevelObject levelObject; // corresponding LevelObject
     protected LevelBlock currentLevelBlock; // current associated LevelBlock
     protected boolean canMoveRocks = false; // This moveable can move rocks (Main for example)
-    protected boolean canPassWalls = false; // Can this move through walls?
+    protected int transWall; // Can this move through walls, then this is > 0
     protected LevelBlock lastBlock = null;
     private LevelBlock headingTo;  // Block this object is heading to
     private boolean accelerated = false;
@@ -78,9 +78,10 @@ public abstract class Mover {
      * @param lo levelobject to move
      * @param speed mulitplier for Game.baseSpeed (usually 1.0)
      */
-    public void init( LevelObject lo, int speed, boolean canMoveRocks) {
+    public void init( LevelObject lo, int speed, boolean canMoveRocks, int transwall) {
         levelObject = lo;
         speedFactor = speed;
+        this.transWall = transwall;
         computeSpeeds();
         this.canMoveRocks = canMoveRocks;
         // obsolet lo.setMover(this);
@@ -99,29 +100,25 @@ public abstract class Mover {
      * @param down graphics for moving down
      * @param left  graphics for moving left
      */
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, Graphics still, Graphics up, Graphics right, Graphics down, Graphics left) {
-        init(lo, speed, canMoveRocks);
+    public Mover( LevelObject lo, int speed, boolean canMoveRocks, int transWall, Graphics still, Graphics up, Graphics right, Graphics down, Graphics left) {
+        init(lo, speed, canMoveRocks, transWall);
         setGfx(still, up, right, down, left);
     }
 
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, Graphics gfx )
+    public Mover( LevelObject lo, int speed, boolean canMoveRocks, int transWall, Graphics gfx )
     {
-        init(lo, speed, canMoveRocks);
+        init(lo, speed, canMoveRocks, transWall);
         setGfx(gfx);
     }
 
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks )
+    public Mover( LevelObject lo, int speed, boolean canMoveRocks, int transWall )
     {
-        init(lo, speed, canMoveRocks);
+        init(lo, speed, canMoveRocks, transWall);
     }
 
 
-    protected int getUnblockedDirs(int filterMask, boolean checkOneway) {
-        return currentLevelBlock.getUnblockedDirs( filterMask, checkOneway, canMoveRocks);
-    }
-
-    protected int getUnblockedDirs( ) {
-        return getUnblockedDirs(ALL, true);
+    protected int getUnblockedDirs(int filterMask, boolean checkOneway, boolean transwall) {
+        return currentLevelBlock.getUnblockedDirs( filterMask, checkOneway, canMoveRocks, transwall);
     }
 
     /**

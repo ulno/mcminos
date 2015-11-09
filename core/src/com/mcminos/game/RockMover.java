@@ -14,7 +14,7 @@ public class RockMover extends Mover {
         }
     */
     public RockMover(LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingTo) {
-        super(rock, speed, false, Entities.extras_rock);
+        super(rock, speed, false, 0, Entities.extras_rock);
         setSpeedAccelerated(accelerated);
         this.currentDirection = currentDirection;
         this.headingTo = headingTo;

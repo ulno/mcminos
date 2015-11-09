@@ -12,8 +12,8 @@ public class GhostMover extends Mover {
     private McMinos mcminos;
     private LevelBlock rememberedBlock;
 
-    public GhostMover(Game game, LevelObject ghost, int speed, Graphics gfx) {
-        super(ghost, speed, false, gfx);
+    public GhostMover(Game game, LevelObject ghost, int speed, int transwall, Graphics gfx) {
+        super(ghost, speed, false, transwall, gfx);
         this.game = game;
         audio = game.getAudio();
         ghosts = game.getGhosts();
@@ -32,7 +32,12 @@ public class GhostMover extends Mover {
 
 
         // Let's get our possibilities
-        int dirs = getUnblockedDirs(ALL, true);
+        int dirs;
+        if(transWall>0 && game.random(transWall) == 0) { // if transwall and lucky
+            dirs = getUnblockedDirs(ALL, true, true);
+        } else { // normal
+            dirs = getUnblockedDirs(ALL, true, false);
+        }
         int[] dirList = {0, 0, 0, 0};
         int dircounter = 0;
         int dir = 1;
