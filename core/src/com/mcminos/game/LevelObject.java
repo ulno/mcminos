@@ -110,7 +110,6 @@ public class LevelObject implements  Comparable<LevelObject> {
                 if (type == LevelObject.Types.Rock) {
                     // Check, if we are on a rockme
                     if (from.isRockme()) level.increaseRockmes();
-                    if (headingTo.isRockme()) level.decreaseRockmes();
                 }
             //}
             headingTo.putMoveable(this);

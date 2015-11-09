@@ -117,8 +117,9 @@ public class Explosion {
                 }
                 new LevelObject(lb,g, LevelObject.Types.Unspecified);
             } else if (lb.hasRock()) {
+                if(lb.isRockme()) level.increaseRockmes();
                 LevelObject r = lb.getRock();
-                // TODO: add destroyed rock graphics
+                new LevelObject(lb,Entities.extras_rock_destroyed,LevelObject.Types.Unspecified);
                 lb.setRock(null);
                 game.removeMover(r.getMover());
                 lb.removeMovable(r); // gom global movables
