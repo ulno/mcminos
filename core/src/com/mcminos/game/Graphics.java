@@ -225,15 +225,14 @@ public class Graphics {
         // let the installed scissor do the clipping, we just draw the respective image max 4 times
         ///////// first look at x
         int gamew = playwindow.levelWidthInPixels;
-        int totalWidth = blockWidth << playwindow.resolutionExponent; // physical size of graphics
+        int totalWidth = blockWidth << playwindow.resolutionExponent; // physical size in pixels of graphics
         int vlw = playwindow.getVPixelsLevelWidth(); // virtual levelwidth
         vx0 = (vx0 - anchorX + vlw) % vlw; // make sure it's not negative and apply anchor
         // get physical coordinates
         int x0 = vPixelToScreen(vx0, playwindow.windowVPixelXPos,gamew,currentResolutionBitsLeftShifter);
-
         /////////// do same for y
         int gameh = playwindow.levelHeightInPixels;
-        int totalHeight = blockHeight << playwindow.resolutionExponent; // physical size of graphics
+        int totalHeight = blockHeight << playwindow.resolutionExponent; // physical size in pixels of graphics
         int vlh = playwindow.getVPixelsLevelHeight(); // virtual levelwidth
         vy0 = (vy0 - anchorY + vlh) % vlh; // make sure it's not negative and apply anchor
         // get physical coordinates
@@ -241,40 +240,22 @@ public class Graphics {
 
         // draw different parts to physical coordinates
         TextureRegion t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
-        /*int maxww = playwindow.visibleWidthInPixels;
-        int maxwh = playwindow.visibleHeightInPixels;*/
-        // clipping should be done by scissors in playscreen
+        // clipping is done by scissors in playscreen
         // TODO: this seems slow, optimize in figuring out what is (at least partly) visible
-        playwindow.batch.draw(t, x0, y0);
-        playwindow.batch.draw(t, x0 - gamew, y0);
-        playwindow.batch.draw(t, x0, y0 - gameh);
-        playwindow.batch.draw(t, x0 - gamew, y0 - gameh);
-/*        if( x0 < maxww && y0 < maxwh ) { // lower left corner in visible
-            playwindow.batch.draw(t, x0, y0);
-        }
-        if( (x0 + totalWidth) % gamew < maxww && y0 < maxwh ) { // lower right corner visible
-            playwindow.batch.draw(t, x0 - gamew, y0);
-        }
-        if( x0 < maxww && (x0 + totalWidth) % gamew < maxww && y0 < maxwh ) { // upper left corner visible
-            playwindow.batch.draw(t, x0 - gamew, y0);
-        }
+        int maxww = playwindow.visibleWidthInPixels;
+        int x1 = (gamew + x0 + totalWidth - 1) % gamew;
+        int maxwh = playwindow.visibleHeightInPixels;
+        int y1 = (gameh + y0 + totalHeight - 1) % gameh;
+        boolean xcl = x0 < maxww; // left corner in visible area
+        boolean xcr = x1 < maxww; // right corner
+        boolean ycb = y0 < maxwh; // bottom corner
+        boolean yct = y1 < maxwh; // top corner
 
-
-
-        // Clipping correction for small screens, TODO: think about optimization
-        if(x0 >= maxww && x0 > playwindow.levelWidthInPixels - totalWidth )
-            x0 -= playwindow.levelWidthInPixels;
-        if(y0 >= maxwh && y0 > playwindow.levelHeightInPixels - totalHeight )
-            y0 -= playwindow.levelHeightInPixels;
-        if(  (x0 < maxww) && (y0 < playwindow.visibleHeightInPixels) ) {
-            playwindow.batch.draw(t, x0, y0, 0, totalHeight, x0w, y0h);
-        }
-        if( (x0 < maxww) && (y1 < maxwh)) {
-                playwindow.batch.draw(t, x0, y1, 0, 0, x0w, y1h); }
-            if( (vx1w > 0)
-                    && (x1 < maxww) && (y1 < maxwh)) {
-                playwindow.batch.draw(t, x1, y1, x0w, 0, x1w, y1h);
-            }*/
+        // TODO: check if just drawing all four isn't faster
+        if(xcl && ycb) playwindow.batch.draw(t, x0, y0); // left bottom visible
+        if(xcr && ycb) playwindow.batch.draw(t, x0 - gamew, y0); // right bottom
+        if(xcl && yct) playwindow.batch.draw(t, x0, y0 - gameh); // left top
+        if(xcr && yct) playwindow.batch.draw(t, x0 - gamew, y0 - gameh); // right top
     }
 
     public static int virtualToMiniX( PlayWindow playwindow, int vx, int anchorX ) {
