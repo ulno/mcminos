@@ -444,6 +444,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         statisticsTable.add(new Label("Sprite Size: " + Util.formatInteger(playwindow.resolution,0), skin)).left().row();
         statisticsTable.add(new Label("Resolution: " + Util.formatInteger(Gdx.graphics.getWidth(),0) + "x" + Util.formatInteger(Gdx.graphics.getHeight(),0) , skin)).left().row();
         statisticsTable.add(new Label("Minimap Sprite Size: " + Util.formatInteger(playwindow.virtual2MiniResolution,0) , skin)).left().row();
+        statisticsTable.add(new Label("FPS: " + Util.formatInteger((int)(Gdx.graphics.getFramesPerSecond()),0), skin)).left().row();
         // Remaining pills
         statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res, 0))).left();
         pillLabel = new Label(Util.formatInteger(level.getPillsNumber(),5), skin);
@@ -856,6 +857,7 @@ allows cheating */
 //            gameBatch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
             gameBatch.begin();
 
+            gameBatch.flush();
             ScissorStack.pushScissors(playwindow.getScissors());
 
             game.draw();
@@ -889,10 +891,11 @@ allows cheating */
             stageBatch.begin();
             // score etc.
             font.draw(stageBatch,
-                    "S" + Util.formatInteger(mcminos.getScore(), 6)
-                            + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 3)
-                            + " U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 3)
+                    "S" + Util.formatInteger(mcminos.getScore(), 5)
+                            + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 2)
+                            + " U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 2)
                             + " T" + Util.formatInteger((mcminos.getPoisonDuration()+mcminos.getDrunkLevel()) >> game.timeResolutionExponent, 2)
+                            + " F" + Util.formatInteger((int)(Gdx.graphics.getFramesPerSecond()),0)
                             + " L" + Util.formatInteger(mcminos.getLives(), 2)
                             + (mcminos.isMirrored() ? " M" : ""),
                     20, Gdx.graphics.getHeight() - 20);

@@ -286,8 +286,10 @@ public class LevelBlock {
             LevelBlock u = level.getUp(x, y);
             LevelBlock r = level.getRight(x, y);
             if (u != null && u.hasCastle()
-                    && r != null && r.hasCastle())
+                    && r != null && r.hasCastle()) {
                 castle.setGfx(Entities.castle_default);
+                castle.animationStartRandom(); // make sure not all are animated the same
+            }
         }
     }
 
