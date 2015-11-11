@@ -25,11 +25,14 @@ GHOST2:   100
 GHSPEED2: 1
 AGIL2:    20
 GRTIME2:  1
+PILLMAX2: 32768 
+PILLFREQ2:1 
 
 GHOST3:   100
 GHSPEED3: 1
 AGIL3:    20
 GRTIME3:  1
+TRANSWALL3:32768
 
 GHOST4:   100
 GHSPEED4: 1
@@ -70,8 +73,8 @@ XXXX XXXXXXXXX XXXXXXXXb+XXXXXXXXb XXXXXXXXb XXXXX
 .X.X XH_H_H_HX Xh_h_h_hX+XG_G_G_GX Xg_g_g_gX X.X..
 ...r X_H_H_H_X X_h_h_h_XbX_G_G_G_X X_g_g_g_X X...r
 XXXX XXXXXXXXb bXXXXXXXXfXXXXXXXXX XXXXXXXXX XrXXX
-     _________b++bb+b+bFPFb+b+b+b+F_________      
-oooo XXXXXXXXb^XXXXXXXXXfXXXXXXXXX XXXXXXXXX ooooo
+     m_m_m_m_mb++bb+b+bFPFb+b+b+b+F_m_m_m_m_      
+oooo XXXXXXXXb^XXXXXXXXXFXXXXXXXXX XXXXXXXXX ooooo
 333o XCC,G,G,XkXCC,g,g,XbXCCbHbHbX XCCbhbhbX oCC o
 333o XCCG,G,GXkXCCg,g,gX+XCCHbHbHX XCChbhbhX oCC o
 333o X,G,G,G,XkX,g,g,g,XbXbHbHbHbX XbhbhbhbX o   o
@@ -80,17 +83,17 @@ oooo XXXXXXXXb^XXXXXXXXXfXXXXXXXXX XXXXXXXXX ooooo
 333o XG,G,G,GXkXg,g,g,gX+XHbHbHbHX XhbhbhbhX o3333
 333o X,G,G,G,XkX,g,g,g,XbXbHbHbHbX XbhbhbhbX o3333
 oooo XXXXXXXXb,bXXXXXXXX+XXXXXXXXb,bXXXXXXXX ooooo
-             ,d,mmmmmmmuuummmmmmm,d,        F     
-XXXX XXXXXXXXb,bXXXXXXXXbXXXXXXXXbbbXXXXXXXX XXXXX
- b X XCC,H,H,X XCC,h,h,X+XCCbGbGbXbXCCgbgbgX XCC b
-b bX XCCH,H,HX XCCh,h,hXbXCCGbGbGXbXCCbgbgbX XCCb 
+             ,d,m_m_m_mubum_m_m_m,d,        F     
+XXXX XXXXXXXXb,bXXXXXXXX+XXXXXXXXbbbXXXXXXXX XXXXX
+ b X XCC,H,H,X XCC,h,h,XbXCCbGbGbXbXCCgbgbgX XCC b
+b bX XCCH,H,HX XCCh,h,hX+XCCGbGbGXbXCCbgbgbX XCCb 
  b X X,H,H,H,X X,h,h,h,X+XbGbGbGbXbXgbgbgbXb,bXb b
-b bX XH,H,H,HX Xh,h,h,hXbXGbGbGbGXbXbgbgbgbZdZb b 
+b bX XH,H,H,HX Xh,h,h,hX+XGbGbGbGXbXbgbgbgbZdZb b 
  b X X,H,H,H,X X,h,h,h,X+XbGbGbGbXbXgbgbgbXb,bXb b
-b bX XH,H,H,HX Xh,h,h,hXbXGbGbGbGXbXbgbgbgbX Xb b 
+b bX XH,H,H,HX Xh,h,h,hX+XGbGbGbGXbXbgbgbgbX Xb b 
  b X X,H,H,H,X X,h,h,h,X+XbGbGbGbXbXgbgbgbgX X b b
-XXXX XXXXXXXXX XXXXXXXXXbXXXXXXXXXbXXXXXXXXX XXXXX
-                                 ,A,              
+XXXX XXXXXXXXX XXXXXXXXX+XXXXXXXXXbXXXXXXXXX XXXXX
+     d+d+d+d+d                   ,A,              
 XXXX XXXXXXXXX XXXXDXXXX XXXXDXXXX,>>>>>>>>v XXXXX
    X XCC, , ,X X3333333X X1111111Xb^CC     v XCCo 
    X XCC, , ,X X3XX|XX3X X1XX|XX1Xb^CC     v XCCo 
