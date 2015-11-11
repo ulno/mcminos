@@ -22,7 +22,24 @@ Marketing & Advertising
 =======================
 
 * assemble a list of media contacts to inform short before final release
+
+  * libgdx forums
+  * AndroidPit: https://www.androidpit.de/android-spiele + https://www.androidpit.de/forum/neue-beitraege
+  * Twitter & Co.:
+  
+
 * assemble a list of possible alpha & beta testers
+
+  * Andreas:
+  
+    * Kai Hofstetter <kaih@bonn-online.com> — Gelegenheitsspieler, freelance journalist, distiller, Bürgerfunker, Anfang 50
+    * Arya Ghader <arya1511@yahoo.de> — Gelegenheitsspieler, Student Bauingenieurwesen FH, hat als Kind die Atari-Version gespielt
+    * Markus Adam (keine E-Mail bekannt) — Erzieher, Musiker, Beta-Tester der Atari-Version
+  
+  * Uli:
+  
+    * Walter Norbisrath
+
 * YouTube video(s), produce and publish short before public betas
 * blogging, late in the dev. process
 * find game conventions, game dev meetings to attend and use for contacts and wom propaganda
