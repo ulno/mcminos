@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -26,13 +27,23 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private Game game;
     private Table toolboxTable;
     private Label bombLabel;
+    private SegmentString bombLabelText;
     private Label dynamiteLabel;
+    private SegmentString dynamiteLabelText;
     private Label landmineLabel;
+    private SegmentString landmineLabelText;
     private Label chocolateLabel;
+    private SegmentString chocolateLabelText;
     private Label pillLabel;
+    private SegmentString pillLabelText;
     private Label keyLabel;
+    private SegmentString keyLabelText;
     private Label rockmeLabel;
+    private SegmentString rockmeLabelText;
     private Label umbrellaLabel;
+    private SegmentString umbrellaLabelText;
+    private Label medicineLabel;
+    private SegmentString medicineLabelText;
     private PlayWindow playwindow;
     private final Skin skin;
     private McMinos mcminos;
@@ -51,7 +62,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private int touchDownY;
     private long lastZoomTime = 0;
     private int gameResolutionCounter = 0;
-    private Label medicineLabel;
     Graphics background;
     private Touchpad touchpad;
     private Table toolbox;
@@ -68,6 +78,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private Image chocolatesImage;
     private Table toolboxDialog = null;
     private final LevelBlock doorBlocks[] = new LevelBlock[4];
+    private int x,y,i,j; // Spave for temp variables
+    private SegmentString scoreInfo;
+    private SegmentString score;
+    private SegmentString powerScore;
+    private SegmentString umbrellaScore;
+    private SegmentString toxicScore;
+    private SegmentString livesScore;
+    private SegmentString mirroredScore;
+    private SegmentString framerateScore;
 
 
 
@@ -104,6 +123,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() ) / 16
                 );
         gameResolutionCounter = playwindow.setClosestResolution(preferredResolution);
+
+        // init scoreinfo display
+        scoreInfo = new SegmentString( "S00000 P00 U00 T00 L00 F00 M" );
+        score = scoreInfo.sub(1,5);
+        powerScore = scoreInfo.sub(8,2);
+        umbrellaScore = scoreInfo.sub(12,2);
+        toxicScore = scoreInfo.sub(16,2);
+        livesScore = scoreInfo.sub(20,2);
+        framerateScore = scoreInfo.sub(24,2);
+        mirroredScore = scoreInfo.sub(27,1);
 
         // Init stage
         stage = new Stage(new ScreenViewport(), stageBatch);
@@ -182,129 +211,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             }
         });
 
-        ////////// Menu
-        menuButton = new Group();
-        menuButtonImage = new TextButton("Menu", skin);
-        menuButtonImage.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                gameMenu();
-            }
-        });
-        menuButton.addActor(menuButtonImage);
-        toolboxTable.add(menuButton).row();
-
-
-        /////////// chocolates
-        chocolatesButton = new Group();
-        chocolateLabel = new Label(Util.formatInteger(mcminos.getChocolates(), 2), skin);
-        chocolatesButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                activateChocolate();
-            }
-        });
-
-        /////// keys
-        keysButton = new Group();
-        keyLabel = new Label(Util.formatInteger(mcminos.getKeys(), 2), skin);
-        keysButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //super.clicked(event, x, y);
-                doorOpener();
-            }
-        });
-
-
-        /////// Bombs
-        bombsButton = new Group();
-        bombLabel = new Label(Util.formatInteger(mcminos.getBombs(), 2), skin);
-        bombsButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                activateBomb();
-            }
-        });
-
-        // TODO: work on drop only
-/*        bombDropButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (mcminos.hasBomb()) {
-                    mcminos.decreaseBombs();
-                    mcminos.getLevelBlock().makeBomb();
-                    toggleToolbox(); // close toolbox
-                } else audio.soundPlay("error");
-            }
-        });*/
-
-        /////// Dynamites
-        dynamitesButton = new Group();
-        dynamiteLabel = new Label(Util.formatInteger(mcminos.getDynamites(), 2), skin);
-        dynamitesButton.addActor(dynamiteLabel);
-
-/*            dynamiteDropButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (mcminos.hasDynamite()) {
-                        mcminos.decreaseDynamites();
-                        mcminos.getLevelBlock().makeDynamite();
-                        toggleToolbox(); // close toolbox
-                    } else audio.soundPlay("error");
-                }
-            });*/
-        dynamitesButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                activateDynamite();
-            }
-        });
-
-        /////// Landmines
-        landminesButton = new Group();
-        landmineLabel = new Label(Util.formatInteger(mcminos.getLandmines(), 2), skin);
-        landminesButton.addActor(landmineLabel);
-
-            /*landmineDropButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (mcminos.hasLandmine()) {
-                        mcminos.decreaseLandmines();
-                        mcminos.getLevelBlock().makeLandMine();
-                        toggleToolbox(); // close toolbox
-                    } else audio.soundPlay("error");
-                }
-            });*/
-        landminesButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                activateLandmine();
-            }
-        });
-
-        /////// Umbrellas
-        umbrellasButton = new Group();
-        umbrellaLabel = new Label(Util.formatInteger(mcminos.getUmbrellas(), 2), skin);
-        umbrellasButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                activateUmbrella();
-            }
-        });
-
-        /////// Medicines
-        medicinesButton = new Group();
-        medicineLabel = new Label(Util.formatInteger(mcminos.getMedicines(), 2), skin);
-
-        medicinesButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                activateMedicine();
-            }
-        });
-
-        toolboxImages();
+        toolboxResize();
         toolboxUpdate();
 
         // virtual joystick (called touchpad in libgdx)
@@ -439,20 +346,20 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // Levelname
         statisticsTable.add(new Label("Levelname: " + level.getLevelName(),skin)).colspan(2).left().row();
         // Zoomlevel + Resolution
-        statisticsTable.add(new Label("Density: " + Util.formatInteger((int)(Gdx.graphics.getDensity()*160),0), skin)).left().row();
-        statisticsTable.add(new Label("Zoom Level: " + Util.formatInteger(gameResolutionCounter,0), skin)).left().row();
-        statisticsTable.add(new Label("Sprite Size: " + Util.formatInteger(playwindow.resolution,0), skin)).left().row();
-        statisticsTable.add(new Label("Resolution: " + Util.formatInteger(Gdx.graphics.getWidth(),0) + "x" + Util.formatInteger(Gdx.graphics.getHeight(),0) , skin)).left().row();
-        statisticsTable.add(new Label("Minimap Sprite Size: " + Util.formatInteger(playwindow.virtual2MiniResolution,0) , skin)).left().row();
-        statisticsTable.add(new Label("FPS: " + Util.formatInteger((int)(Gdx.graphics.getFramesPerSecond()),0), skin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int)(Gdx.graphics.getDensity()*160)), skin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(gameResolutionCounter), skin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), skin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), skin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution) , skin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int)(Gdx.graphics.getFramesPerSecond())), skin)).left().row();
         // Remaining pills
         statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res, 0))).left();
-        pillLabel = new Label(Util.formatInteger(level.getPillsNumber(),5), skin);
+        pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), skin);
         statisticsTable.add(pillLabel).left();
         statisticsTable.row();
         // Remaining rockmes
         statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res, 0))).left();
-        rockmeLabel = new Label(Util.formatInteger(level.getRockmesNumber(),5), skin);
+        rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), skin);
         statisticsTable.add(rockmeLabel).left();
         statisticsTable.row();
 
@@ -710,12 +617,145 @@ allows cheating */
         // adjust size
         toolbox.setWidth(res + 4); // 4 for border
         toolbox.setHeight(playwindow.getHeightInPixels());
-        toolboxImages();
+        toolboxAddImages();
     }
 
-    public void toolboxImages() {
+    public void toolboxAddImages() {
         int res = playwindow.resolution;
 
+        toolboxTable.clearChildren(); // empty all
+
+        ////////// Menu
+        menuButton = new Group();
+        menuButtonImage = new TextButton("Menu", skin);
+        menuButtonImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameMenu();
+            }
+        });
+        menuButton.addActor(menuButtonImage);
+        toolboxTable.add(menuButton).row();
+
+
+        /////////// chocolates
+        chocolatesButton = new Group();
+        chocolateLabelText = new SegmentString(2);
+        chocolateLabel = new Label(chocolateLabelText, skin);
+        chocolatesButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                activateChocolate();
+            }
+        });
+
+        /////// keys
+        keysButton = new Group();
+        keyLabelText = new SegmentString(2);
+        keyLabel = new Label(keyLabelText.getStringBuilder(), skin);
+        keysButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //super.clicked(event, x, y);
+                doorOpener();
+            }
+        });
+
+
+        /////// Bombs
+        bombsButton = new Group();
+        bombLabelText = new SegmentString(2);
+        bombLabel = new Label(bombLabelText.getStringBuilder(), skin);
+        bombsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                activateBomb();
+            }
+        });
+
+        // TODO: work on drop only
+/*        bombDropButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (mcminos.hasBomb()) {
+                    mcminos.decreaseBombs();
+                    mcminos.getLevelBlock().makeBomb();
+                    toggleToolbox(); // close toolbox
+                } else audio.soundPlay("error");
+            }
+        });*/
+
+        /////// Dynamites
+        dynamitesButton = new Group();
+        dynamiteLabelText = new SegmentString(2);
+        dynamiteLabel = new Label(dynamiteLabelText.getStringBuilder(), skin);
+        dynamitesButton.addActor(dynamiteLabel);
+
+/*            dynamiteDropButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (mcminos.hasDynamite()) {
+                        mcminos.decreaseDynamites();
+                        mcminos.getLevelBlock().makeDynamite();
+                        toggleToolbox(); // close toolbox
+                    } else audio.soundPlay("error");
+                }
+            });*/
+        dynamitesButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                activateDynamite();
+            }
+        });
+
+        /////// Landmines
+        landminesButton = new Group();
+        landmineLabelText = new SegmentString(2);
+        landmineLabel = new Label(landmineLabelText.getStringBuilder(), skin);
+        landminesButton.addActor(landmineLabel);
+
+            /*landmineDropButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (mcminos.hasLandmine()) {
+                        mcminos.decreaseLandmines();
+                        mcminos.getLevelBlock().makeLandMine();
+                        toggleToolbox(); // close toolbox
+                    } else audio.soundPlay("error");
+                }
+            });*/
+        landminesButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                activateLandmine();
+            }
+        });
+
+        /////// Umbrellas
+        umbrellasButton = new Group();
+        umbrellaLabelText = new SegmentString(2);
+        umbrellaLabel = new Label(umbrellaLabelText.getStringBuilder(), skin);
+        umbrellasButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                activateUmbrella();
+            }
+        });
+
+        /////// Medicines
+        medicinesButton = new Group();
+        medicineLabelText = new SegmentString(2);
+        medicineLabel = new Label(medicineLabelText.getStringBuilder(), skin);
+
+        medicinesButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                activateMedicine();
+            }
+        });
+
+
+        // now set correct sizes
         menuButton.setSize(res, res);
         menuButtonImage.setSize(res - 4, res - 4);
         menuButtonImage.setPosition(res / 2, res / 2, Align.center);
@@ -762,62 +802,88 @@ allows cheating */
         medicinesButton.addActor(new Image(Entities.extras_medicine.getTexture(res, 0)));
         medicineLabel.setPosition(res / 2, res / 2, Align.center);
         medicinesButton.addActor(medicineLabel);
+
+        // make all visible
+        //////// Chocolates
+        chocolateLabelText.writeInteger(mcminos.getChocolates());
+        chocolateLabel.setText(chocolateLabelText.getStringBuilder());
+        toolboxTable.add(chocolatesButton).row();
+        keyLabelText.writeInteger(mcminos.getKeys());
+        keyLabel.setText(keyLabelText.getStringBuilder());
+        toolboxTable.add(keysButton).row();
+        bombLabelText.writeInteger(mcminos.getBombs());
+        bombLabel.setText(bombLabelText.getStringBuilder());
+        toolboxTable.add(bombsButton).row();
+        dynamiteLabelText.writeInteger(mcminos.getDynamites());
+        dynamiteLabel.setText(dynamiteLabelText.getStringBuilder());
+        toolboxTable.add(dynamitesButton).row();
+        landmineLabelText.writeInteger(mcminos.getLandmines());
+        landmineLabel.setText(landmineLabelText.getStringBuilder());
+        toolboxTable.add(landminesButton).row();
+        umbrellaLabelText.writeInteger(mcminos.getUmbrellas());
+        umbrellaLabel.setText(umbrellaLabelText.getStringBuilder());
+        toolboxTable.add(umbrellasButton).row();
+        medicineLabelText.writeInteger(mcminos.getMedicines());
+        medicineLabel.setText(medicineLabelText.getStringBuilder());
+        toolboxTable.add(medicinesButton).row();
     }
 
     public void toolboxUpdate() {
         //////// Chocolates
         if (mcminos.getChocolates() == 0) {
-            chocolatesButton.remove();
+            chocolatesButton.setColor(0,0,0,0);
         } else {
-            chocolateLabel.setText(Util.formatInteger(mcminos.getChocolates(), 2));
-            toolboxTable.add(chocolatesButton).row();
+            chocolatesButton.setColor(0,0,0,1);
+            chocolateLabelText.writeInteger(mcminos.getChocolates());
+            chocolateLabel.setText(chocolateLabelText.getStringBuilder());
         }
         if (mcminos.getKeys() == 0) {
-            keysButton.remove();
+            keysButton.setColor(0,0,0,0);
         } else {
-            keyLabel.setText(Util.formatInteger(mcminos.getKeys(), 2));
-            toolboxTable.add(keysButton).row();
+            keysButton.setColor(0,0,0,1);
+            keyLabelText.writeInteger(mcminos.getKeys());
+            keyLabel.setText(keyLabelText.getStringBuilder());
         }
         if (mcminos.getBombs() == 0) {
-            bombsButton.remove();
+            bombsButton.setColor(0,0,0,0);
         } else {
-            bombLabel.setText(Util.formatInteger(mcminos.getBombs(), 2));
-            toolboxTable.add(bombsButton).row();
+            bombLabelText.writeInteger(mcminos.getBombs());
+            bombLabel.setText(bombLabelText.getStringBuilder());
         }
         if (mcminos.getDynamites() == 0) {
-            dynamitesButton.remove();
+            dynamitesButton.setColor(0,0,0,0);
         } else {
-            dynamiteLabel.setText(Util.formatInteger(mcminos.getDynamites(), 2));
-            toolboxTable.add(dynamitesButton).row();
+            dynamiteLabelText.writeInteger(mcminos.getDynamites());
+            dynamiteLabel.setText(dynamiteLabelText.getStringBuilder());
         }
         if (mcminos.getLandmines() == 0) {
-            landminesButton.remove();
+            landminesButton.setColor(0,0,0,0);
         } else {
-            landmineLabel.setText(Util.formatInteger(mcminos.getLandmines(), 2));
-            toolboxTable.add(landminesButton).row();
+            landmineLabelText.writeInteger(mcminos.getLandmines());
+            landmineLabel.setText(landmineLabelText.getStringBuilder());
         }
         if (mcminos.getUmbrellas() == 0) {
-            umbrellasButton.remove();
+            umbrellasButton.setColor(0,0,0,0);
         } else {
-            umbrellaLabel.setText(Util.formatInteger(mcminos.getUmbrellas(), 2));
-            toolboxTable.add(umbrellasButton).row();
+            umbrellaLabelText.writeInteger(mcminos.getUmbrellas());
+            umbrellaLabel.setText(umbrellaLabelText.getStringBuilder());
         }
         if (mcminos.getMedicines() == 0) {
-            medicinesButton.remove();
+            medicinesButton.setColor(0,0,0,0);
         } else {
-            medicineLabel.setText(Util.formatInteger(mcminos.getMedicines(), 2));
-            toolboxTable.add(medicinesButton).row();
+            medicineLabelText.writeInteger(mcminos.getMedicines());
+            medicineLabel.setText(medicineLabelText.getStringBuilder());
         }
-        toolboxTable.pack();
+/*        toolboxTable.pack();
+
+        // TODO: fix padding, creates (garbage collected) memory leak?
         float currentPadding = toolboxTable.getPadBottom();
         float newPadding = playwindow.getHeightInPixels() - toolboxTable.getHeight() + currentPadding;
         if (newPadding > 0)
             toolboxTable.padBottom(newPadding);
         else
             toolboxTable.padBottom(0);
-
-/*        pillLabel.setText(Util.formatInteger(level.getPillsNumber(),5));
-        rockmeLabel.setText(Util.formatInteger(level.getRockmesNumber(),5));*/
+*/
     }
 
     public void activateToolbox() {
@@ -838,21 +904,18 @@ allows cheating */
     public void render(float delta) {
         /////// Handle timing events (like moving and events)
         if (game.updateTime()) { // not finished
-            int w = Gdx.graphics.getWidth();
-            int h = Gdx.graphics.getHeight();
 
             // Handle drawing
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            SpriteBatch testBatch = backgroundBatch;
-            testBatch.begin();
-            for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution) {
-                for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution) {
-                    background.draw(playwindow, testBatch, x, y);
+            backgroundBatch.begin();
+            for (x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution) {
+                for (y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution) {
+                    background.draw(playwindow, backgroundBatch, x, y);
                 }
             }
-            testBatch.end();
+            backgroundBatch.end();
 
 //            gameBatch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
             gameBatch.begin();
@@ -890,20 +953,18 @@ allows cheating */
 
             stageBatch.begin();
             // score etc.
-            font.draw(stageBatch,
-                    "S" + Util.formatInteger(mcminos.getScore(), 5)
-                            + " P" + Util.formatInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent, 2)
-                            + " U" + Util.formatInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent, 2)
-                            + " T" + Util.formatInteger((mcminos.getPoisonDuration()+mcminos.getDrunkLevel()) >> game.timeResolutionExponent, 2)
-                            + " F" + Util.formatInteger((int)(Gdx.graphics.getFramesPerSecond()),0)
-                            + " L" + Util.formatInteger(mcminos.getLives(), 2)
-                            + (mcminos.isMirrored() ? " M" : ""),
-                    20, Gdx.graphics.getHeight() - 20);
-            // " P%03d U%03d T%02d L%02d ",
+            score.writeInteger(mcminos.getScore());
+            powerScore.writeInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent);
+            umbrellaScore.writeInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent);
+            toxicScore.writeInteger((mcminos.getPoisonDuration()+mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
+            framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
+            mirroredScore.writeChar(0,mcminos.isMirrored() ? 'M' : ' ');
+            font.draw(stageBatch, scoreInfo, playwindow.resolution + 20, Gdx.graphics.getHeight() - 20);
             // add stage and menu
             stageBatch.end();
 
-            toolboxUpdate(); // update toolbox based on inventory
+// TODO: chack again
+//            toolboxUpdate(); // update toolbox based on inventory
             stage.draw();
             stage.act(delta);
         } // else level is finished
