@@ -1,0 +1,102 @@
+; LEVEL 21
+; FOR MAC MINOS - Version 0.6
+
+AUTHOR:   NoPe;   Andreas Neudecker
+NUMBR:    21
+ACCCD:    100200300
+
+LWID:   50
+LHI:    50
+SCROLLX:  1
+SCROLLY:  1
+BACK:   63
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+GHOST1:   100
+GHSPEED1: 1
+AGIL1:    20
+GRTIME1:  1
+
+GHOST2:   100
+GHSPEED2: 1
+AGIL2:    20
+GRTIME2:  1
+PILLMAX2: 32768 
+PILLFREQ2:1 
+
+GHOST3:   100
+GHSPEED3: 1
+AGIL3:    20
+GRTIME3:  1
+TRANSWALL3:32768
+
+GHOST4:   100
+GHSPEED4: 1
+AGIL4:    20
+GRTIME4:  1
+
+LIVE:   0,999
+CHOC:   0,999
+BMBS:   0,999
+DYNA:   0,999
+MINE:   0,999
+MEDC:   0,999
+UMBR:   0,999
+KEYS:   0,999
+
+LEVEL:
+   X X,,,,, ,X X3X   X3X X1X   X1Xb^       v X    
+   X X      ,X X3XX|XX3X X1XX|XX1Xb^       v X    
+   X X,,,,,,,X X3333333X X1111111Xb^       v X    
+XXXX XXXXXXXXX XXXXDXXXX XXXXDXXXXb^<<<<<<<< XXXXX
+                                 ,b,              
+XXXX XXXXXXXXb bXXXXXXXX XXXXXXXX,,,XXXXXXXX XXXXX
+   X XCC_G_G_X XCC_g_g_X XCC_H_H_X XCC_h_h_X XCC  
+   X XCCG_G_GX XCCg_g_gX XCCH_H_HX XCCh_h_hX XCC  
+   X X_G_G_G_X X_g_g_g_X X_H_H_H_X X_h_h_h_X X    
+   X XG_G_G_GX Xg_g_g_gX XH_H_H_HX Xh_h_h_hX X    
+   X X_G_G_G_X X_g_g_g_X X_H_H_H_X X_h_h_h_X X    
+   X XG_G_G_GX Xg_g_g_gX XH_H_H_HX Xh_h_h_hX X    
+   X X_G_G_G_X X_g_g_g_X X_H_H_H_X X_h_h_h_X X    
+XXXX XXXXXXXXX XXXXXXXXb bXXXXXXXb bXXXXXXXX XXXXX
+              f         F         F               
+XXXX XXXXXXXXX XXXXXXXXb+XXXXXXXXb XXXXXXXXb XXXXX
+...r XCC_H_H_X XCC_h_h_XbXCC_G_G_X XCC_g_g_X XCCv.
+.X.X XCCH_H_HX XCCh_h_hX+XCCG_G_GX XCCg_g_gX XCCv.
+.X.X X_H_H_H_X X_h_h_h_XbX_G_G_G_X X_g_g_g_X X^<<.
+.X.X XH_H_H_HX Xh_h_h_hX+XG_G_G_GX Xg_g_g_gX r....
+.X.X X_H_H_H_X X_h_h_h_XbX_G_G_G_X X_g_g_g_X X.XXX
+.X.X XH_H_H_HX Xh_h_h_hX+XG_G_G_GX Xg_g_g_gX X.X..
+...r X_H_H_H_X X_h_h_h_XbX_G_G_G_X X_g_g_g_X X...r
+XXXX XXXXXXXXb bXXXXXXXXfXXXXXXXXX XXXXXXXXX XrXXX
+     m_m_m_m_mb++bb+b+bFPFb+b+b+b+F_m_m_m_m_      
+oooo XXXXXXXXb^XXXXXXXXXFXXXXXXXXX XXXXXXXXX ooooo
+333o XCC,G,G,XkXCC,g,g,XbXCCbHbHbX XCCbhbhbX oCC o
+333o XCCG,G,GXkXCCg,g,gX+XCCHbHbHX XCChbhbhX oCC o
+333o X,G,G,G,XkX,g,g,g,XbXbHbHbHbX XbhbhbhbX o   o
+333o XG,G,G,GXkXg,g,g,gX+XHbHbHbHX XhbhbhbhX ooooo
+333o X,G,G,G,XkX,g,g,g,XbXbHbHbHbX XbhbhbhbX o3333
+333o XG,G,G,GXkXg,g,g,gX+XHbHbHbHX XhbhbhbhX o3333
+333o X,G,G,G,XkX,g,g,g,XbXbHbHbHbX XbhbhbhbX o3333
+oooo XXXXXXXXb,bXXXXXXXX+XXXXXXXXb,bXXXXXXXX ooooo
+             ,d,m_m_m_mubum_m_m_m,d,        F     
+XXXX XXXXXXXXb,bXXXXXXXX+XXXXXXXXbbbXXXXXXXX XXXXX
+ b X XCC,H,H,X XCC,h,h,XbXCCbGbGbXbXCCgbgbgX XCC b
+b bX XCCH,H,HX XCCh,h,hX+XCCGbGbGXbXCCbgbgbX XCCb 
+ b X X,H,H,H,X X,h,h,h,X+XbGbGbGbXbXgbgbgbXb,bXb b
+b bX XH,H,H,HX Xh,h,h,hX+XGbGbGbGXbXbgbgbgbZdZb b 
+ b X X,H,H,H,X X,h,h,h,X+XbGbGbGbXbXgbgbgbXb,bXb b
+b bX XH,H,H,HX Xh,h,h,hX+XGbGbGbGXbXbgbgbgbX Xb b 
+ b X X,H,H,H,X X,h,h,h,X+XbGbGbGbXbXgbgbgbgX X b b
+XXXX XXXXXXXXX XXXXXXXXX+XXXXXXXXXbXXXXXXXXX XXXXX
+     d+d+d+d+d                   ,A,              
+XXXX XXXXXXXXX XXXXDXXXX XXXXDXXXX,>>>>>>>>v XXXXX
+   X XCC, , ,X X3333333X X1111111Xb^CC     v XCCo 
+   X XCC, , ,X X3XX|XX3X X1XX|XX1Xb^CC     v XCCo 
+   X X,,, , ,X X3X   X3X X1X . X1Xb^       v Xooo 
+   X X    , ,X D3| x |3D D1| A |1Db^       v X    
+#
