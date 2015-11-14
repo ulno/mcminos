@@ -18,7 +18,7 @@ LHI:    7
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 SCROLLX:  1
 SCROLLY:  1
-BACK:   1
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------+
 LTIME:    0

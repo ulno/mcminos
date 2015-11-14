@@ -2,6 +2,11 @@
 McMinos Menu Hierarchy
 ======================
 
+:Author:
+  Andreas Neudecker <zapyon@gmx.net>
+
+:Date: 2015-11-13
+
 * Start screen
 
 * Main menu
