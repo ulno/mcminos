@@ -334,7 +334,7 @@ public class Level {
                 break;
             case "4":
             case "pavement-04":
-                bggfx = Entities.backgrounds_pavement_03;
+                bggfx = Entities.backgrounds_pavement_04;
                 break;
             case "amoeboid-01":
                 bggfx = Entities.backgrounds_amoeboid_01;
