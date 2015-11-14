@@ -1,5 +1,7 @@
 package com.mcminos.game;
 
+import java.util.ArrayList;
+
 /**
  * Created by ulno on 01.10.15.
  */
@@ -11,6 +13,8 @@ public class GhostMover extends Mover {
     private final Level level;
     private McMinos mcminos;
     private LevelBlock rememberedBlock;
+    private ArrayList<LevelObject> currentItems;
+    int[] dirList = {0, 0, 0, 0};
 
     public GhostMover(Game game, LevelObject ghost, int speed, int transwall, Graphics gfx) {
         super(ghost, speed, false, transwall, gfx);
@@ -38,7 +42,8 @@ public class GhostMover extends Mover {
         } else { // normal
             dirs = getUnblockedDirs(ALL, true, false);
         }
-        int[] dirList = {0, 0, 0, 0};
+        for(int i= 3; i>=0; i--)
+            dirList[i] = 0;
         int dircounter = 0;
         int dir = 1;
         for (int i = 0; i < 4; i++) {
@@ -127,18 +132,6 @@ public class GhostMover extends Mover {
                     }
                 }
             }
-            for( LevelObject b:currentBlock.getCollectibles()) {
-                switch( b.getType() ) {
-                    case LandMineActive:
-                        currentBlock.removeItem(b);
-                        b.dispose();
-                        new Explosion(currentBlock, LevelObject.Types.LandMine);
-                        break;
-                    /* already dealt with case OneWay:
-                        break; */
-
-                }
-            }
             // check if here is max hole, because ghosts will fall in and die (even if they don't increase hole-sizes)
             if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
                 if(ghostnr == 3 ) { // jumping pill
@@ -150,8 +143,15 @@ public class GhostMover extends Mover {
                 return true; // remove me
             }
             // check the things lying here
-            for( LevelObject b:currentBlock.getCollectibles()) {
+            currentItems = currentBlock.getCollectibles();
+            for( int i = currentItems.size()-1; i>=0; i--) {
+                LevelObject b = currentItems.get(i);
                 switch( b.getType() ) {
+                    case LandMineActive:
+                        currentBlock.removeItem(b);
+                        b.dispose();
+                        new Explosion(currentBlock, LevelObject.Types.LandMine);
+                        break;
                     case WarpHole:
                         if (currentDirection != STOP) { // only teleport when moving onto field
                             teleportToBlock(level.getFreeWarpHole(currentBlock));

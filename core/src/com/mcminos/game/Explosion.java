@@ -143,7 +143,7 @@ public class Explosion {
             if(lb.hasOneWay()) {
                 lb.turnOneWay();
             }
-            // kill ghosts and TODO: mcminos
+            // kill ghosts and mcminos
             ArrayList<LevelObject> list = lb.getMovables();
             for( int i=list.size()-1; i>=0; i--) {
                 LevelObject lo = list.get(i);
@@ -164,8 +164,9 @@ public class Explosion {
                 }
             }
 
-            HashSet<LevelObject> collectibles = lb.getCollectibles(); // cascade explosions
-            for( LevelObject lo: collectibles ) {
+            ArrayList<LevelObject> collectibles = lb.getCollectibles(); // cascade explosions
+            for( int i = collectibles.size() - 1; i>=0; i-- ) {
+                LevelObject lo = collectibles.get(i);
                 switch(lo.getType()) {
                     case Bomb:
                         collectibles.remove(lo);

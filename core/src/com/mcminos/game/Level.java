@@ -67,7 +67,9 @@ public class Level {
 
     public void draw(PlayWindow playwindow) {
         playwindow.updateCoordinates(); // fix coordinates and compute scrolling
-        for (LevelObject lo : allLevelObjects) {
+        int size = allLevelObjects.size();
+        for (int i=0; i<size; i++) {
+            LevelObject lo = allLevelObjects.get(i);
             if( lo.getzIndex() >= LevelObject.maxzIndex)
                 break; // can be stopped, as null is infinity and therefore only null in the end
             lo.draw(playwindow);
@@ -75,7 +77,9 @@ public class Level {
     }
 
     public void drawMini(PlayWindow playwindow, SpriteBatch batch) {
-        for (LevelObject lo : allLevelObjects) {
+        int size = allLevelObjects.size();
+        for (int i=0; i<size; i++) {
+            LevelObject lo = allLevelObjects.get(i);
             lo.drawMini(playwindow, batch);
         }
     }
@@ -817,7 +821,6 @@ Missing:
         game.getMcMinos().reset();
         game.disposeFrameTimer();
         if((restart & 1) > 0) { // complete restart requested
-            // TODO: make sure to take things away McMinos just found in this Level
             // done in reset game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
             //game.getMcMinos().dispose();

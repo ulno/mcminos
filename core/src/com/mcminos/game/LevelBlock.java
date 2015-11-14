@@ -93,7 +93,7 @@ public class LevelBlock {
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};
     private final oneWayDir oneWayDirMap[] = {oneWayDir.FREE, oneWayDir.UP, oneWayDir.RIGHT, oneWayDir.DOWN, oneWayDir.LEFT};
     private ArrayList<LevelObject> movables=new ArrayList<>(); // ghosts, mcminos, explosions, rocks hovering here.
-    private HashSet<LevelObject> collectibles =new HashSet<>(); // collectibles on the field
+    private ArrayList<LevelObject> collectibles =new ArrayList<>(); // collectibles on the field
     private LevelObject door=null; // a potential door
     private boolean rockme = false;
     private Graphics[] walls = {
@@ -559,7 +559,7 @@ public class LevelBlock {
         oneWay = lo;
     }
 
-    public HashSet<LevelObject> getCollectibles() {
+    public ArrayList<LevelObject> getCollectibles() {
         return collectibles;
     }
 
