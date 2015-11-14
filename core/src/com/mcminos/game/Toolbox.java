@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.StringBuilder;
 
+import java.util.ArrayList;
+
 /**
  * Created by ulno on 13.11.15.
  */
@@ -27,33 +29,19 @@ public class Toolbox {
     private final Play play;
 
     private Table toolboxTable;
-    private Label bombLabel;
-    private SegmentString bombLabelText;
-    private Label dynamiteLabel;
-    private SegmentString dynamiteLabelText;
-    private Label landmineLabel;
-    private SegmentString landmineLabelText;
-    private Label chocolateLabel;
-    private SegmentString chocolateLabelText;
-    private Label keyLabel;
-    private SegmentString keyLabelText;
-    private Label umbrellaLabel;
-    private SegmentString umbrellaLabelText;
-    private Label medicineLabel;
-    private SegmentString medicineLabelText;
 
-    private Table toolbox;
+    private Table rootTable;
 
     private ScrollPane toolboxScroller;
-    private Group chocolatesButton;
-    private Group keysButton;
-    private Group dynamitesButton;
-    private Group bombsButton;
-    private Group landminesButton;
-    private Group umbrellasButton;
-    private Group medicinesButton;
-    private Group menuButton;
-    private TextButton menuButtonImage;
+    private ToolboxButton chocolateButton;
+    private ToolboxButton keyButton;
+    private ToolboxButton dynamiteButton;
+    private ToolboxButton bombButton;
+    private ToolboxButton landmineButton;
+    private ToolboxButton umbrellaButton;
+    private ToolboxButton medicineButton;
+    private ToolboxButton menuButton;
+    private Image menuButtonImage;
     private Image chocolatesImage;
 
     private Label pillLabel;
@@ -64,9 +52,9 @@ public class Toolbox {
 
     private Table toolboxDialog = null;
     private final LevelBlock doorBlocks[] = new LevelBlock[4];
+    private ArrayList<ToolboxButton> buttonList = new ArrayList<>();
 
-
-            /* old toolbox
+            /* old rootTable
             menuTable = new Table();
         menuTable.setWidth(stage.getWidth());
         menuTable.align(Align.center | Align.top);
@@ -86,16 +74,16 @@ public class Toolbox {
         menuTable.setColor(new Color(1, 1, 1, 0.7f));
         stage.addActor(menuTable);*/
 
-        /*toolbox = new Window("Toolbox", skin);
+        /*rootTable = new Window("Toolbox", skin);
 
-        toolbox.setMovable(false);
-        toolbox.setResizable(false);
-        //toolbox.setResizeBorder(8); // big border so it works also onphones
-        toolbox.setSize(stage.getWidth() / 3, stage.getWidth() * 4 / 5);
-        toolbox.setPosition(stage.getWidth(), 0, Align.bottomRight);
-        toolbox.align(Align.topLeft); // stuff in here move to top left
-        toolbox.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
-        toolbox.addListener(new DragListener() {
+        rootTable.setMovable(false);
+        rootTable.setResizable(false);
+        //rootTable.setResizeBorder(8); // big border so it works also onphones
+        rootTable.setSize(stage.getWidth() / 3, stage.getWidth() * 4 / 5);
+        rootTable.setPosition(stage.getWidth(), 0, Align.bottomRight);
+        rootTable.align(Align.topLeft); // stuff in here move to top left
+        rootTable.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
+        rootTable.addListener(new DragListener() {
             float downx, downy;
 
             @Override
@@ -113,9 +101,9 @@ public class Toolbox {
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 //super.touchDragged(event, x, y, pointer);
                 if (pointer == 0) {
-                    float posx = toolbox.getX();
-                    float posy = toolbox.getY();
-                    toolbox.setPosition(posx - downx + x, posy - downy + y, Align.bottomLeft);
+                    float posx = rootTable.getX();
+                    float posy = rootTable.getY();
+                    rootTable.setPosition(posx - downx + x, posy - downy + y, Align.bottomLeft);
                 }
             }
         });*/
@@ -130,23 +118,23 @@ public class Toolbox {
         mcminos = game.getMcMinos();
         audio = game.getAudio();
         level = game.getLevel();
-        toolbox = new Table(skin); // This is just the root of the toolbox, updated by resize
-        toolbox.setPosition(0, 0);
-        stage.addActor(toolbox);
+        rootTable = new Table(skin); // This is just the root of the rootTable, updated by resize
+        rootTable.setPosition(0, 0);
+        stage.addActor(rootTable);
         // In there, we need a table on a scrollable pane
         toolboxTable = new Table(skin);
         toolboxTable.setPosition(0, 0, Align.top);
         toolboxScroller = new ScrollPane(toolboxTable);
         toolboxScroller.setScrollBarPositions(false, true);
-        toolbox.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
-        toolbox.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
+        rootTable.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
+        rootTable.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
         //toolboxTable.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
-        toolbox.add(toolboxScroller).fill().expand().align(Align.topLeft); // add this to root
-//        toolbox.add(toolboxScroller).top(); // add this to root
+        rootTable.add(toolboxScroller).fill().expand().align(Align.topLeft); // add this to root
+//        rootTable.add(toolboxScroller).top(); // add this to root
 //        toolboxTable.setColor(0,1,0,1);
 //        toolboxTable.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
-//        toolbox.add(toolboxTable).expand().fill().align(Align.topLeft).row();
-        toolbox.addListener(new InputListener() {
+//        rootTable.add(toolboxTable).expand().fill().align(Align.topLeft).row();
+        rootTable.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 activate();
@@ -154,111 +142,63 @@ public class Toolbox {
             }
         });
 
-        resize();
-        update();
-
-    }
-
-    public void resize() {
-        int res = playwindow.resolution;
-        // adjust size
-        toolbox.setWidth(res + 4); // 4 for border
-        toolbox.setHeight(playwindow.getHeightInPixels());
-        addImages();
-    }
-
-    public void addImages() {
-        int res = playwindow.resolution;
-
-        toolboxTable.clearChildren(); // empty all
-
-        ////////// Menu
-        menuButton = new Group();
-        menuButtonImage = new TextButton("Menu", skin);
-        menuButtonImage.addListener(new ClickListener() {
+        menuButton = new ToolboxButton( this, Entities.menu_enter_button, 0, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gameMenu();
             }
         });
-        menuButton.addActor(menuButtonImage);
-
-
-        /////////// chocolates
-        chocolatesButton = new Group();
-        chocolateLabelText = new SegmentString(2);
-        chocolateLabel = new Label(chocolateLabelText, skin);
-        chocolatesButton.addListener(new ClickListener() {
+        chocolateButton = new ToolboxButton( this, Entities.pills_power_pill_chocolate, 2, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 activateChocolate();
             }
         });
-
-        /////// keys
-        keysButton = new Group();
-        keyLabelText = new SegmentString(2);
-        keyLabel = new Label(keyLabelText.getStringBuilder(), skin);
-        keysButton.addListener(new ClickListener() {
+        keyButton = new ToolboxButton( this, Entities.extras_key, 2, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //super.clicked(event, x, y);
                 doorOpener();
             }
         });
-
-
-        /////// Bombs
-        bombsButton = new Group();
-        bombLabelText = new SegmentString(2);
-        bombLabel = new Label(bombLabelText.getStringBuilder(), skin);
-        bombsButton.addListener(new ClickListener() {
+        bombButton = new ToolboxButton( this, Entities.extras_bomb_default, 2, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 activateBomb();
             }
         });
-
-        // TODO: work on drop only
+        // TODO: work on drop only, long click/right click?
 /*        bombDropButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (mcminos.hasBomb()) {
                     mcminos.decreaseBombs();
                     mcminos.getLevelBlock().makeBomb();
-                    toggleToolbox(); // close toolbox
+                    toggleToolbox(); // close rootTable
                 } else audio.soundPlay("error");
             }
         });*/
-
-        /////// Dynamites
-        dynamitesButton = new Group();
-        dynamiteLabelText = new SegmentString(2);
-        dynamiteLabel = new Label(dynamiteLabelText.getStringBuilder(), skin);
-        dynamitesButton.addActor(dynamiteLabel);
-
+        dynamiteButton = new ToolboxButton( this, Entities.extras_dynamite_default, 2, new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                activateDynamite();
+            }
+        });
 /*            dynamiteDropButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (mcminos.hasDynamite()) {
                         mcminos.decreaseDynamites();
                         mcminos.getLevelBlock().makeDynamite();
-                        toggleToolbox(); // close toolbox
+                        toggleToolbox(); // close rootTable
                     } else audio.soundPlay("error");
                 }
             });*/
-        dynamitesButton.addListener(new ClickListener() {
+        landmineButton = new ToolboxButton( this, Entities.extras_land_mine_default, 2, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                activateDynamite();
+                activateLandmine();
             }
         });
-
-        /////// Landmines
-        landminesButton = new Group();
-        landmineLabelText = new SegmentString(2);
-        landmineLabel = new Label(landmineLabelText.getStringBuilder(), skin);
-        landminesButton.addActor(landmineLabel);
 
             /*landmineDropButton.addListener(new ClickListener() {
                 @Override
@@ -266,180 +206,95 @@ public class Toolbox {
                     if (mcminos.hasLandmine()) {
                         mcminos.decreaseLandmines();
                         mcminos.getLevelBlock().makeLandMine();
-                        toggleToolbox(); // close toolbox
+                        toggleToolbox(); // close rootTable
                     } else audio.soundPlay("error");
                 }
             });*/
-        landminesButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                activateLandmine();
-            }
-        });
-
-        /////// Umbrellas
-        umbrellasButton = new Group();
-        umbrellaLabelText = new SegmentString(2);
-        umbrellaLabel = new Label(umbrellaLabelText.getStringBuilder(), skin);
-        umbrellasButton.addListener(new ClickListener() {
+        umbrellaButton = new ToolboxButton( this, Entities.extras_umbrella, 2, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 activateUmbrella();
             }
         });
-
-        /////// Medicines
-        medicinesButton = new Group();
-        medicineLabelText = new SegmentString(2);
-        medicineLabel = new Label(medicineLabelText.getStringBuilder(), skin);
-
-        medicinesButton.addListener(new ClickListener() {
+        medicineButton = new ToolboxButton( this, Entities.extras_medicine, 2, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 activateMedicine();
             }
         });
 
+        resize();
+    }
 
-        // now set correct sizes
-        menuButton.setSize(res, res);
-        menuButtonImage.setSize(res - 4, res - 4);
-        menuButtonImage.setPosition(res / 2, res / 2, Align.center);
+    public void resize() {
+        int res = playwindow.resolution;
+        // adjust size
+        rootTable.setWidth(res + 4); // 4 for border
+        rootTable.setHeight(playwindow.getHeightInPixels());
 
-        chocolatesButton.clearChildren();
-        chocolatesButton.setSize(res, res);
-        chocolatesImage = new Image(Entities.pills_power_pill_chocolate.getTexture(res, 0));
-        chocolatesButton.addActor(chocolatesImage);
-        chocolateLabel.setPosition(res / 2, res / 2, Align.center);
-        chocolatesButton.addActor(chocolateLabel);
-
-        keysButton.clearChildren();
-        keysButton.setSize(res, res);
-        keysButton.addActor(new Image(Entities.extras_key.getTexture(res, 0)));
-        keyLabel.setPosition(res / 2, res / 2, Align.center);
-        keysButton.addActor(keyLabel);
-
-        bombsButton.clearChildren();
-        bombsButton.setSize(res, res);
-        bombsButton.addActor(new Image(Entities.extras_bomb_default.getTexture(res, 0)));
-        bombLabel.setPosition(res / 2, res / 2, Align.center);
-        bombsButton.addActor(bombLabel);
-
-        dynamitesButton.clearChildren();
-        dynamitesButton.setSize(res, res);
-        dynamitesButton.addActor(new Image(Entities.extras_dynamite_default.getTexture(res, 0)));
-        dynamiteLabel.setPosition(res / 2, res / 2, Align.center);
-        dynamitesButton.addActor(dynamiteLabel);
-
-        landminesButton.clearChildren();
-        landminesButton.setSize(res, res);
-        landminesButton.addActor(new Image(Entities.extras_land_mine_default.getTexture(res, 0)));
-        landmineLabel.setPosition(res / 2, res / 2, Align.center);
-        landminesButton.addActor(landmineLabel);
-
-        umbrellasButton.clearChildren();
-        umbrellasButton.setSize(res, res);
-        umbrellasButton.addActor(new Image(Entities.extras_umbrella.getTexture(res, 0)));
-        umbrellaLabel.setPosition(res / 2, res / 2, Align.center);
-        umbrellasButton.addActor(umbrellaLabel);
-
-        medicinesButton.clearChildren();
-        medicinesButton.setSize(res, res);
-        medicinesButton.addActor(new Image(Entities.extras_medicine.getTexture(res, 0)));
-        medicineLabel.setPosition(res / 2, res / 2, Align.center);
-        medicinesButton.addActor(medicineLabel);
-
-        chocolateLabelText.writeInteger(mcminos.getChocolates());
-        chocolateLabel.setText(chocolateLabelText.getStringBuilder());
-        keyLabelText.writeInteger(mcminos.getKeys());
-        keyLabel.setText(keyLabelText.getStringBuilder());
-        bombLabelText.writeInteger(mcminos.getBombs());
-        bombLabel.setText(bombLabelText.getStringBuilder());
-        dynamiteLabelText.writeInteger(mcminos.getDynamites());
-        dynamiteLabel.setText(dynamiteLabelText.getStringBuilder());
-        landmineLabelText.writeInteger(mcminos.getLandmines());
-        landmineLabel.setText(landmineLabelText.getStringBuilder());
-        umbrellaLabelText.writeInteger(mcminos.getUmbrellas());
-        umbrellaLabel.setText(umbrellaLabelText.getStringBuilder());
-        medicineLabelText.writeInteger(mcminos.getMedicines());
-        medicineLabel.setText(medicineLabelText.getStringBuilder());
-
-        // make all visible
-        toolboxTable.add(menuButton).row();
-        toolboxTable.add(chocolatesButton).row();
-        toolboxTable.add(keysButton).row();
-        toolboxTable.add(bombsButton).row();
-        toolboxTable.add(dynamitesButton).row();
-        toolboxTable.add(landminesButton).row();
-        toolboxTable.add(umbrellasButton).row();
-        toolboxTable.add(medicinesButton).expandY().top().left().row();
+        for(int i=buttonList.size()-1; i>=0; i--) {
+            buttonList.get(i).resize(res);
+        }
 
         update();
+
+        rebuild();
+    }
+
+    private void rebuild() {
+        Cell<Group> last = null;
+        boolean rowadded = true;
+
+        // make all visible
+        toolboxTable.clearChildren();
+
+        for(int i=0; i<buttonList.size(); i++) {
+            if(!rowadded) {
+                last.row();
+                rowadded = true;
+            }
+            ToolboxButton tb = buttonList.get(i);
+            if(tb.isVisible()) {
+                last = toolboxTable.add(tb.getActor());
+                rowadded = false;
+            }
+        }
+        if(last != null)
+            last.expandY().top().left().row();
+
     }
 
     public void update() {
-        //////// Chocolates
-        if (mcminos.getChocolates() == 0) {
-            chocolatesButton.setColor(0,0,0,0);
-        } else {
-            chocolatesButton.setColor( 1,1,1,1);
-            chocolateLabelText.writeInteger(mcminos.getChocolates());
+        boolean c = false;
+        c = c || chocolateButton.setValue(mcminos.getChocolates());
+        c = c || keyButton.setValue(mcminos.getKeys());
+        c = c || bombButton.setValue(mcminos.getBombs());
+        c = c || dynamiteButton.setValue(mcminos.getDynamites());
+        c = c || landmineButton.setValue(mcminos.getLandmines());
+        c = c || umbrellaButton.setValue(mcminos.getUmbrellas());
+        c = c || medicineButton.setValue(mcminos.getMedicines());
+        // does not seem to work: sort();
+        if(c) { // visibility changed
+            rebuild();
         }
-        chocolateLabel.setText(chocolateLabelText.getStringBuilder()); // outside if as this triggers update
-        if (mcminos.getKeys() == 0) {
-            keysButton.setColor(0,0,0,0);
-        } else {
-            keysButton.setColor(1,1,1,1);
-            keyLabelText.writeInteger(mcminos.getKeys());
-        }
-        keyLabel.setText(keyLabelText.getStringBuilder());
-        if (mcminos.getBombs() == 0) {
-            bombsButton.setColor(0,0,0,0);
-        } else {
-            bombsButton.setColor(1,1,1,1);
-            bombLabelText.writeInteger(mcminos.getBombs());
-        }
-        bombLabel.setText(bombLabelText.getStringBuilder());
-        if (mcminos.getDynamites() == 0) {
-            dynamitesButton.setColor(0,0,0,0);
-        } else {
-            dynamitesButton.setColor(1,1,1,1);
-            dynamiteLabelText.writeInteger(mcminos.getDynamites());
-        }
-        dynamiteLabel.setText(dynamiteLabelText.getStringBuilder());
-        if (mcminos.getLandmines() == 0) {
-            landminesButton.setColor(0,0,0,0);
-        } else {
-            landminesButton.setColor(1,1,1,1);
-            landmineLabelText.writeInteger(mcminos.getLandmines());
-        }
-        landmineLabel.setText(landmineLabelText.getStringBuilder());
-        if (mcminos.getUmbrellas() == 0) {
-            umbrellasButton.setColor(0,0,0,0);
-        } else {
-            umbrellasButton.setColor(1,1,1,1);
-            umbrellaLabelText.writeInteger(mcminos.getUmbrellas());
-        }
-        umbrellaLabel.setText(umbrellaLabelText.getStringBuilder());
-        if (mcminos.getMedicines() == 0) {
-            medicinesButton.setColor(0,0,0,0);
-        } else {
-            medicinesButton.setColor(1,1,1,1);
-            medicineLabelText.writeInteger(mcminos.getMedicines());
-        }
-        medicineLabel.setText(medicineLabelText.getStringBuilder());
-/*        toolboxTable.pack();
-
-        // TODO: fix padding, creates (garbage collected) memory leak?
-        float currentPadding = toolboxTable.getPadBottom();
-        float newPadding = playwindow.getHeightInPixels() - toolboxTable.getHeight() + currentPadding;
-        if (newPadding > 0)
-            toolboxTable.padBottom(newPadding);
-        else
-            toolboxTable.padBottom(0);
-*/
     }
 
+    /* swap actor seems not to work
+    private void sort() {
+        // bubble sort toolbox
+        ToolboxButton tmp;
+        for( int i = buttonList.size()-1; i >= 1; i-- )
+            for( int j = i; j >= 1; j-- ) {
+                if( buttonList.get(j-1).isGreater(buttonList.get(j)) ) {
+                    // bubble up
+                    tmp = buttonList.get(j);
+                    toolboxTable.swapActor(tmp.getActor(), buttonList.get(j-1).getActor());
+                    buttonList.set(j,buttonList.get(j-1));
+                    buttonList.set(j-1, tmp);
+                }
+            }
+    }
+*/
 
     public void activate() {
         game.setToolboxActivated(true);
@@ -484,7 +339,7 @@ public class Toolbox {
         if (mcminos.hasMedicine() && (mcminos.getPoisonDuration() > 0 || mcminos.getDrunkLevel() > 0)) {
             mcminos.consumeMedicine();
             mcminos.increaseScore(10);
-            deactivate(); // close toolbox
+            deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }
 
@@ -492,7 +347,7 @@ public class Toolbox {
         if (mcminos.hasChocolate() && mcminos.getPoisonDuration() == 0) {
             mcminos.decreaseChocolates();
             mcminos.setPowerPillValues(2, 1, 10);
-            deactivate(); // close toolbox
+            deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }
 
@@ -500,7 +355,7 @@ public class Toolbox {
         if (mcminos.hasBomb()) {
             mcminos.decreaseBombs();
             new Explosion(mcminos.getFromLevelBlock(), LevelObject.Types.Bomb);
-            deactivate(); // close toolbox
+            deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }
 
@@ -508,7 +363,7 @@ public class Toolbox {
         if (mcminos.hasDynamite()) {
             mcminos.decreaseDynamites();
             new Explosion(mcminos.getFromLevelBlock(), LevelObject.Types.Dynamite);
-            deactivate(); // close toolbox
+            deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }
 
@@ -516,7 +371,7 @@ public class Toolbox {
         if (mcminos.hasLandmine()) {
             mcminos.decreaseLandmines();
             mcminos.getFromLevelBlock().makeLandMineActivated();
-            deactivate(); // close toolbox
+            deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }
 
@@ -525,7 +380,7 @@ public class Toolbox {
             mcminos.consumeUmbrella();
             audio.soundPlay("wind");
             mcminos.increaseScore(10);
-            deactivate(); // close toolbox
+            deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }
 
@@ -826,5 +681,14 @@ allows cheating */
             }
         }
 
+    }
+
+    public int addButton(ToolboxButton toolboxButton) {
+        buttonList.add( toolboxButton );
+        return buttonList.size() - 1;
+    }
+
+    public Skin getSkin() {
+        return skin;
     }
 }
