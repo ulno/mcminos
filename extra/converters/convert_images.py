@@ -209,7 +209,8 @@ def convert_images(sizes, name, animation_number, root, file):
         distutils.dir_util.mkpath( os.path.join( OUTPUT_DIRECTORY, str(resolution) ) )
         packfile = os.path.join( OUTPUT_DIRECTORY, str(resolution), "pack.json" )
         if not os.path.isfile(packfile): # create if necessary
-            res = max(1024,int(resolution)*16)
+            # res = max(1024,int(resolution)*16)
+            res = 1024 # fix to see, if this accelerates
             pf=open(packfile,"w")
             pf.write("{\nuseIndexes: false,\nmaxWidth: %s,\nmaxHeight: %s\n}"%(res,res))
             pf.close()
