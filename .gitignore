@@ -10,6 +10,9 @@
 # ancient gif images as base for new sketches
 *.gif
 
+# generated screenshots
+screenshot*.png
+
 
 ############ generic options for gradle and Java ########
 # Unix-stuff

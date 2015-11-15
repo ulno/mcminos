@@ -334,8 +334,8 @@ public class Game {
         movement = false;
     }
 
-    public void draw() {
-        level.draw(playwindow);
+    public void draw(boolean drawBackground) {
+        level.draw(playwindow, drawBackground);
     }
 
     public void drawMini(SpriteBatch batch) {
