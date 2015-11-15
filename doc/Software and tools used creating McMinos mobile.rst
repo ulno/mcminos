@@ -33,6 +33,21 @@ Homepage:
 * preliminary work, experiments
 * conversion of SVG graphics for animations (testing)
 
+Libraries
+=========
+
+libgdx
+------
+
+Homepage:
+
+Documentation, Tutorials, Articles, etc.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* LibGDX – Making a Paged Level Selection Screen — http://nexsoftware.net/wp/2013/05/09/libgdx-making-a-paged-level-selection-screen/
+
+* 
+
 Graphic tools
 =============
 
