@@ -16,9 +16,9 @@
    version="1.1"
    inkscape:version="0.48.5 r10040"
    sodipodi:docname="main-screen-symbols-only-01b.svg"
-   inkscape:export-filename="/home/andreas/McMinos/doc/mock-ups/main-screen-symbols-only-01/main-screen-symbols-only-01-640x400.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/andreas/McMinos/doc/mock-ups/main-screen-symbols-only-01/main-screen-symbols-only-01b-1280x800.png"
+   inkscape:export-xdpi="180"
+   inkscape:export-ydpi="180">
   <defs
      id="defs4">
     <pattern
@@ -296,7 +296,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.18"
-     inkscape:cx="325.80852"
+     inkscape:cx="311.86807"
      inkscape:cy="200"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
@@ -1315,5 +1315,12 @@
        style="fill:#d40000;fill-opacity:1;stroke:none"
        d="M 328 80 L 328 320 L 568 320 L 568 80 L 328 80 z M 336 88 L 560 88 L 560 312 L 336 312 L 336 88 z "
        id="rect4622" />
+    <rect
+       style="fill:black;fill-opacity:0.50000000000000000;stroke:none"
+       id="rect4627"
+       width="48"
+       height="224"
+       x="592"
+       y="88" />
   </g>
 </svg>
