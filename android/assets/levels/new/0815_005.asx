@@ -1,5 +1,5 @@
 ; LEVEL 005
-; FOR MAC MINOS - Versions > 0.1
+; FOR McMINOS - Versions > 0.1
 AUTHOR:   NoPe;   Andreas Neudecker
 
 NUMBR:    5
@@ -7,8 +7,6 @@ ACCCD:    123456781
 
 LWID:   40
 LHI:    14
-VWID:   40
-VHI:    14
 SCROLLX:  0
 SCROLLY:  1
 BACK: 1

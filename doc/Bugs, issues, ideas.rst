@@ -17,10 +17,6 @@ Bugs and Issues
 
 2015-10-08 — Andreas
 
-[ ] BUG Level 0: McMinos cannot walk accross destroyed walls.
-
-[ ] Level 0: clicking ahead of McMinos at the bottom of the screen to make him walk down, McMinos will walk down, shifting the level accordingly. But while the mouse pointer stays at the bottom edge of the window/clipping area, McMinos will stop walking once he has arrived at the level field that I originally clicked on. -- After my opinion McMinos should keep walking in the direction of the mouse pointer.
-
 [ ] BUG Level 0: Ghosts walk beneath McMinos when they kill him. Maybe we should rethink the z-indexing of ghosts and McMinos? I suggest:
 
   * McMinos:
@@ -58,8 +54,6 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 2015-10-18
 
 [ ] BUG: Level tut0n-*: Player always has 3 lives only at level start, even though LIVE: 999,999 (i.e. min-lives = 999) in all tutorial levels. -- UPDATE: It seems that only the display in the level suggest there are only 3 lives. The player can die multiple times without losing.
-
-[ ] BUG?: level tut05-rock-and-rock-me: Pill layer (now Perry) does not lay any pills, even though PILLFREQ2 is set to 1 (was not defined in "Help_for_editing_levels.asc"; have now added that 0 = no pills at all; default = 1 = 1 pill each field) -- Will produce a new testing level for Perry as tut05 had him by mistake.
 
 [ ] ISSUE: Do we still need the differenciation between NUMBR and SHOWNR in the level sources? I suggest we drop SHOWNR as the level list decides about the position.
 

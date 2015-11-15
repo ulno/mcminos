@@ -1,5 +1,5 @@
 ; LEVEL 001
-; FOR MAC MINOS - Versions > 0.1
+; FOR McMINOS - Versions > 0.1
 
 AUTHOR:   TWoT;   Ulrich Norbisrath (edited by NoPe)
 NUMBR:    1
@@ -7,8 +7,6 @@ ACCCD:    0815
 
 LWID:   30
 LHI:    17
-VWID:   30
-VHI:    17
 SCROLLX:  1
 SCROLLY:  1
 BACK: 1
