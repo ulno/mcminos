@@ -55,7 +55,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private SegmentString framerateScore;
 
     private Toolbox toolbox;
-
+    private boolean menusActivated = true;
 
     public Play(final Main main, String levelName) {
         this.main = main;
@@ -165,18 +165,19 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void render(float delta) {
         /////// Handle timing events (like moving and events)
         if (game.updateTime()) { // not finished
-
             // Handle drawing
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            backgroundBatch.begin();
-            for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution) {
-                for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution) {
-                    background.draw(playwindow, backgroundBatch, x, y);
+            if(menusActivated) {
+                backgroundBatch.begin();
+                for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution) {
+                    for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution) {
+                        background.draw(playwindow, backgroundBatch, x, y);
+                    }
                 }
+                backgroundBatch.end();
             }
-            backgroundBatch.end();
 
 //            gameBatch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
             gameBatch.begin();
@@ -184,7 +185,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             gameBatch.flush();
             ScissorStack.pushScissors(playwindow.getScissors());
 
-            game.draw();
+            game.draw(menusActivated);
 
             gameBatch.flush();
             ScissorStack.popScissors();
@@ -192,42 +193,43 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
             gameBatch.end(); // must end before other layers
 
-            // draw a dark transparent rectangle to have some background for mini screen
-            Gdx.gl.glEnable(GL20.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            if(menusActivated) {
+                // draw a dark transparent rectangle to have some background for mini screen
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-            miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-            miniScreenBackground.setColor(0,0,0,0.5f); // a little transparent
-            miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow,0,0)- playwindow.virtual2MiniResolution,
-                    Graphics.virtualToMiniY(playwindow,0,0)- playwindow.virtual2MiniResolution,
-                    Graphics.virtualToMiniX(playwindow,playwindow.getVPixelsLevelWidth()-1,0),
-                    Graphics.virtualToMiniX(playwindow,playwindow.getVPixelsLevelHeight()-1,0));
-            miniScreenBackground.end();
+                miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
+                miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
+                miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow, 0, 0) - playwindow.virtual2MiniResolution,
+                        Graphics.virtualToMiniY(playwindow, 0, 0) - playwindow.virtual2MiniResolution,
+                        Graphics.virtualToMiniX(playwindow, playwindow.getVPixelsLevelWidth() - 1, 0),
+                        Graphics.virtualToMiniX(playwindow, playwindow.getVPixelsLevelHeight() - 1, 0));
+                miniScreenBackground.end();
 
-            // mini screen
-            miniBatch.begin();
-            game.drawMini(miniBatch);
-            miniBatch.end();
+                // mini screen
+                miniBatch.begin();
+                game.drawMini(miniBatch);
+                miniBatch.end();
 
-            drawVisibleMarker();
+                drawVisibleMarker();
 
 
-            stageBatch.begin();
-            // score etc.
-            score.writeInteger(mcminos.getScore());
-            powerScore.writeInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent);
-            umbrellaScore.writeInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent);
-            toxicScore.writeInteger((mcminos.getPoisonDuration()+mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
-            framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
-            mirroredScore.writeChar(0,mcminos.isMirrored() ? 'M' : ' ');
-            font.draw(stageBatch, scoreInfo, playwindow.resolution + 20, Gdx.graphics.getHeight() - 20);
-            // add stage and menu
-            stageBatch.end();
+                stageBatch.begin();
+                // score etc.
+                score.writeInteger(mcminos.getScore());
+                powerScore.writeInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent);
+                umbrellaScore.writeInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent);
+                toxicScore.writeInteger((mcminos.getPoisonDuration() + mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
+                framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
+                mirroredScore.writeChar(0, mcminos.isMirrored() ? 'M' : ' ');
+                font.draw(stageBatch, scoreInfo, playwindow.resolution + 20, Gdx.graphics.getHeight() - 20);
+                // add stage and menu
+                stageBatch.end();
 
-// TODO: check again
-            toolbox.update(); // update toolbox based on inventory
-            stage.draw();
-            stage.act(delta);
+                toolbox.update(); // update toolbox based on inventory
+                stage.draw();
+                stage.act(delta);
+            }
         } // else level is finished
         else {
             backToMenu();
@@ -382,6 +384,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
             case '7':
                 toolbox.activate();
                 toolbox.activateMedicine();
+                break;
+            case '9':
+                ScreenshotFactory.saveScreenshot();
+                break;
+            case '0':
+                menusActivated = ! menusActivated;
                 break;
             case 27: // Escape
             case 't':

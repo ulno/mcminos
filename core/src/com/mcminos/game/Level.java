@@ -65,14 +65,26 @@ public class Level {
         load( filename );
     }
 
-    public void draw(PlayWindow playwindow) {
+    public void draw(PlayWindow playwindow, boolean drawBackgrounds) {
+        int zIndex;
+
         playwindow.updateCoordinates(); // fix coordinates and compute scrolling
         int size = allLevelObjects.size();
-        for (int i=0; i<size; i++) {
-            LevelObject lo = allLevelObjects.get(i);
-            if( lo.getzIndex() >= LevelObject.maxzIndex)
-                break; // can be stopped, as null is infinity and therefore only null in the end
-            lo.draw(playwindow);
+        if(drawBackgrounds) {
+            for (int i = 0; i < size; i++) {
+                LevelObject lo = allLevelObjects.get(i);
+                if (lo.getzIndex() >= LevelObject.maxzIndex) // TODO: check if necessary
+                    break; // can be stopped, as null is infinity and therefore only null in the end
+                lo.draw(playwindow);
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                LevelObject lo = allLevelObjects.get(i);
+                zIndex = lo.getzIndex();
+                if (  zIndex >= LevelObject.maxzIndex)
+                    break; // can be stopped, as null is infinity and therefore only null in the end
+                if( zIndex >= 200 ) lo.draw(playwindow);
+            }
         }
     }
 
