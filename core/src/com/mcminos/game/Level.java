@@ -340,7 +340,7 @@ public class Level {
             case "pavement-01":
                 bggfx = Entities.backgrounds_pavement_01;
                 break;
-            case "2":
+            /*case "2":
             case "pavement-02":
                 bggfx = Entities.backgrounds_pavement_02;
                 break;
@@ -351,7 +351,7 @@ public class Level {
             case "4":
             case "pavement-04":
                 bggfx = Entities.backgrounds_pavement_04;
-                break;
+                break;*/
             case "amoeboid-01":
                 bggfx = Entities.backgrounds_amoeboid_01;
                 break;
@@ -364,12 +364,12 @@ public class Level {
             case "gravel-01":
                 bggfx = Entities.backgrounds_gravel_01;
                 break;
-            case "gravel-02":
+            /*case "gravel-02":
                 bggfx = Entities.backgrounds_gravel_02;
                 break;
             case "gravel-03":
                 bggfx = Entities.backgrounds_gravel_03;
-                break;
+                break;*/
             case "meadow-flowers":
                 bggfx = Entities.backgrounds_meadow_flowers;
                 break;
