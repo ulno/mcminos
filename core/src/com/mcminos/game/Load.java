@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by ulno on 10.09.15.
  */
 public class Load implements Screen {
-    private final BitmapFont font;
     private final Stage stage;
     private final Skin skin;
     private final Texture loadscreen;
@@ -50,7 +49,6 @@ public class Load implements Screen {
 
         // Set up everything for the current screen
         skin = main.getSkin();
-        font = main.getFont();
         batch = main.getBatch();
         stage = new Stage(new ScreenViewport(), batch);
 

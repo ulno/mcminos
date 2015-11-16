@@ -29,7 +29,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private final Skin skin;
     private McMinos mcminos;
     private final Audio audio;
-    private final BitmapFont font;
+    private BitmapFont font;
     private final SpriteBatch stageBatch;
     private final SpriteBatch gameBatch;
     private final SpriteBatch backgroundBatch;
@@ -45,23 +45,23 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private int gameResolutionCounter = 0;
     Graphics background;
     private Touchpad touchpad;
-    private SegmentString scoreInfo;
-    private SegmentString score;
+    private StringBuilder scoreInfo;
+    /*private SegmentString score;
     private SegmentString powerScore;
     private SegmentString umbrellaScore;
     private SegmentString toxicScore;
     private SegmentString livesScore;
     private SegmentString mirroredScore;
-    private SegmentString framerateScore;
+    private SegmentString framerateScore;*/
 
     private Toolbox toolbox;
     private boolean menusActivated = true;
+
 
     public Play(final Main main, String levelName) {
         this.main = main;
         gameBatch = main.getBatch();
         camera = new OrthographicCamera();
-        font = main.getFont();
         skin = main.getSkin();
         audio = main.getAudio();
         // don't conflict with gameBatch
@@ -71,6 +71,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         miniScreenBackground = new ShapeRenderer();
         init(levelName);
     }
+
 
     public void init(String levelName) {
         game = new Game(main, this, camera);
@@ -96,14 +97,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
         toolbox = new Toolbox(game,this, stage,skin);
 
         // init scoreinfo display
-        scoreInfo = new SegmentString( "S00000 P00 U00 T00 L00 F00 M" );
-        score = scoreInfo.sub(1,5);
+        scoreInfo = new StringBuilder( 28 );
+        scoreInfo.append("S");
+//        scoreInfo = new SegmentString( "S00000 P00 U00 T00 L00 F00 M" );
+        /*score = scoreInfo.sub(1,5);
         powerScore = scoreInfo.sub(8,2);
         umbrellaScore = scoreInfo.sub(12,2);
         toxicScore = scoreInfo.sub(16,2);
         livesScore = scoreInfo.sub(20,2);
         framerateScore = scoreInfo.sub(24,2);
-        mirroredScore = scoreInfo.sub(27,1);
+        mirroredScore = scoreInfo.sub(27,1);*/
 
         // virtual joystick (called touchpad in libgdx)
         touchpad = new Touchpad(32, skin);
@@ -170,8 +173,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
             if(menusActivated) {
                 backgroundBatch.begin();
-                for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += playwindow.resolution) {
-                    for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += playwindow.resolution) {
+                int xoffset = playwindow.resolution * background.getWidth();
+                int yoffset = playwindow.resolution * background.getHeight();
+                for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += xoffset) {
+                    for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += yoffset) {
                         background.draw(playwindow, backgroundBatch, x, y);
                     }
                 }
@@ -214,18 +219,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
 
                 stageBatch.begin();
-                // score etc.
-                score.writeInteger(mcminos.getScore());
-                powerScore.writeInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent);
-                umbrellaScore.writeInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent);
-                toxicScore.writeInteger((mcminos.getPoisonDuration() + mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
-                framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
-                mirroredScore.writeChar(0, mcminos.isMirrored() ? 'M' : ' ');
-                font.draw(stageBatch, scoreInfo, playwindow.resolution + 20, Gdx.graphics.getHeight() - 20);
-                // add stage and menu
+                renderScore(); // score etc.
                 stageBatch.end();
 
                 toolbox.update(); // update toolbox based on inventory
+
+                // add stage and menu
                 stage.draw();
                 stage.act(delta);
             }
@@ -233,6 +232,44 @@ public class Play implements Screen, GestureListener, InputProcessor {
         else {
             backToMenu();
         }
+
+    }
+
+    private void renderScore() {
+        int v;
+
+        scoreInfo.setLength(1);
+        scoreInfo.append(mcminos.getScore());
+        scoreInfo.append(" L");
+        scoreInfo.append(mcminos.getLives());
+        v = mcminos.getPowerDuration();
+        if(v>0) {
+            scoreInfo.append(" P");
+            scoreInfo.append(v >> game.timeResolutionExponent);
+        }
+        v = mcminos.getUmbrellaDuration();
+        if(v>0) {
+            scoreInfo.append(" U");
+            scoreInfo.append(v >> game.timeResolutionExponent);
+        }
+        v = mcminos.getPoisonDuration() + mcminos.getDrunkLevel();
+        if(v>0) {
+            scoreInfo.append(" T");
+            scoreInfo.append(v >> game.timeResolutionExponent);
+        }
+        scoreInfo.append(" F");
+        scoreInfo.append(Gdx.graphics.getFramesPerSecond());
+        if(mcminos.isMirrored()) {
+            scoreInfo.append(" M");
+        }
+
+/*        score.writeInteger(mcminos.getScore());
+        powerScore.writeInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent);
+        umbrellaScore.writeInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent);
+        toxicScore.writeInteger((mcminos.getPoisonDuration() + mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
+        framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
+        mirroredScore.writeChar(0, mcminos.isMirrored() ? 'M' : ' '); */
+        font.draw(stageBatch, scoreInfo, playwindow.resolution + (playwindow.resolution>>3) , Gdx.graphics.getHeight() - (playwindow.resolution >> 3));
 
     }
 
@@ -295,12 +332,24 @@ public class Play implements Screen, GestureListener, InputProcessor {
         miniScreenBackground.setProjectionMatrix(matrix);
 
         playwindow.resize(width, height);
+        fontResize();
         //menuTable.setBounds(0, 0, width, height);
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
         stage.getViewport().update(width, height, true);
         //toolboxTable.setSize(width / 3, height * 4 / 5);
         toolbox.resize();
         touchpadResize();
+    }
+
+    public void resize() {
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    private void fontResize() {
+        int fontRes = playwindow.resolution / 2;
+        if(fontRes < 32) fontRes = 32;
+        if(fontRes >128) fontRes = 128;
+        font = main.getFont(fontRes);
     }
 
     @Override
@@ -349,12 +398,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
             case '+':
                 zoomPlus();
                 playwindow.setResolution(gameResolutionCounter);
-                toolbox.resize();
+                resize();
                 break;
             case '-':
                 zoomMinus();
                 playwindow.setResolution(gameResolutionCounter);
-                toolbox.resize();
+                resize();
                 break;
             case '1':
                 toolbox.activate();
@@ -413,7 +462,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameResolutionCounter--;
         if (gameResolutionCounter < 0) gameResolutionCounter = 0;
         playwindow.setResolution(gameResolutionCounter);
-        toolbox.resize();
+        resize();
     }
 
     public void zoomMinus() {
@@ -421,7 +470,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         if (gameResolutionCounter > Entities.resolutionList.length - 1)
             gameResolutionCounter = Entities.resolutionList.length - 1;
         playwindow.setResolution(gameResolutionCounter);
-        toolbox.resize();
+        resize();
     }
 
     @Override
