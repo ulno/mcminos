@@ -29,7 +29,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private final Skin skin;
     private McMinos mcminos;
     private final Audio audio;
-    private final BitmapFont font;
+    private BitmapFont font;
     private final SpriteBatch stageBatch;
     private final SpriteBatch gameBatch;
     private final SpriteBatch backgroundBatch;
@@ -61,7 +61,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
         this.main = main;
         gameBatch = main.getBatch();
         camera = new OrthographicCamera();
-        font = main.getFont();
         skin = main.getSkin();
         audio = main.getAudio();
         // don't conflict with gameBatch
@@ -71,6 +70,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         miniScreenBackground = new ShapeRenderer();
         init(levelName);
     }
+
 
     public void init(String levelName) {
         game = new Game(main, this, camera);
@@ -295,12 +295,24 @@ public class Play implements Screen, GestureListener, InputProcessor {
         miniScreenBackground.setProjectionMatrix(matrix);
 
         playwindow.resize(width, height);
+        fontResize();
         //menuTable.setBounds(0, 0, width, height);
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
         stage.getViewport().update(width, height, true);
         //toolboxTable.setSize(width / 3, height * 4 / 5);
         toolbox.resize();
         touchpadResize();
+    }
+
+    public void resize() {
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    private void fontResize() {
+        int fontRes = playwindow.resolution / 2;
+        if(fontRes < 32) fontRes = 32;
+        if(fontRes >128) fontRes = 128;
+        font = main.getFont(fontRes);
     }
 
     @Override
@@ -349,12 +361,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
             case '+':
                 zoomPlus();
                 playwindow.setResolution(gameResolutionCounter);
-                toolbox.resize();
+                resize();
                 break;
             case '-':
                 zoomMinus();
                 playwindow.setResolution(gameResolutionCounter);
-                toolbox.resize();
+                resize();
                 break;
             case '1':
                 toolbox.activate();
@@ -413,7 +425,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameResolutionCounter--;
         if (gameResolutionCounter < 0) gameResolutionCounter = 0;
         playwindow.setResolution(gameResolutionCounter);
-        toolbox.resize();
+        resize();
     }
 
     public void zoomMinus() {
@@ -421,7 +433,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         if (gameResolutionCounter > Entities.resolutionList.length - 1)
             gameResolutionCounter = Entities.resolutionList.length - 1;
         playwindow.setResolution(gameResolutionCounter);
-        toolbox.resize();
+        resize();
     }
 
     @Override

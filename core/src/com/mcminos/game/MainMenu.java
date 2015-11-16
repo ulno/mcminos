@@ -31,14 +31,12 @@ public class MainMenu implements Screen {
     private final Texture bg;
     private final Image bgimage;
     private final SelectBox sb;
-    private final BitmapFont font;
     private final SpriteBatch batch;
     private final Main main;
 
     public MainMenu(final Main main, String levelPreselect) {
         this.main = main;
         batch = main.getBatch();
-        font = main.getFont();
         skin = main.getSkin();
 
         bg = new Texture( Gdx.files.internal("images/loadscreen.png"));
