@@ -7,7 +7,7 @@ ACCCD:    0
 
 LWID:   12
 LHI:    12
-SCROLLX:  1
+SCROLLX:  0
 SCROLLY:  0
 BACK: 1
 
@@ -42,7 +42,7 @@ X.XX.XX.XX.X
 X.X......X.X
 X...XXXX...X
 XXX..G...XXX
-....XXXX....
+X...XXXX...X
 X.XXXCCXXX.X
 X....CC....X
 X.XX.XX.XX.X
