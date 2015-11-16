@@ -240,6 +240,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         scoreInfo.setLength(1);
         scoreInfo.append(mcminos.getScore());
+        scoreInfo.append(" L");
+        scoreInfo.append(mcminos.getLives());
         v = mcminos.getPowerDuration();
         if(v>0) {
             scoreInfo.append(" P");
