@@ -38,9 +38,9 @@ public class Game {
 
     private Random randomGenerator = new Random();
     private boolean movement = false; // only do animations but don't move anything
-    boolean toolboxActivated = false;
     private long lastDeltaTimeLeft = 0;
     private boolean timerTaskActive = false;
+    private Toolbox toolbox;
 
 
     public PlayWindow getPlayWindow() {
@@ -83,24 +83,15 @@ public class Game {
         return true;
     }
 
-    public Level loadLevel(String s) {
-        // Load a level
-        level = new Level(this, s);
-        // is al done in load level mcminos.init(); // trigger update
-        playwindow = new PlayWindow(batch,camera,level,mcminos);
-        initAfterLoad();
-
-        // start the own timer (which triggers also the movement)
-        startTimer();
-        return level;
-    }
-
-    private void initAfterLoad() {
+    public void initAfterLoad(PlayWindow playwindow, Level level, McMinos mcminos, Toolbox toolbox) {
+        this.playwindow = playwindow;
+        this.level = level;
+        this.mcminos = mcminos;
         // Now init some of the level elements
         getGhosts().init(); // update references
-        Mover mover = new McMinosMover(this);
+        Mover mover = new McMinosMover(this,mcminos);
         // done in mover creation mcminos.setMover(mover); // needs to be created this late
-
+        this.toolbox = toolbox;
     }
 
     public LevelBlock getLevelBlock( int x, int y) {
@@ -168,7 +159,7 @@ public class Game {
         if( level.isFinished() ) {
             return false;
         }
-        if( !toolboxActivated) { // if game is not suspended with toolbox
+        if( !toolbox.isActivated()) { // if game is not suspended with toolbox
             // do timers
             gameFrame++;
             /* done with synchronize // get lock
@@ -311,15 +302,7 @@ public class Game {
 
     public void reload() {
         level.load(currentLevelName);
-        initAfterLoad();
-    }
-
-    public boolean isToolboxActivated() {
-        return toolboxActivated;
-    }
-
-    public void setToolboxActivated(boolean toolboxActivated) {
-        this.toolboxActivated = toolboxActivated;
+        initAfterLoad(playwindow, level, mcminos, toolbox);
     }
 
     public boolean getMovement() {

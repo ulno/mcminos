@@ -22,8 +22,9 @@ public class McMinosMover extends Mover {
     private ArrayList<LevelObject> currentItemlist;
 
 
-    public McMinosMover(Game game) {
-        super(game.getMcMinos().getLevelObject(), 1, true, 0);
+    public McMinosMover(Game game, McMinos mcminos) {
+        super(mcminos.getLevelObject(), 1, true, 0);
+        this.mcminos = mcminos;
         this.game = game;
         audio = game.getAudio();
         mcminos = game.getMcMinos();
