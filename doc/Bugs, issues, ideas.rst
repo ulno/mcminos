@@ -41,13 +41,7 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 [ ] IDEA: Level number: it would be good to have the level number shown somewhere in the level, at least for testing.
 
 
-2015-10-16 - Andreas
-
-[ ] 2DO: When bomb, dynamite or mine explode, the field under the explosive should be decorated with a crater, using /extra/images/walls/destroyed/00/00.svg
-
 2015-10-17 - Andreas
-
-[ ] 2DO: I just realise, that the current way of walking across level borders is totally different from what we were having in the Atari version: Due to the centering of McMinos, the level would simply scroll on to show (e.g.) the left side of the level when closing in on the right edge of the level, so that the level looks like it is infinite - or is that due to the SCROLL settings of the level?
 
 [ ] IDEA, 2DO: Having an option to load levels from a (pre-defined?) directory outside the jar would make testing+editing levels a lot easier and faster. I suggest that the program checks for existence of <position-of-the-jar>/test-levels and, if this folder exists, loads list and levels from there instead from the internal data.
 
@@ -55,11 +49,11 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 [ ] BUG: Level tut0n-*: Player always has 3 lives only at level start, even though LIVE: 999,999 (i.e. min-lives = 999) in all tutorial levels. -- UPDATE: It seems that only the display in the level suggest there are only 3 lives. The player can die multiple times without losing.
 
-[ ] ISSUE: Do we still need the differenciation between NUMBR and SHOWNR in the level sources? I suggest we drop SHOWNR as the level list decides about the position.
+[ ] ISSUE: Do we still need the differenciation between NUMBR and SHOWNR in the level sources? I suggest we drop SHOWNR as the level list decides about the position. — 2015-11-16: May be we can even drop NUMBR?
 
-[ ] ISSUE, 2DO: For testing purposes we need the version of the program visible inside the game, in a prominent place, if possible.
+[ ] ISSUE, 2DO: For testing purposes we need the version of the program visible inside the game, in a prominent place, if possible. When alpha and beta testers test, they may not always have the most recent version and we cannot know whithout them telling us.
 
-[ ] BUG: Level tut08-holes: while the level is easy to do, the pill at the bottom right needs to be eaten last. Otherwise the player falls into the hole next to it. The level source defines RSTRT: 1 which should make the whole level restart after the player falls into a hole. But the level stays in the state it was right before the players demise. This makes the level impossible to solve after the player fell into one hole.
+[ ] IMPORTANT BUG: Level tut08-holes: while the level is easy to do, the pill at the bottom right needs to be eaten last. Otherwise the player falls into the hole next to it. The level source defines RSTRT: 1 which should make the whole level restart after the player falls into a hole. But the level stays in the state it was right before the players demise. This makes the level impossible to solve after the player fell into one hole.
 
 [ ] BUG: Level 6: McMinos finished the level by eating the last jumping pill. And is killed by a ghost while already cheering. Ghosts should stop running once McMinos wins.
 
@@ -70,17 +64,13 @@ This way, McMinos is beneath ghosts, unless he has had power pill or similar pow
 
 2015-10-19 - Andreas
 
-[ ] ISSUE, TESTING: The following features would greatly facilitate testing and/or preparation of the release:
+[ ] IDEA, TESTING: The following features would greatly facilitate testing and/or preparation of the release:
 
 * program version visible inside the program
 
 * screenshot functionality inside the program
 
 * recording playing a level (for testing and demo use)
-
-[ ] ISSUE: toolbox: I suggest the toolbox becomes a narrow area where tools are presented only after they have been collected. (Plus level options like restart, go to mainmenu, suicide, ...)
-
-[ ] ISSUE: level-clipping as defined in the level sources: I know we used to have a number of levels where a very peep-hole style clipping was used. I believe I have seen some in the current working list of levels. Do we really need this to produce entertaining levels? We are now addressing devices as diverse as mobile phone and desktop, i.e. vastly diverging display dimensions.
 
 [ ] 2DO: Level tut11-dynamite: This level has an outer wall made of indestructible walls. Inside are a couple of default walls. Where the default walls "touch" the indestructible ones, they are sort of connected. In the Atari version we had them separated by end pieces, i.e.
 
@@ -100,15 +90,9 @@ would lead to a sequence of <indestructible wall>,<default wall 02>,<default wal
 
 [ ] BUG: Level tut17-infinite-world: SCROLLX and SCROLLY are on. If the player is in a position where the castle is visible at the bottom accross the level edges, but only the two top field quarters of the castle should be visible, the castle is not drawn at all. If a little more than the two top fields are shown, the castle is visible. — Addendum: this only happens at maximum size of the fields (128x128) in a 1280x878 pixel window.
 
-  UPDATE (2015-10-23): The same happens with background pavement-01 (now a 3x3 field object with corresponding CONFIG), level tut17-infinite-world: the bottom row of fields should show the upper third of the background. It shows the frame background (currently pavement-04) instead. 
+  UPDATE (2015-10-23): The same happens with background pavement-01 (now a 3x3 field object with corresponding CONFIG), level tut17-infinite-world: the bottom row of fields should show the upper third of the background. It shows the frame background (currently pavement-04) instead.
 
 [ ] ISSUE: (sample) level: tut06-jumping-pills: the jpills are too stupid: simply waiting in a corner or closing the door and waiting in the middle of the level is enough to have all jpills jump in your mouth - unless they have all done that already before you managed to close the door. It would be great if the jpills could be set to a difficulty where they can also turn in their own path to evade the player.
-
-[ ] ISSUE: we need a more obvious connection between background numbers in the level sources and the real background names. Should we move to background names in the level sources? And, if not found (i.e.: nobody cared to change the level source, YET) default background is used?
-
-2015-10-23 - Andreas
-
-[ ] BUG level tut17-infinite-worlds: player eats last pill on left edge field (passage to right edge; field coord.: (1; 2)), jumps cheering(ly) to the right edge
 
 2015-10-24 - Andreas
 
@@ -117,12 +101,21 @@ would lead to a sequence of <indestructible wall>,<default wall 02>,<default wal
 
 2015-10-27 Phone talk Andreas + Uli
 
-* minimap/radar screen, base size 4x4, is to be integrated into /extra/images as "minimap" ()or "radar"? A.)
 * UI possibly done without skins, similar to Atari version: icons + text, where required
-* minimap directory will replicate the directory structure of /extra/images for now
-* for now, only static images and very short animations where required will be done for minimap
 * LEVEL SOURCES: no extras are transferred to the next level; all tools will be converted to extra points. Exception: extra lives will be transferred. Corresponding variables in the level sources are deprecated and will be ignored. Levels need to be adapted accordingly (i.e.: provide required extras at level start - inside the level)
 
+
+2015-11-16 - Andreas
+
+[ ] IDEA: desktop, level screen, pause mode: the cursor keys should allow navigation in the level in view mode.
+
+[ ] ISSUE: level screen, minimap: I would like to get rid of the yellow frame. I think it is often misleading as it wraps around the edges - or worse: the corners - of the minimap. Now, I thought, it might be nicer, to automatically scroll the minimap just the same as the big level, so that McMinos is usally in the center of the minimap, too. This might also let us get rid of double walls on the edges as the wrap-around levels would than REALLY be infinite world style and it doesn't matter where the actual level edges are. Optionally, McMinos might blink in the minimap, as he did on Atari (right?)
+
+[ ] ISSUE: Currently the level is centered on the level screen. Due to this, there is often a part of the level covered by the minimap, even though there is a lot of free space on the left, between the toolbox and the level, that could be used for displaying the level. — Oh, the same is valid for vertical positioning. I.e.: I consider it best, if the there is a sensible way not to cover the level with the minimap, not to do it.
+
+[ ] ISSUE: Showing the level number inside the level for testing would be very helpful, not only for testers, but, too, for my screenshots for level list thumbnails, as this would be the only useful way I could see the level number corresponding to a screenshot right away without searching and guessing.
+
+[ ] BUG: Walls next to invisible walls should not be drawn as connected to those as they give away the invisble walls. And it looks awful, too.
 
 
 Ideas, Brainstorming

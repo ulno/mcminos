@@ -3,7 +3,6 @@ testing/50x50_many_animations
 tut/tut01-pills
 tut/tut02-ghost-hanky
 tut/tut03-chocolate
-tut/tut04b-doors-and-keys-new
 tut/tut04-doors-and-keys
 tut/tut05-rock-and-rock-me
 tut/tut06-jumping-pills
@@ -16,7 +15,7 @@ tut/tut12-oneways
 tut/tut13-mirror
 tut/tut14-speed-up-and-down-killall-field
 tut/tut15-whisky
-tut/tut15-infinite-world
+tut/tut16-infinite-world
 new/0815_000
 new/0815_001
 new/0815_002
@@ -61,7 +60,6 @@ yellow/0200_001
 yellow/0200_005
 yellow/0200_010
 yellow/0200_011
-yellow/0200_012
 yellow/0200_015
 yellow/0200_018
 yellow/0200_020

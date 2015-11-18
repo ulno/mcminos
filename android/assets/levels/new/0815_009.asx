@@ -8,9 +8,9 @@ SHAREWARE:  1
 
 LWID:   32
 LHI:    30
-SCROLL:   1
-SCROLL:   1
-BACK:   26
+SCROLLX:   1
+SCROLLY:   1
+BACK: 1
 
 LTIME:    700
 RSTRT:    0
@@ -37,34 +37,34 @@ UMBR:   0,999
 KEYS:   0,999
 
 LEVEL:
-XX XX   XX XX   XX XX   XX XX
+XX XX   XX XX   XX XX   XX XX   
 X   XXXXX   XXXXX   XXXXX   XXXX
-  .       .   P   .       .   D
+  .       .   P   .       .   D 
 X   XXrXX   XXrXX   XXrXX   XXXX
-XXXXX   XXXXX   XXXXX   XXXXX
-      O   D   .   D   .   D r .
-XXXXX   XXXXX   XXXXX   XXXDX
+XXXXX   XXXXX   XXXXX   XXXXX   
+      O   D   .   D   .   D r . 
+XXXXX   XXXXX   XXXXX   XXXDX   
 X   XX XX   XXDXX   XXDXX CCXXXX
-r .     r . r   r . r   r CCD
+r .     r . r   r . r   r CCD   
 X   XXXXX   XXXXX   XXXXX   XXXX
-XX XX   XX XX   XX XX   XX XX
-      .       .       .     G X
-XXOXX   XX XX   XXLXX   XX XX
+XX XX   XX XX   XX XX   XX XX   
+      .       .       .     G X 
+XXOXX   XX XX   XXLXX   XX XX   
 Xk .XXXXX. .XXXXX   XXXXX   XXXX
- CC   .   r   .   r   .   r
+ CC   .   r   .   r   .   r     
 XCC XXXXX. .XXXXX   XXXXX   XXXX
-XX XX   XX XX  kXX XX   XX XX
-      *       *     D O Xk    r
-XX XX   XX XX   XX XX   XXXXX
+XX XX   XX XX  kXX XX   XX XX   
+      *       *     D O Xk    r 
+XX XX   XX XX   XX XX   XXXXX   
 X   XXXXXCC XXXXX   XX XXkb+XDXX
-  O   r  CC   r   c kX XkkbbX
+  O   r  CC   r   c kX XkkbbX   
 X   XXXXX   XXXXX   XX XXkbbXXXX
-XXDXX   XX XXk  XX XX   XXDXX
-      O       r               X
-XXDXX   XX XX   XXDXX   XXXXX
+XXDXX   XX XXk  XX XX   XXDXX   
+      O       r               X 
+XXDXX   XX XX   XXDXX   XXXXX   
 X   XXrXX   XX XX   XX XX   XXXX
-D O       *       b       +
+D O       *       b       +     
 X   XXXXX   XXXXX   XXXXX   XXXX
-XX XX   XX XX   XX XX   XX XX
-  r   .               O       *
+XX XX   XX XX   XX XX   XX XX   
+  r   .               O       * 
 #

@@ -295,8 +295,8 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.18"
-     inkscape:cx="311.86807"
+     inkscape:zoom="1.32"
+     inkscape:cx="320"
      inkscape:cy="200"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
@@ -336,7 +336,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:creator>
           <cc:Agent>
             <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
@@ -1295,7 +1295,7 @@
        id="image4259"
        xlink:href="file:///home/andreas/Dokumente/Projekte/McMinos/mcminos-mobile/doc/mock-ups/tutorial-list-screen-01/pics/2015-11-14_09:06:10_CUT.png"
        height="224"
-       width="225" />
+       width="224" />
     <image
        y="88"
        x="336"

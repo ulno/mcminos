@@ -39,14 +39,24 @@ Libraries
 libgdx
 ------
 
-Homepage:
+Homepage: https://github.com/libgdx
+
 
 Documentation, Tutorials, Articles, etc.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* libgdx Wiki — https://github.com/libgdx/libgdx/wiki
+
 * LibGDX – Making a Paged Level Selection Screen — http://nexsoftware.net/wp/2013/05/09/libgdx-making-a-paged-level-selection-screen/
 
-* 
+* Skin Editor documentation — http://www.shadebob.org/posts/skin-editor-documentation
+
+* Bad Logic Games Forum: Skin Editor — http://www.badlogicgames.com/forum/viewtopic.php?t=14295&p=78236
+
+* How to create skin for libgdx project? — https://stackoverflow.com/questions/25117901/how-to-create-skin-for-libgdx-project
+
+* Skin Editor — http://www.badlogicgames.com/forum/viewtopic.php?t=14295&p=78236
+
 
 Graphic tools
 =============
@@ -68,6 +78,23 @@ Homepage:
 
 UI editors and tools
 ====================
+
+Skin Editor (for libgdx skins)
+------------------------------
+
+Homepage: https://github.com/gunmetal313/gdx-skineditor
+
+
+
+hiero
+-----
+
+Homepage: 
+
+A bitmap font generator, saves in Angel Code font format.
+
+* libdx Wiki:Hiero — https://github.com/libgdx/libgdx/wiki/Hiero
+
 
 Diverse
 =======

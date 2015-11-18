@@ -335,6 +335,10 @@ public class Level {
         // select background
         Graphics bggfx = null;
         switch(background) {
+            case "0":
+            case "black":
+                bggfx = Entities.backgrounds_black;
+                break;
             case "1":
             case "pavement-01":
                 bggfx = Entities.backgrounds_pavement_01;
