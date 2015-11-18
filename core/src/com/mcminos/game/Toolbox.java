@@ -3,6 +3,8 @@ package com.mcminos.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -146,7 +148,7 @@ public class Toolbox {
             }
         });
 
-        menuButton = new ToolboxButton( this, Entities.menu_enter_button, 0, new ClickListener() {
+        menuButton = new ToolboxButton( this, Entities.menu_settings, 0, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gameMenu();
@@ -566,6 +568,8 @@ allows cheating */
 
         // Fill topMenu
         final Group soundButton = new Group();
+        final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res,0);
+        soundButton.addActor(new Image(emptyButtonGfx));
         soundButton.addActor(new Image(Entities.menu_sound_on.getTexture(res,0)));
         soundButton.addListener(new ClickListener() {
             @Override
@@ -573,8 +577,10 @@ allows cheating */
                 audio.toggleSound();
                 soundButton.clearChildren();
                 if(audio.getSound()) {
+                    soundButton.addActor(new Image(emptyButtonGfx));
                     soundButton.addActor(new Image(Entities.menu_sound_on.getTexture(playwindow.resolution,0)));
                 } else {
+                    soundButton.addActor(new Image(emptyButtonGfx));
                     soundButton.addActor(new Image(Entities.menu_sound_off.getTexture(playwindow.resolution,0)));
                 }
             }
@@ -600,7 +606,9 @@ allows cheating */
         });
         topMenu.add(touchpadButton).prefSize(res, res);
 
-        Image plusButton = new Image(Entities.menu_zoom_in.getTexture(res, 0));
+        Group plusButton = new Group();
+        plusButton.addActor(new Image(emptyButtonGfx));
+        plusButton.addActor(new Image(Entities.menu_zoom_in.getTexture(res, 0)));
         plusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -611,7 +619,9 @@ allows cheating */
         });
         topMenu.add(plusButton).prefSize(res, res);
 
-        Image minusButton = new Image(Entities.menu_zoom_out.getTexture(res, 0));
+        Group minusButton = new Group();
+        minusButton.addActor(new Image(emptyButtonGfx));
+        minusButton.addActor(new Image(Entities.menu_zoom_out.getTexture(res, 0)));
         minusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -622,7 +632,9 @@ allows cheating */
         });
         topMenu.add(minusButton).prefSize(res, res);
 
-        Image leaveButton = new Image(Entities.menu_stop.getTexture(res, 0));
+        Group leaveButton = new Group();
+        leaveButton.addActor(new Image(emptyButtonGfx));
+        leaveButton.addActor(new Image(Entities.menu_stop.getTexture(res, 0)));
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -632,24 +644,28 @@ allows cheating */
         });
         topMenu.add(leaveButton).prefSize(res,res);
 
-        Image viewButton = new Image(Entities.menu_pause.getTexture(res, 0));
-        viewButton.addListener(new ClickListener() {
+        Group pauseButton = new Group();
+        pauseButton.addActor(new Image(emptyButtonGfx));
+        pauseButton.addActor(new Image(Entities.menu_pause.getTexture(res, 0)));
+        pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 removeDialog();
             }
         });
-        topMenu.add(viewButton).prefSize(res,res);
+        topMenu.add(pauseButton).prefSize(res,res);
 
-        Image exitImage = new Image(Entities.menu_play.getTexture(res, 0));
-        exitImage.addListener(new ClickListener() {
+        Group continueButton = new Group();
+        continueButton.addActor(new Image(emptyButtonGfx));
+        continueButton.addActor(new Image(Entities.menu_play.getTexture(res, 0)));
+        continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 deactivate();
                 //super.clicked(event, x, y);
             }
         });
-        topMenu.add(exitImage).prefSize(res, res).maxSize(res).left().fillX().expandX();
+        topMenu.add(continueButton).prefSize(res, res).maxSize(res).left().fillX().expandX();
 
         ///// Fill statistics
         statisticsTable.add(new Label("Statistics", skin)).top().colspan(2).center().padBottom(res / 4).row();
