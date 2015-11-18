@@ -3,10 +3,7 @@ package com.mcminos.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -21,16 +18,16 @@ import java.util.ArrayList;
 public class Toolbox {
     private final Stage stage;
     private final Skin skin;
-    private final Game game;
     private final PlayWindow playwindow;
     private final McMinos mcminos;
     private final Audio audio;
     private final Level level;
     private final Play play;
 
-    private Table toolboxTable;
-
+    private Table table;
     private Table rootTable;
+
+    private boolean activated = false;
 
     private ScrollPane toolboxScroller;
     private ToolboxButton chocolateButton;
@@ -40,6 +37,7 @@ public class Toolbox {
     private ToolboxButton landmineButton;
     private ToolboxButton umbrellaButton;
     private ToolboxButton medicineButton;
+    private ToolboxButton playPauseButton;
     private ToolboxButton menuButton;
     private Image menuButtonImage;
     private Image chocolatesImage;
@@ -53,6 +51,8 @@ public class Toolbox {
     private Table toolboxDialog = null;
     private final LevelBlock doorBlocks[] = new LevelBlock[4];
     private ArrayList<ToolboxButton> buttonList = new ArrayList<>();
+    private boolean rebuildNecessary = true; // at the beginning it has to be rebuilt
+    private boolean activatingTouchInProgress = false;
 
             /* old rootTable
             menuTable = new Table();
@@ -109,36 +109,40 @@ public class Toolbox {
         });*/
 
 
-    public Toolbox(Game game, Play play, Stage stage, Skin skin) {
-        this.game = game;
+    public Toolbox(Play play, PlayWindow playwindow, McMinos mcminos, Audio audio, Level level, Stage stage, Skin skin) {
         this.play = play;
         this.stage = stage;
         this.skin = skin;
-        playwindow = game.getPlayWindow();
-        mcminos = game.getMcMinos();
-        audio = game.getAudio();
-        level = game.getLevel();
-        rootTable = new Table(skin); // This is just the root of the rootTable, updated by resize
+        this.playwindow = playwindow;
+        this.mcminos = mcminos;
+        this.audio = audio;
+        this.level = level;
+        rootTable = new Table(skin); // This is just the root of the table, updated by resize
         rootTable.setPosition(0, 0);
         stage.addActor(rootTable);
         // In there, we need a table on a scrollable pane
-        toolboxTable = new Table(skin);
-        toolboxTable.setPosition(0, 0, Align.top);
-        toolboxScroller = new ScrollPane(toolboxTable);
+        table = new Table(skin);
+        table.setPosition(0, 0, Align.top);
+        toolboxScroller = new ScrollPane(table);
         toolboxScroller.setScrollBarPositions(false, true);
         rootTable.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
         rootTable.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
-        //toolboxTable.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
+        //table.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
         rootTable.add(toolboxScroller).fill().expand().align(Align.topLeft); // add this to root
 //        rootTable.add(toolboxScroller).top(); // add this to root
-//        toolboxTable.setColor(0,1,0,1);
-//        toolboxTable.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
-//        rootTable.add(toolboxTable).expand().fill().align(Align.topLeft).row();
+//        table.setColor(0,1,0,1);
+//        table.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
+//        rootTable.add(table).expand().fill().align(Align.topLeft).row();
         rootTable.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                activate();
-                return super.touchDown(event, x, y, pointer, button);
+                if(event.getListenerActor() == rootTable) {
+                    activatingTouchInProgress = !activated;
+                    activate();
+                    //table.fire(event);
+                    //return super.touchDown(event, x, y, pointer, button);
+                }
+                return false;
             }
         });
 
@@ -146,6 +150,18 @@ public class Toolbox {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gameMenu();
+            }
+        });
+        playPauseButton = new ToolboxButton( this, Entities.menu_pause, 0, new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!activatingTouchInProgress ) {
+                    if (activated) {
+                        deactivate();
+                    } else {
+                        activate();
+                    }
+                }
             }
         });
         chocolateButton = new ToolboxButton( this, Entities.pills_power_pill_chocolate, 2, new ClickListener() {
@@ -233,39 +249,42 @@ public class Toolbox {
         rootTable.setHeight(playwindow.getHeightInPixels());
 
         for(int i=buttonList.size()-1; i>=0; i--) {
-            buttonList.get(i).resize(res);
+            buttonList.get(i).rebuildButton(res);
         }
 
         update();
 
-        rebuild();
+        scheduleRebuild();
     }
 
-    private void rebuild() {
-        Cell<Group> last = null;
-        boolean rowadded = true;
+    public void rebuild() {
+        if( rebuildNecessary ) {
+            Cell<Group> last = null;
+            boolean rowadded = true;
 
-        // make all visible
-        toolboxTable.clearChildren();
+            // make all visible
+            table.clearChildren();
 
-        for(int i=0; i<buttonList.size(); i++) {
-            if(!rowadded) {
-                last.row();
-                rowadded = true;
+            for (int i = 0; i < buttonList.size(); i++) {
+                if (!rowadded) {
+                    last.row();
+                    rowadded = true;
+                }
+                ToolboxButton tb = buttonList.get(i);
+                if (tb.isVisible()) {
+                    last = tb.addToTable();
+                    rowadded = false;
+                }
             }
-            ToolboxButton tb = buttonList.get(i);
-            if(tb.isVisible()) {
-                last = toolboxTable.add(tb.getActor());
-                rowadded = false;
-            }
+            if (last != null)
+                last.expandY().top().left().row();
+            rebuildNecessary = false;
         }
-        if(last != null)
-            last.expandY().top().left().row();
-
     }
 
     public void update() {
         boolean c = false;
+        c = c || playPauseButton.setGraphics(activated?Entities.menu_play:Entities.menu_pause); // set right image in pause-button
         c = c || chocolateButton.setValue(mcminos.getChocolates());
         c = c || keyButton.setValue(mcminos.getKeys());
         c = c || bombButton.setValue(mcminos.getBombs());
@@ -275,8 +294,15 @@ public class Toolbox {
         c = c || medicineButton.setValue(mcminos.getMedicines());
         // does not seem to work: sort();
         if(c) { // visibility changed
-            rebuild();
+            scheduleRebuild();
         }
+    }
+
+    /**
+     * make sure to trigger a rebuild at a later point
+     */
+    private void scheduleRebuild() {
+        rebuildNecessary = true;
     }
 
     /* swap actor seems not to work
@@ -288,7 +314,7 @@ public class Toolbox {
                 if( buttonList.get(j-1).isGreater(buttonList.get(j)) ) {
                     // bubble up
                     tmp = buttonList.get(j);
-                    toolboxTable.swapActor(tmp.getActor(), buttonList.get(j-1).getActor());
+                    table.swapActor(tmp.getActor(), buttonList.get(j-1).getActor());
                     buttonList.set(j,buttonList.get(j-1));
                     buttonList.set(j-1, tmp);
                 }
@@ -297,12 +323,18 @@ public class Toolbox {
 */
 
     public void activate() {
-        game.setToolboxActivated(true);
+        if(!activated) {
+            activated = true;
+            rebuild();
+        }
     }
 
     public void deactivate() {
-        game.setToolboxActivated(false);
-        removeDialog();
+        if( activated ) {
+            activated = false;
+            removeDialog();
+            rebuild();
+        }
     }
 
     private void removeDialog() {
@@ -329,7 +361,7 @@ public class Toolbox {
                     if (lb.hasClosedDoor()) // was opened
                         audio.soundPlay("rums");
                     else audio.soundPlay("quietsch");
-                    deactivate(); // close toolboxTable
+                    deactivate(); // close table
                 }
             }
         }
@@ -483,12 +515,11 @@ allows cheating */
                 buttonTable.add(empty).pad(res / 2);
                 if ((doors & Mover.UP) > 0) buttonTable.add(new KeyButton(res, doorBlocks[0],Entities.toolbox_key_option_up).getImage());
                 else buttonTable.add(empty);
-                Image exitImage = new Image(Entities.extras_missing.getTexture(res, 0));
+                Image exitImage = new Image(Entities.toolbox_abort.getTexture(res, 0));
                 buttonTable.add(exitImage).row();
                 exitImage.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        removeDialog();
                         deactivate();
                         //super.clicked(event, x, y);
                     }
@@ -526,7 +557,7 @@ allows cheating */
         Table topMenu = new Table(skin);
         topMenu.setHeight(res);
         ScrollPane scrollPane = new ScrollPane(topMenu);
-        d.add(scrollPane).colspan(2).expandX().top().row();
+        d.add(scrollPane).colspan(2).expandX().fillX().top().row();
         Table statisticsTable = new Table(skin);
         d.add(statisticsTable).fill().expand();
         Table storyTable = new Table(skin);
@@ -534,12 +565,18 @@ allows cheating */
         d.row();
 
         // Fill topMenu
-        final Button soundButton = new TextButton("Sound\n" + (audio.getSound()?"on":"off"), skin);
+        final Group soundButton = new Group();
+        soundButton.addActor(new Image(Entities.menu_sound_on.getTexture(res,0)));
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 audio.toggleSound();
-                ((Label) soundButton.getChildren().first()).setText("Sound\n" + (audio.getSound() ? "on" : "off"));
+                soundButton.clearChildren();
+                if(audio.getSound()) {
+                    soundButton.addActor(new Image(Entities.menu_sound_on.getTexture(playwindow.resolution,0)));
+                } else {
+                    soundButton.addActor(new Image(Entities.menu_sound_off.getTexture(playwindow.resolution,0)));
+                }
             }
         });
         topMenu.add(soundButton).left().prefSize(res, res);
@@ -563,7 +600,7 @@ allows cheating */
         });
         topMenu.add(touchpadButton).prefSize(res, res);
 
-        Button plusButton = new TextButton("+", skin);
+        Image plusButton = new Image(Entities.menu_zoom_in.getTexture(res, 0));
         plusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -574,7 +611,7 @@ allows cheating */
         });
         topMenu.add(plusButton).prefSize(res, res);
 
-        Button minusButton = new TextButton("-", skin);
+        Image minusButton = new Image(Entities.menu_zoom_out.getTexture(res, 0));
         minusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -585,7 +622,7 @@ allows cheating */
         });
         topMenu.add(minusButton).prefSize(res, res);
 
-        Button leaveButton = new TextButton("Leave", skin);
+        Image leaveButton = new Image(Entities.menu_stop.getTexture(res, 0));
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -595,7 +632,7 @@ allows cheating */
         });
         topMenu.add(leaveButton).prefSize(res,res);
 
-        Button viewButton = new TextButton("View", skin);
+        Image viewButton = new Image(Entities.menu_pause.getTexture(res, 0));
         viewButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -604,16 +641,15 @@ allows cheating */
         });
         topMenu.add(viewButton).prefSize(res,res);
 
-        Image exitImage = new Image(Entities.extras_missing.getTexture(res, 0));
+        Image exitImage = new Image(Entities.menu_play.getTexture(res, 0));
         exitImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
                 deactivate();
                 //super.clicked(event, x, y);
             }
         });
-        topMenu.add(exitImage).prefSize(res, res);
+        topMenu.add(exitImage).prefSize(res, res).maxSize(res).left().fillX().expandX();
 
         ///// Fill statistics
         statisticsTable.add(new Label("Statistics", skin)).top().colspan(2).center().padBottom(res / 4).row();
@@ -647,8 +683,8 @@ allows cheating */
         story.setWrap(true);
         storyTable.add(story).top().left().width(d.getWidth() / 2);
 
-//        toolboxTable.setWidth(playwindow.resolution + 4);
-//        toolboxTable.setHeight(playwindow.getHeightInPixels() + 4);
+//        table.setWidth(playwindow.resolution + 4);
+//        table.setHeight(playwindow.getHeightInPixels() + 4);
 
         toolboxDialog = d;
         stage.addActor( toolboxDialog );
@@ -690,5 +726,17 @@ allows cheating */
 
     public Skin getSkin() {
         return skin;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public boolean isRebuildNecessary() {
+        return rebuildNecessary;
     }
 }

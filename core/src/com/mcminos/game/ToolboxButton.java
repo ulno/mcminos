@@ -3,9 +3,12 @@ package com.mcminos.game;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.SnapshotArray;
 
 /**
  * Created by ulno on 13.11.15.
@@ -13,16 +16,19 @@ import com.badlogic.gdx.utils.Align;
 public class ToolboxButton  {
 
     private final Toolbox toolbox;
-    private final Graphics gfx;
+    private final Table table;
+    private Graphics gfx;
     private final Group button;
     private final int myIndex;
     private Label label = null;
     private SegmentString text;
     private boolean visible = true;
-    private boolean lastVisible = false;
+    private boolean lastVisible = true; // we start with all visible (last and actual have to be the same in the start)
+    private int lastResolution;
 
     public ToolboxButton(Toolbox toolbox, Graphics gfx, int labelLength, EventListener listener) {
         this.toolbox = toolbox;
+        this.table = toolbox.getTable();
         this.gfx = gfx;
         myIndex = toolbox.addButton( this );
         button = new Group();
@@ -33,7 +39,8 @@ public class ToolboxButton  {
         button.addListener(listener);
     }
 
-    public void resize(int resolution) {
+    public void rebuildButton(int resolution) {
+        this.lastResolution = resolution;
         button.clearChildren();
         button.setSize(resolution, resolution);
         Image image = new Image(gfx.getTexture(resolution, 0));
@@ -44,11 +51,16 @@ public class ToolboxButton  {
         }
     }
 
+    private void rebuildButton() {
+        rebuildButton(lastResolution);
+    }
+
+
     public SegmentString getText() {
         return text;
     }
 
-    public void update() {
+    public void updateText() {
         if(label != null) {
             label.setText(text.getStringBuilder());
         }
@@ -57,24 +69,42 @@ public class ToolboxButton  {
     /**
      * set new value
      * @param input
-     * @return did vidibility change
+     * @return did visibility change
      */
     public boolean setValue(int input) {
-        boolean retvalue = false;
         text.writeInteger(input);
+        updateText();
         if(input == 0) { // decide if visible
-            button.setColor(0,0,0,0);
-            visible = false;
+            return hide();
         } else {
-            button.setColor( 1,1,1,1 );
+            return show();
+        }
+    }
+
+    /**
+     * @return did visibility change
+     */
+    public boolean show() {
+        if( lastVisible == false ) {
+            //   button.setColor( 1,1,1,1 );
             visible = true;
+            lastVisible = true;
+            return true;
         }
-        update();
-        if( lastVisible != visible) {
-            retvalue = true;
+        return false;
+    }
+
+    /**
+     * @return did visibility change
+     */
+    public boolean hide() {
+        if (lastVisible == true) {
+            //  button.setColor(0,0,0,0);
+            visible = false;
+            lastVisible = false;
+            return true;
         }
-        lastVisible = visible;
-        return retvalue;
+        return false;
     }
 
     public Group getActor() {
@@ -92,5 +122,21 @@ public class ToolboxButton  {
 
     public boolean isVisible() {
         return visible;
+    }
+
+    /**
+     * @return did graphics change
+     */
+    public boolean setGraphics(Graphics gfx) {
+        if(gfx != this.gfx) {
+            this.gfx = gfx;
+            rebuildButton();
+            return true;
+        }
+        return false;
+    }
+
+    public Cell<Group> addToTable() {
+        return table.add(getActor());
     }
 }

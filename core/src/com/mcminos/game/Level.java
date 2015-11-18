@@ -68,7 +68,6 @@ public class Level {
     public void draw(PlayWindow playwindow, boolean drawBackgrounds) {
         int zIndex;
 
-        playwindow.updateCoordinates(); // fix coordinates and compute scrolling
         int size = allLevelObjects.size();
         if(drawBackgrounds) {
             for (int i = 0; i < size; i++) {

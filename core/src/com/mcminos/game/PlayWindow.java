@@ -139,10 +139,8 @@ public class PlayWindow {
      * Update the position of the currently seen viewable window
      */
     public void updateCoordinates() {
-        if( ! game.isToolboxActivated()) {
-            windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), visibleWidthInVPixels);
-            windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), visibleHeightInVPixels);
-        }
+        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), visibleWidthInVPixels);
+        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), visibleHeightInVPixels);
     }
 
     public void resize(int width, int height) {

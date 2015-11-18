@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -56,6 +55,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private Toolbox toolbox;
     private boolean menusActivated = true;
+    private long toolboxRebuildTimePoint = 0;
 
 
     public Play(final Main main, String levelName) {
@@ -72,16 +72,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
         init(levelName);
     }
 
-
-    public void init(String levelName) {
+     public void init(String levelName) {
         game = new Game(main, this, camera);
+        mcminos = game.getMcMinos();
 //        background = Entities.backgrounds_punched_plate_03;
         background = Entities.backgrounds_amoeboid_01;
         game.disableMovement();
         game.currentLevelName = levelName;
-        level = game.loadLevel(levelName);
-        mcminos = game.getMcMinos();
-        playwindow = game.getPlayWindow();
+        level = new Level(game, levelName);
+
+        playwindow = new PlayWindow(gameBatch,camera,level,mcminos);
 
         //  Basically, based on density and screensize, we want to set out default zoomlevel.
         float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
@@ -91,12 +91,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 );
         gameResolutionCounter = playwindow.setClosestResolution(preferredResolution);
 
-        // Init stage
-        stage = new Stage(new ScreenViewport(), stageBatch);
+        stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
+        toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage, skin);
 
-        toolbox = new Toolbox(game,this, stage,skin);
+        game.initAfterLoad(playwindow,level,mcminos,toolbox);
 
-        // init scoreinfo display
+        // start the own timer (which triggers also the movement)
+        game.startTimer();
+
+         // init scoreinfo display
         scoreInfo = new StringBuilder( 28 );
         scoreInfo.append("S");
 //        scoreInfo = new SegmentString( "S00000 P00 U00 T00 L00 F00 M" );
@@ -117,7 +120,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (!game.isToolboxActivated()) {
+                if (!toolbox.isActivated()) {
                     mcminos.updateTouchpadDirections(touchpad.getKnobPercentX(), touchpad.getKnobPercentY());
                     if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
                         game.enableMovement();
@@ -172,6 +175,17 @@ public class Play implements Screen, GestureListener, InputProcessor {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             if(menusActivated) {
+                if( toolbox.isRebuildNecessary() ) {
+                  if( toolboxRebuildTimePoint > 0 ) { // already scheduled
+                      if( game.getGameFrame() >= toolboxRebuildTimePoint ) {
+                          toolboxRebuildTimePoint = 0;
+                          toolbox.rebuild();
+                      }
+                  } else { // set schedule time
+                      toolboxRebuildTimePoint = game.getGameFrame() + Game.timeResolution/8;
+                  }
+                }
+
                 backgroundBatch.begin();
                 int xoffset = playwindow.resolution * background.getWidth();
                 int yoffset = playwindow.resolution * background.getHeight();
@@ -183,7 +197,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 backgroundBatch.end();
             }
 
-//            gameBatch.setColor(Color.WHITE); // reset to full brightness as destroyed by menu
+            if( ! toolbox.isActivated()) {
+                playwindow.updateCoordinates(); // fix coordinates and compute scrolling else coordinates come from panning
+            }
+
             gameBatch.begin();
 
             gameBatch.flush();
@@ -217,16 +234,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
                 drawVisibleMarker();
 
-
-                stageBatch.begin();
-                renderScore(); // score etc.
-                stageBatch.end();
-
                 toolbox.update(); // update toolbox based on inventory
 
                 // add stage and menu
                 stage.draw();
-                stage.act(delta);
+                stageBatch.begin();
+                renderScore(); // score etc.
+                stageBatch.end();
+
+                stage.act(delta); // evaluate interaction with menu
             }
         } // else level is finished
         else {
@@ -377,7 +393,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         mcminos.updateKeyDirections();
-        if (!game.isToolboxActivated()) {
+        if (!toolbox.isActivated()) {
             if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
                 game.enableMovement();
             }
@@ -443,7 +459,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             case 't':
             case 'T':
             case ' ':
-                if (game.isToolboxActivated()) {
+                if (toolbox.isActivated()) {
                     toolbox.deactivate();
                 } else {
                     toolbox.activate();
@@ -475,7 +491,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (!game.isToolboxActivated()) { // just pan in this case -> see there
+        if (!toolbox.isActivated()) { // just pan in this case -> see there
             // TODO: consider only first button/finger
             if (button > 0) return false;
             if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
@@ -551,7 +567,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean tap(float x, float y, int count, int button) {
         if (button > 0 || count > 1) {
-            if (game.isToolboxActivated()) {
+            if (toolbox.isActivated()) {
                 toolbox.deactivate();
             } else {
                 toolbox.activate();
@@ -583,7 +599,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean pan(float screenX, float screenY, float deltaX, float deltaY) {
-        if (playwindow.game.isToolboxActivated()) {
+        if (toolbox.isActivated()) {
             int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + playwindow.getVPixelsLevelWidth() - dxi) % playwindow.getVPixelsLevelWidth();
