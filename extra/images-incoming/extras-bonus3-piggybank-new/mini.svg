@@ -71,7 +71,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -81,24 +81,31 @@
      id="layer1"
      transform="translate(0,-1048.3622)">
     <g
-       id="g14638">
+       id="g14448">
       <rect
          transform="translate(0,1048.3622)"
          y="0"
          x="0"
          height="4"
          width="4"
-         id="rect14636"
+         id="rect14446"
          style="fill:none;fill-opacity:1;stroke:none" />
       <path
-         transform="translate(0,1048.3622)"
-         d="M 3,2 C 3,2.5522847 2.5522847,3 2,3 1.4477153,3 1,2.5522847 1,2 1,1.4477153 1.4477153,1 2,1 2.5522847,1 3,1.4477153 3,2 z"
-         sodipodi:ry="1"
-         sodipodi:rx="1"
-         sodipodi:cy="2"
-         sodipodi:cx="2"
-         id="path13111"
-         style="fill:#ffb400;fill-opacity:1;stroke:none"
+         id="path3102"
+         d="m 2.21875,1049.1747 c -0.8698485,0 -1.6134067,0.4549 -1.78125,1.0625 l -0.4375,0 0,0.9375 1.03125,0.3438 c 0.1318826,0.084 0.2765735,0.1339 0.4375,0.1875 l 0,0.6562 0.40625,0 0.125,0 0.1875,-0.5312 0.03125,0 c 0.2328959,0 0.4519576,-0.034 0.65625,-0.094 l 0.21875,0.625 0.125,0 0.40625,0 0.125,-1.1562 c 0.1699901,-0.2032 0.25,-0.4618 0.25,-0.7188 0,-0.7363 -0.7871374,-1.3125 -1.78125,-1.3125 z"
+         style="fill:#ff8162;fill-opacity:1;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         transform="matrix(0.17732656,0,0,0.17732656,-0.9133354,1048.2756)"
+         sodipodi:end="1.5707963"
+         sodipodi:start="0"
+         d="M 18.015267,5 A 6.0152674,6.0152674 0 0 1 12,11.015267 L 12,5 z"
+         sodipodi:ry="6.0152674"
+         sodipodi:rx="6.0152674"
+         sodipodi:cy="5"
+         sodipodi:cx="12"
+         id="path3884"
+         style="fill:#e02c00;fill-opacity:1;stroke:none"
          sodipodi:type="arc" />
     </g>
   </g>
