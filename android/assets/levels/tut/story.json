@@ -1,0 +1,88 @@
+{
+  "level_collection": "Tutorial",
+  "version": "3.14",
+  
+  "levels": [
+    {
+      "id": "tut01_pills"    ,
+      "title": "Tutorial 1: Walls and peas",
+      "body": "In McMinos levels have walls. You cannot pass through them. Go and eat all peas to finish a level.",
+    },
+    {
+      "id": "tut02_ghost_hanky",
+      "title": "Tutorial 2: Ghost Hanky",
+      "body": "Ghosts live in the castle(s). When they come out, they hunt you. Don't lose your head, just get away in time. Eating a cookie gives you enough power to hunt the ghosts - for a short while.",
+    },
+    {
+      "id": "tut03_chocolate",
+      "title": "Chocolate",
+      "body": "Collect chocolate in your toolbox. Eat it when needed to hunt ghosts.",
+    },
+    {
+      "id": "tut04_doors_and_keys",
+      "title": "Tutorial 4: Of doors and keys",
+      "body": "Collect all keys you find in a level. You may need them to open doors. Or close them again to stop ghosts from hunting you.",
+    },
+    {
+      "id": "tut05_rock_and_rock_me",
+      "title": "Tutorial 5: Rock, rock me, baby!",
+      "body": "Push the rocks around to fence-in ghosts. Or push them on the corresponding rock-me fields to finish the level.",
+    },
+    {
+      "id": "tut06_jumping_pills",
+      "title": "Tutorial 6: Go, get the jumping peas!",
+      "body": "It's easy to eat the peas along the way to finish a level, right? Well, not if they run away. Go, get them!",
+    },
+    {
+      "id": "tut07_bombs",
+      "title": "Tutorial 7: It's a bomb!",
+      "body": "Collect, and use with care!",
+    },
+    {
+      "id": "tut08_holes",
+      "title": "Tutorial 8: Small holes, big holes",
+      "body": "Small holes grow, and down large holes you go.",
+    },
+    {
+      "id": "tut09_warp_holes",
+      "title": "Tutorial 9: Warp holes",
+      "body": "Jump into one, exit from another.",
+    },
+    {
+      "id": "tut10_poison_and_medicine",
+      "title": "Tutorial 10: Potions good and bad",
+      "body": "Don't touch the poisoned potion. Be sure to have medicine on you, just in case.",
+    },
+    {
+      "id": "tut11_dynamite",
+      "title": "Tutorial 11: Dynamite",
+      "body": "If you see me running, try to keep up.",
+    },
+    {
+      "id": "tut12_oneways",
+      "title": "Tutorial 12: One-Ways",
+      "body": "This way, please.",
+    },
+    {
+      "id": "tut13_mirror",
+      "title": "Tutorial 13: Mirror, mirror on the wall",
+      "body": "Left is right and up is down.",
+    },
+    {
+      "id": "tut14_speed_up_and_down_kill_all_field",
+      "title": "Tutorial 14: Speedy race",
+      "body": "Speeding can be a life saver.",
+    },
+    {
+      "id": "tut15_whisky",
+      "title": "Tutorial 15: Don't drink and ...",
+      "body": "If you get drunk you lose control. Just don't.",
+    },
+    {
+      "id": "tut16_infinite_world",
+      "title": "Tutorial 16: Infinite world",
+      "body": "Where does it start? Where does it end? Can you tell? I think, I have been here before.",
+    },
+  ]
+
+}
