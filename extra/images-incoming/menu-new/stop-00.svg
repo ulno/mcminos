@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.5 r10040"
    viewBox="0 0 32 32"
-   sodipodi:docname="play-00.svg">
+   sodipodi:docname="stop-variant2-00.svg">
   <defs
      id="defs4152" />
   <sodipodi:namedview
@@ -71,7 +71,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -79,20 +79,12 @@
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
-    <g
-       id="g8325">
-      <rect
-         y="0"
-         x="0"
-         height="32"
-         width="32"
-         id="rect3572"
-         style="fill:none;stroke:none" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path6837"
-         d="M 5,4 29,16 5,28 z"
-         style="fill:green;fill-opacity:1;stroke:none" />
-    </g>
+    <rect
+       style="fill:#d40000;fill-opacity:1;stroke:none"
+       id="rect8255"
+       width="24"
+       height="24"
+       x="4"
+       y="4" />
   </g>
 </svg>

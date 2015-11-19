@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg4150"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   viewBox="0 0 32 32"
+   sodipodi:docname="button-music-on-00.svg">
+  <defs
+     id="defs4152" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="16.5"
+     inkscape:cx="16"
+     inkscape:cy="16"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="10000"
+     inkscape:snap-perpendicular="true"
+     guidetolerance="10000"
+     inkscape:window-width="1024"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
+     inkscape:window-y="2"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4698"
+       empspacing="8"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="0.5px"
+       spacingy="0.5px" />
+    <sodipodi:guide
+       position="16,32"
+       orientation="1,0"
+       id="guide4769" />
+    <sodipodi:guide
+       position="-4,16"
+       orientation="0,1"
+       id="guide4771" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="-0.70710678,0.70710678"
+       id="guide4773" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="0.70710678,0.70710678"
+       id="guide4775" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="13,15"
+       id="guide9481" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4155">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="button"
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true">
+    <g
+       id="g3627">
+      <rect
+         style="fill:#fc0;fill-opacity:1;stroke:none"
+         id="rect3767"
+         width="32"
+         height="32"
+         x="0"
+         y="0"
+         ry="4" />
+      <path
+         id="rect2997"
+         d="M 1.875,1.875 C 1.33275,2.41725 1,3.169 1,4 l 0,24 c 0,1.662 1.338,3 3,3 l 24,0 c 0.831,0 1.58275,-0.33275 2.125,-0.875 L 29.40625,29.40625 C 29.04475,29.76775 28.554,30 28,30 L 4,30 C 2.892,30 2,29.108 2,28 L 2,4 C 2,3.446 2.23225,2.95525 2.59375,2.59375 L 1.875,1.875 Z"
+         style="fill:black;fill-opacity:0.37647059;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="rect2993"
+         d="M 4,0 C 1.784,0 0,1.784 0,4 l 0,24 c 0,2.216 1.784,4 4,4 l 24,0 c 2.216,0 4,-1.784 4,-4 L 32,4 C 32,1.784 30.216,0 28,0 L 4,0 Z m 0,1 24,0 c 1.662,0 3,1.338 3,3 l 0,24 c 0,1.662 -1.338,3 -3,3 L 4,31 C 2.338,31 1,29.662 1,28 L 1,4 C 1,2.338 2.338,1 4,1 Z"
+         style="fill:black;fill-opacity:1;stroke:none" />
+      <path
+         inkscape:connector-curvature="0"
+         id="rect3774"
+         d="M 4,1 C 3.169,1 2.41725,1.33275 1.875,1.875 L 2.59375,2.59375 C 2.95525,2.23225 3.446,2 4,2 l 24,0 c 1.108,0 2,0.892 2,2 l 0,24 c 0,0.554 -0.23225,1.04475 -0.59375,1.40625 L 30.125,30.125 C 30.66725,29.58275 31,28.831 31,28 L 31,4 C 31,2.338 29.662,1 28,1 L 4,1 Z"
+         style="fill:white;fill-opacity:0.37647059;stroke:none" />
+      <rect
+         rx="1"
+         ry="1"
+         y="2"
+         x="3"
+         height="2"
+         width="26"
+         id="rect3793"
+         style="fill:white;fill-opacity:0.50196078;stroke:none" />
+      <rect
+         rx="0.5"
+         ry="0.5"
+         y="2"
+         x="4"
+         height="1"
+         width="24"
+         id="rect3795"
+         style="fill:white;fill-opacity:0.50196078;stroke:none" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="symbol">
+    <g
+       id="g9485"
+       transform="matrix(1.0000168,0,0,1,-4.3320562e-4,1.4998645)">
+      <rect
+         y="6"
+         x="12"
+         height="4"
+         width="11"
+         id="rect8965"
+         style="fill:black;fill-opacity:1;stroke:none" />
+      <rect
+         y="10"
+         x="22"
+         height="9.5"
+         width="1"
+         id="rect9475"
+         style="fill:black;fill-opacity:1;stroke:none" />
+      <rect
+         y="10"
+         x="12"
+         height="9.5"
+         width="1"
+         id="rect9477"
+         style="fill:black;fill-opacity:1;stroke:none" />
+      <path
+         transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,-4.5551672,1.0790032)"
+         d="m 12.236068,22 c 0,1.104569 -1.448837,2 -3.236068,2 -1.787231,0 -3.236068,-0.895431 -3.236068,-2 0,-1.104569 1.448837,-2 3.236068,-2 1.787231,0 3.236068,0.895431 3.236068,2 z"
+         sodipodi:ry="2"
+         sodipodi:rx="3.236068"
+         sodipodi:cy="22"
+         sodipodi:cx="9"
+         id="path9479"
+         style="fill:black;fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:type="arc"
+         style="fill:black;fill-opacity:1;stroke:none"
+         id="path9483"
+         sodipodi:cx="9"
+         sodipodi:cy="22"
+         sodipodi:rx="3.236068"
+         sodipodi:ry="2"
+         d="m 12.236068,22 c 0,1.104569 -1.448837,2 -3.236068,2 -1.787231,0 -3.236068,-0.895431 -3.236068,-2 0,-1.104569 1.448837,-2 3.236068,-2 1.787231,0 3.236068,0.895431 3.236068,2 z"
+         transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,5.4448328,1.0790032)" />
+    </g>
+  </g>
+</svg>

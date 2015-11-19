@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.5 r10040"
    viewBox="0 0 32 32"
-   sodipodi:docname="tutorial-01.svg">
+   sodipodi:docname="tutorial-00.svg">
   <defs
      id="defs4152" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:zoom="16.5"
      inkscape:cx="16"
      inkscape:cy="16"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3043"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
@@ -73,52 +73,55 @@
      inkscape:groupmode="layer">
     <g
        id="g3043">
-      <rect
-         y="0"
-         x="0"
-         height="32"
-         width="32"
-         id="rect6876"
-         style="fill:none;stroke:none" />
       <g
-         transform="translate(0,2)"
-         id="g3037">
-        <path
-           style="fill:black;fill-opacity:1;stroke:none"
-           d="M 13,7 31,7 22,13 1,13 z"
-           id="path6868"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="ccccc" />
-        <path
-           sodipodi:type="arc"
-           style="fill:black;fill-opacity:1;stroke:none"
-           id="path6870"
-           sodipodi:cx="16"
-           sodipodi:cy="16"
-           sodipodi:rx="8"
-           sodipodi:ry="8"
-           d="m 8,16 c 2e-7,-4.418278 3.581722,-8.0000002 8,-8 4.418278,2e-7 8,3.581722 8,8 l -8,0 z"
-           transform="matrix(1.125,0,0,1.3560606,-2,-1.6969697)"
-           sodipodi:start="3.1415927"
-           sodipodi:end="6.2831853" />
-        <path
-           sodipodi:type="arc"
-           style="fill:black;fill-opacity:1;stroke:none"
-           id="path6872"
-           sodipodi:cx="16"
-           sodipodi:cy="20"
-           sodipodi:rx="8"
-           sodipodi:ry="4"
-           d="m 24,20 c 0,2.209139 -3.581722,4 -8,4 -4.418278,0 -8,-1.790861 -8,-4 0,0 0,0 0,0 l 8,0 z"
-           transform="matrix(1.125,0,0,0.5,-2,10)"
-           sodipodi:start="0"
-           sodipodi:end="3.1415927" />
-        <path
-           style="fill:red;fill-opacity:1;stroke:none"
-           d="m 21,26 c 0.405877,-0.52158 0.739211,-0.260789 0.918388,-0.746097 C 22.278925,25.639463 22.594123,25.741391 23,26 19.101859,21.549469 21.423482,17.353259 20,15 c -0.333333,0 -0.666667,0 -1,0 2.159351,3.41236 0.02582,7.297152 2,11 z"
-           id="path6874"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="cccccc" />
+         id="g4640">
+        <rect
+           style="fill:none;stroke:none"
+           id="rect6876"
+           width="32"
+           height="32"
+           x="0"
+           y="0" />
+        <g
+           id="g3037"
+           transform="translate(0,2)">
+          <path
+             sodipodi:nodetypes="ccccc"
+             inkscape:connector-curvature="0"
+             id="path6868"
+             d="M 13,7 31,7 22,13 1,13 z"
+             style="fill:black;fill-opacity:1;stroke:none" />
+          <path
+             sodipodi:end="6.2831853"
+             sodipodi:start="3.1415927"
+             transform="matrix(1.125,0,0,1.3560606,-2,-1.6969697)"
+             d="m 8,16 c 2e-7,-4.418278 3.581722,-8.0000002 8,-8 4.418278,2e-7 8,3.581722 8,8 l -8,0 z"
+             sodipodi:ry="8"
+             sodipodi:rx="8"
+             sodipodi:cy="16"
+             sodipodi:cx="16"
+             id="path6870"
+             style="fill:black;fill-opacity:1;stroke:none"
+             sodipodi:type="arc" />
+          <path
+             sodipodi:end="3.1415927"
+             sodipodi:start="0"
+             transform="matrix(1.125,0,0,0.5,-2,10)"
+             d="m 24,20 c 0,2.209139 -3.581722,4 -8,4 -4.418278,0 -8,-1.790861 -8,-4 0,0 0,0 0,0 l 8,0 z"
+             sodipodi:ry="4"
+             sodipodi:rx="8"
+             sodipodi:cy="20"
+             sodipodi:cx="16"
+             id="path6872"
+             style="fill:black;fill-opacity:1;stroke:none"
+             sodipodi:type="arc" />
+          <path
+             sodipodi:nodetypes="cccccc"
+             inkscape:connector-curvature="0"
+             id="path6874"
+             d="m 21,24 c 0.405877,-0.52158 0.739211,-0.260789 0.918388,-0.746097 C 22.278925,23.639463 23.594123,23.741391 24,24 20.101859,19.549469 22.423482,15.353259 21,13 c -0.333333,0 -1.666667,0 -2,0 2.159351,3.41236 0.02582,7.297152 2,11 z"
+             style="fill:red;fill-opacity:1;stroke:none" />
+        </g>
       </g>
     </g>
   </g>
