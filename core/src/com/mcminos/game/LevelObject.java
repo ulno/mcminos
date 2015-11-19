@@ -74,12 +74,12 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     public void draw(PlayWindow playwindow) {
         if(gfx != null) // castle parts can be null or invisible things
-            gfx.draw(playwindow,x,y,animDelta);
+            gfx.draw(playwindow,level,x,y,animDelta);
     }
 
     public void drawMini(PlayWindow playwindow, SpriteBatch batch) {
         if(gfx != null) // castle parts can be null or invisible things
-            gfx.drawMini(playwindow,batch,x,y,animDelta);
+            gfx.drawMini(playwindow,level,batch,x,y,animDelta);
     }
 
     @Override
@@ -125,10 +125,10 @@ public class LevelObject implements  Comparable<LevelObject> {
     }
 
     /**
-     * assign a matching LevelBlock based on th ecurrent coordinates
+     * assign a matching LevelBlock based on the current coordinates
      */
-    public void assignLevelBlock() {
-        levelBlock = game.getLevelBlockFromVPixel(x, y);
+    public void assignLevelBlock(PlayWindow playwindow) {
+        levelBlock = level.getLevelBlockFromVPixel(x, y);
     }
 
     public boolean hasGfx() {

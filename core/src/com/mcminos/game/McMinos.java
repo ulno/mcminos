@@ -465,14 +465,14 @@ public class McMinos {
         return winning;
     }
 
-    public void setDestination(int x, int y) {
+    public void setDestination( PlayWindow playwindow, int x, int y) {
         if(destinationEnabled) {
             if(isMirrored()) { // if this goes out of range it's corrected in moveto
                 x = getVX() - (x - getVX());
                 y = getVY() - (y - getVY());
             } // TODO: think if this shoudl be better handled in chooseDirection
             destination.setGfx(Entities.destination);
-            LevelBlock lb = game.getLevelBlockFromVPixelRounded(x, y);
+            LevelBlock lb = level.getLevelBlockFromVPixelRounded(x, y);
             destination.moveTo(lb.getX() << PlayWindow.virtualBlockResolutionExponent, lb.getY() << PlayWindow.virtualBlockResolutionExponent, lb);
             destinationSet = true;
         }

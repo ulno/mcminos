@@ -13,7 +13,6 @@ public class McMinosMover extends Mover {
 
     private final Game game;
     private final McMinos mcminos;
-    private PlayWindow playwindow;
     private final Audio audio;
     private final Level level;
     private final Ghosts ghosts;
@@ -28,7 +27,6 @@ public class McMinosMover extends Mover {
         this.game = game;
         audio = game.getAudio();
         mcminos = game.getMcMinos();
-        this.playwindow = game.getPlayWindow();
         this.level = game.getLevel();
         ghosts = game.getGhosts();
         mcminos.setMover(this);
@@ -329,7 +327,7 @@ public class McMinosMover extends Mover {
     protected boolean checkCollisions() {
         // check if something can be collected (only when full on field)
         if(mcminos.fullOnBlock()) {
-            LevelBlock currentBlock = game.getLevelBlockFromVPixel(mcminos.getVX(), mcminos.getVY());
+            LevelBlock currentBlock = level.getLevelBlockFromVPixel(mcminos.getVX(), mcminos.getVY());
             if( currentBlock.hasPill() )
             {
                 audio.soundPlay("knurps");
@@ -528,8 +526,9 @@ public class McMinosMover extends Mover {
             int ghostnr = lo.getGhostNr();
             if(ghostnr != -1) {
                 // check if ghost is really near enough
-                if (distanceWithScroll(level.getScrollX(),mcminos.getVX(),lo.getVX(),playwindow.getVPixelsLevelWidth())
-                        + distanceWithScroll(level.getScrollY(), mcminos.getVY(), lo.getVY(), playwindow.getVPixelsLevelHeight()) < (PlayWindow.virtualBlockResolution)) {
+                if (distanceWithScroll(level.getScrollX(),mcminos.getVX(),lo.getVX(),level.getVPixelsWidth())
+                        + distanceWithScroll(level.getScrollY(), mcminos.getVY(), lo.getVY(),
+                        level.getVPixelsHeight()) < (PlayWindow.virtualBlockResolution)) {
                     if (mcminos.isPowered()) {
                         if (ghostnr == 3) { // jumping pill, will poison when powered
                             mcminos.poison();

@@ -69,38 +69,36 @@ public class Play implements Screen, GestureListener, InputProcessor {
         backgroundBatch = new SpriteBatch();
         miniBatch = new SpriteBatch();
         miniScreenBackground = new ShapeRenderer();
+//        background = Entities.backgrounds_punched_plate_03;
+        background = Entities.backgrounds_amoeboid_01;
         init(levelName);
     }
 
-     public void init(String levelName) {
-        game = new Game(main, this, camera);
+    public void init(String levelName) {
+        // Prepare the control layer
+        game = new Game(main, this);
+        level = game.levelNew( levelName );
         mcminos = game.getMcMinos();
-//        background = Entities.backgrounds_punched_plate_03;
-        background = Entities.backgrounds_amoeboid_01;
-        game.disableMovement();
-        game.currentLevelName = levelName;
-        level = new Level(game, levelName);
 
-        playwindow = new PlayWindow(gameBatch,camera,level,mcminos);
+        // prepare stuff for graphics output
+        playwindow = new PlayWindow(gameBatch, camera, level, mcminos);
 
         //  Basically, based on density and screensize, we want to set out default zoomlevel.
         float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
 
-        int preferredResolution =  Math.max( (int) (density * 32),
-                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() ) / 16
-                );
+        int preferredResolution = Math.max((int) (density * 32),
+                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 16
+        );
         gameResolutionCounter = playwindow.setClosestResolution(preferredResolution);
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
         toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage, skin);
 
-        game.initAfterLoad(playwindow,level,mcminos,toolbox);
-
         // start the own timer (which triggers also the movement)
         game.startTimer();
 
-         // init scoreinfo display
-        scoreInfo = new StringBuilder( 28 );
+        // init scoreinfo display
+        scoreInfo = new StringBuilder(28);
         scoreInfo.append("S");
 //        scoreInfo = new SegmentString( "S00000 P00 U00 T00 L00 F00 M" );
         /*score = scoreInfo.sub(1,5);
@@ -138,7 +136,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void toogleTouchpad() {
-        if(touchpad.hasParent())
+        if (touchpad.hasParent())
             touchpad.remove();
         else {
             touchpadResize();
@@ -158,7 +156,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void backToMenu() {
         this.dispose();
-        main.setScreen(new MainMenu(main, level.getLevelName()));
+        main.setScreen(new MainMenu(main, level.getName()));
     }
 
     @Override
@@ -166,89 +164,90 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     }
 
+
     @Override
     public void render(float delta) {
         /////// Handle timing events (like moving and events)
-        if (game.updateTime()) { // not finished
-            // Handle drawing
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if( !toolbox.isActivated()) { // if game is not suspended with toolbox (no time passes while in toolbox)
+            if (!game.updateTime()) { // update and exit, if game finished
+                backToMenu();
+                return;
+            }
+        }
+        //////// Handle drawing
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            if(menusActivated) {
-                if( toolbox.isRebuildNecessary() ) {
-                  if( toolboxRebuildTimePoint > 0 ) { // already scheduled
-                      if( game.getGameFrame() >= toolboxRebuildTimePoint ) {
-                          toolboxRebuildTimePoint = 0;
-                          toolbox.rebuild();
-                      }
-                  } else { // set schedule time
-                      toolboxRebuildTimePoint = game.getGameFrame() + Game.timeResolution/8;
-                  }
-                }
-
-                backgroundBatch.begin();
-                int xoffset = playwindow.resolution * background.getWidth();
-                int yoffset = playwindow.resolution * background.getHeight();
-                for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += xoffset) {
-                    for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += yoffset) {
-                        background.draw(playwindow, backgroundBatch, x, y);
+        if (menusActivated) {
+            if (toolbox.isRebuildNecessary()) {
+                if (toolboxRebuildTimePoint > 0) { // already scheduled
+                    if (game.getGameFrame() >= toolboxRebuildTimePoint) {
+                        toolboxRebuildTimePoint = 0;
+                        toolbox.rebuild();
                     }
+                } else { // set schedule time
+                    toolboxRebuildTimePoint = game.getGameFrame() + Game.timeResolution / 8;
                 }
-                backgroundBatch.end();
             }
 
-            if( ! toolbox.isActivated()) {
-                playwindow.updateCoordinates(); // fix coordinates and compute scrolling else coordinates come from panning
+            backgroundBatch.begin();
+            int xoffset = playwindow.resolution * background.getWidth();
+            int yoffset = playwindow.resolution * background.getHeight();
+            for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += xoffset) {
+                for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += yoffset) {
+                    background.draw(playwindow, backgroundBatch, x, y);
+                }
             }
-
-            gameBatch.begin();
-
-            gameBatch.flush();
-            ScissorStack.pushScissors(playwindow.getScissors());
-
-            game.draw(menusActivated);
-
-            gameBatch.flush();
-            ScissorStack.popScissors();
-
-
-            gameBatch.end(); // must end before other layers
-
-            if(menusActivated) {
-                // draw a dark transparent rectangle to have some background for mini screen
-                Gdx.gl.glEnable(GL20.GL_BLEND);
-                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
-                miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-                miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
-                miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow, 0, 0) - playwindow.virtual2MiniResolution,
-                        Graphics.virtualToMiniY(playwindow, 0, 0) - playwindow.virtual2MiniResolution,
-                        Graphics.virtualToMiniX(playwindow, playwindow.getVPixelsLevelWidth() - 1, 0),
-                        Graphics.virtualToMiniX(playwindow, playwindow.getVPixelsLevelHeight() - 1, 0));
-                miniScreenBackground.end();
-
-                // mini screen
-                miniBatch.begin();
-                game.drawMini(miniBatch);
-                miniBatch.end();
-
-                drawVisibleMarker();
-
-                toolbox.update(); // update toolbox based on inventory
-
-                // add stage and menu
-                stage.draw();
-                stageBatch.begin();
-                renderScore(); // score etc.
-                stageBatch.end();
-
-                stage.act(delta); // evaluate interaction with menu
-            }
-        } // else level is finished
-        else {
-            backToMenu();
+            backgroundBatch.end();
         }
 
+        if (!toolbox.isActivated()) {
+            playwindow.updateCoordinates(); // fix coordinates and compute scrolling else coordinates come from panning
+        }
+
+        gameBatch.begin();
+
+        gameBatch.flush();
+        ScissorStack.pushScissors(playwindow.getScissors());
+
+        playwindow.draw(menusActivated);
+
+        gameBatch.flush();
+        ScissorStack.popScissors();
+
+
+        gameBatch.end(); // must end before other layers
+
+        if (menusActivated) {
+            // draw a dark transparent rectangle to have some background for mini screen
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+            miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
+            miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
+            miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow, level, 0, 0) - playwindow.virtual2MiniResolution,
+                    Graphics.virtualToMiniY(playwindow, level, 0, 0) - playwindow.virtual2MiniResolution,
+                    Graphics.virtualToMiniX(playwindow, level, level.getVPixelsWidth() - 1, 0),
+                    Graphics.virtualToMiniX(playwindow, level, level.getVPixelsHeight() - 1, 0));
+            miniScreenBackground.end();
+
+            // mini screen
+            miniBatch.begin();
+            playwindow.drawMini(miniBatch);
+            miniBatch.end();
+
+            drawVisibleMarker();
+
+            toolbox.update(); // update toolbox based on inventory
+
+            // add stage and menu
+            stage.draw();
+            stageBatch.begin();
+            renderScore(); // score etc.
+            stageBatch.end();
+
+            stage.act(delta); // evaluate interaction with menu
+        }
     }
 
     private void renderScore() {
@@ -259,23 +258,23 @@ public class Play implements Screen, GestureListener, InputProcessor {
         scoreInfo.append(" L");
         scoreInfo.append(mcminos.getLives());
         v = mcminos.getPowerDuration();
-        if(v>0) {
+        if (v > 0) {
             scoreInfo.append(" P");
             scoreInfo.append(v >> game.timeResolutionExponent);
         }
         v = mcminos.getUmbrellaDuration();
-        if(v>0) {
+        if (v > 0) {
             scoreInfo.append(" U");
             scoreInfo.append(v >> game.timeResolutionExponent);
         }
         v = mcminos.getPoisonDuration() + mcminos.getDrunkLevel();
-        if(v>0) {
+        if (v > 0) {
             scoreInfo.append(" T");
             scoreInfo.append(v >> game.timeResolutionExponent);
         }
         scoreInfo.append(" F");
         scoreInfo.append(Gdx.graphics.getFramesPerSecond());
-        if(mcminos.isMirrored()) {
+        if (mcminos.isMirrored()) {
             scoreInfo.append(" M");
         }
 
@@ -285,7 +284,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         toxicScore.writeInteger((mcminos.getPoisonDuration() + mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
         framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
         mirroredScore.writeChar(0, mcminos.isMirrored() ? 'M' : ' '); */
-        font.draw(stageBatch, scoreInfo, playwindow.resolution + (playwindow.resolution>>3) , Gdx.graphics.getHeight() - (playwindow.resolution >> 3));
+        font.draw(stageBatch, scoreInfo, playwindow.resolution + (playwindow.resolution >> 3), Gdx.graphics.getHeight() - (playwindow.resolution >> 3));
 
     }
 
@@ -296,42 +295,42 @@ public class Play implements Screen, GestureListener, InputProcessor {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-        miniScreenBackground.setColor(255,128,0,0.5f); // orange transparent
+        miniScreenBackground.setColor(255, 128, 0, 0.5f); // orange transparent
 
         // These are up to 8 lines (4 corners) to draw
         int t = playwindow.virtual2MiniResolution / 2; // line thickness
         int t2 = t * 2;
-        int thickness = 1+t;
+        int thickness = 1 + t;
         // compute the visible area lower left corner
-        int x0 = Graphics.virtualToMiniX(playwindow,playwindow.windowVPixelXPos,0);
-        int y0 = Graphics.virtualToMiniY(playwindow,playwindow.windowVPixelYPos,0);
+        int x0 = Graphics.virtualToMiniX(playwindow, level, playwindow.windowVPixelXPos, 0);
+        int y0 = Graphics.virtualToMiniY(playwindow, level, playwindow.windowVPixelYPos, 0);
         // compute the upper right corner
-        int x1 = Graphics.virtualToMiniX(playwindow,((playwindow.windowVPixelXPos + playwindow.getVisibleWidthInVPixels() - 1) % playwindow.getVPixelsLevelWidth()),0);
-        int y1 = Graphics.virtualToMiniY(playwindow,((playwindow.windowVPixelYPos + playwindow.getVisibleHeightInVPixels() - 1) % playwindow.getVPixelsLevelHeight()),0);
+        int x1 = Graphics.virtualToMiniX(playwindow, level, ((playwindow.windowVPixelXPos + playwindow.getVisibleWidthInVPixels() - 1) % level.getVPixelsWidth()), 0);
+        int y1 = Graphics.virtualToMiniY(playwindow, level, ((playwindow.windowVPixelYPos + playwindow.getVisibleHeightInVPixels() - 1) % level.getVPixelsHeight()), 0);
         // lower left corner of mini-screen
-        int mx0 = Graphics.virtualToMiniX(playwindow,0,0);
-        int my0 = Graphics.virtualToMiniY(playwindow,0,0);
+        int mx0 = Graphics.virtualToMiniX(playwindow, level, 0, 0);
+        int my0 = Graphics.virtualToMiniY(playwindow, level, 0, 0);
         // upper right corner of mini-screen
-        int mx1 = Graphics.virtualToMiniX(playwindow,playwindow.getVPixelsLevelWidth()-1,0);
-        int my1 = Graphics.virtualToMiniY(playwindow,playwindow.getVPixelsLevelHeight()-1,0);
+        int mx1 = Graphics.virtualToMiniX(playwindow, level, level.getVPixelsWidth() - 1, 0);
+        int my1 = Graphics.virtualToMiniY(playwindow, level, level.getVPixelsHeight() - 1, 0);
 
-        if(x0<x1) { // normal, no split
-            miniScreenBackground.rect( x0-t,y0-t,x1-x0+t2+1,thickness );
-            miniScreenBackground.rect( x0-t,y1,x1-x0+t2+1,thickness );
+        if (x0 < x1) { // normal, no split
+            miniScreenBackground.rect(x0 - t, y0 - t, x1 - x0 + t2 + 1, thickness);
+            miniScreenBackground.rect(x0 - t, y1, x1 - x0 + t2 + 1, thickness);
         } else { // split necessary x1 < x0
-            miniScreenBackground.rect( mx0-t,y0-t,x1-mx0+t2+1,thickness );
-            miniScreenBackground.rect( x0-t,y0-t,mx1-x0+t2,thickness );
-            miniScreenBackground.rect( mx0-t,y1,x1-mx0+t2+1,thickness );
-            miniScreenBackground.rect( x0-t,y1,mx1-x0+t2,thickness );
+            miniScreenBackground.rect(mx0 - t, y0 - t, x1 - mx0 + t2 + 1, thickness);
+            miniScreenBackground.rect(x0 - t, y0 - t, mx1 - x0 + t2, thickness);
+            miniScreenBackground.rect(mx0 - t, y1, x1 - mx0 + t2 + 1, thickness);
+            miniScreenBackground.rect(x0 - t, y1, mx1 - x0 + t2, thickness);
         }
-        if(y0<y1) { // normal, no split
-            miniScreenBackground.rect( x0-t,y0+1,thickness,y1-y0-1 );
-            miniScreenBackground.rect( x1,y0+1,thickness,y1-y0-1 );
+        if (y0 < y1) { // normal, no split
+            miniScreenBackground.rect(x0 - t, y0 + 1, thickness, y1 - y0 - 1);
+            miniScreenBackground.rect(x1, y0 + 1, thickness, y1 - y0 - 1);
         } else { // split necessary y1 < y0
-            miniScreenBackground.rect( x0-t,my0+1,thickness,y1-my0-1 );
-            miniScreenBackground.rect( x0-t,y0+1,thickness,my1-y0-1);
-            miniScreenBackground.rect( x1,my0+1,thickness,y1-my0-1 );
-            miniScreenBackground.rect( x1,y0+1,thickness,my1-y0-1 );
+            miniScreenBackground.rect(x0 - t, my0 + 1, thickness, y1 - my0 - 1);
+            miniScreenBackground.rect(x0 - t, y0 + 1, thickness, my1 - y0 - 1);
+            miniScreenBackground.rect(x1, my0 + 1, thickness, y1 - my0 - 1);
+            miniScreenBackground.rect(x1, y0 + 1, thickness, my1 - y0 - 1);
         }
 
         miniScreenBackground.end();
@@ -341,7 +340,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public void resize(int width, int height) {
         Matrix4 matrix = new Matrix4();
-        matrix.setToOrtho2D(0,0,width,height);
+        matrix.setToOrtho2D(0, 0, width, height);
         backgroundBatch.setProjectionMatrix(matrix);
         miniBatch.setProjectionMatrix(matrix);
         stageBatch.setProjectionMatrix(matrix);
@@ -363,8 +362,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private void fontResize() {
         int fontRes = playwindow.resolution / 2;
-        if(fontRes < 32) fontRes = 32;
-        if(fontRes >128) fontRes = 128;
+        if (fontRes < 32) fontRes = 32;
+        if (fontRes > 128) fontRes = 128;
         font = main.getFont(fontRes);
     }
 
@@ -404,7 +403,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         mcminos.updateKeyDirections();
-        toolbox.checkDoorKey( keycode );
+        toolbox.checkDoorKey(keycode);
         return false;
     }
 
@@ -453,7 +452,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 ScreenshotFactory.saveScreenshot();
                 break;
             case '0':
-                menusActivated = ! menusActivated;
+                menusActivated = !menusActivated;
                 break;
             case 27: // Escape
             case 't':
@@ -499,7 +498,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             }
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
-            mcminos.setDestination(x, y);
+            mcminos.setDestination(playwindow, x, y);
             return false; // needs to be evtl. dealt with at drag
         }
         return false;
@@ -523,12 +522,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public int windowToGameY(int screenY) {
-        return windowToGame(Gdx.graphics.getHeight() - screenY, playwindow.getVPixelsLevelHeight(),
+        return windowToGame(Gdx.graphics.getHeight() - screenY, level.getVPixelsHeight(),
                 playwindow.getProjectionY(), playwindow.windowVPixelYPos, level.getScrollY());
     }
 
     public int windowToGameX(int screenX) {
-        return windowToGame(screenX, playwindow.getVPixelsLevelWidth(),
+        return windowToGame(screenX, level.getVPixelsWidth(),
                 playwindow.getProjectionX(), playwindow.windowVPixelXPos, level.getScrollX());
     }
 
@@ -602,8 +601,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         if (toolbox.isActivated()) {
             int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
-            playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + playwindow.getVPixelsLevelWidth() - dxi) % playwindow.getVPixelsLevelWidth();
-            playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + playwindow.getVPixelsLevelHeight() + dyi) % playwindow.getVPixelsLevelHeight();
+            playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + level.getVPixelsWidth() - dxi) % level.getVPixelsWidth();
+            playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + level.getVPixelsHeight() + dyi) % level.getVPixelsHeight();
             return true;
         }
         return false;

@@ -1,7 +1,6 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
@@ -11,6 +10,11 @@ import java.util.Random;
  * Created by ulno on 27.08.15.
  *
  * This is the class having all game content which needs to be accessed by all other modules.
+ * It also manages the game content but nothing graphical.
+ * Graphical things like projection or coordinates would go to playwindow or the PlayScreen.
+ * The timing of the game is done here.
+ * Audio events can be (still) triggered from here.
+ * Also the toolbox needs to be controlled from outside and doesn't belong in here.
  *
  */
 public class Game {
@@ -18,48 +22,29 @@ public class Game {
     public static final int timeResolution = 128; // How often per second movements are updated?
     public static final int timeResolutionExponent = Util.log2binary(timeResolution);
     public static final int baseSpeed = 2; // base speed of all units (kind of the slowest anybody usually moves) in blocks per second
-
-    private final Audio audio;
-    private final SpriteBatch batch;
-    private final Play playScreen;
-    private final OrthographicCamera camera;
-    private long gameFrame = 0; // The game time - there is a getter for this
-    private long gameTime = 0;
     private Main main;
-    //private Semaphore updateLock = new Semaphore(1);
-    //private Timer.Task timerTask = null;
-    String currentLevelName = null;
+    private final Play playScreen;
+    private final Audio audio;
+    private long gameFrame = 0; // The game time in frames
+    private long gameTime = 0;
     private Level level;
     private McMinos mcminos;
     private Ghosts ghosts;
     private FrameTimer frameTimer;
     private ArrayList<Mover> movers; // all Movers (not from mcminos at the moment - handled separately) - i.e. for ghosts and rocks
-    private PlayWindow playwindow = null;
 
     private Random randomGenerator = new Random();
     private boolean movement = false; // only do animations but don't move anything
     private long lastDeltaTimeLeft = 0;
     private boolean timerTaskActive = false;
-    private Toolbox toolbox;
 
-
-    public PlayWindow getPlayWindow() {
-        return playwindow;
-    }
-
-    public Game(Main main, Play playScreen, OrthographicCamera camera) {
+    public Game(Main main, Play playScreen) {
         this.main = main;
         this.playScreen = playScreen;
         movers = new ArrayList<>();
         audio = main.getAudio();
         mcminos = new McMinos(this);
         ghosts = new Ghosts(this);
-        batch = main.getBatch();
-        this.camera = camera;
-    }
-
-    public void loadFromPlay(String levelName) {
-        playScreen.init(levelName);
     }
 
     /**
@@ -82,48 +67,6 @@ public class Game {
         }
         return true;
     }
-
-    public void initAfterLoad(PlayWindow playwindow, Level level, McMinos mcminos, Toolbox toolbox) {
-        this.playwindow = playwindow;
-        this.level = level;
-        this.mcminos = mcminos;
-        // Now init some of the level elements
-        getGhosts().init(); // update references
-        Mover mover = new McMinosMover(this,mcminos);
-        // done in mover creation mcminos.setMover(mover); // needs to be created this late
-        this.toolbox = toolbox;
-    }
-
-    public LevelBlock getLevelBlock( int x, int y) {
-        return level.get( x, y );
-    }
-
-    public LevelBlock getLevelBlockFromVPixel( int vPixelX, int vPixelY) {
-        int w = playwindow.getLevelWidth();
-        int h = playwindow.getLevelHeight();
-        int x = vPixelX  >> playwindow.virtualBlockResolutionExponent;
-        int y = vPixelY  >> playwindow.virtualBlockResolutionExponent;
-        x = (  x + w ) % w;
-        y = ( y  + h ) % h;
-        return level.get( x, y );
-    }
-
-    public LevelBlock getLevelBlockFromVPixelRounded( int vPixelX, int vPixelY) {
-        int w = playwindow.getLevelWidth();
-        int h = playwindow.getLevelHeight();
-        int roundx = (vPixelX + (playwindow.virtualBlockResolution >> 1)) >> playwindow.virtualBlockResolutionExponent;
-        int roundy = (vPixelY + (playwindow.virtualBlockResolution >> 1)) >> playwindow.virtualBlockResolutionExponent;
-        //if( level.getScrollX() )
-        roundx = (  roundx + w ) % w;
-        //else
-        //    roundx = Math.max(0,Math.min(w,roundx));
-        //if( level.getScrollY() )
-        roundy = ( roundy  + h ) % h;
-        //else
-        //    roundy = Math.max(0,Math.min(h,roundy));
-        return level.get( roundx, roundy );
-    }
-
 
     /**
      * Start the moving thread which will manage all movement of objects in the game
@@ -159,44 +102,42 @@ public class Game {
         if( level.isFinished() ) {
             return false;
         }
-        if( !toolbox.isActivated()) { // if game is not suspended with toolbox
-            // do timers
-            gameFrame++;
+        // do timers
+        gameFrame++;
             /* done with synchronize // get lock
             try { // needs to be synchronized against drawing
                 updateLock.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }*/
-            frameTimer.update(gameFrame);
+        frameTimer.update(gameFrame);
 
 
-            if(movement) {
-                // update durations and trigger events, if necessary
-                mcminos.updateDurations();
-                ghosts.checkSpawn();
+        if (movement) {
+            // update durations and trigger events, if necessary
+            mcminos.updateDurations();
+            ghosts.checkSpawn();
 
-                // move everybody
-                mcminos.move();
-                for (int i = movers.size() - 1; i >= 0; i--) { // works as synchronized
-                    // current could already be destroyed by last mover
-                    if (i <= movers.size() - 1) {
-                        // TODO: check if this makes sense
-                        Mover m = movers.get(i);
-                        if (m.move()) {
-                            movers.remove(i);
-                            LevelObject lo = m.getLevelObject();
-                            lo.getLevelBlock().removeMovable(lo);
-                            lo.dispose();
-                        }
-                        if( level.isFinished() ) {
-                            return false;
-                        }
+            // move everybody
+            mcminos.move();
+            for (int i = movers.size() - 1; i >= 0; i--) { // works as synchronized
+                // current could already be destroyed by last mover
+                if (i <= movers.size() - 1) {
+                    // TODO: check if this makes sense
+                    Mover m = movers.get(i);
+                    if (m.move()) {
+                        movers.remove(i);
+                        LevelObject lo = m.getLevelObject();
+                        lo.getLevelBlock().removeMovable(lo);
+                        lo.dispose();
+                    }
+                    if (level.isFinished()) {
+                        return false;
                     }
                 }
             }
-            /* done with synchronize updateLock.release(); // release lock */
         }
+            /* done with synchronize updateLock.release(); // release lock */
         return true;
     }
 
@@ -296,15 +237,6 @@ public class Game {
         return playScreen;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public void reload() {
-        level.load(currentLevelName);
-        initAfterLoad(playwindow, level, mcminos, toolbox);
-    }
-
     public boolean getMovement() {
         return movement;
     }
@@ -317,12 +249,23 @@ public class Game {
         movement = false;
     }
 
-    public void draw(boolean drawBackground) {
-        level.draw(playwindow, drawBackground);
+    public Level levelNew(String levelName) {
+        level = new Level(this, levelName);
+        initAfterLoad( );
+        return level;
     }
 
-    public void drawMini(SpriteBatch batch) {
-        level.drawMini(playwindow, batch);
+    public void reload() {
+        level.load(level.getName());
+        initAfterLoad( );
+    }
+
+    private void initAfterLoad( ) {
+        // Now init some of the level elements
+        getGhosts().init(); // update references
+        Mover mover = new McMinosMover(this,mcminos);
+        // done in mover creation mcminos.setMover(mover); // needs to be created this late
+        disableMovement();
     }
 
 }

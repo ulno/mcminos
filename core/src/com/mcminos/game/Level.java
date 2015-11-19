@@ -609,6 +609,20 @@ Missing:
             return null;
     }
 
+    public LevelBlock getLevelBlockFromVPixel( int vPixelX, int vPixelY) {
+        int x = vPixelX  >> PlayWindow.virtualBlockResolutionExponent;
+        int y = vPixelY  >> PlayWindow.virtualBlockResolutionExponent;
+        x = (  x + width ) % width;
+        y = (  y + height ) % height;
+        return get( x, y );
+    }
+
+    public LevelBlock getLevelBlockFromVPixelRounded( int vPixelX, int vPixelY) {
+        return getLevelBlockFromVPixel( vPixelX + (PlayWindow.virtualBlockResolution >> 1),
+                vPixelY + (PlayWindow.virtualBlockResolution >> 1) );
+    }
+
+
     /**
      * Find level block below of the given windowVPixelXPos,windowVPixelYPos position.
      * @param x
@@ -843,7 +857,7 @@ Missing:
         game.reload();
     }
 
-    public String getLevelName() {
+    public String getName() {
         return levelName;
     }
 
@@ -874,4 +888,5 @@ Missing:
     public int getGhostPillFreq() {
         return ghostPillFreq;
     }
+
 }

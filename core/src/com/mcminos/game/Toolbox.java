@@ -3,7 +3,6 @@ package com.mcminos.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -425,9 +424,9 @@ public class Toolbox {
             return;
         }
         int mvx = mcminos.getVX() + (PlayWindow.virtualBlockResolution >> 1);
-        if (level.getScrollX()) mvx = mvx % playwindow.getVPixelsLevelWidth();
+        if (level.getScrollX()) mvx = mvx % level.getVPixelsWidth();
         int mvy = mcminos.getVY() + (PlayWindow.virtualBlockResolution >> 1);
-        if (level.getScrollY()) mvy = mvy % playwindow.getVPixelsLevelWidth();
+        if (level.getScrollY()) mvy = mvy % level.getVPixelsWidth();
 
 /*         // get rounded mcminos block
          LevelBlock lb = level.get( mvx / PlayWindow.virtualBlockResolution, mvy / PlayWindow.virtualBlockResolution);
@@ -670,7 +669,7 @@ allows cheating */
         ///// Fill statistics
         statisticsTable.add(new Label("Statistics", skin)).top().colspan(2).center().padBottom(res / 4).row();
         // Levelname
-        statisticsTable.add(new Label("Levelname: " + level.getLevelName(),skin)).colspan(2).left().row();
+        statisticsTable.add(new Label("Levelname: " + level.getName(),skin)).colspan(2).left().row();
         // Zoomlevel + Resolution
         statisticsTable.add(new Label(new StringBuilder("Density: ").append((int)(Gdx.graphics.getDensity()*160)), skin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), skin)).left().row();
