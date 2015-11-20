@@ -1,12 +1,17 @@
 {
-  "level_collection": "Tutorial",
+  "level_set": "Tutorial",
   "version": "3.14",
+  "path:": "."
   
   "levels": [
     {
-      "id": "tut01_pills"    ,
+      "id": "tut01_pills",
+      
       "title": "Tutorial 1: Walls and peas",
+      "title_de": "Tutorial: Mauern und Pillen",
+      
       "body": "In McMinos levels have walls. You cannot pass through them. Go and eat all peas to finish a level.",
+      "body_de": "In McMinos-Spielebenen gibt es Wände. Du kannst nicht durch Wände gehen. Geh und sammel alle Pillen ein, um eine Spielebene zu beenden."
     },
     {
       "id": "tut02_ghost_hanky",
