@@ -7,26 +7,26 @@
     {
       "id": "tut01_pills",
       
-      "title": "Tutorial 1: Walls and peas",
+      "title": "Tutorial 1: Walls and pellets",
       "title_de": "Tutorial: Mauern und Pillen",
       
-      "body": "In McMinos levels have walls. You cannot pass through them. Go and eat all peas to finish a level.",
+      "body": "In McMinos levels have walls. You cannot pass through them. Go and eat all pellets to finish a level.",
       "body_de": "In McMinos-Spielebenen gibt es Wände. Du kannst nicht durch Wände gehen. Geh und sammel alle Pillen ein, um eine Spielebene zu beenden."
     },
     {
       "id": "tut02_ghost_hanky",
       "title": "Tutorial 2: Ghost Hanky",
-      "body": "Ghosts live in the castle(s). When they come out, they hunt you. Don't lose your head, just get away in time. Eating a cookie gives you enough power to hunt the ghosts - for a short while.",
+      "body": "The ghosts live in castles. When they come out, they hunt you. Eating a cookie gives you enough power to hunt the ghosts - for a short while.",
     },
     {
       "id": "tut03_chocolate",
       "title": "Chocolate",
-      "body": "Collect chocolate in your toolbox. Eat it when needed to hunt ghosts.",
+      "body": "Collect chocolate in your toolbox. Eat it to hunt ghosts.",
     },
     {
       "id": "tut04_doors_and_keys",
       "title": "Tutorial 4: Of doors and keys",
-      "body": "Collect all keys you find in a level. You may need them to open doors. Or close them again to stop ghosts from hunting you.",
+      "body": "Collect all keys you find in a level. You may need them to open doors. Or to close them again.",
     },
     {
       "id": "tut05_rock_and_rock_me",
