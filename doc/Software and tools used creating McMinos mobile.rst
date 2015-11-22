@@ -20,6 +20,8 @@ Java
 * OpenJDK
 * IntelliJ Community Edition
 * Android SDK
+  * Draw 9-patch — https://developer.android.com/tools/help/draw9patch.html
+  * Android Asset Studio — https://romannurik.github.io/AndroidAssetStudio/index.html
 * libGDX
 * GDX Skin Editor
 
@@ -58,6 +60,7 @@ Documentation, Tutorials, Articles, etc.
 * Skin Editor — http://www.badlogicgames.com/forum/viewtopic.php?t=14295&p=78236
 
 
+
 Graphic tools
 =============
 
@@ -83,6 +86,8 @@ Skin Editor (for libgdx skins)
 ------------------------------
 
 Homepage: https://github.com/gunmetal313/gdx-skineditor
+
+* Skin Editor Documentation — http://www.shadebob.org/posts/skin-editor-documentation
 
 
 
