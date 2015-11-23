@@ -587,7 +587,27 @@ allows cheating */
         });
         topMenu.add(soundButton).left().prefSize(res, res);
 
-        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
+        //  Andreas (2015-11-23) Added graphic music on/off button to replace text button.
+        final Group musicButton = new Group();
+        musicButton.addActor(new Image(emptyButtonGfx));
+        musicButton.addActor(new Image(Entities.menu_music_on.getTexture(res,0)));
+        musicButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                audio.toggleMusic();
+                musicButton.clearChildren();
+                if(audio.getMusic()) {
+                    musicButton.addActor(new Image(emptyButtonGfx));
+                    musicButton.addActor(new Image(Entities.menu_music_on.getTexture(playwindow.resolution,0)));
+                } else {
+                    musicButton.addActor(new Image(emptyButtonGfx));
+                    musicButton.addActor(new Image(Entities.menu_music_off.getTexture(playwindow.resolution,0)));
+                }
+            }
+        });
+        topMenu.add(musicButton).left().prefSize(res, res);
+
+/*        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -596,7 +616,7 @@ allows cheating */
             }
         });
         topMenu.add(musicButton).prefSize(res, res);
-
+*/
         Button touchpadButton = new TextButton("D-Pad", skin);
         touchpadButton.addListener(new ClickListener() {
             @Override
