@@ -2,6 +2,8 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -268,4 +270,16 @@ public class Game {
         disableMovement();
     }
 
+    /**
+     * Create a persistentsnapshot for the current gamestate
+     * (hibernate to disk)
+     */
+    private void saveSnapshot() {
+        Gdx.files.local("settings.json");
+        Json output = new Json();
+        Gdx.files.local("user-save.json");
+        JsonWriter jw = new JsonWriter(         );
+        JsonState state = new JsonState(this);
+        state.
+    }
 }
