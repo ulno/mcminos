@@ -298,7 +298,7 @@ public class LevelBlock {
     }
 
     public void makeGhost(int typenr, Ghosts ghosts) {
-        ghosts.create(this, 0);
+        ghosts.create(this, typenr);
     }
 
     public void makeLive() {
