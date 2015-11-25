@@ -617,6 +617,27 @@ allows cheating */
         });
         topMenu.add(musicButton).prefSize(res, res);
 */
+/*        //  Andreas (2015-11-23) Added graphic d-pad on/off button to replace text button.
+        final Group touchpadButton = new Group();
+        //touchpadButton.addActor(new Image(emptyButtonGfx));
+        touchpadButton.addActor(new Image(Entities.menu_button_touchpad_on.getTexture(res,0)));
+        touchpadButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                play.toggleTouchpad();
+                touchpadButton.clearChildren();
+                if(play.toggleTouchpad()) {
+                    touchpadutton.addActor(new Image(emptyButtonGfx));
+                    touchButton.addActor(new Image(Entities.menu_button_touchpad_on.getTexture(playwindow.resolution,0)));
+                } else {
+                    musicButton.addActor(new Image(emptyButtonGfx));
+                    musicButton.addActor(new Image(Entities.menu_button_touchpad_off.getTexture(playwindow.resolution,0)));
+                }
+            
+            }
+        });
+        topMenu.add(touchpadButton).left().prefSize(res, res);
+*/
         Button touchpadButton = new TextButton("D-Pad", skin);
         touchpadButton.addListener(new ClickListener() {
             @Override
@@ -624,7 +645,9 @@ allows cheating */
                 play.toogleTouchpad();
             }
         });
+
         topMenu.add(touchpadButton).prefSize(res, res);
+
 
         Group plusButton = new Group();
         plusButton.addActor(new Image(emptyButtonGfx));
@@ -637,6 +660,7 @@ allows cheating */
                 gameMenu(); // TODO: check if this leaks too much memory
             }
         });
+
         topMenu.add(plusButton).prefSize(res, res);
 
         Group minusButton = new Group();

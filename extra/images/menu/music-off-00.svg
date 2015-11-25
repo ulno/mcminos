@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="symbol-music-off-00.svg">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="music-off-00.svg">
   <defs id="defs4152" />
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="15.20904" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
     <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
     <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
     <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
@@ -15,21 +15,19 @@
       <cc:Work rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
-    <g id="g8220">
-      <g style="fill:#333" transform="matrix(1.0000168,0,0,1,-4.3320562e-4,1.4998645)" id="g9485">
-        <rect style="fill:#333;fill-opacity:1;stroke:none" id="rect8965" width="11" height="4" x="12" y="6" />
-        <rect style="fill:#333;fill-opacity:1;stroke:none" id="rect9475" width="1" height="9.5" x="22" y="10" />
-        <rect style="fill:#333;fill-opacity:1;stroke:none" id="rect9477" width="1" height="9.5" x="12" y="10" />
-        <ellipse ry="2" rx="3.236068" cy="22" cx="9" style="fill:#333;fill-opacity:1;stroke:none" id="path9479" transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,-4.5551672,1.0790032)" />
-        <ellipse ry="2" rx="3.236068" cy="22" cx="9" transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,5.4448328,1.0790032)" id="path9483" style="fill:#333;fill-opacity:1;stroke:none" />
-      </g>
-      <rect transform="matrix(-0.70710678,0.70710678,-0.70710678,-0.70710678,0,0)" style="fill:#d40000;fill-opacity:1;stroke:none" id="rect3153" width="28" height="4" x="-14" y="-24.627417" />
-      <rect y="-2" x="-36.627415" height="4" width="28" id="rect9602" style="fill:#d40000;fill-opacity:1;stroke:none" transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)" />
+    <g id="g9485" transform="matrix(1.0000168,0,0,1,-4.3320562e-4,1.4998645)" style="fill:#333">
+      <rect y="6" x="12" height="4" width="11" id="rect8965" style="fill:#333;fill-opacity:1;stroke:none" />
+      <rect y="10" x="22" height="9.5" width="1" id="rect9475" style="fill:#333;fill-opacity:1;stroke:none" />
+      <rect y="10" x="12" height="9.5" width="1" id="rect9477" style="fill:#333;fill-opacity:1;stroke:none" />
+      <ellipse transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,-4.5551672,1.0790032)" id="path9479" style="fill:#333;fill-opacity:1;stroke:none" cx="9" cy="22" rx="3.236068" ry="2" />
+      <ellipse style="fill:#333;fill-opacity:1;stroke:none" id="path9483" transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,5.4448328,1.0790032)" cx="9" cy="22" rx="3.236068" ry="2" />
     </g>
+    <rect y="-24.627417" x="-14" height="4" width="28" id="rect3153" style="fill:#d40000;fill-opacity:1;stroke:none" transform="matrix(-0.70710678,0.70710678,-0.70710678,-0.70710678,0,0)" />
+    <rect transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)" style="fill:#d40000;fill-opacity:1;stroke:none" id="rect9602" width="28" height="4" x="-36.627415" y="-2" />
   </g>
 </svg>
