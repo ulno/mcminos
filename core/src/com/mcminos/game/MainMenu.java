@@ -35,6 +35,7 @@ public class MainMenu implements Screen {
     private final Main main;
 
     public MainMenu(final Main main, String levelPreselect) {
+        final MainMenu thisScreen = this;
         this.main = main;
         batch = main.getBatch();
         skin = main.getSkin();
@@ -53,12 +54,20 @@ public class MainMenu implements Screen {
         table.align(Align.center | Align.top);
 
         TextButton startButton = new TextButton("Start",skin);
-        final MainMenu thisScreen = this;
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 thisScreen.dispose();
                 main.setScreen(new Play(main, (String) sb.getSelected()));
+            }
+        });
+
+        TextButton resumeButton = new TextButton("Resume",skin);
+        resumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                thisScreen.dispose();
+                main.setScreen(new Play(main));
             }
         });
 
@@ -99,6 +108,9 @@ public class MainMenu implements Screen {
                 .minSize(160, 48)
                 .row();
         table.add(startButton)
+                .minSize(128, 48)
+                .row();
+        table.add(resumeButton)
                 .minSize(128, 48);
 
         stage.addActor(bgimage);

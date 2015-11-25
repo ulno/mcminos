@@ -101,7 +101,7 @@ public class Load implements Screen {
                 loadingDone = true;
                 Entities.finishLoad(manager.get("entities/pack.atlas", TextureAtlas.class));
                 finishLoads();
-                //game.init();
+                //game.loadLevel();
                 // Then switch screen
                 this.dispose();
                 MainMenu screen = new MainMenu(main,null);

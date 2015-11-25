@@ -2,6 +2,8 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +16,7 @@ import java.util.Collections;
  *
  * The actual level with the ability to read in a new level
  */
-public class Level {
+public class Level implements Json.Serializable {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
     private ArrayList<LevelObject> allLevelObjects = new ArrayList<>(); // sorted list of all levelobjects (for drawing at once)
     private Game game;
@@ -60,9 +62,23 @@ public class Level {
     private boolean finished = false;
 
 
+    /**
+     * called when restored from json
+     */
+    Level() {
+        this.game = null;
+        // name will be set later
+    }
+
     Level ( Game game, String filename ) {
         this.game = game;
-        load( filename );
+        load( filename, true );
+        initMcMinosStart(game.getMcMinos());
+        resetGhostsStart(game.getGhosts());
+    }
+
+    public void initAfterJson( Game game) {
+        this.game = game;
     }
 
     public void draw(PlayWindow playwindow, boolean drawBackgrounds) {
@@ -115,7 +131,7 @@ public class Level {
      *
      * @param levelName
      */
-    public void load(String levelName) {
+    public void load(String levelName, boolean doUpdateBlocks) {
         // save name
         this.levelName = levelName;
 
@@ -362,28 +378,29 @@ public class Level {
                 bggfx = Entities.backgrounds_pavement_01;
                 break;
         }
-        for( int x=0; x<width; x++)
-            for( int y=0; y<height; y++)
-            {
-                LevelBlock f = field[x][y];
-                f.updateWall();
-                f.updateCastle();
-                f.updateDoor();
-                // create background
-                if(x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
-                    LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_pavement_01.getzIndex(),LevelObject.Types.Background);
-                    lo.setGfx(bggfx);
+        if(doUpdateBlocks) {
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++) {
+                    LevelBlock f = field[x][y];
+                    f.updateWall();
+                    f.updateCastle(game);
+                    f.updateDoor();
+                    // create background
+                    if (x % bggfx.getWidth() == 0 && y % bggfx.getHeight() == 0) {
+                        LevelObject lo = new LevelObject(this, x, y, Entities.backgrounds_pavement_01.getzIndex(), LevelObject.Types.Background);
+                        lo.setGfx(bggfx);
+                    }
+                    // create wrap-around fields
+                    if (scrollX && x == width - 1) {
+                        LevelObject lo = new LevelObject(this, x, y, Entities.extras_wrap_around_horizontal.getzIndex(), LevelObject.Types.Background);
+                        lo.setGfx(Entities.extras_wrap_around_horizontal);
+                    }
+                    if (scrollY && y == height - 1) {
+                        LevelObject lo = new LevelObject(this, x, y, Entities.extras_wrap_around_vertical.getzIndex(), LevelObject.Types.Background);
+                        lo.setGfx(Entities.extras_wrap_around_vertical);
+                    }
                 }
-                // create wrap-around fields
-                if(scrollX && x==width-1) {
-                    LevelObject lo = new LevelObject(this, x, y, Entities.extras_wrap_around_horizontal.getzIndex(), LevelObject.Types.Background);
-                    lo.setGfx(Entities.extras_wrap_around_horizontal);
-                }
-                if(scrollY && y==height-1) {
-                    LevelObject lo = new LevelObject(this, x, y, Entities.extras_wrap_around_vertical.getzIndex(), LevelObject.Types.Background);
-                    lo.setGfx(Entities.extras_wrap_around_vertical);
-                }
-            }
+        }
         // update some related variables
         vPixelsWidth = width << PlayWindow.virtualBlockResolutionExponent;
         vPixelsHeight = height << PlayWindow.virtualBlockResolutionExponent;
@@ -403,7 +420,7 @@ public class Level {
             LevelBlock lb = field[linepos][destinationLine];
             switch(c) {
                 case 'P':
-                    lb.makeMcMinos();
+                    //lb.makeMcMinos(mcminos);
                     mcminosStart = lb;
                     break;
                 case 'X':
@@ -428,22 +445,22 @@ public class Level {
                     lb.makePowerPill3();
                     break;
                 case 'C':
-                    lb.makeCastle();
+                    lb.makeCastle(game);
                     break;
                 case 'G':
-                    lb.makeGhost1();
+                    //lb.makeGhost(0,ghosts);
                     ghostStart[0].add(lb);
                     break;
                 case 'g':
-                    lb.makeGhost2();
+                    //lb.makeGhost(1,ghosts);
                     ghostStart[1].add(lb);
                     break;
                 case 'H':
-                    lb.makeGhost3();
+                    //lb.makeGhost(2,ghosts);
                     ghostStart[2].add(lb);
                     break;
                 case 'h':
-                    lb.makeGhost4();
+                    //lb.makeGhost(3,ghosts);
                     ghostStart[3].add(lb);
                     break;
                 case 'L':
@@ -844,13 +861,21 @@ Missing:
                 game.getGhosts().dispose(); // remove ghosts
             }
             if ((restart & 2) == 0) {
-                for (LevelBlock b : ghostStart[0]) b.makeGhost1();
-                for (LevelBlock b : ghostStart[1]) b.makeGhost2();
-                for (LevelBlock b : ghostStart[2]) b.makeGhost3();
-                for (LevelBlock b : ghostStart[3]) b.makeGhost4();
+                resetGhostsStart(game.getGhosts());
             }
             if ((restart & 4) == 0) game.getMcMinos().teleportToBlock(mcminosStart);
         }
+    }
+
+    private void resetGhostsStart(Ghosts ghosts) {
+        for (LevelBlock b : ghostStart[0]) b.makeGhost(0,ghosts);
+        for (LevelBlock b : ghostStart[1]) b.makeGhost(1,ghosts);
+        for (LevelBlock b : ghostStart[2]) b.makeGhost(2,ghosts);
+        for (LevelBlock b : ghostStart[3]) b.makeGhost(3,ghosts);
+    }
+
+    private void initMcMinosStart(McMinos mcminos) {
+        mcminosStart.makeMcMinos(mcminos);
     }
 
     private void reload() {
@@ -866,7 +891,7 @@ Missing:
     }
 
     /**
-     * :eve; is finished, either by win or death
+     * level is finished, either by win or death
      */
     public void finish() {
         finished = true;
@@ -889,4 +914,20 @@ Missing:
         return ghostPillFreq;
     }
 
+    @Override
+    public void write(Json json) {
+        json.writeValue("levelName",levelName);
+        json.writeValue("levelObjects",allLevelObjects);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        levelName = json.readValue("levelName",String.class,jsonData);
+        load(levelName, false);
+        allLevelObjects.clear(); // reset as these are loaded now - TODO: consider skipping backgrounds
+        allLevelObjects = json.readValue("levelObjects",ArrayList.class, jsonData);
+        for( int i=allLevelObjects.size()-1; i>=0; i--) {
+            allLevelObjects.get(i).initAfterJsonLoad(this);
+        }
+    }
 }

@@ -22,21 +22,21 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by ulno on 10.09.15.
  */
 public class Play implements Screen, GestureListener, InputProcessor {
-    private final OrthographicCamera camera;
+    private OrthographicCamera camera;
     private Game game;
     private PlayWindow playwindow;
-    private final Skin skin;
+    private Skin skin;
     private McMinos mcminos;
-    private final Audio audio;
+    private Audio audio;
     private BitmapFont font;
-    private final SpriteBatch stageBatch;
-    private final SpriteBatch gameBatch;
-    private final SpriteBatch backgroundBatch;
-    private final SpriteBatch miniBatch;
-    private final ShapeRenderer miniScreenBackground;
+    private SpriteBatch stageBatch;
+    private SpriteBatch gameBatch;
+    private SpriteBatch backgroundBatch;
+    private SpriteBatch miniBatch;
+    private ShapeRenderer miniScreenBackground;
 
     private Stage stage;
-    private final Main main;
+    private Main main;
     private Level level;
     private int touchDownX;
     private int touchDownY;
@@ -58,7 +58,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private long toolboxRebuildTimePoint = 0;
 
 
-    public Play(final Main main, String levelName) {
+    private void preInit( final Main main ) {
         this.main = main;
         gameBatch = main.getBatch();
         camera = new OrthographicCamera();
@@ -71,14 +71,39 @@ public class Play implements Screen, GestureListener, InputProcessor {
         miniScreenBackground = new ShapeRenderer();
 //        background = Entities.backgrounds_punched_plate_03;
         background = Entities.backgrounds_amoeboid_01;
-        init(levelName);
     }
 
-    public void init(String levelName) {
+    public Play( Main main, String levelName) {
+        preInit(main);
+        loadLevel(levelName);
+        initAfterLevel();
+    }
+
+    /**
+     * no levelName-> resume from saved state
+     * @param main
+     */
+    public Play(final Main main) {
+        preInit(main);
+        resumeLevel();
+        initAfterLevel();
+    }
+
+    private void resumeLevel() {
+        game = new Game(main, this);
+        game.loadSnapshot();
+        level = game.getLevel();
+        level.initAfterJson( game );
+    }
+
+    public void loadLevel(String levelName) {
         // Prepare the control layer
         game = new Game(main, this);
-        level = game.levelNew( levelName );
-        mcminos = game.getMcMinos();
+        level = game.levelNew(levelName);
+    }
+
+    public void initAfterLevel( ) {
+        mcminos = game.getMcMinos(); // only works after level has been loaded/initialized
 
         // prepare stuff for graphics output
         playwindow = new PlayWindow(gameBatch, camera, level, mcminos);
@@ -633,5 +658,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public int getGameResolutionCounter() {
         return gameResolutionCounter;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

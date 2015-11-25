@@ -1,7 +1,9 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 
@@ -258,7 +260,7 @@ public class Game {
     }
 
     public void reload() {
-        level.load(level.getName());
+        level.load( level.getName(), true );
         initAfterLoad( );
     }
 
@@ -271,15 +273,69 @@ public class Game {
     }
 
     /**
-     * Create a persistentsnapshot for the current gamestate
+     * Create a persistent snapshot for the current gamestate
      * (hibernate to disk)
      */
-    private void saveSnapshot() {
-        Gdx.files.local("settings.json");
+    public void saveSnapshot() {
+        FileHandle settings = Gdx.files.local("settings.json");
         Json output = new Json();
-        Gdx.files.local("user-save.json");
-        JsonWriter jw = new JsonWriter(         );
-        JsonState state = new JsonState(this);
-        state.
+        FileHandle userSave = Gdx.files.local("user-save.json");
+
+        JsonState jsonState = new JsonState(this);
+        // convert the given profile to text
+        String profileAsText = output.toJson( jsonState );
+
+        Gdx.app.log("profileAsText",profileAsText);
+        // encode the text
+        String profileAsCode = Base64Coder.encodeString( profileAsText );
+
+        // write the profile data file
+        userSave.writeString( profileAsCode, false );
+    }
+
+    public void loadSnapshot() {
+        FileHandle userSave = Gdx.files.local("user-save.json");
+        // create the JSON utility object
+        Json json = new Json();
+
+        // check if the profile data file exists
+        if( userSave.exists() ) {
+
+            // load the profile from the data file
+//            try {
+
+                // read the file as text
+                String profileAsCode = userSave.readString();
+
+                // decode the contents
+                String profileAsText = Base64Coder.decodeString( profileAsCode );
+
+                // restore the state
+                JsonState jsonState = json.fromJson( JsonState.class, profileAsText );
+                level = jsonState.getLevel();
+                McMinos tmpmcminos = jsonState.getMcminos();
+                mcminos.initFromTempMcMinos(tmpmcminos);
+            // TODO: Set level blocks in levelobjects!!!
+                initAfterLoad(); // TODO: does this make sense?
+            mcminos.initDestination();
+
+
+//            } catch( Exception e ) {
+
+                // log the exception
+//                Gdx.app.error( "info", "Unable to parse existing profile data file", e );
+
+                /*// recover by creating a fresh new profile data file;
+                // note that the player will lose all game progress
+                profile = new Profile();
+                persist( profile ); */
+
+//            }
+
+//        } else {
+/*            // create a new profile data file
+            profile = new Profile();
+            persist( profile ); */
+        }
     }
 }

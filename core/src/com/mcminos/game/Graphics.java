@@ -20,6 +20,7 @@ import java.util.HashMap;
  */
 public class Graphics {
     static int numberImagesLoaded = 0; // for progress-bar
+    private final int graphicsIndex;
     private char symbol;
     private int anchorX, anchorY; // already shifted to virtual resolution
     private int zIndex;
@@ -85,6 +86,7 @@ public class Graphics {
         this.blockHeight = blockHeight;
         totalAnimationFrames = 0;
         allGraphics.add(this);
+        graphicsIndex = allGraphics.size()-1;
     }
 
     long msToFrames( long ms) {
@@ -293,5 +295,16 @@ public class Graphics {
 
     public int getAnimationFramesLength() {
         return totalAnimationFrames;
+    }
+
+    public int getAllGraphicsIndex() {
+        return graphicsIndex;
+    }
+
+    public static Graphics getByIndex(int index ) {
+        if(index>=0 && index < allGraphics.size())
+            return allGraphics.get(index);
+        else
+            return null;
     }
 }

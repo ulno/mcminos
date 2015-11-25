@@ -53,7 +53,7 @@ public class PlayWindow {
         this.mcminos = mcminos;
     }
 
-/*    seems obsolete public void init() {
+/*    seems obsolete public void loadLevel() {
         gfx = Entities.getInstance();
         // Load after graphics have been loaded
         windowVPixelXPos = 0;

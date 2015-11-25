@@ -118,7 +118,7 @@ public class GhostMover extends Mover {
             int ghostnr = levelObject.getGhostNr();
             if (currentLevelBlock != rememberedBlock) {
                 if (rememberedBlock.hasOneWay()) { // let ghosts turn the oneways
-                    rememberedBlock.turnOneWay();
+                    rememberedBlock.turnOneWay(audio);
                 }
             }
             rememberedBlock = currentLevelBlock;

@@ -79,7 +79,7 @@ public class Explosion {
             animationLength = Entities.extras_land_mine_exploding.getAnimationFramesLength();
             destroyLiving();
         }
-        explosionObject.animationStartNow();
+        explosionObject.animationStartNow(game);
         // Start a timer to come back here, when explosion finished
         explosionFinishTask = new FrameTimer.Task(explosionObject) {
             @Override
@@ -138,10 +138,10 @@ public class Explosion {
                 mcminos.increaseScore(1);
             }
             if(lb.hasHole()) {
-                lb.getHole().increaseHole();
+                lb.getHole().increaseHole(audio);
             }
             if(lb.hasOneWay()) {
-                lb.turnOneWay();
+                lb.turnOneWay(audio);
             }
             // kill ghosts and mcminos
             ArrayList<LevelObject> list = lb.getMovables();
@@ -210,13 +210,13 @@ public class Explosion {
 
         if(type == LevelObject.Types.Bomb) {
             fuseObject = new LevelObject(center, Entities.extras_bomb_fused, LevelObject.Types.BombFused);
-            fuseObject.animationStartNow();
+            fuseObject.animationStartNow(game);
             audio.soundPlay("zisch");
             animationLength = Entities.extras_bomb_fused.getAnimationFramesLength();
         }
         else { // so it's dynamite
             fuseObject = new LevelObject(center, Entities.extras_dynamite_fused, LevelObject.Types.BombFused);
-            fuseObject.animationStartNow();
+            fuseObject.animationStartNow(game);
             audio.soundPlay("zisch");
             animationLength = Entities.extras_dynamite_fused.getAnimationFramesLength();
         }

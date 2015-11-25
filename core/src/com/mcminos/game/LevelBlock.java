@@ -10,10 +10,10 @@ import java.util.HashSet;
  *
  */
 public class LevelBlock {
-    private final Game game;
-    private final Audio audio;
-    private final McMinos mcminos;
-    private final Ghosts ghosts;
+//    private final Game game;
+//    private final Audio audio;
+//    private final McMinos mcminos;
+//    private final Ghosts ghosts;
     private int x,y; // Position in Level Field
     private Level level; // corresponding level
     private LevelObject wall=null; // The wall or door connected here
@@ -163,10 +163,10 @@ public class LevelBlock {
 
     public LevelBlock(Level level, int x, int y) {
         this.level = level;
-        game = level.getGame();
-        audio = game.getAudio();
-        mcminos = game.getMcMinos();
-        ghosts = game.getGhosts();
+//        game = level.getGame();
+//        audio = game.getAudio();
+//        mcminos = game.getMcMinos();
+//        ghosts = game.getGhosts();
         this.x = x;
         this.y = y;
 
@@ -246,7 +246,7 @@ public class LevelBlock {
         wall = new LevelObject(level,x,y,Entities.walls_default_00.getzIndex(),LevelObject.Types.InvisibleWall);
     }
 
-    public void makeMcMinos() {
+    public void makeMcMinos(McMinos mcminos) {
         mcminos.initLevelBlock(level,x,y); // creates levelobject and relation to levelblock
         movables.add(mcminos.getLevelObject());
     }
@@ -273,13 +273,13 @@ public class LevelBlock {
         collectibles.add(lo);
     }
 
-    public void makeCastle() {
+    public void makeCastle(Game game) {
         castle = new LevelObject(level,x,y,Entities.castle_default.getzIndex(),LevelObject.Types.Castle);
-        updateCastle();
+        updateCastle(game);
         level.addCastle(castle);
     }
 
-    public void updateCastle() {
+    public void updateCastle(Game game) {
         if( castle != null) { // only update if this is castle
             // only add graphics, when lower button corner of a
             // castle (so there needs to be a castle up and one right)
@@ -288,7 +288,7 @@ public class LevelBlock {
             if (u != null && u.hasCastle()
                     && r != null && r.hasCastle()) {
                 castle.setGfx(Entities.castle_default);
-                castle.animationStartRandom(); // make sure not all are animated the same
+                castle.animationStartRandom(game); // make sure not all are animated the same
             }
         }
     }
@@ -297,20 +297,8 @@ public class LevelBlock {
         return castle != null;
     }
 
-    public void makeGhost1() {
+    public void makeGhost(int typenr, Ghosts ghosts) {
         ghosts.create(this, 0);
-    }
-
-    public void makeGhost2() {
-        ghosts.create(this, 1);
-    }
-
-    public void makeGhost3() {
-        ghosts.create(this, 2);
-    }
-
-    public void makeGhost4() {
-        ghosts.create(this, 3);
     }
 
     public void makeLive() {
@@ -663,7 +651,7 @@ public class LevelBlock {
         return oneWayType != -1;
     }
 
-    public boolean turnOneWay() {
+    public boolean turnOneWay(Audio audio) {
         if(oneWayType >=4) {
             oneWayType++;
             if(oneWayType >=8) oneWayType = 4;

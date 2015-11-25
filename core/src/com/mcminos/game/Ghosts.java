@@ -33,7 +33,7 @@ public class Ghosts {
     public LevelObject create(LevelBlock block, int ghostnr) {
         LevelObject.Types ghosttype = ghostTypes[ghostnr];
         LevelObject lo = new LevelObject( block, ghostEntities[ghostnr], ghosttype );
-        lo.animationStartRandom();
+        lo.animationStartRandom(game);
         block.addMovables(lo);
         level = block.getLevel();
         Mover mover = new GhostMover(game, lo, ghostSpeed[ghostnr],

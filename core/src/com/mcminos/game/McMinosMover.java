@@ -340,10 +340,10 @@ public class McMinosMover extends Mover {
                     // check if last block had a hole -> make it bigger
                     if (lastBlock.hasHole()) {
                         // try to increase
-                        lastBlock.getHole().increaseHole();
+                        lastBlock.getHole().increaseHole(audio);
                     }
                     if (lastBlock.hasOneWay()) {
-                        lastBlock.turnOneWay();
+                        lastBlock.turnOneWay(audio);
                     }
                     // check if here is max hole
                     if (currentBlock.hasHole() && currentBlock.getHole().holeIsMax()) {
