@@ -122,7 +122,7 @@ public class Explosion {
                 new LevelObject(lb,Entities.extras_rock_destroyed,LevelObject.Types.Unspecified);
                 lb.setRock(null);
                 game.removeMover(r.getMover());
-                lb.removeMovable(r); // gom global movables
+                lb.remove(r); // from global movables
                 r.dispose();
             }
         }
@@ -132,7 +132,9 @@ public class Explosion {
      * kill ghosts, mcminos, remove pills, light other explosives
      */
     private void destroyLiving() {
-        for( LevelBlock lb: getArea() ) {
+        LevelBlock[] area = getArea(); // TODO: consider allocating this statically
+        for( int ac=area.length-1; ac>=0; ac--) {
+            LevelBlock lb = area[ac];
             if( lb.hasPill()) {
                 lb.removePill();
                 mcminos.increaseScore(1);
@@ -146,21 +148,23 @@ public class Explosion {
             // kill ghosts and mcminos
             ArrayList<LevelObject> list = lb.getMovables();
             for( int i=list.size()-1; i>=0; i--) {
-                LevelObject lo = list.get(i);
-                int ghostnr = lo.getGhostNr();
-                if (ghostnr != -1) { // THi sis a ghost
-                    if (ghostnr == 3) { // jumping pill
-                        level.decreasePills();
-                        audio.soundPlay("knurps");
+                if(list.size() > i) {
+                    LevelObject lo = list.get(i);
+                    int ghostnr = lo.getGhostNr();
+                    if (ghostnr != -1) { // This is a ghost
+                        if (ghostnr == 3) { // jumping pill
+                            level.decreasePills();
+                            audio.soundPlay("knurps");
+                        }
+                        ghosts.decreaseGhosts(ghostnr);
+                        game.removeMover(lo.getMover());
+                        list.remove(i);
+                        lo.dispose();
+                        mcminos.increaseScore(30);
                     }
-                    ghosts.decreaseGhosts(ghostnr);
-                    game.removeMover(lo.getMover());
-                    list.remove(i);
-                    lo.dispose();
-                    mcminos.increaseScore(30);
-                }
-                if(lo.getType() == LevelObject.Types.McMinos) {
-                    mcminos.kill("skullkill",Entities.mcminos_dying);
+                    if (lo.getType() == LevelObject.Types.McMinos) {
+                        mcminos.kill("skullkill", Entities.mcminos_dying);
+                    }
                 }
             }
 

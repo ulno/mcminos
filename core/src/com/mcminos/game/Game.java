@@ -12,14 +12,13 @@ import java.util.Random;
 
 /**
  * Created by ulno on 27.08.15.
- *
+ * <p/>
  * This is the class having all game content which needs to be accessed by all other modules.
  * It also manages the game content but nothing graphical.
  * Graphical things like projection or coordinates would go to playwindow or the PlayScreen.
  * The timing of the game is done here.
  * Audio events can be (still) triggered from here.
  * Also the toolbox needs to be controlled from outside and doesn't belong in here.
- *
  */
 public class Game {
     // constants
@@ -52,19 +51,18 @@ public class Game {
     }
 
     /**
-     *
      * @return usually true, when game continues, if next level or return to menu, return false
      */
     public boolean updateTime() {
         // use square to be more precise
         float gdxtime = Gdx.graphics.getDeltaTime();
-        gameTime += (long)( gdxtime* 1000);
+        gameTime += (long) (gdxtime * 1000);
 
-        if(timerTaskActive) {
+        if (timerTaskActive) {
             long deltaTime = (long) (gdxtime * Game.timeResolution * Game.timeResolution);
             deltaTime += lastDeltaTimeLeft; // apply what is left
             while (deltaTime >= Game.timeResolution) {
-                if(! nextGameFrame() ) return false;
+                if (!nextGameFrame()) return false;
                 deltaTime -= Game.timeResolution;
             }
             lastDeltaTimeLeft = deltaTime;
@@ -103,7 +101,7 @@ public class Game {
      * else should return true
      */
     public boolean nextGameFrame() {
-        if( level.isFinished() ) {
+        if (level.isFinished()) {
             return false;
         }
         // do timers
@@ -132,7 +130,7 @@ public class Game {
                     if (m.move()) {
                         movers.remove(i);
                         LevelObject lo = m.getLevelObject();
-                        lo.getLevelBlock().removeMovable(lo);
+                        lo.getLevelBlock().remove(lo);
                         lo.dispose();
                     }
                     if (level.isFinished()) {
@@ -255,20 +253,19 @@ public class Game {
 
     public Level levelNew(String levelName) {
         level = new Level(this, levelName);
-        initAfterLoad( );
+        initAfterLoad();
         return level;
     }
 
     public void reload() {
-        level.load( level.getName(), true );
-        initAfterLoad( );
+        level.load(level.getName(), true);
+        initAfterLoad();
     }
 
-    private void initAfterLoad( ) {
+    private void initAfterLoad() {
         // Now init some of the level elements
         getGhosts().init(); // update references
-        Mover mover = new McMinosMover(this,mcminos);
-        // done in mover creation mcminos.setMover(mover); // needs to be created this late
+        mcminos.initMover();  // needs to be created this late
         disableMovement();
     }
 
@@ -283,14 +280,14 @@ public class Game {
 
         JsonState jsonState = new JsonState(this);
         // convert the given profile to text
-        String profileAsText = output.toJson( jsonState );
+        String profileAsText = output.toJson(jsonState);
 
-        Gdx.app.log("profileAsText",profileAsText);
+        Gdx.app.log("profileAsText", profileAsText);
         // encode the text
-        String profileAsCode = Base64Coder.encodeString( profileAsText );
+        String profileAsCode = Base64Coder.encodeString(profileAsText);
 
         // write the profile data file
-        userSave.writeString( profileAsCode, false );
+        userSave.writeString(profileAsCode, false);
     }
 
     public void loadSnapshot() {
@@ -299,30 +296,36 @@ public class Game {
         Json json = new Json();
 
         // check if the profile data file exists
-        if( userSave.exists() ) {
+        if (userSave.exists()) {
 
             // load the profile from the data file
 //            try {
 
-                // read the file as text
-                String profileAsCode = userSave.readString();
+            // read the file as text
+            String profileAsCode = userSave.readString();
 
-                // decode the contents
-                String profileAsText = Base64Coder.decodeString( profileAsCode );
+            // decode the contents
+            String profileAsText = Base64Coder.decodeString(profileAsCode);
 
-                // restore the state
-                JsonState jsonState = json.fromJson( JsonState.class, profileAsText );
-                level = jsonState.getLevel();
-                McMinos tmpmcminos = jsonState.getMcminos();
-                mcminos.initFromTempMcMinos(tmpmcminos);
-            // TODO: Set level blocks in levelobjects!!!
-                initAfterLoad(); // TODO: does this make sense?
+            // restore the state
+            JsonState jsonState = json.fromJson(JsonState.class, profileAsText);
+            level = jsonState.getLevel();
+            McMinos tmpmcminos = jsonState.getMcminos();
+            mcminos.initFromTempMcMinos(tmpmcminos);
+            movers.clear(); // clear mover list to add the loaded movers
+            // TODO: update movers and speeds for ghosts and mcminos - do they first have to be removed?
+            // find loaded movers and add them to the list of movers
+            initAfterLoad(); // TODO: does this make sense?
             mcminos.initDestination();
+
+            // done in game initialization:mcminos.initMover(); TODO: make compliant withmovers we read in
+            // mcminos levelobject is not in level.allLevelObjects // TODO: make sure it's added
+            // TODO: restore explosions and fuses (timed tasks)
 
 
 //            } catch( Exception e ) {
 
-                // log the exception
+            // log the exception
 //                Gdx.app.error( "info", "Unable to parse existing profile data file", e );
 
                 /*// recover by creating a fresh new profile data file;

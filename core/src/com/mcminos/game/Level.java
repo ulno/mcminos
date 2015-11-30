@@ -854,6 +854,7 @@ Missing:
             game.reset();
             // reload
             reload();
+            resetGhostsStart(game.getGhosts());
         } else { // "normal" restart
             // restore graphics of mcminos
             game.getMcMinos().gfxNormal();
@@ -863,11 +864,18 @@ Missing:
             if ((restart & 2) == 0) {
                 resetGhostsStart(game.getGhosts());
             }
-            if ((restart & 4) == 0) game.getMcMinos().teleportToBlock(mcminosStart);
+            if ((restart & 4) == 0) { // if not 4, teleport back
+                game.getMcMinos().teleportToBlock(mcminosStart);
+            }
         }
+        McMinos mcminos = game.getMcMinos();
+        mcminos.teleportToBlock(mcminos.getLevelBlock());
+        mcminos.initMover();
+        // game.getMcMinos().initBlock();
     }
 
     private void resetGhostsStart(Ghosts ghosts) {
+        ghosts.dispose();
         for (LevelBlock b : ghostStart[0]) b.makeGhost(0,ghosts);
         for (LevelBlock b : ghostStart[1]) b.makeGhost(1,ghosts);
         for (LevelBlock b : ghostStart[2]) b.makeGhost(2,ghosts);
@@ -924,10 +932,25 @@ Missing:
     public void read(Json json, JsonValue jsonData) {
         levelName = json.readValue("levelName",String.class,jsonData);
         load(levelName, false);
-        allLevelObjects.clear(); // reset as these are loaded now - TODO: consider skipping backgrounds
+        for( int i=allLevelObjects.size()-1; i>=0; i--) { // reset manually as these are loaded now - TODO: consider skipping backgrounds
+            allLevelObjects.get(i).dispose();
+        }
         allLevelObjects = json.readValue("levelObjects",ArrayList.class, jsonData);
         for( int i=allLevelObjects.size()-1; i>=0; i--) {
             allLevelObjects.get(i).initAfterJsonLoad(this);
         }
     }
+
+    public LevelObject getMcMinosObjectFromList() {
+        for( int i = allLevelObjects.size()-1; i>=0; i-- ) {
+            LevelObject lo = allLevelObjects.get(i);
+            if(lo.getType() == LevelObject.Types.McMinos ) return lo;
+        }
+        return null;
+    }
+
+/*    public void exchangeLevelObjectInList(LevelObject loOld, LevelObject loNew) {
+        allLevelObjects.remove(loOld);
+        allLevelObjects.add(loNew);
+    }*/
 }

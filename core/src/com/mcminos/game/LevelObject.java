@@ -38,7 +38,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
             json.writeValue("g",gfx.getAllGraphicsIndex());
         else
             json.writeValue("g",-1);
-        // Mover?
+        json.writeValue( "m", mover );
         if(levelBlock != null) {
             json.writeValue("hb",true);
             json.writeValue("lbx", levelBlock.getX());
@@ -58,8 +58,8 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         x = json.readValue("x",Integer.class,jsonData);
         y = json.readValue("y",Integer.class,jsonData);
         gfx = Graphics.getByIndex( json.readValue("g",Integer.class,jsonData));
-        // Mover?
-        boolean hasBlock = json.readValue("y",Boolean.class,jsonData);
+        mover = json.readValue("m",Mover.class,jsonData);
+        boolean hasBlock = json.readValue("hb",Boolean.class,jsonData);
         if(hasBlock) {
             lbx = json.readValue("lbx", Integer.class, jsonData);
             lby = json.readValue("lby", Integer.class, jsonData);
@@ -81,22 +81,28 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
 
     private void construct(LevelBlock levelBlock, int zIndex, Types type) {
         level = levelBlock.getLevel();
-        this.levelBlock = levelBlock;
         // does not exist here playwindow = game.getPlayWindow();
         x = levelBlock.getX() << PlayWindow.virtualBlockResolutionExponent;
         y = levelBlock.getY() << PlayWindow.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
         this.type = type;
+        setLevelBlock(levelBlock);
         level.addToAllLevelObjects(this);
     }
 
+    /**
+     * make sure levelblock is initialized by coordinates
+     * @param level
+     */
     public void initAfterJsonLoad( Level level ) {
         this.level = level;
         if(lbx >= 0 && lby >= 0) {
-            this.levelBlock = level.get(lbx, lby);
+            setLevelBlock( level.get(lbx, lby) );
         } else {
             levelBlock = null;
         }
+        if(mover != null)
+            mover.initAfterJsonLoad(level);
     }
 
     /**
@@ -159,20 +165,17 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
             vpy -= level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
         //}
 
-//        LevelBlock to = game.getLevelBlockFromVPixel(vpx, vpy);
         // needs to be updated to check for collisions via associations
-        if( from != headingTo ) {
-            //if (from != null) { should not happen when properly intialized
-                from.removeMovable(this);
-                // check if rock and update rockme counters
-                if (type == LevelObject.Types.Rock) {
-                    // Check, if we are on a rockme
-                    if (from.isRockme()) level.increaseRockmes();
-                }
-            //}
-            headingTo.putMoveable(this);
+        if (from != headingTo) {
+            from.remove(this);
+            // check if rock and update rockme counters
+            if (type == LevelObject.Types.Rock) {
+                // Check, if we are on a rockme
+                if (from.isRockme()) level.increaseRockmes();
+            }
+            // happens in setLevelBlock: headingTo.putMoveable(this);
         }
-        levelBlock = headingTo; // todo: might be not totally correct for destination
+        setLevelBlock( headingTo ); // todo: might be not totally correct for destination
         setXY(vpx,vpy);
         return levelBlock;
     }
@@ -186,7 +189,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
      * assign a matching LevelBlock based on the current coordinates
      */
     public void assignLevelBlock(PlayWindow playwindow) {
-        levelBlock = level.getLevelBlockFromVPixel(x, y);
+        setLevelBlock( level.getLevelBlockFromVPixel(x, y) );
     }
 
     public boolean hasGfx() {
@@ -201,10 +204,16 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         return mover;
     }
 
-    // make sure to remove yourself from list
+    /**
+     * make sure to remove yourself from list
+     * also cleans itself from associated levelblock
+     */
     public void dispose() {
+        if(levelBlock != null ) { // has levelBlock
+            levelBlock.remove(this);
+            levelBlock = null;
+        }
         level.removeFromAllLevelObjects(this);
-        // TODO: think if we also have to remove from other things in level-block
     }
 
     public boolean isIndestructable() {
@@ -312,8 +321,19 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
 
     }
 
-    public void setLevelBlock(LevelBlock levelBlock) {
-        this.levelBlock = levelBlock;
+    public void setLevelBlock(LevelBlock newBlock) {
+        if(newBlock != levelBlock) { // new levelBlock
+            if (levelBlock != null) { // it has one assigned, so it needs to be removed
+                levelBlock.remove(this);
+            }
+            // now we know that it has nothing assigned
+            levelBlock = newBlock;
+            if(newBlock != null) {
+                lbx = newBlock.getX();
+                lby = newBlock.getY();
+                levelBlock.add(this);
+            }
+        }
     }
 
     public int getGhostNr() {

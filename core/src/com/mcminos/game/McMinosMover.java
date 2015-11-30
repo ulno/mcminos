@@ -2,6 +2,8 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -319,6 +321,16 @@ public class McMinosMover extends Mover {
         }
     }
 
+    @Override
+    public void write(Json json) {
+        super.write(json);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        super.read(json, jsonData);
+    }
+
     /**
      * Check Mcminos'  collisions (mainly if mcminos found something and can collect it)
      * @return
@@ -358,70 +370,59 @@ public class McMinosMover extends Mover {
                     switch(item.getType()) {
                         case Chocolate:
                             audio.soundPlay("tools");
-                            mcminos.increaseChocolates();;
-                            currentBlock.removeItem(item);
+                            mcminos.increaseChocolates();
                             item.dispose();
                             mcminos.increaseScore(10);
                             break;
                         case Bomb:
                             audio.soundPlay("tools");
                             mcminos.increaseBombs();;
-                            currentBlock.removeItem(item);
                             item.dispose();
                             // no score as droppable increaseScore(10);
                             break;
                         case Dynamite:
                             audio.soundPlay("tools");
                             mcminos.increaseDynamites();;
-                            currentBlock.removeItem(item);
                             item.dispose();
                             // no score as droppable increaseScore(10);
                             break;
                         case LandMine:
                             audio.soundPlay("tools");
                             mcminos.increaseLandmines();;
-                            currentBlock.removeItem(item);
                             item.dispose();
                             // no score as droppable increaseScore(10);
                             break;
                         case LandMineActive:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             new Explosion(currentBlock, LevelObject.Types.LandMine);
                             break;
                         case Key:
                             audio.soundPlay("tools");
                             mcminos.increaseKeys();;
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.increaseScore(10);
                             break;
                         case Umbrella:
                             audio.soundPlay("tools");
                             mcminos.increaseUmbrellas();;
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.increaseScore(10);
                             break;
                         case Live:
                             mcminos.increaseLives();
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.increaseScore(10);
                             break;
                         case Power1:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.setPowerPillValues(2, 1, 10);
                             // sound played in ppill method
                             break;
                         case Power2:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.setPowerPillValues(1, 2, 10);
                             break;
                         case Power3:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.setPowerPillValues(1, 1, 10);
                             break;
@@ -438,25 +439,21 @@ public class McMinosMover extends Mover {
                             audio.soundPlay("killall");
                             break;
                         case KillAllPill:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             ghosts.killall();
                             audio.soundPlay("killall");
                             break;
                         case Bonus1:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.increaseScore(100);
                             audio.soundPlay("treasure");
                             break;
                         case Bonus2:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.increaseScore(200);
                             audio.soundPlay("treasure");
                             break;
                         case Bonus3:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.increaseScore(300);
                             audio.soundPlay("treasure");
@@ -468,31 +465,26 @@ public class McMinosMover extends Mover {
                             }
                             break;
                         case Skull:
-                            currentBlock.removeItem(item);
                             item.dispose();
                         case SkullField:
                             mcminos.kill("skullkill",Entities.mcminos_dying);
                             break;
                         case Poison:
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.poison();
                             break;
                         case Whisky:
                             mcminos.increaseScore(5);
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.makeDrunk();
                             break;
                         case Medicine:
                             audio.soundPlay("tools");
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.increaseMedicines();
                             break;
                         case Mirror:
                             audio.soundPlay("fade");
-                            currentBlock.removeItem(item);
                             item.dispose();
                             mcminos.toggleMirrored();
                             break;

@@ -104,8 +104,13 @@ public class McMinos implements Json.Serializable {
         winning = tmpmcm.winning;
         falling = tmpmcm.falling;
         mirrored = tmpmcm.mirrored;
-        levelObject = tmpmcm.levelObject;
-//        levelObject.setXY(tmpmcm.getVX(),tmpmcm.getVY());
+        levelObject = level.getMcMinosObjectFromList();
+        /*if(levelObject == null)
+            levelObject = tmpmcm.levelObject; shoul dnot benecessary */
+        // already done levelObject.setXY(tmpmcm.getVX(),tmpmcm.getVY());
+        levelObject.initAfterJsonLoad(level);
+        //levelObject.moveTo(tmpmcm.getVX(),tmpmcm.getVY());
+
     }
 
 
@@ -123,9 +128,11 @@ public class McMinos implements Json.Serializable {
         // this.level = game.getLevel();
     }
 
-    /*
-     This is called when levelobjects can be used.
-      */
+    /**
+     * This is called when levelobjects can be used.
+     * @param x in block-coordinates
+     * @param y in block-coordinates
+     */
     public void initLevelBlock(Level level, int x, int y) {
         this.level = level;
         if(levelObject != null)
@@ -635,8 +642,12 @@ public class McMinos implements Json.Serializable {
         powerDuration = 0;
         umbrellaDuration = 0;
         setPowerPillValues(1,1,0);
-        initLevelBlock(level,startBlock.getX(),startBlock.getY());
+        initBlock();
         gfxSelect();
+    }
+
+    public void initBlock() {
+        initLevelBlock(level,startBlock.getX(),startBlock.getY());
     }
 
     public boolean updateKeyDirections() {
@@ -667,4 +678,11 @@ public class McMinos implements Json.Serializable {
         mirrored = ! mirrored;
     }
 
+    public void initMover() {
+        if( mover == null ) // create mover only if necessary
+            mover = new McMinosMover(game,this);
+        else // update levelobject
+            mover.setLevelObject(levelObject);
+        // done in mover creation mcminos.setMover(mover);
+    }
 }

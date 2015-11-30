@@ -1,9 +1,12 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 /**
  * Created by ulno on 28.08.15.
  */
-public abstract class Mover {
+public abstract class Mover implements Json.Serializable {
     private Graphics gfxRight = null;
     private Graphics gfxUp = null;
     private Graphics gfxStill = null;
@@ -20,8 +23,14 @@ public abstract class Mover {
     protected boolean canMoveRocks = false; // This moveable can move rocks (Main for example)
     protected int transWall; // Can this move through walls, then this is > 0
     protected LevelBlock lastBlock = null;
-    private LevelBlock headingTo;  // Block this object is heading to
+    protected LevelBlock headingTo;  // Block this object is heading to
     private boolean accelerated = false;
+    private int currentLevelBlockInitX = -1;
+    private int currentLevelBlockInitY = -1;
+    private int lastBlockInitX = -1;
+    private int lastBlockInitY = -1;
+    private int headingToInitX = -1;
+    private int headingToInitY = -1;
 
 
     /**
@@ -116,6 +125,11 @@ public abstract class Mover {
         init(lo, speed, canMoveRocks, transWall);
     }
 
+    // empty for create by json (values are written in read andinitialized by InitAfterJSonLoad
+    public Mover() {
+
+    }
+
 
     protected int getUnblockedDirs(int filterMask, boolean checkOneway, boolean transwall) {
         return currentLevelBlock.getUnblockedDirs( filterMask, checkOneway, canMoveRocks, transwall);
@@ -202,4 +216,52 @@ public abstract class Mover {
         return speedFactor;
     }
 
+    public void setLevelObject(LevelObject levelObject) {
+        this.levelObject = levelObject;
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("u",gfxUp.getAllGraphicsIndex());
+        json.writeValue("r",gfxRight.getAllGraphicsIndex());
+        json.writeValue("d",gfxDown.getAllGraphicsIndex());
+        json.writeValue("l",gfxLeft.getAllGraphicsIndex());
+        json.writeValue("s",gfxStill.getAllGraphicsIndex());
+        json.writeValue("cbx",currentLevelBlock.getX());
+        json.writeValue("cby",currentLevelBlock.getY());
+        json.writeValue("lbx",lastBlock.getX());
+        json.writeValue("lby",lastBlock.getY());
+        json.writeValue("htx",headingTo.getX());
+        json.writeValue("hty",headingTo.getY());
+        json.writeValue("sf",speedFactor);
+        json.writeValue("cd",currentDirection);
+        json.writeValue("r",canMoveRocks);
+        json.writeValue("tw",transWall);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        gfxUp = Graphics.getByIndex(json.readValue("u",Integer.class,jsonData));
+        gfxRight = Graphics.getByIndex(json.readValue("r",Integer.class,jsonData));
+        gfxDown = Graphics.getByIndex(json.readValue("d",Integer.class,jsonData));
+        gfxLeft = Graphics.getByIndex(json.readValue("l",Integer.class,jsonData));
+        gfxStill = Graphics.getByIndex(json.readValue("s",Integer.class,jsonData));
+        currentLevelBlockInitX = json.readValue("cbx",Integer.class,jsonData);
+        currentLevelBlockInitY = json.readValue("cby",Integer.class,jsonData);
+        lastBlockInitX = json.readValue("lbx",Integer.class,jsonData);
+        lastBlockInitY = json.readValue("lby",Integer.class,jsonData);
+        headingToInitX = json.readValue("lbx",Integer.class,jsonData);
+        headingToInitY = json.readValue("lby",Integer.class,jsonData);
+        speedFactor =  json.readValue("sf",Integer.class,jsonData);
+        currentDirection =  json.readValue("cd",Integer.class,jsonData);
+        canMoveRocks =  json.readValue("r",Boolean.class,jsonData);
+        transWall =  json.readValue("tw",Integer.class,jsonData);
+        computeSpeeds();
+    }
+
+    public void initAfterJsonLoad( Level level ) {
+        currentLevelBlock = level.get(currentLevelBlockInitX,currentLevelBlockInitY);
+        lastBlock = level.get(lastBlockInitX,lastBlockInitY);
+        headingTo = level.get(headingToInitX,headingToInitY);
+    }
 }

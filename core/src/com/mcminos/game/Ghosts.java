@@ -34,7 +34,7 @@ public class Ghosts {
         LevelObject.Types ghosttype = ghostTypes[ghostnr];
         LevelObject lo = new LevelObject( block, ghostEntities[ghostnr], ghosttype );
         lo.animationStartRandom(game);
-        block.addMovables(lo);
+        block.add(lo);
         level = block.getLevel();
         Mover mover = new GhostMover(game, lo, ghostSpeed[ghostnr],
                 level.ghostTranswall[ghostnr], ghostEntities[ghostnr]);
@@ -42,7 +42,7 @@ public class Ghosts {
         game.addMover(mover);
         ghostsActive[ghostnr] ++;
         if(ghostnr == 3) {
-            level.increasePills(); // don't use level yet as it might be uninitialized
+            level.increasePills(); // don't use local level yet as it might be uninitialized
         }
         return lo;
     }
@@ -112,7 +112,7 @@ public class Ghosts {
                 }
                 decreaseGhosts(ghostnr);
                 movers.remove(i);
-                lo.getLevelBlock().removeMovable(lo);
+                lo.getLevelBlock().remove(lo);
                 lo.dispose();
                 if(score) mcminos.increaseScore(30);
             }
