@@ -647,6 +647,15 @@ allows cheating */
 
         topMenu.add(touchpadButton).prefSize(res, res);
 
+        Button saveButton = new TextButton("Save\nGame", skin);
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                play.getGame().saveSnapshot();
+            }
+        });
+        topMenu.add(saveButton).prefSize(res, res);
+
         Group plusButton = new Group();
         plusButton.addActor(new Image(emptyButtonGfx));
         plusButton.addActor(new Image(Entities.menu_zoom_in.getTexture(res, 0)));
