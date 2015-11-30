@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="button-d-pad-on-00.svg">
+  <defs id="defs4152" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="5.6568542" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+    <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
+    <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
+    <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
+    <sodipodi:guide position="16,16" orientation="0.70710678,0.70710678" id="guide4775" />
+  </sodipodi:namedview>
+  <metadata id="metadata4155">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g5396">
+      <rect rx="4" style="fill:#666;fill-opacity:1;stroke:none" id="rect3767" width="32" height="32" x="0" y="0" ry="4" />
+      <path inkscape:connector-curvature="0" id="rect2993" d="M 4,0 C 1.784,0 0,1.784 0,4 l 0,24 c 0,2.216 1.784,4 4,4 l 24,0 c 2.216,0 4,-1.784 4,-4 L 32,4 C 32,1.784 30.216,0 28,0 L 4,0 Z m 0,1 24,0 c 1.662,0 3,1.338 3,3 l 0,24 c 0,1.662 -1.338,3 -3,3 L 4,31 C 2.338,31 1,29.662 1,28 L 1,4 C 1,2.338 2.338,1 4,1 Z" style="fill:black;fill-opacity:1;stroke:none" />
+      <g transform="matrix(-1,0,0,-1,32,32)" id="g5392">
+        <path inkscape:connector-curvature="0" style="fill:black;fill-opacity:0.37647059;stroke:none" d="M 30.125,30.125 C 30.66725,29.58275 31,28.831 31,28 L 31,4 C 31,2.338 29.662,1 28,1 L 4,1 C 3.169,1 2.41725,1.33275 1.875,1.875 L 2.59375,2.59375 C 2.95525,2.23225 3.446,2 4,2 l 24,0 c 1.108,0 2,0.892 2,2 l 0,24 c 0,0.554 -0.23225,1.04475 -0.59375,1.40625 L 30.125,30.125 Z" id="rect2997" />
+        <path style="fill:white;fill-opacity:0.37647059;stroke:none" d="m 28,31 c 0.831,0 1.58275,-0.33275 2.125,-0.875 L 29.40625,29.40625 C 29.04475,29.76775 28.554,30 28,30 L 4,30 C 2.892,30 2,29.108 2,28 L 2,4 C 2,3.446 2.23225,2.95525 2.59375,2.59375 L 1.875,1.875 C 1.33275,2.41725 1,3.169 1,4 l 0,24 c 0,1.662 1.338,3 3,3 l 24,0 z" id="rect3774" inkscape:connector-curvature="0" />
+      </g>
+      <g transform="translate(-47,11)" id="g5385">
+        <rect ry="4" y="0" x="58" height="10" width="10" id="rect3767-2" style="fill:#fc0;fill-opacity:1;stroke:none" rx="4" />
+        <path style="fill:black;fill-opacity:1;stroke:none" d="m 62,0 c -2.216,0 -4,1.784 -4,4 l 0,2 c 0,2.216 1.784,4 4,4 l 2,0 c 2.216,0 4,-1.784 4,-4 L 68,4 C 68,1.784 66.216,0 64,0 Z m 0,1 2,0 c 1.662,0 3,1.338 3,3 l 0,2 c 0,1.662 -1.338,3 -3,3 L 62,9 C 60.338,9 59,7.662 59,6 l 0,-2 c 0,-1.662 1.338,-3 3,-3 z" id="rect2993-0" inkscape:connector-curvature="0" sodipodi:nodetypes="ssssssssssssssssss" />
+        <g id="g5381" transform="matrix(-1,0,0,-1,126,10)">
+          <path sodipodi:nodetypes="cssssccsssscc" id="rect2997-2" d="M 66.125,8.125 C 66.66725,7.58275 67,6.831 67,6 L 67,4 C 67,2.338 65.662,1 64,1 l -2,0 c -0.831,0 -1.58275,0.33275 -2.125,0.875 l 0.71875,0.71875 C 60.95525,2.23225 61.446,2 62,2 l 2,0 c 1.108,0 2,0.892 2,2 l 0,2 c 0,0.554 -0.23225,1.04475 -0.59375,1.40625 z" style="fill:black;fill-opacity:0.37647059;stroke:none" inkscape:connector-curvature="0" />
+          <path sodipodi:nodetypes="sccssssccssss" inkscape:connector-curvature="0" id="rect3774-2" d="m 64,9 c 0.831,0 1.58275,-0.33275 2.125,-0.875 L 65.40625,7.40625 C 65.04475,7.76775 64.554,8 64,8 L 62,8 C 60.892,8 60,7.108 60,6 L 60,4 C 60,3.446 60.23225,2.95525 60.59375,2.59375 L 59.875,1.875 C 59.33275,2.41725 59,3.169 59,4 l 0,2 c 0,1.662 1.338,3 3,3 z" style="fill:white;fill-opacity:0.37647059;stroke:none" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
