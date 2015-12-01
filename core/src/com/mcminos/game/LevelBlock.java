@@ -197,6 +197,18 @@ public class LevelBlock {
             case Ghost4:
                 movables.remove(lo);
                 break;
+            case Hole:
+                if(hole == lo) {
+                    hole = null;
+                    removed = true;
+                }
+                break;
+            case OneWay:
+                if(oneWay == lo) {
+                    oneWay = null;
+                    removed = true;
+                }
+                break;
             default: // try to remove from collectibles or moveables
                 removed = collectibles.remove(lo);
                 if(!removed) {
@@ -248,6 +260,9 @@ public class LevelBlock {
                 break;
             case Hole:
                 hole = lo;
+                break;
+            case OneWay:
+                oneWay = lo;
                 break;
             default: // collectible
                 collectibles.add(lo);
