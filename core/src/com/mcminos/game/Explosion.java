@@ -96,7 +96,9 @@ public class Explosion {
      * remove all walls (also invisible ones), doors, and rocks affected by explosion
      */
     private void destroyWalls() {
-        for( LevelBlock lb: getArea() ) {
+        computeArea();
+        for( int i=8; i>=0; i-- ) {
+            LevelBlock lb = area[i];
             if( lb.hasWall() && ! lb.getWall().isIndestructable()) {
                 LevelObject w = lb.getWall();
                 int wIndex = lb.getWallIndex();
@@ -132,7 +134,7 @@ public class Explosion {
      * kill ghosts, mcminos, remove pills, light other explosives
      */
     private void destroyLiving() {
-        LevelBlock[] area = getArea(); // TODO: consider allocating this statically
+        computeArea();
         for( int ac=area.length-1; ac>=0; ac--) {
             LevelBlock lb = area[ac];
             if( lb.hasPill()) {
@@ -199,14 +201,17 @@ public class Explosion {
      * Get all neighboring blocks affected by an explosion
      * @return
      */
-    private LevelBlock[] getArea() {
-        LevelBlock u = center.up();
-        LevelBlock d = center.down();
-        return new LevelBlock[]{
-                u.left(),u,u.right(),
-                center.left(),center,center.right(),
-                d.left(),d,d.right()
-        };
+    private LevelBlock[] area = new LevelBlock[9];
+    private void computeArea() {
+        area[1] = center.up();
+        area[0] = area[1].left();
+        area[2] = area[1].right();
+        area[4] = center;
+        area[3] = center.left();
+        area[5] = center.right();
+        area[7] = center.down();
+        area[6] = area[7].left();
+        area[8] = area[7].right();
     }
 
     private void initFuse() {
