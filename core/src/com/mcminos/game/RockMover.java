@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
  */
 public class RockMover extends Mover {
 
-    private final Audio audio;
+    private Audio audio;
 //    private LevelBlock headingTo;
     private LevelBlock lastBlockChecked = null;
 
@@ -24,6 +24,13 @@ public class RockMover extends Mover {
         audio = rock.getLevelBlock().getLevel().getGame().getAudio();
     }
 
+    /**
+     * for json-read
+     */
+    public RockMover() {
+        super();
+    }
+
     @Override
     public void write(Json json) {
         super.write(json);
@@ -34,6 +41,12 @@ public class RockMover extends Mover {
         super.read(json, jsonData);
     }
 
+    @Override
+    public void initAfterJsonLoad(Game game, LevelObject lo) {
+        super.initAfterJsonLoad(game, lo);
+        audio = game.getAudio();
+        // TODO: add lastBlockChecked
+    }
 
     @Override
     protected boolean checkCollisions() {
