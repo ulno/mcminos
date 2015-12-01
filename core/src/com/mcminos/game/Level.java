@@ -55,7 +55,7 @@ public class Level implements Json.Serializable {
     private int medicinesMin = 0, medicinesMax = 999;
     private int umbrellasMin = 0, umbrellasMax = 999;
     private ArrayList<LevelBlock> warpHoleBlocks = new ArrayList<>();
-    private ArrayList<LevelObject> castleList = new ArrayList<>();
+    private ArrayList<LevelBlock> castleList = new ArrayList<>();
     private ArrayList<LevelBlock> ghostStart[] = new ArrayList[4];
     private LevelBlock mcminosStart;
     private String levelName;
@@ -75,10 +75,6 @@ public class Level implements Json.Serializable {
         load( filename, true );
         initMcMinosStart(game.getMcMinos());
         resetGhostsStart(game.getGhosts());
-    }
-
-    public void initAfterJson( Game game) {
-        this.game = game;
     }
 
     public void draw(PlayWindow playwindow, boolean drawBackgrounds) {
@@ -111,9 +107,17 @@ public class Level implements Json.Serializable {
         }
     }
 
+    private void disposeAllLevelObjects() {
+        for( int i=allLevelObjects.size()-1; i>=0; i--) {
+            LevelObject lo = allLevelObjects.get(i);
+            lo.dispose(); // also removes
+        }
+
+    }
+
     public void dispose() {
         warpHoleBlocks.clear();
-        allLevelObjects.clear();
+        disposeAllLevelObjects();
         pillsNumber = 0;
         rockmeNumber = 0;
     }
@@ -805,14 +809,14 @@ Missing:
     }
 
     public void addCastle(LevelObject castle) {
-        castleList.add(castle);
+        castleList.add(castle.getLevelBlock());
     }
 
     public LevelBlock getRandomCastleBlock() {
         if(castleList.size() == 0) {
             return null;
         }
-        return castleList.get(game.random(castleList.size())).getLevelBlock();
+        return castleList.get(game.random(castleList.size()));
     }
 
     public Game getGame() {
@@ -857,7 +861,7 @@ Missing:
             resetGhostsStart(game.getGhosts());
         } else { // "normal" restart
             // restore graphics of mcminos
-            game.getMcMinos().gfxNormal();
+            game.getMcMinos().gfxSelect();
             if((restart & 16) == 0) {
                 game.getGhosts().dispose(); // remove ghosts
             }
@@ -894,8 +898,11 @@ Missing:
         return levelName;
     }
 
-    public void removeFromAllLevelObjects(LevelObject levelObject) {
-        allLevelObjects.remove(levelObject);
+    public void removeFromAllLevelObjects(LevelObject lo) {
+/*        int index = Collections.binarySearch(allLevelObjects, lo);
+        if(index>=0)
+            allLevelObjects.remove(index);*/ // TODO: optimize, this is very slow (the bigger the level)
+        allLevelObjects.remove(lo);
     }
 
     /**
@@ -936,15 +943,19 @@ Missing:
             allLevelObjects.get(i).dispose();
         }
         allLevelObjects = json.readValue("levelObjects",ArrayList.class, jsonData);
+    }
+
+    public void initAfterJsonLoad(Game game) {
+        this.game = game;
         for( int i=allLevelObjects.size()-1; i>=0; i--) {
-            allLevelObjects.get(i).initAfterJsonLoad(this);
+            allLevelObjects.get(i).initAfterJsonLoad(game);
         }
     }
 
-    public LevelObject getMcMinosObjectFromList() {
+    public LevelObject getFirstLevelObjectFromList(LevelObject.Types type) {
         for( int i = allLevelObjects.size()-1; i>=0; i-- ) {
             LevelObject lo = allLevelObjects.get(i);
-            if(lo.getType() == LevelObject.Types.McMinos ) return lo;
+            if(lo.getType() == type ) return lo;
         }
         return null;
     }

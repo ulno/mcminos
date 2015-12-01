@@ -2,10 +2,8 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -166,7 +164,7 @@ public class Game {
         // disposeTimerTask(); // will be reused
         // mcminos.dispose(); // will be reused
         ghosts.dispose();
-        movers.clear();
+        clearMovers();
         level.dispose();
         mcminos.clearInventory();
         mcminos.reset();
@@ -275,14 +273,14 @@ public class Game {
      */
     public void saveSnapshot() {
         FileHandle settings = Gdx.files.local("settings.json");
-        Json output = new Json();
+        Json json = new Json();
         FileHandle userSave = Gdx.files.local("user-save.json");
 
         JsonState jsonState = new JsonState(this);
         // convert the given profile to text
-        String profileAsText = output.toJson(jsonState);
+        String profileAsText = json.toJson(jsonState);
 
-        Gdx.app.log("profileAsText", profileAsText);
+        Gdx.app.log("profileAsText", json.prettyPrint(profileAsText));
         // encode the text
         String profileAsCode = Base64Coder.encodeString(profileAsText);
 
@@ -307,18 +305,20 @@ public class Game {
             // decode the contents
             String profileAsText = Base64Coder.decodeString(profileAsCode);
 
+            // clearMovers(); should be cleared before
             // restore the state
             JsonState jsonState = json.fromJson(JsonState.class, profileAsText);
             level = jsonState.getLevel();
+            ghosts = jsonState.getGhosts();
             McMinos tmpmcminos = jsonState.getMcminos();
-            mcminos.initFromTempMcMinos(tmpmcminos);
-            movers.clear(); // clear mover list to add the loaded movers
+            mcminos.initAfterJsonLoad(this,tmpmcminos);
+            level.initAfterJsonLoad(this); // must be done after initializing mcminos
+            ghosts.initAfterJsonLoad(this);
             // TODO: update movers and speeds for ghosts and mcminos - do they first have to be removed?
             // find loaded movers and add them to the list of movers
             initAfterLoad(); // TODO: does this make sense?
-            mcminos.initDestination();
 
-            // done in game initialization:mcminos.initMover(); TODO: make compliant withmovers we read in
+            // done in game initialization:mcminos.initMover(); TODO: make compliant with movers we read in
             // mcminos levelobject is not in level.allLevelObjects // TODO: make sure it's added
             // TODO: restore explosions and fuses (timed tasks)
 

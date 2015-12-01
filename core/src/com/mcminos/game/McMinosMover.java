@@ -13,26 +13,36 @@ import java.util.HashSet;
  */
 public class McMinosMover extends Mover {
 
-    private final Game game;
-    private final McMinos mcminos;
-    private final Audio audio;
-    private final Level level;
-    private final Ghosts ghosts;
+    private Game game;
+    private McMinos mcminos;
+    private Audio audio;
+    private Level level;
+    private Ghosts ghosts;
     private int keyDirections = 0;
     private int touchpadDirections = 0;
     private ArrayList<LevelObject> currentItemlist;
 
+    public McMinosMover() {
+        super();
+    }
 
-    public McMinosMover(Game game, McMinos mcminos) {
-        super(mcminos.getLevelObject(), 1, true, 0);
-        this.mcminos = mcminos;
+    public McMinosMover(Game game) {
+        super(game.getMcMinos().getLevelObject(), 1, true, 0);
         this.game = game;
+        initFromGame();
+    }
+
+    /**
+     * Game needs to be set before calling this
+     */
+    private void initFromGame() {
         audio = game.getAudio();
         mcminos = game.getMcMinos();
+        levelObject = mcminos.getLevelObject();
         this.level = game.getLevel();
         ghosts = game.getGhosts();
         mcminos.setMover(this);
-        mcminos.gfxNormal();
+        mcminos.gfxSelect();
         for (int y = 0; y < mazeSize; y++) {
             for (int x = 0; x < mazeSize; x++) {
                 mazeBlocks[y][x] = new MazeBlock();
@@ -331,6 +341,13 @@ public class McMinosMover extends Mover {
         super.read(json, jsonData);
     }
 
+    @Override
+    public void initAfterJsonLoad(Game game,LevelObject lo) {
+        super.initAfterJsonLoad(game,lo);
+        this.game = game;
+        initFromGame();
+    }
+
     /**
      * Check Mcminos'  collisions (mainly if mcminos found something and can collect it)
      * @return
@@ -595,110 +612,12 @@ public class McMinosMover extends Mover {
 }
 
 /*
-		case MEDICINE1-1:clearwall( x, y );
-					snd_tool();
-					inc_score( 10 );
-					carry[CARRYANTIDOT]++;
-					break;
 		case CLOCKOBJ-1:clearwall( x, y );
 					snd_tool();
 					if(timeactiv) leveltime+=60;
 					inc_score( 10 );
 					break;
-		case POISON1-1:clearwall( x, y );
-					pacpoison();
-					retwert = 0;
-					break;
-		case SKULL-1: retwert = 0; spec_action = 1;
-					power = 0; kill_mcminos(); break;
 		case SURPRISE-1:clearwall( x, y );
 					choose_surprise( x, y );
 					break;
-		case LADDER-1: retwert = 0; pills_left=0; spec_action=1;
-    inc_score(10); break;
-    case TRUHE-1:clearwall( x, y );
-    snd_tool();
-    inc_score( 500 );
-    break;
-    case GELDSACK-1:clearwall( x, y );
-    snd_tool();
-    inc_score( 250 );
-    break;
-    case SPARSCHWEIN-1:clearwall( x, y );
-    snd_tool();
-    inc_score( 100 );
-    break;
-    case SPEEDUP-1: snd_speedup(); speedup = 1; break;
-    case SLOWDOWN-1: snd_slowdown(); speedup = 0; break;
-    case MIRROR-1:clearwall( x, y );
-    inc_score( 10 );
-    snd_mirror();
-    mirrorflag = !mirrorflag;
-    break;
-    case WHISKEY-1:clearwall( x, y );
-    snd_drunken();
-    drunken += 16;
-    inc_score( 5 );
-    break;
-    case KILLALL-1:clearwall( x, y );
-    snd_killall();
-    inc_score( goscount[0] * 10 );
-    ghostkillflag = 1;
-    spec_action = 1;
-    break;
-    case KILLALL2-1: snd_killall();
-    inc_score( goscount[0] * 10 );
-    ghostkillflag = 1;
-    spec_action = 1;
-    break;
-    case SECRETLETTER-1:clearwall( x, y );
-    //snd_letter();
-    inc_score( 10 );
-    found_letter = 1;
-    spec_action = 1;
-    break;
-    case LOCH-1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
-    {
-        change_field( x, y, levfield( y, x).type+1 );
-        snd_hole();
-    }
-    break;
-    case LOCH: if(!umbrflag) // Wenn kein Regenschirm aktiviert
-    {
-        change_field( x, y, levfield( y, x).type+1 );
-        snd_hole();
-    }
-    break;
-    case LOCH+1: if(!umbrflag) // Wenn kein Regenschirm aktiviert
-    {
-        change_field( x, y, levfield( y, x).type+1 );
-        snd_hole();
-    }
-    break;
-    case LOCH+2: if(!umbrflag) // Wenn kein Regenschirm aktiviert
-    {
-        change_field( x, y, levfield( y, x).type+1 );
-        snd_hole();
-    }
-    break;
-    case LOCH+3: if(!umbrflag) // Wenn kein Regenschirm aktiviert
-    {
-        McMinos_hole();
-        retwert = 0;
-    }
-    break;
-    case WARP-1:spec_action = 1;
-    stop_moving = 1;
-    do_warp = 1;
-    retwert = 0;
-    break;
-    case MINEDOWN-1: mine_expl( x, y ); break;
-    case MINEUP-1:change_field( x, y, levfield(y, x).extra);
-    snd_tool();
-    inc_score( 10 );
-    carry[CARRYMINE]++;
-    break;
-}
-
-
 */

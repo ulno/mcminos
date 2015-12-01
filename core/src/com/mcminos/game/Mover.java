@@ -75,7 +75,8 @@ public abstract class Mover implements Json.Serializable {
         this.gfxRight = right;
         this.gfxDown = down;
         this.gfxLeft = left;
-        levelObject.setGfx(still); // make sure the first is active as it might else not be chosen
+        if(! levelObject.hasGfx() || still == null)
+            levelObject.setGfx(still); // make sure the first is active as it might else not be chosen
     }
 
     public void setGfx( Graphics allDirections) {
@@ -234,6 +235,7 @@ public abstract class Mover implements Json.Serializable {
         json.writeValue("htx",headingTo.getX());
         json.writeValue("hty",headingTo.getY());
         json.writeValue("sf",speedFactor);
+        json.writeValue("a",accelerated);
         json.writeValue("cd",currentDirection);
         json.writeValue("r",canMoveRocks);
         json.writeValue("tw",transWall);
@@ -250,18 +252,32 @@ public abstract class Mover implements Json.Serializable {
         currentLevelBlockInitY = json.readValue("cby",Integer.class,jsonData);
         lastBlockInitX = json.readValue("lbx",Integer.class,jsonData);
         lastBlockInitY = json.readValue("lby",Integer.class,jsonData);
-        headingToInitX = json.readValue("lbx",Integer.class,jsonData);
-        headingToInitY = json.readValue("lby",Integer.class,jsonData);
+        headingToInitX = json.readValue("htx",Integer.class,jsonData);
+        headingToInitY = json.readValue("hty",Integer.class,jsonData);
         speedFactor =  json.readValue("sf",Integer.class,jsonData);
+        accelerated =  json.readValue("a",Boolean.class,jsonData);
         currentDirection =  json.readValue("cd",Integer.class,jsonData);
         canMoveRocks =  json.readValue("r",Boolean.class,jsonData);
         transWall =  json.readValue("tw",Integer.class,jsonData);
         computeSpeeds();
     }
 
-    public void initAfterJsonLoad( Level level ) {
+    public void initAfterJsonLoad( Game game, LevelObject lo ) {
+        Level level = game.getLevel();
+        levelObject = lo;
         currentLevelBlock = level.get(currentLevelBlockInitX,currentLevelBlockInitY);
         lastBlock = level.get(lastBlockInitX,lastBlockInitY);
         headingTo = level.get(headingToInitX,headingToInitY);
+        switch(levelObject.getType()) {
+            case Ghost1:
+            case Ghost2:
+            case Ghost4:
+                game.addMover(this);
+                break;
+            case Ghost3:
+                game.addMover(this);
+                level.increasePills();
+                break;
+        }
     }
 }

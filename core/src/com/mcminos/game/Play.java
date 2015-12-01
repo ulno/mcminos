@@ -93,7 +93,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game = new Game(main, this);
         game.loadSnapshot();
         level = game.getLevel();
-        level.initAfterJson( game );
     }
 
     public void loadLevel(String levelName) {

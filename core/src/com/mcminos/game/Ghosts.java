@@ -1,17 +1,20 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 import java.util.ArrayList;
 
 /**
  * Created by ulno on 05.10.15.
  */
-public class Ghosts {
-    private final Game game;
-    private final McMinos mcminos;
-    private final Audio audio;
+public class Ghosts implements Json.Serializable {
+    private Game game;
+    private McMinos mcminos;
+    private Audio audio;
     private Level level;
-    private int ghostSpeed[] = {1,1,1,1};
-    private int ghostsActive[] = {0,0,0,0};
+    private int[] ghostSpeed = {1,1,1,1};
+    private int[] ghostsActive = {0,0,0,0};
     private int[] ghostSpawnCounter = {-1,-1,-1,-1};
 
     public final LevelObject.Types ghostTypes[] = {
@@ -21,6 +24,33 @@ public class Ghosts {
             Entities.ghosts_hanky, Entities.ghosts_perry,
             Entities.ghosts_zarathustra, Entities.ghosts_jumpingpill };
 
+    /**
+     * for json-read
+     */
+    public Ghosts() {
+
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("gs", ghostSpeed);
+        json.writeValue("ga", ghostsActive);
+        json.writeValue("sc", ghostSpawnCounter);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        ghostSpeed = json.readValue("gs",int[].class,jsonData);
+        ghostsActive = json.readValue("ga",int[].class,jsonData);
+        ghostSpawnCounter = json.readValue("sc",int[].class,jsonData);
+    }
+
+    public void initAfterJsonLoad(Game game) {
+        this.game = game;
+        mcminos = game.getMcMinos();
+        audio = game.getAudio();
+        init();
+    }
 
     public Ghosts(Game game) {
         this.game = game;
@@ -29,6 +59,8 @@ public class Ghosts {
         // usually still null here needs to be read in create level = game.getLevel();
         // call init to read it
     }
+
+
 
     public LevelObject create(LevelBlock block, int ghostnr) {
         LevelObject.Types ghosttype = ghostTypes[ghostnr];
