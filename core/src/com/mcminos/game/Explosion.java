@@ -79,7 +79,7 @@ public class Explosion {
             animationLength = Entities.extras_land_mine_exploding.getAnimationFramesLength();
             destroyLiving();
         }
-        explosionObject.animationStartNow();
+        explosionObject.animationStartNow(game);
         // Start a timer to come back here, when explosion finished
         explosionFinishTask = new FrameTimer.Task(explosionObject) {
             @Override
@@ -122,7 +122,7 @@ public class Explosion {
                 new LevelObject(lb,Entities.extras_rock_destroyed,LevelObject.Types.Unspecified);
                 lb.setRock(null);
                 game.removeMover(r.getMover());
-                lb.removeMovable(r); // gom global movables
+                lb.remove(r); // from global movables
                 r.dispose();
             }
         }
@@ -132,35 +132,39 @@ public class Explosion {
      * kill ghosts, mcminos, remove pills, light other explosives
      */
     private void destroyLiving() {
-        for( LevelBlock lb: getArea() ) {
+        LevelBlock[] area = getArea(); // TODO: consider allocating this statically
+        for( int ac=area.length-1; ac>=0; ac--) {
+            LevelBlock lb = area[ac];
             if( lb.hasPill()) {
                 lb.removePill();
                 mcminos.increaseScore(1);
             }
             if(lb.hasHole()) {
-                lb.getHole().increaseHole();
+                lb.getHole().increaseHole(audio);
             }
             if(lb.hasOneWay()) {
-                lb.turnOneWay();
+                lb.turnOneWay(audio);
             }
             // kill ghosts and mcminos
             ArrayList<LevelObject> list = lb.getMovables();
             for( int i=list.size()-1; i>=0; i--) {
-                LevelObject lo = list.get(i);
-                int ghostnr = lo.getGhostNr();
-                if (ghostnr != -1) { // THi sis a ghost
-                    if (ghostnr == 3) { // jumping pill
-                        level.decreasePills();
-                        audio.soundPlay("knurps");
+                if(list.size() > i) {
+                    LevelObject lo = list.get(i);
+                    int ghostnr = lo.getGhostNr();
+                    if (ghostnr != -1) { // This is a ghost
+                        if (ghostnr == 3) { // jumping pill
+                            level.decreasePills();
+                            audio.soundPlay("knurps");
+                        }
+                        ghosts.decreaseGhosts(ghostnr);
+                        game.removeMover(lo.getMover());
+                        list.remove(i);
+                        lo.dispose();
+                        mcminos.increaseScore(30);
                     }
-                    ghosts.decreaseGhosts(ghostnr);
-                    game.removeMover(lo.getMover());
-                    list.remove(i);
-                    lo.dispose();
-                    mcminos.increaseScore(30);
-                }
-                if(lo.getType() == LevelObject.Types.McMinos) {
-                    mcminos.kill("skullkill",Entities.mcminos_dying);
+                    if (lo.getType() == LevelObject.Types.McMinos) {
+                        mcminos.kill("skullkill", Entities.mcminos_dying);
+                    }
                 }
             }
 
@@ -210,13 +214,13 @@ public class Explosion {
 
         if(type == LevelObject.Types.Bomb) {
             fuseObject = new LevelObject(center, Entities.extras_bomb_fused, LevelObject.Types.BombFused);
-            fuseObject.animationStartNow();
+            fuseObject.animationStartNow(game);
             audio.soundPlay("zisch");
             animationLength = Entities.extras_bomb_fused.getAnimationFramesLength();
         }
         else { // so it's dynamite
             fuseObject = new LevelObject(center, Entities.extras_dynamite_fused, LevelObject.Types.BombFused);
-            fuseObject.animationStartNow();
+            fuseObject.animationStartNow(game);
             audio.soundPlay("zisch");
             animationLength = Entities.extras_dynamite_fused.getAnimationFramesLength();
         }

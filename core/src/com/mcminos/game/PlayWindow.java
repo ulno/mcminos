@@ -53,7 +53,7 @@ public class PlayWindow {
         this.mcminos = mcminos;
     }
 
-/*    seems obsolete public void init() {
+/*    seems obsolete public void loadLevel() {
         gfx = Entities.getInstance();
         // Load after graphics have been loaded
         windowVPixelXPos = 0;
@@ -239,13 +239,6 @@ public class PlayWindow {
         return level.getHeight();
     }
 
-    public int getVPixelsLevelWidth() {
-        return level.getVPixelsWidth();
-    }
-
-    public int getVPixelsLevelHeight() {
-        return level.getVPixelsHeight();
-    }
 
     public int getVisibleWidthInVPixels() {
         return visibleWidthInVPixels;
@@ -311,4 +304,15 @@ public class PlayWindow {
         return vPixelToScreen( v, windowVPixelYPos, levelHeightInPixels );
     }
 
+    public void draw(boolean drawBackground) {
+        level.draw(this, drawBackground);
+    }
+
+    public void drawMini(SpriteBatch batch) {
+        level.drawMini(this, batch);
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
 }

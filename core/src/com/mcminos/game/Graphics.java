@@ -20,6 +20,7 @@ import java.util.HashMap;
  */
 public class Graphics {
     static int numberImagesLoaded = 0; // for progress-bar
+    private final int graphicsIndex;
     private char symbol;
     private int anchorX, anchorY; // already shifted to virtual resolution
     private int zIndex;
@@ -85,6 +86,7 @@ public class Graphics {
         this.blockHeight = blockHeight;
         totalAnimationFrames = 0;
         allGraphics.add(this);
+        graphicsIndex = allGraphics.size()-1;
     }
 
     long msToFrames( long ms) {
@@ -221,19 +223,19 @@ public class Graphics {
      * @param vy0 virtualPixel y-coordinate (level block * virtualPixelResolution)
      * @param animDelta offset to adapt animation
      */
-    public void draw( PlayWindow playwindow, int vx0, int vy0, int animDelta ) {
+    public void draw( PlayWindow playwindow, Level level, int vx0, int vy0, int animDelta ) {
         // let the installed scissor do the clipping, we just draw the respective image max 4 times
         ///////// first look at x
         int gamew = playwindow.levelWidthInPixels;
         int totalWidth = blockWidth << playwindow.resolutionExponent; // physical size in pixels of graphics
-        int vlw = playwindow.getVPixelsLevelWidth(); // virtual levelwidth
+        int vlw = level.getVPixelsWidth(); // virtual levelwidth
         vx0 = (vx0 - anchorX + vlw) % vlw; // make sure it's not negative and apply anchor
         // get physical coordinates
         int x0 = vPixelToScreen(vx0, playwindow.windowVPixelXPos,gamew,currentResolutionBitsLeftShifter);
         /////////// do same for y
         int gameh = playwindow.levelHeightInPixels;
         int totalHeight = blockHeight << playwindow.resolutionExponent; // physical size in pixels of graphics
-        int vlh = playwindow.getVPixelsLevelHeight(); // virtual levelwidth
+        int vlh = level.getVPixelsHeight(); // virtual levelwidth
         vy0 = (vy0 - anchorY + vlh) % vlh; // make sure it's not negative and apply anchor
         // get physical coordinates
         int y0 = vPixelToScreen(vy0, playwindow.windowVPixelYPos,gameh,currentResolutionBitsLeftShifter);
@@ -258,19 +260,19 @@ public class Graphics {
         if(xcr && yct) playwindow.batch.draw(t, x0 - gamew, y0 - gameh); // right top
     }
 
-    public static int virtualToMiniX( PlayWindow playwindow, int vx, int anchorX ) {
-        return Gdx.graphics.getWidth() - ((playwindow.getVPixelsLevelWidth() - vx + anchorX ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+    public static int virtualToMiniX( PlayWindow playwindow, Level level, int vx, int anchorX ) {
+        return Gdx.graphics.getWidth() - ((level.getVPixelsWidth() - vx + anchorX ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
     }
 
-    public static int virtualToMiniY( PlayWindow playwindow, int vy, int anchorY ) {
-        return Gdx.graphics.getHeight() - ((playwindow.getVPixelsLevelHeight() - vy + anchorY ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+    public static int virtualToMiniY( PlayWindow playwindow, Level level, int vy, int anchorY ) {
+        return Gdx.graphics.getHeight() - ((level.getVPixelsHeight() - vy + anchorY ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
     }
 
-    public void drawMini( PlayWindow playwindow, SpriteBatch minibatch, int vx, int vy, int animDelta ) {
+    public void drawMini( PlayWindow playwindow, Level level, SpriteBatch minibatch, int vx, int vy, int animDelta ) {
         if(zIndex>=200) { // only draw non-backgrounds
             // compute for upper right corner
-            int x = virtualToMiniX(playwindow, vx, anchorX);
-            int y = virtualToMiniY(playwindow, vy, anchorY);
+            int x = virtualToMiniX(playwindow, level, vx, anchorX);
+            int y = virtualToMiniY(playwindow, level, vy, anchorY);
             TextureRegion t = getTextureMini(playwindow.virtual2MiniResolution);
             if (t != null)
                 minibatch.draw(t, x, y);
@@ -293,5 +295,16 @@ public class Graphics {
 
     public int getAnimationFramesLength() {
         return totalAnimationFrames;
+    }
+
+    public int getAllGraphicsIndex() {
+        return graphicsIndex;
+    }
+
+    public static Graphics getByIndex(int index ) {
+        if(index>=0 && index < allGraphics.size())
+            return allGraphics.get(index);
+        else
+            return null;
     }
 }

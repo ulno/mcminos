@@ -1,10 +1,13 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 /**
  * Created by ulno on 05.10.15.
  */
-public class McMinos {
-    private final Game game;
+public class McMinos implements Json.Serializable {
+    private Game game;
     private Level level;
     private McMinosMover mover;
     private int powerDuration = 0;
@@ -20,7 +23,7 @@ public class McMinos {
     private int medicines=0; // number of medicines carried by mcminos
     private int lives=3; // number of lives left
     private int score=0; // current score
-    private final Audio audio;
+    private Audio audio;
     private LevelObject levelObject;
     private boolean killed = false;
     private boolean winning = false;
@@ -31,12 +34,91 @@ public class McMinos {
     private boolean destinationEnabled = true;
     private boolean mirrored = false;
 
-    public boolean isMirrored() {
-        return mirrored;
+    @Override
+    public void write(Json json) {
+        // mover?
+        json.writeValue("pd", powerDuration);
+        json.writeValue("ud", umbrellaDuration);
+        json.writeValue("td", poisonDuration);
+        json.writeValue("dl", drunkLevel);
+        json.writeValue("u", umbrellas);
+        json.writeValue("c", chocolates);
+        json.writeValue("b", bombs);
+        json.writeValue("d", dynamites);
+        json.writeValue("k", keys);
+        json.writeValue("l", landmines);
+        json.writeValue("m", medicines);
+        json.writeValue("lv", lives);
+        json.writeValue("s", score);
+        json.writeValue("k", killed);
+        json.writeValue("w", winning);
+        json.writeValue("f", falling);
+        json.writeValue("m", mirrored);
+        json.writeValue("lo", levelObject);
+        // destination?
+
+
     }
 
-    public void toggleMirrored() {
-        mirrored = ! mirrored;
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        powerDuration = json.readValue("pd",Integer.class,jsonData);
+        umbrellaDuration = json.readValue("ud",Integer.class,jsonData);
+        poisonDuration = json.readValue("td",Integer.class,jsonData);
+        drunkLevel = json.readValue("dl",Integer.class,jsonData);
+        umbrellas = json.readValue("u",Integer.class,jsonData);
+        chocolates = json.readValue("c",Integer.class,jsonData);
+        bombs = json.readValue("b",Integer.class,jsonData);
+        dynamites = json.readValue("d",Integer.class,jsonData);
+        keys = json.readValue("k",Integer.class,jsonData);
+        landmines = json.readValue("l",Integer.class,jsonData);
+        medicines = json.readValue("m",Integer.class,jsonData);
+        lives = json.readValue("lv",Integer.class,jsonData);
+        score = json.readValue("s",Integer.class,jsonData);
+        killed = json.readValue("k",Boolean.class,jsonData);
+        winning = json.readValue("w",Boolean.class,jsonData);
+        falling = json.readValue("f",Boolean.class,jsonData);
+        mirrored = json.readValue("m",Boolean.class,jsonData);
+
+        //tmpLevelObject = new LevelObject(game.getLevel(),0,0,0, LevelObject.Types.McMinos);
+        levelObject = json.readValue("lo",LevelObject.class,jsonData);
+        //levelObject.setXY(tmpLevelObject.getVX(),tmpLevelObject.getVY());
+    }
+
+    public void initFromTempMcMinos( McMinos tmpmcm ) {
+        level = game.getLevel();
+        powerDuration = tmpmcm.powerDuration;
+        umbrellaDuration = tmpmcm.umbrellaDuration;
+        poisonDuration = tmpmcm.poisonDuration;
+        drunkLevel = tmpmcm.drunkLevel;
+        umbrellas = tmpmcm.umbrellas;
+        chocolates = tmpmcm.chocolates;
+        bombs = tmpmcm.bombs;
+        dynamites = tmpmcm.dynamites;
+        keys = tmpmcm.keys;
+        landmines = tmpmcm.landmines;
+        medicines = tmpmcm.medicines;
+        lives = tmpmcm.lives;
+        score = tmpmcm.score;
+        killed = tmpmcm.killed;
+        winning = tmpmcm.winning;
+        falling = tmpmcm.falling;
+        mirrored = tmpmcm.mirrored;
+        levelObject = level.getMcMinosObjectFromList();
+        /*if(levelObject == null)
+            levelObject = tmpmcm.levelObject; shoul dnot benecessary */
+        // already done levelObject.setXY(tmpmcm.getVX(),tmpmcm.getVY());
+        levelObject.initAfterJsonLoad(level);
+        //levelObject.moveTo(tmpmcm.getVX(),tmpmcm.getVY());
+
+    }
+
+
+    /**
+     * Just for Json read
+     */
+    public McMinos() {
+
     }
 
     public McMinos(Game game) {
@@ -46,9 +128,11 @@ public class McMinos {
         // this.level = game.getLevel();
     }
 
-    /*
-     This is called when levelobjects can be used.
-      */
+    /**
+     * This is called when levelobjects can be used.
+     * @param x in block-coordinates
+     * @param y in block-coordinates
+     */
     public void initLevelBlock(Level level, int x, int y) {
         this.level = level;
         if(levelObject != null)
@@ -338,7 +422,7 @@ public class McMinos {
             mover.setGfx(null); // hide
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
             animation.setXY(getVX(), getVY());
-            animation.animationStartNow();
+            animation.animationStartNow(game);
 
             // schedule level-end and grave-stone setting after animation
             game.schedule(new FrameTimer.Task(animation) {
@@ -371,7 +455,7 @@ public class McMinos {
             // show fall-animation
             mover.setGfx(null); // hide
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
-            animation.animationStartNow();
+            animation.animationStartNow(game);
 
             // schedule level-end and grave-stone setting after animation
             game.schedule(new FrameTimer.Task(animation) {
@@ -448,7 +532,7 @@ public class McMinos {
             // TODO: winning animation
             Graphics gfx = Entities.mcminos_cheering;
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
-            animation.animationStartNow();
+            animation.animationStartNow(game);
 
             // schedule level-end and grave-stone setting after animation
             game.schedule(new FrameTimer.Task(animation) {
@@ -465,14 +549,14 @@ public class McMinos {
         return winning;
     }
 
-    public void setDestination(int x, int y) {
+    public void setDestination( PlayWindow playwindow, int x, int y) {
         if(destinationEnabled) {
             if(isMirrored()) { // if this goes out of range it's corrected in moveto
                 x = getVX() - (x - getVX());
                 y = getVY() - (y - getVY());
             } // TODO: think if this shoudl be better handled in chooseDirection
             destination.setGfx(Entities.destination);
-            LevelBlock lb = game.getLevelBlockFromVPixelRounded(x, y);
+            LevelBlock lb = level.getLevelBlockFromVPixelRounded(x, y);
             destination.moveTo(lb.getX() << PlayWindow.virtualBlockResolutionExponent, lb.getY() << PlayWindow.virtualBlockResolutionExponent, lb);
             destinationSet = true;
         }
@@ -498,7 +582,7 @@ public class McMinos {
     /**
      * create graphical object for destination
      */
-    private void initDestination() {
+    public void initDestination() {
         destination = new LevelObject(level,getLevelBlock().getX(),getLevelBlock().getY(),
                 Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
         // playwindow.resize();
@@ -558,6 +642,12 @@ public class McMinos {
         powerDuration = 0;
         umbrellaDuration = 0;
         setPowerPillValues(1,1,0);
+        initBlock();
+        gfxSelect();
+    }
+
+    public void initBlock() {
+        initLevelBlock(level,startBlock.getX(),startBlock.getY());
     }
 
     public boolean updateKeyDirections() {
@@ -578,5 +668,21 @@ public class McMinos {
 
     public void setSpeedAccelerated(boolean b) {
         mover.setSpeedAccelerated(b);
+    }
+
+    public boolean isMirrored() {
+        return mirrored;
+    }
+
+    public void toggleMirrored() {
+        mirrored = ! mirrored;
+    }
+
+    public void initMover() {
+        if( mover == null ) // create mover only if necessary
+            mover = new McMinosMover(game,this);
+        else // update levelobject
+            mover.setLevelObject(levelObject);
+        // done in mover creation mcminos.setMover(mover);
     }
 }

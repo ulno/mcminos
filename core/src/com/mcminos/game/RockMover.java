@@ -1,25 +1,39 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 /**
  * Created by ulno on 01.10.15.
  */
 public class RockMover extends Mover {
 
     private final Audio audio;
-    private LevelBlock headingTo;
+//    private LevelBlock headingTo;
     private LevelBlock lastBlockChecked = null;
 
     /* public RockMover(LevelObject rock, int speed) {
             super(rock, speed, false, Entities.extras_rock);
         }
     */
-    public RockMover(LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingTo) {
+    public RockMover(LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingToNew) {
         super(rock, speed, false, 0, Entities.extras_rock);
         setSpeedAccelerated(accelerated);
         this.currentDirection = currentDirection;
-        this.headingTo = headingTo;
+        headingTo = headingToNew;
         audio = rock.getLevelBlock().getLevel().getGame().getAudio();
     }
+
+    @Override
+    public void write(Json json) {
+        super.write(json);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        super.read(json, jsonData);
+    }
+
 
     @Override
     protected boolean checkCollisions() {
@@ -31,7 +45,7 @@ public class RockMover extends Mover {
             }
             if(currentLevelBlock.hasHole()) {
                 currentLevelBlock.getHole().setHoleLevel(LevelObject.maxHoleLevel);
-                currentLevelBlock.removeMovable(levelObject);
+                currentLevelBlock.remove(levelObject);
                 currentLevelBlock.setRock(null); // remove rock
                 levelObject.dispose();
                 audio.soundPlay("rumble");
@@ -39,7 +53,6 @@ public class RockMover extends Mover {
             } else {
                 for (LevelObject lo : currentLevelBlock.getCollectibles()) {
                     if (lo.getType() == LevelObject.Types.LandMineActive) { // rock triggers active landmine
-                        currentLevelBlock.removeItem(lo);
                         lo.dispose();
                         new Explosion(currentLevelBlock, LevelObject.Types.LandMine);
                         break;

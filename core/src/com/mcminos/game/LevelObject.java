@@ -1,6 +1,8 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.Collections;
 
@@ -10,23 +12,64 @@ import java.util.Collections;
  * Actual objects of a Level. Walls, Main, Doors, Ghosts and pills are
  * created here. the corresponding graphics are in Graphics
  */
-public class LevelObject implements  Comparable<LevelObject> {
+public class LevelObject implements  Comparable<LevelObject>, Json.Serializable  {
 
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
+    private LevelBlock levelBlock = null; // currently associated LevelBlock
+    private int lbx = -1; // levelblock x
+    private int lby = -1; // levelblock y
     private Graphics gfx; // actual Graphics for the object
     private int zIndex = maxzIndex; // by default it is too high
     private Mover mover = null; // backlink
     private Level level = null;
-    private LevelBlock levelBlock = null; // currently associated LevelBlock
     private int holeLevel;
     public static final int maxHoleLevel = 4; // maximum open
     private int animDelta = 0; // how much offset for the animation
     private Types type;
     private DoorTypes doorType = DoorTypes.None;
-    private Game game;
-    private Audio audio;
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("x",x);
+        json.writeValue("y",y);
+        if(gfx != null)
+            json.writeValue("g",gfx.getAllGraphicsIndex());
+        else
+            json.writeValue("g",-1);
+        json.writeValue( "m", mover );
+        if(levelBlock != null) {
+            json.writeValue("hb",true);
+            json.writeValue("lbx", levelBlock.getX());
+            json.writeValue("lby", levelBlock.getY());
+        } else {
+            json.writeValue("hb",false);
+        }
+        json.writeValue("z", zIndex);
+        json.writeValue("hl", holeLevel);
+        json.writeValue("ad", animDelta);
+        json.writeValue("t", type);
+        json.writeValue("dt", doorType);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        x = json.readValue("x",Integer.class,jsonData);
+        y = json.readValue("y",Integer.class,jsonData);
+        gfx = Graphics.getByIndex( json.readValue("g",Integer.class,jsonData));
+        mover = json.readValue("m",Mover.class,jsonData);
+        boolean hasBlock = json.readValue("hb",Boolean.class,jsonData);
+        if(hasBlock) {
+            lbx = json.readValue("lbx", Integer.class, jsonData);
+            lby = json.readValue("lby", Integer.class, jsonData);
+        }
+        zIndex = json.readValue("z", Integer.class, jsonData);
+        holeLevel = json.readValue("hl", Integer.class, jsonData);
+        animDelta = json.readValue("ad", Integer.class, jsonData);
+        type = json.readValue("t", Types.class, jsonData);
+        doorType = json.readValue("dt", DoorTypes.class, jsonData);
+    }
 
     public enum Types {Unspecified, Power1, Power2, Power3,
         IndestructableWall, InvisibleWall, Rockme, Live, Letter,
@@ -38,16 +81,37 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     private void construct(LevelBlock levelBlock, int zIndex, Types type) {
         level = levelBlock.getLevel();
-        this.levelBlock = levelBlock;
-        game = level.getGame();
-        audio = game.getAudio();
         // does not exist here playwindow = game.getPlayWindow();
         x = levelBlock.getX() << PlayWindow.virtualBlockResolutionExponent;
         y = levelBlock.getY() << PlayWindow.virtualBlockResolutionExponent;
         this.zIndex = zIndex;
         this.type = type;
+        setLevelBlock(levelBlock);
         level.addToAllLevelObjects(this);
     }
+
+    /**
+     * make sure levelblock is initialized by coordinates
+     * @param level
+     */
+    public void initAfterJsonLoad( Level level ) {
+        this.level = level;
+        if(lbx >= 0 && lby >= 0) {
+            setLevelBlock( level.get(lbx, lby) );
+        } else {
+            levelBlock = null;
+        }
+        if(mover != null)
+            mover.initAfterJsonLoad(level);
+    }
+
+    /**
+     * This is called when re-constructed from json-save
+     */
+    LevelObject() {
+        // TODO: make sure construct is called later
+    }
+
     /**
      *all.
      * @param x in block coordinates
@@ -74,12 +138,12 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     public void draw(PlayWindow playwindow) {
         if(gfx != null) // castle parts can be null or invisible things
-            gfx.draw(playwindow,x,y,animDelta);
+            gfx.draw(playwindow,level,x,y,animDelta);
     }
 
     public void drawMini(PlayWindow playwindow, SpriteBatch batch) {
         if(gfx != null) // castle parts can be null or invisible things
-            gfx.drawMini(playwindow,batch,x,y,animDelta);
+            gfx.drawMini(playwindow,level,batch,x,y,animDelta);
     }
 
     @Override
@@ -101,20 +165,17 @@ public class LevelObject implements  Comparable<LevelObject> {
             vpy -= level.getHeight() << PlayWindow.virtualBlockResolutionExponent;
         //}
 
-//        LevelBlock to = game.getLevelBlockFromVPixel(vpx, vpy);
         // needs to be updated to check for collisions via associations
-        if( from != headingTo ) {
-            //if (from != null) { should not happen when properly intialized
-                from.removeMovable(this);
-                // check if rock and update rockme counters
-                if (type == LevelObject.Types.Rock) {
-                    // Check, if we are on a rockme
-                    if (from.isRockme()) level.increaseRockmes();
-                }
-            //}
-            headingTo.putMoveable(this);
+        if (from != headingTo) {
+            from.remove(this);
+            // check if rock and update rockme counters
+            if (type == LevelObject.Types.Rock) {
+                // Check, if we are on a rockme
+                if (from.isRockme()) level.increaseRockmes();
+            }
+            // happens in setLevelBlock: headingTo.putMoveable(this);
         }
-        levelBlock = headingTo; // todo: might be not totally correct for destination
+        setLevelBlock( headingTo ); // todo: might be not totally correct for destination
         setXY(vpx,vpy);
         return levelBlock;
     }
@@ -125,10 +186,10 @@ public class LevelObject implements  Comparable<LevelObject> {
     }
 
     /**
-     * assign a matching LevelBlock based on th ecurrent coordinates
+     * assign a matching LevelBlock based on the current coordinates
      */
-    public void assignLevelBlock() {
-        levelBlock = game.getLevelBlockFromVPixel(x, y);
+    public void assignLevelBlock(PlayWindow playwindow) {
+        setLevelBlock( level.getLevelBlockFromVPixel(x, y) );
     }
 
     public boolean hasGfx() {
@@ -143,10 +204,16 @@ public class LevelObject implements  Comparable<LevelObject> {
         return mover;
     }
 
-    // make sure to remove yourself from list
+    /**
+     * make sure to remove yourself from list
+     * also cleans itself from associated levelblock
+     */
     public void dispose() {
+        if(levelBlock != null ) { // has levelBlock
+            levelBlock.remove(this);
+            levelBlock = null;
+        }
         level.removeFromAllLevelObjects(this);
-        // TODO: think if we also have to remove from other things in level-block
     }
 
     public boolean isIndestructable() {
@@ -170,7 +237,7 @@ public class LevelObject implements  Comparable<LevelObject> {
         this.setGfx(holes[holeLevel]);
     }
 
-    public boolean increaseHole() {
+    public boolean increaseHole(Audio audio) {
         holeLevel ++;
         if(holeLevel > maxHoleLevel) {
             holeLevel = maxHoleLevel;
@@ -205,13 +272,13 @@ public class LevelObject implements  Comparable<LevelObject> {
         return levelBlock;
     }
 
-    void animationStartNow() {
+    void animationStartNow(Game game) {
         int len = gfx.getAnimationFramesLength();
 
         animDelta = len - (int)(game.getGameFrame() % (long)len);
     }
 
-    void animationStartRandom() {
+    void animationStartRandom(Game game) {
         animDelta = game.random(gfx.getAnimationFramesLength());
     }
 
@@ -254,8 +321,19 @@ public class LevelObject implements  Comparable<LevelObject> {
 
     }
 
-    public void setLevelBlock(LevelBlock levelBlock) {
-        this.levelBlock = levelBlock;
+    public void setLevelBlock(LevelBlock newBlock) {
+        if(newBlock != levelBlock) { // new levelBlock
+            if (levelBlock != null) { // it has one assigned, so it needs to be removed
+                levelBlock.remove(this);
+            }
+            // now we know that it has nothing assigned
+            levelBlock = newBlock;
+            if(newBlock != null) {
+                lbx = newBlock.getX();
+                lby = newBlock.getY();
+                levelBlock.add(this);
+            }
+        }
     }
 
     public int getGhostNr() {

@@ -1,5 +1,8 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 import java.util.ArrayList;
 
 /**
@@ -25,6 +28,17 @@ public class GhostMover extends Mover {
         level = ghost.getLevelBlock().getLevel(); // need to get it from here as else null
         this.rememberedBlock = currentLevelBlock;
     }
+
+    @Override
+    public void write(Json json) {
+        super.write(json);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        super.read(json, jsonData);
+    }
+
 
     @Override
     protected LevelBlock chooseDirection() {
@@ -118,7 +132,7 @@ public class GhostMover extends Mover {
             int ghostnr = levelObject.getGhostNr();
             if (currentLevelBlock != rememberedBlock) {
                 if (rememberedBlock.hasOneWay()) { // let ghosts turn the oneways
-                    rememberedBlock.turnOneWay();
+                    rememberedBlock.turnOneWay(audio);
                 }
             }
             rememberedBlock = currentLevelBlock;
@@ -148,7 +162,6 @@ public class GhostMover extends Mover {
                 LevelObject b = currentItems.get(i);
                 switch( b.getType() ) {
                     case LandMineActive:
-                        currentBlock.removeItem(b);
                         b.dispose();
                         new Explosion(currentBlock, LevelObject.Types.LandMine);
                         break;
