@@ -10,6 +10,7 @@ public class JsonState implements Json.Serializable {
     private Game game;
     private Level level;
     private McMinos mcminos;
+    private Ghosts ghosts;
 
     public JsonState(Game game) {
         init(game);
@@ -27,6 +28,7 @@ public class JsonState implements Json.Serializable {
     public void write(Json json) {
         json.writeValue("level",game.getLevel());
         json.writeValue("mcminos",game.getMcMinos());
+        json.writeValue("ghosts",game.getGhosts());
         // Explosions?
         // Timingevents?
     }
@@ -35,6 +37,7 @@ public class JsonState implements Json.Serializable {
     public void read(Json json, JsonValue jsonData) {
         level = json.readValue("level",Level.class,jsonData);
         mcminos = json.readValue("mcminos",McMinos.class,jsonData);
+        ghosts = json.readValue("ghosts",Ghosts.class,jsonData);
     }
 
     public Level getLevel() {
@@ -43,5 +46,9 @@ public class JsonState implements Json.Serializable {
 
     public McMinos getMcminos() {
         return mcminos;
+    }
+
+    public Ghosts getGhosts() {
+        return ghosts;
     }
 }

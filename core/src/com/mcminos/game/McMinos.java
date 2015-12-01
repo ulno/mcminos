@@ -1,5 +1,6 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
@@ -31,6 +32,8 @@ public class McMinos implements Json.Serializable {
     private boolean destinationSet; // was a destination set (and needs to be shown)
     private boolean falling;
     private LevelBlock startBlock = null;
+    private int initStartBlockX = -1;
+    private int initStartBlockY = -1;
     private boolean destinationEnabled = true;
     private boolean mirrored = false;
 
@@ -55,9 +58,10 @@ public class McMinos implements Json.Serializable {
         json.writeValue("f", falling);
         json.writeValue("m", mirrored);
         json.writeValue("lo", levelObject);
-        // destination?
-
-
+        json.writeValue("de", destinationEnabled);
+        json.writeValue("do", destination);
+        json.writeValue("sbx", startBlock.getX());
+        json.writeValue("sby", startBlock.getY());
     }
 
     @Override
@@ -83,9 +87,14 @@ public class McMinos implements Json.Serializable {
         //tmpLevelObject = new LevelObject(game.getLevel(),0,0,0, LevelObject.Types.McMinos);
         levelObject = json.readValue("lo",LevelObject.class,jsonData);
         //levelObject.setXY(tmpLevelObject.getVX(),tmpLevelObject.getVY());
+        destinationEnabled = json.readValue("de",Boolean.class,jsonData);
+        destination = json.readValue("do",LevelObject.class,jsonData);
+        initStartBlockX = json.readValue("sbx",Integer.class,jsonData);
+        initStartBlockY = json.readValue("sby",Integer.class,jsonData);
     }
 
-    public void initFromTempMcMinos( McMinos tmpmcm ) {
+    public void initAfterJsonLoad(Game game, McMinos tmpmcm ) {
+        this.game = game;
         level = game.getLevel();
         powerDuration = tmpmcm.powerDuration;
         umbrellaDuration = tmpmcm.umbrellaDuration;
@@ -104,11 +113,15 @@ public class McMinos implements Json.Serializable {
         winning = tmpmcm.winning;
         falling = tmpmcm.falling;
         mirrored = tmpmcm.mirrored;
-        levelObject = level.getMcMinosObjectFromList();
+        levelObject = level.getFirstLevelObjectFromList(LevelObject.Types.McMinos);
+        destination = level.getFirstLevelObjectFromList(LevelObject.Types.Destination); // TODO: check if necessary as read from json too
+        startBlock = level.get(tmpmcm.initStartBlockX,tmpmcm.initStartBlockY);
+        initDestination();
+        mover = (McMinosMover) levelObject.getMover();
         /*if(levelObject == null)
-            levelObject = tmpmcm.levelObject; shoul dnot benecessary */
+            levelObject = tmpmcm.levelObject; should not benecessary */
         // already done levelObject.setXY(tmpmcm.getVX(),tmpmcm.getVY());
-        levelObject.initAfterJsonLoad(level);
+        // as an exisiting levelObject is used, it should have been initialized in level-load levelObject.initAfterJsonLoad(game);
         //levelObject.moveTo(tmpmcm.getVX(),tmpmcm.getVY());
 
     }
@@ -151,24 +164,48 @@ public class McMinos implements Json.Serializable {
         }
     }
 
-    public void gfxNormal() {
+    private void gfxNormal() {
         mover.setGfx(Entities.mcminos_default_front, Entities.mcminos_default_up,
                 Entities.mcminos_default_right, Entities.mcminos_default_down, Entities.mcminos_default_left);
     }
 
-    public void gfxPowered() {
+    private void gfxPowered() {
         mover.setGfx(Entities.mcminos_powered_front, Entities.mcminos_powered_up,
                 Entities.mcminos_powered_right, Entities.mcminos_powered_down, Entities.mcminos_powered_left);
     }
 
-    public void gfxPoisoned() {
+    private void gfxPoisoned() {
         mover.setGfx(Entities.mcminos_poisoned_front);
     }
 
-    public void gfxDrunk() {
+    private void gfxDrunk() {
         mover.setGfx(Entities.mcminos_drunk_front, Entities.mcminos_drunk_up,
                 Entities.mcminos_drunk_right, Entities.mcminos_drunk_down, Entities.mcminos_drunk_left);
     }
+
+    private void gfxHide() {
+        mover.setGfx(null);
+    }
+
+    public void gfxSelect() {
+        if(killed || winning || falling) {
+            // TODO: check, if we can show the regular graphics here
+            gfxHide(); // hide, animation is done elsewhere
+        }
+        else if(poisonDuration > 0) {
+            gfxPoisoned();
+        }
+        else if(drunkLevel > 0) {
+            gfxDrunk();
+        }
+        else if(powerDuration > 0) {
+            gfxPowered();
+        }
+        else {
+            gfxNormal();
+        }
+    }
+
 
     public LevelObject getLevelObject() {
         return levelObject;
@@ -419,7 +456,7 @@ public class McMinos implements Json.Serializable {
             stop();
             killed = true;
             // show kill-animation
-            mover.setGfx(null); // hide
+            gfxSelect();
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
             animation.setXY(getVX(), getVY());
             animation.animationStartNow(game);
@@ -453,7 +490,7 @@ public class McMinos implements Json.Serializable {
             stop();
             falling = true;
             // show fall-animation
-            mover.setGfx(null); // hide
+            gfxSelect();
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
             animation.animationStartNow(game);
 
@@ -488,17 +525,6 @@ public class McMinos implements Json.Serializable {
     }
 
 
-    private void gfxSelect() {
-        if(poisonDuration > 0) {
-            gfxPoisoned();
-        }
-        else if(drunkLevel > 0) {
-            gfxDrunk();
-        }
-        else if(powerDuration > 0) gfxPowered();
-        else gfxNormal();
-    }
-
     /**
      * Stop all movement
      */
@@ -511,6 +537,7 @@ public class McMinos implements Json.Serializable {
     }
 
     private void resume() {
+        gfxSelect();
         mover.resume();
         if( mover.getKeyDirections() == 0) destinationEnabled = true;
     }
@@ -527,14 +554,12 @@ public class McMinos implements Json.Serializable {
             stop();
 
             winning = true;
-            // show kill-animation
-            mover.setGfx(null); // hide
-            // TODO: winning animation
+            gfxSelect(); // hide gfx
             Graphics gfx = Entities.mcminos_cheering;
             final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
             animation.animationStartNow(game);
 
-            // schedule level-end and grave-stone setting after animation
+            // schedule level-end after animation
             game.schedule(new FrameTimer.Task(animation) {
                 @Override
                 public void run() {
@@ -554,7 +579,7 @@ public class McMinos implements Json.Serializable {
             if(isMirrored()) { // if this goes out of range it's corrected in moveto
                 x = getVX() - (x - getVX());
                 y = getVY() - (y - getVY());
-            } // TODO: think if this shoudl be better handled in chooseDirection
+            } // TODO: think if this should be better handled in chooseDirection
             destination.setGfx(Entities.destination);
             LevelBlock lb = level.getLevelBlockFromVPixelRounded(x, y);
             destination.moveTo(lb.getX() << PlayWindow.virtualBlockResolutionExponent, lb.getY() << PlayWindow.virtualBlockResolutionExponent, lb);
@@ -579,12 +604,24 @@ public class McMinos implements Json.Serializable {
         destinationSet = false; // TODO: or does it need to be still set?
     }
 
+    public void disposeDestination() {
+        if( destination != null)
+            destination.dispose();
+        destination = null;
+        destinationSet = false;
+        destinationEnabled = false;
+    }
+
     /**
      * create graphical object for destination
      */
-    public void initDestination() {
-        destination = new LevelObject(level,getLevelBlock().getX(),getLevelBlock().getY(),
-                Entities.destination.getzIndex(), LevelObject.Types.Unspecified);
+    private void initDestination() {
+        if( destination == null ) {
+            destination = new LevelObject(level, getLevelBlock().getX(), getLevelBlock().getY(),
+                    Entities.destination.getzIndex(), LevelObject.Types.Destination);
+            destinationEnabled = true;
+            destinationSet = false;
+        }
         // playwindow.resize();
     }
 
@@ -643,6 +680,8 @@ public class McMinos implements Json.Serializable {
         umbrellaDuration = 0;
         setPowerPillValues(1,1,0);
         initBlock();
+        disposeDestination();
+        initDestination();
         gfxSelect();
     }
 
@@ -679,10 +718,11 @@ public class McMinos implements Json.Serializable {
     }
 
     public void initMover() {
-        if( mover == null ) // create mover only if necessary
-            mover = new McMinosMover(game,this);
+        if( mover == null ) { // create mover only if necessary
+            mover = new McMinosMover(game);
+            // done in mover creation mcminos.setMover(mover);
+        }
         else // update levelobject
-            mover.setLevelObject(levelObject);
-        // done in mover creation mcminos.setMover(mover);
+            mover.setLevelObject(levelObject); // TODO: check: might not be necessary
     }
 }

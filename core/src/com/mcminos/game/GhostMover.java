@@ -10,14 +10,23 @@ import java.util.ArrayList;
  */
 public class GhostMover extends Mover {
 
-    private final Game game;
-    private final Ghosts ghosts;
-    private final Audio audio;
-    private final Level level;
+    private Game game;
+    private Ghosts ghosts;
+    private Audio audio;
+    private Level level;
     private McMinos mcminos;
     private LevelBlock rememberedBlock;
+    private int initRememberedBlockX = -1;
+    private int initRememberedBlockY = -1;
     private ArrayList<LevelObject> currentItems;
     int[] dirList = {0, 0, 0, 0};
+
+    /**
+     * needed for json-read
+     */
+    public GhostMover() {
+        super();
+    }
 
     public GhostMover(Game game, LevelObject ghost, int speed, int transwall, Graphics gfx) {
         super(ghost, speed, false, transwall, gfx);
@@ -32,13 +41,27 @@ public class GhostMover extends Mover {
     @Override
     public void write(Json json) {
         super.write(json);
+        json.writeValue("rbx",rememberedBlock.getX());
+        json.writeValue("rby",rememberedBlock.getY());
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
         super.read(json, jsonData);
+        initRememberedBlockX = json.readValue("rbx",Integer.class,jsonData);
+        initRememberedBlockY = json.readValue("rby",Integer.class,jsonData);
     }
 
+    @Override
+    public void initAfterJsonLoad(Game game, LevelObject lo) {
+        super.initAfterJsonLoad(game, lo);
+        this.game = game;
+        audio = game.getAudio();
+        ghosts = game.getGhosts();
+        mcminos = game.getMcMinos();
+        level = game.getLevel();
+        rememberedBlock = level.get(initRememberedBlockX,initRememberedBlockY);
+    }
 
     @Override
     protected LevelBlock chooseDirection() {

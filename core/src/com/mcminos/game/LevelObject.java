@@ -38,7 +38,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
             json.writeValue("g",gfx.getAllGraphicsIndex());
         else
             json.writeValue("g",-1);
-        json.writeValue( "m", mover );
+        json.writeValue( "m", mover, null ); // null triggers writing the class type
         if(levelBlock != null) {
             json.writeValue("hb",true);
             json.writeValue("lbx", levelBlock.getX());
@@ -76,7 +76,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
         DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
         Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
-        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Exit, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, SkullField, Hole};
+        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Exit, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, SkullField, Destination, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
 
     private void construct(LevelBlock levelBlock, int zIndex, Types type) {
@@ -92,9 +92,10 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
 
     /**
      * make sure levelblock is initialized by coordinates
-     * @param level
+     * @param game
      */
-    public void initAfterJsonLoad( Level level ) {
+    public void initAfterJsonLoad( Game game ) {
+        Level level = game.getLevel();
         this.level = level;
         if(lbx >= 0 && lby >= 0) {
             setLevelBlock( level.get(lbx, lby) );
@@ -102,7 +103,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
             levelBlock = null;
         }
         if(mover != null)
-            mover.initAfterJsonLoad(level);
+            mover.initAfterJsonLoad(game,this);
     }
 
     /**
