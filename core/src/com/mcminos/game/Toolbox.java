@@ -387,7 +387,7 @@ public class Toolbox {
     public void activateBomb() {
         if (mcminos.hasBomb()) {
             mcminos.decreaseBombs();
-            new Explosion(mcminos.getFromLevelBlock(), LevelObject.Types.Bomb);
+            level.getGame().schedule(EventManager.Types.FuseBomb,mcminos.getFromLevelBlock());
             deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }
@@ -395,7 +395,7 @@ public class Toolbox {
     public void activateDynamite() {
         if (mcminos.hasDynamite()) {
             mcminos.decreaseDynamites();
-            new Explosion(mcminos.getFromLevelBlock(), LevelObject.Types.Dynamite);
+            level.getGame().schedule(EventManager.Types.FuseDynamite,mcminos.getFromLevelBlock());
             deactivate(); // close rootTable
         } else audio.soundPlay("error");
     }

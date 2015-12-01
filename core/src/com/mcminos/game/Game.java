@@ -31,7 +31,7 @@ public class Game {
     private Level level;
     private McMinos mcminos;
     private Ghosts ghosts;
-    private FrameTimer frameTimer;
+    private EventManager eventManager;
     private ArrayList<Mover> movers; // all Movers (not from mcminos at the moment - handled separately) - i.e. for ghosts and rocks
 
     private Random randomGenerator = new Random();
@@ -72,7 +72,7 @@ public class Game {
      * Start the moving thread which will manage all movement of objects in the game
      */
     public void startTimer() {
-        frameTimer = new FrameTimer();
+        eventManager = new EventManager();
 
         timerTaskActive = true;
 
@@ -110,7 +110,7 @@ public class Game {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }*/
-        frameTimer.update(gameFrame);
+        eventManager.update(this);
 
 
         if (movement) {
@@ -142,7 +142,7 @@ public class Game {
     }
 
     public void disposeFrameTimer() {
-        frameTimer.dispose();
+        eventManager.dispose();
     }
 
     public void disposeTimerTask() {
@@ -210,8 +210,12 @@ public class Game {
         return gameTime;
     }
 
-    public void schedule(FrameTimer.Task task, int interval) {
-        frameTimer.schedule(task, interval);
+    public void schedule(EventManager.Types event, LevelObject loWhere) {
+        eventManager.schedule(this, event, loWhere.getLevelBlock(), loWhere.getVX(), loWhere.getVY() );
+    }
+
+    public void schedule(EventManager.Types event, LevelBlock lbWhere) {
+        eventManager.schedule(this, event, lbWhere, lbWhere.getVX(), lbWhere.getVY() );
     }
 
     public Audio getAudio() {

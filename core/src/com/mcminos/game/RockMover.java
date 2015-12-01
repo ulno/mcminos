@@ -11,14 +11,16 @@ public class RockMover extends Mover {
     private Audio audio;
 //    private LevelBlock headingTo;
     private LevelBlock lastBlockChecked = null;
+    private Game game;
 
 
-    public RockMover(LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingToNew) {
+    public RockMover(Game game, LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingToNew) {
         super(rock, speed, false, 0, Entities.extras_rock);
         setSpeedAccelerated(accelerated);
         this.currentDirection = currentDirection;
         headingTo = headingToNew;
-        audio = rock.getLevelBlock().getLevel().getGame().getAudio();
+        this.game = game;
+        audio = game.getAudio();
     }
 
     /**
@@ -42,6 +44,7 @@ public class RockMover extends Mover {
     public void initAfterJsonLoad(Game game, LevelObject lo) {
         super.initAfterJsonLoad(game, lo);
         audio = game.getAudio();
+        this.game = game;
         // TODO: add lastBlockChecked
     }
 
@@ -65,7 +68,7 @@ public class RockMover extends Mover {
                 for (LevelObject lo : currentLevelBlock.getCollectibles()) {
                     if (lo.getType() == LevelObject.Types.LandMineActive) { // rock triggers active landmine
                         lo.dispose();
-                        new Explosion(currentLevelBlock, LevelObject.Types.LandMine);
+                        game.schedule(EventManager.Types.ExplosionLight, currentLevelBlock);
                         break;
                     }
                 }

@@ -128,7 +128,7 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if (m == null) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(game, rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
@@ -249,7 +249,7 @@ public class McMinosMover extends Mover {
 //            // old direction selection code follows
 //
 //            // check screen distance
-//            int x = levelObject.getVX();
+//            int x = animation.getVX();
 //            int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
 //            int xdiff = Math.abs(xdelta);
 //            if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
@@ -260,7 +260,7 @@ public class McMinosMover extends Mover {
 //                else
 //                    xdelta = -(int) Math.signum(xdelta);
 //            }
-//            int y = levelObject.getVY();
+//            int y = animation.getVY();
 //            int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
 //            int ydiff = Math.abs(ydelta);
 //            if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
@@ -411,7 +411,7 @@ public class McMinosMover extends Mover {
                             break;
                         case LandMineActive:
                             item.dispose();
-                            new Explosion(currentBlock, LevelObject.Types.LandMine);
+                            game.schedule(EventManager.Types.ExplosionLight, currentBlock);
                             break;
                         case Key:
                             audio.soundPlay("tools");

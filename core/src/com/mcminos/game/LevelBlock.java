@@ -713,6 +713,14 @@ public class LevelBlock {
         return y;
     }
 
+    public int getVX() {
+        return x << PlayWindow.virtualBlockResolutionExponent;
+    }
+
+    public int getVY() {
+        return y << PlayWindow.virtualBlockResolutionExponent;
+    }
+
     public LevelObject getWall() {
         return wall;
     }

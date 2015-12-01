@@ -1,6 +1,5 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
@@ -86,7 +85,7 @@ public class McMinos implements Json.Serializable {
 
         //tmpLevelObject = new LevelObject(game.getLevel(),0,0,0, LevelObject.Types.McMinos);
         levelObject = json.readValue("lo",LevelObject.class,jsonData);
-        //levelObject.setXY(tmpLevelObject.getVX(),tmpLevelObject.getVY());
+        //animation.setXY(tmpLevelObject.getVX(),tmpLevelObject.getVY());
         destinationEnabled = json.readValue("de",Boolean.class,jsonData);
         destination = json.readValue("do",LevelObject.class,jsonData);
         initStartBlockX = json.readValue("sbx",Integer.class,jsonData);
@@ -118,11 +117,11 @@ public class McMinos implements Json.Serializable {
         startBlock = level.get(tmpmcm.initStartBlockX,tmpmcm.initStartBlockY);
         initDestination();
         mover = (McMinosMover) levelObject.getMover();
-        /*if(levelObject == null)
-            levelObject = tmpmcm.levelObject; should not benecessary */
-        // already done levelObject.setXY(tmpmcm.getVX(),tmpmcm.getVY());
-        // as an exisiting levelObject is used, it should have been initialized in level-load levelObject.initAfterJsonLoad(game);
-        //levelObject.moveTo(tmpmcm.getVX(),tmpmcm.getVY());
+        /*if(animation == null)
+            animation = tmpmcm.animation; should not benecessary */
+        // already done animation.setXY(tmpmcm.getVX(),tmpmcm.getVY());
+        // as an exisiting animation is used, it should have been initialized in level-load animation.initAfterJsonLoad(game);
+        //animation.moveTo(tmpmcm.getVX(),tmpmcm.getVY());
 
     }
 
@@ -455,58 +454,52 @@ public class McMinos implements Json.Serializable {
             game.stopAllMovers();
             stop();
             killed = true;
-            // show kill-animation
-            gfxSelect();
-            final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
-            animation.setXY(getVX(), getVY());
-            animation.animationStartNow(game);
+            gfxSelect(); // Hide current
 
             // schedule level-end and grave-stone setting after animation
-            game.schedule(new FrameTimer.Task(animation) {
-                @Override
-                public void run() {
-                    new LevelObject(animation.getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
-                    animation.dispose();
-                    decreaseLives();
-                    if(getLives() > 0) {
-                        level.killRestart();
-                        killed = false;
-                        resume();
-                        // will be enabled at beginning of game: game.enableMovement();
-                    } else {
-                        level.finish();
-                    }
-                }
-            }, gfx.getAnimationFramesLength());
+            game.schedule(EventManager.Types.Death, levelObject);
         }
     }
 
+    /**
+     * Called after the killed animation
+     */
+    public void executeDeath() {
+        // create gravestone
+        new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+        decreaseLives();
+        if(getLives() > 0) {
+            level.killRestart();
+            killed = false;
+            resume();
+            // will be enabled at beginning of game: game.enableMovement();
+        } else {
+            level.finish();
+        }
+    }
+
+
     public void fall() {
         // don't multifall
-        Graphics gfx = Entities.mcminos_frightened;
         if (!isFalling()) {
             audio.soundPlay("falling");
             //game.stopAllMovers();
             stop();
             falling = true;
-            // show fall-animation
-            gfxSelect();
-            final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
-            animation.animationStartNow(game);
+            gfxSelect(); // hide current gfx
 
+            // show fall-animation
             // schedule level-end and grave-stone setting after animation
-            game.schedule(new FrameTimer.Task(animation) {
-                @Override
-                public void run() {
-                    animation.dispose();
-                    //decreaseLives();
-                    teleportToBlock(startBlock);
-                    falling = false;
-                    gfxSelect();
-                    resume();
-                }
-            }, gfx.getAnimationFramesLength());
+            game.schedule(EventManager.Types.Fall, levelObject);
         }
+    }
+
+    public void executeFall() {
+        //decreaseLives();
+        teleportToBlock(startBlock);
+        falling = false;
+        gfxSelect();
+        resume();
     }
 
     public void poison() {
@@ -555,18 +548,9 @@ public class McMinos implements Json.Serializable {
 
             winning = true;
             gfxSelect(); // hide gfx
-            Graphics gfx = Entities.mcminos_cheering;
-            final LevelObject animation = new LevelObject(getLevelBlock(), gfx, LevelObject.Types.Unspecified);
-            animation.animationStartNow(game);
 
             // schedule level-end after animation
-            game.schedule(new FrameTimer.Task(animation) {
-                @Override
-                public void run() {
-                    animation.dispose();
-                    level.finish();
-                }
-            }, gfx.getAnimationFramesLength());
+            game.schedule(EventManager.Types.Win, levelObject);
         }
     }
 

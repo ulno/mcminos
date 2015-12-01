@@ -175,7 +175,7 @@ public abstract class Mover implements Json.Serializable {
                 break;
         }
         // update current block
-        // does not work because of rounding errors currentLevelBlock = levelObject.moveTo(x, y); // finally move to new position
+        // does not work because of rounding errors currentLevelBlock = animation.moveTo(x, y); // finally move to new position
         currentLevelBlock = levelObject.moveTo(x, y, headingTo);
 
         return checkCollisions(); // check potential collisons at new position

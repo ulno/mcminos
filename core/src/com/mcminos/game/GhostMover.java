@@ -186,7 +186,7 @@ public class GhostMover extends Mover {
                 switch( b.getType() ) {
                     case LandMineActive:
                         b.dispose();
-                        new Explosion(currentBlock, LevelObject.Types.LandMine);
+                        game.schedule(EventManager.Types.ExplosionLight, currentBlock);
                         break;
                     case WarpHole:
                         if (currentDirection != STOP) { // only teleport when moving onto field
