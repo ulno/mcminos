@@ -52,21 +52,21 @@ UMBR:   0,999
 KEYS:   0,999
 
 LEVEL:
-  X . X     XX   
-. X     XX r   X 
+  X   X     XX   
+  X     XX r   X 
   r XX r   X X X 
-XX     X . X     
+XX     X   X     
    X r X  OCCXXr 
- r X   r XXCC   X
+ r X   r XXCC.  X
      XX h  OX X X
  XXr    X r X    
     X P X    rXXr
 X h X     XX     
-X     XXr    X . 
+X     XXr    X   
   XXr    X h X   
- c   X . X   r XX
- X . X     XX  CC
+ c   X   X   r XX
+ X   X     XX  CC
  X     XX r   XCC
-   XX r   X . X  
-X r   X . X    rX
+   XX r   X   X  
+X r   X   X    rX
 #
