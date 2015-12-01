@@ -83,7 +83,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
         DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
         Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
-        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Exit, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, SkullField, Destination, DynamiteFused, Hole};
+        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Exit, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, SkullField, Destination, DynamiteFused, McMinosDying, McMinosFalling, McMinosWinning, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
 
     private void construct(LevelBlock levelBlock, int zIndex, Types type) {

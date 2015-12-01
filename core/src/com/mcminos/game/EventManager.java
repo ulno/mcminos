@@ -1,16 +1,64 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
  * Created by ulno on 25.09.15.
  */
-public class EventManager {
+public class EventManager implements Json.Serializable {
     long lastFrame = -1;
     long nowFrame = 0;
     ArrayList<Task> tasks = new ArrayList<>();
+    private Game game;
+    private McMinos mcminos;
+    private Audio audio;
+    private Level level;
+    private Ghosts ghosts;
+
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("l",lastFrame);
+        json.writeValue("n",nowFrame);
+        json.writeValue("t",tasks);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        lastFrame = json.readValue("l",Long.class,jsonData);
+        nowFrame = json.readValue("n",Long.class,jsonData);
+        tasks = json.readValue("t",ArrayList.class,jsonData);
+    }
+
+    public void init(Game game) {
+        this.game = game;
+        mcminos = game.getMcMinos();
+        audio = game.getAudio();
+        level = game.getLevel();
+        ghosts = game.getGhosts();
+    }
+
+    public void initAfterJsonLoad(Game game) {
+        init(game);
+        for(int i=tasks.size()-1; i>=0; i-- ) {
+            Task t = tasks.get(i);
+            if(t.animation != null)
+                t.animation.initAfterJsonLoad(game);
+        }
+    }
+
     public static enum Types {FuseDynamite, FuseBomb, ExplosionLight, ExplosionHeavy, Death, Win, Fall}
+
+    /**
+     * for json-read
+     */
+    EventManager() {
+
+    }
 
     /**
      * @param game
@@ -35,27 +83,27 @@ public class EventManager {
                 lo = new LevelObject(center, Entities.extras_bomb_exploding, LevelObject.Types.BombExplosion);
                 animationLength  = Entities.extras_bomb_exploding.getAnimationFramesLength();
                 game.getAudio().soundPlay("explosio");
-                destroyLiving(game, center);
+                destroyLiving(center);
                 break;
             case ExplosionHeavy:
                 lo = new LevelObject(center, Entities.extras_bomb_exploding, LevelObject.Types.BombExplosion);
                 animationLength = Entities.extras_bomb_exploding.getAnimationFramesLength();
                 game.getAudio().soundPlay("explosio");
-                destroyLiving(game, center);
-                destroyWalls(game, center);
+                destroyLiving(center);
+                destroyWalls(center);
                 break;
             case Death:
-                lo = new LevelObject(center, Entities.mcminos_dying, LevelObject.Types.Unspecified);
+                lo = new LevelObject(center, Entities.mcminos_dying, LevelObject.Types.McMinosDying);
                 animationLength = Entities.mcminos_dying.getAnimationFramesLength();
                 lo.setXY(posX,posY);
                 break;
             case Fall:
-                lo = new LevelObject(center, Entities.mcminos_frightened, LevelObject.Types.Unspecified);
+                lo = new LevelObject(center, Entities.mcminos_frightened, LevelObject.Types.McMinosFalling);
                 animationLength = Entities.mcminos_frightened.getAnimationFramesLength();
                 lo.setXY(posX,posY);
                 break;
             case Win:
-                lo = new LevelObject(center, Entities.mcminos_cheering, LevelObject.Types.Unspecified);
+                lo = new LevelObject(center, Entities.mcminos_cheering, LevelObject.Types.McMinosWinning);
                 animationLength = Entities.mcminos_cheering.getAnimationFramesLength();
                 lo.setXY(posX,posY);
                 break;
@@ -69,18 +117,18 @@ public class EventManager {
         lo.animationStartNow(game);
     }
 
-    public void update(Game game) {
+    public void update() {
         long gameFrame = game.getGameFrame();
         nowFrame = gameFrame;
         while (tasks.size() > 0 && tasks.get(0).scheduleFrame <= nowFrame) {
             Task t = tasks.get(0);
             tasks.remove(0);
-            executeAfterAnimation(game, t); // this can create new tasks, so make sure this task has been removed from list before
+            executeAfterAnimation(t); // this can create new tasks, so make sure this task has been removed from list before
         }
         lastFrame = gameFrame;
     }
 
-    private void executeAfterAnimation(Game game, Task t) {
+    private void executeAfterAnimation(Task t) {
         LevelObject animation = t.animation;
         McMinos mcminos = game.getMcMinos();
         Level level = game.getLevel();
@@ -109,17 +157,17 @@ public class EventManager {
         }
     }
 
-    public void dispose() {
-        for( Task t: tasks) {
-            t.dispose();
-        }
-        tasks.clear();
-    }
-
     static public class Task implements Comparable<Task> {
         Types type;
         long scheduleFrame=-1; // The frame where this should be executed
         LevelObject animation;
+
+        /**
+         * for json-read
+         */
+        Task () {
+
+        }
 
         public Task(Types event, LevelObject lo) {
             animation = lo;
@@ -177,8 +225,7 @@ public class EventManager {
     /**
      * remove all walls (also invisible ones), doors, and rocks affected by explosion
      */
-    private void destroyWalls(Game game, LevelBlock center) {
-        Level level = game.getLevel();
+    private void destroyWalls(LevelBlock center) {
         LevelBlock[] area = computeArea(center);
         for( int i=8; i>=0; i-- ) {
             LevelBlock lb = area[i];
@@ -216,11 +263,7 @@ public class EventManager {
     /**
      * kill ghosts, mcminos, remove pills, light other explosives
      */
-    private void destroyLiving(Game game, LevelBlock center) {
-        McMinos mcminos = game.getMcMinos();
-        Audio audio = game.getAudio();
-        Level level = game.getLevel();
-        Ghosts ghosts = game.getGhosts();
+    private void destroyLiving(LevelBlock center) {
         LevelBlock[] area = computeArea(center);
         for( int ac=area.length-1; ac>=0; ac--) {
             LevelBlock lb = area[ac];
@@ -284,4 +327,11 @@ public class EventManager {
         }
     }
 
+    void disposeAllTasks() {
+        for(int i=tasks.size()-1; i>=0; i-- ) {
+            Task t = tasks.get(i);
+            t.animation.dispose();
+            tasks.remove(i);
+        }
+    }
 }

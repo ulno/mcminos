@@ -72,7 +72,10 @@ public class Game {
      * Start the moving thread which will manage all movement of objects in the game
      */
     public void startTimer() {
-        eventManager = new EventManager();
+        if(eventManager == null) {
+            eventManager = new EventManager();
+            eventManager.init(this);
+        }
 
         timerTaskActive = true;
 
@@ -110,7 +113,7 @@ public class Game {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }*/
-        eventManager.update(this);
+        eventManager.update();
 
 
         if (movement) {
@@ -141,8 +144,9 @@ public class Game {
         return true;
     }
 
-    public void disposeFrameTimer() {
-        eventManager.dispose();
+    public void disposeEventManagerTasks() {
+        if(eventManager != null)
+            eventManager.disposeAllTasks();
     }
 
     public void disposeTimerTask() {
@@ -151,7 +155,7 @@ public class Game {
     }
 
     public void dispose() {
-        disposeFrameTimer();
+        disposeEventManagerTasks();
         disposeTimerTask();
         mcminos.dispose();
         ghosts.dispose();
@@ -160,7 +164,7 @@ public class Game {
     }
 
     public void reset() {
-        disposeFrameTimer();
+        disposeEventManagerTasks();
         // disposeTimerTask(); // will be reused
         // mcminos.dispose(); // will be reused
         ghosts.dispose();
@@ -260,6 +264,7 @@ public class Game {
     }
 
     public void reload() {
+        eventManager.disposeAllTasks();
         level.load(level.getName(), true);
         initAfterLoad();
     }
@@ -310,6 +315,8 @@ public class Game {
             String profileAsText = Base64Coder.decodeString(profileAsCode);
 
             // clearMovers(); should be cleared before
+            disposeEventManagerTasks();
+
             // restore the state
             JsonState jsonState = json.fromJson(JsonState.class, profileAsText);
             level = jsonState.getLevel();
@@ -318,6 +325,9 @@ public class Game {
             mcminos.initAfterJsonLoad(this,tmpmcminos);
             level.initAfterJsonLoad(this); // must be done after initializing mcminos
             ghosts.initAfterJsonLoad(this);
+            gameFrame = jsonState.getGameFrame();
+            eventManager = jsonState.getEventManager();
+            eventManager.initAfterJsonLoad(this);
             // TODO: update movers and speeds for ghosts and mcminos - do they first have to be removed?
             // find loaded movers and add them to the list of movers
             initAfterLoad(); // TODO: does this make sense?
@@ -344,5 +354,9 @@ public class Game {
             profile = new Profile();
             persist( profile ); */
         }
+    }
+
+    public EventManager getEventManager() {
+        return eventManager;
     }
 }
