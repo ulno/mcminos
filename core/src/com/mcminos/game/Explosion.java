@@ -120,7 +120,7 @@ public class Explosion {
                 if(lb.isRockme()) level.increaseRockmes();
                 LevelObject r = lb.getRock();
                 new LevelObject(lb,Entities.extras_rock_destroyed,LevelObject.Types.Unspecified);
-                lb.setRock(null);
+                //handled in remove lb.setRock(null);
                 game.removeMover(r.getMover());
                 lb.remove(r); // from global movables
                 r.dispose();

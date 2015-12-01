@@ -278,6 +278,9 @@ public abstract class Mover implements Json.Serializable {
                 game.addMover(this);
                 level.increasePills();
                 break;
+            case Rock:
+                game.addMover(this);
+                break;
         }
     }
 }

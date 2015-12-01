@@ -94,6 +94,10 @@ public class LevelBlock {
         pill.dispose();
     }
 
+    public int getOneWayType() {
+        return oneWayType;
+    }
+
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};
     private final oneWayDir oneWayDirMap[] = {oneWayDir.FREE, oneWayDir.UP, oneWayDir.RIGHT, oneWayDir.DOWN, oneWayDir.LEFT};
     private ArrayList<LevelObject> movables=new ArrayList<>(); // ghosts, mcminos, explosions, rocks hovering here.
@@ -186,6 +190,7 @@ public class LevelBlock {
                 break;
             case Rock:
                 if(rock == lo) {
+                    if(isRockme()) level.increaseRockmes();
                     rock = null;
                     removed = true;
                     movables.remove(lo);
@@ -196,6 +201,7 @@ public class LevelBlock {
             case Ghost3:
             case Ghost4:
                 movables.remove(lo);
+                removed = true;
                 break;
             case Hole:
                 if(hole == lo) {
@@ -263,6 +269,7 @@ public class LevelBlock {
                 break;
             case OneWay:
                 oneWay = lo;
+                oneWayType = lo.getInitOneWayType();
                 break;
             default: // collectible
                 collectibles.add(lo);
@@ -511,9 +518,9 @@ public class LevelBlock {
         return rock;
     }
 
-    public void setRock(LevelObject rock) {
+    /*public void setRock(LevelObject rock) {
         this.rock = rock;
-    }
+    }*/
 
     public boolean hasPill() {
         return pill != null;

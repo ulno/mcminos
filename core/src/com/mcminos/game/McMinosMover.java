@@ -132,14 +132,14 @@ public class McMinosMover extends Mover {
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
-                    nextBlock.setRock(null);
-                    nextBlock2.setRock(rock);
+                    //nextBlock.setRock(null); check if this was important to prevent monster running here - seems not
+                    //nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
                 } else if (!m.isMoving()) {
                     // let it move again
                     m.triggerMove(currentDirection, getSpeedFactor(), isAccelerated(), nextBlock2);
-                    nextBlock.setRock(null);
-                    nextBlock2.setRock(rock);
+                    //nextBlock.setRock(null);
+                    //nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
                 }
             }
@@ -192,7 +192,7 @@ public class McMinosMover extends Mover {
                     if (lb == null) {
                         b.directions = 0;
                     } else {
-                        // TODO: check, if the dealing with rocks is good like this
+                        // check, if the dealing with rocks is good like this - seems ok
                         int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
                         int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
                         if( xdist + ydist <= rockRadius )
@@ -238,7 +238,7 @@ public class McMinosMover extends Mover {
                 traceDir = b.fromDir;
             }
             directions = traceDir;
-            // TODO: consider ingnoring or giving panelty to rocks (or even doors?) in way calculation
+            // consider ingnoring or giving panelty to rocks (or even doors?) in way calculation - solved with radius 1
         }
         if (directions == STOP) {
             mcminos.hideDestination();
@@ -512,6 +512,12 @@ public class McMinosMover extends Mover {
                 }
             }
             lastBlock = currentBlock;
+
+            // check winning condition (only when full on block to allow rocks to slide to the end)
+            if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
+                mcminos.win();
+            }
+
         }
         checkGhosts(currentLevelBlock);
         checkGhosts(currentLevelBlock.up());
@@ -519,10 +525,6 @@ public class McMinosMover extends Mover {
         checkGhosts(currentLevelBlock.down());
         checkGhosts(currentLevelBlock.left());
 
-        // check winning condition
-        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
-            mcminos.win();
-        }
         return false; // don't remove mcminos
     }
 

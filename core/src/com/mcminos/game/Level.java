@@ -177,7 +177,7 @@ public class Level implements Json.Serializable {
                                 }
                             }
                         }
-                        // TODO: apply minmax on existing mcminos
+                        // apply minmax on existing mcminos - we don't do this anymore, levels are always started with 0
                         if(strList[0].equals("LEVEL") ) {
                             readLevel = true;
                         } else {
@@ -506,7 +506,7 @@ public class Level implements Json.Serializable {
                 case '0':
                     lb.makeRockMe();
                     lb.makeRock();
-                    decreaseRockmes(); // is already at destination
+                    //handled now correctly decreaseRockmes(); // is already at destination
                     break;
                 case '6':
                     lb.makeHole(0);
@@ -757,7 +757,7 @@ Missing:
 
     public void decreasePills() {
         pillsNumber --;
-        // TODO: do we need to trigger something when we reach 0?
+        // do we need to trigger something when we reach 0 - no, we check this manually
     }
 
     public void increaseRockmes() {
@@ -766,7 +766,7 @@ Missing:
 
     public void decreaseRockmes() {
         rockmeNumber --;
-        // TODO: do we need to trigger something when we reach 0?
+        // do we need to trigger something when we reach 0 - no, we check this manually
     }
 
 
