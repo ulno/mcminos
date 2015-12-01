@@ -246,6 +246,9 @@ public class LevelBlock {
             case Ghost4:
                 movables.add(lo);
                 break;
+            case Hole:
+                hole = lo;
+                break;
             default: // collectible
                 collectibles.add(lo);
         }
