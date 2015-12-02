@@ -46,8 +46,10 @@ public class EventManager implements Json.Serializable {
         init(game);
         for(int i=tasks.size()-1; i>=0; i-- ) {
             Task t = tasks.get(i);
-            if(t.animation != null)
+            if(t.animation != null) {
                 t.animation.initAfterJsonLoad(game);
+                level.addToAllLevelObjects(t.animation);
+            }
         }
     }
 
@@ -118,14 +120,14 @@ public class EventManager implements Json.Serializable {
     }
 
     public void update() {
-        long gameFrame = game.getGameFrame();
-        nowFrame = gameFrame;
+        long timerFrame = game.getTimerFrame(); // just use tiemrframes not animationframes, as this here is not about images
+        nowFrame = timerFrame;
         while (tasks.size() > 0 && tasks.get(0).scheduleFrame <= nowFrame) {
             Task t = tasks.get(0);
             tasks.remove(0);
             executeAfterAnimation(t); // this can create new tasks, so make sure this task has been removed from list before
         }
-        lastFrame = gameFrame;
+        lastFrame = timerFrame;
     }
 
     private void executeAfterAnimation(Task t) {

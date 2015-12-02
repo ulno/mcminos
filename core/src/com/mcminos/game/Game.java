@@ -23,11 +23,10 @@ public class Game {
     public static final int timeResolution = 128; // How often per second movements are updated?
     public static final int timeResolutionExponent = Util.log2binary(timeResolution);
     public static final int baseSpeed = 2; // base speed of all units (kind of the slowest anybody usually moves) in blocks per second
+    public static final int timeResolutionSquare = timeResolution*timeResolution; // someimes needed for precision
     private Main main;
     private final Play playScreen;
     private final Audio audio;
-    private long gameFrame = 0; // The game time in frames
-    private long gameTime = 0;
     private Level level;
     private McMinos mcminos;
     private Ghosts ghosts;
@@ -35,9 +34,12 @@ public class Game {
     private ArrayList<Mover> movers; // all Movers (not from mcminos at the moment - handled separately) - i.e. for ghosts and rocks
 
     private Random randomGenerator = new Random();
-    private boolean movement = false; // only do animations but don't move anything
+    private boolean movement = true; // when false, don't call the movement method (no movement of objects)
+    private long timerFrame = 0; // The game time in frames
+    private boolean timer = false; // Does the timer currently run (or only the animations)?
+    private long animationFrame = 0; // This one continues running when movement is stopped, and is updated to animationframe when game continues
+    private long realGameTime = 0; // this value comes from libgdx, we just sync our frames against it
     private long lastDeltaTimeLeft = 0;
-    private boolean timerTaskActive = false;
 
     public Game(Main main, Play playScreen) {
         this.main = main;
@@ -54,46 +56,43 @@ public class Game {
     public boolean updateTime() {
         // use square to be more precise
         float gdxtime = Gdx.graphics.getDeltaTime();
-        gameTime += (long) (gdxtime * 1000);
+        realGameTime += (long) (gdxtime * 1000);
 
-        if (timerTaskActive) {
-            long deltaTime = (long) (gdxtime * Game.timeResolution * Game.timeResolution);
-            deltaTime += lastDeltaTimeLeft; // apply what is left
-            while (deltaTime >= Game.timeResolution) {
-                if (!nextGameFrame()) return false;
-                deltaTime -= Game.timeResolution;
-            }
-            lastDeltaTimeLeft = deltaTime;
+        long deltaTime = (long) (gdxtime * Game.timeResolutionSquare); // needs to have long in front as gdxtime is float (don't apply long directly to gdxtime)
+        deltaTime += lastDeltaTimeLeft; // apply what is left
+        while (deltaTime >= Game.timeResolution) {
+            if (!nextGameFrame()) return false;
+            deltaTime -= Game.timeResolution;
         }
+        lastDeltaTimeLeft = deltaTime;
         return true;
     }
 
     /**
      * Start the moving thread which will manage all movement of objects in the game
      */
-    public void startTimer() {
+    public void initEventManager() {
         if(eventManager == null) {
             eventManager = new EventManager();
             eventManager.init(this);
         }
-
-        timerTaskActive = true;
-
-        /*
-            updates now handled in render based on deltaTime
-        if( timerTask != null)
-            timerTask.cancel(); // cancel old one
-        timerTask = new Timer.Task() {
-            @Override
-            public void run() {
-                nextGameFrame();
-            }
-        };
-        Timer.schedule(timerTask, 0, 1 / (float) timeResolution); */
     }
 
-    public long getGameFrame() {
-        return gameFrame;
+    /**
+     * This is the framecounter which is not updated, when in pause-mode
+     * Can stopped with stopTimer and started with startTimer.
+     * @return
+     */
+    public long getTimerFrame() {
+        return timerFrame;
+    }
+
+    /**
+     * This is the framecounter which is also updated, when in pause-mode
+     * @return
+     */
+    public long getAnimationFrame() {
+        return animationFrame;
     }
 
     /**
@@ -105,42 +104,38 @@ public class Game {
         if (level.isFinished()) {
             return false;
         }
-        // do timers
-        gameFrame++;
-            /* done with synchronize // get lock
-            try { // needs to be synchronized against drawing
-                updateLock.acquire();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-        eventManager.update();
+        // do animation timer
+        animationFrame++;
 
-
-        if (movement) {
+        if(timer) {
+            // timer
+            timerFrame++;
+            eventManager.update();
             // update durations and trigger events, if necessary
             mcminos.updateDurations();
             ghosts.checkSpawn();
 
-            // move everybody
-            mcminos.move();
-            for (int i = movers.size() - 1; i >= 0; i--) { // works as synchronized
-                // current could already be destroyed by last mover
-                if (i <= movers.size() - 1) {
-                    // TODO: check if this makes sense
-                    Mover m = movers.get(i);
-                    if (m.move()) {
-                        movers.remove(i);
-                        LevelObject lo = m.getLevelObject();
-                        lo.getLevelBlock().remove(lo);
-                        lo.dispose();
-                    }
-                    if (level.isFinished()) {
-                        return false;
+            if (movement) { // only do this when timer is active
+                // move everybody
+                mcminos.move();
+                for (int i = movers.size() - 1; i >= 0; i--) {
+                    // current could already be destroyed by last mover
+                    if (i <= movers.size() - 1) {
+                        // TODO: check if this makes sense
+                        Mover m = movers.get(i);
+                        if (m.move()) {
+                            movers.remove(i);
+                            LevelObject lo = m.getLevelObject();
+                            lo.getLevelBlock().remove(lo);
+                            lo.dispose();
+                        }
+                        if (level.isFinished()) {
+                            return false;
+                        }
                     }
                 }
             }
         }
-            /* done with synchronize updateLock.release(); // release lock */
         return true;
     }
 
@@ -149,14 +144,9 @@ public class Game {
             eventManager.disposeAllTasks();
     }
 
-    public void disposeTimerTask() {
-        //timerTask.cancel();
-        timerTaskActive = false;
-    }
-
     public void dispose() {
+        stopTimer();
         disposeEventManagerTasks();
-        disposeTimerTask();
         mcminos.dispose();
         ghosts.dispose();
         movers.clear();
@@ -210,8 +200,8 @@ public class Game {
         updateLock.release();
     }*/
 
-    public long getGameTime() {
-        return gameTime;
+    public long getRealGameTime() {
+        return realGameTime;
     }
 
     public void schedule(EventManager.Types event, LevelObject loWhere) {
@@ -224,13 +214,6 @@ public class Game {
 
     public Audio getAudio() {
         return audio;
-    }
-
-    public void stopAllMovers() {
-        /*for(Mover m: movers) {
-            m.computeSpeeds(0);
-        }*/
-        movement = false;
     }
 
     public ArrayList<Mover> getMovers() {
@@ -249,13 +232,23 @@ public class Game {
         return movement;
     }
 
-    public void enableMovement() {
+    public void startMovement() {
         movement = true;
     }
 
-    public void disableMovement() {
+    public void stopMovement() {
         movement = false;
     }
+
+    public void startTimer() {
+        timer = true;
+        animationFrame = timerFrame; //sync
+    }
+
+    public void stopTimer() {
+        timer = false;
+    }
+
 
     public Level levelNew(String levelName) {
         level = new Level(this, levelName);
@@ -273,7 +266,7 @@ public class Game {
         // Now init some of the level elements
         getGhosts().init(); // update references
         mcminos.initMover();  // needs to be created this late
-        disableMovement();
+        startMovement(); // make sure everything can move
     }
 
     /**
@@ -325,17 +318,11 @@ public class Game {
             mcminos.initAfterJsonLoad(this,tmpmcminos);
             level.initAfterJsonLoad(this); // must be done after initializing mcminos
             ghosts.initAfterJsonLoad(this);
-            gameFrame = jsonState.getGameFrame();
+            timerFrame = jsonState.getGameFrame();
+            animationFrame = timerFrame;
             eventManager = jsonState.getEventManager();
             eventManager.initAfterJsonLoad(this);
-            // TODO: update movers and speeds for ghosts and mcminos - do they first have to be removed?
-            // find loaded movers and add them to the list of movers
             initAfterLoad(); // TODO: does this make sense?
-
-            // done in game initialization:mcminos.initMover(); TODO: make compliant with movers we read in
-            // mcminos levelobject is not in level.allLevelObjects // TODO: make sure it's added
-            // TODO: restore explosions and fuses (timed tasks)
-
 
 //            } catch( Exception e ) {
 
@@ -358,5 +345,9 @@ public class Game {
 
     public EventManager getEventManager() {
         return eventManager;
+    }
+
+    public boolean isTimerActivated() {
+        return timer;
     }
 }

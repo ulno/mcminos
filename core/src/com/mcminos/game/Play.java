@@ -94,7 +94,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game.loadSnapshot();
         level = game.getLevel();
         // start the own timer (which triggers also the movement)
-        game.startTimer();
+        game.initEventManager();
 
     }
 
@@ -103,8 +103,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game = new Game(main, this);
         level = game.levelNew(levelName);
         // start the own timer (which triggers also the movement)
-        game.startTimer();
-
+        game.initEventManager();
     }
 
     public void initAfterLevel( ) {
@@ -148,7 +147,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 if (!toolbox.isActivated()) {
                     mcminos.updateTouchpadDirections(touchpad.getKnobPercentX(), touchpad.getKnobPercentY());
                     if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                        game.enableMovement();
+                        game.startMovement();
                     }
                 }
             }
@@ -160,6 +159,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         GestureDetector gd = new GestureDetector(this);
         InputMultiplexer im = new InputMultiplexer(stage, gd, this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
+
+        toolbox.activate(); // make sure it's active and game is paused
     }
 
     public void toogleTouchpad() {
@@ -195,12 +196,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public void render(float delta) {
         /////// Handle timing events (like moving and events)
-        if( !toolbox.isActivated()) { // if game is not suspended with toolbox (no time passes while in toolbox)
-            if (!game.updateTime()) { // update and exit, if game finished
-                backToMenu();
-                return;
-            }
+        if (!game.updateTime()) { // update and exit, if game finished
+            backToMenu();
+            return;
         }
+
         //////// Handle drawing
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -208,12 +208,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         if (menusActivated) {
             if (toolbox.isRebuildNecessary()) {
                 if (toolboxRebuildTimePoint > 0) { // already scheduled
-                    if (game.getGameFrame() >= toolboxRebuildTimePoint) {
+                    if (game.getAnimationFrame() >= toolboxRebuildTimePoint) {
                         toolboxRebuildTimePoint = 0;
                         toolbox.rebuild();
                     }
                 } else { // set schedule time
-                    toolboxRebuildTimePoint = game.getGameFrame() + Game.timeResolution / 8;
+                    toolboxRebuildTimePoint = game.getAnimationFrame() + Game.timeResolution / 8;
                 }
             }
 
@@ -419,9 +419,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         mcminos.updateKeyDirections();
-        if (!toolbox.isActivated()) {
+        if (!toolbox.dialogActive()) {
             if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                game.enableMovement();
+                toolbox.deactivate();
             }
         }
         return false;
@@ -493,8 +493,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 break;
             case 'p':
             case 'P':
-                // TODO: check if this enables to cheat
-                game.disableMovement();
+                if(!toolbox.dialogActive()) {
+                    if (toolbox.isActivated()) {
+                        toolbox.deactivate();
+                    } else {
+                        toolbox.activate();
+                    }
+                }
                 break;
         }
         return false;
@@ -517,11 +522,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (!toolbox.isActivated()) { // just pan in this case -> see there
+        // TODO: check that there was not a double-click event
+         if (!toolbox.isActivated()) { // just pan in this case or wait for a registered click -> see there
             // TODO: consider only first button/finger
             if (button > 0) return false;
             if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                game.enableMovement();
+                toolbox.deactivate();
             }
             int x = windowToGameX(screenX);
             int y = windowToGameY(screenY);
@@ -592,7 +598,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        if (button > 0 || count > 1) {
+        if (button > 0) {
             if (toolbox.isActivated()) {
                 toolbox.deactivate();
             } else {
@@ -600,6 +606,19 @@ public class Play implements Screen, GestureListener, InputProcessor {
             }
             return true;
         }
+        if (count > 1) { // Double click
+            int vx = windowToGameX((int)x);
+            int vy = windowToGameY((int)y);
+            LevelBlock lb = level.getLevelBlockFromVPixelRounded(vx, vy);
+            // TODO: check radius better
+            LevelBlock mcmlb = mcminos.getLevelBlock();
+            int delta = Math.abs(mcmlb.getX()-lb.getX()) + Math.abs(mcmlb.getY()-lb.getY());
+            if( delta <= 2 )
+                toolbox.toggleDoor(lb);
+            return true;
+        }
+        // this was a single tap
+        toolbox.deactivate();
         return touchDown(x, y, 0, button);
     }
 
@@ -642,13 +661,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        if (game.getGameTime() - lastZoomTime > 500) { // ignore some events
+        if (game.getRealGameTime() - lastZoomTime > 500) { // ignore some events
             if (initialDistance > distance + playwindow.visibleHeightInPixels / 4) {
                 zoomMinus();
             } else if (initialDistance < distance - playwindow.visibleHeightInPixels / 4) {
                 zoomPlus();
             }
-            lastZoomTime = game.getGameTime();
+            lastZoomTime = game.getRealGameTime();
         }
         return false; // consume event
     }

@@ -846,7 +846,7 @@ Missing:
                     ; 260 = Last level and RSTRT = 4
                     ; 264 = Last level and RSTRT = 8
                     ; 272 = Last level and RSTRT = 16 !!! */
-        game.disableMovement();
+        game.stopMovement();
         game.getMcMinos().reset();
         game.disposeEventManagerTasks();
         if((restart & 1) > 0) { // complete restart requested

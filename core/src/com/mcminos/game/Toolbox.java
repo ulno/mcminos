@@ -324,6 +324,7 @@ public class Toolbox {
 */
 
     public void activate() {
+        play.getGame().stopTimer();
         if(!activated) {
             activated = true;
             rebuild();
@@ -336,6 +337,7 @@ public class Toolbox {
             removeDialog();
             rebuild();
         }
+        play.getGame().startTimer();
     }
 
     private void removeDialog() {
@@ -343,6 +345,10 @@ public class Toolbox {
         toolboxDialog = null;
         for( int i=0; i<doorBlocks.length; i++)
             doorBlocks[i] = null;
+    }
+
+    public boolean dialogActive() {
+        return toolboxDialog != null;
     }
 
     private LevelBlock checkDoor(LevelBlock lb1, LevelBlock lb2) {
@@ -353,7 +359,8 @@ public class Toolbox {
         return null;
     }
 
-    private void toggleDoor(LevelBlock lb) {
+    public void toggleDoor(LevelBlock lb) {
+        // TODO: move to levelblock
         if (lb.hasDoor()) {
             if (!lb.hasRock()) { // if the door is not blocked by rock
                 if (mcminos.hasKey()) {

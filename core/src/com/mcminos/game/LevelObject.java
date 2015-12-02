@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
-import java.util.Collections;
-
 /**
  * Created by ulno on 17.08.15.
  *
@@ -39,6 +37,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
             json.writeValue("g",gfx.getAllGraphicsIndex());
         else
             json.writeValue("g",-1);
+        // TODO: check why it does not save a mover here, when mcminos was controlled by keyboard or resave
         json.writeValue( "m", mover, null ); // null triggers writing the class type
         if(levelBlock != null) {
             json.writeValue("hb",true);
@@ -74,6 +73,22 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         initOneWayType = json.readValue("ot", Integer.class, jsonData);
     }
 
+    /**
+     * make sure levelblock is initialized by coordinates
+     * @param game
+     */
+    public void initAfterJsonLoad( Game game ) {
+        Level level = game.getLevel();
+        this.level = level;
+        if(lbx >= 0 && lby >= 0) {
+            setLevelBlock( level.get(lbx, lby) );
+        } else {
+            levelBlock = null;
+        }
+        if(mover != null)
+            mover.initAfterJsonLoad(game,this);
+    }
+
     public int getInitOneWayType() {
         return initOneWayType;
     }
@@ -95,22 +110,6 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         this.type = type;
         setLevelBlock(levelBlock);
         level.addToAllLevelObjects(this);
-    }
-
-    /**
-     * make sure levelblock is initialized by coordinates
-     * @param game
-     */
-    public void initAfterJsonLoad( Game game ) {
-        Level level = game.getLevel();
-        this.level = level;
-        if(lbx >= 0 && lby >= 0) {
-            setLevelBlock( level.get(lbx, lby) );
-        } else {
-            levelBlock = null;
-        }
-        if(mover != null)
-            mover.initAfterJsonLoad(game,this);
     }
 
     /**
@@ -284,7 +283,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
     void animationStartNow(Game game) {
         int len = gfx.getAnimationFramesLength();
 
-        animDelta = len - (int)(game.getGameFrame() % (long)len);
+        animDelta = len - (int)(game.getTimerFrame() % (long)len); // TODO: check if we need to use Timer or Animationframe here
     }
 
     void animationStartRandom(Game game) {

@@ -207,7 +207,7 @@ public class Graphics {
          * directly draw a Texture in given batch
          */
     public void draw( PlayWindow playwindow, SpriteBatch b, int x, int y) {
-        b.draw(getTexture(playwindow.getGame().getGameFrame()), x, y);
+        b.draw(getTexture(playwindow.getGame().getAnimationFrame()), x, y);
     }
 
     public static int vPixelToScreen( int v, int vpixelpos, int levelPixelSize, int currentResolutionBitsLeftShifter) {
@@ -241,7 +241,7 @@ public class Graphics {
         int y0 = vPixelToScreen(vy0, playwindow.windowVPixelYPos,gameh,currentResolutionBitsLeftShifter);
 
         // draw different parts to physical coordinates
-        TextureRegion t = getTexture(playwindow.getGame().getGameFrame() + animDelta );
+        TextureRegion t = getTexture(playwindow.getGame().getAnimationFrame() + animDelta );
         // clipping is done by scissors in playscreen
         // TODO: this seems slow, optimize in figuring out what is (at least partly) visible
         int maxww = playwindow.visibleWidthInPixels;

@@ -450,8 +450,7 @@ public class McMinos implements Json.Serializable {
         // don't multikill
         if( ! isKilled() ) {
             audio.soundPlay(sound);
-            game.disableMovement();
-            game.stopAllMovers();
+            game.stopMovement();
             stop();
             killed = true;
             gfxSelect(); // Hide current
@@ -472,7 +471,7 @@ public class McMinos implements Json.Serializable {
             level.killRestart();
             killed = false;
             resume();
-            // will be enabled at beginning of game: game.enableMovement();
+            // will be enabled at beginning of game: game.startMovement();
         } else {
             level.finish();
         }
@@ -483,7 +482,7 @@ public class McMinos implements Json.Serializable {
         // don't multifall
         if (!isFalling()) {
             audio.soundPlay("falling");
-            //game.stopAllMovers();
+            //game.stopMovement();
             stop();
             falling = true;
             gfxSelect(); // hide current gfx
@@ -542,8 +541,7 @@ public class McMinos implements Json.Serializable {
     public void win() {
         if( ! isWinning() ) {
             audio.soundPlay("applaus");
-            game.disableMovement();
-            game.stopAllMovers();
+            game.stopMovement();
             stop();
 
             winning = true;

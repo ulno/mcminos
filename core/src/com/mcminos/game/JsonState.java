@@ -31,10 +31,8 @@ public class JsonState implements Json.Serializable {
         json.writeValue("l",game.getLevel());
         json.writeValue("m",game.getMcMinos());
         json.writeValue("g",game.getGhosts());
-        json.writeValue("f",game.getGameFrame());
+        json.writeValue("f",game.getTimerFrame());
         json.writeValue("e",game.getEventManager());
-        // Explosions?
-        // Timingevents?
     }
 
     @Override
