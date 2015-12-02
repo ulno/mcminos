@@ -29,6 +29,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
     private int animDelta = 0; // how much offset for the animation
     private Types type;
     private DoorTypes doorType = DoorTypes.None;
+    private int initOneWayType = -1;
 
     @Override
     public void write(Json json) {
@@ -51,6 +52,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         json.writeValue("ad", animDelta);
         json.writeValue("t", type);
         json.writeValue("dt", doorType);
+        json.writeValue("ot", levelBlock.getOneWayType());
     }
 
     @Override
@@ -69,6 +71,11 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         animDelta = json.readValue("ad", Integer.class, jsonData);
         type = json.readValue("t", Types.class, jsonData);
         doorType = json.readValue("dt", DoorTypes.class, jsonData);
+        initOneWayType = json.readValue("ot", Integer.class, jsonData);
+    }
+
+    public int getInitOneWayType() {
+        return initOneWayType;
     }
 
     public enum Types {Unspecified, Power1, Power2, Power3,
@@ -76,7 +83,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         Skull, Bomb, Dynamite, Rock, Pill, Castle, McMinos, Wall, Background, Key, Umbrella,
         DoorClosed, DoorOpened, SpeedUpField, SpeedDownField, WarpHole, KillAllField, OneWay,
         Chocolate, LandMine, LandMineActive, LandMineExplosion, BombFused, DynamiteExplosion,
-        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Exit, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, SkullField, Destination, Hole};
+        BombExplosion, DestroyedWall, Ghost1, Ghost2, Ghost3, Ghost4, KillAllPill, Exit, Bonus1, Bonus2, Bonus3, Whisky, Mirror, Poison, Medicine, SkullField, Destination, DynamiteFused, McMinosDying, McMinosFalling, McMinosWinning, Hole};
     public enum DoorTypes {None, HorizontalOpened,HorizontalClosed, VerticalOpened,VerticalClosed};
 
     private void construct(LevelBlock levelBlock, int zIndex, Types type) {
@@ -110,7 +117,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
      * This is called when re-constructed from json-save
      */
     LevelObject() {
-        // TODO: make sure construct is called later
+
     }
 
     /**
@@ -169,12 +176,13 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         // needs to be updated to check for collisions via associations
         if (from != headingTo) {
             from.remove(this);
-            // check if rock and update rockme counters
+            /* deals already with rockmes // check if rock and update rockme counters
             if (type == LevelObject.Types.Rock) {
                 // Check, if we are on a rockme
                 if (from.isRockme()) level.increaseRockmes();
             }
             // happens in setLevelBlock: headingTo.putMoveable(this);
+            */
         }
         setLevelBlock( headingTo ); // todo: might be not totally correct for destination
         setXY(vpx,vpy);

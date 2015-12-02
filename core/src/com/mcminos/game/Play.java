@@ -93,12 +93,18 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game = new Game(main, this);
         game.loadSnapshot();
         level = game.getLevel();
+        // start the own timer (which triggers also the movement)
+        game.startTimer();
+
     }
 
     public void loadLevel(String levelName) {
         // Prepare the control layer
         game = new Game(main, this);
         level = game.levelNew(levelName);
+        // start the own timer (which triggers also the movement)
+        game.startTimer();
+
     }
 
     public void initAfterLevel( ) {
@@ -117,9 +123,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
         toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage, skin);
-
-        // start the own timer (which triggers also the movement)
-        game.startTimer();
 
         // init scoreinfo display
         scoreInfo = new StringBuilder(28);

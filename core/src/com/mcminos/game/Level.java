@@ -177,7 +177,7 @@ public class Level implements Json.Serializable {
                                 }
                             }
                         }
-                        // TODO: apply minmax on existing mcminos
+                        // apply minmax on existing mcminos - we don't do this anymore, levels are always started with 0
                         if(strList[0].equals("LEVEL") ) {
                             readLevel = true;
                         } else {
@@ -506,7 +506,7 @@ public class Level implements Json.Serializable {
                 case '0':
                     lb.makeRockMe();
                     lb.makeRock();
-                    decreaseRockmes(); // is already at destination
+                    //handled now correctly decreaseRockmes(); // is already at destination
                     break;
                 case '6':
                     lb.makeHole(0);
@@ -757,7 +757,7 @@ Missing:
 
     public void decreasePills() {
         pillsNumber --;
-        // TODO: do we need to trigger something when we reach 0?
+        // do we need to trigger something when we reach 0 - no, we check this manually
     }
 
     public void increaseRockmes() {
@@ -766,7 +766,7 @@ Missing:
 
     public void decreaseRockmes() {
         rockmeNumber --;
-        // TODO: do we need to trigger something when we reach 0?
+        // do we need to trigger something when we reach 0 - no, we check this manually
     }
 
 
@@ -848,7 +848,7 @@ Missing:
                     ; 272 = Last level and RSTRT = 16 !!! */
         game.disableMovement();
         game.getMcMinos().reset();
-        game.disposeFrameTimer();
+        game.disposeEventManagerTasks();
         if((restart & 1) > 0) { // complete restart requested
             // done in reset game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
@@ -942,7 +942,22 @@ Missing:
         for( int i=allLevelObjects.size()-1; i>=0; i--) { // reset manually as these are loaded now - TODO: consider skipping backgrounds
             allLevelObjects.get(i).dispose();
         }
-        allLevelObjects = json.readValue("levelObjects",ArrayList.class, jsonData);
+        allLevelObjects = json.readValue("levelObjects", ArrayList.class, jsonData);
+        // cleanup, remove animation-event-objects
+        for( int i = allLevelObjects.size()-1; i>=0; i-- ) {
+            LevelObject lo = allLevelObjects.get(i);
+            switch(lo.getType()) {
+                case BombFused:
+                case DynamiteFused:
+                case BombExplosion:
+                case McMinosDying:
+                case McMinosFalling:
+                case McMinosWinning:
+                    allLevelObjects.remove(i);
+                    break;
+            }
+        }
+
     }
 
     public void initAfterJsonLoad(Game game) {

@@ -11,6 +11,8 @@ public class JsonState implements Json.Serializable {
     private Level level;
     private McMinos mcminos;
     private Ghosts ghosts;
+    private EventManager eventManager;
+    private long gameFrame;
 
     public JsonState(Game game) {
         init(game);
@@ -26,18 +28,22 @@ public class JsonState implements Json.Serializable {
 
     @Override
     public void write(Json json) {
-        json.writeValue("level",game.getLevel());
-        json.writeValue("mcminos",game.getMcMinos());
-        json.writeValue("ghosts",game.getGhosts());
+        json.writeValue("l",game.getLevel());
+        json.writeValue("m",game.getMcMinos());
+        json.writeValue("g",game.getGhosts());
+        json.writeValue("f",game.getGameFrame());
+        json.writeValue("e",game.getEventManager());
         // Explosions?
         // Timingevents?
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
-        level = json.readValue("level",Level.class,jsonData);
-        mcminos = json.readValue("mcminos",McMinos.class,jsonData);
-        ghosts = json.readValue("ghosts",Ghosts.class,jsonData);
+        level = json.readValue("l",Level.class,jsonData);
+        mcminos = json.readValue("m",McMinos.class,jsonData);
+        ghosts = json.readValue("g",Ghosts.class,jsonData);
+        gameFrame = json.readValue("f",Long.class,jsonData);
+        eventManager = json.readValue("e",EventManager.class,jsonData);
     }
 
     public Level getLevel() {
@@ -50,5 +56,13 @@ public class JsonState implements Json.Serializable {
 
     public Ghosts getGhosts() {
         return ghosts;
+    }
+
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+
+    public long getGameFrame() {
+        return gameFrame;
     }
 }

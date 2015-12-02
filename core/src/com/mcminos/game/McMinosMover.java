@@ -128,18 +128,18 @@ public class McMinosMover extends Mover {
                 RockMover m = (RockMover) rock.getMover();
                 if (m == null) {
                     // also make rock in the speed we push it
-                    RockMover mover = new RockMover(rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
+                    RockMover mover = new RockMover(game, rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
                     rock.setMover(mover);
                     game.addMover(mover);
                     //mover.move(); //small headstart to arrive early enough - not necessary
-                    nextBlock.setRock(null);
-                    nextBlock2.setRock(rock);
+                    //nextBlock.setRock(null); check if this was important to prevent monster running here - seems not
+                    //nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
                 } else if (!m.isMoving()) {
                     // let it move again
                     m.triggerMove(currentDirection, getSpeedFactor(), isAccelerated(), nextBlock2);
-                    nextBlock.setRock(null);
-                    nextBlock2.setRock(rock);
+                    //nextBlock.setRock(null);
+                    //nextBlock2.setRock(rock);
                     audio.soundPlay("moverock");
                 }
             }
@@ -192,7 +192,7 @@ public class McMinosMover extends Mover {
                     if (lb == null) {
                         b.directions = 0;
                     } else {
-                        // TODO: check, if the dealing with rocks is good like this
+                        // check, if the dealing with rocks is good like this - seems ok
                         int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
                         int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
                         if( xdist + ydist <= rockRadius )
@@ -238,7 +238,7 @@ public class McMinosMover extends Mover {
                 traceDir = b.fromDir;
             }
             directions = traceDir;
-            // TODO: consider ingnoring or giving panelty to rocks (or even doors?) in way calculation
+            // consider ingnoring or giving panelty to rocks (or even doors?) in way calculation - solved with radius 1
         }
         if (directions == STOP) {
             mcminos.hideDestination();
@@ -249,7 +249,7 @@ public class McMinosMover extends Mover {
 //            // old direction selection code follows
 //
 //            // check screen distance
-//            int x = levelObject.getVX();
+//            int x = animation.getVX();
 //            int xdelta = x - destination.getVX(); // delta to center of destination (two centers substract)
 //            int xdiff = Math.abs(xdelta);
 //            if (xdiff <= PlayWindow.virtualBlockResolution >> 1 || xdiff >= playwindow.getVPixelsLevelWidth() - (PlayWindow.virtualBlockResolution >> 1))
@@ -260,7 +260,7 @@ public class McMinosMover extends Mover {
 //                else
 //                    xdelta = -(int) Math.signum(xdelta);
 //            }
-//            int y = levelObject.getVY();
+//            int y = animation.getVY();
 //            int ydelta = y - destination.getVY(); // delta to center of destination (two centers substract)
 //            int ydiff = Math.abs(ydelta);
 //            if (ydiff <= PlayWindow.virtualBlockResolution >> 1 || ydiff >= playwindow.getVPixelsLevelHeight() - (PlayWindow.virtualBlockResolution >> 1))
@@ -411,7 +411,7 @@ public class McMinosMover extends Mover {
                             break;
                         case LandMineActive:
                             item.dispose();
-                            new Explosion(currentBlock, LevelObject.Types.LandMine);
+                            game.schedule(EventManager.Types.ExplosionLight, currentBlock);
                             break;
                         case Key:
                             audio.soundPlay("tools");
@@ -512,6 +512,12 @@ public class McMinosMover extends Mover {
                 }
             }
             lastBlock = currentBlock;
+
+            // check winning condition (only when full on block to allow rocks to slide to the end)
+            if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
+                mcminos.win();
+            }
+
         }
         checkGhosts(currentLevelBlock);
         checkGhosts(currentLevelBlock.up());
@@ -519,10 +525,6 @@ public class McMinosMover extends Mover {
         checkGhosts(currentLevelBlock.down());
         checkGhosts(currentLevelBlock.left());
 
-        // check winning condition
-        if(level.getPillsNumber() == 0 && level.getRockmesNumber() == 0) {
-            mcminos.win();
-        }
         return false; // don't remove mcminos
     }
 

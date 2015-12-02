@@ -11,17 +11,16 @@ public class RockMover extends Mover {
     private Audio audio;
 //    private LevelBlock headingTo;
     private LevelBlock lastBlockChecked = null;
+    private Game game;
 
-    /* public RockMover(LevelObject rock, int speed) {
-            super(rock, speed, false, Entities.extras_rock);
-        }
-    */
-    public RockMover(LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingToNew) {
+
+    public RockMover(Game game, LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingToNew) {
         super(rock, speed, false, 0, Entities.extras_rock);
         setSpeedAccelerated(accelerated);
         this.currentDirection = currentDirection;
         headingTo = headingToNew;
-        audio = rock.getLevelBlock().getLevel().getGame().getAudio();
+        this.game = game;
+        audio = game.getAudio();
     }
 
     /**
@@ -45,6 +44,7 @@ public class RockMover extends Mover {
     public void initAfterJsonLoad(Game game, LevelObject lo) {
         super.initAfterJsonLoad(game, lo);
         audio = game.getAudio();
+        this.game = game;
         // TODO: add lastBlockChecked
     }
 
@@ -52,14 +52,15 @@ public class RockMover extends Mover {
     protected boolean checkCollisions() {
         if (levelObject.fullOnBlock() && lastBlockChecked != currentLevelBlock) {
             lastBlockChecked = currentLevelBlock;
-            // check if on hole -> break hole and remove rock
+            /* ishandled automatically in moving and levelblock association
             if(currentLevelBlock.isRockme()) {
                 currentLevelBlock.getLevel().decreaseRockmes();
-            }
+            } */
+            // check if on hole -> break hole and remove rock
             if(currentLevelBlock.hasHole()) {
                 currentLevelBlock.getHole().setHoleLevel(LevelObject.maxHoleLevel);
                 currentLevelBlock.remove(levelObject);
-                currentLevelBlock.setRock(null); // remove rock
+                //handled in remove currentLevelBlock.setRock(null); // remove rock
                 levelObject.dispose();
                 audio.soundPlay("rumble");
                 return true;
@@ -67,7 +68,7 @@ public class RockMover extends Mover {
                 for (LevelObject lo : currentLevelBlock.getCollectibles()) {
                     if (lo.getType() == LevelObject.Types.LandMineActive) { // rock triggers active landmine
                         lo.dispose();
-                        new Explosion(currentLevelBlock, LevelObject.Types.LandMine);
+                        game.schedule(EventManager.Types.ExplosionLight, currentLevelBlock);
                         break;
                     }
                 }
