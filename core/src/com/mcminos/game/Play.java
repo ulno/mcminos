@@ -229,7 +229,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         }
 
         if (!toolbox.isActivated()) {
-            playwindow.updateCoordinates(); // fix coordinates and compute scrolling else coordinates come from panning
+            playwindow.updateCoordinates( mcminos.getSpeed() ); // fix coordinates and compute scrolling else coordinates come from panning
         }
 
         gameBatch.begin();

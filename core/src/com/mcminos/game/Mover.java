@@ -223,11 +223,11 @@ public abstract class Mover implements Json.Serializable {
 
     @Override
     public void write(Json json) {
-        json.writeValue("u",gfxUp.getAllGraphicsIndex());
-        json.writeValue("r",gfxRight.getAllGraphicsIndex());
-        json.writeValue("d",gfxDown.getAllGraphicsIndex());
-        json.writeValue("l",gfxLeft.getAllGraphicsIndex());
-        json.writeValue("s",gfxStill.getAllGraphicsIndex());
+        json.writeValue("u",gfxUp==null?-1:gfxUp.getAllGraphicsIndex());
+        json.writeValue("r",gfxRight==null?-1:gfxRight.getAllGraphicsIndex());
+        json.writeValue("d",gfxDown==null?-1:gfxDown.getAllGraphicsIndex());
+        json.writeValue("l",gfxLeft==null?-1:gfxLeft.getAllGraphicsIndex());
+        json.writeValue("s",gfxStill==null?-1:gfxStill.getAllGraphicsIndex());
         json.writeValue("cbx",currentLevelBlock.getX());
         json.writeValue("cby",currentLevelBlock.getY());
         json.writeValue("lbx",lastBlock.getX());

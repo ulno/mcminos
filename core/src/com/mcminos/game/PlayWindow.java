@@ -91,9 +91,10 @@ public class PlayWindow {
      * @param scroll is scrolling for current level and respective coordinate switched on?
      * @param totalBlocks total number of blocks for this coordinate (level block width or height)
      * @param visibleVPixels total number of visible virtual pixels in this coordinate
-     * @return
+     * @param scrollSpeed if 0 make the full shift so window is at right position (>0: just make small shift to follow, bigger=faster)
+     * @return newCoordinate
      */
-    private int computeWindowCoordinate(int inputPos, int mcmPos, boolean scroll, int totalBlocks, int visibleVPixels) {
+    private int computeWindowCoordinate(int inputPos, int mcmPos, boolean scroll, int totalBlocks, int visibleVPixels, int scrollSpeed) {
         // We compute the view based on McMinos' position
         // when we are calling this, we try to make sure McMinos is visible near the center of the screen
         // However, scrollability of the level needs to be respected.
@@ -106,7 +107,8 @@ public class PlayWindow {
             if (scroll) { // the level scrolls in this direction
                 if (Math.abs(delta) > totalBlocks << (virtualBlockResolutionExponent - 1))
                     delta = (int) Math.signum(delta) * (Math.abs(delta) - totalVPixels);
-                delta >>= virtualBlockResolutionExponent - 2; // do it a little slowly depending on distance TODO: make constant dependent on other constants
+                if(scrollSpeed > 0) // if this is 0, apply full delta
+                    delta /=   (virtualBlockResolution>>1)/scrollSpeed ; // do it a little slowly depending on distance
                 inputPos += delta;
                 if (inputPos < 0) inputPos += totalVPixels;
                 else {
@@ -138,9 +140,9 @@ public class PlayWindow {
     /**
      * Update the position of the currently seen viewable window
      */
-    public void updateCoordinates() {
-        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), visibleWidthInVPixels);
-        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), visibleHeightInVPixels);
+    public void updateCoordinates(int scrollSpeed) {
+        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), visibleWidthInVPixels, scrollSpeed);
+        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), visibleHeightInVPixels, scrollSpeed);
     }
 
     public void resize(int width, int height) {
@@ -200,6 +202,9 @@ public class PlayWindow {
         // add clipping
         Rectangle clipBounds = new Rectangle( projectionX, projectionY, visibleWidthInPixels, visibleHeightInPixels);
         ScissorStack.calculateScissors(camera, batch.getTransformMatrix(), clipBounds, scissors);
+
+        // fully center mcminos
+        updateCoordinates(0);
 
         // resize minimap
         //virtual2MiniResolution = resolution >=64 ? 8 : 4;

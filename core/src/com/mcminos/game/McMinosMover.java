@@ -529,42 +529,44 @@ public class McMinosMover extends Mover {
     }
 
     private void checkGhosts(LevelBlock lb) {
-        if(lb==null) return;
+        if (lb == null) return;
         // check always if we met a ghost
         ArrayList<LevelObject> moveables = lb.getMovables(); // TODO: check all ghosts
-        for( int i=moveables.size()-1; i>=0; i--) {
-            LevelObject lo = moveables.get(i);
-            int ghostnr = lo.getGhostNr();
-            if(ghostnr != -1) {
-                // check if ghost is really near enough
-                if (distanceWithScroll(level.getScrollX(),mcminos.getVX(),lo.getVX(),level.getVPixelsWidth())
-                        + distanceWithScroll(level.getScrollY(), mcminos.getVY(), lo.getVY(),
-                        level.getVPixelsHeight()) < (PlayWindow.virtualBlockResolution)) {
-                    if (mcminos.isPowered()) {
-                        if (ghostnr == 3) { // jumping pill, will poison when powered
-                            mcminos.poison();
-                        } else { // all others can be killed when powered
-                            game.removeMover(lo.getMover());
-                            moveables.remove(i);
-                            ghosts.decreaseGhosts(ghostnr);
-                            lo.dispose();
-                            audio.soundPlay("gotyou");
-                            mcminos.increaseScore(30);
-                        }
-                    } else { // all others can be killed when powered
-                        if (ghostnr == 3) { // jumping pill, can be eaten when not powered
-                            game.removeMover(lo.getMover());
-                            moveables.remove(i);
-                            level.decreasePills();
-                            ghosts.decreaseGhosts(ghostnr);
-                            lo.dispose();
-                            audio.soundPlay("knurps");
-                            mcminos.increaseScore(30);
-                        } else {
-                            if(ghostnr == 1) { // perry only poisons
+        for (int i = moveables.size() - 1; i >= 0; i--) {
+            if (i < moveables.size()) {
+                LevelObject lo = moveables.get(i);
+                int ghostnr = lo.getGhostNr();
+                if (ghostnr != -1) {
+                    // check if ghost is really near enough
+                    if (distanceWithScroll(level.getScrollX(), mcminos.getVX(), lo.getVX(), level.getVPixelsWidth())
+                            + distanceWithScroll(level.getScrollY(), mcminos.getVY(), lo.getVY(),
+                            level.getVPixelsHeight()) < (PlayWindow.virtualBlockResolution)) {
+                        if (mcminos.isPowered()) {
+                            if (ghostnr == 3) { // jumping pill, will poison when powered
                                 mcminos.poison();
-                            } else { // zara kills
-                                mcminos.kill("ghosts", Entities.mcminos_dying);
+                            } else { // all others can be killed when powered
+                                game.removeMover(lo.getMover());
+                                moveables.remove(i);
+                                ghosts.decreaseGhosts(ghostnr);
+                                lo.dispose();
+                                audio.soundPlay("gotyou");
+                                mcminos.increaseScore(30);
+                            }
+                        } else { // all others can be killed when powered
+                            if (ghostnr == 3) { // jumping pill, can be eaten when not powered
+                                game.removeMover(lo.getMover());
+                                moveables.remove(i);
+                                level.decreasePills();
+                                ghosts.decreaseGhosts(ghostnr);
+                                lo.dispose();
+                                audio.soundPlay("knurps");
+                                mcminos.increaseScore(30);
+                            } else {
+                                if (ghostnr == 1) { // perry only poisons
+                                    mcminos.poison();
+                                } else { // zara kills
+                                    mcminos.kill("ghosts", Entities.mcminos_dying);
+                                }
                             }
                         }
                     }
