@@ -686,4 +686,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public Game getGame() {
         return game;
     }
+
+    public void activateToolbox() {
+        toolbox.activate();
+    }
 }

@@ -13,6 +13,7 @@ public class JsonState implements Json.Serializable {
     private Ghosts ghosts;
     private EventManager eventManager;
     private long gameFrame;
+    private Boolean movement;
 
     public JsonState(Game game) {
         init(game);
@@ -33,6 +34,7 @@ public class JsonState implements Json.Serializable {
         json.writeValue("g",game.getGhosts());
         json.writeValue("f",game.getTimerFrame());
         json.writeValue("e",game.getEventManager());
+        json.writeValue("mv",game.getMovement());
     }
 
     @Override
@@ -42,6 +44,7 @@ public class JsonState implements Json.Serializable {
         ghosts = json.readValue("g",Ghosts.class,jsonData);
         gameFrame = json.readValue("f",Long.class,jsonData);
         eventManager = json.readValue("e",EventManager.class,jsonData);
+        movement = json.readValue("mv",Boolean.class,jsonData);
     }
 
     public Level getLevel() {
@@ -62,5 +65,9 @@ public class JsonState implements Json.Serializable {
 
     public long getGameFrame() {
         return gameFrame;
+    }
+
+    public Boolean getMovement() {
+        return movement;
     }
 }
