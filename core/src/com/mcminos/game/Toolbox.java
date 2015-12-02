@@ -575,8 +575,8 @@ allows cheating */
         // Fill topMenu
         final Group soundButton = new Group();
         final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res,0);
-        soundButton.addActor(new Image(emptyButtonGfx));
-        soundButton.addActor(new Image(Entities.menu_sound_on.getTexture(res,0)));
+        //soundButton.addActor(new Image(emptyButtonGfx));
+        soundButton.addActor(new Image(Entities.menu_button_sound_on.getTexture(res,0)));
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -584,10 +584,10 @@ allows cheating */
                 soundButton.clearChildren();
                 if(audio.getSound()) {
                     soundButton.addActor(new Image(emptyButtonGfx));
-                    soundButton.addActor(new Image(Entities.menu_sound_on.getTexture(playwindow.resolution,0)));
+                    soundButton.addActor(new Image(Entities.menu_button_sound_on.getTexture(playwindow.resolution,0)));
                 } else {
                     soundButton.addActor(new Image(emptyButtonGfx));
-                    soundButton.addActor(new Image(Entities.menu_sound_off.getTexture(playwindow.resolution,0)));
+                    soundButton.addActor(new Image(Entities.menu_button_sound_off.getTexture(playwindow.resolution,0)));
                 }
             }
         });
@@ -595,8 +595,8 @@ allows cheating */
 
         //  Andreas (2015-11-23) Added graphic music on/off button to replace text button.
         final Group musicButton = new Group();
-        musicButton.addActor(new Image(emptyButtonGfx));
-        musicButton.addActor(new Image(Entities.menu_music_on.getTexture(res,0)));
+        //musicButton.addActor(new Image(emptyButtonGfx));
+        musicButton.addActor(new Image(Entities.menu_button_music_on.getTexture(res,0)));
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -604,10 +604,10 @@ allows cheating */
                 musicButton.clearChildren();
                 if(audio.getMusic()) {
                     musicButton.addActor(new Image(emptyButtonGfx));
-                    musicButton.addActor(new Image(Entities.menu_music_on.getTexture(playwindow.resolution,0)));
+                    musicButton.addActor(new Image(Entities.menu_button_music_on.getTexture(playwindow.resolution,0)));
                 } else {
                     musicButton.addActor(new Image(emptyButtonGfx));
-                    musicButton.addActor(new Image(Entities.menu_music_off.getTexture(playwindow.resolution,0)));
+                    musicButton.addActor(new Image(Entities.menu_button_music_off.getTexture(playwindow.resolution,0)));
                 }
             }
         });
@@ -664,8 +664,8 @@ allows cheating */
         topMenu.add(saveButton).prefSize(res, res);
 
         Group plusButton = new Group();
-        plusButton.addActor(new Image(emptyButtonGfx));
-        plusButton.addActor(new Image(Entities.menu_zoom_in.getTexture(res, 0)));
+        //plusButton.addActor(new Image(emptyButtonGfx));
+        plusButton.addActor(new Image(Entities.menu_button_zoom_in.getTexture(res, 0)));
         plusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -678,8 +678,8 @@ allows cheating */
         topMenu.add(plusButton).prefSize(res, res);
 
         Group minusButton = new Group();
-        minusButton.addActor(new Image(emptyButtonGfx));
-        minusButton.addActor(new Image(Entities.menu_zoom_out.getTexture(res, 0)));
+        //minusButton.addActor(new Image(emptyButtonGfx));
+        minusButton.addActor(new Image(Entities.menu_button_zoom_out.getTexture(res, 0)));
         minusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -691,8 +691,8 @@ allows cheating */
         topMenu.add(minusButton).prefSize(res, res);
 
         Group leaveButton = new Group();
-        leaveButton.addActor(new Image(emptyButtonGfx));
-        leaveButton.addActor(new Image(Entities.menu_stop.getTexture(res, 0)));
+        //leaveButton.addActor(new Image(emptyButtonGfx));
+        leaveButton.addActor(new Image(Entities.menu_button_stop.getTexture(res, 0)));
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -703,8 +703,8 @@ allows cheating */
         topMenu.add(leaveButton).prefSize(res,res);
 
         Group pauseButton = new Group();
-        pauseButton.addActor(new Image(emptyButtonGfx));
-        pauseButton.addActor(new Image(Entities.menu_pause.getTexture(res, 0)));
+        //pauseButton.addActor(new Image(emptyButtonGfx));
+        pauseButton.addActor(new Image(Entities.menu_button_pause.getTexture(res, 0)));
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -714,8 +714,8 @@ allows cheating */
         topMenu.add(pauseButton).prefSize(res,res);
 
         Group continueButton = new Group();
-        continueButton.addActor(new Image(emptyButtonGfx));
-        continueButton.addActor(new Image(Entities.menu_play.getTexture(res, 0)));
+        //continueButton.addActor(new Image(emptyButtonGfx));
+        continueButton.addActor(new Image(Entities.menu_button_play.getTexture(res, 0)));
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
