@@ -163,12 +163,14 @@ public class Play implements Screen, GestureListener, InputProcessor {
         toolbox.activate(); // make sure it's active and game is paused
     }
 
-    public void toogleTouchpad() {
-        if (touchpad.hasParent())
+    public boolean toggleTouchpad() {
+        if (touchpad.hasParent()) {
             touchpad.remove();
-        else {
+            return false; // it's gone
+        } else {
             touchpadResize();
             stage.addActor(touchpad);
+            return true; // now it's visible
         }
     }
 
