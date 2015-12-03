@@ -282,7 +282,8 @@ public class Game {
         // convert the given profile to text
         String profileAsText = json.toJson(jsonState);
 
-        Gdx.app.log("profileAsText", json.prettyPrint(profileAsText));
+        // Un-comment the following line to output saved JSON data
+        //Gdx.app.log("profileAsText", json.prettyPrint(profileAsText));
         // encode the text
         String profileAsCode = Base64Coder.encodeString(profileAsText);
 
