@@ -147,12 +147,6 @@ public class Toolbox {
             }
         });
 
-        menuButton = new ToolboxButton( this, Entities.menu_settings, 0, new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                gameMenu();
-            }
-        });
         playPauseButton = new ToolboxButton( this, Entities.menu_pause, 0, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -163,6 +157,12 @@ public class Toolbox {
                         activate();
                     }
                 }
+            }
+        });
+        menuButton = new ToolboxButton( this, Entities.menu_settings, 0, new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameMenu();
             }
         });
         chocolateButton = new ToolboxButton( this, Entities.pills_power_pill_chocolate, 2, new ClickListener() {
@@ -244,7 +244,7 @@ public class Toolbox {
     }
 
     public void resize() {
-        int res = playwindow.resolution;
+        int res = play.getSymbolResolution();
         // adjust size
         rootTable.setWidth(res + 4); // 4 for border
         rootTable.setHeight(playwindow.getHeightInPixels());
@@ -555,7 +555,7 @@ allows cheating */
     private void gameMenu() {
         removeDialog(); // make sure any other one is gone
         Table d = new Table();
-        int res = playwindow.resolution;
+        int res = play.getSymbolResolution();
         d.setBackground(new NinePatchDrawable(skin.getPatch(("default-rect"))));
         d.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
         d.setSize(Gdx.graphics.getWidth()-res,Gdx.graphics.getHeight()-res);
@@ -575,39 +575,36 @@ allows cheating */
         final Group soundButton = new Group();
         final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res,0);
         //soundButton.addActor(new Image(emptyButtonGfx));
-        soundButton.addActor(new Image(Entities.menu_button_sound_on.getTexture(res,0)));
+        soundButton.addActor(new Image(audio.getSound()?
+                Entities.menu_button_sound_on.getTexture(play.getSymbolResolution(),0)
+                :Entities.menu_button_sound_off.getTexture(play.getSymbolResolution(),0)));
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 audio.toggleSound();
                 soundButton.clearChildren();
-                if(audio.getSound()) {
-                    soundButton.addActor(new Image(emptyButtonGfx));
-                    soundButton.addActor(new Image(Entities.menu_button_sound_on.getTexture(playwindow.resolution,0)));
-                } else {
-                    soundButton.addActor(new Image(emptyButtonGfx));
-                    soundButton.addActor(new Image(Entities.menu_button_sound_off.getTexture(playwindow.resolution,0)));
-                }
+                soundButton.addActor(new Image(audio.getSound()?
+                        Entities.menu_button_sound_on.getTexture(play.getSymbolResolution(),0)
+                        :Entities.menu_button_sound_off.getTexture(play.getSymbolResolution(),0)));
+                play.savePreferences();
             }
         });
         topMenu.add(soundButton).left().prefSize(res, res);
 
-        //  Andreas (2015-11-23) Added graphic music on/off button to replace text button.
         final Group musicButton = new Group();
         //musicButton.addActor(new Image(emptyButtonGfx));
-        musicButton.addActor(new Image(Entities.menu_button_music_on.getTexture(res,0)));
+        musicButton.addActor(new Image(audio.getMusic()?
+                Entities.menu_button_music_on.getTexture(play.getSymbolResolution(),0)
+                :Entities.menu_button_music_off.getTexture(play.getSymbolResolution(),0)));
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 audio.toggleMusic();
                 musicButton.clearChildren();
-                if(audio.getMusic()) {
-                    musicButton.addActor(new Image(emptyButtonGfx));
-                    musicButton.addActor(new Image(Entities.menu_button_music_on.getTexture(playwindow.resolution,0)));
-                } else {
-                    musicButton.addActor(new Image(emptyButtonGfx));
-                    musicButton.addActor(new Image(Entities.menu_button_music_off.getTexture(playwindow.resolution,0)));
-                }
+                musicButton.addActor(new Image(audio.getMusic()?
+                        Entities.menu_button_music_on.getTexture(play.getSymbolResolution(),0)
+                        :Entities.menu_button_music_off.getTexture(play.getSymbolResolution(),0)));
+                play.savePreferences();
             }
         });
         topMenu.add(musicButton).left().prefSize(res, res);
@@ -626,15 +623,17 @@ allows cheating */
         final Group touchpadButton = new Group();
         //touchpadButton.addActor(new Image(emptyButtonGfx));
         touchpadButton.addActor(new Image(Entities.menu_button_touchpad_off.getTexture(res,0)));
+        touchpadButton.addActor(new Image(play.isTouchpadActive()?
+                Entities.menu_button_touchpad_on.getTexture(play.getSymbolResolution(),0)
+                :Entities.menu_button_touchpad_off.getTexture(play.getSymbolResolution(),0)));
         touchpadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 touchpadButton.clearChildren();
-                if(play.toggleTouchpad()) {
-                    touchpadButton.addActor(new Image(Entities.menu_button_touchpad_on.getTexture(playwindow.resolution,0)));
-                } else {
-                    touchpadButton.addActor(new Image(Entities.menu_button_touchpad_off.getTexture(playwindow.resolution,0)));
-                }
+                touchpadButton.addActor(new Image(play.toggleTouchpad()?
+                        Entities.menu_button_touchpad_on.getTexture(play.getSymbolResolution(),0)
+                        :Entities.menu_button_touchpad_off.getTexture(play.getSymbolResolution(),0)));
+                play.savePreferences();
 
             }
         });
@@ -657,6 +656,7 @@ allows cheating */
             public void clicked(InputEvent event, float x, float y) {
                 removeDialog();
                 play.zoomPlus();
+                play.savePreferences();
                 gameMenu(); // TODO: check if this leaks too much memory
             }
         });
@@ -671,10 +671,35 @@ allows cheating */
             public void clicked(InputEvent event, float x, float y) {
                 removeDialog();
                 play.zoomMinus();
+                play.savePreferences();
                 gameMenu(); // TODO: check if this leaks too much memory
             }
         });
         topMenu.add(minusButton).prefSize(res, res);
+
+        Button symbolPlusButton = new TextButton("Smbl\n+", skin);
+        symbolPlusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                removeDialog();
+                play.increaseSymbolResolution();
+                play.savePreferences();
+                gameMenu(); // TODO: check if this leaks too much memory
+            }
+        });
+        topMenu.add(symbolPlusButton).prefSize(res, res);
+
+        Button symbolMinusButton = new TextButton("Smbl\n-", skin);
+        symbolMinusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                removeDialog();
+                play.decreaseSymbolResolution();
+                play.savePreferences();
+                gameMenu();
+            }
+        });
+        topMenu.add(symbolMinusButton).prefSize(res, res);
 
         Group leaveButton = new Group();
         //leaveButton.addActor(new Image(emptyButtonGfx));
@@ -720,6 +745,7 @@ allows cheating */
         statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), skin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), skin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), skin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), skin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution) , skin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int)(Gdx.graphics.getFramesPerSecond())), skin)).left().row();
         // Remaining pills
@@ -743,7 +769,7 @@ allows cheating */
         story.setWrap(true);
         storyTable.add(story).top().left().width(d.getWidth() / 2);
 
-//        table.setWidth(playwindow.resolution + 4);
+//        table.setWidth(play.getSymbolResolution() + 4);
 //        table.setHeight(playwindow.getHeightInPixels() + 4);
 
         toolboxDialog = d;

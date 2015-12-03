@@ -209,6 +209,8 @@ public class PlayWindow {
         // resize minimap
         //virtual2MiniResolution = resolution >=64 ? 8 : 4;
         // set resolution based on size of level in relation to screen
+        // TODO: only show, when not all fits on the screen
+        // TODO: move out of the way, when mcminos near
         int hint = Math.min(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()) / Math.max(level.getWidth(),level.getHeight());
         if(hint < 16) virtual2MiniResolution = 4;
         else if(hint < 40) virtual2MiniResolution = 8;
