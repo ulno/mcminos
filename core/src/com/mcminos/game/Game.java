@@ -126,7 +126,7 @@ public class Game {
                         if (m.move()) {
                             movers.remove(i);
                             LevelObject lo = m.getLevelObject();
-                            lo.getLevelBlock().remove(lo);
+                            //lo.getLevelBlock().remove(lo); done in next step
                             lo.dispose();
                         }
                         if (level.isFinished()) {

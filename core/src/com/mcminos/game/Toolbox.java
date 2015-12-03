@@ -360,7 +360,6 @@ public class Toolbox {
     }
 
     public void toggleDoor(LevelBlock lb) {
-        // TODO: prevent move to levelblock
         if (lb.hasDoor()) {
             if (!lb.hasRock()) { // if the door is not blocked by rock
                 if (mcminos.hasKey()) {
