@@ -126,7 +126,7 @@ public class Game {
                         if (m.move()) {
                             movers.remove(i);
                             LevelObject lo = m.getLevelObject();
-                            lo.getLevelBlock().remove(lo);
+                            //lo.getLevelBlock().remove(lo); done in next step
                             lo.dispose();
                         }
                         if (level.isFinished()) {
@@ -282,7 +282,7 @@ public class Game {
         // convert the given profile to text
         String profileAsText = json.toJson(jsonState);
 
-        Gdx.app.log("profileAsText", json.prettyPrint(profileAsText));
+        //Gdx.app.log("profileAsText", json.prettyPrint(profileAsText));
         // encode the text
         String profileAsCode = Base64Coder.encodeString(profileAsText);
 
@@ -322,7 +322,9 @@ public class Game {
             animationFrame = timerFrame;
             eventManager = jsonState.getEventManager();
             eventManager.initAfterJsonLoad(this);
-            initAfterLoad(); // TODO: does this make sense?
+            initAfterLoad();
+            if(! jsonState.getMovement() ) // must be later as previous line enables movement
+                stopMovement();
 
 //            } catch( Exception e ) {
 

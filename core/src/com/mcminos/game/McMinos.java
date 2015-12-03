@@ -707,4 +707,8 @@ public class McMinos implements Json.Serializable {
         else // update levelobject
             mover.setLevelObject(levelObject); // TODO: check: might not be necessary
     }
+
+    public int getSpeed() {
+        return mover.getVPixelSpeed();
+    }
 }

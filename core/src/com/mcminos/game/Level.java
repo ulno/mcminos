@@ -875,6 +875,8 @@ Missing:
         McMinos mcminos = game.getMcMinos();
         mcminos.teleportToBlock(mcminos.getLevelBlock());
         mcminos.initMover();
+        game.startMovement();
+        game.getPlayScreen().activateToolbox();
         // game.getMcMinos().initBlock();
     }
 

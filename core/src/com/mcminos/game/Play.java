@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by ulno on 10.09.15.
  */
 public class Play implements Screen, GestureListener, InputProcessor {
+    public final static long doubleClickFrames = Game.timeResolution / 3;
     private OrthographicCamera camera;
     private Game game;
     private PlayWindow playwindow;
@@ -38,8 +39,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private Stage stage;
     private Main main;
     private Level level;
-    private int touchDownX;
-    private int touchDownY;
     private long lastZoomTime = 0;
     private int gameResolutionCounter = 0;
     Graphics background;
@@ -56,9 +55,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private Toolbox toolbox;
     private boolean menusActivated = true;
     private long toolboxRebuildTimePoint = 0;
+    private int destinationX = -1;
+    private int destinationY = -1;
+    private long lastTouchDown = -16 * doubleClickFrames; // too far in history to be noted
+    private boolean panning = false;
 
 
-    private void preInit( final Main main ) {
+    private void preInit(final Main main) {
         this.main = main;
         gameBatch = main.getBatch();
         camera = new OrthographicCamera();
@@ -73,7 +76,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         background = Entities.backgrounds_amoeboid_01;
     }
 
-    public Play( Main main, String levelName) {
+    public Play(Main main, String levelName) {
         preInit(main);
         loadLevel(levelName);
         initAfterLevel();
@@ -81,6 +84,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     /**
      * no levelName-> resume from saved state
+     *
      * @param main
      */
     public Play(final Main main) {
@@ -106,7 +110,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         game.initEventManager();
     }
 
-    public void initAfterLevel( ) {
+    public void initAfterLevel() {
         mcminos = game.getMcMinos(); // only works after level has been loaded/initialized
 
         // prepare stuff for graphics output
@@ -163,12 +167,14 @@ public class Play implements Screen, GestureListener, InputProcessor {
         toolbox.activate(); // make sure it's active and game is paused
     }
 
-    public void toogleTouchpad() {
-        if (touchpad.hasParent())
+    public boolean toggleTouchpad() {
+        if (touchpad.hasParent()) {
             touchpad.remove();
-        else {
+            return false; // it's gone
+        } else {
             touchpadResize();
             stage.addActor(touchpad);
+            return true; // now it's visible
         }
     }
 
@@ -195,6 +201,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void render(float delta) {
+        /// check if single click occurred
+        long gameFrame = game.getAnimationFrame();
+        if (destinationX >= 0 && gameFrame - lastTouchDown > doubleClickFrames) { // there was a single click on a door
+            if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                toolbox.deactivate();
+            }
+            mcminos.setDestination(playwindow, destinationX, destinationY);
+            destinationX = -1;
+        }
         /////// Handle timing events (like moving and events)
         if (!game.updateTime()) { // update and exit, if game finished
             backToMenu();
@@ -229,7 +244,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
         }
 
         if (!toolbox.isActivated()) {
-            playwindow.updateCoordinates(); // fix coordinates and compute scrolling else coordinates come from panning
+            playwindow.updateCoordinates(mcminos.getSpeed()); // fix coordinates and compute scrolling else coordinates come from panning
+        } else if (!panning ) { // if nobody is currently looking
+            playwindow.updateCoordinates(1); //slowly scroll back
         }
 
         gameBatch.begin();
@@ -366,6 +383,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        panning = false; // stop panning
         Matrix4 matrix = new Matrix4();
         matrix.setToOrtho2D(0, 0, width, height);
         backgroundBatch.setProjectionMatrix(matrix);
@@ -493,7 +511,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 break;
             case 'p':
             case 'P':
-                if(!toolbox.dialogActive()) {
+                if (!toolbox.dialogActive()) {
                     if (toolbox.isActivated()) {
                         toolbox.deactivate();
                     } else {
@@ -520,21 +538,37 @@ public class Play implements Screen, GestureListener, InputProcessor {
         resize();
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // TODO: check that there was not a double-click event
-         if (!toolbox.isActivated()) { // just pan in this case or wait for a registered click -> see there
-            // TODO: consider only first button/finger
+    private boolean destinationDown(int screenX, int screenY, int button, boolean detectDoorDoubleClick) {
+        if (!toolbox.isActivated()) { // just pan in this case or wait for a registered click -> see there
             if (button > 0) return false;
+            int x = windowToGameX(screenX);
+            int y = windowToGameY(screenY);
+            if (detectDoorDoubleClick) {
+                LevelBlock lb = level.getLevelBlockFromVPixelRounded(x, y);
+                if (lb.hasDoor() && blockDistance(lb, mcminos.getLevelBlock()) <= 2) { // ok, be careful, somebody clicked on a nearby door
+                    long gameFrame = game.getAnimationFrame();
+                    if (gameFrame - lastTouchDown > doubleClickFrames) { // this is not part of a double click
+                        destinationX = x;
+                        destinationY = y;
+                        lastTouchDown = gameFrame;
+                    }
+                    return false; // we just monitor here - action in beginning of render
+                }
+            }
+            // it's not a near door or doubleclick is not monitored
             if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
                 toolbox.deactivate();
             }
-            int x = windowToGameX(screenX);
-            int y = windowToGameY(screenY);
             mcminos.setDestination(playwindow, x, y);
-            return false; // needs to be evtl. dealt with at drag
+            destinationX = -1;
+            return true; // handled
         }
         return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return destinationDown(screenX, screenY, button, true);
     }
 
     public int windowToGame(int screenCoordinate, int vpixelsize, int projection, int vpixelpos, boolean scroll) {
@@ -571,7 +605,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return touchDown(screenX, screenY, pointer, 0); // Forward to touch
+        //return destinationDown(screenX,screenY,pointer,0);
+        return false;
     }
 
     @Override
@@ -593,11 +628,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
-        return touchDown((int) x, (int) y, pointer, button); // Forward to touch
+        return destinationDown((int) x, (int) y, button, true);
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        if (toolbox.dialogActive()) return false; //here we don't handle these events
         if (button > 0) {
             if (toolbox.isActivated()) {
                 toolbox.deactivate();
@@ -607,24 +643,49 @@ public class Play implements Screen, GestureListener, InputProcessor {
             return true;
         }
         if (count > 1) { // Double click
-            int vx = windowToGameX((int)x);
-            int vy = windowToGameY((int)y);
-            LevelBlock lb = level.getLevelBlockFromVPixelRounded(vx, vy);
-            // TODO: check radius better
-            LevelBlock mcmlb = mcminos.getLevelBlock();
-            int delta = Math.abs(mcmlb.getX()-lb.getX()) + Math.abs(mcmlb.getY()-lb.getY());
-            if( delta <= 2 )
-                toolbox.toggleDoor(lb);
-            return true;
+            // only register, when in own double-click time
+            if (game.getAnimationFrame() - lastTouchDown <= doubleClickFrames) {
+                return tryDoor((int) x, (int) y);
+            }
+            return false;
         }
         // this was a single tap
-        toolbox.deactivate();
-        return touchDown(x, y, 0, button);
+        if (toolbox.isActivated()) {
+            toolbox.deactivate(); // this exits eventually toolbox-mode
+            destinationDown((int) x, (int) y, button, false);
+            return true;
+        }
+        // else will have been registered in touchdown and handled there
+        return false;
+    }
+
+    private boolean tryDoor(int x, int y) {
+        destinationX = -1; // cancel destination
+        int vx = windowToGameX(x);
+        int vy = windowToGameY(y);
+        LevelBlock lb = level.getLevelBlockFromVPixelRounded(vx, vy);
+        if (lb.hasDoor()) {
+            // TODO: does the radius need to be better checked to allow only neighboring doors?
+            int delta = blockDistance(lb, mcminos.getLevelBlock());
+            if (delta <= 2 && delta > 0) {
+                toolbox.toggleDoor(lb);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int blockDistance(LevelBlock lb1, LevelBlock lb2) {
+        int dx = Math.abs(lb2.getX() - lb1.getX());
+        if(level.getScrollX() && dx > 2) dx=level.getWidth()-dx;
+        int dy = Math.abs(lb2.getY() - lb1.getY());
+        if(level.getScrollY() && dy > 2) dy=level.getWidth()-dy;
+        return dx+dy;
     }
 
     @Override
     public boolean longPress(float x, float y) {
-        return false;
+        return tryDoor((int) x, (int) y);
     }
 
     @Override
@@ -645,17 +706,25 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean pan(float screenX, float screenY, float deltaX, float deltaY) {
         if (toolbox.isActivated()) {
+            panning = true;
             int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
-            playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + level.getVPixelsWidth() - dxi) % level.getVPixelsWidth();
-            playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + level.getVPixelsHeight() + dyi) % level.getVPixelsHeight();
+            playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + level.getVPixelsWidth() - dxi);
+            if(level.getScrollX()) playwindow.windowVPixelXPos %= level.getVPixelsWidth();
+            else playwindow.windowVPixelXPos = Math.min(playwindow.windowVPixelXPos, level.getVPixelsWidth() - playwindow.getVisibleWidthInVPixels());
+            playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + level.getVPixelsHeight() + dyi);
+            if(level.getScrollY()) playwindow.windowVPixelYPos %= level.getVPixelsHeight();
+            else playwindow.windowVPixelYPos = Math.min(playwindow.windowVPixelYPos, level.getVPixelsHeight() - playwindow.getVisibleHeightInVPixels());
             return true;
+        } else {
+            return destinationDown((int) screenX, (int) screenY, 0, false);
         }
-        return false;
+        //return false;
     }
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
+        panning = false;
         return false;
     }
 
@@ -683,5 +752,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public Game getGame() {
         return game;
+    }
+
+    public void activateToolbox() {
+        toolbox.activate();
     }
 }
