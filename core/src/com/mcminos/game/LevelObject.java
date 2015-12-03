@@ -38,7 +38,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         else
             json.writeValue("g",-1);
         // TODO: check why it does not save a mover here, when mcminos was controlled by keyboard or resave
-        json.writeValue( "m", mover, null ); // null triggers writing the class type
+        json.writeValue( "m", mover, Mover.class ); // write class name if not plain Mover
         if(levelBlock != null) {
             json.writeValue("hb",true);
             json.writeValue("lbx", levelBlock.getX());
@@ -174,7 +174,8 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
 
         // needs to be updated to check for collisions via associations
         if (from != headingTo) {
-            from.remove(this);
+            if(from != null)
+                from.remove(this);
             /* deals already with rockmes // check if rock and update rockme counters
             if (type == LevelObject.Types.Rock) {
                 // Check, if we are on a rockme
@@ -217,6 +218,9 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
      * also cleans itself from associated levelblock
      */
     public void dispose() {
+        if(mover!=null) {
+            mover.remove(this);
+        }
         if(levelBlock != null ) { // has levelBlock
             levelBlock.remove(this);
             levelBlock = null;

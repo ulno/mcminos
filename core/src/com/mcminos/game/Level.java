@@ -117,7 +117,7 @@ public class Level implements Json.Serializable {
 
     public void dispose() {
         warpHoleBlocks.clear();
-        disposeAllLevelObjects();
+        disposeAllLevelObjects(); // this also removes mcminos from this list
         pillsNumber = 0;
         rockmeNumber = 0;
     }
@@ -847,7 +847,6 @@ Missing:
                     ; 264 = Last level and RSTRT = 8
                     ; 272 = Last level and RSTRT = 16 !!! */
         game.stopMovement();
-        game.getMcMinos().reset();
         game.disposeEventManagerTasks();
         if((restart & 1) > 0) { // complete restart requested
             // done in reset game.getGhosts().dispose(); // remove ghosts
@@ -860,8 +859,9 @@ Missing:
             reload();
             resetGhostsStart(game.getGhosts());
         } else { // "normal" restart
+            game.getMcMinos().reset();
             // restore graphics of mcminos
-            game.getMcMinos().gfxSelect();
+            // in mcminos.reset: game.getMcMinos().gfxSelect();
             if((restart & 16) == 0) {
                 game.getGhosts().dispose(); // remove ghosts
             }
@@ -871,13 +871,12 @@ Missing:
             if ((restart & 4) == 0) { // if not 4, teleport back
                 game.getMcMinos().teleportToBlock(mcminosStart);
             }
+            McMinos mcminos = game.getMcMinos();
+            mcminos.teleportToBlock(mcminos.getLevelBlock());
+            mcminos.initMover();
         }
-        McMinos mcminos = game.getMcMinos();
-        mcminos.teleportToBlock(mcminos.getLevelBlock());
-        mcminos.initMover();
         game.startMovement();
         game.getPlayScreen().activateToolbox();
-        // game.getMcMinos().initBlock();
     }
 
     private void resetGhostsStart(Ghosts ghosts) {

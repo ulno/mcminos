@@ -159,7 +159,8 @@ public class Game {
         // mcminos.dispose(); // will be reused
         ghosts.dispose();
         clearMovers();
-        level.dispose();
+        level.dispose(); // also disposes the mcminos-levelobject
+        level.addToAllLevelObjects(mcminos.getLevelObject());
         mcminos.clearInventory();
         mcminos.reset();
     }
