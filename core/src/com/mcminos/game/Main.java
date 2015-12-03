@@ -1,11 +1,14 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -23,6 +26,7 @@ public class Main extends com.badlogic.gdx.Game {
     public static final String DEFAULT_FONT = "liberation-sans";
     private HashMap<Integer,BitmapFont> fontList = new HashMap<>();
     private int symbolResolution;
+    private ArrayList<String> levelNamesList;
 
     @Override
 	public void create () {
@@ -52,7 +56,27 @@ public class Main extends com.badlogic.gdx.Game {
             }
             symbolResolution = nearest;
         }
+
+        readLevelList();
+
         this.setScreen(new Load(this));
+    }
+
+    private void readLevelList() {
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(Gdx.files.internal("levels/list").read()), 2048);
+        String line;
+        levelNamesList =  new ArrayList<>();
+
+        try {
+            while ((line = br.readLine()) != null) {
+                line = line.trim(); // remove whitespace
+                levelNamesList.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public int getSymbolResolution() {
@@ -113,5 +137,19 @@ public class Main extends com.badlogic.gdx.Game {
 
     public Audio getAudio() {
         return audio;
+    }
+
+    public ArrayList<String> getLevelNames() {
+        return levelNamesList;
+    }
+
+    public String getNextLevel( String currentLevel ) {
+        int index = levelNamesList.indexOf( currentLevel );
+        if(index < 0) return null;
+        if(index == levelNamesList.size()-1) { // Last level
+            // TODO: trigger something special
+            return levelNamesList.get(0); // start over for now
+        }
+        return  levelNamesList.get(index+1);
     }
 }

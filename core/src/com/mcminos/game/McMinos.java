@@ -721,4 +721,12 @@ public class McMinos implements Json.Serializable {
     public int getSpeed() {
         return mover.getVPixelSpeed();
     }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 }

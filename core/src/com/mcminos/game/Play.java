@@ -76,10 +76,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
         background = Entities.backgrounds_amoeboid_01;
     }
 
-    public Play(Main main, String levelName) {
+    public Play(Main main, String levelName, int score, int lives ) {
+        if(levelName==null) {
+            backToMenu();
+            return;
+        }
         preInit(main);
         loadLevel(levelName);
         initAfterLevel();
+        mcminos.setScore( score );
+        mcminos.setLives( lives );
     }
 
     /**
@@ -196,6 +202,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
         touchpad.setPosition(width * 3 / 4, 0);
     }
 
+    public void advanceToNextLevel() {
+        // save what we want to carry over
+        int score = mcminos.getScore();
+        int lives = mcminos.getLives();
+        String nextLevelName = main.getNextLevel(level.getName());
+        this.dispose();
+        main.setScreen(new Play(main,nextLevelName,score,lives));
+    }
+
     public void backToMenu() {
         this.dispose();
         main.setScreen(new MainMenu(main, level.getName()));
@@ -220,7 +235,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
         }
         /////// Handle timing events (like moving and events)
         if (!game.updateTime()) { // update and exit, if game finished
-            backToMenu();
+            if(mcminos.isWinning()) { // This level was actually won
+                advanceToNextLevel();
+            } else { // lost
+                backToMenu();
+            }
             return;
         }
 

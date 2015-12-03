@@ -58,7 +58,7 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 thisScreen.dispose();
-                main.setScreen(new Play(main, (String) sb.getSelected()));
+                main.setScreen(new Play(main, (String) sb.getSelected(), 0, 3));
             }
         });
 
@@ -86,20 +86,9 @@ public class MainMenu implements Screen {
         table.add(scroller).fill().expand(); */
 
         sb = new SelectBox(skin);
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(Gdx.files.internal("levels/list").read()), 2048);
-        String line;
-        ArrayList<String> names = new ArrayList<>();
 
-        try {
-            while ((line = br.readLine()) != null) {
-                line = line.trim(); // remove whitespace
-                names.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        sb.setItems(names.toArray());
+
+        sb.setItems(main.getLevelNames().toArray());
         if( levelPreselect != null && levelPreselect != "" )
             sb.setSelected(levelPreselect);
 
