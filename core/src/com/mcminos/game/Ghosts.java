@@ -1,14 +1,16 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
 
 /**
  * Created by ulno on 05.10.15.
  */
-public class Ghosts implements Json.Serializable {
+public class Ghosts implements KryoSerializable {
     private Game game;
     private McMinos mcminos;
     private Audio audio;
@@ -25,27 +27,27 @@ public class Ghosts implements Json.Serializable {
             Entities.ghosts_zarathustra, Entities.ghosts_jumpingpill };
 
     /**
-     * for json-read
+     * for kryo-read
      */
     public Ghosts() {
 
     }
 
     @Override
-    public void write(Json json) {
-        json.writeValue("gs", ghostSpeed);
-        json.writeValue("ga", ghostsActive);
-        json.writeValue("sc", ghostSpawnCounter);
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output, ghostSpeed);
+        kryo.writeObject(output, ghostsActive);
+        kryo.writeObject(output, ghostSpawnCounter);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        ghostSpeed = json.readValue("gs",int[].class,jsonData);
-        ghostsActive = json.readValue("ga",int[].class,jsonData);
-        ghostSpawnCounter = json.readValue("sc",int[].class,jsonData);
+    public void read(Kryo kryo, Input input) {
+        ghostSpeed = kryo.readObject(input,int[].class);
+        ghostsActive = kryo.readObject(input,int[].class);
+        ghostSpawnCounter = kryo.readObject(input,int[].class);
     }
 
-    public void initAfterJsonLoad(Game game) {
+    public void initAfterKryoLoad(Game game) {
         this.game = game;
         mcminos = game.getMcMinos();
         audio = game.getAudio();

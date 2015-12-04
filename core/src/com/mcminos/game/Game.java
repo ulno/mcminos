@@ -4,10 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Base64Coder;
-import com.badlogic.gdx.utils.Json;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.serializers.DefaultSerializers;
+import com.esotericsoftware.minlog.Log;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.zip.DeflaterInputStream;
+import java.util.zip.DeflaterOutputStream;
 
 /**
  * Created by ulno on 27.08.15.
@@ -51,6 +66,7 @@ public class Game {
         audio = main.getAudio();
         mcminos = new McMinos(this);
         ghosts = new Ghosts(this);
+        initKryo(); // for saving objects
     }
 
     /**
@@ -299,59 +315,90 @@ public class Game {
         playScreen.setSymbolResolution(preferencesHandle.getInteger("sr"));
     }
 
+    /* kryo and crypto init */
+    private static final String ALGORITHM = "Blowfish";
+    private final Key secretKey = new SecretKeySpec("mcminos.ulno.net".getBytes(), ALGORITHM);
+    private Cipher cipher;
+    private Kryo kryo;
+    /**
+     * Init cryptographic variables and Kryofor load and save
+     */
+    void initKryo()  {
+        try {
+            cipher = Cipher.getInstance(ALGORITHM);
+        } catch (Exception e) {
+            Gdx.app.log("exception in initKryo", e.toString());
+        }
+        kryo = new Kryo();
+        DefaultSerializers.KryoSerializableSerializer ser = new DefaultSerializers.KryoSerializableSerializer();
+        kryo.register(Level.class,ser);
+        kryo.register(McMinos.class,ser);
+        kryo.register(Ghosts.class,ser);
+        kryo.register(EventManager.class,ser);
+        kryo.register(LevelObject.class,ser);
+        kryo.register(LevelBlock.class,ser);
+        kryo.register(Mover.class,ser);
+        kryo.register(McMinosMover.class,ser);
+        kryo.register(GhostMover.class,ser);
+        kryo.register(RockMover.class,ser);
+        //Log.DEBUG();
+    }
+
+
     /**
      * Create a persistent snapshot for the current gamestate
      * (hibernate to disk)
      */
-    public void saveSnapshot() {
-        Json json = new Json();
+    public void saveSnapshot()  {
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+//            Output output = new Output(new CipherOutputStream(new DeflaterOutputStream(suspendFileHandle.write(false)), cipher));
+            Output output = new Output(suspendFileHandle.write(false));
 
-        JsonState jsonState = new JsonState(this);
-        // convert the given profile to text
-        String profileAsText = json.toJson(jsonState);
+            kryo.writeObject(output,level);
+            kryo.writeObject(output,ghosts);
+            kryo.writeObject(output,mcminos);
+            kryo.writeObject(output,timerFrame);
+            kryo.writeObject(output,eventManager);
+            kryo.writeObject(output,movement);
 
-        //Gdx.app.log("profileAsText", json.prettyPrint(profileAsText));
-        // encode the text
-        String profileAsCode = Base64Coder.encodeString(profileAsText);
-
-        // write the profile data file
-        suspendFileHandle.writeString(profileAsCode, false);
+            output.close();
+        } catch (Exception e) {
+            Gdx.app.log("exception in saveSnapshot", e.toString());
+        }
     }
 
     public void loadSnapshot() {
-        // create the JSON utility object
-        Json json = new Json();
-
-        // check if the profile data file exists
+        // check if the save-game
         if (suspendFileHandle.exists()) {
+            try {
+                cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            } catch (Exception e) {
+                Gdx.app.log("exception in loadSnapshot", e.toString());
+            }
+//            Input input = new Input(new DeflaterInputStream(new CipherInputStream(suspendFileHandle.read(), cipher)));
+            Input input = new Input(suspendFileHandle.read());
 
-            // load the profile from the data file
-//            try {
-
-            // read the file as text
-            String profileAsCode = suspendFileHandle.readString();
-
-            // decode the contents
-            String profileAsText = Base64Coder.decodeString(profileAsCode);
-
-            // clearMovers(); should be cleared before
+            // clearMovers(); will already be cleared
             disposeEventManagerTasks();
 
             // restore the state
-            JsonState jsonState = json.fromJson(JsonState.class, profileAsText);
-            level = jsonState.getLevel();
-            ghosts = jsonState.getGhosts();
-            McMinos tmpmcminos = jsonState.getMcminos();
-            mcminos.initAfterJsonLoad(this,tmpmcminos);
-            level.initAfterJsonLoad(this); // must be done after initializing mcminos
-            ghosts.initAfterJsonLoad(this);
-            timerFrame = jsonState.getGameFrame();
+            level = kryo.readObject(input,Level.class);
+            ghosts = kryo.readObject(input,Ghosts.class);
+            McMinos tmpmcminos = kryo.readObject(input,McMinos.class);
+            mcminos.initAfterKryoLoad(this,tmpmcminos);
+            level.initAfterKryoLoad(this); // must be done after initializing mcminos
+            ghosts.initAfterKryoLoad(this);
+            timerFrame = kryo.readObject(input,Long.class);
             animationFrame = timerFrame;
-            eventManager = jsonState.getEventManager();
-            eventManager.initAfterJsonLoad(this);
+            eventManager = kryo.readObject(input,EventManager.class);
+            eventManager.initAfterKryoLoad(this);
             initAfterLoad();
-            if(! jsonState.getMovement() ) // must be later as previous line enables movement
+
+            if(! kryo.readObject(input,Boolean.class) ) // must be later as previous line enables movement
                 stopMovement();
+
+            input.close();
 
 //            } catch( Exception e ) {
 

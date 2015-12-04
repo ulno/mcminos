@@ -1,7 +1,10 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +12,7 @@ import java.util.Collections;
 /**
  * Created by ulno on 25.09.15.
  */
-public class EventManager implements Json.Serializable {
+public class EventManager implements KryoSerializable {
     long lastFrame = -1;
     long nowFrame = 0;
     ArrayList<Task> tasks = new ArrayList<>();
@@ -21,17 +24,17 @@ public class EventManager implements Json.Serializable {
 
 
     @Override
-    public void write(Json json) {
-        json.writeValue("l",lastFrame);
-        json.writeValue("n",nowFrame);
-        json.writeValue("t",tasks);
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output,lastFrame);
+        kryo.writeObject(output,nowFrame);
+        kryo.writeObject(output,tasks);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        lastFrame = json.readValue("l",Long.class,jsonData);
-        nowFrame = json.readValue("n",Long.class,jsonData);
-        tasks = json.readValue("t",ArrayList.class,jsonData);
+    public void read(Kryo kryo, Input input) {
+        lastFrame = kryo.readObject(input,Long.class);
+        nowFrame = kryo.readObject(input,Long.class);
+        tasks = kryo.readObject(input,ArrayList.class);
     }
 
     public void init(Game game) {
@@ -42,12 +45,12 @@ public class EventManager implements Json.Serializable {
         ghosts = game.getGhosts();
     }
 
-    public void initAfterJsonLoad(Game game) {
+    public void initAfterKryoLoad(Game game) {
         init(game);
         for(int i=tasks.size()-1; i>=0; i-- ) {
             Task t = tasks.get(i);
             if(t.animation != null) {
-                t.animation.initAfterJsonLoad(game);
+                t.animation.initAfterKryoLoad(game);
                 level.addToAllLevelObjects(t.animation);
             }
         }
@@ -56,11 +59,12 @@ public class EventManager implements Json.Serializable {
     public static enum Types {FuseDynamite, FuseBomb, ExplosionLight, ExplosionHeavy, Death, Win, Fall}
 
     /**
-     * for json-read
+     * for kryo-read
      */
     EventManager() {
 
     }
+
 
     /**
      * @param game
@@ -165,7 +169,7 @@ public class EventManager implements Json.Serializable {
         LevelObject animation;
 
         /**
-         * for json-read
+         * for kryo-read
          */
         Task () {
 

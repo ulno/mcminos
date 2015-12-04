@@ -1,8 +1,12 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.Registration;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 /**
  * Created by ulno on 17.08.15.
@@ -10,7 +14,7 @@ import com.badlogic.gdx.utils.JsonValue;
  * Actual objects of a Level. Walls, Main, Doors, Ghosts and pills are
  * created here. the corresponding graphics are in Graphics
  */
-public class LevelObject implements  Comparable<LevelObject>, Json.Serializable  {
+public class LevelObject implements  Comparable<LevelObject>, KryoSerializable {
 
     public final static int maxzIndex=10000;
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
@@ -28,51 +32,71 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
     private int initOneWayType = -1;
 
     @Override
-    public void write(Json json) {
-        json.writeValue("x",x);
-        json.writeValue("y",y);
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output,x);
+        kryo.writeObject(output,y);
         if(gfx != null)
-            json.writeValue("g",gfx.getAllGraphicsIndex());
+            kryo.writeObject(output,gfx.getAllGraphicsIndex());
         else
-            json.writeValue("g",-1);
-        // TODO: check why it does not save a mover here, when mcminos was controlled by keyboard or resave
-        json.writeValue( "m", mover, Mover.class ); // write class name if not plain Mover
-        json.writeValue("lb", levelBlock);
-        json.writeValue("z", zIndex);
-        json.writeValue("hl", holeLevel);
-        json.writeValue("ad", animDelta);
-        json.writeValue("t", type);
-        json.writeValue("dt", doorType);
-        json.writeValue("ot", levelBlock.getOneWayType());
+            kryo.writeObject(output,-1);
+        // TODO: check why it does sometimes not save a mover here (when mcminos was controlled by keyboard or resave?)
+        if(mover != null) {
+            kryo.writeClass(output, mover.getClass());
+            kryo.writeObject(output, mover);
+        } else {
+            kryo.writeClass(output, null);
+        }
+        kryo.writeObject(output, levelBlock);
+        kryo.writeObject(output, zIndex);
+        kryo.writeObject(output, holeLevel);
+        kryo.writeObject(output, animDelta);
+        kryo.writeObject(output, type);
+        kryo.writeObject(output, doorType);
+        kryo.writeObject(output, levelBlock.getOneWayType());
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        x = json.readValue("x",Integer.class,jsonData);
-        y = json.readValue("y",Integer.class,jsonData);
-        gfx = Graphics.getByIndex( json.readValue("g",Integer.class,jsonData));
-        mover = json.readValue("m",Mover.class,jsonData);
-        levelBlock = json.readValue("lb", LevelBlock.class, jsonData);
-        zIndex = json.readValue("z", Integer.class, jsonData);
-        holeLevel = json.readValue("hl", Integer.class, jsonData);
-        animDelta = json.readValue("ad", Integer.class, jsonData);
-        type = json.readValue("t", Types.class, jsonData);
-        doorType = json.readValue("dt", DoorTypes.class, jsonData);
-        initOneWayType = json.readValue("ot", Integer.class, jsonData);
+    public void read(Kryo kryo, Input input) {
+        x = kryo.readObject(input,Integer.class);
+        y = kryo.readObject(input,Integer.class);
+        gfx = Graphics.getByIndex( kryo.readObject(input,Integer.class));
+        Registration c = kryo.readClass(input);
+        if( c == null) {
+            mover = null;
+        } else if (c.getType() == RockMover.class) {
+            mover = kryo.readObject(input, RockMover.class);
+        } else if (c.getType() == GhostMover.class) {
+            mover = kryo.readObject(input, GhostMover.class);
+        } else if (c.getType() == McMinosMover.class) {
+            mover = kryo.readObject(input, McMinosMover.class);
+        } else { // should not happen
+            Gdx.app.log("LevelObject kryo read","Got wrong mover reading file.");
+            mover = kryo.readObject(input, Mover.class);
+        }
+        levelBlock = kryo.readObjectOrNull(input, LevelBlock.class);
+        zIndex = kryo.readObject(input, Integer.class);
+        holeLevel = kryo.readObject(input, Integer.class);
+        animDelta = kryo.readObject(input, Integer.class);
+        type = kryo.readObject(input, Types.class);
+        doorType = kryo.readObject(input, DoorTypes.class);
+        initOneWayType = kryo.readObject(input, Integer.class);
     }
 
     /**
      * make sure levelblock is initialized by coordinates
      * @param game
      */
-    public void initAfterJsonLoad( Game game ) {
+    public void initAfterKryoLoad( Game game ) {
         Level level = game.getLevel();
         this.level = level;
         if(levelBlock != null) {
-            setLevelBlock( level.get(levelBlock.getX(), levelBlock.getY()) );
+            int lbx = levelBlock.getX();
+            int lby = levelBlock.getY();
+            levelBlock = null; // so far not correctly initialized, therefore set this to 0
+            setLevelBlock( level.get(lbx,lby) ); // TODO: check if this is important for other levelblocks
         }
         if(mover != null)
-            mover.initAfterJsonLoad(game,this);
+            mover.initAfterKryoLoad(game,this);
     }
 
     public int getInitOneWayType() {
@@ -99,7 +123,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
     }
 
     /**
-     * This is called when re-constructed from json-save
+     * This is called when re-constructed from kryo-save
      */
     LevelObject() {
 

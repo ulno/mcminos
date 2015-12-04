@@ -1,7 +1,9 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
 
@@ -20,7 +22,7 @@ public class GhostMover extends Mover {
     int[] dirList = {0, 0, 0, 0};
 
     /**
-     * needed for json-read
+     * needed for kryo-read
      */
     public GhostMover() {
         super();
@@ -37,20 +39,20 @@ public class GhostMover extends Mover {
     }
 
     @Override
-    public void write(Json json) {
-        super.write(json);
-        json.writeValue("rb",rememberedBlock);
+    public void write(Kryo kryo, Output output) {
+        super.write(kryo, output);
+        kryo.writeObjectOrNull(output, rememberedBlock, LevelBlock.class);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        super.read(json, jsonData);
-        rememberedBlock = json.readValue("rb",LevelBlock.class,jsonData);
+    public void read(Kryo kryo, Input input) {
+        super.read(kryo, input);
+        rememberedBlock = kryo.readObjectOrNull(input, LevelBlock.class);
     }
 
     @Override
-    public void initAfterJsonLoad(Game game, LevelObject lo) {
-        super.initAfterJsonLoad(game, lo);
+    public void initAfterKryoLoad(Game game, LevelObject lo) {
+        super.initAfterKryoLoad(game, lo);
         this.game = game;
         audio = game.getAudio();
         ghosts = game.getGhosts();

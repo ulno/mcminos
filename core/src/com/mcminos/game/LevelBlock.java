@@ -1,7 +1,9 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
 
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  * These are the actual blocks the field consists off.
  *
  */
-public class LevelBlock implements Json.Serializable {
+public class LevelBlock implements KryoSerializable {
 //    private final Game game;
 //    private final Audio audio;
 //    private final McMinos mcminos;
@@ -28,21 +30,21 @@ public class LevelBlock implements Json.Serializable {
     private int oneWayType = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
 
     /**
-     * for json-read
+     * for kryo-read
      */
     public LevelBlock() {
     }
 
     @Override
-    public void write(Json json) {
-        json.writeValue("x",x);
-        json.writeValue("y",y);
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output,x);
+        kryo.writeObject(output,y);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        x = json.readValue("x",Integer.class,jsonData);
-        y = json.readValue("y",Integer.class,jsonData);
+    public void read(Kryo kryo, Input input) {
+        x = kryo.readObject(input,Integer.class);
+        y = kryo.readObject(input,Integer.class);
     }
     /**
      *

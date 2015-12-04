@@ -2,8 +2,8 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -334,18 +334,18 @@ public class McMinosMover extends Mover {
     }
 
     @Override
-    public void write(Json json) {
-        super.write(json);
+    public void write(Kryo kryo, Output output) {
+        super.write(kryo, output);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        super.read(json, jsonData);
+    public void read(Kryo kryo, com.esotericsoftware.kryo.io.Input input) {
+        super.read(kryo, input);
     }
 
     @Override
-    public void initAfterJsonLoad(Game game,LevelObject lo) {
-        super.initAfterJsonLoad(game,lo);
+    public void initAfterKryoLoad(Game game,LevelObject lo) {
+        super.initAfterKryoLoad(game,lo);
         this.game = game;
         initFromGame();
     }

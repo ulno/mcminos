@@ -1,13 +1,15 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 /**
  * Created by ulno on 28.08.15.
  */
-public abstract class Mover implements Json.Serializable {
+public abstract class Mover implements KryoSerializable {
     private Graphics gfxRight = null;
     private Graphics gfxUp = null;
     private Graphics gfxStill = null;
@@ -120,7 +122,7 @@ public abstract class Mover implements Json.Serializable {
         init(lo, speed, canMoveRocks, transWall);
     }
 
-    // empty for create by json (values are written in read andinitialized by InitAfterJSonLoad
+    // empty for create by kryo (values are written in read andinitialized by InitAfterKryoLoad
     public Mover() {
 
     }
@@ -216,41 +218,41 @@ public abstract class Mover implements Json.Serializable {
     }
 
     @Override
-    public void write(Json json) {
-        json.writeValue("u",gfxUp==null?-1:gfxUp.getAllGraphicsIndex());
-        json.writeValue("r",gfxRight==null?-1:gfxRight.getAllGraphicsIndex());
-        json.writeValue("d",gfxDown==null?-1:gfxDown.getAllGraphicsIndex());
-        json.writeValue("l",gfxLeft==null?-1:gfxLeft.getAllGraphicsIndex());
-        json.writeValue("s",gfxStill==null?-1:gfxStill.getAllGraphicsIndex());
-        json.writeValue("cb",currentLevelBlock);
-        json.writeValue("lb",lastBlock);
-        json.writeValue("ht",headingTo);
-        json.writeValue("sf",speedFactor);
-        json.writeValue("a",accelerated);
-        json.writeValue("cd",currentDirection);
-        json.writeValue("mr",canMoveRocks);
-        json.writeValue("tw",transWall);
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output,gfxUp==null?-1:gfxUp.getAllGraphicsIndex());
+        kryo.writeObject(output,gfxRight==null?-1:gfxRight.getAllGraphicsIndex());
+        kryo.writeObject(output,gfxDown==null?-1:gfxDown.getAllGraphicsIndex());
+        kryo.writeObject(output,gfxLeft==null?-1:gfxLeft.getAllGraphicsIndex());
+        kryo.writeObject(output,gfxStill==null?-1:gfxStill.getAllGraphicsIndex());
+        kryo.writeObjectOrNull(output,currentLevelBlock,LevelBlock.class);
+        kryo.writeObjectOrNull(output,lastBlock,LevelBlock.class);
+        kryo.writeObjectOrNull(output,headingTo,LevelBlock.class);
+        kryo.writeObject(output,speedFactor);
+        kryo.writeObject(output,accelerated);
+        kryo.writeObject(output,currentDirection);
+        kryo.writeObject(output,canMoveRocks);
+        kryo.writeObject(output,transWall);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        gfxUp = Graphics.getByIndex(json.readValue("u",Integer.class,jsonData));
-        gfxRight = Graphics.getByIndex(json.readValue("r",Integer.class,jsonData));
-        gfxDown = Graphics.getByIndex(json.readValue("d",Integer.class,jsonData));
-        gfxLeft = Graphics.getByIndex(json.readValue("l",Integer.class,jsonData));
-        gfxStill = Graphics.getByIndex(json.readValue("s",Integer.class,jsonData));
-        currentLevelBlock = json.readValue("cb",LevelBlock.class,jsonData);
-        lastBlock = json.readValue("lb",LevelBlock.class,jsonData);
-        headingTo = json.readValue("ht",LevelBlock.class,jsonData);
-        speedFactor =  json.readValue("sf",Integer.class,jsonData);
-        accelerated =  json.readValue("a",Boolean.class,jsonData);
-        currentDirection = json.readValue("cd",Integer.class,jsonData);
-        canMoveRocks = json.readValue("mr",Boolean.class,jsonData);
-        transWall = json.readValue("tw",Integer.class,jsonData);
+    public void read(Kryo kryo, Input input) {
+        gfxUp = Graphics.getByIndex(kryo.readObject(input,Integer.class));
+        gfxRight = Graphics.getByIndex(kryo.readObject(input,Integer.class));
+        gfxDown = Graphics.getByIndex(kryo.readObject(input,Integer.class));
+        gfxLeft = Graphics.getByIndex(kryo.readObject(input,Integer.class));
+        gfxStill = Graphics.getByIndex(kryo.readObject(input,Integer.class));
+        currentLevelBlock = kryo.readObjectOrNull(input,LevelBlock.class);
+        lastBlock = kryo.readObjectOrNull(input,LevelBlock.class);
+        headingTo = kryo.readObjectOrNull(input,LevelBlock.class);
+        speedFactor =  kryo.readObject(input,Integer.class);
+        accelerated =  kryo.readObject(input,Boolean.class);
+        currentDirection = kryo.readObject(input,Integer.class);
+        canMoveRocks = kryo.readObject(input,Boolean.class);
+        transWall = kryo.readObject(input,Integer.class);
         computeSpeeds();
     }
 
-    public void initAfterJsonLoad( Game game, LevelObject lo ) {
+    public void initAfterKryoLoad( Game game, LevelObject lo ) {
         Level level = game.getLevel();
         levelObject = lo;
         if(currentLevelBlock != null)
