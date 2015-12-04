@@ -469,12 +469,14 @@ public class McMinos implements Json.Serializable {
     /**
      * Called after the killed animation
      */
-    public void executeDeath() {
-        // create gravestone
-        new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+    public void executeDeath(boolean completeRestart) {
+        if(!completeRestart) {
+            // create gravestone
+            new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+        }
         decreaseLives();
         if(getLives() > 0) {
-            level.killRestart();
+            level.killRestart(completeRestart);
             killed = false;
             resume();
             // will be enabled at beginning of game: game.startMovement();
@@ -500,11 +502,15 @@ public class McMinos implements Json.Serializable {
     }
 
     public void executeFall() {
+        /*
+        user requested that it is better to die here
         //decreaseLives();
         teleportToBlock(startBlock);
         falling = false;
         gfxSelect();
-        resume();
+        resume(); */
+        killed = true;
+        executeDeath(true);
     }
 
     public void poison() {

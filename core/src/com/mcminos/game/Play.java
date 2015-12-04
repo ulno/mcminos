@@ -59,6 +59,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private int destinationY = -1;
     private long lastTouchDown = -16 * doubleClickFrames; // too far in history to be noted
     private boolean panning = false;
+    private boolean fullscreen = false;
 
 
     private void preInit(final Main main) {
@@ -546,8 +547,25 @@ public class Play implements Screen, GestureListener, InputProcessor {
                     }
                 }
                 break;
+            case 'F': // only capital:
+                toggleFullscreen();
+                break;
         }
         return false;
+    }
+
+    private void toggleFullscreen() {
+        if(!fullscreen) {
+            fullscreen = true;
+            //Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+//            Gdx.graphics.setDisplayMode(1920, 1080, true);
+            Gdx.graphics.setDisplayMode(1280, 720, true);
+            Gdx.graphics.setVSync(true);
+        } else {
+            fullscreen = false;
+            Gdx.graphics.setDisplayMode(1280, 900, false);
+        }
+        resize();
     }
 
     public void zoomPlus() {

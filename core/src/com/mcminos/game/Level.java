@@ -823,7 +823,7 @@ Missing:
         return game;
     }
 
-    public void killRestart() {
+    public void killRestart(boolean completeRestart) {
         // reset all things necessary in case of a death
         /* restart:      0       ; (0,1,2,4,8,16 256, 257, 258, 260,
                     ; 264, 272)
@@ -848,7 +848,7 @@ Missing:
                     ; 272 = Last level and RSTRT = 16 !!! */
         game.stopMovement();
         game.disposeEventManagerTasks();
-        if((restart & 1) > 0) { // complete restart requested
+        if(completeRestart || (restart & 1) > 0) { // complete restart requested
             // done in reset game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
             //game.getMcMinos().dispose();
