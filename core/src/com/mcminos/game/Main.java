@@ -121,6 +121,7 @@ public class Main extends com.badlogic.gdx.Game {
         for(BitmapFont f: fontList.values()) {
             f.dispose();
         }
+        Gdx.app.exit();
     }
 
     public SpriteBatch getBatch() {

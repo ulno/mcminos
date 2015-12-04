@@ -70,6 +70,17 @@ public class MainMenu implements Screen {
             }
         });
 
+        TextButton endButton = new TextButton("End",skin);
+        endButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+/*
+                thisScreen.dispose();
+                main.dispose();*/
+            }
+        });
+
         /*Label text1 = new Label( "Level 1", skin );
         Label text2 = new Label( "Level 2", skin );
         Label text3 = new Label( "Level 3", skin );
@@ -99,10 +110,14 @@ public class MainMenu implements Screen {
                 .minSize(128, 48)
                 .row();
         table.add(resumeButton)
+                .minSize(128, 48)
+                .row();
+        table.add(endButton)
                 .minSize(128, 48);
 
         stage.addActor(bgimage);
         stage.addActor(table);
+
 
         stage.addListener(new InputListener() {
             @Override
@@ -137,7 +152,7 @@ public class MainMenu implements Screen {
     public void resize(int width, int height) {
         Util.scaleBackground(bgimage);
         table.setBounds(0,0,width,height);
-        stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, true);;
     }
 
     @Override
