@@ -1,7 +1,6 @@
 package com.mcminos.game;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Created by ulno on 17.08.15.
@@ -363,7 +362,8 @@ public class LevelBlock {
     }
 
     public void makeMcMinos(McMinos mcminos) {
-        mcminos.initLevelBlock(level,x,y); // creates levelobject and relation to levelblock
+        mcminos.initLevelBlockAndObject(level,x,y); // creates levelobject and relation to levelblock
+        mcminos.initDestination();
         movables.add(mcminos.getLevelObject());
     }
 

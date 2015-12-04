@@ -1,5 +1,6 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
@@ -237,7 +238,7 @@ public abstract class Mover implements Json.Serializable {
         json.writeValue("sf",speedFactor);
         json.writeValue("a",accelerated);
         json.writeValue("cd",currentDirection);
-        json.writeValue("r",canMoveRocks);
+        json.writeValue("mr",canMoveRocks);
         json.writeValue("tw",transWall);
     }
 
@@ -256,9 +257,9 @@ public abstract class Mover implements Json.Serializable {
         headingToInitY = json.readValue("hty",Integer.class,jsonData);
         speedFactor =  json.readValue("sf",Integer.class,jsonData);
         accelerated =  json.readValue("a",Boolean.class,jsonData);
-        currentDirection =  json.readValue("cd",Integer.class,jsonData);
-        canMoveRocks =  json.readValue("r",Boolean.class,jsonData);
-        transWall =  json.readValue("tw",Integer.class,jsonData);
+        currentDirection = json.readValue("cd",Integer.class,jsonData);
+        canMoveRocks = json.readValue("mr",Boolean.class,jsonData);
+        transWall = json.readValue("tw",Integer.class,jsonData);
         computeSpeeds();
     }
 
@@ -281,6 +282,14 @@ public abstract class Mover implements Json.Serializable {
             case Rock:
                 game.addMover(this);
                 break;
+        }
+    }
+
+    public void remove(LevelObject lo) {
+        if( levelObject == lo ) {
+            levelObject = null;
+        } else {
+            Gdx.app.log("remove in Mover", "trying to remove illigal levelobject");
         }
     }
 }

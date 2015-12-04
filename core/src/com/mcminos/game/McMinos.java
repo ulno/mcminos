@@ -145,14 +145,19 @@ public class McMinos implements Json.Serializable {
      * @param x in block-coordinates
      * @param y in block-coordinates
      */
-    public void initLevelBlock(Level level, int x, int y) {
+    public void initLevelBlockAndObject(Level level, int x, int y) {
         this.level = level;
-        if(levelObject != null)
-            levelObject.dispose();
-        levelObject = new LevelObject(level, x, y, Entities.mcminos_default_front.getzIndex(), LevelObject.Types.McMinos);
-        startBlock = levelObject.getLevelBlock();
-        levelObject.setGfx(Entities.mcminos_default_front);
-        initDestination();
+        if(levelObject == null) {
+            levelObject = new LevelObject(level, x, y, Entities.mcminos_default_front.getzIndex(), LevelObject.Types.McMinos);
+            levelObject.setGfx(Entities.mcminos_default_front);
+            startBlock = levelObject.getLevelBlock();
+        } else {
+            // init existing
+            startBlock = level.get(x,y);
+        }
+        teleportToBlock(startBlock); // also set coordinates
+//        setLevelBlock(startBlock);
+        // initDestination(); shoudl be done elsewhere
     }
 
     public void increaseScore(int increment) {
@@ -431,7 +436,8 @@ public class McMinos implements Json.Serializable {
         //setLevelBlock( block );
         levelObject.moveTo(block.getX() << PlayWindow.virtualBlockResolutionExponent,
                 block.getY() << PlayWindow.virtualBlockResolutionExponent, block);
-        mover.setLevelBlock(block);
+        if(mover != null)
+            mover.setLevelBlock(block);
     }
 
     /**
@@ -463,12 +469,14 @@ public class McMinos implements Json.Serializable {
     /**
      * Called after the killed animation
      */
-    public void executeDeath() {
-        // create gravestone
-        new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+    public void executeDeath(boolean completeRestart) {
+        if(!completeRestart) {
+            // create gravestone
+            new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+        }
         decreaseLives();
         if(getLives() > 0) {
-            level.killRestart();
+            level.killRestart(completeRestart);
             killed = false;
             resume();
             // will be enabled at beginning of game: game.startMovement();
@@ -494,11 +502,15 @@ public class McMinos implements Json.Serializable {
     }
 
     public void executeFall() {
+        /*
+        user requested that it is better to die here
         //decreaseLives();
         teleportToBlock(startBlock);
         falling = false;
         gfxSelect();
-        resume();
+        resume(); */
+        killed = true;
+        executeDeath(true);
     }
 
     public void poison() {
@@ -578,7 +590,8 @@ public class McMinos implements Json.Serializable {
     }
 
     public void hideDestination() {
-        destination.setGfx(null);
+        if(destination != null)
+            destination.setGfx(null);
     }
 
     public void unsetDestination() {
@@ -597,7 +610,7 @@ public class McMinos implements Json.Serializable {
     /**
      * create graphical object for destination
      */
-    private void initDestination() {
+    public void initDestination() {
         if( destination == null ) {
             destination = new LevelObject(level, getLevelBlock().getX(), getLevelBlock().getY(),
                     Entities.destination.getzIndex(), LevelObject.Types.Destination);
@@ -656,19 +669,22 @@ public class McMinos implements Json.Serializable {
     public void reset() {
         //TODO: check to eventually re-create start values
         mirrored = false;
+        killed = false;
+        falling = false;
         poisonDuration = 0;
         drunkLevel = 0;
         powerDuration = 0;
         umbrellaDuration = 0;
         setPowerPillValues(1,1,0);
-        initBlock();
+        initBlockAndObject();
         disposeDestination();
         initDestination();
+        initMover();
         gfxSelect();
     }
 
-    public void initBlock() {
-        initLevelBlock(level,startBlock.getX(),startBlock.getY());
+    public void initBlockAndObject() {
+        initLevelBlockAndObject(level,startBlock.getX(),startBlock.getY());
     }
 
     public boolean updateKeyDirections() {
@@ -710,5 +726,13 @@ public class McMinos implements Json.Serializable {
 
     public int getSpeed() {
         return mover.getVPixelSpeed();
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 }

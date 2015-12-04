@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
@@ -40,6 +41,8 @@ public class Game {
     private long animationFrame = 0; // This one continues running when movement is stopped, and is updated to animationframe when game continues
     private long realGameTime = 0; // this value comes from libgdx, we just sync our frames against it
     private long lastDeltaTimeLeft = 0;
+    public static final Preferences preferencesHandle = Gdx.app.getPreferences( "com.mcminos.game.prefs");
+    public static final FileHandle suspendFileHandle = Gdx.files.local("user-save");
 
     public Game(Main main, Play playScreen) {
         this.main = main;
@@ -113,9 +116,9 @@ public class Game {
             eventManager.update();
             // update durations and trigger events, if necessary
             mcminos.updateDurations();
-            ghosts.checkSpawn();
 
             if (movement) { // only do this when timer is active
+                ghosts.checkSpawn(); // no spawn, if nobody can move
                 // move everybody
                 mcminos.move();
                 for (int i = movers.size() - 1; i >= 0; i--) {
@@ -159,7 +162,8 @@ public class Game {
         // mcminos.dispose(); // will be reused
         ghosts.dispose();
         clearMovers();
-        level.dispose();
+        level.dispose(); // also disposes the mcminos-levelobject
+        level.addToAllLevelObjects(mcminos.getLevelObject());
         mcminos.clearInventory();
         mcminos.reset();
     }
@@ -269,14 +273,38 @@ public class Game {
         startMovement(); // make sure everything can move
     }
 
+    public void savePreferences() {
+        preferencesHandle.putBoolean("s", audio.getSound());
+        preferencesHandle.putBoolean("m", audio.getMusic());
+        preferencesHandle.putBoolean("t", playScreen.isTouchpadActive());
+        preferencesHandle.putInteger("r", playScreen.getGameResolution());
+        preferencesHandle.putInteger("sr", playScreen.getSymbolResolution());
+        preferencesHandle.flush();
+    }
+
+    public void loadPreferences() {
+        if(!preferencesHandle.contains("s")) { // first time, so generate
+            audio.setSound(true);
+            audio.setMusic(true);
+            // touchpad should be off by default
+            // game resolution should also have been guessed
+            // as well as symbol resolution
+            savePreferences(); // create preference file
+        }
+        audio.setSound(preferencesHandle.getBoolean("s"));
+        audio.setMusic(preferencesHandle.getBoolean("m"));
+        boolean tp = preferencesHandle.getBoolean("t");
+        if(tp !=  playScreen.isTouchpadActive()) playScreen.toggleTouchpad();
+        playScreen.setGameResolution(preferencesHandle.getInteger("r"));
+        playScreen.setSymbolResolution(preferencesHandle.getInteger("sr"));
+    }
+
     /**
      * Create a persistent snapshot for the current gamestate
      * (hibernate to disk)
      */
     public void saveSnapshot() {
-        FileHandle settings = Gdx.files.local("settings.json");
         Json json = new Json();
-        FileHandle userSave = Gdx.files.local("user-save.json");
 
         JsonState jsonState = new JsonState(this);
         // convert the given profile to text
@@ -287,22 +315,21 @@ public class Game {
         String profileAsCode = Base64Coder.encodeString(profileAsText);
 
         // write the profile data file
-        userSave.writeString(profileAsCode, false);
+        suspendFileHandle.writeString(profileAsCode, false);
     }
 
     public void loadSnapshot() {
-        FileHandle userSave = Gdx.files.local("user-save.json");
         // create the JSON utility object
         Json json = new Json();
 
         // check if the profile data file exists
-        if (userSave.exists()) {
+        if (suspendFileHandle.exists()) {
 
             // load the profile from the data file
 //            try {
 
             // read the file as text
-            String profileAsCode = userSave.readString();
+            String profileAsCode = suspendFileHandle.readString();
 
             // decode the contents
             String profileAsText = Base64Coder.decodeString(profileAsCode);

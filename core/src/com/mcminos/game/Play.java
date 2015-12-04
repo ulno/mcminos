@@ -76,10 +76,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
         background = Entities.backgrounds_amoeboid_01;
     }
 
-    public Play(Main main, String levelName) {
+    public Play(Main main, String levelName, int score, int lives ) {
+        if(levelName==null) {
+            backToMenu();
+            return;
+        }
         preInit(main);
         loadLevel(levelName);
         initAfterLevel();
+        mcminos.setScore( score );
+        mcminos.setLives( lives );
     }
 
     /**
@@ -117,12 +123,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         playwindow = new PlayWindow(gameBatch, camera, level, mcminos);
 
         //  Basically, based on density and screensize, we want to set out default zoomlevel.
-        float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
-
-        int preferredResolution = Math.max((int) (density * 32),
-                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 16
+        // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
+        // let's do everything based on width and height - we assume width>height
+        int preferredGameResolution = Math.max(16,
+                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 8
         );
-        gameResolutionCounter = playwindow.setClosestResolution(preferredResolution);
+        gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution);
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
         toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage, skin);
@@ -165,6 +171,14 @@ public class Play implements Screen, GestureListener, InputProcessor {
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
 
         toolbox.activate(); // make sure it's active and game is paused
+
+        // read teh preferences from storage
+        game.loadPreferences();
+
+    }
+
+    public boolean isTouchpadActive() {
+        return touchpad !=null && touchpad.hasParent();
     }
 
     public boolean toggleTouchpad() {
@@ -186,6 +200,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
         touchpad.setSize(tpwidth, tpwidth);
         touchpad.setDeadzone(tpwidth / 5);
         touchpad.setPosition(width * 3 / 4, 0);
+    }
+
+    public void advanceToNextLevel() {
+        // save what we want to carry over
+        int score = mcminos.getScore();
+        int lives = mcminos.getLives();
+        String nextLevelName = main.getNextLevel(level.getName());
+        this.dispose();
+        main.setScreen(new Play(main,nextLevelName,score,lives));
     }
 
     public void backToMenu() {
@@ -212,7 +235,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
         }
         /////// Handle timing events (like moving and events)
         if (!game.updateTime()) { // update and exit, if game finished
-            backToMenu();
+            if(mcminos.isWinning()) { // This level was actually won
+                advanceToNextLevel();
+            } else { // lost
+                backToMenu();
+            }
             return;
         }
 
@@ -750,11 +777,40 @@ public class Play implements Screen, GestureListener, InputProcessor {
         return gameResolutionCounter;
     }
 
+    public int getGameResolution() {
+        return playwindow.resolution;
+    }
+
+    public void setGameResolution( int resolution ) {
+        gameResolutionCounter = playwindow.setClosestResolution( resolution );
+    }
+
     public Game getGame() {
         return game;
     }
 
     public void activateToolbox() {
         toolbox.activate();
+    }
+
+    public void savePreferences() {
+        game.savePreferences();
+    }
+
+    public int getSymbolResolution() {
+        return main.getSymbolResolution();
+    }
+
+    public void setSymbolResolution(int symbolResolution) {
+        main.setSymbolResolution(symbolResolution);
+        resize();
+    }
+
+    public void increaseSymbolResolution() {
+        setSymbolResolution(getSymbolResolution()*2);
+    }
+
+    public void decreaseSymbolResolution() {
+        setSymbolResolution(getSymbolResolution()/2);
     }
 }

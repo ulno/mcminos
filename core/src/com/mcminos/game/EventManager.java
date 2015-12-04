@@ -148,7 +148,7 @@ public class EventManager implements Json.Serializable {
             case ExplosionHeavy:
                 break;
             case Death:
-                mcminos.executeDeath();
+                mcminos.executeDeath(false);
                 break;
             case Fall:
                 mcminos.executeFall();

@@ -117,7 +117,7 @@ public class Level implements Json.Serializable {
 
     public void dispose() {
         warpHoleBlocks.clear();
-        disposeAllLevelObjects();
+        disposeAllLevelObjects(); // this also removes mcminos from this list
         pillsNumber = 0;
         rockmeNumber = 0;
     }
@@ -823,7 +823,7 @@ Missing:
         return game;
     }
 
-    public void killRestart() {
+    public void killRestart(boolean completeRestart) {
         // reset all things necessary in case of a death
         /* restart:      0       ; (0,1,2,4,8,16 256, 257, 258, 260,
                     ; 264, 272)
@@ -847,9 +847,8 @@ Missing:
                     ; 264 = Last level and RSTRT = 8
                     ; 272 = Last level and RSTRT = 16 !!! */
         game.stopMovement();
-        game.getMcMinos().reset();
         game.disposeEventManagerTasks();
-        if((restart & 1) > 0) { // complete restart requested
+        if(completeRestart || (restart & 1) > 0) { // complete restart requested
             // done in reset game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
             //game.getMcMinos().dispose();
@@ -860,8 +859,9 @@ Missing:
             reload();
             resetGhostsStart(game.getGhosts());
         } else { // "normal" restart
+            game.getMcMinos().reset();
             // restore graphics of mcminos
-            game.getMcMinos().gfxSelect();
+            // in mcminos.reset: game.getMcMinos().gfxSelect();
             if((restart & 16) == 0) {
                 game.getGhosts().dispose(); // remove ghosts
             }
@@ -871,13 +871,12 @@ Missing:
             if ((restart & 4) == 0) { // if not 4, teleport back
                 game.getMcMinos().teleportToBlock(mcminosStart);
             }
+            McMinos mcminos = game.getMcMinos();
+            mcminos.teleportToBlock(mcminos.getLevelBlock());
+            mcminos.initMover();
         }
-        McMinos mcminos = game.getMcMinos();
-        mcminos.teleportToBlock(mcminos.getLevelBlock());
-        mcminos.initMover();
         game.startMovement();
         game.getPlayScreen().activateToolbox();
-        // game.getMcMinos().initBlock();
     }
 
     private void resetGhostsStart(Ghosts ghosts) {
