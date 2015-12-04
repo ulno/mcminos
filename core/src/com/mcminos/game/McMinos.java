@@ -517,7 +517,7 @@ public class McMinos implements Json.Serializable {
         if (poisonDuration == 0) { // not already poisoned
             poisonDuration = 10 << Game.timeResolutionExponent;
             audio.soundPlay("poison");
-            stop();
+            //stop();
             gfxPoisoned();
         }
     }
@@ -651,7 +651,7 @@ public class McMinos implements Json.Serializable {
         audio.soundPlay("antidot");
         poisonDuration = 0;
         drunkLevel = 0;
-        resume();
+        //resume();
         gfxSelect();
     }
 
