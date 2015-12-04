@@ -126,7 +126,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
         // let's do everything based on width and height - we assume width>height
         int preferredGameResolution = Math.max(16,
-                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 8
+                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 12 // often reported too big
         );
         gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution);
 
