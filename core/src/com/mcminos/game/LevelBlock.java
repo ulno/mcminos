@@ -1,5 +1,8 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +11,7 @@ import java.util.ArrayList;
  * These are the actual blocks the field consists off.
  *
  */
-public class LevelBlock {
+public class LevelBlock implements Json.Serializable {
 //    private final Game game;
 //    private final Audio audio;
 //    private final McMinos mcminos;
@@ -24,6 +27,23 @@ public class LevelBlock {
     private LevelObject oneWay = null;
     private int oneWayType = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
 
+    /**
+     * for json-read
+     */
+    public LevelBlock() {
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("x",x);
+        json.writeValue("y",y);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        x = json.readValue("x",Integer.class,jsonData);
+        y = json.readValue("y",Integer.class,jsonData);
+    }
     /**
      *
      * @param nextBlock
