@@ -16,8 +16,6 @@ public class GhostMover extends Mover {
     private Level level;
     private McMinos mcminos;
     private LevelBlock rememberedBlock;
-    private int initRememberedBlockX = -1;
-    private int initRememberedBlockY = -1;
     private ArrayList<LevelObject> currentItems;
     int[] dirList = {0, 0, 0, 0};
 
@@ -41,15 +39,13 @@ public class GhostMover extends Mover {
     @Override
     public void write(Json json) {
         super.write(json);
-        json.writeValue("rbx",rememberedBlock.getX());
-        json.writeValue("rby",rememberedBlock.getY());
+        json.writeValue("rb",rememberedBlock);
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
         super.read(json, jsonData);
-        initRememberedBlockX = json.readValue("rbx",Integer.class,jsonData);
-        initRememberedBlockY = json.readValue("rby",Integer.class,jsonData);
+        rememberedBlock = json.readValue("rb",LevelBlock.class,jsonData);
     }
 
     @Override
@@ -60,7 +56,7 @@ public class GhostMover extends Mover {
         ghosts = game.getGhosts();
         mcminos = game.getMcMinos();
         level = game.getLevel();
-        rememberedBlock = level.get(initRememberedBlockX,initRememberedBlockY);
+        rememberedBlock = level.get(rememberedBlock.getX(),rememberedBlock.getY());
     }
 
     @Override

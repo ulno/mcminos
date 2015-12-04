@@ -26,13 +26,6 @@ public abstract class Mover implements Json.Serializable {
     protected LevelBlock lastBlock = null;
     protected LevelBlock headingTo;  // Block this object is heading to
     private boolean accelerated = false;
-    private int currentLevelBlockInitX = -1;
-    private int currentLevelBlockInitY = -1;
-    private int lastBlockInitX = -1;
-    private int lastBlockInitY = -1;
-    private int headingToInitX = -1;
-    private int headingToInitY = -1;
-
 
     /**
      *
@@ -229,12 +222,9 @@ public abstract class Mover implements Json.Serializable {
         json.writeValue("d",gfxDown==null?-1:gfxDown.getAllGraphicsIndex());
         json.writeValue("l",gfxLeft==null?-1:gfxLeft.getAllGraphicsIndex());
         json.writeValue("s",gfxStill==null?-1:gfxStill.getAllGraphicsIndex());
-        json.writeValue("cbx",currentLevelBlock.getX());
-        json.writeValue("cby",currentLevelBlock.getY());
-        json.writeValue("lbx",lastBlock.getX());
-        json.writeValue("lby",lastBlock.getY());
-        json.writeValue("htx",headingTo.getX());
-        json.writeValue("hty",headingTo.getY());
+        json.writeValue("cb",currentLevelBlock);
+        json.writeValue("lb",lastBlock);
+        json.writeValue("ht",headingTo);
         json.writeValue("sf",speedFactor);
         json.writeValue("a",accelerated);
         json.writeValue("cd",currentDirection);
@@ -249,12 +239,9 @@ public abstract class Mover implements Json.Serializable {
         gfxDown = Graphics.getByIndex(json.readValue("d",Integer.class,jsonData));
         gfxLeft = Graphics.getByIndex(json.readValue("l",Integer.class,jsonData));
         gfxStill = Graphics.getByIndex(json.readValue("s",Integer.class,jsonData));
-        currentLevelBlockInitX = json.readValue("cbx",Integer.class,jsonData);
-        currentLevelBlockInitY = json.readValue("cby",Integer.class,jsonData);
-        lastBlockInitX = json.readValue("lbx",Integer.class,jsonData);
-        lastBlockInitY = json.readValue("lby",Integer.class,jsonData);
-        headingToInitX = json.readValue("htx",Integer.class,jsonData);
-        headingToInitY = json.readValue("hty",Integer.class,jsonData);
+        currentLevelBlock = json.readValue("cb",LevelBlock.class,jsonData);
+        lastBlock = json.readValue("lb",LevelBlock.class,jsonData);
+        headingTo = json.readValue("ht",LevelBlock.class,jsonData);
         speedFactor =  json.readValue("sf",Integer.class,jsonData);
         accelerated =  json.readValue("a",Boolean.class,jsonData);
         currentDirection = json.readValue("cd",Integer.class,jsonData);
@@ -266,9 +253,12 @@ public abstract class Mover implements Json.Serializable {
     public void initAfterJsonLoad( Game game, LevelObject lo ) {
         Level level = game.getLevel();
         levelObject = lo;
-        currentLevelBlock = level.get(currentLevelBlockInitX,currentLevelBlockInitY);
-        lastBlock = level.get(lastBlockInitX,lastBlockInitY);
-        headingTo = level.get(headingToInitX,headingToInitY);
+        if(currentLevelBlock != null)
+            currentLevelBlock = level.get(currentLevelBlock.getX(),currentLevelBlock.getY());
+        if(lastBlock != null)
+            lastBlock = level.get(lastBlock.getX(),lastBlock.getY());
+        if(headingTo != null)
+            headingTo = level.get(headingTo.getX(), headingTo.getY());
         switch(levelObject.getType()) {
             case Ghost1:
             case Ghost2:

@@ -16,8 +16,6 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
     private int x; // windowVPixelXPos-Position in level blocks * virtualBlockResolution
     private int y; // windowVPixelYPos-Position in level blocks * virtualBlockResolution
     private LevelBlock levelBlock = null; // currently associated LevelBlock
-    private int lbx = -1; // levelblock x
-    private int lby = -1; // levelblock y
     private Graphics gfx; // actual Graphics for the object
     private int zIndex = maxzIndex; // by default it is too high
     private Mover mover = null; // backlink
@@ -39,13 +37,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
             json.writeValue("g",-1);
         // TODO: check why it does not save a mover here, when mcminos was controlled by keyboard or resave
         json.writeValue( "m", mover, Mover.class ); // write class name if not plain Mover
-        if(levelBlock != null) {
-            json.writeValue("hb",true);
-            json.writeValue("lbx", levelBlock.getX());
-            json.writeValue("lby", levelBlock.getY());
-        } else {
-            json.writeValue("hb",false);
-        }
+        json.writeValue("lb", levelBlock);
         json.writeValue("z", zIndex);
         json.writeValue("hl", holeLevel);
         json.writeValue("ad", animDelta);
@@ -60,11 +52,7 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
         y = json.readValue("y",Integer.class,jsonData);
         gfx = Graphics.getByIndex( json.readValue("g",Integer.class,jsonData));
         mover = json.readValue("m",Mover.class,jsonData);
-        boolean hasBlock = json.readValue("hb",Boolean.class,jsonData);
-        if(hasBlock) {
-            lbx = json.readValue("lbx", Integer.class, jsonData);
-            lby = json.readValue("lby", Integer.class, jsonData);
-        }
+        levelBlock = json.readValue("lb", LevelBlock.class, jsonData);
         zIndex = json.readValue("z", Integer.class, jsonData);
         holeLevel = json.readValue("hl", Integer.class, jsonData);
         animDelta = json.readValue("ad", Integer.class, jsonData);
@@ -80,10 +68,8 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
     public void initAfterJsonLoad( Game game ) {
         Level level = game.getLevel();
         this.level = level;
-        if(lbx >= 0 && lby >= 0) {
-            setLevelBlock( level.get(lbx, lby) );
-        } else {
-            levelBlock = null;
+        if(levelBlock != null) {
+            setLevelBlock( level.get(levelBlock.getX(), levelBlock.getY()) );
         }
         if(mover != null)
             mover.initAfterJsonLoad(game,this);
@@ -341,8 +327,6 @@ public class LevelObject implements  Comparable<LevelObject>, Json.Serializable 
             // now we know that it has nothing assigned
             levelBlock = newBlock;
             if(newBlock != null) {
-                lbx = newBlock.getX();
-                lby = newBlock.getY();
                 levelBlock.add(this);
             }
         }
