@@ -1,0 +1,163 @@
+=======
+McMINOS
+=======
+
+:Author: Andreas Neudecker <andreas.mcminos@googlemail.com>,
+
+:Date: 2015-12-04
+
+
+McMinos für Mobilgeräte und Desktop-Computer ist zurzeit noch in der Entwicklung 
+(alpha-Version). Es gibt Fehler im Programm. Es wurden noch nicht alle geplanten 
+Funktionen eingebaut. Es kann sich noch einiges am Programm ändern. Aber Du 
+kannst McMinos schon jetzt spielen - wenigstens zu Testzwecken.
+
+Wenn Du McMinos zum ersten mal spielst, empfehlen wir Dir, die Tutorial-Levels 
+zu spielen. Du findest Sie oben in der Level-Liste im Hauptmenü des Programms.
+Die Tutorial-Levels stellen viele Spielelemente Schritt für Schritt vor. Die 
+meisten sind leicht zu spielen und auch zum Testen gut geeignet.
+
+Es sind zwei Varianten des Programms verfügbar:
+
+
+desktop-1.0.jar
+===============
+
+Das ist die Variante für Desktop-Computer. Sie benötigt ein installiertes 
+Oracle Java 7 oder neuer ( https://www.oracle.com/java/ ).
+
+MICROSOFT WINDOWS
+-----------------
+
+1. Lade desktop-1.0.jar herunter.
+
+2. Wenn Java (7 oder neuer!) bereits installiert ist, sollte ein Doppelklick auf 
+   die herunter geladene Datei desktop-1.0.jar genügen, um das Programm zu 
+   starten. Anderenfalls lade Java von https://www.oracle.com/java/ herunter 
+   und installiere es, wie dort erklärt.
+
+LINUX
+-----
+
+1. Lade desktop-1.0.jar herunter.
+
+2. Falls noch kein Java (7 oder neuer!) installiert ist, lade Oracle Java von 
+   https://www.oracle.com/java/ herunter und installiere es, wie dort erklärt.
+
+3. Starte McMinos mit einem Doppelklick auf die herunter geladene Datei 
+   desktop-1.0.jar. Sollte das nicht funktionieren, öffne eine Shell, wechsle in
+   das Verzeichnise, in dem desktop-1.0.jar gespeichert ist (cd <Verzeichnis>) 
+   und starte McMinos mit "java -jar desktop-1.0.jar". Natürlich kann man dies 
+   auch in ein Skript eintragen und eine passende mcminos.desktop-Datei 
+   erzeugen, um McMinos per Klick einfach zu starten und es in die Menüs 
+   einzufügen.
+
+
+android-release.apk
+===================
+
+Dies ist die Version für Android-Geräte (Handys, Tablets, usw.). Lade die Datei 
+auf Dein Android-Gerät herunter. Öffne einen Dateimanager und tippe auf die 
+Datei. Android bietet dann an, das Programm zu installieren. Akzeptiere das. 
+Warte ein paar Sekunden. Spiele!
+
+
+Hardware-Anforderungen unter Android
+------------------------------------
+
+* Dual-Core CPU, min. 1.2 GHz
+* 1GB RAM
+* ~ VGA-Display (640x600 pixels)
+
+Die meisten ab etwa 2012 gekauften Geräte dürften diese Anforderungen erfüllen.
+
+Das Spiel spielen
+=================
+
+Im Level gibt es folgende Möglichkeiten:
+
+McMinos bewegen
+---------------
+
+* (nur Desktop): Auf der Tastatur die Pfeil-Tasten oder die Tasten 
+  [A], [W], [S], [D]
+
+* Klicke (Touchscreen: tippe) vor McMinos dorthin, wohin er sich bewegen soll.
+
+* Verwende das quadratische "Touchpad"-Feld, das in der Ecke des Bilds ähnlich 
+  wie ein Joystick benutzt werden kann. Schiebe den kleinen Knopf aus der Mitte 
+  nach links, um Dich nach links zu bewegen, nach rechts, um McMinos nach rechts 
+  zu bewegen, u.s.w. 
+
+Werkzeugkasten öffnen/schließen
+-------------------------------
+
+* Tippe/klicke auf den obersten Knopf "Einstellungen" im Werzeugkasten (links 
+  im Bild)
+* Doppelklick/Doppel-Tippen irgend wo im Level
+* (nur Desktop) Drücke die Leertaste
+
+Die Pause-Taste im Werkzeugkasten erlaubt es, sich große Level in Ruhe 
+anzusehen.
+
+In Level hinein und wieder heraus zoomen
+----------------------------------------
+
+* (Desktop) bewege das Mausrad 
+* (Desktop) Drücke auf der Tastatur die Tasten [+] oder [-]
+* Die Zoom-Knöpfe (+) und (-) im Menü des Werkzeugkastens (Einstellungen, s.o.)
+
+Gegenstände aus dem Werkzeugkasten verwenden
+--------------------------------------------
+
+Der Werkzeugkasten präsentiert die Gegenstände, die Du im Level eingesammelt 
+hast. Schokolade, Bomben, Medizin, u.s.w. Um sie zu verwenden, klicke/tippe auf 
+die Gegenstände im Werkzeugkasten. Das funktioniert auch aus dem Pausen-Modus 
+heraus. Dieser wird dann beendet.
+
+Am Desktop-Computer können die Gegenstände auch mit der Tastatur gewählt werden:
+chocolate — 1
+key       — 2
+bomb      — 3
+dynamite  — 4
+landmine  — 5
+umbrella  — 6
+medicine  — 7
+
+Wenn Du um Dich herum mehr als eine Tür hast, wird nach Auswahl des Schlüssels 
+eine Auswahl der Tür angeboten. Alternativ kannst Du auch einfach die benachbarte Tür, die geöffnet oder geschlossen werden soll, doppelklicken/doppelt antippen. Dann brauchst Du vorher nicht erst den Schlüssel zu wählen.
+
+Explosive Gegenstände werden immer gezündet bzw. aktiviert abgelegt, wenn Du 
+sie einsetzt.
+
+Levels
+======
+
+Die Level-Liste ist ziemlich im Fluss. Zurzeit besteht sie aus:
+
+* testing/ - ein paar Test-Levels, die nicht ungedingt zum normalen Spielen 
+  geeignet sind.
+
+* new/ - die zuletzt hinzu gefügten Levels; zurzeit sind das die Original-Levels 
+  der Atari-Version von McMinos (von 1993). Wirklich gut spielbar (wenn auch 
+  z.T. ganz schön schwierig).
+
+* green/ - Ausgewählte Levels, die gut spielbar sind; verschiedene 
+  Schwierigkeitsgrade, noch unsortiert.
+
+* yellow/ - mit Vorbehalt ausgewählte Levels, die evtl. noch bearbeitet werden 
+  oder doch noch rausfliegen.
+
+* blue/ - Ausgewählte Levels, die wir für besonders schwer halten.
+
+
+Disclaimer
+==========
+
+Diese Datei wird ständig bearbeitet. Wenn irgend etwas unklar oder falsch ist, 
+lasst es mich wissen.
+
+
+Viel Spaß beim Spielen und Testen wünscht
+
+Andreas Neudecker
