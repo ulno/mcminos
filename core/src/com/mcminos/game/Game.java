@@ -3,26 +3,20 @@ package com.mcminos.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Base64Coder;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
-import com.esotericsoftware.minlog.Log;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.security.InvalidKeyException;
+import java.io.BufferedOutputStream;
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.zip.DeflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 /**
  * Created by ulno on 27.08.15.
@@ -352,8 +346,8 @@ public class Game {
     public void saveSnapshot()  {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-//            Output output = new Output(new CipherOutputStream(new DeflaterOutputStream(suspendFileHandle.write(false)), cipher));
-            Output output = new Output(suspendFileHandle.write(false));
+//            Output output = new Output(new CipherOutputStream(new BufferedOutputStream(new DeflaterOutputStream(suspendFileHandle.write(false))), cipher));
+            Output output = new Output(new DeflaterOutputStream(suspendFileHandle.write(false)));
 
             kryo.writeObject(output,level);
             kryo.writeObject(output,ghosts);
@@ -373,36 +367,33 @@ public class Game {
         if (suspendFileHandle.exists()) {
             try {
                 cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            } catch (Exception e) {
-                Gdx.app.log("exception in loadSnapshot", e.toString());
-            }
-//            Input input = new Input(new DeflaterInputStream(new CipherInputStream(suspendFileHandle.read(), cipher)));
-            Input input = new Input(suspendFileHandle.read());
+//            Input input = new Input(new InflaterInputStream(new CipherInputStream(new BufferedInputStream(suspendFileHandle.read()), cipher)));
+                Input input = new Input(new InflaterInputStream(suspendFileHandle.read()));
 
-            // clearMovers(); will already be cleared
-            disposeEventManagerTasks();
+                // clearMovers(); will already be cleared
+                disposeEventManagerTasks();
 
-            // restore the state
-            level = kryo.readObject(input,Level.class);
-            ghosts = kryo.readObject(input,Ghosts.class);
-            McMinos tmpmcminos = kryo.readObject(input,McMinos.class);
-            mcminos.initAfterKryoLoad(this,tmpmcminos);
-            level.initAfterKryoLoad(this); // must be done after initializing mcminos
-            ghosts.initAfterKryoLoad(this);
-            timerFrame = kryo.readObject(input,Long.class);
-            animationFrame = timerFrame;
-            eventManager = kryo.readObject(input,EventManager.class);
-            eventManager.initAfterKryoLoad(this);
-            initAfterLoad();
+                // restore the state
+                level = kryo.readObject(input, Level.class);
+                ghosts = kryo.readObject(input, Ghosts.class);
+                McMinos tmpmcminos = kryo.readObject(input, McMinos.class);
+                mcminos.initAfterKryoLoad(this, tmpmcminos);
+                level.initAfterKryoLoad(this); // must be done after initializing mcminos
+                ghosts.initAfterKryoLoad(this);
+                timerFrame = kryo.readObject(input, Long.class);
+                animationFrame = timerFrame;
+                eventManager = kryo.readObject(input, EventManager.class);
+                eventManager.initAfterKryoLoad(this);
+                initAfterLoad();
 
-            if(! kryo.readObject(input,Boolean.class) ) // must be later as previous line enables movement
-                stopMovement();
+                if (!kryo.readObject(input, Boolean.class)) // must be later as previous line enables movement
+                    stopMovement();
 
-            input.close();
+                input.close();
 
 //            } catch( Exception e ) {
 
-            // log the exception
+                // log the exception
 //                Gdx.app.error( "info", "Unable to parse existing profile data file", e );
 
                 /*// recover by creating a fresh new profile data file;
@@ -416,6 +407,9 @@ public class Game {
 /*            // create a new profile data file
             profile = new Profile();
             persist( profile ); */
+            } catch (Exception e) {
+                Gdx.app.log("exception in loadSnapshot", e.toString());
+            }
         }
     }
 
