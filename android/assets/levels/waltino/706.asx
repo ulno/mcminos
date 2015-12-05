@@ -1,0 +1,72 @@
+; LEVEL 706 ---------------------------------------------*
+; FOR McMINOS - Version x.x
+; Created.....: 05.12.2015
+; Done by.....: Walter Norbisrath
+
+; HEADER ------------------------------------------------*
+AUTHOR:   waltino; Walter Norbisrath
+NUMBR:    706
+ACCCD:    
+VERSION:  1100
+
+; LEVELFORMAT -------------------------------------------*
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
+LWID:   29
+LHI:    12
+SCROLLX:  0
+SCROLLY:  0
+BACK:
+
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+; McMINOS -----------------------------------------------*
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------*
+GHOST1:   4
+GHSPEED1: 0
+AGIL1:    10
+GRTIME1:  5
+
+GHOST2:   0
+GHSPEED2: 0
+AGIL2:    0
+GRTIME2:  0
+PILLMAX2: 0
+PILLFREQ2:  0
+
+GHOST3:   0
+GHSPEED3: 0
+AGIL3:    0
+GRTIME3:  0
+TRANSWALL3: 0
+
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
+
+; LEVELDATEN --------------------------------------------*
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z         9                 Z
+ZäZZZZZZZZZZZZZZZZZZZZZZZZZ Z
+Z Z.,     Z     Z    Z    Z Z
+Z ZZZZZ ZCC Z Z Z Z  Z  Z Z Z
+Z Z   Z ZCCZZZZ Z Z  Z  Z Z Z
+Z Z Z Z    Z.,    Z   ,.Z Z Z
+Z Z,Z ZZZZ ZZZZZZ ZZZZZZZ Z Z
+Z Z.Z.,     Z.,     Z.,   Z Z
+Z ZZZZZZZZZZZZZZZZZZZZZZZZZ Z
+ZP 7                      < Z
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*
