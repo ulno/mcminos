@@ -33,7 +33,7 @@ public class Game {
     public static final int timeResolution = 128; // How often per second movements are updated?
     public static final int timeResolutionExponent = Util.log2binary(timeResolution);
     public static final int baseSpeed = 2; // base speed of all units (kind of the slowest anybody usually moves) in blocks per second
-    public static final int timeResolutionSquare = timeResolution*timeResolution; // someimes needed for precision
+    public static final int timeResolutionSquare = timeResolution * timeResolution; // someimes needed for precision
     private Main main;
     private final Play playScreen;
     private final Audio audio;
@@ -50,7 +50,7 @@ public class Game {
     private long animationFrame = 0; // This one continues running when movement is stopped, and is updated to animationframe when game continues
     private long realGameTime = 0; // this value comes from libgdx, we just sync our frames against it
     private long lastDeltaTimeLeft = 0;
-    public static final Preferences preferencesHandle = Gdx.app.getPreferences( "com.mcminos.game.prefs");
+    public static final Preferences preferencesHandle = Gdx.app.getPreferences("com.mcminos.game.prefs");
     public static final FileHandle suspendFileHandle = Gdx.files.local("user-save");
 
     public Game(Main main, Play playScreen) {
@@ -85,7 +85,7 @@ public class Game {
      * Start the moving thread which will manage all movement of objects in the game
      */
     public void initEventManager() {
-        if(eventManager == null) {
+        if (eventManager == null) {
             eventManager = new EventManager();
             eventManager.init(this);
         }
@@ -94,6 +94,7 @@ public class Game {
     /**
      * This is the framecounter which is not updated, when in pause-mode
      * Can stopped with stopTimer and started with startTimer.
+     *
      * @return
      */
     public long getTimerFrame() {
@@ -102,6 +103,7 @@ public class Game {
 
     /**
      * This is the framecounter which is also updated, when in pause-mode
+     *
      * @return
      */
     public long getAnimationFrame() {
@@ -120,7 +122,7 @@ public class Game {
         // do animation timer
         animationFrame++;
 
-        if(timer) {
+        if (timer) {
             // timer
             timerFrame++;
             eventManager.update();
@@ -153,7 +155,7 @@ public class Game {
     }
 
     public void disposeEventManagerTasks() {
-        if(eventManager != null)
+        if (eventManager != null)
             eventManager.disposeAllTasks();
     }
 
@@ -219,11 +221,11 @@ public class Game {
     }
 
     public void schedule(EventManager.Types event, LevelObject loWhere) {
-        eventManager.schedule(this, event, loWhere.getLevelBlock(), loWhere.getVX(), loWhere.getVY() );
+        eventManager.schedule(this, event, loWhere.getLevelBlock(), loWhere.getVX(), loWhere.getVY());
     }
 
     public void schedule(EventManager.Types event, LevelBlock lbWhere) {
-        eventManager.schedule(this, event, lbWhere, lbWhere.getVX(), lbWhere.getVY() );
+        eventManager.schedule(this, event, lbWhere, lbWhere.getVX(), lbWhere.getVY());
     }
 
     public Audio getAudio() {
@@ -293,7 +295,7 @@ public class Game {
     }
 
     public void loadPreferences() {
-        if(!preferencesHandle.contains("s")) { // first time, so generate
+        if (!preferencesHandle.contains("s")) { // first time, so generate
             audio.setSound(true);
             audio.setMusic(true);
             // touchpad should be off by default
@@ -304,7 +306,7 @@ public class Game {
         audio.setSound(preferencesHandle.getBoolean("s"));
         audio.setMusic(preferencesHandle.getBoolean("m"));
         boolean tp = preferencesHandle.getBoolean("t");
-        if(tp !=  playScreen.isTouchpadActive()) playScreen.toggleTouchpad();
+        if (tp != playScreen.isTouchpadActive()) playScreen.toggleTouchpad();
         playScreen.setGameResolution(preferencesHandle.getInteger("r"));
         playScreen.setSymbolResolution(preferencesHandle.getInteger("sr"));
     }
@@ -314,10 +316,11 @@ public class Game {
     private final Key secretKey = new SecretKeySpec("mcminos.ulno.net".getBytes(), ALGORITHM);
     private Cipher cipher;
     private Kryo kryo;
+
     /**
      * Init cryptographic variables and Kryofor load and save
      */
-    void initKryo()  {
+    void initKryo() {
         try {
             cipher = Cipher.getInstance(ALGORITHM);
         } catch (Exception e) {
@@ -325,16 +328,16 @@ public class Game {
         }
         kryo = new Kryo();
         DefaultSerializers.KryoSerializableSerializer ser = new DefaultSerializers.KryoSerializableSerializer();
-        kryo.register(Level.class,ser);
-        kryo.register(McMinos.class,ser);
-        kryo.register(Ghosts.class,ser);
-        kryo.register(EventManager.class,ser);
-        kryo.register(LevelObject.class,ser);
-        kryo.register(LevelBlock.class,ser);
-        kryo.register(Mover.class,ser);
-        kryo.register(McMinosMover.class,ser);
-        kryo.register(GhostMover.class,ser);
-        kryo.register(RockMover.class,ser);
+        kryo.register(Level.class, ser);
+        kryo.register(McMinos.class, ser);
+        kryo.register(Ghosts.class, ser);
+        kryo.register(EventManager.class, ser);
+        kryo.register(LevelObject.class, ser);
+        kryo.register(LevelBlock.class, ser);
+        kryo.register(Mover.class, ser);
+        kryo.register(McMinosMover.class, ser);
+        kryo.register(GhostMover.class, ser);
+        kryo.register(RockMover.class, ser);
         //Log.DEBUG();
     }
 
@@ -343,18 +346,17 @@ public class Game {
      * Create a persistent snapshot for the current gamestate
      * (hibernate to disk)
      */
-    public void saveSnapshot()  {
+    public void saveSnapshot() {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-//            Output output = new Output(new CipherOutputStream(new BufferedOutputStream(new DeflaterOutputStream(suspendFileHandle.write(false))), cipher));
-            Output output = new Output(new DeflaterOutputStream(suspendFileHandle.write(false)));
+            Output output = new Output(new BufferedOutputStream(new DeflaterOutputStream(new CipherOutputStream(suspendFileHandle.write(false), cipher))));
 
-            kryo.writeObject(output,level);
-            kryo.writeObject(output,ghosts);
-            kryo.writeObject(output,mcminos);
-            kryo.writeObject(output,timerFrame);
-            kryo.writeObject(output,eventManager);
-            kryo.writeObject(output,movement);
+            kryo.writeObject(output, level);
+            kryo.writeObject(output, ghosts);
+            kryo.writeObject(output, mcminos);
+            kryo.writeObject(output, timerFrame);
+            kryo.writeObject(output, eventManager);
+            kryo.writeObject(output, movement);
 
             output.close();
         } catch (Exception e) {
@@ -367,8 +369,7 @@ public class Game {
         if (suspendFileHandle.exists()) {
             try {
                 cipher.init(Cipher.DECRYPT_MODE, secretKey);
-//            Input input = new Input(new InflaterInputStream(new CipherInputStream(new BufferedInputStream(suspendFileHandle.read()), cipher)));
-                Input input = new Input(new InflaterInputStream(suspendFileHandle.read()));
+                Input input = new Input(new BufferedInputStream(new InflaterInputStream(new CipherInputStream(suspendFileHandle.read(), cipher))));
 
                 // clearMovers(); will already be cleared
                 disposeEventManagerTasks();
