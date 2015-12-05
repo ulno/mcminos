@@ -1,12 +1,14 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 /**
  * Created by ulno on 05.10.15.
  */
-public class McMinos implements Json.Serializable {
+public class McMinos implements KryoSerializable {
     private Game game;
     private Level level;
     private McMinosMover mover;
@@ -31,68 +33,64 @@ public class McMinos implements Json.Serializable {
     private boolean destinationSet; // was a destination set (and needs to be shown)
     private boolean falling;
     private LevelBlock startBlock = null;
-    private int initStartBlockX = -1;
-    private int initStartBlockY = -1;
     private boolean destinationEnabled = true;
     private boolean mirrored = false;
 
+
     @Override
-    public void write(Json json) {
-        // mover?
-        json.writeValue("pd", powerDuration);
-        json.writeValue("ud", umbrellaDuration);
-        json.writeValue("td", poisonDuration);
-        json.writeValue("dl", drunkLevel);
-        json.writeValue("u", umbrellas);
-        json.writeValue("c", chocolates);
-        json.writeValue("b", bombs);
-        json.writeValue("d", dynamites);
-        json.writeValue("k", keys);
-        json.writeValue("l", landmines);
-        json.writeValue("m", medicines);
-        json.writeValue("lv", lives);
-        json.writeValue("s", score);
-        json.writeValue("k", killed);
-        json.writeValue("w", winning);
-        json.writeValue("f", falling);
-        json.writeValue("m", mirrored);
-        json.writeValue("lo", levelObject);
-        json.writeValue("de", destinationEnabled);
-        json.writeValue("do", destination);
-        json.writeValue("sbx", startBlock.getX());
-        json.writeValue("sby", startBlock.getY());
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output, powerDuration);
+        kryo.writeObject(output, umbrellaDuration);
+        kryo.writeObject(output, poisonDuration);
+        kryo.writeObject(output, drunkLevel);
+        kryo.writeObject(output, umbrellas);
+        kryo.writeObject(output, chocolates);
+        kryo.writeObject(output, bombs);
+        kryo.writeObject(output, dynamites);
+        kryo.writeObject(output, keys);
+        kryo.writeObject(output, landmines);
+        kryo.writeObject(output, medicines);
+        kryo.writeObject(output, lives);
+        kryo.writeObject(output, score);
+        kryo.writeObject(output, killed);
+        kryo.writeObject(output, winning);
+        kryo.writeObject(output, falling);
+        kryo.writeObject(output, mirrored);
+        kryo.writeObject(output, levelObject);
+        kryo.writeObject(output, destinationEnabled);
+        kryo.writeObject(output, destination);
+        kryo.writeObjectOrNull(output, startBlock, LevelBlock.class);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        powerDuration = json.readValue("pd",Integer.class,jsonData);
-        umbrellaDuration = json.readValue("ud",Integer.class,jsonData);
-        poisonDuration = json.readValue("td",Integer.class,jsonData);
-        drunkLevel = json.readValue("dl",Integer.class,jsonData);
-        umbrellas = json.readValue("u",Integer.class,jsonData);
-        chocolates = json.readValue("c",Integer.class,jsonData);
-        bombs = json.readValue("b",Integer.class,jsonData);
-        dynamites = json.readValue("d",Integer.class,jsonData);
-        keys = json.readValue("k",Integer.class,jsonData);
-        landmines = json.readValue("l",Integer.class,jsonData);
-        medicines = json.readValue("m",Integer.class,jsonData);
-        lives = json.readValue("lv",Integer.class,jsonData);
-        score = json.readValue("s",Integer.class,jsonData);
-        killed = json.readValue("k",Boolean.class,jsonData);
-        winning = json.readValue("w",Boolean.class,jsonData);
-        falling = json.readValue("f",Boolean.class,jsonData);
-        mirrored = json.readValue("m",Boolean.class,jsonData);
+    public void read(Kryo kryo, Input input) {
+        powerDuration = kryo.readObject(input,Integer.class);
+        umbrellaDuration = kryo.readObject(input,Integer.class);
+        poisonDuration = kryo.readObject(input,Integer.class);
+        drunkLevel = kryo.readObject(input,Integer.class);
+        umbrellas = kryo.readObject(input,Integer.class);
+        chocolates = kryo.readObject(input,Integer.class);
+        bombs = kryo.readObject(input,Integer.class);
+        dynamites = kryo.readObject(input,Integer.class);
+        keys = kryo.readObject(input,Integer.class);
+        landmines = kryo.readObject(input,Integer.class);
+        medicines = kryo.readObject(input,Integer.class);
+        lives = kryo.readObject(input,Integer.class);
+        score = kryo.readObject(input,Integer.class);
+        killed = kryo.readObject(input,Boolean.class);
+        winning = kryo.readObject(input,Boolean.class);
+        falling = kryo.readObject(input,Boolean.class);
+        mirrored = kryo.readObject(input,Boolean.class);
 
         //tmpLevelObject = new LevelObject(game.getLevel(),0,0,0, LevelObject.Types.McMinos);
-        levelObject = json.readValue("lo",LevelObject.class,jsonData);
+        levelObject = kryo.readObject(input,LevelObject.class);
         //animation.setXY(tmpLevelObject.getVX(),tmpLevelObject.getVY());
-        destinationEnabled = json.readValue("de",Boolean.class,jsonData);
-        destination = json.readValue("do",LevelObject.class,jsonData);
-        initStartBlockX = json.readValue("sbx",Integer.class,jsonData);
-        initStartBlockY = json.readValue("sby",Integer.class,jsonData);
+        destinationEnabled = kryo.readObject(input,Boolean.class);
+        destination = kryo.readObject(input,LevelObject.class);
+        startBlock = kryo.readObject(input,LevelBlock.class);
     }
 
-    public void initAfterJsonLoad(Game game, McMinos tmpmcm ) {
+    public void initAfterKryoLoad(Game game, McMinos tmpmcm ) {
         this.game = game;
         level = game.getLevel();
         powerDuration = tmpmcm.powerDuration;
@@ -113,21 +111,21 @@ public class McMinos implements Json.Serializable {
         falling = tmpmcm.falling;
         mirrored = tmpmcm.mirrored;
         levelObject = level.getFirstLevelObjectFromList(LevelObject.Types.McMinos);
-        destination = level.getFirstLevelObjectFromList(LevelObject.Types.Destination); // TODO: check if necessary as read from json too
-        startBlock = level.get(tmpmcm.initStartBlockX,tmpmcm.initStartBlockY);
+        destination = level.getFirstLevelObjectFromList(LevelObject.Types.Destination); // TODO: check if necessary as read from kryo too
+        startBlock = level.get(tmpmcm.startBlock.getX(),tmpmcm.startBlock.getY());
         initDestination();
         mover = (McMinosMover) levelObject.getMover();
         /*if(animation == null)
             animation = tmpmcm.animation; should not benecessary */
         // already done animation.setXY(tmpmcm.getVX(),tmpmcm.getVY());
-        // as an exisiting animation is used, it should have been initialized in level-load animation.initAfterJsonLoad(game);
+        // as an exisiting animation is used, it should have been initialized in level-load animation.initAfterKryoLoad(game);
         //animation.moveTo(tmpmcm.getVX(),tmpmcm.getVY());
 
     }
 
 
     /**
-     * Just for Json read
+     * Just for Kryo read
      */
     public McMinos() {
 
@@ -469,12 +467,14 @@ public class McMinos implements Json.Serializable {
     /**
      * Called after the killed animation
      */
-    public void executeDeath() {
-        // create gravestone
-        new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+    public void executeDeath(boolean completeRestart) {
+        if(!completeRestart) {
+            // create gravestone
+            new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+        }
         decreaseLives();
         if(getLives() > 0) {
-            level.killRestart();
+            level.killRestart(completeRestart);
             killed = false;
             resume();
             // will be enabled at beginning of game: game.startMovement();
@@ -500,18 +500,22 @@ public class McMinos implements Json.Serializable {
     }
 
     public void executeFall() {
+        /*
+        user requested that it is better to die here
         //decreaseLives();
         teleportToBlock(startBlock);
         falling = false;
         gfxSelect();
-        resume();
+        resume(); */
+        killed = true;
+        executeDeath(true);
     }
 
     public void poison() {
         if (poisonDuration == 0) { // not already poisoned
             poisonDuration = 10 << Game.timeResolutionExponent;
             audio.soundPlay("poison");
-            stop();
+            //stop();
             gfxPoisoned();
         }
     }
@@ -645,7 +649,7 @@ public class McMinos implements Json.Serializable {
         audio.soundPlay("antidot");
         poisonDuration = 0;
         drunkLevel = 0;
-        resume();
+        //resume();
         gfxSelect();
     }
 
@@ -721,4 +725,13 @@ public class McMinos implements Json.Serializable {
     public int getSpeed() {
         return mover.getVPixelSpeed();
     }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
 }

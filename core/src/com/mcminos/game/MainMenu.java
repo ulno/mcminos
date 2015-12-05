@@ -8,17 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 /**
  * Created by ulno on 11.09.15.
@@ -33,6 +29,9 @@ public class MainMenu implements Screen {
     private final SelectBox sb;
     private final SpriteBatch batch;
     private final Main main;
+
+    private boolean fullscreen = Game.preferencesHandle.getBoolean("fs");
+
 
     public MainMenu(final Main main, String levelPreselect) {
         final MainMenu thisScreen = this;
@@ -58,7 +57,7 @@ public class MainMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 thisScreen.dispose();
-                main.setScreen(new Play(main, (String) sb.getSelected()));
+                main.setScreen(new Play(main, (String) sb.getSelected(), 0, 3));
             }
         });
 
@@ -68,6 +67,17 @@ public class MainMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 thisScreen.dispose();
                 main.setScreen(new Play(main));
+            }
+        });
+
+        TextButton endButton = new TextButton("End",skin);
+        endButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+/*
+                thisScreen.dispose();
+                main.dispose();*/
             }
         });
 
@@ -86,20 +96,9 @@ public class MainMenu implements Screen {
         table.add(scroller).fill().expand(); */
 
         sb = new SelectBox(skin);
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(Gdx.files.internal("levels/list").read()), 2048);
-        String line;
-        ArrayList<String> names = new ArrayList<>();
 
-        try {
-            while ((line = br.readLine()) != null) {
-                line = line.trim(); // remove whitespace
-                names.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        sb.setItems(names.toArray());
+
+        sb.setItems(main.getLevelNames().toArray());
         if( levelPreselect != null && levelPreselect != "" )
             sb.setSelected(levelPreselect);
 
@@ -111,10 +110,27 @@ public class MainMenu implements Screen {
                 .minSize(128, 48)
                 .row();
         table.add(resumeButton)
+                .minSize(128, 48)
+                .row();
+        table.add(endButton)
                 .minSize(128, 48);
 
         stage.addActor(bgimage);
         stage.addActor(table);
+
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyTyped(InputEvent event, char character) {
+                switch (character) {
+                    case 'F': // only capital:
+                        toggleFullscreen();
+                        break;
+                }
+                return false;
+            }
+
+        });
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -136,7 +152,7 @@ public class MainMenu implements Screen {
     public void resize(int width, int height) {
         Util.scaleBackground(bgimage);
         table.setBounds(0,0,width,height);
-        stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, true);;
     }
 
     @Override
@@ -158,5 +174,35 @@ public class MainMenu implements Screen {
     public void dispose() {
         stage.dispose();
         bg.dispose();
+    }
+
+    private void toggleFullscreen() {
+        if(!fullscreen) {
+            fullscreen = true;
+            //DesktopLauncher.run(false);
+
+/*            com.badlogic.gdx.Graphics.DisplayMode m = null;
+            for(com.badlogic.gdx.Graphics.DisplayMode mode: Gdx.graphics.getDisplayModes()) {
+                Gdx.app.log("mode",mode.toString());
+                if(m == null) {
+                    m = mode;
+                } else {
+                    if(m.width < mode.width) {
+                        m = mode;
+                    }
+                }
+            }
+            Gdx.graphics.setDisplayMode(m); */
+            //Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+//            Gdx.graphics.setDisplayMode(1920, 1080, true);
+//            Gdx.graphics.setDisplayMode(1280, 720, true);
+//            Gdx.graphics.setVSync(true);
+            //TODO: setting here to fs does not work
+        } else {
+            fullscreen = false;
+            Gdx.graphics.setDisplayMode(1280, 900, false);
+        }
+        Game.preferencesHandle.putBoolean("fs", fullscreen);
+        Game.preferencesHandle.flush();
     }
 }

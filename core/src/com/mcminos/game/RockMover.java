@@ -1,7 +1,8 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 /**
  * Created by ulno on 01.10.15.
@@ -24,25 +25,25 @@ public class RockMover extends Mover {
     }
 
     /**
-     * for json-read
+     * for kryo-read
      */
     public RockMover() {
         super();
     }
 
     @Override
-    public void write(Json json) {
-        super.write(json);
+    public void write(Kryo kryo, Output output) {
+        super.write(kryo, output);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        super.read(json, jsonData);
+    public void read(Kryo kryo, Input input) {
+        super.read(kryo, input);
     }
 
     @Override
-    public void initAfterJsonLoad(Game game, LevelObject lo) {
-        super.initAfterJsonLoad(game, lo);
+    public void initAfterKryoLoad(Game game, LevelObject lo) {
+        super.initAfterKryoLoad(game, lo);
         audio = game.getAudio();
         this.game = game;
         // TODO: add lastBlockChecked

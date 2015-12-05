@@ -1,12 +1,22 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Base64Coder;
-import com.badlogic.gdx.utils.Json;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.serializers.DefaultSerializers;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 /**
  * Created by ulno on 27.08.15.
@@ -23,7 +33,7 @@ public class Game {
     public static final int timeResolution = 128; // How often per second movements are updated?
     public static final int timeResolutionExponent = Util.log2binary(timeResolution);
     public static final int baseSpeed = 2; // base speed of all units (kind of the slowest anybody usually moves) in blocks per second
-    public static final int timeResolutionSquare = timeResolution*timeResolution; // someimes needed for precision
+    public static final int timeResolutionSquare = timeResolution * timeResolution; // someimes needed for precision
     private Main main;
     private final Play playScreen;
     private final Audio audio;
@@ -40,6 +50,8 @@ public class Game {
     private long animationFrame = 0; // This one continues running when movement is stopped, and is updated to animationframe when game continues
     private long realGameTime = 0; // this value comes from libgdx, we just sync our frames against it
     private long lastDeltaTimeLeft = 0;
+    public static final Preferences preferencesHandle = Gdx.app.getPreferences("com.mcminos.game.prefs");
+    public static final FileHandle suspendFileHandle = Gdx.files.local("user-save");
 
     public Game(Main main, Play playScreen) {
         this.main = main;
@@ -48,6 +60,7 @@ public class Game {
         audio = main.getAudio();
         mcminos = new McMinos(this);
         ghosts = new Ghosts(this);
+        initKryo(); // for saving objects
     }
 
     /**
@@ -72,7 +85,7 @@ public class Game {
      * Start the moving thread which will manage all movement of objects in the game
      */
     public void initEventManager() {
-        if(eventManager == null) {
+        if (eventManager == null) {
             eventManager = new EventManager();
             eventManager.init(this);
         }
@@ -81,6 +94,7 @@ public class Game {
     /**
      * This is the framecounter which is not updated, when in pause-mode
      * Can stopped with stopTimer and started with startTimer.
+     *
      * @return
      */
     public long getTimerFrame() {
@@ -89,6 +103,7 @@ public class Game {
 
     /**
      * This is the framecounter which is also updated, when in pause-mode
+     *
      * @return
      */
     public long getAnimationFrame() {
@@ -107,15 +122,15 @@ public class Game {
         // do animation timer
         animationFrame++;
 
-        if(timer) {
+        if (timer) {
             // timer
             timerFrame++;
             eventManager.update();
             // update durations and trigger events, if necessary
             mcminos.updateDurations();
-            ghosts.checkSpawn();
 
             if (movement) { // only do this when timer is active
+                ghosts.checkSpawn(); // no spawn, if nobody can move
                 // move everybody
                 mcminos.move();
                 for (int i = movers.size() - 1; i >= 0; i--) {
@@ -140,7 +155,7 @@ public class Game {
     }
 
     public void disposeEventManagerTasks() {
-        if(eventManager != null)
+        if (eventManager != null)
             eventManager.disposeAllTasks();
     }
 
@@ -206,11 +221,11 @@ public class Game {
     }
 
     public void schedule(EventManager.Types event, LevelObject loWhere) {
-        eventManager.schedule(this, event, loWhere.getLevelBlock(), loWhere.getVX(), loWhere.getVY() );
+        eventManager.schedule(this, event, loWhere.getLevelBlock(), loWhere.getVX(), loWhere.getVY());
     }
 
     public void schedule(EventManager.Types event, LevelBlock lbWhere) {
-        eventManager.schedule(this, event, lbWhere, lbWhere.getVX(), lbWhere.getVY() );
+        eventManager.schedule(this, event, lbWhere, lbWhere.getVX(), lbWhere.getVY());
     }
 
     public Audio getAudio() {
@@ -270,66 +285,116 @@ public class Game {
         startMovement(); // make sure everything can move
     }
 
+    public void savePreferences() {
+        preferencesHandle.putBoolean("s", audio.getSound());
+        preferencesHandle.putBoolean("m", audio.getMusic());
+        preferencesHandle.putBoolean("t", playScreen.isTouchpadActive());
+        preferencesHandle.putInteger("r", playScreen.getGameResolution());
+        preferencesHandle.putInteger("sr", playScreen.getSymbolResolution());
+        preferencesHandle.flush();
+    }
+
+    public void loadPreferences() {
+        if (!preferencesHandle.contains("s")) { // first time, so generate
+            audio.setSound(true);
+            audio.setMusic(true);
+            // touchpad should be off by default
+            // game resolution should also have been guessed
+            // as well as symbol resolution
+            savePreferences(); // create preference file
+        }
+        audio.setSound(preferencesHandle.getBoolean("s"));
+        audio.setMusic(preferencesHandle.getBoolean("m"));
+        boolean tp = preferencesHandle.getBoolean("t");
+        if (tp != playScreen.isTouchpadActive()) playScreen.toggleTouchpad();
+        playScreen.setGameResolution(preferencesHandle.getInteger("r"));
+        playScreen.setSymbolResolution(preferencesHandle.getInteger("sr"));
+    }
+
+    /* kryo and crypto init */
+    private static final String ALGORITHM = "Blowfish";
+    private final Key secretKey = new SecretKeySpec("mcminos.ulno.net".getBytes(), ALGORITHM);
+    private Cipher cipher;
+    private Kryo kryo;
+
+    /**
+     * Init cryptographic variables and Kryofor load and save
+     */
+    void initKryo() {
+        try {
+            cipher = Cipher.getInstance(ALGORITHM);
+        } catch (Exception e) {
+            Gdx.app.log("exception in initKryo", e.toString());
+        }
+        kryo = new Kryo();
+        DefaultSerializers.KryoSerializableSerializer ser = new DefaultSerializers.KryoSerializableSerializer();
+        kryo.register(Level.class, ser);
+        kryo.register(McMinos.class, ser);
+        kryo.register(Ghosts.class, ser);
+        kryo.register(EventManager.class, ser);
+        kryo.register(LevelObject.class, ser);
+        kryo.register(LevelBlock.class, ser);
+        kryo.register(Mover.class, ser);
+        kryo.register(McMinosMover.class, ser);
+        kryo.register(GhostMover.class, ser);
+        kryo.register(RockMover.class, ser);
+        //Log.DEBUG();
+    }
+
+
     /**
      * Create a persistent snapshot for the current gamestate
      * (hibernate to disk)
      */
     public void saveSnapshot() {
-        FileHandle settings = Gdx.files.local("settings.json");
-        Json json = new Json();
-        FileHandle userSave = Gdx.files.local("user-save.json");
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            Output output = new Output(new BufferedOutputStream(new DeflaterOutputStream(new CipherOutputStream(suspendFileHandle.write(false), cipher))));
 
-        JsonState jsonState = new JsonState(this);
-        // convert the given profile to text
-        String profileAsText = json.toJson(jsonState);
+            kryo.writeObject(output, level);
+            kryo.writeObject(output, ghosts);
+            kryo.writeObject(output, mcminos);
+            kryo.writeObject(output, timerFrame);
+            kryo.writeObject(output, eventManager);
+            kryo.writeObject(output, movement);
 
-        //Gdx.app.log("profileAsText", json.prettyPrint(profileAsText));
-        // encode the text
-        String profileAsCode = Base64Coder.encodeString(profileAsText);
-
-        // write the profile data file
-        userSave.writeString(profileAsCode, false);
+            output.close();
+        } catch (Exception e) {
+            Gdx.app.log("exception in saveSnapshot", e.toString());
+        }
     }
 
     public void loadSnapshot() {
-        FileHandle userSave = Gdx.files.local("user-save.json");
-        // create the JSON utility object
-        Json json = new Json();
+        // check if the save-game
+        if (suspendFileHandle.exists()) {
+            try {
+                cipher.init(Cipher.DECRYPT_MODE, secretKey);
+                Input input = new Input(new BufferedInputStream(new InflaterInputStream(new CipherInputStream(suspendFileHandle.read(), cipher))));
 
-        // check if the profile data file exists
-        if (userSave.exists()) {
+                // clearMovers(); will already be cleared
+                disposeEventManagerTasks();
 
-            // load the profile from the data file
-//            try {
+                // restore the state
+                level = kryo.readObject(input, Level.class);
+                ghosts = kryo.readObject(input, Ghosts.class);
+                McMinos tmpmcminos = kryo.readObject(input, McMinos.class);
+                mcminos.initAfterKryoLoad(this, tmpmcminos);
+                level.initAfterKryoLoad(this); // must be done after initializing mcminos
+                ghosts.initAfterKryoLoad(this);
+                timerFrame = kryo.readObject(input, Long.class);
+                animationFrame = timerFrame;
+                eventManager = kryo.readObject(input, EventManager.class);
+                eventManager.initAfterKryoLoad(this);
+                initAfterLoad();
 
-            // read the file as text
-            String profileAsCode = userSave.readString();
+                if (!kryo.readObject(input, Boolean.class)) // must be later as previous line enables movement
+                    stopMovement();
 
-            // decode the contents
-            String profileAsText = Base64Coder.decodeString(profileAsCode);
-
-            // clearMovers(); should be cleared before
-            disposeEventManagerTasks();
-
-            // restore the state
-            JsonState jsonState = json.fromJson(JsonState.class, profileAsText);
-            level = jsonState.getLevel();
-            ghosts = jsonState.getGhosts();
-            McMinos tmpmcminos = jsonState.getMcminos();
-            mcminos.initAfterJsonLoad(this,tmpmcminos);
-            level.initAfterJsonLoad(this); // must be done after initializing mcminos
-            ghosts.initAfterJsonLoad(this);
-            timerFrame = jsonState.getGameFrame();
-            animationFrame = timerFrame;
-            eventManager = jsonState.getEventManager();
-            eventManager.initAfterJsonLoad(this);
-            initAfterLoad();
-            if(! jsonState.getMovement() ) // must be later as previous line enables movement
-                stopMovement();
+                input.close();
 
 //            } catch( Exception e ) {
 
-            // log the exception
+                // log the exception
 //                Gdx.app.error( "info", "Unable to parse existing profile data file", e );
 
                 /*// recover by creating a fresh new profile data file;
@@ -343,6 +408,9 @@ public class Game {
 /*            // create a new profile data file
             profile = new Profile();
             persist( profile ); */
+            } catch (Exception e) {
+                Gdx.app.log("exception in loadSnapshot", e.toString());
+            }
         }
     }
 

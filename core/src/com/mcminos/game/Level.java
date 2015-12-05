@@ -2,8 +2,10 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +18,7 @@ import java.util.Collections;
  *
  * The actual level with the ability to read in a new level
  */
-public class Level implements Json.Serializable {
+public class Level implements KryoSerializable {
     public static final int maxDimension = 100; // maximum Level size in windowVPixelXPos and windowVPixelYPos
     private ArrayList<LevelObject> allLevelObjects = new ArrayList<>(); // sorted list of all levelobjects (for drawing at once)
     private Game game;
@@ -63,7 +65,7 @@ public class Level implements Json.Serializable {
 
 
     /**
-     * called when restored from json
+     * called when restored from kryo
      */
     Level() {
         this.game = null;
@@ -823,7 +825,7 @@ Missing:
         return game;
     }
 
-    public void killRestart() {
+    public void killRestart(boolean completeRestart) {
         // reset all things necessary in case of a death
         /* restart:      0       ; (0,1,2,4,8,16 256, 257, 258, 260,
                     ; 264, 272)
@@ -848,7 +850,7 @@ Missing:
                     ; 272 = Last level and RSTRT = 16 !!! */
         game.stopMovement();
         game.disposeEventManagerTasks();
-        if((restart & 1) > 0) { // complete restart requested
+        if(completeRestart || (restart & 1) > 0) { // complete restart requested
             // done in reset game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
             //game.getMcMinos().dispose();
@@ -931,19 +933,19 @@ Missing:
     }
 
     @Override
-    public void write(Json json) {
-        json.writeValue("levelName",levelName);
-        json.writeValue("levelObjects",allLevelObjects);
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output,levelName);
+        kryo.writeObject(output,allLevelObjects);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        levelName = json.readValue("levelName",String.class,jsonData);
+    public void read(Kryo kryo, Input input) {
+        levelName = kryo.readObject(input,String.class);
         load(levelName, false);
         for( int i=allLevelObjects.size()-1; i>=0; i--) { // reset manually as these are loaded now - TODO: consider skipping backgrounds
             allLevelObjects.get(i).dispose();
         }
-        allLevelObjects = json.readValue("levelObjects", ArrayList.class, jsonData);
+        allLevelObjects = kryo.readObject(input, ArrayList.class);
         // cleanup, remove animation-event-objects
         for( int i = allLevelObjects.size()-1; i>=0; i-- ) {
             LevelObject lo = allLevelObjects.get(i);
@@ -961,10 +963,10 @@ Missing:
 
     }
 
-    public void initAfterJsonLoad(Game game) {
+    public void initAfterKryoLoad(Game game) {
         this.game = game;
         for( int i=allLevelObjects.size()-1; i>=0; i--) {
-            allLevelObjects.get(i).initAfterJsonLoad(game);
+            allLevelObjects.get(i).initAfterKryoLoad(game);
         }
     }
 

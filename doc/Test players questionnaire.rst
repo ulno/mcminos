@@ -11,7 +11,7 @@ Questionnaire for test players
   Andreas Neudecker <andreas.mcminos@googlemail.com>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-10-17
+:Date: 2015-12-04 (2015-10-17)
 
 :Places:
   Aachen (Germany),
@@ -21,10 +21,9 @@ Questionnaire for test players
 Dear test player:
 
 We are pleased and grateful that you are testing McMinos. To improve game play
-and fix bugs that certainly still lurk somewhere in the program, we depend on
-your help. If you would please fill out this form, it would facilitate finding
-and fixing bugs as well as improving the game on the whole. If the options of
-the form do not suffice, please feel free to add your own notes, opinions, or
+and fix bugs we depend on your help. If you would please be so kind as to fill
+out this form, it would facilitate improving the game. If the options of the
+form do not suffice, please feel free to add your own notes, opinions, or
 suggestions.
 
 Thank you very much.
@@ -33,23 +32,26 @@ Andreas and Ulrich
 
 
 
-
 Hardware
 ========
 
 * Brand and model of your device (mobile phone, tablet, etc.)
 
-* Amount of internal memory (RAM) your device has:
+* Size of internal memory (RAM) of your device:
 
-* Amount of installed extension memory (e.g. microSD, microSDHC card):
+* Size of installed extension memory (e.g. microSD card):
 
 Software
 ========
 
 * Program version you are playing (see ... [2DO]):
 
-* Android version of your device:
+* Android version of your device[#]_:
 
+.. [#] To find the Android version your device is running, tap the menu button,
+   then Settings. There, scroll down to "About phone" or "About tablet" 
+   (depending on your device). This screen will show Android and kernel versions
+   respectively.
 
 Player status
 =============
@@ -60,7 +62,7 @@ Player status
 
   [ ] English
 
-  [ ] other (please elaborate):
+  [ ] other:
 
 * If it is not English, how would you describe your English knowledge?
 
@@ -80,17 +82,27 @@ Player status
 
   [ ] no
 
+* If yes, which device do you play on most?
+
+  [ ] computer (desktop, laptop)
+  
+  [ ] mobile phone
+  
+  [ ] tablet
+  
+  [ ] video game console
+
 * If yes, what kinds of games do you like to play?
 
-  [ ] classic arcade games ([2DO: give meaningful examples])
+  [ ] classic arcade games (Pac Man, Tetris, Frogger, Asteroids, ...)
 
   [ ] graphic adventures ([2DO: give examples])
 
-  [ ] simulations ([2DO: give examples])
+  [ ] simulations (SimCity, Settlers, flight simulators, ...)
 
-  [ ] sport games ([2DO: give examples])
+  [ ] sport games ([2DO: give examples] Pong, ...)
 
-  [ ] other types (please name them and give examples):
+  [ ] other types (please give examples):
 
 
 Strictly optional
@@ -126,13 +138,11 @@ McMinos
 
 * Have you played McMinos before?
 
-  [ ] no, this is my first time
-
-  [ ] yes, I played the Atari version long ago
+  [ ] yes, I used to play the Atari version long ago
 
   [ ] yes, I tested previous alpha/beta versions
 
-  [ ] other (please elaborate):
+  [ ] no, this is my first time
 
 
 General impressions
@@ -140,8 +150,10 @@ General impressions
 
 * How long does it take for McMinos to start on your device? Approximately:
 
-  [ ] less than 30 seconds
+  [ ] less than 10 seconds
 
+  [ ] more than 10 seconds
+  
   [ ] more than 30 seconds
 
   [ ] more than one minute
@@ -156,7 +168,10 @@ General impressions
 
   [ ] other:
 
-* Are the menus coherent and layed out clearly?
+* Are the menus coherent, comprehesible and layed out clearly[#]_?
+
+.. [#] Currently (2015-12-04) the menus are not final, layout and even screens 
+   may change, be added or deleted.
 
   [ ] yes
 
@@ -164,9 +179,9 @@ General impressions
 
 * Any options/functions you are missing in the menus?
 
-  [ ] yes:
-
   [ ] no
+
+  [ ] yes:
 
 
 Tutorial levels
@@ -186,21 +201,19 @@ Tutorial levels
 
     [ ] no, some explanations and examples would be helpful:
 
-    [ ] other:
-
-  * Is it necessary to have tutorials/explanations for all features/extras?
+  * Do we need tutorials/explanations for all features/extras?
 
     [ ] yes, please add tutorial levels for all remaining objects, features
 
     [ ] no, leave something for the player to be discovered
 
-    [ ] other:
-
 
 Main level set
 --------------
 
-* Did you finish all levels?
+* Did you finish all levels in the "new" section[#]_?
+
+.. [#] They are high on the list for the first release of McMinos.
 
   [ ] yes
 
@@ -210,7 +223,7 @@ Main level set
 
 * Which type of levels do you favour?
 
-  [ ] classic arcade levels: eat pills and run
+  [ ] classic arcade levels: eat pellets and run
 
   [ ] action levels: explosives, speed, fun!
 
@@ -226,9 +239,34 @@ Main level set
 
 * Which level did you like best, and why (please provide level no.)?
 
-*
+* Are there levels you consider so bad they absolutely need to go?
+
+  [ ] no
+  
+  [ ] yes:
 
 
+Bugs
+----
+
+Did you find any bugs in the program? - If so, please try to find out, if the 
+bug is "reproducible", i.e.:
+
+* does the same problem occur again in the same situation? Example: "*started
+  playing level no. X, went left, moved a rock, program crashed*"
+
+* does the same problem occur in similar situations in different places? 
+  Example: "*started level X and tried to save the game before moving McMinos 
+  → program crashed. Tried the same in level Y, and it happened again.*"
+
+* does the problem occur rarely or every time you try?
+
+* If you have McMinos installed on different devices: does the problem occur on 
+  all of them?
 
 
+Additional notes
+----------------
+
+*This space intentionally left blank*
 

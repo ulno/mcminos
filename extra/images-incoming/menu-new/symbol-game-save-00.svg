@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="symbol-game-save-00.svg">
+  <defs id="defs4152">
+    <linearGradient inkscape:collect="always" xlink:href="#linearGradient3985" id="linearGradient3117" gradientUnits="userSpaceOnUse" x1="16" y1="3" x2="16" y2="24" />
+    <linearGradient id="linearGradient3985">
+      <stop style="stop-color:black;stop-opacity:0;" offset="0" id="stop3987" />
+      <stop style="stop-color:black;stop-opacity:1;" offset="1" id="stop3989" />
+    </linearGradient>
+    <linearGradient inkscape:collect="always" xlink:href="#linearGradient3985" id="linearGradient5467" gradientUnits="userSpaceOnUse" x1="16" y1="3" x2="16" y2="24" gradientTransform="translate(34,0)" />
+  </defs>
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="11.0625" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+    <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
+    <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
+    <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
+    <sodipodi:guide position="16,16" orientation="-0.70710678,0.70710678" id="guide4773" />
+    <sodipodi:guide position="16,16" orientation="0.70710678,0.70710678" id="guide4775" />
+  </sodipodi:namedview>
+  <metadata id="metadata4155">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8px;line-height:80.00000119%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient3117);fill-opacity:1;stroke:none" x="0.20349121" y="7.9267569" id="text3201" sodipodi:linespacing="80.000001%"><tspan sodipodi:role="line" x="0.20349121" y="7.9267569" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.5px;line-height:80.00000119%;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono Bold';fill:url(#linearGradient3117);fill-opacity:1" id="tspan3205">0101011</tspan><tspan sodipodi:role="line" x="0.20349121" y="13.926757" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.5px;line-height:80.00000119%;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono Bold';fill:url(#linearGradient3117);fill-opacity:1" id="tspan3209">1110010</tspan><tspan sodipodi:role="line" x="0.20349121" y="19.926758" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.5px;line-height:80.00000119%;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono Bold';fill:url(#linearGradient3117);fill-opacity:1" id="tspan3211">0001010</tspan><tspan sodipodi:role="line" x="0.20349121" y="25.926758" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.5px;line-height:80.00000119%;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono Bold';fill:url(#linearGradient3117);fill-opacity:1" id="tspan3213">0010111</tspan><tspan sodipodi:role="line" x="0.20349121" y="31.926758" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.5px;line-height:80.00000119%;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono Bold';fill:url(#linearGradient3117);fill-opacity:1" id="tspan3215">1000101</tspan></text>
+    <g id="g3993">
+      <path sodipodi:end="2.7052603" sodipodi:start="3.577925" sodipodi:type="arc" style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3287" sodipodi:cx="7.9652176" sodipodi:cy="8" sodipodi:rx="6.9913044" sodipodi:ry="6.9913044" d="M 1.6289441,5.0453469 A 6.9913044,6.9913044 0 0 1 9.4784129,1.1744175 6.9913044,6.9913044 0 0 1 14.956522,8 6.9913044,6.9913044 0 0 1 9.478413,14.825583 6.9913044,6.9913044 0 0 1 1.6289441,10.954653 L 7.9652176,8 Z" transform="matrix(-1.001099,0,0,1.001099,15.974629,-0.00945008)" />
+      <circle transform="matrix(-0.9998554,0,0,0.9998554,15.999499,4.9892415e-4)" style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3289" cx="8" cy="5" r="2" />
+      <circle style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3291" transform="matrix(-0.9998554,0,0,0.9998554,15.999354,4.9892415e-4)" cx="8" cy="5" r="1" />
+    </g>
+    <path style="fill:red;fill-opacity:1;stroke:none" d="m 13.171573,18.828427 5.656854,-5.656854 5.656854,5.656854 L 27.313708,16 l 0,11.313708 -11.313708,0 2.828427,-2.828427 z" id="path4023" inkscape:connector-curvature="0" inkscape:transform-center-y="4.2426405" inkscape:transform-center-x="-4.2426405" />
+  </g>
+</svg>

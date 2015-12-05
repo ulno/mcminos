@@ -2,8 +2,8 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,97 +53,99 @@ public class McMinosMover extends Mover {
 
     @Override
     public LevelBlock chooseDirection() {
-        // this is only called, when on block boundaries
-        int directions = getKeyDirections(); // direction bit field
-        int level = mcminos.getDrunkLevel();
-        if (level > 0) /* Wenn betrunken */
-            if (game.random(Math.max(1, 10 - (level >> Game.timeResolutionExponent))) == 0)
-                directions = game.random(15) + 1;
+        if(mcminos.getPoisonDuration() == 0) { // there can only be a direction if not poisoned
+            // this is only called, when on block boundaries
+            int directions = getKeyDirections(); // direction bit field
+            int level = mcminos.getDrunkLevel();
+            if (level > 0) /* Wenn betrunken */
+                if (game.random(Math.max(1, 10 - (level >> Game.timeResolutionExponent))) == 0)
+                    directions = game.random(15) + 1;
 
-        if (directions == 0) { // if no key, then try to get from destination
-            // the following includes the call to unblocked dirs already
-            directions = getDirectionsFromDestination();
-        } else { // got keyboard directions
-            // refine with possible directions
-            directions = getUnblockedDirs(directions, true, false);
-        }
-        if (directions > 0) { // got something in directions
-
-            LevelBlock nextBlock = null;
-
-            switch (directions) {
-                // do one direction fast
-                case STOP:
-                    //nextBlock = currentLevelBlock;
-                    // actually done here
-                    currentDirection = STOP;
-                    return currentLevelBlock;
-                //break;
-                case UP:
-                    nextBlock = currentLevelBlock.up();
-                    break;
-                case RIGHT:
-                    nextBlock = currentLevelBlock.right();
-                    break;
-                case DOWN:
-                    nextBlock = currentLevelBlock.down();
-                    break;
-                case LEFT:
-                    nextBlock = currentLevelBlock.left();
-                    break;
-                default: // more than one given, select first possible
-                    if ((directions & UP) > 0) {
-                        nextBlock = currentLevelBlock.up();
-                        directions = UP;
-                    } else if ((directions & RIGHT) > 0) {
-                        nextBlock = currentLevelBlock.right();
-                        directions = RIGHT;
-                    } else if ((directions & DOWN) > 0) {
-                        nextBlock = currentLevelBlock.down();
-                        directions = DOWN;
-                    } else /* LEFT */ {
-                        nextBlock = currentLevelBlock.left();
-                        directions = LEFT;
-                    }
-                    break;
+            if (directions == 0) { // if no key, then try to get from destination
+                // the following includes the call to unblocked dirs already
+                directions = getDirectionsFromDestination();
+            } else { // got keyboard directions
+                // refine with possible directions
+                directions = getUnblockedDirs(directions, true, false);
             }
-            currentDirection = directions; // start moving there
-            if (nextBlock.hasRock()) {
-                LevelBlock nextBlock2 = null;
-                switch (currentDirection) {
+            if (directions > 0) { // got something in directions
+
+                LevelBlock nextBlock = null;
+
+                switch (directions) {
+                    // do one direction fast
+                    case STOP:
+                        //nextBlock = currentLevelBlock;
+                        // actually done here
+                        currentDirection = STOP;
+                        return currentLevelBlock;
+                    //break;
                     case UP:
-                        nextBlock2 = currentLevelBlock.up2();
+                        nextBlock = currentLevelBlock.up();
                         break;
                     case RIGHT:
-                        nextBlock2 = currentLevelBlock.right2();
+                        nextBlock = currentLevelBlock.right();
                         break;
                     case DOWN:
-                        nextBlock2 = currentLevelBlock.down2();
+                        nextBlock = currentLevelBlock.down();
                         break;
                     case LEFT:
-                        nextBlock2 = currentLevelBlock.left2();
+                        nextBlock = currentLevelBlock.left();
+                        break;
+                    default: // more than one given, select first possible
+                        if ((directions & UP) > 0) {
+                            nextBlock = currentLevelBlock.up();
+                            directions = UP;
+                        } else if ((directions & RIGHT) > 0) {
+                            nextBlock = currentLevelBlock.right();
+                            directions = RIGHT;
+                        } else if ((directions & DOWN) > 0) {
+                            nextBlock = currentLevelBlock.down();
+                            directions = DOWN;
+                        } else /* LEFT */ {
+                            nextBlock = currentLevelBlock.left();
+                            directions = LEFT;
+                        }
                         break;
                 }
-                LevelObject rock = nextBlock.getRock();
-                RockMover m = (RockMover) rock.getMover();
-                if (m == null) {
-                    // also make rock in the speed we push it
-                    RockMover mover = new RockMover(game, rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
-                    rock.setMover(mover);
-                    game.addMover(mover);
-                    //mover.move(); //small headstart to arrive early enough - not necessary
-                    //nextBlock.setRock(null); check if this was important to prevent monster running here - seems not
-                    //nextBlock2.setRock(rock);
-                    audio.soundPlay("moverock");
-                } else if (!m.isMoving()) {
-                    // let it move again
-                    m.triggerMove(currentDirection, getSpeedFactor(), isAccelerated(), nextBlock2);
-                    //nextBlock.setRock(null);
-                    //nextBlock2.setRock(rock);
-                    audio.soundPlay("moverock");
+                currentDirection = directions; // start moving there
+                if (nextBlock.hasRock()) {
+                    LevelBlock nextBlock2 = null;
+                    switch (currentDirection) {
+                        case UP:
+                            nextBlock2 = currentLevelBlock.up2();
+                            break;
+                        case RIGHT:
+                            nextBlock2 = currentLevelBlock.right2();
+                            break;
+                        case DOWN:
+                            nextBlock2 = currentLevelBlock.down2();
+                            break;
+                        case LEFT:
+                            nextBlock2 = currentLevelBlock.left2();
+                            break;
+                    }
+                    LevelObject rock = nextBlock.getRock();
+                    RockMover m = (RockMover) rock.getMover();
+                    if (m == null) {
+                        // also make rock in the speed we push it
+                        RockMover mover = new RockMover(game, rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
+                        rock.setMover(mover);
+                        game.addMover(mover);
+                        //mover.move(); //small headstart to arrive early enough - not necessary
+                        //nextBlock.setRock(null); check if this was important to prevent monster running here - seems not
+                        //nextBlock2.setRock(rock);
+                        audio.soundPlay("moverock");
+                    } else if (!m.isMoving()) {
+                        // let it move again
+                        m.triggerMove(currentDirection, getSpeedFactor(), isAccelerated(), nextBlock2);
+                        //nextBlock.setRock(null);
+                        //nextBlock2.setRock(rock);
+                        audio.soundPlay("moverock");
+                    }
                 }
+                return nextBlock;
             }
-            return nextBlock;
         }
         // nothing found or no direction set so return currentblock and no direction possibility
         currentDirection = STOP;
@@ -332,18 +334,18 @@ public class McMinosMover extends Mover {
     }
 
     @Override
-    public void write(Json json) {
-        super.write(json);
+    public void write(Kryo kryo, Output output) {
+        super.write(kryo, output);
     }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
-        super.read(json, jsonData);
+    public void read(Kryo kryo, com.esotericsoftware.kryo.io.Input input) {
+        super.read(kryo, input);
     }
 
     @Override
-    public void initAfterJsonLoad(Game game,LevelObject lo) {
-        super.initAfterJsonLoad(game,lo);
+    public void initAfterKryoLoad(Game game,LevelObject lo) {
+        super.initAfterKryoLoad(game,lo);
         this.game = game;
         initFromGame();
     }

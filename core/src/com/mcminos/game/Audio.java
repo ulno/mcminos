@@ -1,5 +1,6 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 import java.util.HashMap;
@@ -56,6 +57,7 @@ public class Audio {
     public void soundPlay(String s) {
         if (sound && s != null && s != "")
             soundList.get(s).play(1.0f);
+        // TODO: add volume
     }
 
     public void addSound(String s, Sound sound) {
@@ -63,12 +65,11 @@ public class Audio {
     }
 
     public void toggleSound() {
-        sound = !sound;
+        setSound(!sound);
     }
 
     public void toggleMusic() {
-        music = !music;
-    }
+        setMusic(!music);    }
 
     public boolean getSound() {
         return sound;
@@ -76,6 +77,20 @@ public class Audio {
 
     public boolean getMusic() {
         return music;
+    }
+
+    public void setSound(boolean sound) {
+        this.sound = sound;
+        if(sound == false) {
+            for(com.badlogic.gdx.audio.Sound s:soundList.values()) {
+                s.stop();
+            }
+        }
+    }
+
+    public void setMusic(boolean music) {
+        this.music = music;
+        // TODO: switch off all playing music
     }
 }
 

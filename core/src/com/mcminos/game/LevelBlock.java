@@ -1,5 +1,10 @@
 package com.mcminos.game;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +13,7 @@ import java.util.ArrayList;
  * These are the actual blocks the field consists off.
  *
  */
-public class LevelBlock {
+public class LevelBlock implements KryoSerializable {
 //    private final Game game;
 //    private final Audio audio;
 //    private final McMinos mcminos;
@@ -24,6 +29,23 @@ public class LevelBlock {
     private LevelObject oneWay = null;
     private int oneWayType = -1; // -1, no oneway, 0 up, 1 right, 2 down, 3 left, +4 rotatable
 
+    /**
+     * for kryo-read
+     */
+    public LevelBlock() {
+    }
+
+    @Override
+    public void write(Kryo kryo, Output output) {
+        kryo.writeObject(output,x);
+        kryo.writeObject(output,y);
+    }
+
+    @Override
+    public void read(Kryo kryo, Input input) {
+        x = kryo.readObject(input,Integer.class);
+        y = kryo.readObject(input,Integer.class);
+    }
     /**
      *
      * @param nextBlock
