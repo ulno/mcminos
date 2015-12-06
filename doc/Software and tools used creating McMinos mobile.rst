@@ -59,6 +59,8 @@ Documentation, Tutorials, Articles, etc.
 
 * Skin Editor — http://www.badlogicgames.com/forum/viewtopic.php?t=14295&p=78236
 
+* Changing font size in skin [libgdx] — https://stackoverflow.com/questions/20301964/changing-font-size-in-skin#20306333
+ 
 
 
 Graphic tools

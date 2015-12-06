@@ -1,6 +1,6 @@
 # McMinos level source
 
-level_properties = {
+level = {
 
   "author":  "Andrea Neudecker",
   "version": 3.14,
@@ -67,32 +67,13 @@ level_properties = {
     "return_time": 3,
   },
 
-  "tools_min_max": {
-    "live":      (0,999),
-    "keys":      (0,0),
-    "bomb":      (0,0),
-    "dynamite":  (0,0),
-    "mine":      (0,0),
-    "chocolate": (0,0),
-    "medicine":  (0,0),
-    "umbrella":  (0,0),
-  },
-
-  # description
-  "title": "Title of the Level",
-
-  "description": """McMinos level have walls and pills. You cannot pass through
-  walls. Go and eat all pills.""",
+  level_data = [
+    "XXXXXXX",
+    "X.....X",
+    "X.XXX.X",
+    "X..PX.X",
+    "X.X.X.X",
+    "X.....X",
+    "XXXXXXX",
+  ]
 }
-
-
-level_data = """
-XXXXXXX
-X.....X
-X.XXX.X
-X..PX.X
-X.X.X.X
-X.....X
-XXXXXXX
-"""
-
