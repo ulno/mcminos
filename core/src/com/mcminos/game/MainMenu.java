@@ -29,6 +29,8 @@ public class MainMenu implements Screen {
     private final SelectBox sb;
     private final SpriteBatch batch;
     private final Main main;
+    private final Table rootTable;
+    private final Label versionStringActor;
 
     private boolean fullscreen = Game.preferencesHandle.getBoolean("fs");
 
@@ -47,8 +49,11 @@ public class MainMenu implements Screen {
 
         stage = new Stage(new ScreenViewport(), batch);
 
+        // root table covering the screen
+        rootTable = new Table();
         // table for buttons
         table = new Table();
+        rootTable.add(table).top();
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
 
@@ -116,7 +121,10 @@ public class MainMenu implements Screen {
                 .minSize(128, 48);
 
         stage.addActor(bgimage);
-        stage.addActor(table);
+        stage.addActor(rootTable);
+
+        versionStringActor = new Label(main.getVersionString(),skin);
+        stage.addActor(versionStringActor);
 
 
         stage.addListener(new InputListener() {
@@ -132,6 +140,7 @@ public class MainMenu implements Screen {
 
         });
         Gdx.input.setInputProcessor(stage);
+        resize();
     }
 
     @Override
@@ -148,11 +157,17 @@ public class MainMenu implements Screen {
         stage.draw();
     }
 
+    public void resize() {
+        resize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+    }
+
     @Override
     public void resize(int width, int height) {
         Util.scaleBackground(bgimage);
+        rootTable.setSize(width,height);
         table.setBounds(0,0,width,height);
-        stage.getViewport().update(width, height, true);;
+        stage.getViewport().update(width, height, true);
+        versionStringActor.setPosition(width-3,2,Align.bottomRight);
     }
 
     @Override

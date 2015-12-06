@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -27,6 +28,8 @@ public class Main extends com.badlogic.gdx.Game {
     private HashMap<Integer,BitmapFont> fontList = new HashMap<>();
     private int symbolResolution;
     private ArrayList<String> levelNamesList;
+    public final static String versionStringFile = "VERSIONSTRING";
+    private String versionString;
 
     @Override
 	public void create () {
@@ -56,6 +59,8 @@ public class Main extends com.badlogic.gdx.Game {
             }
             symbolResolution = nearest;
         }
+
+        versionString = Gdx.files.internal(versionStringFile).readString();
 
         readLevelList();
 
@@ -152,5 +157,9 @@ public class Main extends com.badlogic.gdx.Game {
             return levelNamesList.get(0); // start over for now
         }
         return  levelNamesList.get(index+1);
+    }
+
+    public String getVersionString () {
+        return versionString;
     }
 }
