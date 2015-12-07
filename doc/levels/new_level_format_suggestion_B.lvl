@@ -1,24 +1,23 @@
 # McMinos level source
 
-level_properties = {
+level = {
 
-  "author":  "Andrea Neudecker",
+  "author":  "Andreas Neudecker",   # replace spaces with underscores
   "version": 3.14,
 
-  "level_series": "Tutorial",
-  "level_number": 1,
-  "show_number":  1,
-  "accessCode":   1,
+  "level_number": None,             # deprecated
+  "show_number":  None,             # deprecated
+  "accessCode":   None,             # deprecated
 
 
   "dimensions": {
     "width":          7,
     "height":         7,
-    "visible_width":  7,
-    "visible_height": 7,
+    "visible_width":  None,         # deprecated
+    "visible_height": None,         # deprecated
 
-    "torus_x":        False,
-    "torus_y":        False,
+    "wrap_x":        False,         # SCROLLX
+    "wrap_y":        False,         # SCROLLY
   },
 
   "background":       1,
@@ -67,32 +66,13 @@ level_properties = {
     "return_time": 3,
   },
 
-  "tools_min_max": {
-    "live":      (0,999),
-    "keys":      (0,0),
-    "bomb":      (0,0),
-    "dynamite":  (0,0),
-    "mine":      (0,0),
-    "chocolate": (0,0),
-    "medicine":  (0,0),
-    "umbrella":  (0,0),
-  },
-
-  # description
-  "title": "Title of the Level",
-
-  "description": """McMinos level have walls and pills. You cannot pass through
-  walls. Go and eat all pills.""",
+  level_data = [
+    "XXXXXXX",
+    "X.....X",
+    "X.XXX.X",
+    "X..PX.X",
+    "X.X.X.X",
+    "X.....X",
+    "XXXXXXX",
+  ]
 }
-
-
-level_data = """
-XXXXXXX
-X.....X
-X.XXX.X
-X..PX.X
-X.X.X.X
-X.....X
-XXXXXXX
-"""
-
