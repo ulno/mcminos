@@ -2,23 +2,22 @@
 
 level = {
 
-  "author":  "Andrea Neudecker",
+  "author":  "Andreas Neudecker",   # replace spaces with underscores
   "version": 3.14,
 
-  "level_series": "Tutorial",
-  "level_number": 1,
-  "show_number":  1,
-  "accessCode":   1,
+  "level_number": None,             # deprecated
+  "show_number":  None,             # deprecated
+  "accessCode":   None,             # deprecated
 
 
   "dimensions": {
     "width":          7,
     "height":         7,
-    "visible_width":  7,
-    "visible_height": 7,
+    "visible_width":  None,         # deprecated
+    "visible_height": None,         # deprecated
 
-    "torus_x":        False,
-    "torus_y":        False,
+    "wrap_x":        False,         # SCROLLX
+    "wrap_y":        False,         # SCROLLY
   },
 
   "background":       1,
