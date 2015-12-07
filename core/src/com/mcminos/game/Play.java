@@ -527,6 +527,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 playwindow.setResolution(gameResolutionCounter);
                 resize();
                 break;
+            case '<':
+                decreaseSymbolResolution();
+                break;
+            case '>':
+                increaseSymbolResolution();
+                break;
             case '1':
                 toolbox.activate();
                 toolbox.activateChocolate();
