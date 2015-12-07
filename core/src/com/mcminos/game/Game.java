@@ -142,7 +142,8 @@ public class Game {
                             movers.remove(i);
                             LevelObject lo = m.getLevelObject();
                             //lo.getLevelBlock().remove(lo); done in next step
-                            lo.dispose();
+                            if(lo !=null)
+                                lo.dispose();
                         }
                         if (level.isFinished()) {
                             return false;
