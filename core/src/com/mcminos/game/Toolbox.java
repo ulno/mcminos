@@ -18,12 +18,13 @@ import java.util.ArrayList;
  */
 public class Toolbox {
     private final Stage stage;
-    private final Skin skin;
+    private Skin skin;
     private final PlayWindow playwindow;
     private final McMinos mcminos;
     private final Audio audio;
     private final Level level;
     private final Play play;
+    private final Main main;
 
     private Table table;
     private Table rootTable;
@@ -110,14 +111,16 @@ public class Toolbox {
         });*/
 
 
-    public Toolbox(Play play, PlayWindow playwindow, McMinos mcminos, Audio audio, Level level, Stage stage, Skin skin) {
+    public Toolbox(Play play, PlayWindow playwindow, McMinos mcminos, Audio audio, Level level, Stage stage) {
         this.play = play;
+        this.main = play.getMain();
         this.stage = stage;
-        this.skin = skin;
+        this.skin = main.getSkin(main.getSymbolResolution()/2);
         this.playwindow = playwindow;
         this.mcminos = mcminos;
         this.audio = audio;
         this.level = level;
+        // TODO: check if skin needs to be dependent on resolution
         rootTable = new Table(skin); // This is just the root of the table, updated by resize
         rootTable.setPosition(0, 0);
         stage.addActor(rootTable);
@@ -245,6 +248,7 @@ public class Toolbox {
 
     public void resize() {
         int res = play.getSymbolResolution();
+        skin = main.getSkin(res/2);
         // adjust size
         rootTable.setWidth(res + 4); // 4 for border
         rootTable.setHeight(playwindow.getHeightInPixels());
@@ -566,9 +570,11 @@ allows cheating */
         ScrollPane scrollPane = new ScrollPane(topMenu);
         d.add(scrollPane).colspan(2).expandX().fillX().top().row();
         Table statisticsTable = new Table(skin);
-        d.add(statisticsTable).fill().expand();
+        scrollPane = new ScrollPane(statisticsTable);
+        d.add(scrollPane).fill().expand();
         Table storyTable = new Table(skin);
-        d.add(storyTable).fill().expand();
+        scrollPane = new ScrollPane(storyTable);
+        d.add(scrollPane).fill().expand();
         d.row();
 
         // Fill topMenu
