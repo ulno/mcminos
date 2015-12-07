@@ -233,23 +233,25 @@ public class Play implements Screen, GestureListener, InputProcessor {
         if (destinationX != offScreen) {
             if( gameFrame - lastTouchDown > doubleClickFrames) { // there was a single click
                 // attention: this is called every frame until touchUp
-                Gdx.app.log("render","singleclick occured lastTouchDown="+lastTouchDown+" gameFrame="+gameFrame);
+                //Gdx.app.log("render","singleclick occured lastTouchDown="+lastTouchDown+" gameFrame="+gameFrame);
 
                 setDestination();
                 //destinationX = offScreen; // will be lifted by touchUp, needs not to be relased to allow setting when still pressed
             }
             if(lastTouchUp > lastTouchDown) {
-                if(level.getLevelBlockFromVPixelRounded(destinationX,destinationY).hasDoor()) {
-                    if (lastTouchUp > lastTouchDown + doubleClickFrames) {
+                int x = windowToGameX(destinationX);
+                int y = windowToGameY(destinationY);
+                if(level.getLevelBlockFromVPixelRounded(x,y).hasDoor()) {
+                    if (gameFrame > lastTouchDown + doubleClickFrames) { // give grace period of double click
                         // reset monitoring
                         lastTouchUp = lastTouchInPast;
                         destinationX = offScreen;
-                        Gdx.app.log("render","touchup delayed lifted at gameFrame="+gameFrame);
+                        //Gdx.app.log("render","touchup delayed lifted at gameFrame="+gameFrame);
                     }
                 } else {
                     lastTouchUp = lastTouchInPast;
                     destinationX = offScreen;
-                    Gdx.app.log("render","touchup directly lifted at gameFrame="+gameFrame);
+                    //Gdx.app.log("render","touchup directly lifted at gameFrame="+gameFrame);
                 }
             }
         }
@@ -611,7 +613,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                     long gameFrame = game.getAnimationFrame();
                     if (gameFrame - lastTouchDown > doubleClickFrames) { // this is not part of a double click
                         lastTouchDown = gameFrame;
-                        Gdx.app.log("destinationDown","lastTouchDown="+lastTouchDown);
+                        //Gdx.app.log("destinationDown","lastTouchDown="+lastTouchDown);
                     }
                     return true;
                 }
@@ -713,6 +715,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             destinationDown((int) x, (int) y, button, false);
             setDestination();
             destinationX = offScreen;
+            //Gdx.app.log("tap","single tap at gameFrame="+game.getAnimationFrame());
+
             return true;
         }
         // else will have been registered in touchdown and handled there
@@ -724,6 +728,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int vy = windowToGameY(y);
         LevelBlock lb = level.getLevelBlockFromVPixelRounded(vx, vy);
         if (lb.hasDoor()) {
+            //Gdx.app.log("tryDoor","trying to open door"+game.getAnimationFrame());
             destinationX = offScreen; // cancel destination
             // TODO: does the radius need to be better checked to allow only neighboring doors?
             int delta = blockDistance(lb, mcminos.getLevelBlock());
