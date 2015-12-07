@@ -1,0 +1,72 @@
+; LEVEL 001 ---------------------------------------------*
+; FOR McMINOS - Version x.x
+; Created.....: 
+; Done by.....: Walter Norbisrath
+
+; HEADER ------------------------------------------------*
+AUTHOR:   waltino; Walter Norbisrath
+NUMBR:    1
+ACCCD:    910914
+VERSION:  1100
+
+; LEVELFORMAT -------------------------------------------*
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
+LWID:   12
+LHI:    12
+SCROLLX:  1
+SCROLLY:  0
+BACK:
+
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+; McMINOS -----------------------------------------------*
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------*
+GHOST1:   0
+GHSPEED1: 0
+AGIL1:    0
+GRTIME1:  0
+
+GHOST2:   0
+GHSPEED2: 0
+AGIL2:    0
+GRTIME2:  0
+PILLMAX2: 0
+PILLFREQ2:  0
+
+GHOST3:   0
+GHSPEED3: 0
+AGIL3:    0
+GRTIME3:  0
+TRANSWALL3: 0
+
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
+
+; LEVELDATEN --------------------------------------------*
+LEVEL:
+ZZZZZZZZZZZZ
+Z..........Z
+Z..........Z
+Z..........Z
+Z..........Z
+Z..........Z
+Z..........Z
+Z..........Z
+Z..........Z
+Z..........Z
+Z..........Z
+ZZZZZZZZZZZZ
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*
