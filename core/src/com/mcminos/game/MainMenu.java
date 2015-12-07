@@ -2,11 +2,13 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class MainMenu implements Screen {
 
-    private final Skin skin;
+    private Skin skin;
     private final Stage stage;
     private final Table table;
     private final Texture bg;
@@ -29,6 +31,8 @@ public class MainMenu implements Screen {
     private final SelectBox sb;
     private final SpriteBatch batch;
     private final Main main;
+    private final Table rootTable;
+    private final Label versionStringActor;
 
     private boolean fullscreen = Game.preferencesHandle.getBoolean("fs");
 
@@ -37,8 +41,19 @@ public class MainMenu implements Screen {
         final MainMenu thisScreen = this;
         this.main = main;
         batch = main.getBatch();
-        skin = main.getSkin();
+        skin = main.getSkin(main.getSymbolResolution()/2);
 
+/*        skin.remove("default-font",BitmapFont.class);
+//        skin.remove("font_liberation_sans-_regular_16pt",BitmapFont.class);
+        skin.add("default-font", main.getFont(128), BitmapFont.class);
+//        skin.add("font_liberation_sans-_regular_16pt", fontList.get(128));
+        BitmapFont skinFont = skin.getFont("default-font");
+        skinFont.getData().setScale(4.0f);
+//        skinFont = skin.getFont("font_liberation_sans-_regular_16pt");
+//        skinFont.getData().setScale(2.0f); */
+
+//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/myFont.ttf"));
+//        BitmapFont font = generator.generateFont(14);
         bg = new Texture( Gdx.files.internal("images/loadscreen.png"));
         bgimage = new Image(bg);
         bgimage.setZIndex(0);
@@ -47,8 +62,11 @@ public class MainMenu implements Screen {
 
         stage = new Stage(new ScreenViewport(), batch);
 
+        // root table covering the screen
+        rootTable = new Table();
         // table for buttons
         table = new Table();
+        rootTable.add(table).top();
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
 
@@ -116,7 +134,10 @@ public class MainMenu implements Screen {
                 .minSize(128, 48);
 
         stage.addActor(bgimage);
-        stage.addActor(table);
+        stage.addActor(rootTable);
+
+        versionStringActor = new Label(main.getVersionString(),skin);
+        stage.addActor(versionStringActor);
 
 
         stage.addListener(new InputListener() {
@@ -132,6 +153,7 @@ public class MainMenu implements Screen {
 
         });
         Gdx.input.setInputProcessor(stage);
+        resize();
     }
 
     @Override
@@ -148,11 +170,19 @@ public class MainMenu implements Screen {
         stage.draw();
     }
 
+    public void resize() {
+        resize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+    }
+
     @Override
     public void resize(int width, int height) {
+        skin = main.getSkin(main.getSymbolResolution()/2);
+        // TODO recreate menus, when changing size
         Util.scaleBackground(bgimage);
+        rootTable.setSize(width,height);
         table.setBounds(0,0,width,height);
-        stage.getViewport().update(width, height, true);;
+        stage.getViewport().update(width, height, true);
+        versionStringActor.setPosition(width-3,2,Align.bottomRight);
     }
 
     @Override

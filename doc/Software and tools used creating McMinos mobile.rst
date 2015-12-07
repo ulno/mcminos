@@ -13,6 +13,12 @@ Remember to include due credits and URLs!
 Development tools, languages, etc.
 ==================================
 
+Android SDK
+-----------
+
+* NinePatch — https://developer.android.com/reference/android/graphics/NinePatch.html
+* Canvas and Drawables — https://developer.android.com/guide/topics/graphics/2d-graphics.html#nine-patch
+
 
 Java
 ----
@@ -34,6 +40,7 @@ Homepage:
 
 * preliminary work, experiments
 * conversion of SVG graphics for animations (testing)
+* other minor tasks
 
 Libraries
 =========
@@ -59,7 +66,20 @@ Documentation, Tutorials, Articles, etc.
 
 * Skin Editor — http://www.badlogicgames.com/forum/viewtopic.php?t=14295&p=78236
 
+* Changing font size in skin [libgdx] — https://stackoverflow.com/questions/20301964/changing-font-size-in-skin#20306333
 
+* LibGDX Tutorial series — http://www.gamefromscratch.com/page/LibGDX-Tutorial-series.aspx
+
+* LibGDX Tutorial - A Running Game with LibGDX:
+
+  * Part 1 (Setup of project and world) — http://williammora.com/a-running-game-with-libgdx-part-1/
+  * Part 2 (controls for the runner) — http://williammora.com/a-running-game-with-libgdx-part-2/
+  * Part 3 (enemies) — http://williammora.com/a-running-game-with-libgdx-part-3/
+  * Part 4 (background and ground) — http://williammora.com/a-running-game-with-libgdx-part-4/
+  * Part 5 (texture atlases and animations) — http://williammora.com/a-running-game-with-libgdx-part-5/
+  * Code of "Martian Run" on GitHub — https://github.com/wmora/martianrun
+
+* McGovern P (2014) Generated Fonts in LibGDX Skins — http://pmcgovern.ca/wp/?p=359
 
 Graphic tools
 =============
@@ -68,6 +88,7 @@ Inkscape
 --------
 
 * sprites design
+* skin design
 * conversion of SVG graphics for animations (testing)
 
 The GIMP
@@ -89,16 +110,21 @@ Homepage: https://github.com/gunmetal313/gdx-skineditor
 
 * Skin Editor Documentation — http://www.shadebob.org/posts/skin-editor-documentation
 
+Fonts and font tools
+====================
 
+gdx-fontpack
+------------
+
+Homepage: https://github.com/mattdesl/gdx-fontpack
 
 hiero
 -----
 
-Homepage: 
+Homepage: https://libgdx.badlogicgames.com/tools.html
+Docs: https://github.com/libgdx/libgdx/wiki/Hiero
 
 A bitmap font generator, saves in Angel Code font format.
-
-* libdx Wiki:Hiero — https://github.com/libgdx/libgdx/wiki/Hiero
 
 
 Diverse
