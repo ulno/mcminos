@@ -771,7 +771,7 @@ allows cheating */
         Label story = new Label("Here we will have at one point a beautiful " +
                 "story explaing everything in this Level. " +
                 "This is only some example text at this point.\n\n" +
-                "Stay tuned\n\nulno + nope", skin);
+                "Stay tuned\n\nUlrich + Andreas", skin);
         story.setWrap(true);
         storyTable.add(story).top().left().width(d.getWidth() / 2);
 

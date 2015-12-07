@@ -79,6 +79,8 @@ Documentation, Tutorials, Articles, etc.
   * Part 5 (texture atlases and animations) — http://williammora.com/a-running-game-with-libgdx-part-5/
   * Code of "Martian Run" on GitHub — https://github.com/wmora/martianrun
 
+* McGovern P (2014) Generated Fonts in LibGDX Skins — http://pmcgovern.ca/wp/?p=359
+
 Graphic tools
 =============
 
