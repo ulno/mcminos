@@ -46,7 +46,10 @@ public class ToolboxButton  {
         Image image = new Image(gfx.getTexture(resolution, 0));
         button.addActor(image);
         if(label != null) {
-            label.setPosition(resolution / 2, resolution / 2, Align.center);
+            label = new Label(text.getStringBuilder(), toolbox.getSkin()); // resolution could have changed
+            int w = (int) label.getWidth();
+            int h = (int) label.getHeight();
+            label.setPosition((resolution -w)/2, (resolution -h )/ 2);
             button.addActor(label);
         }
     }

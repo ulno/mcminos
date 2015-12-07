@@ -68,7 +68,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         this.main = main;
         gameBatch = main.getBatch();
         camera = new OrthographicCamera();
-        skin = main.getSkin();
+        skin = main.getSkin(getSymbolResolution());
         audio = main.getAudio();
         // don't conflict with gameBatch
         stageBatch = new SpriteBatch();
@@ -134,7 +134,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution);
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
-        toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage, skin);
+        toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage);
 
         // init scoreinfo display
         scoreInfo = new StringBuilder(28);
@@ -423,6 +423,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        skin = main.getSkin(getSymbolResolution());
         panning = 0; // stop panning
         Matrix4 matrix = new Matrix4();
         matrix.setToOrtho2D(0, 0, width, height);
@@ -827,5 +828,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void decreaseSymbolResolution() {
         setSymbolResolution(getSymbolResolution()/2);
+    }
+
+    public Main getMain() {
+        return main;
     }
 }

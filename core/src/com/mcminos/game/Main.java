@@ -4,6 +4,7 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.io.BufferedReader;
@@ -19,13 +20,15 @@ import java.util.HashMap;
  *
  */
 public class Main extends com.badlogic.gdx.Game {
+    private static final int MINRES = 16;
     private Game game;
     private SpriteBatch batch;
-    private Skin skin;
     private Audio audio;
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
+    public static final String DEFAULT_ATLAS = "uiskin.atlas";
     public static final String DEFAULT_FONT = "liberation-sans";
     private HashMap<Integer,BitmapFont> fontList = new HashMap<>();
+    private HashMap<Integer,Skin> skinList = new HashMap<>();
     private int symbolResolution;
     private ArrayList<String> levelNamesList;
     public final static String versionStringFile = "VERSIONSTRING";
@@ -35,10 +38,12 @@ public class Main extends com.badlogic.gdx.Game {
 	public void create () {
         Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         audio = new Audio();
-        loadFont(32);
-        loadFont(64);
-        loadFont(128);
-        skin = new Skin( Gdx.files.internal(DEFAULT_UISKIN) );
+        // TODO: loadSkinAndFont(8);
+        loadSkinAndFont(16);
+        loadSkinAndFont(32);
+        loadSkinAndFont(64);
+        loadSkinAndFont(128);
+
         batch = new SpriteBatch();
         //  Basically, based on density and screensize, we want to set our default zoomlevel.
         // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
@@ -46,11 +51,11 @@ public class Main extends com.badlogic.gdx.Game {
         if(Game.preferencesHandle.contains("sr")) {
             symbolResolution = Game.preferencesHandle.getInteger("sr");
         } else { // guess something reasonable
-            symbolResolution = Math.max(16,
+            symbolResolution = Math.max(MINRES,
                     Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 8
             );
-            int closestPowerOf2 = 16;
-            int nearest = 16;
+            int closestPowerOf2 = MINRES;
+            int nearest = MINRES;
             while (closestPowerOf2 <= 128) {
                 if (Math.abs(symbolResolution - closestPowerOf2) < Math.abs(symbolResolution - nearest)) {
                     nearest = closestPowerOf2;
@@ -89,14 +94,26 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void setSymbolResolution(int symbolResolution) {
-        if(symbolResolution < 16) symbolResolution = 16;
+        if(symbolResolution < MINRES) symbolResolution = MINRES;
         if(symbolResolution > 128) symbolResolution = 128;
         this.symbolResolution = symbolResolution;
     }
 
-    private void loadFont(int res) {
+    private void loadSkinAndFont(int res) {
         String fontName = "fonts/" + DEFAULT_FONT + "-" + res + ".fnt";
         fontList.put(res,new BitmapFont(Gdx.files.internal(fontName)));
+        Skin skin = new Skin();
+        skin.add("default-font", getFont(res), BitmapFont.class);
+        FileHandle fileHandle = Gdx.files.internal(DEFAULT_UISKIN);
+        FileHandle atlasFile = fileHandle.sibling(DEFAULT_ATLAS);
+        if (atlasFile.exists()) {
+            skin.addRegions(new TextureAtlas(atlasFile));
+        }
+        skin.load(fileHandle);
+        //BitmapFont skinFont = skin.getFont("default-font");
+        //skinFont.getData().setScale(2.0f);
+        skinList.put(res,skin);
+
     }
 
     @Override
@@ -122,7 +139,9 @@ public class Main extends com.badlogic.gdx.Game {
     @Override
     public void dispose() {
         batch.dispose();
-        skin.dispose();
+        for(Skin s: skinList.values()) {
+            s.dispose();
+        }
         for(BitmapFont f: fontList.values()) {
             f.dispose();
         }
@@ -137,8 +156,9 @@ public class Main extends com.badlogic.gdx.Game {
         return fontList.get(res);
     }
 
-    public Skin getSkin() {
-        return skin;
+    public Skin getSkin(int res) {
+        if(res<MINRES) res = MINRES;
+        return skinList.get(res);
     }
 
     public Audio getAudio() {
