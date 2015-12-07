@@ -69,7 +69,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         this.main = main;
         gameBatch = main.getBatch();
         camera = new OrthographicCamera();
-        skin = main.getSkin(getSymbolResolution());
+        skin = main.getLevelSkin(getSymbolResolution());
         audio = main.getAudio();
         // don't conflict with gameBatch
         stageBatch = new SpriteBatch();
@@ -444,7 +444,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        skin = main.getSkin(getSymbolResolution());
+        skin = main.getLevelSkin(getSymbolResolution());
         panning = 0; // stop panning
         Matrix4 matrix = new Matrix4();
         matrix.setToOrtho2D(0, 0, width, height);
@@ -471,7 +471,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int fontRes = playwindow.resolution / 2;
         if (fontRes < 32) fontRes = 32;
         if (fontRes > 128) fontRes = 128;
-        font = main.getFont(fontRes);
+        font = main.getLevelFont(fontRes);
     }
 
     @Override

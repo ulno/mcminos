@@ -26,9 +26,12 @@ public class Main extends com.badlogic.gdx.Game {
     private Audio audio;
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
     public static final String DEFAULT_ATLAS = "uiskin.atlas";
-    public static final String DEFAULT_FONT = "liberation-sans";
-    private HashMap<Integer,BitmapFont> fontList = new HashMap<>();
-    private HashMap<Integer,Skin> skinList = new HashMap<>();
+    public static final String LEVEL_FONT = "level";
+    public static final String MENU_FONT = "menu";
+    private HashMap<Integer,BitmapFont> levelFontList = new HashMap<>();
+    private HashMap<Integer,BitmapFont> menuFontList = new HashMap<>();
+    private HashMap<Integer,Skin> levelSkinList = new HashMap<>();
+    private HashMap<Integer,Skin> menuSkinList = new HashMap<>();
     private int symbolResolution;
     private ArrayList<String> levelNamesList;
     public final static String versionStringFile = "VERSIONSTRING";
@@ -38,7 +41,7 @@ public class Main extends com.badlogic.gdx.Game {
 	public void create () {
         Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         audio = new Audio();
-        // TODO: loadSkinAndFont(8);
+        loadSkinAndFont(8);
         loadSkinAndFont(16);
         loadSkinAndFont(32);
         loadSkinAndFont(64);
@@ -100,10 +103,19 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     private void loadSkinAndFont(int res) {
-        String fontName = "fonts/" + DEFAULT_FONT + "-" + res + ".fnt";
-        fontList.put(res,new BitmapFont(Gdx.files.internal(fontName)));
+        String fontName = "fonts/" + LEVEL_FONT + "-" + res + ".fnt";
+        BitmapFont levelFont = new BitmapFont(Gdx.files.internal(fontName));
+        levelFontList.put(res,levelFont);
+        fontName = "fonts/" + MENU_FONT + "-" + res + ".fnt";
+        BitmapFont menuFont = new BitmapFont(Gdx.files.internal(fontName));
+        menuFontList.put(res, menuFont );
+        levelSkinList.put(res, createSkinWithFont(levelFont));
+        menuSkinList.put(res, createSkinWithFont(menuFont));
+    }
+
+    private Skin createSkinWithFont(BitmapFont font) {
         Skin skin = new Skin();
-        skin.add("default-font", getFont(res), BitmapFont.class);
+        skin.add("default-font", font, BitmapFont.class);
         FileHandle fileHandle = Gdx.files.internal(DEFAULT_UISKIN);
         FileHandle atlasFile = fileHandle.sibling(DEFAULT_ATLAS);
         if (atlasFile.exists()) {
@@ -112,8 +124,7 @@ public class Main extends com.badlogic.gdx.Game {
         skin.load(fileHandle);
         //BitmapFont skinFont = skin.getFont("default-font");
         //skinFont.getData().setScale(2.0f);
-        skinList.put(res,skin);
-
+        return skin;
     }
 
     @Override
@@ -139,10 +150,10 @@ public class Main extends com.badlogic.gdx.Game {
     @Override
     public void dispose() {
         batch.dispose();
-        for(Skin s: skinList.values()) {
+        for(Skin s: levelSkinList.values()) {
             s.dispose();
         }
-        for(BitmapFont f: fontList.values()) {
+        for(BitmapFont f: levelFontList.values()) {
             f.dispose();
         }
         Gdx.app.exit();
@@ -152,13 +163,20 @@ public class Main extends com.badlogic.gdx.Game {
         return batch;
     }
 
-    public BitmapFont getFont(int res) {
-        return fontList.get(res);
+    public BitmapFont getLevelFont(int res) {
+        return levelFontList.get(res);
     }
 
-    public Skin getSkin(int res) {
-        if(res<MINRES) res = MINRES;
-        return skinList.get(res);
+    public BitmapFont getMenuFont(int res) {
+        return levelFontList.get(res);
+    }
+
+    public Skin getLevelSkin(int res) {
+        return levelSkinList.get(res);
+    }
+
+    public Skin getMenuSkin(int res) {
+        return menuSkinList.get(res);
     }
 
     public Audio getAudio() {
