@@ -14,9 +14,9 @@
    height="32"
    id="svg4150"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.91 r13725"
    viewBox="0 0 32 32"
-   sodipodi:docname="button-game-save-variant1-00.svg">
+   sodipodi:docname="button-game-load-variant1-00.svg">
   <defs
      id="defs4152">
     <linearGradient
@@ -428,8 +428,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="9.44"
-     inkscape:cx="16"
-     inkscape:cy="16"
+     inkscape:cx="-0.57838983"
+     inkscape:cy="15.788136"
      inkscape:current-layer="layer2"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -437,10 +437,10 @@
      objecttolerance="10000"
      inkscape:snap-perpendicular="true"
      guidetolerance="10000"
-     inkscape:window-width="1024"
-     inkscape:window-height="741"
-     inkscape:window-x="0"
-     inkscape:window-y="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1021"
+     inkscape:window-x="1440"
+     inkscape:window-y="30"
      inkscape:window-maximized="1"
      showguides="false"
      inkscape:guide-bbox="true">
@@ -473,7 +473,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -548,7 +548,7 @@
     </g>
     <path
        style="fill:#d40000;fill-opacity:1;stroke:none"
-       d="m 10,5 0,5 -4,0 10,7 10,-7 -4,0 0,-5 z"
+       d="m 10,17 0,-5 -4,0 10,-7 10,7 -4,0 0,5 z"
        id="rect11710"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc" />

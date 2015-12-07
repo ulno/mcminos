@@ -116,7 +116,7 @@ public class Toolbox {
         this.play = play;
         this.main = play.getMain();
         this.stage = stage;
-        menuSkin = main.getMenuSkin(main.getSymbolResolution()/2);
+        menuSkin = main.getMenuSkin(main.getSymbolResolution());
         levelSkin = main.getLevelSkin(main.getSymbolResolution()/2);
         this.playwindow = playwindow;
         this.mcminos = mcminos;
@@ -250,7 +250,7 @@ public class Toolbox {
 
     public void resize() {
         int res = play.getSymbolResolution();
-        menuSkin = main.getMenuSkin(res/2);
+        menuSkin = main.getMenuSkin(res);
         levelSkin = main.getLevelSkin(res/2);
         // adjust size
         rootTable.setWidth(res + 4); // 4 for border
@@ -563,15 +563,17 @@ allows cheating */
         removeDialog(); // make sure any other one is gone
         Table d = new Table();
         int res = play.getSymbolResolution();
+        Skin writingSkin = main.getMenuSkin(res/2);
+        Skin menuSkin = main.getMenuSkin(res);
         d.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
         d.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
-        d.setSize(Gdx.graphics.getWidth()-res,Gdx.graphics.getHeight()-res);
+        d.setSize(Gdx.graphics.getWidth()*4/5,Gdx.graphics.getHeight()*4/5);
         d.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2,Align.center);
         // Basic layout
         Table topMenu = new Table(menuSkin);
         topMenu.setHeight(res);
         ScrollPane scrollPane = new ScrollPane(topMenu);
-        d.add(scrollPane).colspan(2).expandX().fillX().top().row();
+        d.add(scrollPane).colspan(2).expandX().fillX().top().minHeight(res).row();
         Table statisticsTable = new Table(menuSkin);
         scrollPane = new ScrollPane(statisticsTable);
         d.add(scrollPane).fill().expand();
@@ -648,7 +650,7 @@ allows cheating */
         });
         topMenu.add(touchpadButton).prefSize(res, res);
 
-        Button saveButton = new TextButton("Save\nGame", menuSkin);
+        Button saveButton = new TextButton("Save", writingSkin);
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -686,7 +688,7 @@ allows cheating */
         });
         topMenu.add(minusButton).prefSize(res, res);
 
-        Button symbolPlusButton = new TextButton("Smbl\n+", menuSkin);
+        Button symbolPlusButton = new TextButton("S+", writingSkin);
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -698,7 +700,7 @@ allows cheating */
         });
         topMenu.add(symbolPlusButton).prefSize(res, res);
 
-        Button symbolMinusButton = new TextButton("Smbl\n-", menuSkin);
+        Button symbolMinusButton = new TextButton("S-", writingSkin);
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -748,23 +750,23 @@ allows cheating */
         ///// Fill statistics
         statisticsTable.add(new Label("Statistics", menuSkin)).top().colspan(2).center().padBottom(res / 4).row();
         // Levelname
-        statisticsTable.add(new Label("Levelname: " + level.getName(),menuSkin)).colspan(2).left().row();
+        statisticsTable.add(new Label("Levelname: " + level.getName(),writingSkin)).colspan(2).left().row();
         // Zoomlevel + Resolution
-        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int)(Gdx.graphics.getDensity()*160)), menuSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), menuSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), menuSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), menuSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), menuSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution) , menuSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int)(Gdx.graphics.getFramesPerSecond())), menuSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int)(Gdx.graphics.getDensity()*160)), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution) , writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int)(Gdx.graphics.getFramesPerSecond())), writingSkin)).left().row();
         // Remaining pills
         statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res, 0))).left();
-        pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), menuSkin);
+        pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), writingSkin);
         statisticsTable.add(pillLabel).left();
         statisticsTable.row();
         // Remaining rockmes
         statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res, 0))).left();
-        rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), menuSkin);
+        rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), writingSkin);
         statisticsTable.add(rockmeLabel).left();
         statisticsTable.row();
 
@@ -774,7 +776,7 @@ allows cheating */
         Label story = new Label("Here we will have at one point a beautiful " +
                 "story explaing everything in this Level. " +
                 "This is only some example text at this point.\n\n" +
-                "Stay tuned\n\nUlrich + Andreas", menuSkin);
+                "Stay tuned\n\nUlrich + Andreas", writingSkin);
         story.setWrap(true);
         storyTable.add(story).top().left().width(d.getWidth() / 2);
 
