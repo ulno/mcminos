@@ -58,8 +58,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public final static int offScreen=-0xffffff;
     private int destinationX = offScreen; // if this is >=0 a destination or door to open needs to be selected
     private int destinationY = offScreen;
-    private final static long lastTouchDownInPast = -16 * doubleClickFrames; // too far in history to be noted;
-    private long lastTouchDown = lastTouchDownInPast; // important to detect double click on door
+    private final static long lastTouchInPast = -16 * doubleClickFrames; // too far in history to be noted;
+    private long lastTouchDown = lastTouchInPast; // important to detect double click on door
+    private long lastTouchUp = lastTouchInPast;
     private long panning = 0;
     static final long panScrollBackPause = 60; // wait how long until slowly scrolling back in pan-mode
 
@@ -229,10 +230,30 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void render(float delta) {
         /// check if single click occurred
         long gameFrame = game.getAnimationFrame();
-        if (destinationX != offScreen && gameFrame - lastTouchDown > doubleClickFrames) { // there was a single click
-            setDestination();
-            //destinationX = offScreen; will be lifted by touchUp
-            panning = 0;
+        if (destinationX != offScreen) {
+            if( gameFrame - lastTouchDown > doubleClickFrames) { // there was a single click
+                // attention: this is called every frame until touchUp
+                //Gdx.app.log("render","singleclick occured lastTouchDown="+lastTouchDown+" gameFrame="+gameFrame);
+
+                setDestination();
+                //destinationX = offScreen; // will be lifted by touchUp, needs not to be relased to allow setting when still pressed
+            }
+            if(lastTouchUp > lastTouchDown) {
+                int x = windowToGameX(destinationX);
+                int y = windowToGameY(destinationY);
+                if(level.getLevelBlockFromVPixelRounded(x,y).hasDoor()) {
+                    if (gameFrame > lastTouchDown + doubleClickFrames) { // give grace period of double click
+                        // reset monitoring
+                        lastTouchUp = lastTouchInPast;
+                        destinationX = offScreen;
+                        //Gdx.app.log("render","touchup delayed lifted at gameFrame="+gameFrame);
+                    }
+                } else {
+                    lastTouchUp = lastTouchInPast;
+                    destinationX = offScreen;
+                    //Gdx.app.log("render","touchup directly lifted at gameFrame="+gameFrame);
+                }
+            }
         }
         /////// Handle timing events (like moving and events)
         if (!game.updateTime()) { // update and exit, if game finished
@@ -506,6 +527,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 playwindow.setResolution(gameResolutionCounter);
                 resize();
                 break;
+            case '<':
+                decreaseSymbolResolution();
+                break;
+            case '>':
+                increaseSymbolResolution();
+                break;
             case '1':
                 toolbox.activate();
                 toolbox.activateChocolate();
@@ -582,24 +609,23 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private boolean destinationDown(int screenX, int screenY, int button, boolean detectDoorDoubleClick) {
         if (!toolbox.isActivated()) { // just pan in this case or wait for a registered click -> see tap
             if (button > 0) return false;
-            int x = windowToGameX(screenX);
-            int y = windowToGameY(screenY);
+            destinationX = screenX;
+            destinationY = screenY;
             if (detectDoorDoubleClick) {
+                int x = windowToGameX(screenX);
+                int y = windowToGameY(screenY);
                 LevelBlock lb = level.getLevelBlockFromVPixelRounded(x, y);
                 if (lb.hasDoor() && blockDistance(lb, mcminos.getLevelBlock()) <= 2) { // ok, be careful, somebody clicked on a nearby door
                     long gameFrame = game.getAnimationFrame();
                     if (gameFrame - lastTouchDown > doubleClickFrames) { // this is not part of a double click
-                        destinationX = screenX;
-                        destinationY = screenY;
                         lastTouchDown = gameFrame;
+                        //Gdx.app.log("destinationDown","lastTouchDown="+lastTouchDown);
                     }
-                    return false; // we just monitor here - action in beginning of render
+                    return true;
                 }
             }
             // it's not a near door or doubleclick is not monitored
-            destinationX = screenX;
-            destinationY = screenY;
-            lastTouchDown = lastTouchDownInPast;
+            lastTouchDown = lastTouchInPast;
             return true; // handled
         }
         return false;
@@ -639,7 +665,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        destinationX = offScreen;
+        lastTouchUp = game.getAnimationFrame();
         return false;
     }
 
@@ -695,6 +721,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             destinationDown((int) x, (int) y, button, false);
             setDestination();
             destinationX = offScreen;
+            //Gdx.app.log("tap","single tap at gameFrame="+game.getAnimationFrame());
+
             return true;
         }
         // else will have been registered in touchdown and handled there
@@ -706,6 +734,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int vy = windowToGameY(y);
         LevelBlock lb = level.getLevelBlockFromVPixelRounded(vx, vy);
         if (lb.hasDoor()) {
+            //Gdx.app.log("tryDoor","trying to open door"+game.getAnimationFrame());
             destinationX = offScreen; // cancel destination
             // TODO: does the radius need to be better checked to allow only neighboring doors?
             int delta = blockDistance(lb, mcminos.getLevelBlock());
@@ -767,7 +796,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
         // will count down itself panning = false;
-        destinationX = offScreen; //lift destination selection
+        lastTouchUp = game.getAnimationFrame();
         return false;
     }
 
