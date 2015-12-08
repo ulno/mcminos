@@ -132,7 +132,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int preferredGameResolution = Math.max(16,
                 Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 12 // often reported too big
         );
-        gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution);
+        gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution, main.getSymbolResolution());
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
         toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage);
@@ -294,9 +294,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         if (!toolbox.isActivated()) {
             panning = 0;
-            playwindow.updateCoordinates(mcminos.getSpeed()); // fix coordinates and compute scrolling else coordinates come from panning
+            playwindow.updateCoordinates(mcminos.getSpeed(), getSymbolResolution()); // fix coordinates and compute scrolling else coordinates come from panning
         } else if ( panning == 0 ) { // if nobody is currently looking
-            playwindow.updateCoordinates(1); //slowly scroll back
+            playwindow.updateCoordinates(1, getSymbolResolution()); //slowly scroll back
         } else {
             panning --;
         }
@@ -315,24 +315,28 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameBatch.end(); // must end before other layers
 
         if (menusActivated) {
-            // draw a dark transparent rectangle to have some background for mini screen
-            Gdx.gl.glEnable(GL20.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            // only draw minimap if parts of map are not visible (be one half block tolerant in favor of not drawing)
+            if(level.getVPixelsWidth() > playwindow.getVisibleWidthInVPixels() + PlayWindow.virtualBlockResolution/2
+                    || level.getVPixelsHeight() > playwindow.getVisibleHeightInVPixels() + PlayWindow.virtualBlockResolution/2 ) {
+                // draw a dark transparent rectangle to have some background for mini screen
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-            miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-            miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
-            miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow, level, 0, 0) - playwindow.virtual2MiniResolution,
-                    Graphics.virtualToMiniY(playwindow, level, 0, 0) - playwindow.virtual2MiniResolution,
-                    Graphics.virtualToMiniX(playwindow, level, level.getVPixelsWidth() - 1, 0),
-                    Graphics.virtualToMiniX(playwindow, level, level.getVPixelsHeight() - 1, 0));
-            miniScreenBackground.end();
+                miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
+                miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
+                miniScreenBackground.rect(playwindow.getMiniX(),
+                        playwindow.getMiniY(),
+                        (level.getWidth() + 2) * playwindow.virtual2MiniResolution,
+                        (level.getHeight() + 2) * playwindow.virtual2MiniResolution);
+                miniScreenBackground.end();
 
-            // mini screen
-            miniBatch.begin();
-            playwindow.drawMini(miniBatch);
-            miniBatch.end();
+                // mini screen
+                miniBatch.begin();
+                playwindow.drawMini(miniBatch);
+                miniBatch.end();
 
-            drawVisibleMarker();
+                drawVisibleMarker();
+            }
 
             toolbox.update(); // update toolbox based on inventory
 
@@ -453,7 +457,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         stageBatch.setProjectionMatrix(matrix);
         miniScreenBackground.setProjectionMatrix(matrix);
 
-        playwindow.resize(width, height);
+        playwindow.resize(width, height, main.getSymbolResolution());
         fontResize();
         //menuTable.setBounds(0, 0, width, height);
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
@@ -519,12 +523,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         switch (character) {
             case '+':
                 zoomPlus();
-                playwindow.setResolution(gameResolutionCounter);
+                playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
                 resize();
                 break;
             case '-':
                 zoomMinus();
-                playwindow.setResolution(gameResolutionCounter);
+                playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
                 resize();
                 break;
             case '<':
@@ -594,7 +598,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void zoomPlus() {
         gameResolutionCounter--;
         if (gameResolutionCounter < 0) gameResolutionCounter = 0;
-        playwindow.setResolution(gameResolutionCounter);
+        playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
         resize();
     }
 
@@ -602,7 +606,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameResolutionCounter++;
         if (gameResolutionCounter > Entities.resolutionList.length - 1)
             gameResolutionCounter = Entities.resolutionList.length - 1;
-        playwindow.setResolution(gameResolutionCounter);
+        playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
         resize();
     }
 
@@ -827,7 +831,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void setGameResolution( int resolution ) {
-        gameResolutionCounter = playwindow.setClosestResolution( resolution );
+        gameResolutionCounter = playwindow.setClosestResolution( resolution, main.getSymbolResolution() );
     }
 
     public Game getGame() {
