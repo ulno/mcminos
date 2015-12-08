@@ -48,7 +48,7 @@ public class Load implements Screen {
         Util.scaleBackground(loadimage);
 
         // Set up everything for the current screen
-        skin = main.getSkin();
+        skin = main.getMenuSkin(main.getSymbolResolution());
         batch = main.getBatch();
         stage = new Stage(new ScreenViewport(), batch);
 

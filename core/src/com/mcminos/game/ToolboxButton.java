@@ -1,14 +1,11 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.SnapshotArray;
 
 /**
  * Created by ulno on 13.11.15.
@@ -34,7 +31,7 @@ public class ToolboxButton  {
         button = new Group();
         if(labelLength>0) {
             text = new SegmentString(labelLength);
-            label = new Label(text.getStringBuilder(), toolbox.getSkin());
+            label = new Label(text.getStringBuilder(), toolbox.getLevelSkin());
         }
         button.addListener(listener);
     }
@@ -46,7 +43,10 @@ public class ToolboxButton  {
         Image image = new Image(gfx.getTexture(resolution, 0));
         button.addActor(image);
         if(label != null) {
-            label.setPosition(resolution / 2, resolution / 2, Align.center);
+            label = new Label(text.getStringBuilder(), toolbox.getLevelSkin()); // resolution could have changed
+            int w = (int) label.getWidth();
+            int h = (int) label.getHeight();
+            label.setPosition((resolution -w)/2, (resolution -h )/ 2);
             button.addActor(label);
         }
     }

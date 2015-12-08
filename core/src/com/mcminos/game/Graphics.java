@@ -261,11 +261,13 @@ public class Graphics {
     }
 
     public static int virtualToMiniX( PlayWindow playwindow, Level level, int vx, int anchorX ) {
-        return Gdx.graphics.getWidth() - ((level.getVPixelsWidth() - vx + anchorX ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+//        return Gdx.graphics.getWidth() - ((level.getVPixelsWidth() - vx + anchorX ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+        return playwindow.getMiniX() + ((vx - anchorX ) >> playwindow.virtual2MiniExponent) + playwindow.virtual2MiniResolution;
     }
 
     public static int virtualToMiniY( PlayWindow playwindow, Level level, int vy, int anchorY ) {
-        return Gdx.graphics.getHeight() - ((level.getVPixelsHeight() - vy + anchorY ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+//        return Gdx.graphics.getHeight() - ((level.getVPixelsHeight() - vy + anchorY ) >> playwindow.virtual2MiniExponent) - playwindow.virtual2MiniResolution;
+        return playwindow.getMiniY() + ((vy - anchorY ) >> playwindow.virtual2MiniExponent) + playwindow.virtual2MiniResolution;
     }
 
     public void drawMini( PlayWindow playwindow, Level level, SpriteBatch minibatch, int vx, int vy, int animDelta ) {
@@ -282,11 +284,11 @@ public class Graphics {
         /**
          * For the static part concerning all graphics
          */
-    static void setResolutionAll( PlayWindow playwindow, int resolution ) {
+    static void setResolutionAll( PlayWindow playwindow, int resolution, int toolboxWidth ) {
         for (Graphics gfx : allGraphics) {
             gfx.setResolution( resolution );
         }
-        playwindow.resize();
+        playwindow.resize(toolboxWidth);
     }
 
     public int getzIndex() {

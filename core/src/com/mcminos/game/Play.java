@@ -58,8 +58,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public final static int offScreen=-0xffffff;
     private int destinationX = offScreen; // if this is >=0 a destination or door to open needs to be selected
     private int destinationY = offScreen;
-    private final static long lastTouchDownInPast = -16 * doubleClickFrames; // too far in history to be noted;
-    private long lastTouchDown = lastTouchDownInPast; // important to detect double click on door
+    private final static long lastTouchInPast = -16 * doubleClickFrames; // too far in history to be noted;
+    private long lastTouchDown = lastTouchInPast; // important to detect double click on door
+    private long lastTouchUp = lastTouchInPast;
     private long panning = 0;
     static final long panScrollBackPause = 60; // wait how long until slowly scrolling back in pan-mode
 
@@ -68,7 +69,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         this.main = main;
         gameBatch = main.getBatch();
         camera = new OrthographicCamera();
-        skin = main.getSkin();
+        skin = main.getLevelSkin(getSymbolResolution());
         audio = main.getAudio();
         // don't conflict with gameBatch
         stageBatch = new SpriteBatch();
@@ -96,19 +97,21 @@ public class Play implements Screen, GestureListener, InputProcessor {
      *
      * @param main
      */
-    public Play(final Main main) {
+    public Play(final Main main, int resumeSlot) {
         preInit(main);
-        resumeLevel();
+        resumeLevel(resumeSlot);
         initAfterLevel();
     }
 
-    private void resumeLevel() {
+    private boolean resumeLevel(int resumeSlot) {
         game = new Game(main, this);
-        game.loadSnapshot();
+        if( ! game.loadGame(resumeSlot) ) {
+            return false;
+        }
         level = game.getLevel();
         // start the own timer (which triggers also the movement)
         game.initEventManager();
-
+        return true;
     }
 
     public void loadLevel(String levelName) {
@@ -131,10 +134,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int preferredGameResolution = Math.max(16,
                 Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 12 // often reported too big
         );
-        gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution);
+        gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution, main.getSymbolResolution());
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
-        toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage, skin);
+        toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage);
 
         // init scoreinfo display
         scoreInfo = new StringBuilder(28);
@@ -216,6 +219,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void backToMenu() {
         this.dispose();
+        Game.getSaveFileHandle(0).delete();
         main.setScreen(new MainMenu(main, level.getName()));
     }
 
@@ -229,10 +233,30 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void render(float delta) {
         /// check if single click occurred
         long gameFrame = game.getAnimationFrame();
-        if (destinationX != offScreen && gameFrame - lastTouchDown > doubleClickFrames) { // there was a single click
-            setDestination();
-            //destinationX = offScreen; will be lifted by touchUp
-            panning = 0;
+        if (destinationX != offScreen) {
+            if( gameFrame - lastTouchDown > doubleClickFrames) { // there was a single click
+                // attention: this is called every frame until touchUp
+                //Gdx.app.log("render","singleclick occured lastTouchDown="+lastTouchDown+" gameFrame="+gameFrame);
+
+                setDestination();
+                //destinationX = offScreen; // will be lifted by touchUp, needs not to be relased to allow setting when still pressed
+            }
+            if(lastTouchUp > lastTouchDown) {
+                int x = windowToGameX(destinationX);
+                int y = windowToGameY(destinationY);
+                if(level.getLevelBlockFromVPixelRounded(x,y).hasDoor()) {
+                    if (gameFrame > lastTouchDown + doubleClickFrames) { // give grace period of double click
+                        // reset monitoring
+                        lastTouchUp = lastTouchInPast;
+                        destinationX = offScreen;
+                        //Gdx.app.log("render","touchup delayed lifted at gameFrame="+gameFrame);
+                    }
+                } else {
+                    lastTouchUp = lastTouchInPast;
+                    destinationX = offScreen;
+                    //Gdx.app.log("render","touchup directly lifted at gameFrame="+gameFrame);
+                }
+            }
         }
         /////// Handle timing events (like moving and events)
         if (!game.updateTime()) { // update and exit, if game finished
@@ -273,9 +297,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         if (!toolbox.isActivated()) {
             panning = 0;
-            playwindow.updateCoordinates(mcminos.getSpeed()); // fix coordinates and compute scrolling else coordinates come from panning
+            playwindow.updateCoordinates(mcminos.getSpeed(), getSymbolResolution()); // fix coordinates and compute scrolling else coordinates come from panning
         } else if ( panning == 0 ) { // if nobody is currently looking
-            playwindow.updateCoordinates(1); //slowly scroll back
+            playwindow.updateCoordinates(1, getSymbolResolution()); //slowly scroll back
         } else {
             panning --;
         }
@@ -294,24 +318,28 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameBatch.end(); // must end before other layers
 
         if (menusActivated) {
-            // draw a dark transparent rectangle to have some background for mini screen
-            Gdx.gl.glEnable(GL20.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            // only draw minimap if parts of map are not visible (be one half block tolerant in favor of not drawing)
+            if(level.getVPixelsWidth() > playwindow.getVisibleWidthInVPixels() + PlayWindow.virtualBlockResolution/2
+                    || level.getVPixelsHeight() > playwindow.getVisibleHeightInVPixels() + PlayWindow.virtualBlockResolution/2 ) {
+                // draw a dark transparent rectangle to have some background for mini screen
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-            miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-            miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
-            miniScreenBackground.rect(Graphics.virtualToMiniX(playwindow, level, 0, 0) - playwindow.virtual2MiniResolution,
-                    Graphics.virtualToMiniY(playwindow, level, 0, 0) - playwindow.virtual2MiniResolution,
-                    Graphics.virtualToMiniX(playwindow, level, level.getVPixelsWidth() - 1, 0),
-                    Graphics.virtualToMiniX(playwindow, level, level.getVPixelsHeight() - 1, 0));
-            miniScreenBackground.end();
+                miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
+                miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
+                miniScreenBackground.rect(playwindow.getMiniX(),
+                        playwindow.getMiniY(),
+                        (level.getWidth() + 2) * playwindow.virtual2MiniResolution,
+                        (level.getHeight() + 2) * playwindow.virtual2MiniResolution);
+                miniScreenBackground.end();
 
-            // mini screen
-            miniBatch.begin();
-            playwindow.drawMini(miniBatch);
-            miniBatch.end();
+                // mini screen
+                miniBatch.begin();
+                playwindow.drawMini(miniBatch);
+                miniBatch.end();
 
-            drawVisibleMarker();
+                drawVisibleMarker();
+            }
 
             toolbox.update(); // update toolbox based on inventory
 
@@ -423,6 +451,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        skin = main.getLevelSkin(getSymbolResolution());
         panning = 0; // stop panning
         Matrix4 matrix = new Matrix4();
         matrix.setToOrtho2D(0, 0, width, height);
@@ -431,7 +460,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         stageBatch.setProjectionMatrix(matrix);
         miniScreenBackground.setProjectionMatrix(matrix);
 
-        playwindow.resize(width, height);
+        playwindow.resize(width, height, main.getSymbolResolution());
         fontResize();
         //menuTable.setBounds(0, 0, width, height);
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
@@ -449,22 +478,20 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int fontRes = playwindow.resolution / 2;
         if (fontRes < 32) fontRes = 32;
         if (fontRes > 128) fontRes = 128;
-        font = main.getFont(fontRes);
+        font = main.getLevelFont(fontRes);
     }
 
     @Override
     public void pause() {
-
+        game.saveGame(0);
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -497,13 +524,19 @@ public class Play implements Screen, GestureListener, InputProcessor {
         switch (character) {
             case '+':
                 zoomPlus();
-                playwindow.setResolution(gameResolutionCounter);
+                playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
                 resize();
                 break;
             case '-':
                 zoomMinus();
-                playwindow.setResolution(gameResolutionCounter);
+                playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
                 resize();
+                break;
+            case '<':
+                decreaseSymbolResolution();
+                break;
+            case '>':
+                increaseSymbolResolution();
                 break;
             case '1':
                 toolbox.activate();
@@ -566,7 +599,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void zoomPlus() {
         gameResolutionCounter--;
         if (gameResolutionCounter < 0) gameResolutionCounter = 0;
-        playwindow.setResolution(gameResolutionCounter);
+        playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
         resize();
     }
 
@@ -574,31 +607,30 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameResolutionCounter++;
         if (gameResolutionCounter > Entities.resolutionList.length - 1)
             gameResolutionCounter = Entities.resolutionList.length - 1;
-        playwindow.setResolution(gameResolutionCounter);
+        playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
         resize();
     }
 
     private boolean destinationDown(int screenX, int screenY, int button, boolean detectDoorDoubleClick) {
         if (!toolbox.isActivated()) { // just pan in this case or wait for a registered click -> see tap
             if (button > 0) return false;
-            int x = windowToGameX(screenX);
-            int y = windowToGameY(screenY);
+            destinationX = screenX;
+            destinationY = screenY;
             if (detectDoorDoubleClick) {
+                int x = windowToGameX(screenX);
+                int y = windowToGameY(screenY);
                 LevelBlock lb = level.getLevelBlockFromVPixelRounded(x, y);
                 if (lb.hasDoor() && blockDistance(lb, mcminos.getLevelBlock()) <= 2) { // ok, be careful, somebody clicked on a nearby door
                     long gameFrame = game.getAnimationFrame();
                     if (gameFrame - lastTouchDown > doubleClickFrames) { // this is not part of a double click
-                        destinationX = screenX;
-                        destinationY = screenY;
                         lastTouchDown = gameFrame;
+                        //Gdx.app.log("destinationDown","lastTouchDown="+lastTouchDown);
                     }
-                    return false; // we just monitor here - action in beginning of render
+                    return true;
                 }
             }
             // it's not a near door or doubleclick is not monitored
-            destinationX = screenX;
-            destinationY = screenY;
-            lastTouchDown = lastTouchDownInPast;
+            lastTouchDown = lastTouchInPast;
             return true; // handled
         }
         return false;
@@ -638,7 +670,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        destinationX = offScreen;
+        lastTouchUp = game.getAnimationFrame();
         return false;
     }
 
@@ -694,6 +726,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             destinationDown((int) x, (int) y, button, false);
             setDestination();
             destinationX = offScreen;
+            //Gdx.app.log("tap","single tap at gameFrame="+game.getAnimationFrame());
+
             return true;
         }
         // else will have been registered in touchdown and handled there
@@ -705,6 +739,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int vy = windowToGameY(y);
         LevelBlock lb = level.getLevelBlockFromVPixelRounded(vx, vy);
         if (lb.hasDoor()) {
+            //Gdx.app.log("tryDoor","trying to open door"+game.getAnimationFrame());
             destinationX = offScreen; // cancel destination
             // TODO: does the radius need to be better checked to allow only neighboring doors?
             int delta = blockDistance(lb, mcminos.getLevelBlock());
@@ -750,12 +785,17 @@ public class Play implements Screen, GestureListener, InputProcessor {
             panning = panScrollBackPause; // approx two seconds delay before moving back
             int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
-            playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + level.getVPixelsWidth() - dxi);
-            if(level.getScrollX()) playwindow.windowVPixelXPos %= level.getVPixelsWidth();
-            else playwindow.windowVPixelXPos = Math.min(playwindow.windowVPixelXPos, level.getVPixelsWidth() - playwindow.getVisibleWidthInVPixels());
-            playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + level.getVPixelsHeight() + dyi);
-            if(level.getScrollY()) playwindow.windowVPixelYPos %= level.getVPixelsHeight();
-            else playwindow.windowVPixelYPos = Math.min(playwindow.windowVPixelYPos, level.getVPixelsHeight() - playwindow.getVisibleHeightInVPixels());
+
+            if(level.getScrollX()) {
+                playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + level.getVPixelsWidth() - dxi) % level.getVPixelsWidth();
+            } else {
+                playwindow.windowVPixelXPos = Math.max(Math.min(playwindow.windowVPixelXPos - dxi, level.getVPixelsWidth() - playwindow.getVisibleWidthInVPixels()), 0);
+            }
+            if(level.getScrollY()) {
+                playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + level.getVPixelsHeight() + dyi) % level.getVPixelsHeight();
+            } else {
+                playwindow.windowVPixelYPos = Math.max(Math.min(playwindow.windowVPixelYPos + dyi, level.getVPixelsHeight() - playwindow.getVisibleHeightInVPixels()), 0);
+            }
             return true;
         } else {
             return destinationDown((int) screenX, (int) screenY, 0, false);
@@ -766,7 +806,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
         // will count down itself panning = false;
-        destinationX = offScreen; //lift destination selection
+        lastTouchUp = game.getAnimationFrame();
         return false;
     }
 
@@ -797,7 +837,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void setGameResolution( int resolution ) {
-        gameResolutionCounter = playwindow.setClosestResolution( resolution );
+        gameResolutionCounter = playwindow.setClosestResolution( resolution, main.getSymbolResolution() );
     }
 
     public Game getGame() {
@@ -827,5 +867,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void decreaseSymbolResolution() {
         setSymbolResolution(getSymbolResolution()/2);
+    }
+
+    public Main getMain() {
+        return main;
     }
 }

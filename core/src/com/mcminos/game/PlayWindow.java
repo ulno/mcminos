@@ -44,6 +44,9 @@ public class PlayWindow {
     private Rectangle scissors = new Rectangle();
     private int currentResolutionBitsLeftShifter;
     public int virtual2MiniResolution;
+    private int miniX;
+    private int miniY;
+    private boolean miniMapLeft = false;
 
     public PlayWindow(SpriteBatch batch, OrthographicCamera camera, Level level, McMinos mcminos) {
         this.batch = batch;
@@ -61,15 +64,15 @@ public class PlayWindow {
     }*/
 
 
-    public void setResolution(int resolutionCounter) {
+    public void setResolution(int resolutionCounter, int toolboxWidth) {
         resolution = Entities.resolutionList[resolutionCounter];
         resolutionExponent = Util.log2binary(resolution);
-        Graphics.setResolutionAll(this, resolution);
+        Graphics.setResolutionAll(this, resolution, toolboxWidth);
         currentResolutionBitsLeftShifter = Util.log2binary(resolution) - PlayWindow.virtualBlockResolutionExponent;
-        resize();
+        resize(toolboxWidth);
     }
 
-    public int setClosestResolution( int resolutionValue ) {
+    public int setClosestResolution( int resolutionValue, int toolboxWidth ) {
         int delta = 0x1000000;
         int counter = -1;
         for( int i=0; i<Entities.resolutionList.length; i++ ) {
@@ -79,7 +82,7 @@ public class PlayWindow {
                 counter = i;
             }
         }
-        setResolution(counter);
+        setResolution(counter, toolboxWidth);
         return counter;
     }
 
@@ -140,12 +143,35 @@ public class PlayWindow {
     /**
      * Update the position of the currently seen viewable window
      */
-    public void updateCoordinates(int scrollSpeed) {
-        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcminos.getLevelObject().getVX(), level.getScrollX(), getLevelWidth(), visibleWidthInVPixels, scrollSpeed);
-        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcminos.getLevelObject().getVY(), level.getScrollY(), getLevelHeight(), visibleHeightInVPixels, scrollSpeed);
+    public void updateCoordinates(int scrollSpeed, int toolboxWidth) {
+        int mcmx = mcminos.getLevelObject().getVX();
+        int mcmy = mcminos.getLevelObject().getVY();
+
+        windowVPixelXPos = computeWindowCoordinate(windowVPixelXPos, mcmx, level.getScrollX(), getLevelWidth(), visibleWidthInVPixels, scrollSpeed);
+        windowVPixelYPos = computeWindowCoordinate(windowVPixelYPos, mcmy, level.getScrollY(), getLevelHeight(), visibleHeightInVPixels, scrollSpeed);
+        // minimap coordinates
+        // TODO: only show, when not all fits on the screen
+        // Check, if mcminos is rather in upper right part of screen or in lower left and position minimap
+        // accordingly
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.graphics.getHeight();
+        int mcminosScreenX = projectionX + Graphics.vPixelToScreen(mcmx,windowVPixelXPos,width,currentResolutionBitsLeftShifter);
+        //int mcminosScreenY = Graphics.vPixelToScreen(mcmy,windowVPixelYPos,height,currentResolutionBitsLeftShifter);
+        if( mcminosScreenX > width*3/5 ) {
+            miniMapLeft = true;
+        } else if(mcminosScreenX < width*2/5){
+            miniMapLeft = false;
+        }
+        if(miniMapLeft) {
+            miniX = toolboxWidth;
+            miniY = 0;
+        } else {
+            miniX = width - ((level.getWidth() + 2) << (virtualBlockResolutionExponent - virtual2MiniExponent));
+            miniY = height - ((level.getHeight() + 2) << (virtualBlockResolutionExponent - virtual2MiniExponent));
+        }
     }
 
-    public void resize(int width, int height) {
+    public void resize(int width, int height, int toolboxWidth) {
         // apply globally
         viewWidthInPixels = width;
         viewHeightInPixels = height;
@@ -203,23 +229,22 @@ public class PlayWindow {
         Rectangle clipBounds = new Rectangle( projectionX, projectionY, visibleWidthInPixels, visibleHeightInPixels);
         ScissorStack.calculateScissors(camera, batch.getTransformMatrix(), clipBounds, scissors);
 
-        // fully center mcminos
-        updateCoordinates(0);
-
         // resize minimap
         //virtual2MiniResolution = resolution >=64 ? 8 : 4;
         // set resolution based on size of level in relation to screen
-        // TODO: only show, when not all fits on the screen
-        // TODO: move out of the way, when mcminos near
         int hint = Math.min(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()) / Math.max(level.getWidth(),level.getHeight());
         if(hint < 16) virtual2MiniResolution = 4;
         else if(hint < 40) virtual2MiniResolution = 8;
         else virtual2MiniResolution = 16;
         virtual2MiniExponent = virtualBlockResolutionExponent - Util.log2binary(virtual2MiniResolution);
+
+        // fully center mcminos
+        updateCoordinates(0, toolboxWidth);
+
     }
 
-    public void resize() {
-        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    public void resize(int toolboxWidth) {
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), toolboxWidth);
     }
 
     public int getVisibleWidth() {
@@ -321,5 +346,13 @@ public class PlayWindow {
 
     public SpriteBatch getBatch() {
         return batch;
+    }
+
+    public int getMiniX() {
+        return miniX;
+    }
+
+    public int getMiniY() {
+        return miniY;
     }
 }

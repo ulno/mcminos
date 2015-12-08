@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,7 +19,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class MainMenu implements Screen {
 
-    private final Skin skin;
+    private boolean resumeRequested = false; // only resume, if resume-file detected
+    private Skin levelSkin;
+    private Skin menuSkin;
     private final Stage stage;
     private final Table table;
     private final Texture bg;
@@ -39,8 +39,22 @@ public class MainMenu implements Screen {
         final MainMenu thisScreen = this;
         this.main = main;
         batch = main.getBatch();
-        skin = main.getSkin();
+        int res = main.getSymbolResolution();
+        menuSkin = main.getMenuSkin(res/2);
+        levelSkin = main.getLevelSkin(res/2);
 
+
+/*        menuSkin.remove("default-font",BitmapFont.class);
+//        menuSkin.remove("font_liberation_sans-_regular_16pt",BitmapFont.class);
+        menuSkin.add("default-font", main.getFont(128), BitmapFont.class);
+//        menuSkin.add("font_liberation_sans-_regular_16pt", fontList.get(128));
+        BitmapFont skinFont = menuSkin.getFont("default-font");
+        skinFont.getData().setScale(4.0f);
+//        skinFont = menuSkin.getFont("font_liberation_sans-_regular_16pt");
+//        skinFont.getData().setScale(2.0f); */
+
+//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/myFont.ttf"));
+//        BitmapFont font = generator.generateFont(14);
         bg = new Texture( Gdx.files.internal("images/loadscreen.png"));
         bgimage = new Image(bg);
         bgimage.setZIndex(0);
@@ -51,13 +65,14 @@ public class MainMenu implements Screen {
 
         // root table covering the screen
         rootTable = new Table();
+        rootTable.setPosition(0,0);
         // table for buttons
         table = new Table();
-        rootTable.add(table).top();
-        table.setWidth(stage.getWidth());
-        table.align(Align.center | Align.top);
+        rootTable.add(table).top().center();
+//        table.setWidth(stage.getWidth());
+//        table.align(Align.center | Align.top);
 
-        TextButton startButton = new TextButton("Start",skin);
+        TextButton startButton = new TextButton("Start", menuSkin);
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -66,16 +81,16 @@ public class MainMenu implements Screen {
             }
         });
 
-        TextButton resumeButton = new TextButton("Resume",skin);
+        TextButton resumeButton = new TextButton("Load", menuSkin);
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 thisScreen.dispose();
-                main.setScreen(new Play(main));
+                main.setScreen(new Play(main,1)); // TODO: allow more slots
             }
         });
 
-        TextButton endButton = new TextButton("End",skin);
+        TextButton endButton = new TextButton("End", menuSkin);
         endButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -86,9 +101,9 @@ public class MainMenu implements Screen {
             }
         });
 
-        /*Label text1 = new Label( "Level 1", skin );
-        Label text2 = new Label( "Level 2", skin );
-        Label text3 = new Label( "Level 3", skin );
+        /*Label text1 = new Label( "Level 1", menuSkin );
+        Label text2 = new Label( "Level 2", menuSkin );
+        Label text3 = new Label( "Level 3", menuSkin );
 
         Table scrollTable = new Table();
         scrollTable.add(text1).row();
@@ -100,7 +115,7 @@ public class MainMenu implements Screen {
         table.pad(32);
         table.add(scroller).fill().expand(); */
 
-        sb = new SelectBox(skin);
+        sb = new SelectBox(menuSkin);
 
 
         sb.setItems(main.getLevelNames().toArray());
@@ -108,22 +123,23 @@ public class MainMenu implements Screen {
             sb.setSelected(levelPreselect);
 
         table.add(sb)
-                .pad(32)
-                .minSize(160, 48)
+                .top()
+                .pad(res/4)
+                .minSize(res*3, res*12/10)
                 .row();
         table.add(startButton)
-                .minSize(128, 48)
+                .minSize(res*3, res*12/10)
                 .row();
         table.add(resumeButton)
-                .minSize(128, 48)
+                .minSize(res*3, res*12/10)
                 .row();
         table.add(endButton)
-                .minSize(128, 48);
+                .minSize(res*3, res*12/10);
 
         stage.addActor(bgimage);
         stage.addActor(rootTable);
 
-        versionStringActor = new Label(main.getVersionString(),skin);
+        versionStringActor = new Label(main.getVersionString(), levelSkin);
         stage.addActor(versionStringActor);
 
 
@@ -141,6 +157,11 @@ public class MainMenu implements Screen {
         });
         Gdx.input.setInputProcessor(stage);
         resize();
+
+        // eventually continue a paused/suspended game
+        if(Game.getSaveFileHandle(0).exists()) {
+            resumeRequested = true;
+        }
     }
 
     @Override
@@ -152,9 +173,15 @@ public class MainMenu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // TODO: Create background-picture for loading screen
-        stage.act(delta);
-        stage.draw();
+        if( resumeRequested) {
+            dispose();
+            main.setScreen(new Play(main,0)); // resume
+            // TODO: capture fail
+        } else {
+            // TODO: Create background-picture for loading screen
+            stage.act(delta);
+            stage.draw();
+        }
     }
 
     public void resize() {
@@ -163,11 +190,15 @@ public class MainMenu implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        menuSkin = main.getMenuSkin(main.getSymbolResolution()/2);
+        levelSkin = main.getLevelSkin(main.getSymbolResolution()/2);
+        // TODO recreate menus, when changing size
         Util.scaleBackground(bgimage);
         rootTable.setSize(width,height);
         table.setBounds(0,0,width,height);
         stage.getViewport().update(width, height, true);
-        versionStringActor.setPosition(width-3,2,Align.bottomRight);
+        versionStringActor.setPosition(width-4,0,Align.bottomRight); // TODO: check, why this is not lower on the screen
+//        versionStringActor.setPosition(0,0);
     }
 
     @Override

@@ -1,2 +1,8 @@
 #!/bin/bash
-exec ./gradlew desktop:run
+dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+cd "$dir"
+if test "$1" = fullscreen; then
+    exec ./gradlew desktop:fullscreen
+else
+    exec ./gradlew desktop:run
+fi
