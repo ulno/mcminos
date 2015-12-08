@@ -785,12 +785,17 @@ public class Play implements Screen, GestureListener, InputProcessor {
             panning = panScrollBackPause; // approx two seconds delay before moving back
             int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
-            playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + level.getVPixelsWidth() - dxi);
-            if(level.getScrollX()) playwindow.windowVPixelXPos %= level.getVPixelsWidth();
-            else playwindow.windowVPixelXPos = Math.min(playwindow.windowVPixelXPos, level.getVPixelsWidth() - playwindow.getVisibleWidthInVPixels());
-            playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + level.getVPixelsHeight() + dyi);
-            if(level.getScrollY()) playwindow.windowVPixelYPos %= level.getVPixelsHeight();
-            else playwindow.windowVPixelYPos = Math.min(playwindow.windowVPixelYPos, level.getVPixelsHeight() - playwindow.getVisibleHeightInVPixels());
+
+            if(level.getScrollX()) {
+                playwindow.windowVPixelXPos = (playwindow.windowVPixelXPos + level.getVPixelsWidth() - dxi) % level.getVPixelsWidth();
+            } else {
+                playwindow.windowVPixelXPos = Math.max(Math.min(playwindow.windowVPixelXPos - dxi, level.getVPixelsWidth() - playwindow.getVisibleWidthInVPixels()), 0);
+            }
+            if(level.getScrollY()) {
+                playwindow.windowVPixelYPos = (playwindow.windowVPixelYPos + level.getVPixelsHeight() + dyi) % level.getVPixelsHeight();
+            } else {
+                playwindow.windowVPixelYPos = Math.max(Math.min(playwindow.windowVPixelYPos + dyi, level.getVPixelsHeight() - playwindow.getVisibleHeightInVPixels()), 0);
+            }
             return true;
         } else {
             return destinationDown((int) screenX, (int) screenY, 0, false);
