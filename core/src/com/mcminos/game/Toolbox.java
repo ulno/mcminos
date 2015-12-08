@@ -654,7 +654,7 @@ allows cheating */
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                play.getGame().saveSnapshot();
+                play.getGame().saveGame(1); // TODO: allow several game-saves
             }
         });
         topMenu.add(saveButton).prefSize(res, res);

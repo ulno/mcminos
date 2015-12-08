@@ -51,7 +51,7 @@ public class Game {
     private long realGameTime = 0; // this value comes from libgdx, we just sync our frames against it
     private long lastDeltaTimeLeft = 0;
     public static final Preferences preferencesHandle = Gdx.app.getPreferences("com.mcminos.game.prefs");
-    public static final FileHandle suspendFileHandle = Gdx.files.local("user-save");
+    public static final String suspendFileName = "user-save";
 
     public Game(Main main, Play playScreen) {
         this.main = main;
@@ -346,11 +346,15 @@ public class Game {
     /**
      * Create a persistent snapshot for the current gamestate
      * (hibernate to disk)
+     * if 0 is given it;s the suspend file
+     * 1-3 are normal-save-game slots
      */
-    public void saveSnapshot() {
+    public void saveGame(int slot) {
+        FileHandle fh = getSaveFileHandle(slot);
+
         try {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            Output output = new Output(new BufferedOutputStream(new DeflaterOutputStream(new CipherOutputStream(suspendFileHandle.write(false), cipher))));
+            Output output = new Output(new BufferedOutputStream(new DeflaterOutputStream(new CipherOutputStream(fh.write(false), cipher))));
 
             kryo.writeObject(output, level);
             kryo.writeObject(output, ghosts);
@@ -361,16 +365,22 @@ public class Game {
 
             output.close();
         } catch (Exception e) {
-            Gdx.app.log("exception in saveSnapshot", e.toString());
+            Gdx.app.log("exception in saveGame", e.toString());
         }
     }
 
-    public void loadSnapshot() {
-        // check if the save-game
-        if (suspendFileHandle.exists()) {
+    public static FileHandle getSaveFileHandle( int slot ) {
+        return Gdx.files.local(suspendFileName + "-" + slot);
+    }
+
+    public boolean loadGame(int slot) {
+        FileHandle fh = getSaveFileHandle(slot);
+
+        // check if the save-game exists
+        if (fh.exists()) {
             try {
                 cipher.init(Cipher.DECRYPT_MODE, secretKey);
-                Input input = new Input(new BufferedInputStream(new InflaterInputStream(new CipherInputStream(suspendFileHandle.read(), cipher))));
+                Input input = new Input(new BufferedInputStream(new InflaterInputStream(new CipherInputStream(fh.read(), cipher))));
 
                 // clearMovers(); will already be cleared
                 disposeEventManagerTasks();
@@ -393,26 +403,23 @@ public class Game {
 
                 input.close();
 
-//            } catch( Exception e ) {
+                // if this was "just" a suspend file, delete it
+                if( slot == 0) {
+                    fh.delete();
+                }
 
-                // log the exception
-//                Gdx.app.error( "info", "Unable to parse existing profile data file", e );
-
+            } catch (Exception e) {
+                Gdx.app.log("Unable to load data file in loadGame", e.toString());
                 /*// recover by creating a fresh new profile data file;
                 // note that the player will lose all game progress
                 profile = new Profile();
                 persist( profile ); */
-
-//            }
-
-//        } else {
-/*            // create a new profile data file
-            profile = new Profile();
-            persist( profile ); */
-            } catch (Exception e) {
-                Gdx.app.log("exception in loadSnapshot", e.toString());
+                return false; // not successful
             }
+        } else {
+            return false; // doesn't exist, can't load
         }
+        return true; // success
     }
 
     public EventManager getEventManager() {

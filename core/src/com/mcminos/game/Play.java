@@ -97,19 +97,21 @@ public class Play implements Screen, GestureListener, InputProcessor {
      *
      * @param main
      */
-    public Play(final Main main) {
+    public Play(final Main main, int resumeSlot) {
         preInit(main);
-        resumeLevel();
+        resumeLevel(resumeSlot);
         initAfterLevel();
     }
 
-    private void resumeLevel() {
+    private boolean resumeLevel(int resumeSlot) {
         game = new Game(main, this);
-        game.loadSnapshot();
+        if( ! game.loadGame(resumeSlot) ) {
+            return false;
+        }
         level = game.getLevel();
         // start the own timer (which triggers also the movement)
         game.initEventManager();
-
+        return true;
     }
 
     public void loadLevel(String levelName) {
@@ -217,6 +219,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void backToMenu() {
         this.dispose();
+        Game.getSaveFileHandle(0).delete();
         main.setScreen(new MainMenu(main, level.getName()));
     }
 
@@ -480,17 +483,15 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void pause() {
-
+        game.saveGame(0);
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override

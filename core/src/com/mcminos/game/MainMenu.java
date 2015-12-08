@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class MainMenu implements Screen {
 
+    private boolean resumeRequested = false; // only resume, if resume-file detected
     private Skin levelSkin;
     private Skin menuSkin;
     private final Stage stage;
@@ -80,12 +81,12 @@ public class MainMenu implements Screen {
             }
         });
 
-        TextButton resumeButton = new TextButton("Resume", menuSkin);
+        TextButton resumeButton = new TextButton("Load", menuSkin);
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 thisScreen.dispose();
-                main.setScreen(new Play(main));
+                main.setScreen(new Play(main,1)); // TODO: allow more slots
             }
         });
 
@@ -156,6 +157,11 @@ public class MainMenu implements Screen {
         });
         Gdx.input.setInputProcessor(stage);
         resize();
+
+        // eventually continue a paused/suspended game
+        if(Game.getSaveFileHandle(0).exists()) {
+            resumeRequested = true;
+        }
     }
 
     @Override
@@ -167,9 +173,15 @@ public class MainMenu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // TODO: Create background-picture for loading screen
-        stage.act(delta);
-        stage.draw();
+        if( resumeRequested) {
+            dispose();
+            main.setScreen(new Play(main,0)); // resume
+            // TODO: capture fail
+        } else {
+            // TODO: Create background-picture for loading screen
+            stage.act(delta);
+            stage.draw();
+        }
     }
 
     public void resize() {

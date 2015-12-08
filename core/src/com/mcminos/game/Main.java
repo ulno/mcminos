@@ -39,6 +39,7 @@ public class Main extends com.badlogic.gdx.Game {
 
     @Override
 	public void create () {
+        Gdx.app.setLogLevel(Application.LOG_DEBUG); // TODO: set to info again
         Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         audio = new Audio();
         loadSkinAndFont(8);
@@ -139,12 +140,12 @@ public class Main extends com.badlogic.gdx.Game {
 
     @Override
     public void pause() {
-
+        super.pause();
     }
 
     @Override
     public void resume() {
-
+        super.resume();
     }
 
     @Override
