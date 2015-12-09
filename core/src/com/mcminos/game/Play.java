@@ -99,8 +99,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
      */
     public Play(final Main main, int resumeSlot) {
         preInit(main);
-        resumeLevel(resumeSlot);
-        initAfterLevel();
+        if(!resumeLevel(resumeSlot)) {
+            game = null;
+            mcminos = null;
+        } else {
+            initAfterLevel();
+        }
     }
 
     private boolean resumeLevel(int resumeSlot) {

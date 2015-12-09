@@ -174,9 +174,13 @@ public class MainMenu implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if( resumeRequested) {
-            dispose();
-            main.setScreen(new Play(main,0)); // resume
-            // TODO: capture fail
+            Play p = new Play(main,0);
+            if(p.getGame() != null) { //load successfull
+                dispose();
+                main.setScreen(p); // resume
+            } else { //if not just continue with this screen
+                resumeRequested = false;
+            }
         } else {
             // TODO: Create background-picture for loading screen
             stage.act(delta);
