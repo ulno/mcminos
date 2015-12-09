@@ -13,8 +13,8 @@ SHOWNR:   79
 ACCCD:    79
 
 ; LEVELFORMAT -------------------------------------------+
-LWID:   16
-LHI:    9
+LWID:   20
+LHI:    11
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 SCROLLX:  1
 SCROLLY:  1
@@ -58,12 +58,12 @@ LEVEL:
 XXXXXXXXXXXXXXXXXXXX
 XG                 X
 X XXXXXXXXXXXXXXXX X
-X    ,dXCC    X    X
-X XXXXXXCC   XXXXX X
-X     X      X     X
-X XXXXX     XXXXXX X
-X    X     PXh     X
+X    ,dXCC    Xh   X
+X rrrrXXCC O XXrrr X
+X    .X   O  X     X
+X rrrXX  O  XXrrrr X
+X   hX     PXh     X
 X XXXXXXXXXXXXXXXX X
-X                 GX
+X        .        GX
 XXXXXXXXXXXXXXXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
