@@ -71,10 +71,10 @@ UMBR:   0,0
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
 XXXXXXX
-XCCX. X
+XCCX.LX
 XCCXX+X
-XG    X
-X XXX X
-X+  +PX
+XG....X
+X.XXX.X
+X+..+PX
 XXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*

@@ -1,6 +1,9 @@
-================================================================
-Project McMinos: Software and tools used creating McMinos mobile
-================================================================
+===============
+Project McMinos
+===============
+-----------------------------------------------
+Software and tools used creating McMinos mobile
+-----------------------------------------------
 
 :Authors:
   Andreas Neudecker <zapyon@gmx.net>,
@@ -99,6 +102,15 @@ Homepage:
 * preliminary work
 * animation testing
 
+Fonts
+-----
+
+Google Fonts
+~~~~~~~~~~~~
+
+* Margarine by Astigmatic (Brian J. Bonislawsky) — https://www.google.com/fonts/specimen/Margarine — SIL Open Font License, 1.1
+
+* 
 
 UI editors and tools
 ====================
