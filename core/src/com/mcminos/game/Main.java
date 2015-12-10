@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Json;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,9 +16,8 @@ import java.util.HashMap;
 
 /**
  * Created by ulno on 27.08.15.
- *
+ * <p/>
  * This is the Main class from where the game is controlled.
- *
  */
 public class Main extends com.badlogic.gdx.Game {
     private static final int MINRES = 16;
@@ -28,17 +28,23 @@ public class Main extends com.badlogic.gdx.Game {
     public static final String DEFAULT_ATLAS = "uiskin.atlas";
     public static final String LEVEL_FONT = "level";
     public static final String MENU_FONT = "menu";
-    private HashMap<Integer,BitmapFont> levelFontList = new HashMap<>();
-    private HashMap<Integer,BitmapFont> menuFontList = new HashMap<>();
-    private HashMap<Integer,Skin> levelSkinList = new HashMap<>();
-    private HashMap<Integer,Skin> menuSkinList = new HashMap<>();
+    private HashMap<Integer, BitmapFont> levelFontList = new HashMap<>();
+    private HashMap<Integer, BitmapFont> menuFontList = new HashMap<>();
+    private HashMap<Integer, Skin> levelSkinList = new HashMap<>();
+    private HashMap<Integer, Skin> menuSkinList = new HashMap<>();
     private int symbolResolution;
     private ArrayList<String> levelNamesList;
     public final static String versionStringFile = "VERSIONSTRING";
     private String versionString;
+    public final static String levelsConfigFile = "levels/config.json";
+    private LevelsConfig levelConfig;
+
+    public LevelsConfig getLevelConfig() {
+        return levelConfig;
+    }
 
     @Override
-	public void create () {
+    public void create() {
         Gdx.app.setLogLevel(Application.LOG_DEBUG); // TODO: set to info again
         Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         audio = new Audio();
@@ -52,7 +58,7 @@ public class Main extends com.badlogic.gdx.Game {
         //  Basically, based on density and screensize, we want to set our default zoomlevel.
         // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
         // let's do everything based on width and height - we assume width>height
-        if(Game.preferencesHandle.contains("sr")) {
+        if (Game.preferencesHandle.contains("sr")) {
             symbolResolution = Game.preferencesHandle.getInteger("sr");
         } else { // guess something reasonable
             symbolResolution = Math.max(MINRES,
@@ -71,6 +77,9 @@ public class Main extends com.badlogic.gdx.Game {
 
         versionString = Gdx.files.internal(versionStringFile).readString();
 
+        Json json = new Json();
+        levelConfig = json.fromJson(LevelsConfig.class, Gdx.files.internal((levelsConfigFile)));
+
         readLevelList();
 
         this.setScreen(new Load(this));
@@ -80,7 +89,7 @@ public class Main extends com.badlogic.gdx.Game {
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(Gdx.files.internal("levels/list").read()), 2048);
         String line;
-        levelNamesList =  new ArrayList<>();
+        levelNamesList = new ArrayList<>();
 
         try {
             while ((line = br.readLine()) != null) {
@@ -98,18 +107,18 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void setSymbolResolution(int symbolResolution) {
-        if(symbolResolution < MINRES) symbolResolution = MINRES;
-        if(symbolResolution > 128) symbolResolution = 128;
+        if (symbolResolution < MINRES) symbolResolution = MINRES;
+        if (symbolResolution > 128) symbolResolution = 128;
         this.symbolResolution = symbolResolution;
     }
 
     private void loadSkinAndFont(int res) {
         String fontName = "fonts/" + LEVEL_FONT + "-" + res + ".fnt";
         BitmapFont levelFont = new BitmapFont(Gdx.files.internal(fontName));
-        levelFontList.put(res,levelFont);
+        levelFontList.put(res, levelFont);
         fontName = "fonts/" + MENU_FONT + "-" + res + ".fnt";
         BitmapFont menuFont = new BitmapFont(Gdx.files.internal(fontName));
-        menuFontList.put(res, menuFont );
+        menuFontList.put(res, menuFont);
         levelSkinList.put(res, createSkinWithFont(levelFont));
         menuSkinList.put(res, createSkinWithFont(menuFont));
     }
@@ -134,9 +143,9 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     @Override
-	public void render () {
+    public void render() {
         super.render();
-	}
+    }
 
     @Override
     public void pause() {
@@ -151,10 +160,10 @@ public class Main extends com.badlogic.gdx.Game {
     @Override
     public void dispose() {
         batch.dispose();
-        for(Skin s: levelSkinList.values()) {
+        for (Skin s : levelSkinList.values()) {
             s.dispose();
         }
-        for(BitmapFont f: levelFontList.values()) {
+        for (BitmapFont f : levelFontList.values()) {
             f.dispose();
         }
         Gdx.app.exit();
@@ -188,17 +197,17 @@ public class Main extends com.badlogic.gdx.Game {
         return levelNamesList;
     }
 
-    public String getNextLevel( String currentLevel ) {
-        int index = levelNamesList.indexOf( currentLevel );
-        if(index < 0) return null;
-        if(index == levelNamesList.size()-1) { // Last level
+    public String getNextLevel(String currentLevel) {
+        int index = levelNamesList.indexOf(currentLevel);
+        if (index < 0) return null;
+        if (index == levelNamesList.size() - 1) { // Last level
             // TODO: trigger something special
             return levelNamesList.get(0); // start over for now
         }
-        return  levelNamesList.get(index+1);
+        return levelNamesList.get(index + 1);
     }
 
-    public String getVersionString () {
+    public String getVersionString() {
         return versionString;
     }
 }

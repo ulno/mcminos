@@ -1,0 +1,253 @@
+{
+  "sets": [
+    {
+      "name": "Tutorial",
+      "path": "tut",
+      // "gfx": "tutGfx", will be called gfx.png
+      //"version": "3.14",
+      "levels": [
+        {
+          "id": "tut01_pills",
+          //"gfx": will be id+".png"
+          "title": {
+            "en": "Peas'n'Walls",
+            "de": "Mauern und Pillen"
+          },
+          "body": {
+            "en": "In McMinos levels have walls. You cannot pass through them. Go and eat all peas to finish a level.",
+            "de": "In McMinos-Spielebenen gibt es Wände. Du kannst nicht durch Wände gehen. Geh und sammel alle Pillen ein, um eine Spielebene zu beenden."
+          }
+        },
+        {
+          "id": "tut02_ghost_hanky",
+          "title": {
+            "en": "Ghost Hanky",
+            "de": "Der Geist Hänki"
+          },
+          "body": {
+            "en": "Ghosts live in spooky fortresses. When they come out, they hunt you. Eating the big yellow cookie gives you enough power to hunt the ghosts - for a short while.",
+            "de": "Geister leben in Burgen. Wenn sie herauskommen, jagen sie dich. Wenn du den großen gelben Keks isst, bekommst du genug Energie, um selber die Geister zu jagen - zumindest füë kurze Zeit."
+          }
+        },
+        {
+          "id": "tut03_chocolate",
+          "title": {
+            "en": "Chocolate Take Away",
+            "de": "Schoki für unterwegs"
+          },
+          "body": {
+            "en": "Collect chocolate in your toolbox. Eat it to hunt ghosts.",
+            "de": "Sammel Shokolade ein und hebe sie für später in der Toolbox auf. Auch Schookolade gibt Energie, um Geister jagen zu können."
+          }
+        },
+        {
+          "id": "tut04_doors_and_keys",
+          "title": {
+            "en": "Of doors and keys",
+            "de": "Von Türen und Schlüsseln"
+          },
+          "body": {
+            "en": "Try to collect keys you find. You may need them to open doors. Or to close them again.",
+            "de": "Sammel Schlüssel ein. Ein Schlüssel öffnet oder schließt eine Tür."
+          }
+        },
+        {
+          "id": "tut05_rock_and_rock_me",
+          "title": {
+            "en": "Rock, rock me, baby!"
+          },
+          "body": {
+            "en": "Push the rocks around to fence-in ghosts. Or push them on the corresponding rock-me fields to finish the level.",
+            "de": "Verschiebe die Gesteinsbrocken um Gesiter einzukeilen oder bedecke alle rock-me-Felder mit Gesteinsbrocken, um die Spielebene zu beenden."
+          }
+        },
+        {
+          "id": "tut06_jumping_pills",
+          "title": {
+            "en": "Go, get the jumping peas!",
+            "de": "Schnell, verspeise die Hüpfpillen!"
+          },
+          "body": {
+            "en": "It's easy to eat the peas along the way to finish a level, right? Well, not if they run away. Go, get them!",
+            "de": "Es scheint einfach die Pillen unterwegs zu sich zu nehmen - doch einege laufen weg! Fang sie!"
+          }
+        },
+        {
+          "id": "tut07_bombs",
+          "title": {
+            "en": "It's a bomb!",
+            "de": "Eine Bombe!"
+          },
+          "body": {
+            "en": "Collect, and use with care!",
+            "de": "Einsammeln und mit Vorsicht einsetzen! Verletzungsgefahr!"
+          }
+        },
+        {
+          "id": "tut08_holes",
+          "title": {
+            "en": "Small holes, big holes",
+            "de": "Kleine Löcher, große Löcher."
+          },
+          "body": {
+            "en": "Small holes grow, and down large holes you go.",
+            "de": "Kleine Löcher werden beim Drübergehen größer und große Löcher können einen verschlucken."
+          }
+        },
+        {
+          "id": "tut09_warp_holes",
+          "title": {
+            "en": "Warp holes",
+            "de": "Warp-Löcher"
+          },
+          "body": {
+            "en": "Jump into one, exit from another.",
+            "de": "SPringe in eines, erscheine in einem andern."
+          }
+        },
+        {
+          "id": "tut10_poison_and_medicine",
+          "title": {
+            "en": "Potions good and bad",
+            "de": "Gute Tränke, böse Tränke."
+          },
+          "body": {
+            "en": "Don't touch the poisoned potion. Be sure to have medicine on you, just in case.",
+            "de": "Berühre nicht die Vergiftertränke - sollte es doch passieren sie zu, dass du ein Gegengift bei dir trägst und anwendest."
+          }
+        },
+        {
+          "id": "tut11_dynamite",
+          "title": {
+            "en": "Dynamite",
+            "de": "Dynamit"
+          },
+          "body": {
+            "en": "Let's blow things up! If you see me running, try to keep up.",
+            "de": "Bei diesen Explosionen halten auch die meisten Wände nicht stand."
+          }
+        },
+        {
+          "id": "tut12_oneways",
+          "title": {
+            "en": "One-Ways",
+            "de": "Einbahnstraße"
+          },
+          "body": {
+            "en": "(Only) this way, please.",
+            "de": "Bitte (nur) hier entlang."
+          }
+        },
+        {
+          "id": "tut13_mirror",
+          "title": {
+            "en": "Mirror, mirror on the wall",
+            "de": "Spieglein, Spieglein an der Wand"
+          },
+          "body": {
+            "en": "Left is right and up is down.",
+            "de": "Links ist rechts und oben ist unten."
+          }
+        },
+        {
+          "id": "tut14_speed_up_and_down_kill_all_field",
+          "title": {
+            "en": "Speedy race",
+            "de": "Ab die Post"
+          },
+          "body": {
+            "en": "Speeding can be a life saver.",
+            "de": "Manchmal kann rasen auch Leben retten."
+          }
+        },
+        {
+          "id": "tut15_whisky",
+          "title": {
+            "en": "Don't drink and ...",
+            "de": "Kein Alkohol am ..."
+          },
+          "body": {
+            "en": "If you get drunk you lose control. Just don't.",
+            "de": "Wenn du dich während des Spiels betrinkst, verlierst du die Kontrolle. Besser sein lassen."
+          }
+        },
+        {
+          "id": "tut16_infinite_world",
+          "title": {
+            "en": "Infinite world",
+            "de": "Unendliche Weite"
+          },
+          "body": {
+            "en": "Where does it start? Where does it end? Can you tell? I think, I have been here before.",
+            "de": "Wo fängt es an? Wo endet es? Wer kann es mirverraten? Bin ich hier nicht schon einmal gewesen?"
+          }
+        }
+      ]
+      // end tutorial levels
+    },
+    // end tutorial set
+    {
+      "name": "McMinos Teaser",
+      "path": "teaser",
+      "levels": [
+      ]
+      // end teaserlevels
+    },
+    // end Teaser Set */
+    {
+      "name": "Testing",
+      "path": "testing",
+      "levels": [
+        {
+          "id": "testing",
+          "title": {
+            "en": "Development Testlevel",
+            "de": "Testlevel Deutscher Titel"
+          },
+          "body": {
+            "en": "This is a level with all eLements you can find in the game.",
+            "de": "Hier kann man alles sehen, was es an Elementen in McMinos gibt."
+          }
+        }
+      ]
+      // end testing levels
+    },
+    // end Testing Set
+    {
+      "name": "McMinos is Alive",
+      "path": "alive",
+      "levels": [
+      ]
+      // end alivelevels
+    },
+    // end alive Set
+    {
+      "name": "McMinos Ultimate",
+      "path": "ultimate",
+      "levels": [
+      ]
+      // end ultimate levels
+    },
+    // end ultimate Set
+    {
+      "name": "The Black Daddy Returns",
+      "path": "waltino",
+      "levels": [
+        {
+          "id": "709",
+          "title": {
+            "en": "The Ultimate Hole Challenge",
+            "de": "Das Löcherpuzzle"
+          },
+          "body": {
+            "en": "Lots of ghosts and unstable ground - run before you think, but htink whil eyou run."
+          }
+        }
+      ]
+      // end tbd levels
+    }
+    // end tbd Set */
+  ]
+  //end: sets
+}
+
