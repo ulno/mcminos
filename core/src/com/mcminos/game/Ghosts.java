@@ -49,8 +49,12 @@ public class Ghosts implements KryoSerializable {
 
     public void initAfterKryoLoad(Game game) {
         this.game = game;
+        this.level = game.getLevel();
         mcminos = game.getMcMinos();
         audio = game.getAudio();
+        // adjust pill-counter for active jumping-pills
+        for( int i=0; i<ghostsActive[3]; i++)
+            level.increasePills();
         init();
     }
 
