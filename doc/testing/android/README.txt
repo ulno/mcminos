@@ -7,9 +7,9 @@ McMINOS mobile for Android
 :Date: 2015-12-04
 
 
-McMinos mobile is currently in alpha stage. There are bugs. Features
-and game levels have not yet been fully implemented/selected. A lot may change 
-yet. But McMinos is well playable for testing purposes.
+McMinos mobile is currently in alpha stage. There are bugs. Some features are
+not yet implemented. We are in the process of editing and selecting levels. A
+lot may change yet. But McMinos is well playable for testing purposes.
 
 If you are a first-time player, we recommend that you try the tutorial levels,
 currently shown at the top of the level list in the game's main menu. The 
@@ -20,9 +20,10 @@ are easy to play, and also a nice testing area.
 android-release.apk
 ===================
 
-This is the install archive for Android devices (mobile phones, tablets, etc.). Download 
-this to your android device. Open a file manager and tap this file. Android will 
-offer you to install the program. Accept. Wait a few seconds. Play.
+This is the install archive for Android devices (mobile phones, tablets, etc.).
+Download this to your android device. Open a file manager and tap this file.
+Android will offer you to install the program. Accept. Wait a few seconds.
+Play.
 
 Minimum hardware requirements for McMinos for Android
 -----------------------------------------------------
