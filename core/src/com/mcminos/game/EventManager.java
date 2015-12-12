@@ -56,7 +56,7 @@ public class EventManager implements KryoSerializable {
         }
     }
 
-    public static enum Types {FuseDynamite, FuseBomb, ExplosionLight, ExplosionHeavy, Death, Win, Fall}
+    public static enum Types {FuseDynamite, FuseBomb, ExplosionLight, ExplosionHeavy, Death, Win, DeathRestart, Fall}
 
     /**
      * for kryo-read
@@ -99,6 +99,11 @@ public class EventManager implements KryoSerializable {
                 destroyWalls(center);
                 break;
             case Death:
+                lo = new LevelObject(center, Entities.mcminos_dying, LevelObject.Types.McMinosDying);
+                animationLength = Entities.mcminos_dying.getAnimationFramesLength();
+                lo.setXY(posX,posY);
+                break;
+            case DeathRestart:
                 lo = new LevelObject(center, Entities.mcminos_dying, LevelObject.Types.McMinosDying);
                 animationLength = Entities.mcminos_dying.getAnimationFramesLength();
                 lo.setXY(posX,posY);
@@ -153,6 +158,9 @@ public class EventManager implements KryoSerializable {
                 break;
             case Death:
                 mcminos.executeDeath(false);
+                break;
+            case DeathRestart:
+                mcminos.executeDeath(true);
                 break;
             case Fall:
                 mcminos.executeFall();
@@ -301,7 +309,7 @@ public class EventManager implements KryoSerializable {
                         mcminos.increaseScore(30);
                     }
                     if (lo.getType() == LevelObject.Types.McMinos) {
-                        mcminos.kill("skullkill", Entities.mcminos_dying);
+                        mcminos.kill("skullkill", Entities.mcminos_dying,false);
                     }
                 }
             }

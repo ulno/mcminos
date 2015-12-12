@@ -714,6 +714,17 @@ allows cheating */
         });
         topMenu.add(symbolMinusButton).prefSize(res, res);
 
+        TextButton restartButton = new TextButton("Rstr", writingSkin);
+        restartButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                removeDialog();
+                mcminos.kill("skullkill",Entities.mcminos_dying,true);
+                deactivate();
+            }
+        });
+        topMenu.add(restartButton).prefSize(res, res);
+
         Group leaveButton = new Group();
         //leaveButton.addActor(new Image(emptyButtonGfx));
         leaveButton.addActor(new Image(Entities.menu_button_stop.getTexture(res, 0)));

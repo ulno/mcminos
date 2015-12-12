@@ -229,7 +229,7 @@ public class McMinos implements KryoSerializable {
         if(poisonDuration > 0) {
             poisonDuration --;
             if(poisonDuration == 0) {
-                kill("skullkill", Entities.mcminos_dying);
+                kill("skullkill", Entities.mcminos_dying,false);
             }
         }
         if(drunkLevel > 0) {
@@ -450,7 +450,7 @@ public class McMinos implements KryoSerializable {
         lives --;
     }
 
-    public void kill(String sound, Graphics gfx) {
+    public void kill(String sound, Graphics gfx, boolean completeRestart) {
         // don't multikill
         if( ! isKilled() ) {
             audio.soundPlay(sound);
@@ -460,7 +460,7 @@ public class McMinos implements KryoSerializable {
             gfxSelect(); // Hide current
 
             // schedule level-end and grave-stone setting after animation
-            game.schedule(EventManager.Types.Death, levelObject);
+            game.schedule(completeRestart?EventManager.Types.DeathRestart:EventManager.Types.Death, levelObject);
         }
     }
 
