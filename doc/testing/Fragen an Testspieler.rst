@@ -3,7 +3,7 @@ McMinos mobile for Android
 ==========================
 
 ------------------------------
-Questionnaire for test players
+Fragen an Testspieler
 ------------------------------
 
 
@@ -11,79 +11,78 @@ Questionnaire for test players
   Andreas Neudecker <andreas.mcminos@googlemail.com>,
   Ulrich Norbisrath <ulno@ulno.net>
 
-:Date: 2015-12-04 (2015-10-17)
+:Date: 2015-12-11 (2015-10-17)
 
 :Places:
   Aachen (Germany),
   Jakarta (Indonesia)
 
 
-Dear test player:
+Liebe Testspielerin, lieber Testspieler,
 
-We are pleased and grateful that you are testing McMinos. To improve game play
-and fix bugs we depend on your help. If you would please be so kind as to fill
-out this form, it would facilitate improving the game. If the options of the
-form do not suffice, please feel free to add your own notes, opinions, or
-suggestions.
+wir freuen uns und danken Ihnen dafür, dass Sie McMinos testen. Sie helfen uns,
+das Spiel noch besser zu machen und Fehler zu finden. Wenn Sie
+freundlicherweise die Fragen in diesem Dokument beantworten könnten, würde uns
+das sehr helfen. Wenn die angebotenen Auswahlmöglichkeiten nicht ausreichen,
+fügen Sie einfach Ihre eigenen Anmerkungen hinzu.
 
-Thank you very much.
-
-Andreas and Ulrich
-
+Andreas und Ulrich
 
 
 Hardware
 ========
 
-* Brand and model of your device (mobile phone, tablet, etc.)
+* Marke und Modell Ihres Geräts (Handy, Tablet, etc.):
 
-* Size of internal memory (RAM) of your device:
+* Größe des Arbeitsspeichers (RAM) Ihres Geräts:
 
-* Size of the internal flash memory of your device:
+* Größe des internen Massenspeichers (eingebauter Flashspeicher):
 
-* Size of installed extension memory (e.g. microSD card):
+* Größe der eingesetzen Speicherkarte (z.B. microSD-Karte):
 
 Software
 ========
 
-* Program version you are playing (see ... [2DO]):
+* Programmversion, die Sie gerade testen (siehe Hauptmenü von McMinos; z.B.
+  "mcminos-mobile-0.1-8bedff9 15-12-12 8:01")
 
-* Android version of your device[#]_:
+* Android-Version Ihres Geräts[#]_:
 
-.. [#] To find the Android version your device is running, tap the menu button,
-   then Settings. There, scroll down to "About phone" or "About tablet" 
-   (depending on your device). This screen will show the Android version.
+.. [#] So finden Sie die Version von Android auf Ihrem Gerät: Tippen Sie den
+  Menü-Knopf an, dann die "Einstellungen". Scrollen sie ganz nach unten zum 
+  Punkt "Über das Handy", "Über das Tablet" (oder ähnlich). Tippen Sie darauf. 
+  Der folgende Bildschirm zeigt u.a. die Android-Version an.
 
-Player status
-=============
+Sie als Spieler
+===============
 
-* What is your native language?
+* Welche Sprache ist Ihre Muttersprache?
 
-* If it is not English, how good is your English?
+* Wenn es nicht Englisch ist, wie gut können Sie Englisch?
 
-  [ ] very basic
+  [ ] Grundkenntnisse
 
-  [ ] just enough to play a game with English-only user interface
+  [ ] Gerade genug, um ein Spiel mit englischer Benutzeroberfläche zu spielen.
 
-  [ ] medium level (can read short articles, write an email, ...)
+  [ ] mittlere Stufe (Zeitungsartikel lesen, E-Mails schreiben, ...)
 
-  [ ] business fluent
+  [ ] verhandlungssicher
 
-  [ ] close to native speaker
+  [ ] fast wie ein Muttersprachler
 
-* Are you an experienced video game player?
+* Sind sie ein passionierter Computerspieler?
 
-  [ ] yes
-
-  [ ] no
-
-* If yes, which device do you play on most?
-
-  [ ] computer (desktop, laptop)
+  [ ] ja
   
-  [ ] mobile phone
+  [ ] nein
+
+* Falls ja, an welchem Gerät spielen Sie am häufigsten?
+
+  [ ] Computer (Desktop, Laptop)
   
-  [ ] tablet
+  [ ] Handy, Mobiltelefon
+  
+  [ ] Tablet
   
   [ ] video game console
 
