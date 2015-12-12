@@ -65,11 +65,11 @@
           "id": "tut06-jumping-pills",
           "title": {
             "en": "Go, get the jumping peas!",
-            "de": "Schnell, verspeise die Hüpfpillen!"
+            "de": "Schnell, iss die Hüpfpillen!"
           },
           "body": {
             "en": "It's easy to eat the peas along the way to finish a level, right? Well, not if they run away. Go, get them!",
-            "de": "Es scheint einfach die Pillen unterwegs zu sich zu nehmen - doch einege laufen weg! Fang sie!"
+            "de": "Es scheint leicht, die Pillen unterwegs zu verzehren. Doch einige hauen ab! Fang sie!"
           }
         },
         {
@@ -91,7 +91,7 @@
           },
           "body": {
             "en": "Small holes grow, and down large holes you go.",
-            "de": "Kleine Löcher werden beim Drübergehen größer und große Löcher können einen verschlucken."
+            "de": "Kleine Löcher werden größer, wenn Du drüber läufst. In große fällst Du hinein."
           }
         },
         {
@@ -102,7 +102,7 @@
           },
           "body": {
             "en": "Jump into one, exit from another.",
-            "de": "SPringe in eines, erscheine in einem andern."
+            "de": "Springst Du in eins, kommst Du aus einem anderen wieder heraus."
           }
         },
         {
@@ -113,7 +113,7 @@
           },
           "body": {
             "en": "Don't touch the poisoned potion. Be sure to have medicine on you, just in case.",
-            "de": "Berühre nicht die Vergiftertränke - sollte es doch passieren sie zu, dass du ein Gegengift bei dir trägst und anwendest."
+            "de": "Finger weg von der Giftflasche! Sollte es Dir doch passieren, nimm schnell Deine Medizin!"
           }
         },
         {
@@ -124,7 +124,7 @@
           },
           "body": {
             "en": "Let's blow things up! If you see me running, try to keep up.",
-            "de": "Bei diesen Explosionen halten auch die meisten Wände nicht stand."
+            "de": "Diesen Explosionen halten auch die meisten Wände nicht stand."
           }
         },
         {
@@ -134,19 +134,19 @@
             "de": "Einbahnstraße"
           },
           "body": {
-            "en": "(Only) this way, please.",
+            "en": "This way (only), please.",
             "de": "Bitte (nur) hier entlang."
           }
         },
         {
           "id": "tut13-mirror",
           "title": {
-            "en": "Mirror, mirror on the wall",
-            "de": "Spieglein, Spieglein an der Wand"
+            "en": "Mirror, mirror on the wall ...",
+            "de": "Spieglein, Spieglein an der Wand..."
           },
           "body": {
             "en": "Left is right and up is down.",
-            "de": "Links ist rechts und oben ist unten."
+            "de": "Links ist rechts und rauf ist runter."
           }
         },
         {
@@ -168,7 +168,7 @@
           },
           "body": {
             "en": "If you get drunk you lose control. Just don't.",
-            "de": "Wenn du dich während des Spiels betrinkst, verlierst du die Kontrolle. Besser sein lassen."
+            "de": "Wenn du dich im Spiel betrinkst, verlierst du die Kontrolle. Besser sein lassen."
           }
         },
         {
@@ -178,8 +178,8 @@
             "de": "Unendliche Weite"
           },
           "body": {
-            "en": "Where does it start? Where does it end? Can you tell? I think, I have been here before.",
-            "de": "Wo fängt es an? Wo endet es? Wer kann es mirverraten? Bin ich hier nicht schon einmal gewesen?"
+            "en": "Where does it start? Where does it end? Can you tell? Haven't I been here before?",
+            "de": "Wo fängt es an? Wo hört es auf? Weißt Du's? Hier war ich doch schon einmal?"
           }
         }
       ]
@@ -208,8 +208,15 @@
             "en": "This is a level with all eLements you can find in the game.",
             "de": "Hier kann man alles sehen, was es an Elementen in McMinos gibt."
           }
-        }
-      ]
+        },
+        {
+          "id": "50x50_many_animations",
+          "title": {
+            "en": "Test level - Maximum size, many animations"
+            "de": "Testlevel - Maximalgröße, viele Animationen"
+          },
+        },
+      ],
       // end testing levels
     },
     // end Testing Set
