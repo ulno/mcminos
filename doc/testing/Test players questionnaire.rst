@@ -39,6 +39,8 @@ Hardware
 
 * Size of internal memory (RAM) of your device:
 
+* Size of the internal flash memory of your device:
+
 * Size of installed extension memory (e.g. microSD card):
 
 Software
@@ -50,21 +52,14 @@ Software
 
 .. [#] To find the Android version your device is running, tap the menu button,
    then Settings. There, scroll down to "About phone" or "About tablet" 
-   (depending on your device). This screen will show Android and kernel versions
-   respectively.
+   (depending on your device). This screen will show the Android version.
 
 Player status
 =============
 
 * What is your native language?
 
-  [ ] German
-
-  [ ] English
-
-  [ ] other:
-
-* If it is not English, how would you describe your English knowledge?
+* If it is not English, how good is your English?
 
   [ ] very basic
 

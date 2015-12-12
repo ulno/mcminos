@@ -132,7 +132,7 @@ public class Game {
             if (movement) { // only do this when timer is active
                 ghosts.checkSpawn(); // no spawn, if nobody can move
                 // move everybody
-                mcminos.move();
+                mcminos.move(); // first mcminos
                 for (int i = movers.size() - 1; i >= 0; i--) {
                     // current could already be destroyed by last mover
                     if (i <= movers.size() - 1) {

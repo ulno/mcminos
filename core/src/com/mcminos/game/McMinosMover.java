@@ -126,23 +126,18 @@ public class McMinosMover extends Mover {
                             break;
                     }
                     LevelObject rock = nextBlock.getRock();
-                    RockMover m = (RockMover) rock.getMover();
-                    if (m == null) {
+                    RockMover mover = (RockMover) rock.getMover();
+                    if (mover == null) {
                         // also make rock in the speed we push it
-                        RockMover mover = new RockMover(game, rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
+                        mover = new RockMover(game, rock, getSpeedFactor(), isAccelerated(), currentDirection, nextBlock2);
                         rock.setMover(mover);
                         game.addMover(mover);
-                        //mover.move(); //small headstart to arrive early enough - not necessary
-                        //nextBlock.setRock(null); check if this was important to prevent monster running here - seems not
-                        //nextBlock2.setRock(rock);
-                        audio.soundPlay("moverock");
-                    } else if (!m.isMoving()) {
-                        // let it move again
-                        m.triggerMove(currentDirection, getSpeedFactor(), isAccelerated(), nextBlock2);
-                        //nextBlock.setRock(null);
-                        //nextBlock2.setRock(rock);
-                        audio.soundPlay("moverock");
                     }
+                    mover.triggerMove(currentDirection, getSpeedFactor(), isAccelerated(), nextBlock2);
+                    //mover.move(); // small headstart to arrive early enough - necessary to prevent ghosts frolevel.increasePills();m running to destination - does not work, needs to jump ahead (see below)
+                    // this would actually allow another ghost from the side to run in
+                    rock.setLevelBlock(nextBlock2); // this is important to prevent monsters from running here
+                    audio.soundPlay("moverock");
                 }
                 return nextBlock;
             }
@@ -180,67 +175,90 @@ public class McMinosMover extends Mover {
             int my = currentLevelBlock.getY();
             int lw = level.getWidth();
             int lh = level.getHeight();
-            int shortestDestDistance = level.getHeight() * level.getHeight();
-            int closestX = -1;
-            int closestY = -1;
-            int rockRadius = 1; // in which radius are you allowed to move rocks
-            // select 11x11 field with mcminos being the center
-            // fill the field with the unobstructed directions from each position and
-            // distance travelled to 0
-            for (int y = 0, ly = my - mazeCenter; y < mazeSize; y++, ly++) {
-                for (int x = 0, lx = mx - mazeCenter; x < mazeSize; x++, lx++) {
-                    MazeBlock b = mazeBlocks[y][x];
-                    LevelBlock lb = level.get(lx, ly);
-                    if (lb == null) {
-                        b.directions = 0;
+            if (destBlock.hasRock() && // special treatment for rocks as pathfinding is not as good then
+                    (distanceWithScroll(level.getScrollX(), mx, destX, lw)
+                            + distanceWithScroll(level.getScrollY(), my, destY, lh) == 1)) { // is on neighboring field
+                // let's just try to go there
+                if (my == destY) { // it's left or right
+                    if ((mx + 1) % lw == destX) {
+                        directions = RIGHT;
                     } else {
+                        directions = LEFT;
+                    }
+                } else { // must be up or down
+                    if ((my + 1) % lh == destY) {
+                        directions = UP;
+                    } else {
+                        directions = DOWN;
+                    }
+                }
+                directions = getUnblockedDirs( directions, true, false);
+            } else { // ok, it's just normal pathfinding
+                int shortestDestDistance = level.getHeight() * level.getHeight();
+                int closestX = -1;
+                int closestY = -1;
+                int rockRadius = 1; // in which radius are you allowed to move rocks
+                // select 11x11 field with mcminos being the center
+                // fill the field with the unobstructed directions from each position and
+                // distance travelled to 0
+                for (int y = 0, ly = my - mazeCenter; y < mazeSize; y++, ly++) {
+                    for (int x = 0, lx = mx - mazeCenter; x < mazeSize; x++, lx++) {
+                        MazeBlock b = mazeBlocks[y][x];
+                        LevelBlock lb = level.get(lx, ly);
+                        if (lb == null) {
+                            b.directions = 0;
+                        } else {
+                        /*
+                            turned out to be bad, we need to do some extra if, we select a rock as destination
                         // check, if the dealing with rocks is good like this - seems ok
+
                         int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
                         int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
                         if( xdist + ydist <= rockRadius )
                             b.directions = lb.getUnblockedDirs(true,false);
-                        else
-                            b.directions = lb.getUnblockedDirs(false,false);
+                        else  */
+                            b.directions = lb.getUnblockedDirs(false, false);
+                        }
+                        b.distance = mazeMaxDist;
                     }
-                    b.distance = mazeMaxDist;
                 }
-            }
-            // find shortest paths and compute reachability
-            recurseMazeFromHere(mazeCenter, mazeCenter, -1, -1, 0, 0);
+                // find shortest paths and compute reachability
+                recurseMazeFromHere(mazeCenter, mazeCenter, -1, -1, 0, 0);
 
-            // select closest reachable field to destination from search block
-            int shortestDistance = mazeMaxDist;
-            for (int y = 0, ly = my - mazeCenter; y < mazeSize; y++, ly++) {
-                for (int x = 0, lx = mx - mazeCenter; x < mazeSize; x++, lx++) {
-                    MazeBlock b = mazeBlocks[y][x];
-                    if (b.distance < mazeMaxDist) { // if reachable
-                        int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
-                        int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
-                        b.mhDistanceToDestination = xdist + ydist;
-                        if (b.mhDistanceToDestination <= shortestDestDistance) { // equal as there might be several destinations in small levels
-                            if(b.mhDistanceToDestination < shortestDestDistance) { // really smaller
-                                shortestDistance = mazeMaxDist; // reset distance as we really want to go somewhere close
-                            }
-                            if( b.distance < shortestDistance) {
-                                shortestDestDistance = b.mhDistanceToDestination;
-                                shortestDistance = b.distance;
-                                closestX = x;
-                                closestY = y;
+                // select closest reachable field to destination from search block
+                int shortestDistance = mazeMaxDist;
+                for (int y = 0, ly = my - mazeCenter; y < mazeSize; y++, ly++) {
+                    for (int x = 0, lx = mx - mazeCenter; x < mazeSize; x++, lx++) {
+                        MazeBlock b = mazeBlocks[y][x];
+                        if (b.distance < mazeMaxDist) { // if reachable
+                            int xdist = distanceWithScroll(level.getScrollX(), lx, destX, lw);
+                            int ydist = distanceWithScroll(level.getScrollY(), ly, destY, lh);
+                            b.mhDistanceToDestination = xdist + ydist;
+                            if (b.mhDistanceToDestination <= shortestDestDistance) { // equal as there might be several destinations in small levels
+                                if (b.mhDistanceToDestination < shortestDestDistance) { // really smaller
+                                    shortestDistance = mazeMaxDist; // reset distance as we really want to go somewhere close
+                                }
+                                if (b.distance < shortestDistance) {
+                                    shortestDestDistance = b.mhDistanceToDestination;
+                                    shortestDistance = b.distance;
+                                    closestX = x;
+                                    closestY = y;
+                                }
                             }
                         }
                     }
                 }
+                // trace way back to center and then select destination we were coming from
+                int traceDir = 0;
+                while (closestX != mazeCenter || closestY != mazeCenter) {
+                    MazeBlock b = mazeBlocks[closestY][closestX];
+                    closestX = b.fromX;
+                    closestY = b.fromY;
+                    traceDir = b.fromDir;
+                }
+                directions = traceDir;
+                // consider ingnoring or giving panelty to rocks (or even doors?) in way calculation - solved with radius 1
             }
-            // trace way back to center and then select destination we were coming from
-            int traceDir = 0;
-            while (closestX != mazeCenter || closestY != mazeCenter) {
-                MazeBlock b = mazeBlocks[closestY][closestX];
-                closestX = b.fromX;
-                closestY = b.fromY;
-                traceDir = b.fromDir;
-            }
-            directions = traceDir;
-            // consider ingnoring or giving panelty to rocks (or even doors?) in way calculation - solved with radius 1
         }
         if (directions == STOP) {
             mcminos.hideDestination();
@@ -486,7 +504,7 @@ public class McMinosMover extends Mover {
                         case Skull:
                             item.dispose();
                         case SkullField:
-                            mcminos.kill("skullkill",Entities.mcminos_dying);
+                            mcminos.kill("skullkill",Entities.mcminos_dying,false);
                             break;
                         case Poison:
                             item.dispose();
@@ -567,7 +585,7 @@ public class McMinosMover extends Mover {
                                 if (ghostnr == 1) { // perry only poisons
                                     mcminos.poison();
                                 } else { // zara kills
-                                    mcminos.kill("ghosts", Entities.mcminos_dying);
+                                    mcminos.kill("ghosts", Entities.mcminos_dying,false);
                                 }
                             }
                         }

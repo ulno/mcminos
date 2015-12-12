@@ -7,10 +7,10 @@ McMINOS mobile für Android
 :Date: 2015-12-04
 
 
-McMinos für Mobilgeräte und Desktop-Computer ist zurzeit noch in der Entwicklung 
-(alpha-Version). Es gibt Fehler im Programm. Es wurden noch nicht alle geplanten 
-Funktionen eingebaut. Es kann sich noch einiges am Programm ändern. Aber Du 
-kannst McMinos schon jetzt spielen - wenigstens zu Testzwecken.
+McMinos für Mobilgeräte und Desktop-Computer ist zurzeit in der Entwicklung
+(alpha-Version). Es gibt Fehler im Programm. Manche Funktionen sind noch nicht
+eingebaut. Die Arbeit an den Spielebenen - und deren Auswahl - laufen gerade.
+Aber Du kannst McMinos schon jetzt spielen - wenigstens zu Testzwecken.
 
 Wenn Du McMinos zum ersten mal spielst, empfehlen wir Dir, die Tutorial-Levels 
 zu spielen. Du findest Sie oben in der Level-Liste im Hauptmenü des Programms.
@@ -20,9 +20,9 @@ meisten sind leicht zu spielen und auch zum Testen gut geeignet.
 android-release.apk
 ===================
 
-Dies ist das Installationsarchiv für Android-Geräte (Handys, Tablets, usw.).
-Lade die Datei auf Dein Android-Gerät herunter. Öffne einen Dateimanager und
-tippe auf die Datei. Android bietet dann an, das Programm zu installieren.
+Diese Datei ist das Installationsarchiv für Android-Geräte (Handys, Tablets,
+usw.). Lade die Datei auf Dein Android-Gerät herunter. Öffne einen Dateimanager
+und tippe auf die Datei. Android bietet dann an, das Programm zu installieren.
 Akzeptiere das. Warte ein paar Sekunden. Spiele!
 
 Hardware-Anforderungen unter Android

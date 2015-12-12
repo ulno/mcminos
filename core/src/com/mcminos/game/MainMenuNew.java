@@ -2,140 +2,135 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.ArrayList;
 
 /**
  * Created by ulno on 11.09.15.
  */
-public class MainMenu implements Screen {
-
+public class MainMenuNew implements Screen {
+    private final LevelsConfig levelsConfig;
     private boolean resumeRequested = false; // only resume, if resume-file detected
+    private Skin bigMenuSkin;
     private Skin levelSkin;
-    private Skin menuSkin;
+    private Skin textSkin;
+    private Skin bigLevelSkin;
     private final Stage stage;
     private final Table table;
-    private final Texture bg;
-    private final Image bgimage;
-    private final SelectBox sb;
+    private final TextureRegion bg;
     private final SpriteBatch batch;
     private final Main main;
     private final Table rootTable;
-    private final Label versionStringActor;
+    private Label versionStringActor;
+
+    private ArrayList<Texture> categoryButtonImages = new ArrayList();
 
     private boolean fullscreen = Game.preferencesHandle.getBoolean("fs");
+    private int levelCategory;
 
 
-    public MainMenu(final Main main, String levelPreselect) {
-        final MainMenu thisScreen = this;
+    public MainMenuNew(final Main main, String levelPreselect) {
+        final MainMenuNew thisScreen = this;
         this.main = main;
         batch = main.getBatch();
-        int res = main.getSymbolResolution();
-        menuSkin = main.getMenuSkin(res/2);
-        levelSkin = main.getLevelSkin(res/2);
-
-
-/*        menuSkin.remove("default-font",BitmapFont.class);
-//        menuSkin.remove("font_liberation_sans-_regular_16pt",BitmapFont.class);
-        menuSkin.add("default-font", main.getFont(128), BitmapFont.class);
-//        menuSkin.add("font_liberation_sans-_regular_16pt", fontList.get(128));
-        BitmapFont skinFont = menuSkin.getFont("default-font");
-        skinFont.getData().setScale(4.0f);
-//        skinFont = menuSkin.getFont("font_liberation_sans-_regular_16pt");
-//        skinFont.getData().setScale(2.0f); */
-
-//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/myFont.ttf"));
-//        BitmapFont font = generator.generateFont(14);
-        bg = new Texture( Gdx.files.internal("images/loadscreen.png"));
-        bgimage = new Image(bg);
-        bgimage.setZIndex(0);
-        bgimage.setScaling(Scaling.none);
-        Util.scaleBackground(bgimage);
+        levelsConfig = main.getLevelConfig();
+        bg = Entities.backgrounds_amoeboid_01.getTexture(128,0); // can be fixed as bg is not so critical
 
         stage = new Stage(new ScreenViewport(), batch);
 
         // root table covering the screen
         rootTable = new Table();
-        rootTable.setPosition(0,0);
-        // table for buttons
-        table = new Table();
-        rootTable.add(table).top().center();
-//        table.setWidth(stage.getWidth());
-//        table.align(Align.center | Align.top);
-
-        TextButton startButton = new TextButton("Start", menuSkin);
-        startButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                thisScreen.dispose();
-                main.setScreen(new Play(main, (String) sb.getSelected(), 0, 3));
-            }
-        });
-
-        TextButton resumeButton = new TextButton("Load", menuSkin);
-        resumeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                thisScreen.dispose();
-                main.setScreen(new Play(main,1)); // TODO: allow more slots?
-            }
-        });
-
-        TextButton newMenuButton = new TextButton("New Menu", menuSkin);
-        newMenuButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                thisScreen.dispose();
-                main.setScreen(new MainMenuNew(main,null));
-            }
-        });
-
-        TextButton endButton = new TextButton("End", menuSkin);
-        endButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-/*
-                thisScreen.dispose();
-                main.dispose();*/
-            }
-        });
-
-        sb = new SelectBox(menuSkin);
-
-
-        sb.setItems(main.getLevelNames().toArray());
-        if( levelPreselect != null && levelPreselect != "" )
-            sb.setSelected(levelPreselect);
-
-        table.add(sb)
-                .top()
-                .pad(res/4)
-                .minSize(res*3, res*12/10)
-                .row();
-        table.add(startButton)
-                .minSize(res*3, res*12/10)
-                .row();
-        table.add(resumeButton)
-                .minSize(res*3, res*12/10)
-                .row();
-        table.add(newMenuButton)
-                .minSize(res*3, res*12/10)
-                .row();
-        table.add(endButton)
-                .minSize(res*3, res*12/10);
-
-        stage.addActor(bgimage);
         stage.addActor(rootTable);
+        rootTable.setPosition(0,0);
+
+        // table for menu
+        table = new Table();
+        rootTable.add(table).top().center().fill().expand();
+
+        // read images for the category buttons
+        for(int i=0; i < levelsConfig.size(); i++) {
+            String path = levelsConfig.get(i).getPath();
+            FileHandle fh= Gdx.files.internal("levels/"+path+"/gfx.png");
+            if(fh.exists()) {
+                categoryButtonImages.add(new Texture(fh));
+            } else {
+                categoryButtonImages.add(null);
+            }
+        }
+
+        initMenu();
+
+        // eventually continue a paused/suspended game
+        if(Game.getSaveFileHandle(0).exists()) {
+            resumeRequested = true;
+        }
+    }
+
+    private void initMenu() {
+        int res = main.getSymbolResolution();
+        bigMenuSkin = main.getMenuSkin(res);
+        textSkin = main.getMenuSkin(res/2);
+        levelSkin = main.getLevelSkin(res/2);
+        bigLevelSkin = main.getLevelSkin(res);
+
+        table.clear();
+
+        Label title = new Label("McMinos", bigLevelSkin);
+        table.add(title).colspan(2).center().top().row();
+
+        Table folderSelectorTable = new Table();
+        // add the buttons for the differnetlevel categories to the toolbar
+        class MyClickListener extends ClickListener {
+
+            public int catecory;
+
+            MyClickListener(int c) {
+                catecory = c;
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                switchLevelCategory(catecory);
+                initMenu();
+            }
+        }
+
+        for( int i=0; i< levelsConfig.size(); i++) {
+            Group g = new Group();
+            g.setHeight(res);
+            Button b = new Button(bigMenuSkin);
+            if(categoryButtonImages.get(i) != null) {
+                Image img = new Image(categoryButtonImages.get(i));
+                img.setSize(res,res);
+                b.add(img);
+            }
+            b.setSize(res,res);
+            g.addActor(b);
+            b.addListener(new MyClickListener(i) );
+            folderSelectorTable.add(g).size(res).padLeft(2);
+        }
+
+        ScrollPane folderSelector = new ScrollPane(folderSelectorTable);
+        table.add(folderSelector).colspan(2).row();
+
+        Label l = new Label(levelsConfig.get(levelCategory).getName(),levelSkin);
+        table.add(l).colspan(2).left().row();
+
+        table.add( new TextButton("left",bigMenuSkin));
+        table.add( new TextButton("right",bigMenuSkin));
 
         versionStringActor = new Label(main.getVersionString(), levelSkin);
         stage.addActor(versionStringActor);
@@ -155,11 +150,10 @@ public class MainMenu implements Screen {
         });
         Gdx.input.setInputProcessor(stage);
         resize();
+    }
 
-        // eventually continue a paused/suspended game
-        if(Game.getSaveFileHandle(0).exists()) {
-            resumeRequested = true;
-        }
+    private void switchLevelCategory(int catecory) {
+        levelCategory = catecory;
     }
 
     @Override
@@ -180,7 +174,11 @@ public class MainMenu implements Screen {
                 resumeRequested = false;
             }
         } else {
-            // TODO: Create background-picture for loading screen
+            batch.begin();
+            for(int x=0; x<Gdx.graphics.getWidth(); x+=bg.getRegionWidth())
+                for(int y=0; y<Gdx.graphics.getHeight(); y+=bg.getRegionHeight())
+                    batch.draw(bg,x,y);
+            batch.end();
             stage.act(delta);
             stage.draw();
         }
@@ -192,10 +190,12 @@ public class MainMenu implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        menuSkin = main.getMenuSkin(main.getSymbolResolution()/2);
-        levelSkin = main.getLevelSkin(main.getSymbolResolution()/2);
-        // TODO recreate menus, when changing size
-        Util.scaleBackground(bgimage);
+        int res = main.getSymbolResolution();
+        bigMenuSkin = main.getMenuSkin(res);
+        bigLevelSkin = main.getLevelSkin(res);
+        levelSkin = main.getLevelSkin(res/2);
+        textSkin = main.getMenuSkin(res/2);
+
         rootTable.setSize(width,height);
         table.setBounds(0,0,width,height);
         stage.getViewport().update(width, height, true);
@@ -221,7 +221,6 @@ public class MainMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        bg.dispose();
     }
 
     private void toggleFullscreen() {

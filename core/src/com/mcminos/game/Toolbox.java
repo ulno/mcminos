@@ -256,9 +256,9 @@ public class Toolbox {
         rootTable.setWidth(res + 4); // 4 for border
         rootTable.setHeight(playwindow.getHeightInPixels());
 
-        for(int i=buttonList.size()-1; i>=0; i--) {
+/*        for(int i=buttonList.size()-1; i>=0; i--) {
             buttonList.get(i).rebuildButton(res);
-        }
+        } */
 
         update();
 
@@ -269,6 +269,7 @@ public class Toolbox {
         if( rebuildNecessary ) {
             Cell<Group> last = null;
             boolean rowadded = true;
+            int res = main.getSymbolResolution();
 
             // make all visible
             table.clearChildren();
@@ -280,6 +281,7 @@ public class Toolbox {
                 }
                 ToolboxButton tb = buttonList.get(i);
                 if (tb.isVisible()) {
+                    tb.rebuildButton( res ); // TODO: check, if this creates memory leak
                     last = tb.addToTable();
                     rowadded = false;
                 }
@@ -711,6 +713,17 @@ allows cheating */
             }
         });
         topMenu.add(symbolMinusButton).prefSize(res, res);
+
+        TextButton restartButton = new TextButton("Rstr", writingSkin);
+        restartButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                removeDialog();
+                mcminos.kill("skullkill",Entities.mcminos_dying,true);
+                deactivate();
+            }
+        });
+        topMenu.add(restartButton).prefSize(res, res);
 
         Group leaveButton = new Group();
         //leaveButton.addActor(new Image(emptyButtonGfx));
