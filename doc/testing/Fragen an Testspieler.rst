@@ -36,7 +36,7 @@ Hardware
 
 * Größe des Arbeitsspeichers (RAM) Ihres Geräts:
 
-* Größe des internen Massenspeichers (eingebauter Flashspeicher):
+* Größe des internen Flashspeichers:
 
 * Größe der eingesetzen Speicherkarte (z.B. microSD-Karte):
 
@@ -84,183 +84,198 @@ Sie als Spieler
   
   [ ] Tablet
   
-  [ ] video game console
+  [ ] Spielkonsole
 
-* If yes, what kinds of games do you like to play?
+* Falls ja, welche Art von Spielen spielen Sie am liebsten?
 
-  [ ] classic arcade games (Pac Man, Tetris, Frogger, Asteroids, ...)
+  [ ] Klassische Arcade Games (Pac Man, Tetris, Frogger, Asteroids, ...)
 
-  [ ] graphic adventures ([2DO: give examples])
+  [ ] Adventures (Monkey Island, The Book of Unwritten Tales, Broken Age)
 
-  [ ] simulations (SimCity, Settlers, flight simulators, ...)
+  [ ] Simulationen (SimCity, Settlers, Flugsimulatoren, ...)
 
-  [ ] sport games ([2DO: give examples] Pong, ...)
+  [ ] Sport-Spiele (Pong, Autorennen, Fußball-Simulationen, Sportmanagement)
 
-  [ ] other types (please give examples):
+  [ ] andere (bitte nennen Sie Beispiele):
 
 
-Strictly optional
------------------
+Absolut freiwillig
+------------------
 
-* Gender
+* Geschlecht
 
-  [ ] male
+  [ ] männlich
 
-  [ ] female
+  [ ] weiblich
 
-  [ ] other:
+  [ ] anders:
 
-* Age
+* Alter
 
-  [ ] younger than 10
+  [ ] jünger als 10 Jahre
 
-  [ ] 10 to 19 years
+  [ ] 10 bis 19 Jahre
 
-  [ ] 21 to 30 years
+  [ ] 21 bis 30 Jahre
 
-  [ ] 31 to 40 years
+  [ ] 31 bis 40 Jahre
 
-  [ ] 41 to 50 years
+  [ ] 41 bis 50 Jahre
 
-  [ ] 51 to 60 years
+  [ ] 51 bis 60 Jahre
 
-  [ ] over 60 years
+  [ ] über 60 Jahre
 
 
 McMinos
 =======
 
-* Have you played McMinos before?
+* Haben Sie McMinos vorher schon einmal gespielt?
 
-  [ ] yes, I used to play the Atari version long ago
+  [ ] ja, ich habe vor langer Zeit die Atari-Version gespielt
 
-  [ ] yes, I tested previous alpha/beta versions
+  [ ] ja, ich habe frühere Alpha-/Beta-Versionen getestet
 
-  [ ] no, this is my first time
+  [ ] nein, das ist das erste Mal
 
 
-General impressions
--------------------
+Allgemeiner Eindruck
+--------------------
 
-* How long does it take for McMinos to start on your device? Approximately:
+* Wie lange braucht McMinos auf Ihrem Gerät für den Start?
 
-  [ ] less than 10 seconds
+  [ ] weniger als 10 Sekunden
 
-  [ ] more than 10 seconds
+  [ ] mehr als 10 Sekunden
   
-  [ ] more than 30 seconds
+  [ ] mehr als 30 Sekunden
 
-  [ ] more than one minute
+  [ ] mehr als eine Minute
 
-* How do you like the start screen (while the program is loading)
+* Wie finden Sie den Startbildschirm (während das Programm lädt)?
 
-  [ ] boring, pimp it up!
+  [ ] langweilig, aufpeppen!
 
-  [ ] looks okay, gives an impression of what is to come.
+  [ ] Ist okay, man kriegt einen Eindruck davon, was kommt.
 
-  [ ] blew me away. Honestly.
+  [ ] hat mich umgehauen, ehrlich!
 
-  [ ] other:
+  [ ] anders:
 
-* Are the menus coherent, comprehesible and layed out clearly[#]_?
+* Sind die Menüs übersichtlich und verständlich?[#]_?
 
-.. [#] Currently (2015-12-04) the menus are not final, layout and even screens 
-   may change, be added or deleted.
+.. [#] Zurzeit (2015-12-12) sind die Menüs noch nicht endgültig gestaltet, es 
+   können noch Bildschirme hinzukommen oder wegfallen, das Layout kann sich 
+   ändern.
 
-  [ ] yes
+  [ ] ja
 
-  [ ] no:
+  [ ] nein:
 
-* Any options/functions you are missing in the menus?
+* Vermissen Sie irgend welche Optionen/Funktionen in den Menüs?
 
-  [ ] no
+  [ ] nein
 
-  [ ] yes:
+  [ ] ja:
 
 
-Tutorial levels
+Tutorial-Levels
 ---------------
 
-* Did you play the tutorial levels?
+* Haben Sie die Tutorial-Levels durchgespielt?
 
-  [ ] yes
+  [ ] ja
 
-  [ ] no
+  [ ] nein
 
-* If so, please let us know:
+* Falls ja:
 
-  * Are the tutorial levels graspable as they are?
+  * Sind die Tutorial-Levels verständlich, so, wie sie sind?
 
-    [ ] yes
+    [ ] ja
 
-    [ ] no, some explanations and examples would be helpful:
+    [ ] nein, ein paar Erklärungen und Beispiele wären hilfreich:
 
-  * Do we need tutorials/explanations for all features/extras?
+  * Sollte es Tutorials/Erklärungen für alle Funktionen und Extras geben?
 
-    [ ] yes, please add tutorial levels for all remaining objects, features
+    [ ] ja, bitte ergänzt Tutorial-Levels für alle übrigen Funktione, Objekte, 
+        Features
 
-    [ ] no, leave something for the player to be discovered
-
-
-Main level set
---------------
-
-* Did you finish all levels in the "new" section[#]_?
-
-.. [#] They are high on the list for the first release of McMinos.
-
-  [ ] yes
-
-  [ ] still going; managed to finish level no.:
-
-  [ ] no, gave up at level no.:
-
-* Which type of levels do you favour?
-
-  [ ] classic arcade levels: eat pellets and run
-
-  [ ] action levels: explosives, speed, fun!
-
-  [ ] brain teasers: puzzling, demanding, surprising
-
-  [ ] other (please give level number and comment):
-
-* Did you get stuck at individual levels?
-
-  [ ] yes (please give level number(s) and describe your problem(s)):
-
-  [ ] no
-
-* Which level did you like best, and why (please provide level no.)?
-
-* Are there levels you consider so bad they absolutely need to go?
-
-  [ ] no
-  
-  [ ] yes:
+    [ ] nein, lasst den Spielern was zum Entdecken und Ausprobieren
 
 
-Bugs
-----
-
-Did you find any bugs in the program? - If so, please try to find out, if the 
-bug is "reproducible", i.e.:
-
-* does the same problem occur again in the same situation? Example: "*started
-  playing level no. X, went left, moved a rock, program crashed*"
-
-* does the same problem occur in similar situations in different places? 
-  Example: "*started level X and tried to save the game before moving McMinos 
-  → program crashed. Tried the same in level Y, and it happened again.*"
-
-* does the problem occur rarely or every time you try?
-
-* If you have McMinos installed on different devices: does the problem occur on 
-  all of them?
-
-
-Additional notes
+Haupt-Level-Satz
 ----------------
 
-*This space intentionally left blank*
+* Haben Sie alle Levels aus dem Abschnitt "new" durchgespielt[#]_?
+
+.. [#] Diese Levels werden sehr wahrscheinlich in die erste öffentliche Version 
+       von McMinos aufgenommen.
+
+  [ ] ja
+
+  [ ] bin noch dabei, hab's bisher geschafft bis Level Nr.:
+
+  [ ] nein, ich habe aufgegeben bei Level Nr.:
+
+* Welche Art von Levels bevorzugen Sie?
+
+  [ ] Klassische Arcade-Levels: iss Pillen und renn!
+
+  [ ] Action-Levels: Explosionen, Speed, Spaß!
+
+  [ ] knifflige Knobel-Levels
+
+  [ ] andere (bitte nennen Sie Beispiel-Levels und erläutern Sie, was Ihnen 
+      daran gefällt):
+
+* Sind Sie bei bestimmten Levels stecken geblieben?
+
+  [ ] nein
+
+  [ ] ja (bitte nennen Sie die Level-Nummer(n) und beschreiben Sie Ihr(e) 
+      Problem(e)):
+
+* Welches Level hat Ihnen am besten gefallen, und warum?
+
+* Gibt es Levels, die so schlecht sind, dass Sie finden, sie sollten unbedingt 
+  rausfliegen[#]_?
+
+.. [#] Der Abschnitt "misc" in der Level-Auswahl enthält Levels, die noch im 
+       Entstehen sind. Diese laufen also noch außer Konkurrenz!
+
+  [ ] nein
+  
+  [ ] ja:
+
+
+Fehler im Programm
+------------------
+
+Haben Sie irgend welche Fehler im Programm gefunden? Falls ja, versuchen Sie
+bitte heraus zu finden, ob ein Fehler "reproduzierbar" ist, z.B.:
+
+* tritt das gleiche Probem in der gleichen Situation erneut auf? 
+  Beispiel: "*Habe Level Nr. X angefangen, ging nach links, schob einen Stein, 
+  Programm abgestürzt*"
+
+* tritt das gleiche Problem in ähnlichen Situationen an anderer Stelle wieder 
+  auf?
+  Beispiel: "*Lud Level X an und versuchte, das Spiel zu speichern, bevor ich 
+  McMinos bewegt habe → Programmabsturz. Versuchte das gleiche in Level Y - 
+  und es ist wieder passiert.*"
+
+* Tritt das Problem sehr selten auf, oder jedes Mal, wenn Sie versuchen, es 
+  hervor zu rufen?
+
+* Wenn Sie McMinos auf verschiedenen Geräten installiert haben: tritt das 
+  Problem auf allen auf? — Bitte denken Sie in diesem Fall daran, uns 
+  mitzuteilen, um welche Geräte es sich handelt, und welche Android-Versionen 
+  auf ihnen laufen (s.o.)
+
+
+Weitere Anmerkungen
+-------------------
+
+*Dieser Platz ist für Sie reserviert.*
 

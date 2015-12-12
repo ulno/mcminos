@@ -91,11 +91,11 @@ Player status
 
   [ ] classic arcade games (Pac Man, Tetris, Frogger, Asteroids, ...)
 
-  [ ] graphic adventures ([2DO: give examples])
+  [ ] adventures (Monkey Island, The Book of Unwritten Tales, Broken Age)
 
   [ ] simulations (SimCity, Settlers, flight simulators, ...)
 
-  [ ] sport games ([2DO: give examples] Pong, ...)
+  [ ] sport games (Pong, racing games, football simulations, sport management)
 
   [ ] other types (please give examples):
 
@@ -234,7 +234,10 @@ Main level set
 
 * Which level did you like best, and why (please provide level no.)?
 
-* Are there levels you consider so bad they absolutely need to go?
+* Are there levels you consider so bad they absolutely need to go[#]_?
+
+.. [#] The levels in section "misc" are not yet ready for playing, so this 
+       question does not apply to them.
 
   [ ] no
   
