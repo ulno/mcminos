@@ -504,7 +504,7 @@ public class McMinosMover extends Mover {
                         case Skull:
                             item.dispose();
                         case SkullField:
-                            mcminos.kill("skullkill",Entities.mcminos_dying);
+                            mcminos.kill("skullkill",Entities.mcminos_dying,false);
                             break;
                         case Poison:
                             item.dispose();
@@ -585,7 +585,7 @@ public class McMinosMover extends Mover {
                                 if (ghostnr == 1) { // perry only poisons
                                     mcminos.poison();
                                 } else { // zara kills
-                                    mcminos.kill("ghosts", Entities.mcminos_dying);
+                                    mcminos.kill("ghosts", Entities.mcminos_dying,false);
                                 }
                             }
                         }
