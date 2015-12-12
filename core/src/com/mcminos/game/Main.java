@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -75,7 +76,12 @@ public class Main extends com.badlogic.gdx.Game {
             symbolResolution = nearest;
         }
 
-        versionString = Gdx.files.internal(versionStringFile).readString();
+        try {
+            versionString = new BufferedReader(Gdx.files.internal(versionStringFile).reader()).readLine();
+        } catch (IOException e) {
+            Gdx.app.log("Main","Trouble reading version string",e);
+            versionString = "undefined";
+        }
 
         Json json = new Json();
         levelConfig = json.fromJson(LevelsConfig.class, Gdx.files.internal((levelsConfigFile)));

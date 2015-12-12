@@ -7,7 +7,7 @@
       //"version": "3.14",
       "levels": [
         {
-          "id": "tut01_pills",
+          "id": "tut01-pills",
           //"gfx": will be id+".png"
           "title": {
             "en": "Peas'n'Walls",
@@ -19,7 +19,7 @@
           }
         },
         {
-          "id": "tut02_ghost_hanky",
+          "id": "tut02-ghost-hanky",
           "title": {
             "en": "Ghost Hanky",
             "de": "Der Geist Hänki"
@@ -30,7 +30,7 @@
           }
         },
         {
-          "id": "tut03_chocolate",
+          "id": "tut03-chocolate",
           "title": {
             "en": "Chocolate Take Away",
             "de": "Schoki für unterwegs"
@@ -41,7 +41,7 @@
           }
         },
         {
-          "id": "tut04_doors_and_keys",
+          "id": "tut04-doors-and-keys",
           "title": {
             "en": "Of doors and keys",
             "de": "Von Türen und Schlüsseln"
@@ -52,7 +52,7 @@
           }
         },
         {
-          "id": "tut05_rock_and_rock_me",
+          "id": "tut05-rock-and-rock-me",
           "title": {
             "en": "Rock, rock me, baby!"
           },
@@ -62,7 +62,7 @@
           }
         },
         {
-          "id": "tut06_jumping_pills",
+          "id": "tut06-jumping-pills",
           "title": {
             "en": "Go, get the jumping peas!",
             "de": "Schnell, verspeise die Hüpfpillen!"
@@ -73,7 +73,7 @@
           }
         },
         {
-          "id": "tut07_bombs",
+          "id": "tut07-bombs",
           "title": {
             "en": "It's a bomb!",
             "de": "Eine Bombe!"
@@ -84,7 +84,7 @@
           }
         },
         {
-          "id": "tut08_holes",
+          "id": "tut08-holes",
           "title": {
             "en": "Small holes, big holes",
             "de": "Kleine Löcher, große Löcher."
@@ -95,7 +95,7 @@
           }
         },
         {
-          "id": "tut09_warp_holes",
+          "id": "tut09-warp-holes",
           "title": {
             "en": "Warp holes",
             "de": "Warp-Löcher"
@@ -106,7 +106,7 @@
           }
         },
         {
-          "id": "tut10_poison_and_medicine",
+          "id": "tut10-poison-and-medicine",
           "title": {
             "en": "Potions good and bad",
             "de": "Gute Tränke, böse Tränke."
@@ -117,7 +117,7 @@
           }
         },
         {
-          "id": "tut11_dynamite",
+          "id": "tut11-dynamite",
           "title": {
             "en": "Dynamite",
             "de": "Dynamit"
@@ -128,7 +128,7 @@
           }
         },
         {
-          "id": "tut12_oneways",
+          "id": "tut12-oneways",
           "title": {
             "en": "One-Ways",
             "de": "Einbahnstraße"
@@ -139,7 +139,7 @@
           }
         },
         {
-          "id": "tut13_mirror",
+          "id": "tut13-mirror",
           "title": {
             "en": "Mirror, mirror on the wall",
             "de": "Spieglein, Spieglein an der Wand"
@@ -150,7 +150,7 @@
           }
         },
         {
-          "id": "tut14_speed_up_and_down_kill_all_field",
+          "id": "tut14-speed-up-and-down-kill-all-field",
           "title": {
             "en": "Speedy race",
             "de": "Ab die Post"
@@ -161,7 +161,7 @@
           }
         },
         {
-          "id": "tut15_whisky",
+          "id": "tut15-whisky",
           "title": {
             "en": "Don't drink and ...",
             "de": "Kein Alkohol am ..."
@@ -172,7 +172,7 @@
           }
         },
         {
-          "id": "tut16_infinite_world",
+          "id": "tut16-infinite-world",
           "title": {
             "en": "Infinite world",
             "de": "Unendliche Weite"
@@ -240,7 +240,7 @@
             "de": "Das Löcherpuzzle"
           },
           "body": {
-            "en": "Lots of ghosts and unstable ground - run before you think, but htink whil eyou run."
+            "en": "Lots of ghosts and unstable ground - run before you think, but think while you run."
           }
         }
       ]
