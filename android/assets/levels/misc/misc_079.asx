@@ -1,20 +1,20 @@
 ; LEVEL NEW ---------------------------------------------+
 ; FOR McMINOS - Version 3.14
-; Created.....: 2015-10-23
+; Created.....: 2015-12-09
 ; Done by.....: Andreas Neudecker
 
 ; HEADER ------------------------------------------------+
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR:   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 
-NUMBR:    77
-SHOWNR:   77
-ACCCD:    77
+NUMBR:    79
+SHOWNR:   79
+ACCCD:    79
 
 ; LEVELFORMAT -------------------------------------------+
-LWID:   16
-LHI:    9
+LWID:   20
+LHI:    11
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 SCROLLX:  1
 SCROLLY:  1
@@ -32,35 +32,37 @@ MCSPEED:  1
 GHOST1:   1
 GHSPEED1: 1
 AGIL1:    15
-GRTIME1:  5
+GRTIME1:  60
 
 GHOST2:   0
 GHSPEED2: 1
 AGIL2:    15
-GRTIME2:  3
+GRTIME2:  61
 PILLMAX2: 100
-PILLFREQ2:  1
+PILLFREQ2:  100
 
 GHOST3:   0
 GHSPEED3: 1
 AGIL3:    15
-GRTIME3:  3
+GRTIME3:  63
 TRANSWALL3: 3
 
 GHOST4:   0
 GHSPEED4: 1
 AGIL4:    15
-GRTIME4:  3
+GRTIME4:  67
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
-XX X X +++X XdXX
-bX   X XXXX  CC 
- X X        XCCX
-XX X XXXXXX X XX
-O> r <(PG.> r OD
-XX X XXXXXX X XX
-bX X        X   
- X   XXX XX   X 
-XX X Xk   X X XX
+XXXXXXXXXXXXXXXXXXXX
+XG                 X
+X XXXXXXXXXXXXXXXX X
+X    ,dXCC    Xh   X
+X rrrrXXCC O XXrrr X
+X    .X   O  X     X
+X rrrXX  O  XXrrrr X
+X   hX     PXh     X
+X XXXXXXXXXXXXXXXX X
+X        .        GX
+XXXXXXXXXXXXXXXXXXXX
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*
