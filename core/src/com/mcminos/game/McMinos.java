@@ -521,7 +521,7 @@ public class McMinos implements KryoSerializable {
     }
 
     public void makeDrunk() {
-        drunkLevel += 16 << Game.timeResolutionExponent;
+        drunkLevel += 10 << Game.timeResolutionExponent;
         audio.soundPlay("ethanole");
         gfxDrunk();
     }
