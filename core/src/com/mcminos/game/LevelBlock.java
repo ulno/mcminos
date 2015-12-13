@@ -448,8 +448,11 @@ public class LevelBlock implements KryoSerializable {
     }
 
     public void makeLetter() {
+        /*
+        currently deactivated unitl thishas a function again
         LevelObject lo = new LevelObject(level,x,y,Entities.extras_letter.getzIndex(),LevelObject.Types.Letter);
         lo.setGfx(Entities.extras_letter);
+        */
         // add(lo), already done in new LevelObject;
     }
 
