@@ -67,11 +67,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private void preInit(final Main main) {
         this.main = main;
-        gameBatch = main.getBatch();
         camera = new OrthographicCamera();
         skin = main.getLevelSkin(getSymbolResolution());
         audio = main.getAudio();
         // don't conflict with gameBatch
+        gameBatch = new SpriteBatch();
         stageBatch = new SpriteBatch();
         backgroundBatch = new SpriteBatch();
         miniBatch = new SpriteBatch();
@@ -500,9 +500,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void dispose() {
-        //stageBatch.dispose();
         game.dispose();
         stage.dispose();
+        gameBatch.dispose();
+        backgroundBatch.dispose();
+        miniBatch.dispose();
+        stageBatch.dispose();
     }
 
     @Override

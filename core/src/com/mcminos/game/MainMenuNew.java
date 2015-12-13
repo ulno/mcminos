@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -13,9 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by ulno on 11.09.15.
@@ -33,39 +37,114 @@ public class MainMenuNew implements Screen {
     private final SpriteBatch batch;
     private final Main main;
     private final Table rootTable;
-    private Label versionStringActor;
+//    private Label versionStringActor;
 
     private ArrayList<Texture> categoryButtonImages = new ArrayList();
 
     private boolean fullscreen = Game.preferencesHandle.getBoolean("fs");
     private int levelCategory;
     private int activatedLevel = -1; // nothing selected in the beginning
-    private String language="en";
+    private String language = "en";
+    private BitmapFont levelFont;
+    private HashMap<String, Texture> textureCache = new HashMap<>();
 
 
     public MainMenuNew(final Main main, String levelPreselect) {
         final MainMenuNew thisScreen = this;
         this.main = main;
-        batch = main.getBatch();
+        batch = new SpriteBatch();
         levelsConfig = main.getLevelConfig();
-        bg = Entities.backgrounds_amoeboid_01.getTexture(128,0); // can be fixed as bg is not so critical
+        bg = Entities.backgrounds_amoeboid_01.getTexture(128, 0); // can be fixed as bg is not so critical
 
         stage = new Stage(new ScreenViewport(), batch);
 
         // root table covering the screen
         rootTable = new Table();
         stage.addActor(rootTable);
-        rootTable.setPosition(0,0);
+        rootTable.setPosition(0, 0);
 
         // table for menu
         table = new Table();
         rootTable.add(table).top().center().fill().expand();
 
+        rootTable.setBackground(new Drawable() {
+            @Override
+            public void draw(Batch batch, float x0f, float y0f, float widthf, float heightf) {
+                int x0 = (int) x0f;
+                int y0 = (int) y0f;
+                int width = (int) widthf;
+                int height = (int) heightf;
+
+                for (int x = x0; x < x0 + width; x += bg.getRegionWidth())
+                    for (int y = y0; y < 0 + height; y += bg.getRegionHeight())
+                        batch.draw(bg, x, y);
+            }
+
+            @Override
+            public float getLeftWidth() {
+                return 0;
+            }
+
+            @Override
+            public void setLeftWidth(float leftWidth) {
+
+            }
+
+            @Override
+            public float getRightWidth() {
+                return 0;
+            }
+
+            @Override
+            public void setRightWidth(float rightWidth) {
+
+            }
+
+            @Override
+            public float getTopHeight() {
+                return 0;
+            }
+
+            @Override
+            public void setTopHeight(float topHeight) {
+
+            }
+
+            @Override
+            public float getBottomHeight() {
+                return 0;
+            }
+
+            @Override
+            public void setBottomHeight(float bottomHeight) {
+
+            }
+
+            @Override
+            public float getMinWidth() {
+                return 0;
+            }
+
+            @Override
+            public void setMinWidth(float minWidth) {
+
+            }
+
+            @Override
+            public float getMinHeight() {
+                return 0;
+            }
+
+            @Override
+            public void setMinHeight(float minHeight) {
+
+            }
+        });
         // read images for the category buttons
-        for(int i=0; i < levelsConfig.size(); i++) {
+        for (int i = 0; i < levelsConfig.size(); i++) {
             String path = levelsConfig.get(i).getPath();
-            FileHandle fh= Gdx.files.internal("levels/"+path+"/gfx.png");
-            if(fh.exists()) {
+            FileHandle fh = Gdx.files.internal("levels/" + path + "/gfx.png");
+            if (fh.exists()) {
                 categoryButtonImages.add(new Texture(fh));
             } else {
                 categoryButtonImages.add(null);
@@ -75,18 +154,21 @@ public class MainMenuNew implements Screen {
         initMenu();
 
         // eventually continue a paused/suspended game
-        if(Game.getSaveFileHandle(0).exists()) {
+        if (Game.getSaveFileHandle(0).exists()) {
             resumeRequested = true;
         }
     }
 
     private void switchLevelCategory(int catecory) {
         levelCategory = catecory;
-        switchSelectedLevel(-1); //deselect level
+//        selectLevel(-1); //deselect level
     }
 
-    private void switchSelectedLevel(int level) {
+    private void selectLevel(int level) {
         activatedLevel = level;
+        LevelSet levelSet = levelsConfig.get(levelCategory);
+        this.dispose();
+        main.setScreen(new Play(main, levelSet.getPath() + "/" + levelSet.get(level).getId(), 0, 3));
     }
 
     // inner class for menu
@@ -116,110 +198,107 @@ public class MainMenuNew implements Screen {
 
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            switchSelectedLevel(level);
-            initMenu();
+            selectLevel(level);
         }
     }
 
     private void initMenu() {
         int res = main.getSymbolResolution();
         bigMenuSkin = main.getMenuSkin(res);
-        textSkin = main.getMenuSkin(res/2);
-        levelSkin = main.getLevelSkin(res/2);
+        textSkin = main.getMenuSkin(res / 2);
+        levelSkin = main.getLevelSkin(res / 2);
         bigLevelSkin = main.getLevelSkin(res);
 
         table.clear();
 
         Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with old white graphics
-        table.add(title).prefHeight(res).center().top().row();
+        table.add(title).prefHeight(res).center().top().padBottom(res / 8).row();
 
-        // TODO: add preference menu as first toolbar, refactor Preferences into own class
+        Label l = new Label(levelsConfig.get(levelCategory).getName(), levelSkin);
+        table.add(l).prefHeight(res + 4).padBottom(res / 16).left().row();
 
         Table folderSelectorTable = new Table();
-        folderSelectorTable.setHeight(res);
 
-        // add the buttons for the differnetlevel categories to the toolbar
-        Cell<Group> last = null;
-        for( int i=0; i< levelsConfig.size(); i++) {
+        // add the buttons for the different level categories to the toolbar
+        Cell<Group> lastCategory = null;
+        for (int i = 0; i < levelsConfig.size(); i++) {
             Group g = new Group();
             g.setHeight(res);
             Button b = new Button(bigMenuSkin);
-            if(i==levelCategory) {
-                b.setColor(1.0f,0,0,1.0f);
+            if (i == levelCategory) {
+                b.setColor(1.0f, 0, 0, 1.0f);
             }
-            if(categoryButtonImages.get(i) != null) {
+            if (categoryButtonImages.get(i) != null) {
                 Image img = new Image(categoryButtonImages.get(i));
-                img.setSize(res,res);
+                img.setSize(res, res);
                 b.add(img);
             }
-            b.setSize(res,res);
+            b.setSize(res, res);
             g.addActor(b);
-            b.addListener(new CategoryClickListener(i) );
-            last = folderSelectorTable.add(g).left().prefSize(res);
-            if(i!=0) folderSelectorTable.padLeft(2);
+            b.addListener(new CategoryClickListener(i));
+            lastCategory = folderSelectorTable.add(g).top().left().prefSize(res).padBottom(res / 16);
+            folderSelectorTable.row();
         }
-        last.fillX().expandX();
-
-
+        lastCategory.fillY().expandY();
         ScrollPane folderSelector = new ScrollPane(folderSelectorTable);
-        table.add(folderSelector).fillX().expandX().left().minHeight(res).prefHeight(res+4).row();
-
-        Label l = new Label(levelsConfig.get(levelCategory).getName(),levelSkin);
-        table.add(l).prefHeight(res+4).padTop(2).padBottom(2).left().row();
-
 
         Table twoColumns = new Table();
+
+
         table.add(twoColumns).fill().expand().row();
 
         Table levelSelectorTable = new Table();
         ScrollPane levelSelector = new ScrollPane(levelSelectorTable);
-        levelSelector.setForceScroll(false,true);
-
+        levelSelector.setForceScroll(false, true);
 
         LevelSet categoryLevels = levelsConfig.get(levelCategory);
-        for(int i=0; i<categoryLevels.size(); i++) {
-            LevelConfig levelConfig = categoryLevels.get(i);
-            Button b = new TextButton( Integer.toString(i+1), textSkin );
-            levelSelectorTable.add(b).prefSize(res,res).pad(res/8);
-            if(i==activatedLevel) {
-                b.setColor(1.0f,0,0,1.0f);
+        Cell<Group> lastCell = null;
+        for (int i = 0; i < categoryLevels.size(); i++) {
+            LevelConfig lc = categoryLevels.get(i);
+            Group levelRowGroup = new Group();
+            levelRowGroup.setHeight(res+res/8);
+            Table levelRow = new Table();
+            levelRow.setPosition(0,res/2); // TODO: figure out why this shift is necessary -> bug in libgdx?
+            levelRowGroup.addActor(levelRow);
+            Group thumbnail = new Group();
+            thumbnail.setSize(res, res);
+            String levelThumbNailName = "levels/" + levelsConfig.get(levelCategory).getPath() + "/" + lc.getId() + ".png";
+            Texture texture = null;
+            if (textureCache.containsKey(levelThumbNailName)) {
+                texture = textureCache.get(levelThumbNailName);
+            } else {
+                FileHandle fh = Gdx.files.internal(levelThumbNailName);
+                if (fh.exists()) {
+                    texture = new Texture(fh);
+                    textureCache.put(levelThumbNailName, texture);
+                }
             }
-            if( (i+1)%4 == 0 ) {
-                levelSelectorTable.row();
+            if (texture != null) {
+                Image snapshot = new Image(texture);
+                snapshot.setSize(res, res);
+                thumbnail.addActor(snapshot);
             }
-            b.addListener(new LevelClickListener(i) );
+            Label t = new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+            levelRow.add(thumbnail).prefHeight(res).top().left().padRight(res / 4);
+            levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
+            lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
+            levelSelectorTable.row();
+            levelRow.addListener(new LevelClickListener(i));
         }
-
-        twoColumns.add( levelSelector ).top().left().padRight(res);
-
-
-        Table levelDescriptionTable = new Table();
-        if(activatedLevel >= 0) {
-            LevelConfig lc = levelsConfig.get(levelCategory).get(activatedLevel);
-            FileHandle fh = Gdx.files.internal("levels/" + levelsConfig.get(levelCategory).getPath() + "/" + lc.getId() + ".png" );
-            if(fh.exists()) {
-                Image snapshot = new Image(new Texture(fh)); // TODO: make sure image gets disposed
-                snapshot.scaleBy((float)res/256);
-                levelDescriptionTable.add(snapshot).top().row();
-            }
-            Label t = new Label(lc.getTitle(language),levelSkin);
-            levelDescriptionTable.add(t).top().left().padBottom(res/8).row();
-            Label b = new Label(lc.getBody(language),levelSkin);
-            b.setWrap(true);
-            levelDescriptionTable.add(b).top().left().fillX().row();
+        if (lastCell != null) {
+            lastCell.expandY().fillY();
         }
-        Group startButton = new Group();
-        startButton.setSize(res,res);
-        startButton.addActor(new Image(Entities.menu_button_play.getTexture(res, 0)));
-        levelDescriptionTable.add(startButton).prefSize(res,res).fill().expand().bottom().right();
+        twoColumns.add(folderSelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
+        twoColumns.add(levelSelector).fill().expand();
 
-        twoColumns.add( levelDescriptionTable ).fill().expand();
 
+/*        if(versionStringActor != null) {
+            versionStringActor.remove();
+        }
         versionStringActor = new Label(main.getVersionString(), levelSkin);
-//        versionStringActor.setAlignment(Align.bottomRight);
-
-        table.add(versionStringActor).prefHeight(res).right().padBottom(res/8);
-
+        versionStringActor.setPosition(0,0, Align.bottomRight);
+//        versionStringActor.setColor(1,1,1,0.5f);
+        rootTable.addActor(versionStringActor); */
 
         stage.addListener(new InputListener() {
             @Override
@@ -246,27 +325,26 @@ public class MainMenuNew implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if( resumeRequested) {
-            Play p = new Play(main,0);
-            if(p.getGame() != null) { //load successfull
+        if (resumeRequested) {
+            Play p = new Play(main, 0);
+            if (p.getGame() != null) { //load successfull
                 dispose();
                 main.setScreen(p); // resume
             } else { //if not just continue with this screen
                 resumeRequested = false;
             }
         } else {
-            batch.begin();
-            for(int x=0; x<Gdx.graphics.getWidth(); x+=bg.getRegionWidth())
-                for(int y=0; y<Gdx.graphics.getHeight(); y+=bg.getRegionHeight())
-                    batch.draw(bg,x,y);
-            batch.end();
             stage.act(delta);
             stage.draw();
+            batch.begin();
+            levelFont.draw(batch, main.getVersionString(), 0, main.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
+            batch.end();
+
         }
     }
 
     public void resize() {
-        resize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
@@ -274,12 +352,13 @@ public class MainMenuNew implements Screen {
         int res = main.getSymbolResolution();
         bigMenuSkin = main.getMenuSkin(res);
         bigLevelSkin = main.getLevelSkin(res);
-        levelSkin = main.getLevelSkin(res/2);
-        textSkin = main.getMenuSkin(res/2);
+        levelSkin = main.getLevelSkin(res / 2);
+        textSkin = main.getMenuSkin(res / 2);
 
-        rootTable.setSize(width,height);
-        table.setBounds(0,0,width,height);
+        rootTable.setSize(width, height);
+        table.setBounds(0, 0, width, height);
         stage.getViewport().update(width, height, true);
+        levelFont = main.getLevelFont(main.getSymbolResolution() / 2);
     }
 
     @Override
@@ -299,11 +378,14 @@ public class MainMenuNew implements Screen {
 
     @Override
     public void dispose() {
+        for (Texture t : textureCache.values())
+            t.dispose();
         stage.dispose();
+        batch.dispose();
     }
 
     private void toggleFullscreen() {
-        if(!fullscreen) {
+        if (!fullscreen) {
             fullscreen = true;
             //DesktopLauncher.run(false);
 

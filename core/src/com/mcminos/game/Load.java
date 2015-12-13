@@ -49,7 +49,7 @@ public class Load implements Screen {
 
         // Set up everything for the current screen
         skin = main.getMenuSkin(main.getSymbolResolution());
-        batch = main.getBatch();
+        batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
 
         // build stage
@@ -155,5 +155,6 @@ public class Load implements Screen {
     public void dispose() {
         //manager.dispose(); disables the sounds
         loadscreen.dispose();
+        batch.dispose();
     }
 }

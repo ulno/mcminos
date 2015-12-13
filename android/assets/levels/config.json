@@ -208,6 +208,17 @@
             "en": "This is a level with all eLements you can find in the game.",
             "de": "Hier kann man alles sehen, was es an Elementen in McMinos gibt."
           }
+        },
+        {
+          "id": "50x50_many_animations",
+          "title": {
+            "en": "Development Testlevel 50x50",
+            "de": "Testlevel Deutscher Titel 50x50"
+          },
+          "body": {
+            "en": "This is a huge level with all Elements you can find in the game.",
+            "de": "Großer Testlevel mit vielen Animationen."
+          }
         }
       ]
       // end testing levels

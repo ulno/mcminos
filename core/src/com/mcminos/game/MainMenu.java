@@ -38,7 +38,7 @@ public class MainMenu implements Screen {
     public MainMenu(final Main main, String levelPreselect) {
         final MainMenu thisScreen = this;
         this.main = main;
-        batch = main.getBatch();
+        batch = new SpriteBatch();
         int res = main.getSymbolResolution();
         menuSkin = main.getMenuSkin(res/2);
         levelSkin = main.getLevelSkin(res/2);
@@ -222,6 +222,7 @@ public class MainMenu implements Screen {
     public void dispose() {
         stage.dispose();
         bg.dispose();
+        batch.dispose();
     }
 
     private void toggleFullscreen() {

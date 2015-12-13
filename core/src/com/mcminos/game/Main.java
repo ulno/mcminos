@@ -22,8 +22,6 @@ import java.util.HashMap;
  */
 public class Main extends com.badlogic.gdx.Game {
     private static final int MINRES = 16;
-    private Game game;
-    private SpriteBatch batch;
     private Audio audio;
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
     public static final String DEFAULT_ATLAS = "uiskin.atlas";
@@ -55,7 +53,6 @@ public class Main extends com.badlogic.gdx.Game {
         loadSkinAndFont(64);
         loadSkinAndFont(128);
 
-        batch = new SpriteBatch();
         //  Basically, based on density and screensize, we want to set our default zoomlevel.
         // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
         // let's do everything based on width and height - we assume width>height
@@ -165,7 +162,6 @@ public class Main extends com.badlogic.gdx.Game {
 
     @Override
     public void dispose() {
-        batch.dispose();
         for (Skin s : levelSkinList.values()) {
             s.dispose();
         }
@@ -173,10 +169,6 @@ public class Main extends com.badlogic.gdx.Game {
             f.dispose();
         }
         Gdx.app.exit();
-    }
-
-    public SpriteBatch getBatch() {
-        return batch;
     }
 
     public BitmapFont getLevelFont(int res) {
