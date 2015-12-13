@@ -258,7 +258,7 @@ public class MainMenuNew implements Screen {
             Group levelRowGroup = new Group();
             levelRowGroup.setHeight(res+res/8);
             Table levelRow = new Table();
-            levelRow.setPosition(0,res/2); // TODO: figure out why this shift is necessary -> bug in libgdx?
+            levelRow.setPosition(0,res/2+res/8); // TODO: figure out why this shift is necessary -> bug in libgdx?
             levelRowGroup.addActor(levelRow);
             Group thumbnail = new Group();
             thumbnail.setSize(res, res);
