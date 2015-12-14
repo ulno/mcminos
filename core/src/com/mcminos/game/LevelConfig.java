@@ -1,5 +1,8 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
 import java.util.HashMap;
 
 /**
@@ -9,8 +12,20 @@ public class LevelConfig {
     private String id;
     private HashMap<String, String> title;
     private HashMap<String, String> body;
+    private LevelCategory category;
+    private int nr = -1;
 
     public LevelConfig() {
+    }
+
+    /**
+     * is called after json-read to initialize
+     * @param category
+     * @param nr
+     */
+    public void init(LevelCategory category, int nr) {
+        this.category = category;
+        this.nr = nr;
     }
 
     public String getTitle(String lang) {
@@ -33,5 +48,21 @@ public class LevelConfig {
 
     public String getId() {
         return id;
+    }
+
+    public String getName() {
+        return category.getPath() + "/" + getId();
+    }
+
+    public int getCategoryNr() {
+        return category.getNr();
+    }
+
+    public int getNr() {
+        return nr;
+    }
+
+    public LevelConfig getNextLevel() {
+        return category.get(nr+1);
     }
 }

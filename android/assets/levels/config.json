@@ -3,6 +3,10 @@
     {
       "name": "Tutorial",
       "path": "tut",
+      "endmessage": {
+        "en": "Congratulations, you finished all the tutorial levels. Continue with another catagory of levels.",
+        "de": "Glückwunsch. Du hast alle Spielebenen der Einführungskategorie gemeistert. Fahre mit einer anderen Kategorie fort."
+      },
       // "gfx": "tutGfx", will be called gfx.png
       //"version": "3.14",
       "levels": [
@@ -189,6 +193,10 @@
     {
       "name": "McMinos Teaser",
       "path": "teaser",
+      "endmessage": {
+        "en": "Congratulations, you finished all the teaser levels. To play more McMinos levels, get the payed version of McMinos.",
+        "de": "Glückwunsch. Du hast alle Spielebenen der Teaser-Kategorie gemeistert. Um weitere Level von McMinos zu spielen besorge dir die bezahlte Version von McMinos"
+      },
       "levels": [
       ]
       // end teaserlevels
@@ -197,6 +205,10 @@
     {
       "name": "Testing",
       "path": "testing",
+      "endmessage": {
+        "en": "Congratulations, you finished all the testing levels. To play more select a different category.",
+        "de": "Glückwunsch. Du hast alle Spielebenen der Test-Kategorie gemeistert. Um weitere Level zu spielen, wähle eine andere Kategorie."
+      },
       "levels": [
         {
           "id": "testing",
@@ -226,8 +238,282 @@
     // end Testing Set
     {
       "name": "McMinos is Alive",
-      "path": "alive",
+      "path": "new",
+      "endmessage": {
+        "en": "Congratulations, you finished all levels. To play more, visit http://mcminos.com to check out the schedule of new versions.",
+        "de": "Glückwunsch. Du hast alle Spielebenen gemeistert. Um weiter zu spielen besuche http://mcminos.de, um dich über weitere Versionen zu informieren."
+      },
       "levels": [
+        {
+          "id": "0815_000",
+          "title": {
+            "en": "0815_000",
+            "de": "0815_000"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_001",
+          "title": {
+            "en": "0815_001",
+            "de": "0815_001"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_002",
+          "title": {
+            "en": "0815_002",
+            "de": "0815_002"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_003",
+          "title": {
+            "en": "0815_003",
+            "de": "0815_003"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_004",
+          "title": {
+            "en": "0815_004",
+            "de": "0815_004"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_005",
+          "title": {
+            "en": "0815_005",
+            "de": "0815_005"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_006",
+          "title": {
+            "en": "0815_006",
+            "de": "0815_006"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_007",
+          "title": {
+            "en": "0815_007",
+            "de": "0815_007"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_008",
+          "title": {
+            "en": "0815_008",
+            "de": "0815_008"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_009",
+          "title": {
+            "en": "0815_009",
+            "de": "0815_009"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_010",
+          "title": {
+            "en": "0815_010",
+            "de": "0815_010"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_011",
+          "title": {
+            "en": "0815_011",
+            "de": "0815_011"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_012",
+          "title": {
+            "en": "0815_012",
+            "de": "0815_012"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_013",
+          "title": {
+            "en": "0815_013",
+            "de": "0815_013"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_014",
+          "title": {
+            "en": "0815_014",
+            "de": "0815_014"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_015",
+          "title": {
+            "en": "0815_015",
+            "de": "0815_015"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_016",
+          "title": {
+            "en": "0815_016",
+            "de": "0815_016"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_017",
+          "title": {
+            "en": "0815_017",
+            "de": "0815_017"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_018",
+          "title": {
+            "en": "0815_018",
+            "de": "0815_018"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_019",
+          "title": {
+            "en": "0815_019",
+            "de": "0815_019"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_020",
+          "title": {
+            "en": "0815_020",
+            "de": "0815_020"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_021",
+          "title": {
+            "en": "0815_021",
+            "de": "0815_021"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_022",
+          "title": {
+            "en": "0815_022",
+            "de": "0815_022"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_023",
+          "title": {
+            "en": "0815_023",
+            "de": "0815_023"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_024",
+          "title": {
+            "en": "0815_024",
+            "de": "0815_024"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_025",
+          "title": {
+            "en": "0815_025",
+            "de": "0815_025"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "0815_026",
+          "title": {
+            "en": "0815_026",
+            "de": "0815_026"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        }
       ]
       // end alivelevels
     },
@@ -235,6 +521,10 @@
     {
       "name": "McMinos Ultimate",
       "path": "ultimate",
+      "endmessage": {
+        "en": "Congratulations, you finished all McMinos-Ultimate levels. To play more, visit http://mcminos.com to check out the schedule of new versions.",
+        "de": "Glückwunsch. Du hast alle Spielebenen von McMinos-Ultimate gemeistert. Um weiter zu spielen besuche http://mcminos.de, um dich über weitere Versionen zu informieren."
+      },
       "levels": [
       ]
       // end ultimate levels
@@ -243,6 +533,8 @@
     {
       "name": "The Black Daddy Returns",
       "path": "waltino",
+      "endmessage": {
+      },
       "levels": [
         {
           "id": "709",

@@ -652,7 +652,8 @@ allows cheating */
         });
         topMenu.add(touchpadButton).prefSize(res, res);
 
-        Button saveButton = new TextButton("Save", writingSkin);
+//        Button saveButton = new TextButton("Save", writingSkin);
+        Image saveButton = new Image(Entities.menu_button_game_save.getTexture(res,0));
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -763,7 +764,7 @@ allows cheating */
         ///// Fill statistics
         statisticsTable.add(new Label("Statistics", menuSkin)).top().colspan(2).center().padBottom(res / 4).row();
         // Levelname
-        statisticsTable.add(new Label("Levelname: " + level.getName(),writingSkin)).colspan(2).left().row();
+        statisticsTable.add(new Label("Levelname: " + level.getLevelConfig().getName(),writingSkin)).colspan(2).left().row();
         // Zoomlevel + Resolution
         statisticsTable.add(new Label(new StringBuilder("Density: ").append((int)(Gdx.graphics.getDensity()*160)), writingSkin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().row();
@@ -773,12 +774,12 @@ allows cheating */
         statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution) , writingSkin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int)(Gdx.graphics.getFramesPerSecond())), writingSkin)).left().row();
         // Remaining pills
-        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res, 0))).left();
+        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res/2, 0))).left();
         pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), writingSkin);
         statisticsTable.add(pillLabel).left();
         statisticsTable.row();
         // Remaining rockmes
-        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res, 0))).left();
+        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res/2, 0))).left();
         rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), writingSkin);
         statisticsTable.add(rockmeLabel).left();
         statisticsTable.row();
@@ -786,10 +787,7 @@ allows cheating */
         //// Fill the story
 
         storyTable.add(new Label("Story", menuSkin)).top().center().padBottom(res / 4).row();
-        Label story = new Label("Here we will have at one point a beautiful " +
-                "story explaing everything in this Level. " +
-                "This is only some example text at this point.\n\n" +
-                "Stay tuned\n\nUlrich + Andreas", writingSkin);
+        Label story = new Label(level.getLevelConfig().getBody("en"), writingSkin);
         story.setWrap(true);
         storyTable.add(story).top().left().width(d.getWidth() / 2);
 

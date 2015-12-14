@@ -80,13 +80,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
         background = Entities.backgrounds_amoeboid_01;
     }
 
-    public Play(Main main, String levelName, int score, int lives ) {
-        if(levelName==null) {
+    public Play(Main main, LevelConfig levelConfig, int score, int lives ) {
+        if(levelConfig==null) {
             backToMenu();
             return;
         }
         preInit(main);
-        loadLevel(levelName);
+        loadLevel(levelConfig);
         initAfterLevel();
         mcminos.setScore( score );
         mcminos.setLives( lives );
@@ -118,10 +118,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
         return true;
     }
 
-    public void loadLevel(String levelName) {
+    public void loadLevel(LevelConfig levelConfig) {
         // Prepare the control layer
         game = new Game(main, this);
-        level = game.levelNew(levelName);
+        level = game.levelNew(levelConfig);
         // start the own timer (which triggers also the movement)
         game.initEventManager();
     }
@@ -216,15 +216,21 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // save what we want to carry over
         int score = mcminos.getScore();
         int lives = mcminos.getLives();
-        String nextLevelName = main.getNextLevel(level.getName());
-        this.dispose();
-        main.setScreen(new Play(main,nextLevelName,score,lives));
+        LevelConfig currentLevelConfig = level.getLevelConfig();
+        LevelConfig nextLevelConfig = currentLevelConfig.getNextLevel();
+        if(nextLevelConfig != null) { // there is a next level
+            this.dispose();
+            main.setScreen(new Play(main, nextLevelConfig, score, lives));
+        } else {
+            // TODO: show congratulationscreen
+            backToMenu();
+        }
     }
 
     public void backToMenu() {
         this.dispose();
         Game.getSaveFileHandle(0).delete();
-        main.setScreen(new MainMenu(main, level.getName()));
+        main.setScreen(new MainMenu(main, level.getLevelConfig()));
     }
 
     @Override

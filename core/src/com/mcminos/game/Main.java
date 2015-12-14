@@ -3,16 +3,12 @@ package com.mcminos.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -32,14 +28,14 @@ public class Main extends com.badlogic.gdx.Game {
     private HashMap<Integer, Skin> levelSkinList = new HashMap<>();
     private HashMap<Integer, Skin> menuSkinList = new HashMap<>();
     private int symbolResolution;
-    private ArrayList<String> levelNamesList;
+    // obsolet with new menu private ArrayList<String> levelNamesList;
     public final static String versionStringFile = "VERSIONSTRING";
     private String versionString;
     public final static String levelsConfigFile = "levels/config.json";
-    private LevelsConfig levelConfig;
+    private LevelsConfig levelsConfig;
 
-    public LevelsConfig getLevelConfig() {
-        return levelConfig;
+    public LevelsConfig getLevelsConfig() {
+        return levelsConfig;
     }
 
     @Override
@@ -81,13 +77,14 @@ public class Main extends com.badlogic.gdx.Game {
         }
 
         Json json = new Json();
-        levelConfig = json.fromJson(LevelsConfig.class, Gdx.files.internal((levelsConfigFile)));
+        levelsConfig = json.fromJson(LevelsConfig.class, Gdx.files.internal((levelsConfigFile)));
 
-        readLevelList();
+        // obsolet with new menu readLevelList();
 
         this.setScreen(new Load(this));
     }
 
+    /* obsolet with new menu
     private void readLevelList() {
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(Gdx.files.internal("levels/list").read()), 2048);
@@ -103,7 +100,7 @@ public class Main extends com.badlogic.gdx.Game {
             e.printStackTrace();
         }
 
-    }
+    } */
 
     public int getSymbolResolution() {
         return symbolResolution;
@@ -191,10 +188,13 @@ public class Main extends com.badlogic.gdx.Game {
         return audio;
     }
 
+    /* obsolet with new menu
     public ArrayList<String> getLevelNames() {
         return levelNamesList;
     }
+*/
 
+    /* obsolet with new menu
     public String getNextLevel(String currentLevel) {
         int index = levelNamesList.indexOf(currentLevel);
         if (index < 0) return null;
@@ -204,6 +204,7 @@ public class Main extends com.badlogic.gdx.Game {
         }
         return levelNamesList.get(index + 1);
     }
+*/
 
     public String getVersionString() {
         return versionString;

@@ -267,15 +267,15 @@ public class Game {
     }
 
 
-    public Level levelNew(String levelName) {
-        level = new Level(this, levelName);
+    public Level levelNew(LevelConfig levelConfig) {
+        level = new Level(main, this, levelConfig);
         initAfterLoad();
         return level;
     }
 
     public void reload() {
         eventManager.disposeAllTasks();
-        level.load(level.getName(), true);
+        level.load(level.getLevelConfig(), true);
         initAfterLoad();
     }
 
@@ -390,7 +390,7 @@ public class Game {
                 ghosts = kryo.readObject(input, Ghosts.class);
                 McMinos tmpmcminos = kryo.readObject(input, McMinos.class);
                 mcminos.initAfterKryoLoad(this, tmpmcminos);
-                level.initAfterKryoLoad(this); // must be done after initializing mcminos
+                level.initAfterKryoLoad(main, this); // must be done after initializing mcminos
                 ghosts.initAfterKryoLoad(this);
                 timerFrame = kryo.readObject(input, Long.class);
                 animationFrame = timerFrame;

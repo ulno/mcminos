@@ -60,8 +60,11 @@ public class Level implements KryoSerializable {
     private ArrayList<LevelBlock> castleList = new ArrayList<>();
     private ArrayList<LevelBlock> ghostStart[] = new ArrayList[4];
     private LevelBlock mcminosStart;
-    private String levelName;
+    private LevelConfig levelConfig;
     private boolean finished = false;
+    private int levelCategory=-1;
+    private int levelNr=-1;
+    private Main main;
 
 
     /**
@@ -72,9 +75,11 @@ public class Level implements KryoSerializable {
         // name will be set later
     }
 
-    Level ( Game game, String filename ) {
+    Level ( Main main, Game game, LevelConfig levelConfig ) {
+        this.main = main;
         this.game = game;
-        load( filename, true );
+        this.levelConfig = levelConfig;
+        load( levelConfig, true );
         initMcMinosStart(game.getMcMinos());
         resetGhostsStart(game.getGhosts());
     }
@@ -133,17 +138,14 @@ public class Level implements KryoSerializable {
         allLevelObjects.add(index, lo);
     }
 
+    public void load(LevelConfig levelConfig, boolean doUpdateBlocks) {
+        load(levelConfig.getName(),doUpdateBlocks);
+    }
+
     /**
-     *
      * @param levelName
      */
     public void load(String levelName, boolean doUpdateBlocks) {
-        // save name
-        this.levelName = levelName;
-
-        // construct filename
-        String filename = "levels/" + levelName + ".asx";
-
         // reset start positions
         for(int i=0; i<4; i++) {
             ghostStart[i] = new ArrayList<>();
@@ -151,7 +153,7 @@ public class Level implements KryoSerializable {
 
         //Construct BufferedReader from InputStreamReader
         BufferedReader br = new BufferedReader(
-                new InputStreamReader(Gdx.files.internal(filename).read()), 2048);
+                new InputStreamReader(Gdx.files.internal("levels/"+levelName+".asx").read()), 2048);
 
         String line;
         try {
@@ -897,8 +899,8 @@ Missing:
         game.reload();
     }
 
-    public String getName() {
-        return levelName;
+    public LevelConfig getLevelConfig() {
+        return levelConfig;
     }
 
     public void removeFromAllLevelObjects(LevelObject lo) {
@@ -934,13 +936,17 @@ Missing:
 
     @Override
     public void write(Kryo kryo, Output output) {
-        kryo.writeObject(output,levelName);
+        kryo.writeObject(output, levelConfig.getCategoryNr());
+        kryo.writeObject(output, levelConfig.getNr());
+        kryo.writeObject(output, levelConfig.getName());
         kryo.writeObject(output,allLevelObjects);
     }
 
     @Override
     public void read(Kryo kryo, Input input) {
-        levelName = kryo.readObject(input,String.class);
+        levelCategory = kryo.readObject(input,Integer.class);
+        levelNr = kryo.readObject(input,Integer.class);
+        String levelName = kryo.readObject(input,String.class);
         load(levelName, false);
         for( int i=allLevelObjects.size()-1; i>=0; i--) { // reset manually as these are loaded now - TODO: consider skipping backgrounds
             allLevelObjects.get(i).dispose();
@@ -963,8 +969,10 @@ Missing:
 
     }
 
-    public void initAfterKryoLoad(Game game) {
+    public void initAfterKryoLoad(Main main,Game game) {
+        this.main = main;
         this.game = game;
+        levelConfig = main.getLevelsConfig().get(levelCategory).get(levelNr);
         for( int i=allLevelObjects.size()-1; i>=0; i--) {
             allLevelObjects.get(i).initAfterKryoLoad(game);
         }
