@@ -12,7 +12,7 @@ VERSION:  1100
 ;   LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 LWID:          12
-LHI:      29
+LHI:      25
 SCROLLX:  1
 SCROLLY:  1
 BACK:          16
@@ -61,33 +61,29 @@ UMBR:          0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
+ c  OCCOb   
+ 3  OCCOk   
+XXX XXXXXX X
      _     3
-XXX XXXXXX X
-        r
-XX XXX XXX X
- 2
-XXrXXXX XXXX
-          k
+XXX XXX XX X
+ 2      r   
+XXrX XX XXXX
+          k 
 XXXX0XX XX X
-      b
+      b     
 X XXDXXXX XX
-     P    k
+      P   k 
 XXXXDXXXrXXX
-
+            
 X XDX+XX XXX
-          k
+          k 
 XXX XDXXXXXX
-  1
+  1         
 XXXXX0X XrXX
- b
-X XXXXX XXXX
-
+ b          
 X XXXX XX XX
-     b
+     b      
 XX XXXXXXDXX
-      k
+      k     
 XX XXXXXX XX
- c  OCCOb
- 3  OCCOk
-XXX XXXXXX X
 #    ; ENDE DER LEVELDATEN ---------------------------------*

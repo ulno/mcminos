@@ -145,3 +145,5 @@ libgdx-*.zip.MD5
 #ensure gdx-setup.jar works properly
 !/extensions/gdx-setup/src/com/badlogic/gdx/setup/resources/gwt/war
 
+## IGNORED file dump (Andreas, 2015-12-13)
+/IGNORED
