@@ -537,6 +537,86 @@
       },
       "levels": [
         {
+          "id": "701",
+          "title": {
+            "en": "waltino-701",
+            "de": "waltino-701"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "702",
+          "title": {
+            "en": "waltino-702",
+            "de": "waltino-702"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "703",
+          "title": {
+            "en": "waltino-703",
+            "de": "waltino-703"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "704",
+          "title": {
+            "en": "waltino-704",
+            "de": "waltino-704"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "705",
+          "title": {
+            "en": "waltino-705",
+            "de": "waltino-705"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "706",
+          "title": {
+            "en": "waltino-706",
+            "de": "waltino-706"
+          },
+          "body": {
+            "en": "TODO"
+          }
+        },
+        {
+          "id": "707",
+          "title": {
+            "en": "Ghost Seduction",
+            "de": "Geisterverführung"
+          },
+          "body": {
+            "en": "Trick the ghosts to work for you and don't get caught."
+          }
+        },
+        {
+          "id": "708",
+          "title": {
+            "en": "The Flying Cross",
+            "de": "Flugkreuzung"
+          },
+          "body": {
+            "en": "Think and fly."
+          }
+        },
+        {
           "id": "709",
           "title": {
             "en": "The Ultimate Hole Challenge",
