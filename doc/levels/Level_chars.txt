@@ -1,0 +1,4 @@
+PGgHhXZUD|FfWAv^<>äöüßTS?rO06.xa*()L$c123wMpkbd_,+mu
+
+## ^(all level chars except 'c')(c)(all level chars except 'c'):
+^([PGgHhCXZUDFfWAv\^\<\>äöüßTS\?rO06789\.xa\*\(\)L\$c123wMpkbd\_\,\+mu\ \|]*)(c)([PGgHhCXZUDFfWAv\^\<\>äöüßTS\?rO06789\.xa\*\(\)L\$c123wMpkbd\_\,\+mu\ \|]*)
