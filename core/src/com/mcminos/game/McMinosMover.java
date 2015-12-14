@@ -56,9 +56,9 @@ public class McMinosMover extends Mover {
         if(mcminos.getPoisonDuration() == 0) { // there can only be a direction if not poisoned
             // this is only called, when on block boundaries
             int directions = getKeyDirections(); // direction bit field
-            int level = mcminos.getDrunkLevel();
-            if (level > 0) /* Wenn betrunken */
-                if (game.random(Math.max(1, 10 - (level >> Game.timeResolutionExponent))) == 0)
+            int drunkLevel = mcminos.getDrunkLevel();
+            if (drunkLevel > 0) /* if drunk, 3 bottles -> 30 seconds mean no control */
+                if (game.random(Math.max(1, 30 - (drunkLevel >> Game.timeResolutionExponent))) == 0)
                     directions = game.random(15) + 1;
 
             if (directions == 0) { // if no key, then try to get from destination
