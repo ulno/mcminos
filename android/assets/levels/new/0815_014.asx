@@ -26,20 +26,12 @@ GHOST3:   0
 GHOST4:   0
 
 
-LIVE:   0,999
-CHOC:   0,999
-BMBS:   0,999
-DYNA:   0,999
-MINE:   0,999
-MEDC:   0,999
-UMBR:   0,999
-KEYS:   0,0
 
 LEVEL:
 XXXXXX^XXXXXXXXXXXXXXXXXXXXXXvXXXXXXXXXXXXXXXXXXX
-XdddX...X98kX   X   X888X   X???XwwwXWw X   X c,X
- dddX.P..8.9X 3 X 3 X8.8X   Xw.?XwWwX,  X . X ,
-XdddX...X999X   X   X888X   X???XSwwX S.X   X   X
+XdddX...X98kX   X   X888X   X+*SXwwwXWw X   X 1,X
+ dddX.P..8.9X 3 X 3 X8.8X   Xw._XwWwX,  X . X ,
+XdddX...X999X   X   X888X   X173XSwwX S.X   X   X
 XXXXXXDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 X.  X.  X   X999XdddX   X888X   X   X   XoooXCC.X
 X . <.  X . X999XdddX 3 X8.8X 3 D . X 3 XoooXCC.X
@@ -61,9 +53,9 @@ XrrrX   XrrrX   X   XCC.XrrrXrrrX   X   X   X   X
 XrrrX W XrrrX G > W XCC.XrrrXrrrX 8 X W X 3 X 3 X
 XrrrX   XrrrX   XkkkX..WXrrrXr  <   XF  X   X   X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXvXXXXXXXXXXXXXXXXXXX
-X   XW<dX   XrrrX , X???X   X   X   X   X   XdddX
-  W X^ädX.,.XrWrX,W,X?.?X . X 3 X 3 X 3 X 3 Xddd
-X   XdddX   XrrrX , X???X   X   X   X   X   XdddX
+X   XW<dX   XrrrX , X+bdX   X   X   X   X   XdddX
+  W X^ädX.,.XrWrX,W,X,._X . X 3 X 3 X 3 X 3 Xddd
+X   XdddX   XrrrX , X123X   X   X   X   X   XdddX
 XXXXXXXXXX.XXXXXXXXXXXXXXXXXXvXXXXXXXXXXXXXXXXXXX
 X   X   X  fX   X   X   D   X 8 XOOOX   X   X   X
 X W X.b   W   _.X . X W X   X 8 ..r   r   r   W.X

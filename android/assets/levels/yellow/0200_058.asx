@@ -24,10 +24,6 @@ GHSPEED1:   1
 GRTIME1:    10
 AGIL1:    50
 
-CHOC:   0,0
-BMBS:   0,0
-DYNA:   0,0
-MINE:   0,0
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -46,7 +42,7 @@ X    O   r  r  r   r        O    X
 X  GOrrrrr  r  r   r         O   X
 X  O r      r  r   r          O  X
 X O  r   P  r  r   r           O X
-XO c r      rrrr   r            OX
+XO 1 r      rrrr   r            OX
 XO   r             r            OX
 X O  r             r           O X
 X  O r             r          O  X

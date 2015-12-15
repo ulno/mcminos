@@ -27,14 +27,6 @@ AGIL1:    10
 GHSPEED1: 1
 GRTIME1:  1
 
-LIVE:   0,999
-CHOC:   0,999
-BMBS:   0,999
-DYNA:   10,10
-MINE:   0,999
-MEDC:   0,999
-UMBR:   3,3
-KEYS:   0,999
 
 GHOST2:   0
 GHOST3:   0
@@ -46,7 +38,7 @@ X.X.X.X.X.X.X.
 X.r.X.X.X.X.X.
 .8.8.8.8.8.8..
 X.X.r.r.X.X.X.
-.8.8.8.8c8.8..
+.8.8.8.818.8..
 X.X.X.XPX.X.X.
 .8.8.8.9.8.8..
 X.X.r.X.X.X.X.

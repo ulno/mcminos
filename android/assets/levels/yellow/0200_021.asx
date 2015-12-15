@@ -23,14 +23,6 @@ GHOST1:   15
 GHSPEED1: 1
 GRTIME1:  5
 
-LIVE:   0,999
-CHOC:   0,1
-BMBS:   0,1
-DYNA:   0,1
-MINE:   0,1
-MEDC:   0,999
-UMBR:   0,999
-KEYS:   0,999
 
 GHOST2:   0
 GHOST3:   0
@@ -53,7 +45,7 @@ r 5 r O r , r O r _ r . r _
  r r r r r r r r r r r r r r
   r b r . r . rG. r . r _ r
  r r r r r r r r r r r r r r
-r b rW. rGOcr P r b r O r O
+r b rW. rGO1r P r b r O r O
  r r r r r r r r r r r r r r
   r b r G r b r O r O r W r
  r r r r r r r r rWr r r r r

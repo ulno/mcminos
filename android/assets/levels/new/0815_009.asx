@@ -27,14 +27,6 @@ GHOST2:   0
 GHOST3:   0
 GHOST4:   0
 
-LIVE:   0,999
-CHOC:   0,999
-BMBS:   0,999
-DYNA:   0,0
-MINE:   0,0
-MEDC:   0,999
-UMBR:   0,999
-KEYS:   0,999
 
 LEVEL:
 XX XX   XX XX   XX XX   XX XX   
@@ -57,7 +49,7 @@ XX XX   XX XX  kXX XX   XX XX
       *       *     D O Xk    r 
 XX XX   XX XX   XX XX   XXXXX   
 X   XXXXXCC XXXXX   XX XXkb+XDXX
-  O   r  CC   r   c kX XkkbbX   
+  O   r  CC   r   1 kX XkkbbX   
 X   XXXXX   XXXXX   XX XXkbbXXXX
 XXDXX   XX XXk  XX XX   XXDXX   
       O       r               X 

@@ -28,9 +28,6 @@ GHOST2:   0
 GHOST3:   0
 GHOST3:   0
 
-CHOC:   0,0
-BMBS:   0,0
-DYNA:   0,0
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -59,7 +56,7 @@ X.X.X..X..X...........X..X..X..X.X.X
 X.X.X..X..XXXXXXXXXXXXX..X..X..X.X.X
 X.X.X..X.................X..X..X.X.X
 X.X.X..X.................X..X..X.X.X
-X.X.X.cXXXXXXXXXXXXXXXXXXX..XrrX.X.X
+X.X.X.1XXXXXXXXXXXXXXXXXXX..XrrX.X.X
 X.X.X.........................P..X.X
 XGX.X..r.........................X.X
 XOX.X..XXXXXXXXXXXXXXXXXXXXXXXXXXX.X

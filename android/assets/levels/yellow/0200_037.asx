@@ -49,14 +49,6 @@ AGIL4:    10
 GRTIME4:  100
 
 ; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:   0,999
-KEYS:   0,0
-BMBS:   0,0
-DYNA:   0,0
-MINE:   0,0
-CHOC:   0,0
-MEDC:   0,0
-UMBR:   0,999
 
 ; LEVELDATEN --------------------------------------------*
 LEVEL:
@@ -65,7 +57,7 @@ XX X r X XX                       X
 X         X XXXXXXXXXXXXXXXXXXXXX X
 X X X X X X X         f         X X
 X     h   X X XXXXXXXXXXXXXXXXX X X
-XX X X r XX X Xc   Xd,       X  X X
+XX X X r XX X X1   Xd,       X  X X
 X         X X    X XXX  r CC X XX X
 X r X X X X XXXXXXfXr r   CC X X  X
 X         X   X    X   X r   X X XX

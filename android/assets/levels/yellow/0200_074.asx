@@ -21,13 +21,10 @@ GHOST1:   15
 AGIL1:    5
 GHSPEED:  1
 
-CHOC:   0,0
-BMBS:   0,0
-DYNA:   0,0
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X ....1  cX ,,,   ,,X...r  rGGX ,   ,,,,X
+X ....1  1X ,,,   ,,X...r  rGGX ,   ,,,,X
 X , .  ,, X  ,,b,   X...r r rrX  ö ü ü  X
 X üüüüüüü X  ,  ,,, X...r   r X, ä, , , X
 X üüüüüüü X,   ,,   X...r  r  X ,ä,ä, , X
