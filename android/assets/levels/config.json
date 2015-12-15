@@ -1,14 +1,10 @@
 {
   "sets": [
-    {
-      "name": "Tutorial",
+    { "name": "Tutorial",
       "path": "tut",
-      // "gfx": "tutGfx", will be called gfx.png
-      //"version": "3.14",
       "levels": [
         {
           "id": "tut01-pills",
-          //"gfx": will be id+".png"
           "title": {
             "en": "Peas'n'Walls",
             "de": "Mauern und Pillen"
@@ -183,19 +179,13 @@
           }
         }
       ]
-      // end tutorial levels
     },
-    // end tutorial set
-    {
-      "name": "McMinos Teaser",
+    { "name": "McMinos Teaser",
       "path": "teaser",
       "levels": [
       ]
-      // end teaserlevels
     },
-    // end Teaser Set */
-    {
-      "name": "Testing",
+    { "name": "Testing",
       "path": "testing",
       "levels": [
         {
@@ -216,241 +206,320 @@
             "de": "Testlevel Deutscher Titel 50x50"
           },
           "body": {
-            "en": "Test level - Maximum size, many animations"
+            "en": "Test level - Maximum size, many animations",
             "de": "Testlevel - Maximalgröße, viele Animationen"
           }
         }
       ]
-      // end testing levels
     },
-    // end Testing Set
-    {
-      "name": "McMinos is Alive",
+    { "name": "McMinos is Alive",
       "path": "alive",
       "levels": [
         {
-          "id": "0815_000"
+          "id": "0815_000",
           "title": {
-            "en": "Level zero"
+            "en": "Level zero",
             "de": "Ebene null"
           },
           "body": {
-            "en": "Eat all peas. And stay alive."
+            "en": "Eat all peas. And stay alive.",
             "de": "Iss alle Pillen. Und bleib am Leben."
-          },
+          }
         },
         {
-          "id": "0815_001"
+          "id": "0815_001",
           "title": {
-            "en": "Level one"
+            "en": "Level one",
             "de": "Ebene eins"
           },
           "body": {
-            "en": "There are more peas. And more ghosts. Good luck."
+            "en": "There are more peas. And more ghosts. Good luck.",
             "de": "Mehr Pillen. Mehr Ghosts. Viel Glück!"
-          },
+          }
         },
         {
-          "id": "0815_002"
+          "id": "0815_002",
           "title": {
-            "en": "Level two"
+            "en": "Level two",
             "de": "Ebene zwei"
           },
           "body": {
-            "en": "Lock the ghosts in!"
+            "en": "Lock the ghosts in!",
             "de": "Schließ die Geister ein!"
-          },
+          }
         },
         {
-          "id": "0815_003"
+          "id": "0815_003",
           "title": {
-            "en": "Level three"
+            "en": "Level three",
             "de": "Ebene drei"
           },
           "body": {
-            "en": "Mind your ways."
+            "en": "Mind your ways.",
             "de": "Pass auf, wo Du lang läufst."
-          },
+          }
         },
         {
-          "id": "0815_004"
+          "id": "0815_004",
           "title": {
-            "en": "Level four"
+            "en": "Level four",
             "de": "Ebene vier"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_005"
+          "id": "0815_005",
           "title": {
-            "en": "Level five"
+            "en": "Level five",
             "de": "Ebene fünf"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_006"
+          "id": "0815_006",
           "title": {
-            "en": "Level six"
+            "en": "Level six",
             "de": "Ebene sechs"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_007"
+          "id": "0815_007",
           "title": {
-            "en": "Level seven"
+            "en": "Level seven",
             "de": "Ebene sieben"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_008"
+          "id": "0815_008",
           "title": {
-            "en": "Level eight"
+            "en": "Level eight",
             "de": "Ebene acht"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_009"
+          "id": "0815_009",
           "title": {
-            "en": "Level nine"
+            "en": "Level nine",
             "de": "Ebene neun"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_010"
+          "id": "0815_010",
           "title": {
-            "en": "Level ten"
+            "en": "Level ten",
             "de": "Ebene zehn"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_011"
+          "id": "0815_011",
           "title": {
-            "en": "Level eleven"
+            "en": "Level eleven",
             "de": "Ebene elf"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_012"
+          "id": "0815_012",
           "title": {
-            "en": "Level twelve"
+            "en": "Level twelve",
             "de": "Ebene zwölf"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_013"
+          "id": "0815_013",
           "title": {
-            "en": "Level thirteen"
+            "en": "Level thirteen",
             "de": "Ebene dreizehn"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_014"
+          "id": "0815_014",
           "title": {
-            "en": "Level fourteen"
+            "en": "Level fourteen",
             "de": "Ebene vierzehn"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_015"
+          "id": "0815_015",
           "title": {
-            "en": "Level fifteen"
+            "en": "Level fifteen",
             "de": "Ebene fünfzehn"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_016"
+          "id": "0815_016",
           "title": {
-            "en": "Level sixteen"
+            "en": "Level sixteen",
             "de": "Ebene sechzehn"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_017"
+          "id": "0815_017",
           "title": {
-            "en": "Level seventeen"
+            "en": "Level seventeen",
             "de": "Ebene siebzehn"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
         {
-          "id": "0815_018"
+          "id": "0815_018",
           "title": {
-            "en": "Level eighteen"
+            "en": "Level eighteen",
             "de": "Ebene achzehn"
           },
           "body": {
-            "en": "[2do]"
+            "en": "[2do]",
             "de": "[2do]"
-          },
+          }
         },
+        {
+          "id": "0815_019",
+          "title": {
+            "en": "Level nineteen",
+            "de": "Ebene neunzehn"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        },
+        {
+          "id": "0815_020",
+          "title": {
+            "en": "Level twenty",
+            "de": "Ebene zwanzig"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        },
+        {
+          "id": "0815_021",
+          "title": {
+            "en": "Level twenty-one",
+            "de": "Ebene einundzwanzig"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        },
+        {
+          "id": "0815_022",
+          "title": {
+            "en": "Level twenty-two",
+            "de": "Ebene zweiundzwanzig"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        },
+        {
+          "id": "0815_023",
+          "title": {
+            "en": "Level twenty-three",
+            "de": "Ebene dreiundzwanzig"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        },
+        {
+          "id": "0815_024",
+          "title": {
+            "en": "Level twenty",
+            "de": "Ebene zwanzig"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        },
+        {
+          "id": "0815_025",
+          "title": {
+            "en": "Level twenty-five",
+            "de": "Ebene fünfundzwanzig"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        },
+        {
+          "id": "0815_026",
+          "title": {
+            "en": "Level twenty-six",
+            "de": "Ebene sechsundzwanzig"
+          },
+          "body": {
+            "en": "[2do]",
+            "de": "[2do]"
+          }
+        }
       ]
-      // end alivelevels
     },
-    // end alive Set
-    {
-      "name": "McMinos Ultimate",
+    { "name": "McMinos Ultimate",
       "path": "ultimate",
       "levels": [
       ]
-      // end ultimate levels
     },
-    // end ultimate Set
-    {
-      "name": "The Black Daddy Returns",
+    { "name": "The Black Daddy Returns",
       "path": "waltino",
       "levels": [
         {
@@ -464,10 +533,7 @@
           }
         }
       ]
-      // end tbd levels
     }
-    // end tbd Set */
   ]
-  //end: sets
 }
 
