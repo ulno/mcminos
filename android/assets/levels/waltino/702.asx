@@ -6,7 +6,6 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    702
-ACCCD:    
 VERSION:  1100
 
 ; LEVELFORMAT -------------------------------------------*
@@ -15,7 +14,17 @@ LWID:   11
 LHI:    12
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 1
+
+; Textinfo -----------
+TITLE: Rocks and One-Ways
+TITLE-de: Steine und Einbahnstraßen
+BODY:
+This might be a little bit tricky - be careful how you move the rocks.
+#
+BODY-de:
+Ein kleines bisschen fordernd - hier muss man aufpassen, wie und worüber die Steine geschoben werden.
+#
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

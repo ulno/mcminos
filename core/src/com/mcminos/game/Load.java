@@ -24,35 +24,34 @@ public class Load implements Screen {
     private final Main main;
     private final SpriteBatch batch;
     private final Audio audio;
+    private int step = 0; // step to load
     private AssetManager manager;
     private ProgressBar bar;
     private boolean loadingDone = false;
+    private float progress = 0.0f;
 
     public Load(Main main) {
-        
+
         this.main = main;
         audio = main.getAudio();
+        manager = new AssetManager(); // create the assetmanager to do scheduled loading
 
-        // initialize and load necessary elements, we need to show progress
-        // TODO: also bg image?
+        // initialize and load necessary elements, which we need to show progress (image + skin)
 
         // pre-load the graphics to show in the load screen
-        manager = new AssetManager();
-        scheduleLoads();
-        loadscreen = new Texture( Gdx.files.internal("images/loadscreen.png"));
+        loadscreen = new Texture(Gdx.files.internal("images/loadscreen.png"));
         loadimage = new Image(loadscreen);
         loadimage.setZIndex(0);
         loadimage.setScaling(Scaling.none);
         Util.scaleBackground(loadimage);
 
         // Set up everything for the current screen
-        skin = main.getMenuSkin(main.getSymbolResolution());
+        skin = main.getMenuSkin(32); // so far only one is loaded
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
 
         // build stage
         stage.addActor(loadimage);
-
 
         //int percentLoaded = Math.round(manager.getProgress() * 100);
         //font.draw(Game.batch, "Loading resources " + percentLoaded + "%", 20, (Gdx.graphics.getHeight() - 64) / 2);
@@ -60,7 +59,7 @@ public class Load implements Screen {
         /*ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), textureBar);
         barStyle.knobBefore = barStyle.knob;
         bar = new ProgressBar(0, 10, 0.5f, false, barStyle);*/
-        bar = new ProgressBar(0.0f,1.0f,0.01f,false,skin);
+        bar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);
 
         stage.addActor(bar);
 
@@ -71,6 +70,66 @@ public class Load implements Screen {
     @Override
     public void show() {
 
+    }
+
+    /**
+     * @return true, if all is loaded
+     */
+    public boolean loadNext() {
+        switch (step) {
+            case 0:
+                main.loadSkinAndFont(8);
+                progress = 0.03f;
+                step++;
+                break;
+            case 1:
+                main.loadSkinAndFont(16);
+                progress = 0.06f;
+                step++;
+                break;
+            case 2:
+                main.loadSkinAndFont(64);
+                progress = 0.09f;
+                step++;
+                break;
+            case 3:
+                main.loadSkinAndFont(128);
+                progress = 0.12f;
+                step++;
+                break;
+            case 4:
+                scheduleLoadsAudio();
+                progress = 0.14f;
+                step++;
+                break;
+            case 5:
+                scheduleLoadsGraphics();
+                progress = 0.14f;
+                step++;
+                break;
+            case 6:
+                if (manager.update(200)) { // check if done
+                    step++;
+                }
+                progress = 0.2f + manager.getProgress() * 0.6f;
+                break;
+            case 7:
+                Entities.finishLoad(manager.get("entities/pack.atlas", TextureAtlas.class));
+                progress = 0.85f;
+                step++;
+                break;
+            case 8:
+                finishLoads();
+                progress = 0.9f;
+                step++;
+                break;
+            case 9:
+                LevelsConfig lc = new LevelsConfig("levels/list");
+                main.initGlobals(lc);
+                progress = 1.0f;
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -85,34 +144,30 @@ public class Load implements Screen {
         Util.scaleBackground(loadimage);
 
         bar.setPosition(w / 5, 0);
-        bar.setSize(w*3/5,h/5);
+        bar.setSize(w * 3 / 5, h / 5);
 
         // set value of progress bar
-        bar.setValue(manager.getProgress()*0.9f);
+        bar.setValue(progress);
         stage.act(delta);
         stage.draw();
 
-        // do Loading updates
-        if( manager.update(200) ) { // check if done TODO: check value for updates here
-            if( ! loadingDone ) {
-                // finish initialization
-                loadingDone = true;
-                Entities.finishLoad(manager.get("entities/pack.atlas", TextureAtlas.class));
-                finishLoads();
-                //game.loadLevel();
-                // Then switch screen
-                this.dispose();
-                MainMenu screen = new MainMenu(main,null);
-                main.setScreen(screen);
-            }
+        if ( loadNext() ) {
+            // Then switch screen
+            this.dispose();
+            MainMenu screen = new MainMenu(main, null);
+            main.setScreen(screen);
         }
+
     }
 
-    public void scheduleLoads() {
+    public void scheduleLoadsGraphics() {
         // Graphics
         Entities.scheduleLoad(manager);
+    }
+
+    public void scheduleLoadsAudio() {
         // Sounds
-        for( String s: Audio.soundNames) {
+        for (String s : Audio.soundNames) {
             manager.load("sounds/" + s + ".wav", Sound.class);
         }
         // UIs
@@ -121,7 +176,7 @@ public class Load implements Screen {
 
     public void finishLoads() {
         // Sounds
-        for( String s: Audio.soundNames ) {
+        for (String s : Audio.soundNames) {
             Sound sound = manager.get("sounds/" + s + ".wav");
             audio.addSound(s, sound);
         }

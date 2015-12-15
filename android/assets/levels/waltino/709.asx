@@ -6,8 +6,17 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    709
-ACCCD:    
 VERSION:  1100
+
+; Textinfo -----------
+TITLE: The Ultimate Hole Challenge
+TITLE-de: Das ultimative Löcherpuzzle
+BODY:
+Lots of ghosts and unstable ground - run before you think, but think while you run.
+#
+BODY-de:
+Viele Geister und unsicherer Untergrund - renn bevor du zu lange nachdenkst, aber denk während du rennst.
+#
 
 ; LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
@@ -15,7 +24,7 @@ LWID:   13
 LHI:    12
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

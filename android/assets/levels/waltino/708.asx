@@ -6,8 +6,17 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    708
-ACCCD:    
 VERSION:  1100
+
+; Textinfo -----------
+TITLE: The Flying Cross
+TITLE-de: Flugkreuzung
+BODY:
+Think and fly.
+#
+BODY-de:
+Erst denken, dann fliegen.
+#
 
 ; LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
@@ -15,7 +24,7 @@ LWID:   25
 LHI:    19
 SCROLLX:  1
 SCROLLY:  1
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

@@ -15,7 +15,7 @@ LWID:   12
 LHI:    12
 SCROLLX:  1
 SCROLLY:  0
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

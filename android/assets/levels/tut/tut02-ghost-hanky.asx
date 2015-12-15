@@ -12,6 +12,16 @@ NUMBR:    2
 SHOWNR:   2
 ACCCD:    2
 
+; Textinfo
+TITLE: Ghost "Hanky"
+TITLE-de: Der Geist "Hänki"
+BODY:
+Ghosts live in spooky fortresses. When they come out, they hunt you. Eating the big yellow cookie gives you enough power to hunt the ghosts - for a short while.
+#
+BODY-de:
+Geister leben in Burgen. Wenn sie herauskommen, jagen sie dich. Wenn du den großen gelben Keks isst, bekommst du genug Energie, um selber die Geister zu jagen - zumindest füë kurze Zeit.
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

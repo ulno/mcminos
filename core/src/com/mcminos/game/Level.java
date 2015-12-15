@@ -25,37 +25,6 @@ public class Level implements KryoSerializable {
     private int pillsNumber = 0;
     private int rockmeNumber = 0;
     private LevelBlock[][] field; // on each level field are usually several objects, first is windowVPixelXPos, second windowVPixelYPos
-    private String author = "Main";
-    private int number = 199;
-    private int showNumber = 199;
-    private String accessCode = "";
-    private int width = 20;
-    private int vPixelsWidth = 0;
-    private int height = 20;
-    private int vPixelsHeight = 0;
-    private int VisibleWidth = 100;
-    private int visibleHeight = 100;
-    private boolean scrollX = false;
-    private boolean scrollY = false;
-    private String background = "default";
-    private int time = 0;
-    private int restart = 0;
-    private boolean mirror = false;
-    public int mcminosSpeed = 1;
-    public int[] ghostMax = {0,0,0,0};
-    public int[] ghostTime = {0, 0, 0, 0};
-    public int[] ghostSpeed = {0, 0, 0, 0};
-    public int[] ghostAgility = {0, 0, 0, 0};
-    public int ghostPillDrop = 0;
-    public int ghostPillFreq  = 0;
-    public int[] ghostTranswall  = {0, 0, 0, 0};
-    private int livesMin = 0, livesMax = 999;
-    private int keysMin = 0, keysMax = 999;
-    private int dynamitesMin = 0, dynamitesMax = 999;
-    private int minesMin = 0, minesMax = 999;
-    private int chocolatesMin = 0, chocolatesMax = 999;
-    private int medicinesMin = 0, medicinesMax = 999;
-    private int umbrellasMin = 0, umbrellasMax = 999;
     private ArrayList<LevelBlock> warpHoleBlocks = new ArrayList<>();
     private ArrayList<LevelBlock> castleList = new ArrayList<>();
     private ArrayList<LevelBlock> ghostStart[] = new ArrayList[4];
@@ -65,6 +34,16 @@ public class Level implements KryoSerializable {
     private int levelCategory=-1;
     private int levelNr=-1;
     private Main main;
+
+    // values set from levelconfig
+    private int width;
+    private int vPixelsWidth;
+    private int height;
+    private int vPixelsHeight;
+    private boolean scrollX;
+    private boolean scrollY;
+    private int ghostPillDrop;
+
 
 
     /**
@@ -138,254 +117,34 @@ public class Level implements KryoSerializable {
         allLevelObjects.add(index, lo);
     }
 
-    public void load(LevelConfig levelConfig, boolean doUpdateBlocks) {
-        load(levelConfig.getName(),doUpdateBlocks);
-    }
+    public void load(LevelConfig lc, boolean doUpdateBlocks) {
+        this.levelConfig = lc;
 
-    /**
-     * @param levelName
-     */
-    public void load(String levelName, boolean doUpdateBlocks) {
         // reset start positions
         for(int i=0; i<4; i++) {
             ghostStart[i] = new ArrayList<>();
         }
+        // get local cache values from levelConfig
+        width = lc.getWidth();
+        height = lc.getHeight();
+        scrollX = lc.getScrollX();
+        scrollY = lc.getScrollY();
+        ghostPillDrop = lc.getGhostPillDrop();
 
-        //Construct BufferedReader from InputStreamReader
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(Gdx.files.internal("levels/"+levelName+".asx").read()), 2048);
+        // initialize level field
+        field = new LevelBlock[width][height];
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                field[x][y] = new LevelBlock(this, x, y);
 
-        String line;
-        try {
-            boolean readLevel = false; // set to true, when level keyword was found
-            int levelline = 0; // current nr of line read
-            while ((line = br.readLine()) != null) {
-                if(! readLevel) {
-                    line = line.split(";")[0]; // cut off comments
-                    line = line.trim(); // remove whitespace
-                    if( line == "" || ! line.startsWith(";") )
-                    {
-                        int min=0, max=0;
-                        String[] strList = line.split("\\s*:\\s*");
-                        if(strList.length > 1) { // if two params,  try min,max split
-                            String[] minmax = strList[1].split("\\s*,\\s*");
-                            if ( minmax.length > 1) {
-                                try
-                                {
-                                    min = Integer.parseInt(minmax[0]);
-                                    max = Integer.parseInt(minmax[1]);
-                                }
-                                catch(NumberFormatException nfe)
-                                {
-                                    continue; // TODO: this might be string we need to catch
-                                }
-                            }
-                        }
-                        // apply minmax on existing mcminos - we don't do this anymore, levels are always started with 0
-                        if(strList[0].equals("LEVEL") ) {
-                            readLevel = true;
-                        } else {
-                            if( strList.length > 1 && ! strList[1].equals("") ) { // enough data?
-                                switch (strList[0]) {
-                                    case "AUTHOR":
-                                        author = strList[1];
-                                        break;
-                                    case "NUMBR":
-                                        number = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "SHOWNR":
-                                        showNumber = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "ACCCD":
-                                        accessCode = strList[1];
-                                        break;
-                                    case "LWID":
-                                        width = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "LHI":
-                                        height = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "VWID":
-                                        VisibleWidth = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "VHI":
-                                        visibleHeight = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "SCROLLX":
-                                        // for adapting this game to a mobile platform allowing infinite levels only makes sense, when scrolling is enabled in the respective direction
-                                        scrollX = "1".equals(strList[1]);
-                                        break;
-                                    case "SCROLLY":
-                                        scrollY = "1".equals(strList[1]);
-                                        break;
-                                    case "BACK":
-                                        background = strList[1];
-                                        break;
-                                    case "LTIME":
-                                        time = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "RSTRT":
-                                        restart = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "MIRROR":
-                                        mirror = "1".equals(strList[1]);
-                                        break;
-                                    case "MCSPEED":
-                                        mcminosSpeed = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHOST1":
-                                        ghostMax[0] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GRTIME1":
-                                        ghostTime[0] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHSPEED1":
-                                        ghostSpeed[0] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "AGIL1":
-                                        ghostAgility[0] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "TRANSWALL1":
-                                        ghostTranswall[0] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHOST2":
-                                        ghostMax[1] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GRTIME2":
-                                        ghostTime[1] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHSPEED2":
-                                        ghostSpeed[1] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "AGIL2":
-                                        ghostAgility[1] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "PILLMAX2":
-                                        ghostPillDrop = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "PILLFREQ2":
-                                        ghostPillFreq = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "TRANSWALL2":
-                                        ghostTranswall[1] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHOST3":
-                                        ghostMax[2] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GRTIME3":
-                                        ghostTime[2] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHSPEED3":
-                                        ghostSpeed[2] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "AGIL3":
-                                        ghostAgility[2] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "TRANSWALL3":
-                                        ghostTranswall[2] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHOST4":
-                                        ghostMax[3] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GRTIME4":
-                                        ghostTime[3] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "GHSPEED4":
-                                        ghostSpeed[3] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "AGIL4":
-                                        ghostAgility[3] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "TRANSWALL4":
-                                        ghostTranswall[3] = Integer.parseInt(strList[1]);
-                                        break;
-                                    case "LIVE":
-                                        livesMin = min;
-                                        livesMax = max;
-                                        break;
-                                    case "KEYS":
-                                        keysMin = min;
-                                        keysMax = max;
-                                        break;
-                                    case "DYNA":
-                                        dynamitesMin = min;
-                                        dynamitesMax = max;
-                                        break;
-                                    case "MINE":
-                                        minesMin = min;
-                                        minesMax = max;
-                                        break;
-                                    case "CHOC":
-                                        chocolatesMin = min;
-                                        chocolatesMax = max;
-                                        break;
-                                    case "MEDC":
-                                        medicinesMin = min;
-                                        medicinesMax = max;
-                                        break;
-                                    case "UMBR":
-                                        umbrellasMin = min;
-                                        umbrellasMax = max;
-                                        break;
-                                    default:
-                                        // TODO: eventually throw error again
-                                        break;
-                                } // end switch
-                            } // end if enough data (strList.length > 1)
-                        } // end check "LEVEL"-keyword
-                    }
-                }
-                else { // just read level-data
-                    if( levelline == 0 ) // only first time
-                    {
-                        // initialize level field
-                        field = new LevelBlock[width][height];
-                        for (int x = 0; x < width; x++)
-                            for (int y = 0; y < height; y++)
-                                field[x][y] = new LevelBlock(this, x, y);
-                    }
-                    if( levelline < height )
-                    {
-                        parseLevelLine( levelline, line );
-                    }
-                    levelline ++;
-                }
+        String lines[] = lc.getLevelData().split("\n");
 
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 0; i < lines.length; i++) {
+            parseLevelLine(i, lines[i]);
         }
-        // select background
-        Graphics bggfx = null;
-        switch(background) {
-            case "0":
-            case "black":
-                bggfx = Entities.backgrounds_black;
-                break;
-            case "1":
-            case "pavement-01":
-                bggfx = Entities.backgrounds_pavement_01;
-                break;
-            case "amoeboid-01":
-                bggfx = Entities.backgrounds_amoeboid_01;
-                break;
-            case "2":
-            case "gravel-01":
-                bggfx = Entities.backgrounds_gravel_01;
-                break;
-            case "3":
-            case "meadow-flowers":
-                bggfx = Entities.backgrounds_meadow_flowers;
-                break;
-            case "4":
-            case "sand-01":
-                bggfx = Entities.backgrounds_sand_01_sand;
-                break;
-            default:
-                bggfx = Entities.backgrounds_pavement_01;
-                break;
-        }
+
+        Graphics bggfx = lc.getBackground();
+
         if(doUpdateBlocks) {
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++) {
@@ -412,7 +171,6 @@ public class Level implements KryoSerializable {
         // update some related variables
         vPixelsWidth = width << PlayWindow.virtualBlockResolutionExponent;
         vPixelsHeight = height << PlayWindow.virtualBlockResolutionExponent;
-
     }
 
     /**
@@ -732,11 +490,11 @@ Missing:
     }
 
     public int getVisibleWidth() {
-        return VisibleWidth;
+        return levelConfig.getVisibleWidth();
     }
 
     public int getVisibleHeight() {
-        return visibleHeight;
+        return levelConfig.getVisibleHeight();
     }
 
     public boolean getScrollX() {
@@ -852,6 +610,7 @@ Missing:
                     ; 272 = Last level and RSTRT = 16 !!! */
         game.stopMovement();
         game.disposeEventManagerTasks();
+        int restart = levelConfig.getRestart();
         if(completeRestart || (restart & 1) > 0) { // complete restart requested
             // done in reset game.getGhosts().dispose(); // remove ghosts
             // discard mcminos
@@ -931,14 +690,14 @@ Missing:
     }
 
     public int getGhostPillFreq() {
-        return ghostPillFreq;
+        return levelConfig.getGhostPillFreq();
     }
 
     @Override
     public void write(Kryo kryo, Output output) {
         kryo.writeObject(output, levelConfig.getCategoryNr());
         kryo.writeObject(output, levelConfig.getNr());
-        kryo.writeObject(output, levelConfig.getName());
+        kryo.writeObject(output, ghostPillDrop );
         kryo.writeObject(output,allLevelObjects);
     }
 
@@ -946,8 +705,10 @@ Missing:
     public void read(Kryo kryo, Input input) {
         levelCategory = kryo.readObject(input,Integer.class);
         levelNr = kryo.readObject(input,Integer.class);
-        String levelName = kryo.readObject(input,String.class);
-        load(levelName, false);
+        Main main = (Main) kryo.getContext().get("main");
+        levelConfig = main.getLevelsConfig().get(levelCategory).get(levelNr);
+        int gpdTmp = kryo.readObject(input,Integer.class);
+        load(levelConfig, false);
         for( int i=allLevelObjects.size()-1; i>=0; i--) { // reset manually as these are loaded now - TODO: consider skipping backgrounds
             allLevelObjects.get(i).dispose();
         }
@@ -966,7 +727,7 @@ Missing:
                     break;
             }
         }
-
+        ghostPillDrop = gpdTmp;
     }
 
     public void initAfterKryoLoad(Main main,Game game) {
@@ -984,6 +745,22 @@ Missing:
             if(lo.getType() == type ) return lo;
         }
         return null;
+    }
+
+    public int getGhostTranswall(int ghostnr) {
+        return levelConfig.getGhostTranswall(ghostnr);
+    }
+
+    public int getGhostMax(int ghostnr) {
+        return levelConfig.getGhostMax(ghostnr);
+    }
+
+    public int getGhostTime(int ghostnr) {
+        return levelConfig.getGhostTime(ghostnr);
+    }
+
+    public int getGhostAgility(int ghostNr) {
+        return levelConfig.getGhostAgility(ghostNr);
     }
 
 /*    public void exchangeLevelObjectInList(LevelObject loOld, LevelObject loNew) {

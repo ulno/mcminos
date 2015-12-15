@@ -12,6 +12,16 @@ NUMBR:    1
 SHOWNR:   1
 ACCCD:    1
 
+; Textinfo
+TITLE: Peas'n'Walls
+TITLE-de: Mauern und Pillen
+BODY:
+In McMinos, levels have walls. You cannot pass through them. Go and eat all peas to finish a level.
+#
+BODY-de:
+In McMinos-Spielebenen gibt es Wände. Du kannst nicht durch Wände gehen. Geh und sammel alle Pillen ein, um eine Spielebene zu beenden.
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

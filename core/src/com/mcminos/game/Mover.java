@@ -219,11 +219,11 @@ public abstract class Mover implements KryoSerializable {
 
     @Override
     public void write(Kryo kryo, Output output) {
-        kryo.writeObject(output,gfxUp==null?-1:gfxUp.getAllGraphicsIndex());
-        kryo.writeObject(output,gfxRight==null?-1:gfxRight.getAllGraphicsIndex());
-        kryo.writeObject(output,gfxDown==null?-1:gfxDown.getAllGraphicsIndex());
-        kryo.writeObject(output,gfxLeft==null?-1:gfxLeft.getAllGraphicsIndex());
-        kryo.writeObject(output,gfxStill==null?-1:gfxStill.getAllGraphicsIndex());
+        kryo.writeObject(output,gfxUp==null?"":gfxUp.getName());
+        kryo.writeObject(output,gfxRight==null?"":gfxRight.getName());
+        kryo.writeObject(output,gfxDown==null?"":gfxDown.getName());
+        kryo.writeObject(output,gfxLeft==null?"":gfxLeft.getName());
+        kryo.writeObject(output,gfxStill==null?"":gfxStill.getName());
         kryo.writeObjectOrNull(output,currentLevelBlock,LevelBlock.class);
         kryo.writeObjectOrNull(output,lastBlock,LevelBlock.class);
         kryo.writeObjectOrNull(output,headingTo,LevelBlock.class);
@@ -236,11 +236,11 @@ public abstract class Mover implements KryoSerializable {
 
     @Override
     public void read(Kryo kryo, Input input) {
-        gfxUp = Graphics.getByIndex(kryo.readObject(input,Integer.class));
-        gfxRight = Graphics.getByIndex(kryo.readObject(input,Integer.class));
-        gfxDown = Graphics.getByIndex(kryo.readObject(input,Integer.class));
-        gfxLeft = Graphics.getByIndex(kryo.readObject(input,Integer.class));
-        gfxStill = Graphics.getByIndex(kryo.readObject(input,Integer.class));
+        gfxUp = Graphics.getByName(kryo.readObject(input,String.class));
+        gfxRight = Graphics.getByName(kryo.readObject(input,String.class));
+        gfxDown = Graphics.getByName(kryo.readObject(input,String.class));
+        gfxLeft = Graphics.getByName(kryo.readObject(input,String.class));
+        gfxStill = Graphics.getByName(kryo.readObject(input,String.class));
         currentLevelBlock = kryo.readObjectOrNull(input,LevelBlock.class);
         lastBlock = kryo.readObjectOrNull(input,LevelBlock.class);
         headingTo = kryo.readObjectOrNull(input,LevelBlock.class);

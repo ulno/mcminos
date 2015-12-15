@@ -12,6 +12,16 @@ NUMBR:    11
 SHOWNR:   11
 ACCCD:    11
 
+; Textinfo -----------
+TITLE: Dynamite
+TITLE-de: Dynamit
+BODY:
+Let's blow things up! If you see me running, try to keep up.
+#
+BODY-de:
+Diesen Explosionen halten auch die meisten Wände nicht stand.
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

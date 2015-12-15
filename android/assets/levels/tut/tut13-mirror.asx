@@ -12,6 +12,16 @@ NUMBR:    13
 SHOWNR:   13
 ACCCD:    13
 
+; Textinfo -----------
+TITLE: Mirror, mirror on the wall ...
+TITLE-de: Spieglein, Spieglein an der Wand...
+BODY:
+Left is right and up is down.
+#
+BODY-de:
+Links ist rechts und rauf ist runter.
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

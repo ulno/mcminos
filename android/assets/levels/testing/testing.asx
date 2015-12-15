@@ -6,6 +6,16 @@ NUMBR:    6
 ACCCD:    123456
 VERSION:  0900
 
+; Textinfo -----------
+TITLE: Development Testlevel
+TITLE-de: Testlevel Deutscher Titel
+BODY:
+This is a level with all eLements you can find in the game.
+#
+BODY-de:
+Hier kann man alles sehen, was es an Elementen in McMinos gibt.
+#
+
 LWID:   24
 LHI:    12
 SCROLLX:  1

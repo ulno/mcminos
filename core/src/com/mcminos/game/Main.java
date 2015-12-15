@@ -43,11 +43,11 @@ public class Main extends com.badlogic.gdx.Game {
         Gdx.app.setLogLevel(Application.LOG_DEBUG); // TODO: set to info again
         Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         audio = new Audio();
-        loadSkinAndFont(8);
-        loadSkinAndFont(16);
+        //loadSkinAndFont(8);
+        //loadSkinAndFont(16);
         loadSkinAndFont(32);
-        loadSkinAndFont(64);
-        loadSkinAndFont(128);
+        //loadSkinAndFont(64);
+        //loadSkinAndFont(128);
 
         //  Basically, based on density and screensize, we want to set our default zoomlevel.
         // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
@@ -76,12 +76,18 @@ public class Main extends com.badlogic.gdx.Game {
             versionString = "undefined";
         }
 
+/*
+will be read in load
         Json json = new Json();
         levelsConfig = json.fromJson(LevelsConfig.class, Gdx.files.internal((levelsConfigFile)));
-
+*/
         // obsolet with new menu readLevelList();
 
         this.setScreen(new Load(this));
+    }
+
+    public void initGlobals(LevelsConfig lc) {
+        this.levelsConfig = lc;
     }
 
     /* obsolet with new menu
@@ -112,7 +118,7 @@ public class Main extends com.badlogic.gdx.Game {
         this.symbolResolution = symbolResolution;
     }
 
-    private void loadSkinAndFont(int res) {
+    public void loadSkinAndFont(int res) {
         String fontName = "fonts/" + LEVEL_FONT + "-" + res + ".fnt";
         BitmapFont levelFont = new BitmapFont(Gdx.files.internal(fontName));
         levelFontList.put(res, levelFont);

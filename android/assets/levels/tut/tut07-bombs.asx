@@ -12,6 +12,16 @@ NUMBR:    7
 SHOWNR:   7
 ACCCD:    7
 
+; Textinfo -----------
+TITLE: It's a bomb!
+TITLE-de: Eine Bombe!
+BODY:
+Collect, and use with care!
+#
+BODY-de:
+Einsammeln und mit Vorsicht einsetzen! Verletzungsgefahr!
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

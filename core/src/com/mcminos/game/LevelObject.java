@@ -36,10 +36,9 @@ public class LevelObject implements  Comparable<LevelObject>, KryoSerializable {
         kryo.writeObject(output,x);
         kryo.writeObject(output,y);
         if(gfx != null)
-            kryo.writeObject(output,gfx.getAllGraphicsIndex());
+            kryo.writeObject(output,gfx.getName());
         else
-            kryo.writeObject(output,-1);
-        // TODO: check why it does sometimes not save a mover here (when mcminos was controlled by keyboard or resave?)
+            kryo.writeObject(output,"");
         if(mover != null) {
             kryo.writeClass(output, mover.getClass());
             kryo.writeObject(output, mover);
@@ -59,7 +58,7 @@ public class LevelObject implements  Comparable<LevelObject>, KryoSerializable {
     public void read(Kryo kryo, Input input) {
         x = kryo.readObject(input,Integer.class);
         y = kryo.readObject(input,Integer.class);
-        gfx = Graphics.getByIndex( kryo.readObject(input,Integer.class));
+        gfx = Graphics.getByName( kryo.readObject(input,String.class));
         Registration c = kryo.readClass(input);
         if( c == null) {
             mover = null;

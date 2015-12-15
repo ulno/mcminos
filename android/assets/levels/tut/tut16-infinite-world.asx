@@ -12,6 +12,16 @@ NUMBR:    17
 SHOWNR:   17
 ACCCD:    17
 
+; Textinfo -----------
+TITLE: Infinite world
+TITLE-de: Unendliche Weiten
+BODY:
+Where does it start? Where does it end? Can you tell? Haven't I been here before?
+#
+BODY-de:
+Wo fängt es an? Wo hört es auf? Weißt Du's? Hier war ich doch schon einmal?
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -149,7 +147,7 @@ public class MainMenu implements Screen {
         });
         // read images for the category buttons
         for (int i = 0; i < levelsConfig.size(); i++) {
-            String path = levelsConfig.get(i).getPath();
+            String path = levelsConfig.get(i).getId();
             FileHandle fh = Gdx.files.internal("levels/" + path + "/gfx.png");
             if (fh.exists()) {
                 categoryButtonImages.add(new Texture(fh));
@@ -235,8 +233,11 @@ public class MainMenu implements Screen {
         loadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dispose();
-                main.setScreen(new Play(main,1)); // TODO: allow more slots?
+                Play p = new Play(main,1);
+                if(p.getGame() != null) { // init was successful
+                    dispose();
+                    main.setScreen(p); // TODO: allow more slots?
+                }
             }
         });
         topRow.add(loadButton).left().minHeight(res);
@@ -303,7 +304,7 @@ public class MainMenu implements Screen {
             levelRowGroup.addActor(levelRow);
             Group thumbnail = new Group();
             thumbnail.setSize(res, res);
-            String levelThumbNailName = "levels/" + levelsConfig.get(activatedCategory).getPath() + "/" + lc.getId() + ".png";
+            String levelThumbNailName = "levels/" + levelsConfig.get(activatedCategory).getId() + "/" + lc.getId() + ".png";
             Texture texture = null;
             if (textureCache.containsKey(levelThumbNailName)) {
                 texture = textureCache.get(levelThumbNailName);

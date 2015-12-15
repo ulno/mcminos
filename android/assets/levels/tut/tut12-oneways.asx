@@ -12,6 +12,16 @@ NUMBR:    12
 SHOWNR:   12
 ACCCD:    12
 
+; Textinfo -----------
+TITLE: One-Ways
+TITLE-de: Einbahnstraße
+BODY:
+This way (only), please.
+#
+BODY-de:
+Bitte (nur) hier entlang.
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

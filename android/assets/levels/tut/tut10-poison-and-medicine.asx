@@ -12,6 +12,16 @@ NUMBR:    10
 SHOWNR:   10
 ACCCD:    10
 
+; Textinfo -----------
+TITLE: Potions good and bad
+TITLE-de: Gute Tränke, böse Tränke
+BODY:
+Don't touch the poisoned potion. Be sure to have medicine on you, just in case.
+#
+BODY-de:
+Finger weg von der Giftflasche! Sollte es Dir doch passieren, nimm schnell Deine Medizin!
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

@@ -75,7 +75,7 @@ public class Ghosts implements KryoSerializable {
         block.add(lo);
         level = block.getLevel();
         Mover mover = new GhostMover(game, lo, ghostSpeed[ghostnr],
-                level.ghostTranswall[ghostnr], ghostEntities[ghostnr]);
+                level.getGhostTranswall(ghostnr), ghostEntities[ghostnr]);
         lo.setMover(mover);
         game.addMover(mover);
         ghostsActive[ghostnr] ++;
@@ -93,11 +93,11 @@ public class Ghosts implements KryoSerializable {
 
     public void checkSpawn() {
         // check, if ghosts in castles need to be spawned
-        for( int i=0; i<level.ghostMax.length; i++) {
-            if(ghostsActive[i] < level.ghostMax[i] ) {
+        for( int i=0; i<LevelConfig.ghostTypesCount; i++) {
+            if(ghostsActive[i] < level.getGhostMax(i) ) {
                 if(ghostSpawnCounter[i] == -1) { // nothing counting right now
                     // initialize new spawn counter
-                    ghostSpawnCounter[i] = level.ghostTime[i] << Game.timeResolutionExponent;
+                    ghostSpawnCounter[i] = level.getGhostTime(i) << Game.timeResolutionExponent;
                 }
                 if(ghostSpawnCounter[i] >= 0) {
                     ghostSpawnCounter[i] --;
@@ -131,7 +131,7 @@ public class Ghosts implements KryoSerializable {
     }
 
     public boolean evalAgility(int ghostNr) {
-        return level.ghostAgility[ghostNr] != 0 && game.random(level.ghostAgility[ghostNr]) == 0;
+        return level.getGhostAgility(ghostNr) != 0 && game.random(level.getGhostAgility(ghostNr)) == 0;
     }
 
     public void init() {

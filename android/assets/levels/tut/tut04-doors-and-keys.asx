@@ -12,6 +12,16 @@ NUMBR:    4
 SHOWNR:   4
 ACCCD:    4
 
+; Textinfo -----------
+TITLE: Of doors and keys
+TITLE-de: Von Türen und Schlüsseln
+BODY:
+Try to collect keys you find. You may need them to open doors. Or to close them again.
+#
+BODY-de:
+Sammel Schlüssel ein. Ein Schlüssel öffnet oder schließt eine Tür.
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7

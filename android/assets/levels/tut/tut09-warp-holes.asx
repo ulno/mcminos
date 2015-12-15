@@ -12,6 +12,16 @@ NUMBR:    9
 SHOWNR:   9
 ACCCD:    9
 
+; Textinfo -----------
+TITLE: Warp holes
+TITLE-de: Warp-Löcher
+BODY:
+Jump into one, exit from another.
+#
+BODY-de:
+Springst Du in eins, kommst Du aus einem anderen wieder heraus.
+#
+
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7
