@@ -2,7 +2,6 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -40,8 +38,6 @@ public class MainMenu implements Screen {
     private final Table rootTable;
 //    private Label versionStringActor;
 
-    private ArrayList<Texture> categoryButtonImages = new ArrayList();
-
     private boolean fullscreen = Game.preferencesHandle.getBoolean("fs");
     private LevelConfig activatedLevel = null; // nothing selected in the beginning
     private int activatedCategory = 0; // first is selected by default
@@ -54,7 +50,7 @@ public class MainMenu implements Screen {
         final MainMenu thisScreen = this; // TODO: check why we need this
         this.main = main;
         this.activatedLevel = levelPreselect;
-        if(activatedLevel != null) {
+        if (activatedLevel != null) {
             activatedCategory = activatedLevel.getCategoryNr();
         }
         batch = new SpriteBatch();
@@ -145,18 +141,8 @@ public class MainMenu implements Screen {
 
             }
         });
-        // read images for the category buttons
-        for (int i = 0; i < levelsConfig.size(); i++) {
-            String path = levelsConfig.get(i).getId();
-            FileHandle fh = Gdx.files.internal("levels/" + path + "/gfx.png");
-            if (fh.exists()) {
-                categoryButtonImages.add(new Texture(fh));
-            } else {
-                categoryButtonImages.add(null);
-            }
-        }
 
-        initMenu();
+        rebuildMenu();
 
         // eventually continue a paused/suspended game
         if (Game.getSaveFileHandle(0).exists()) {
@@ -164,9 +150,15 @@ public class MainMenu implements Screen {
         }
     }
 
-    private void switchLevelCategory(int catecory) {
-        activatedCategory = catecory;
+    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, Button[] categorySelectorButtons, ScrollPane levelSelector, int res) {
+        categoryLabel.setText(levelsConfig.get(category).getName());
+        categorySelectorButtons[activatedCategory].setColor(1,1,1,1);
+        activatedCategory = category;
+        categorySelectorButtons[activatedCategory].setColor(0.5f,0,0,1);
         activatedLevel = null; //deselect
+        twoColumns.clear();
+        twoColumns.add(folderSelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
+        twoColumns.add(levelSelector).fill().expand();
     }
 
     private void selectLevel(int level) {
@@ -180,16 +172,27 @@ public class MainMenu implements Screen {
     // inner class for menu
     class CategoryClickListener extends ClickListener {
 
+        private final Table twoColumns;
+        private final ScrollPane categorySelector;
+        private final ScrollPane levelSelector;
+        private final int resolution;
+        private final Button[] categorySelectorButtons;
+        private final Label categoryLabel;
         public int category;
 
-        CategoryClickListener(int c) {
+        public CategoryClickListener(int c, Label categoryLabel, Table twoColumns, ScrollPane categorySelector, Button[] buttons, ScrollPane levelSelector, int res) {
             category = c;
+            this.categoryLabel = categoryLabel;
+            this.twoColumns = twoColumns;
+            this.categorySelector = categorySelector;
+            this.categorySelectorButtons = buttons;
+            this.levelSelector = levelSelector;
+            this.resolution = res;
         }
 
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            switchLevelCategory(category);
-            initMenu();
+            switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
         }
     }
 
@@ -208,33 +211,35 @@ public class MainMenu implements Screen {
         }
     }
 
-    private void initMenu() {
+    private void rebuildMenu() {
         int res = main.getSymbolResolution();
         bigMenuSkin = main.getMenuSkin(res);
         textSkin = main.getMenuSkin(res / 2);
         levelSkin = main.getLevelSkin(res / 2);
         bigLevelSkin = main.getLevelSkin(res);
 
+        // initialize
         table.clear();
+        Table twoColumns = new Table();
 
+        // first build only elements, layout later
         Table topRow = new Table();
-        table.add(topRow).prefHeight(res).minHeight(res).top().fillX().expandX().padBottom(res / 8).row();
 
-        Image settingsButton = new Image(Entities.menu_button_settings.getTexture(res,0));
+        Image settingsButton = new Image(Entities.menu_button_settings.getTexture(res, 0));
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // TODO: call/activate preferences menu
             }
         });
-        topRow.add(settingsButton).left().minHeight(res).padRight(res/16);
+        topRow.add(settingsButton).left().minHeight(res).padRight(res / 16);
 
-        Image loadButton = new Image(Entities.menu_button_game_load.getTexture(res,0));
+        Image loadButton = new Image(Entities.menu_button_game_load.getTexture(res, 0));
         loadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Play p = new Play(main,1);
-                if(p.getGame() != null) { // init was successful
+                Play p = new Play(main, 1);
+                if (p.getGame() != null) { // init was successful
                     dispose();
                     main.setScreen(p); // TODO: allow more slots?
                 }
@@ -246,7 +251,7 @@ public class MainMenu implements Screen {
         title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
         topRow.add(title).prefHeight(res).fillX().expandX();
 
-        Image quitButton = new Image(Entities.menu_button_stop.getTexture(res,0));
+        Image quitButton = new Image(Entities.menu_button_stop.getTexture(res, 0));
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -256,91 +261,76 @@ public class MainMenu implements Screen {
         topRow.add(quitButton).right().minHeight(res);
 
 
-        Label l = new Label(levelsConfig.get(activatedCategory).getName(), levelSkin);
-        table.add(l).prefHeight(res + 4).padBottom(res / 16).left().row();
+        Label categoryLabel = new Label(levelsConfig.get(activatedCategory).getName(), levelSkin);
 
-        Table folderSelectorTable = new Table();
+        // the scrollpanes with the respective levels for each category
+        ScrollPane[] levelSelector = new ScrollPane[levelsConfig.size()];
+        Cell<Group> lastCell = null;
+        for (int c = 0; c < levelsConfig.size(); c++) {
+            LevelCategory cat = levelsConfig.get(c);
+
+            Table levelSelectorTable = new Table();
+            levelSelector[c] = new ScrollPane(levelSelectorTable);
+            levelSelector[c].setForceScroll(false, true);
+
+            for (int i = 0; i < cat.size(); i++) {
+                LevelConfig lc = cat.get(i);
+                Group levelRowGroup = new Group();
+                levelRowGroup.setHeight(res + res / 8);
+                Table levelRow = new Table(bigLevelSkin);
+                levelRow.setPosition(0, res / 2 + res / 8); // TODO: figure out why this shift is necessary -> bug in libgdx?
+                levelRowGroup.addActor(levelRow);
+                Group thumbnail = new Group();
+                thumbnail.setSize(res, res);
+                TextureRegion texture = lc.getSymbol(res);
+                if (texture != null) {
+                    Image snapshot = new Image(texture);
+                    snapshot.setSize(res, res);
+                    thumbnail.addActor(snapshot);
+                }
+                Label t = new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+                levelRow.add(thumbnail).prefHeight(res).top().left().padRight(res / 4);
+                levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
+                lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
+                levelSelectorTable.row();
+                levelRow.addListener(new LevelClickListener(i));
+                if (activatedLevel != null) {
+                    if (i == activatedLevel.getNr()) {
+                        //levelRow.setBackground(new NinePatchDrawable(bigMenuSkin.getPatch("default-rect"))); // TODO: check for memory leak here
+                        levelRow.background("default-rect");
+                        levelRowGroup.setColor(0, 1, 0, 0.7f);
+                        //TODO: check why this does not work at all
+                    }
+                }
+            }
+            if (lastCell != null) {
+                lastCell.expandY().fillY();
+            }
+        }
 
         // add the buttons for the different level categories to the toolbar
+        Table categorySelectorTable = new Table();
+        ScrollPane categorySelector = new ScrollPane(categorySelectorTable);
+        Button categorySelectorButtons[] = new Button[levelsConfig.size()];
         Cell<Group> lastCategory = null;
-        for (int i = 0; i < levelsConfig.size(); i++) {
+        for (int i = 0; i < levelsConfig.size(); i++) { // loop through categories
             Group g = new Group();
             g.setHeight(res);
             Button b = new Button(bigMenuSkin);
-            if (i == activatedCategory) {
-                b.setColor(1.0f, 0, 0, 1.0f);
-            }
-            if (categoryButtonImages.get(i) != null) {
-                Image img = new Image(categoryButtonImages.get(i));
+            categorySelectorButtons[i] = b;
+            TextureRegion t = levelsConfig.get(i).getTexture(res);
+            if (t != null) {
+                Image img = new Image(t);
                 img.setSize(res, res);
                 b.add(img);
             }
             b.setSize(res, res);
             g.addActor(b);
-            b.addListener(new CategoryClickListener(i));
-            lastCategory = folderSelectorTable.add(g).top().left().prefSize(res).padBottom(res / 16);
-            folderSelectorTable.row();
+            b.addListener(new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[i], res));
+            lastCategory = categorySelectorTable.add(g).top().left().prefSize(res).padBottom(res / 16);
+            categorySelectorTable.row();
         }
         lastCategory.fillY().expandY();
-        ScrollPane folderSelector = new ScrollPane(folderSelectorTable);
-
-        Table twoColumns = new Table();
-
-
-        table.add(twoColumns).fill().expand().row();
-
-        Table levelSelectorTable = new Table();
-        ScrollPane levelSelector = new ScrollPane(levelSelectorTable);
-        levelSelector.setForceScroll(false, true);
-
-        LevelCategory categoryLevels = levelsConfig.get(activatedCategory);
-        Cell<Group> lastCell = null;
-        for (int i = 0; i < categoryLevels.size(); i++) {
-            LevelConfig lc = categoryLevels.get(i);
-            Group levelRowGroup = new Group();
-            levelRowGroup.setHeight(res+res/8);
-            Table levelRow = new Table(bigLevelSkin);
-            levelRow.setPosition(0,res/2+res/8); // TODO: figure out why this shift is necessary -> bug in libgdx?
-            levelRowGroup.addActor(levelRow);
-            Group thumbnail = new Group();
-            thumbnail.setSize(res, res);
-            String levelThumbNailName = "levels/" + levelsConfig.get(activatedCategory).getId() + "/" + lc.getId() + ".png";
-            Texture texture = null;
-            if (textureCache.containsKey(levelThumbNailName)) {
-                texture = textureCache.get(levelThumbNailName);
-            } else {
-                FileHandle fh = Gdx.files.internal(levelThumbNailName);
-                if (fh.exists()) {
-                    texture = new Texture(fh);
-                    textureCache.put(levelThumbNailName, texture);
-                }
-            }
-            if (texture != null) {
-                Image snapshot = new Image(texture);
-                snapshot.setSize(res, res);
-                thumbnail.addActor(snapshot);
-            }
-            Label t = new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
-            levelRow.add(thumbnail).prefHeight(res).top().left().padRight(res / 4);
-            levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
-            lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
-            levelSelectorTable.row();
-            levelRow.addListener(new LevelClickListener(i));
-            if(activatedLevel != null) {
-                if(i==activatedLevel.getNr()) {
-                    //levelRow.setBackground(new NinePatchDrawable(bigMenuSkin.getPatch("default-rect"))); // TODO: check for memory leak here
-                    levelRow.background("default-rect");
-                    levelRowGroup.setColor(0,1,0,0.7f);
-                    //TODO: check why this does not work at all
-                }
-            }
-        }
-        if (lastCell != null) {
-            lastCell.expandY().fillY();
-        }
-        twoColumns.add(folderSelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
-        twoColumns.add(levelSelector).fill().expand();
-
 
 /*        if(versionStringActor != null) {
             versionStringActor.remove();
@@ -364,6 +354,13 @@ public class MainMenu implements Screen {
         });
         Gdx.input.setInputProcessor(stage);
         resize();
+
+        // Layout
+        table.add(topRow).prefHeight(res).minHeight(res).top().fillX().expandX().padBottom(res / 8).row();
+        table.add(categoryLabel).minHeight(res).prefHeight(res).padBottom(res / 16).left().row();
+        switchLevelCategory(activatedCategory, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[activatedCategory], res);
+        table.add(twoColumns).fill().expand();
+
     }
 
     @Override

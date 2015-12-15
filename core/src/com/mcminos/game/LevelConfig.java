@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +12,8 @@ import java.util.HashMap;
  */
 public class LevelConfig {
     public static final int ghostTypesCount = 4;
+    private int symbolStep;
+    private Graphics symbol;
     private String id;
     private HashMap<String, String> title = new HashMap<>();
     private HashMap<String, String> body = new HashMap<>();
@@ -237,6 +240,16 @@ public class LevelConfig {
                 case "LEVEL":
                     levelData = kv.value;
                     break;
+                case "SYMBOL":
+                    if(kv.value.contains(",")) {
+                        String keysplit[] = kv.value.split(",");
+                        symbol = Graphics.getByName(keysplit[0].trim());
+                        symbolStep = Integer.parseInt(keysplit[1].trim());
+                    } else {
+                        symbol = Graphics.getByName(kv.value);
+                        symbolStep = 0;
+                    }
+                    break;
                 case "TITLE":
                     title.put("en", kv.value);
                     break;
@@ -394,5 +407,12 @@ public class LevelConfig {
 
     public int getGhostAgility(int ghostNr) {
         return ghostAgility[ghostNr];
+    }
+
+    public TextureRegion getSymbol(int res) {
+        if(symbol != null) {
+            return symbol.getTextureDirectStep(res, symbolStep);
+        }
+        return null;
     }
 }

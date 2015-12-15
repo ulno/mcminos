@@ -1,5 +1,5 @@
 name: McMinos is Alive
-gfx: mcminos_default_front
+gfx: mcminos_default_front,18
 end:
 Congratulations, you finished all levels. To play more, visit http://mcminos.com to check out the schedule of new versions.
 #

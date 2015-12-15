@@ -2,8 +2,7 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ public class LevelCategory {
     private int nr = -1;
     private LevelsConfig levelsConfig;
     private Graphics gfx = null;
+    private int gfxStep = 0;
 
 
     public LevelCategory(LevelsConfig lc, String id) {
@@ -40,7 +40,14 @@ public class LevelCategory {
                         name = kv.value;
                         break;
                     case "gfx":
-                        gfx = Graphics.getByName(kv.value);
+                        if(kv.value.contains(",")) {
+                            String split[] = kv.value.split(",");
+                            gfx = Graphics.getByName(split[0].trim());
+                            gfxStep = Integer.parseInt(split[1].trim());
+                        } else {
+                            gfx = Graphics.getByName(kv.value);
+                            gfxStep = 0;
+                        }
                         break;
                     case "end":
                         endmessage.put("en", kv.value);
@@ -89,5 +96,12 @@ public class LevelCategory {
 
     public Graphics getGfx() {
         return gfx;
+    }
+
+    public TextureRegion getTexture(int res) {
+        if(gfx != null) {
+            return gfx.getTextureDirectStep(res, gfxStep);
+        }
+        return null;
     }
 }

@@ -164,6 +164,11 @@ public class Graphics {
         return stepList.get(timeList[(int)gameframe]).first;
     }
 
+    public TextureRegion getTextureDirectStep(int res, int gfxStep) {
+        ArrayList<TextureRegion> textures = resolutionList.get(res);
+        return textures.get( gfxStep );
+    }
+
     /**
      * Generic version for getting a texture for a time
      * @param resolution
@@ -326,4 +331,5 @@ public class Graphics {
         if(name.length() == 0) return null;
         return allGraphicsByName.get(name);
     }
+
 }
