@@ -49,15 +49,6 @@ GHSPEED4: 1
 AGIL4:    10
 GRTIME4:  5
 
-;   MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-LIVE:   0,999
-KEYS:   0,999
-BMBS:   0,999
-DYNA:   0,999
-MINE:   0,999
-CHOC:   0,999
-MEDC:   0,999
-UMBR:   0,999
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:
