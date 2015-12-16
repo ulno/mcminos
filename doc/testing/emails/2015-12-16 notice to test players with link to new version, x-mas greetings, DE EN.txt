@@ -1,0 +1,29 @@
+[English below]
+
+2015-12-16
+
+Liebe McMinos-Tester,
+
+es gibt eine neuere McMinos-Testversion für Android-Geräte. 
+LIESMICH.txt erklärt, wie Ihr McMinos installieren und spielen könnt.
+
+Dazu gibt es einen Fragebogen für Testspieler. Wir würden uns freuen, wenn  Ihr diesen ausfüllen und an uns mailen würdet.
+
+Wir wünschen Euch angenehme Feiertage und alles Gute für das neue Jahr!
+
+Andreas Neudecker, Ulrich Norbisrath
+
+
+[ENGLISH:]
+
+Dear McMinos test players:
+
+there is a new McMinos test version available for Android devices. 
+README.txt explains how to install and play McMinos.
+
+We added a "Test players' questionnaire" and would be grateful if you could fill this and email it to us.
+
+
+Wishing you a happy Christmas and New Year
+
+Andreas Neudecker, Ulrich Norbisrath

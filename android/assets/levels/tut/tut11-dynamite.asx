@@ -20,7 +20,7 @@ BODY:
 Let's blow things up! If you see me running, try to keep up.
 #
 BODY-de:
-Diesen Explosionen halten auch die meisten Wände nicht stand.
+Diesen Explosionen halten die meisten Wände nicht stand.
 #
 
 ; LEVELFORMAT -------------------------------------------+
@@ -61,23 +61,6 @@ GHOST4:   0
 GHSPEED4: 1
 AGIL4:    15
 GRTIME4:  3
-
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   999,999
-KEYS:   0,0
-BMBS:   0,0
-DYNA:   0,0
-MINE:   0,0
-CHOC:   0,0
-MEDC:   0,0
-UMBR:   0,0
-
-; DESCRIPTION -------------------------------------------+
-
-;TITLE: "Dynamite"
-
-;DESCRIPTION: "If you see me running, try to keep up."
-
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:

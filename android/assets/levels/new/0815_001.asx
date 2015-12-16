@@ -5,6 +5,15 @@ AUTHOR:   TWoT;   Ulrich Norbisrath (edited by NoPe)
 NUMBR:    1
 ACCCD:    0815
 
+TITLE: Level one
+TITLE-de: Spielebene eins
+BODY:
+There are more peas. And more ghosts. Good luck.
+#
+BODY-de:
+Mehr Pillen. Mehr Ghosts. Viel Glück!
+#
+ 
 LWID:   30
 LHI:    17
 SCROLLX:  1
@@ -25,8 +34,6 @@ AGIL1:    20
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
-
 
 LEVEL:
 XXXXXXXXXXXXXX..XXXXXXXXXXXXXX

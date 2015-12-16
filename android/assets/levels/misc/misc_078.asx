@@ -5,11 +5,8 @@
 
 ; HEADER ------------------------------------------------+
 AUTHOR:   NoPe;   Andreas Neudecker
-VERSION:  3.14;
-SHAREWARE:  0
-
+VERSION:  3140
 NUMBR:    78
-SHOWNR:   78
 ACCCD:    78
 
 ; LEVELFORMAT -------------------------------------------+
@@ -53,7 +50,6 @@ GRTIME4:  5
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
-;.........|.........|.........|.........|.........|
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 ZP.k.k.k.........L......|.......L...............*Z
 Z.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.Z
@@ -104,5 +100,4 @@ Z.Xb.....................H....................bX.Z
 Z.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXDZ
 Z*......................H......................D+Z
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-
-# ;_ENDE_DER_LEVELDATEN_---------------------------------*
+#

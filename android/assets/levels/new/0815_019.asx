@@ -1,9 +1,18 @@
 ; LEVEL 19
 ; FOR McMINOS - Versions > 0.1
-AUTHOR:   TBD;    Walter Norbisrath
 
+AUTHOR:   TBD;    Walter Norbisrath
 NUMBR:    19
 ACCCD:    600000012
+
+TITLE: Level nineteen
+TITLE-de: Neunzehnte Spielebene
+BODY:
+Be in the right spot at the right time!
+#
+BODY-de:
+Sei zur rechten Zeit am rechten Ort!
+#
 
 LWID:   21
 LHI:    17
@@ -23,7 +32,6 @@ GRTIME1:  10
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXX

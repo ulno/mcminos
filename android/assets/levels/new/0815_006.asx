@@ -4,7 +4,15 @@
 AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    06
 ACCCD:    4711
-SHAREWARE:  1
+
+TITLE: Level six
+TITLE-de: Sechste Spielebene
+BODY:
+Know where you go and when!
+#
+BODY-de:
+Achte darauf, wohin Du gehst. Und wann.
+#
 
 LWID:   13
 LHI:    13
@@ -26,7 +34,6 @@ GHOST3:   0
 GHOST4:   0
 
 MCSPEED:  1
-
 
 LEVEL:
 XXXXXXXXXXX.X

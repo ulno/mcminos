@@ -5,6 +5,15 @@ AUTHOR:   NoPe; Andreas Neudecker
 NUMBR:    002
 ACCCD:    024168442
 
+TITLE: Level two
+TITLE-de: Zweite Spielebene
+BODY:
+Lock the ghosts in!
+#
+BODY-de:
+Schließ die Geister ein!
+#
+
 LWID:   13
 LHI:    20
 SCROLLX:  1
@@ -25,7 +34,6 @@ GRTIME1:  3
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
 
 LEVEL:
 X.XXXXXXXXXDX

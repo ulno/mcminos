@@ -1,9 +1,18 @@
 ; LEVEL 007
 ; FOR McMINOS - VERSIONs > 0.6
-AUTHOR:   NoPe;   Andreas Neudecker
 
+AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    7
 ACCCD:    4812
+
+TITLE: Level seven
+TITLE-de: Siebte Spielebene
+BODY:
+If you put the ghosts under lock and key, you will succeed soon!
+#
+BODY-de:
+Wenn Du die Geister hinter Schloss und Riegel bringst, hast Du es bald geschafft. 
+#
 
 LWID:   33
 LHI:    21

@@ -5,6 +5,15 @@ AUTHOR:   NoPe; Andreas Neudecker
 NUMBR:    003
 ACCCD:    1188
 
+TITLE: Level three
+TITLE-de: Spielebene drei
+BODY:
+Mind your ways.
+#
+BODY-de:
+Pass auf, wo Du lang läufst.
+#
+
 LWID:   50
 LHI:    11
 SCROLLX:  1
@@ -25,7 +34,6 @@ GRTIME1:  1
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

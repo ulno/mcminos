@@ -5,6 +5,15 @@ AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    14
 ACCCD:    1008
 
+TITLE: Level fourteen
+TITLE-de: Vierzehnte Spielebene
+BODY:
+A hundred chambers or more. Shall you ever leave them behind?
+#
+BODY-de:
+Hundert Kammern oder mehr. Wirst Du sie jemals hinter Dir lassen?
+#
+
 LWID:   49
 LHI:    41
 SCROLLX:  1
@@ -24,8 +33,6 @@ GRTIME1:  3
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
-
 
 LEVEL:
 XXXXXX^XXXXXXXXXXXXXXXXXXXXXXvXXXXXXXXXXXXXXXXXXX

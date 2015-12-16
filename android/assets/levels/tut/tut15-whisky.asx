@@ -20,7 +20,7 @@ BODY:
 If you get drunk you lose control. Just don't.
 #
 BODY-de:
-Wenn du dich im Spiel betrinkst, verlierst du die Kontrolle. Besser sein lassen.
+Wenn du dich im Spiel betrinkst, verlierst du die Kontrolle. Lass es lieber sein.
 #
 
 ; LEVELFORMAT -------------------------------------------+
@@ -61,23 +61,6 @@ GHOST4:   0
 GHSPEED4: 1
 AGIL4:    15
 GRTIME4:  3
-
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   999,999
-KEYS:   0,0
-BMBS:   0,0
-DYNA:   0,0
-MINE:   0,0
-CHOC:   0,0
-MEDC:   0,0
-UMBR:   0,0
-
-; DESCRIPTION -------------------------------------------+
-
-;TITLE: "Whisky - don't drink and die!"
-
-;DESCRIPTION: "Single malt is too strong for you."
-
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:

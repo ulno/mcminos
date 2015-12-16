@@ -8,12 +8,12 @@ VERSION:  0900
 
 ; Textinfo -----------
 TITLE: Development Testlevel
-TITLE-de: Testlevel Deutscher Titel
+TITLE-de: Test-Spielebene
 BODY:
-This is a level with all eLements you can find in the game.
+In this level you can see all elements and items that exist in McMinos.
 #
 BODY-de:
-Hier kann man alles sehen, was es an Elementen in McMinos gibt.
+In dieser Spielebene kann man alle Elemente sehen, die es in McMinos gibt.
 #
 
 LWID:   24

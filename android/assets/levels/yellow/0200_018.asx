@@ -10,7 +10,6 @@ ACCCD:         723462
 VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 LWID:          12
 LHI:      25
 SCROLLX:  1
