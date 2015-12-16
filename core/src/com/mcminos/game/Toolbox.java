@@ -583,6 +583,7 @@ allows cheating */
         scrollPane = new ScrollPane(storyTable);
         d.add(scrollPane).fill().expand();
         d.row();
+        int padSize = res / 16;
 
         // Fill topMenu
         final Group soundButton = new Group();
@@ -602,7 +603,7 @@ allows cheating */
                 play.savePreferences();
             }
         });
-        topMenu.add(soundButton).left().prefSize(res, res);
+        topMenu.add(soundButton).left().prefSize(res, res).padRight(padSize);
 
         final Group musicButton = new Group();
         //musicButton.addActor(new Image(emptyButtonGfx));
@@ -620,7 +621,7 @@ allows cheating */
                 play.savePreferences();
             }
         });
-        topMenu.add(musicButton).left().prefSize(res, res);
+        topMenu.add(musicButton).left().prefSize(res, res).padRight(padSize);
 
 /*        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
         musicButton.addListener(new ClickListener() {
@@ -630,7 +631,7 @@ allows cheating */
                 ((Label) musicButton.getChildren().first()).setText("Music\n" + (audio.getMusic() ? "on" : "off"));
             }
         });
-        topMenu.add(musicButton).prefSize(res, res);
+        topMenu.add(musicButton).prefSize(res, res).padRight(padSize);
 */
 
         final Group touchpadButton = new Group();
@@ -650,16 +651,17 @@ allows cheating */
 
             }
         });
-        topMenu.add(touchpadButton).prefSize(res, res);
+        topMenu.add(touchpadButton).prefSize(res, res).padRight(padSize);
 
-        Button saveButton = new TextButton("Save", writingSkin);
+//        Button saveButton = new TextButton("Save", writingSkin);
+        Image saveButton = new Image(Entities.menu_button_game_save.getTexture(res,0));
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 play.getGame().saveGame(1); // TODO: allow several game-saves
             }
         });
-        topMenu.add(saveButton).prefSize(res, res);
+        topMenu.add(saveButton).prefSize(res, res).padRight(padSize);
 
         Group plusButton = new Group();
         //plusButton.addActor(new Image(emptyButtonGfx));
@@ -674,7 +676,7 @@ allows cheating */
             }
         });
 
-        topMenu.add(plusButton).prefSize(res, res);
+        topMenu.add(plusButton).prefSize(res, res).padRight(padSize);
 
         Group minusButton = new Group();
         //minusButton.addActor(new Image(emptyButtonGfx));
@@ -688,7 +690,7 @@ allows cheating */
                 gameMenu(); // TODO: check if this leaks too much memory
             }
         });
-        topMenu.add(minusButton).prefSize(res, res);
+        topMenu.add(minusButton).prefSize(res, res).padRight(padSize);
 
         Button symbolPlusButton = new TextButton("S+", writingSkin);
         symbolPlusButton.addListener(new ClickListener() {
@@ -700,7 +702,7 @@ allows cheating */
                 gameMenu(); // TODO: check if this leaks too much memory
             }
         });
-        topMenu.add(symbolPlusButton).prefSize(res, res);
+        topMenu.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
 
         Button symbolMinusButton = new TextButton("S-", writingSkin);
         symbolMinusButton.addListener(new ClickListener() {
@@ -712,9 +714,11 @@ allows cheating */
                 gameMenu();
             }
         });
-        topMenu.add(symbolMinusButton).prefSize(res, res);
+        topMenu.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
 
-        TextButton restartButton = new TextButton("Rstr", writingSkin);
+//        TextButton restartButton = new TextButton("Rstr", writingSkin);
+        Group restartButton = new Group();
+        restartButton.addActor(new Image(Entities.menu_button_restart.getTexture(res,0)));
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -723,7 +727,7 @@ allows cheating */
                 deactivate();
             }
         });
-        topMenu.add(restartButton).prefSize(res, res);
+        topMenu.add(restartButton).prefSize(res, res).padRight(padSize);
 
         Group leaveButton = new Group();
         //leaveButton.addActor(new Image(emptyButtonGfx));
@@ -735,7 +739,7 @@ allows cheating */
                 play.backToMenu();
             }
         });
-        topMenu.add(leaveButton).prefSize(res,res);
+        topMenu.add(leaveButton).prefSize(res,res).padRight(padSize);
 
         Group pauseButton = new Group();
         //pauseButton.addActor(new Image(emptyButtonGfx));
@@ -746,7 +750,7 @@ allows cheating */
                 removeDialog();
             }
         });
-        topMenu.add(pauseButton).prefSize(res,res);
+        topMenu.add(pauseButton).prefSize(res,res).padRight(padSize);
 
         Group continueButton = new Group();
         //continueButton.addActor(new Image(emptyButtonGfx));
@@ -763,7 +767,7 @@ allows cheating */
         ///// Fill statistics
         statisticsTable.add(new Label("Statistics", menuSkin)).top().colspan(2).center().padBottom(res / 4).row();
         // Levelname
-        statisticsTable.add(new Label("Levelname: " + level.getName(),writingSkin)).colspan(2).left().row();
+        statisticsTable.add(new Label("Levelname: " + level.getLevelConfig().getName(),writingSkin)).colspan(2).left().row();
         // Zoomlevel + Resolution
         statisticsTable.add(new Label(new StringBuilder("Density: ").append((int)(Gdx.graphics.getDensity()*160)), writingSkin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().row();
@@ -773,12 +777,12 @@ allows cheating */
         statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution) , writingSkin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int)(Gdx.graphics.getFramesPerSecond())), writingSkin)).left().row();
         // Remaining pills
-        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res, 0))).left();
+        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res/2, 0))).left();
         pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), writingSkin);
         statisticsTable.add(pillLabel).left();
         statisticsTable.row();
         // Remaining rockmes
-        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res, 0))).left();
+        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res/2, 0))).left();
         rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), writingSkin);
         statisticsTable.add(rockmeLabel).left();
         statisticsTable.row();
@@ -786,10 +790,7 @@ allows cheating */
         //// Fill the story
 
         storyTable.add(new Label("Story", menuSkin)).top().center().padBottom(res / 4).row();
-        Label story = new Label("Here we will have at one point a beautiful " +
-                "story explaing everything in this Level. " +
-                "This is only some example text at this point.\n\n" +
-                "Stay tuned\n\nUlrich + Andreas", writingSkin);
+        Label story = new Label(level.getLevelConfig().getBody("en"), writingSkin);
         story.setWrap(true);
         storyTable.add(story).top().left().width(d.getWidth() / 2);
 

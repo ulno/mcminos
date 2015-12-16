@@ -6,8 +6,17 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    705
-ACCCD:    
 VERSION:  1100
+
+; Textinfo -----------
+TITLE: Race of Holes
+TITLE-de: Das Lochrennen
+BODY:
+Make sure it's the ghost who goes down the hole not you.
+#
+BODY-de:
+Besser der Geist ins Lochals du selbst.
+#
 
 ; LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
@@ -15,7 +24,7 @@ LWID:   15
 LHI:    11
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 2
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

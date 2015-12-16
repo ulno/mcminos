@@ -7,10 +7,21 @@
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
+SYMBOL:   arrows_rotatable_right
 
 NUMBR:    12
 SHOWNR:   12
 ACCCD:    12
+
+; Textinfo -----------
+TITLE: One-Ways
+TITLE-de: Einbahnstraße
+BODY:
+This way (only), please.
+#
+BODY-de:
+Bitte (nur) hier entlang.
+#
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7

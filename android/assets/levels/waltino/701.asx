@@ -6,8 +6,17 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    701
-ACCCD:    0
 VERSION:  1100
+
+; Textinfo -----------
+TITLE: Rocks Warm-Up
+TITLE-de: Kleines Aufwärmen mit Steinen
+BODY:
+This shouldn't be too hard. Just move all rocks to their destination.
+#
+BODY-de:
+Dies sollte nicht zu schwer sein. "Einfach" alle Steine auf ihre Zielfelder bewegen.
+#
 
 ; LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
@@ -15,7 +24,7 @@ LWID:   12
 LHI:    12
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

@@ -6,16 +6,25 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    703
-ACCCD:    
 VERSION:  1100
+
+; Textinfo -----------
+TITLE: Herding Ghosts
+TITLE-de: Geister Hüten
+BODY:
+Pretty tough to make the critters go where they belong.
+#
+BODY-de:
+Gar nicht so einfach die Gesiter dorthing zu bringen, wo sie hingehören.
+#
 
 ; LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 LWID:   11
-LHI:    12
+LHI:    11
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

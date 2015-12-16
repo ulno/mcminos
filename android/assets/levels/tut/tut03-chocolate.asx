@@ -7,10 +7,21 @@
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
+SYMBOL:   pills_power_pill_chocolate
 
 NUMBR:    3
 SHOWNR:   3
 ACCCD:    3
+
+; Textinfo -----------
+TITLE: Chocolate Take Away
+TITLE-de: Schoki für unterwegs
+BODY:
+Collect chocolate in your toolbox. Eat it to hunt ghosts.
+#
+BODY-de:
+Sammel Shokolade ein und hebe sie für später in der Toolbox auf. Auch Schokolade gibt Energie, um Geister jagen zu können.
+#
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7

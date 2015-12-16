@@ -7,10 +7,20 @@
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
+SYMBOL:   extras_rock
 
 NUMBR:    4
 SHOWNR:   4
 ACCCD:    4
+
+; Textinfo -----------
+TITLE: Rock, rock me, baby!
+BODY:
+Push the rocks around to fence-in ghosts. Or push them on the corresponding rock-me fields to finish the level.
+#
+BODY-de:
+Verschiebe die Gesteinsbrocken um Gesiter einzukeilen oder bedecke alle rock-me-Felder mit Gesteinsbrocken, um die Spielebene zu beenden.
+#
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7

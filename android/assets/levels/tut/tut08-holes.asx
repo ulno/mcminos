@@ -7,10 +7,21 @@
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
+SYMBOL:   holes_2
 
 NUMBR:    8
 SHOWNR:   8
 ACCCD:    8
+
+; Textinfo -----------
+TITLE: Small holes, big holes
+TITLE-de: Kleine Löcher, große Löcher
+BODY:
+Small holes grow, and down large holes you go.
+#
+BODY-de:
+Kleine Löcher werden größer, wenn Du drüber läufst. In große fällst Du hinein.
+#
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7

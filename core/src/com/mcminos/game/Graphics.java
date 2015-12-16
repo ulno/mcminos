@@ -28,6 +28,7 @@ public class Graphics {
     private int blockWidth, blockHeight;
     private int totalAnimationFrames; // total length in gameframes
     private int currentResolution = 0;
+    private String name = null; // name of the graphics for index in HashMap
 
     /**
      * Shift how many bits to left to achieve the actual game resolution.
@@ -35,6 +36,23 @@ public class Graphics {
      * this needs to be -1, because 128 << -1 = 64 (negative shifting shifts in other direction)
      */
     private int currentResolutionBitsLeftShifter = 0;
+
+
+    // Remember all graphics for game
+    private static ArrayList<Graphics> allGraphics = new ArrayList<Graphics>();
+    private static HashMap<String,Graphics> allGraphicsByName = new HashMap<>();
+
+    final int precision = 10; // not more precise than 10ms -? 1/100s second
+    private int[] timeList = null;
+
+    /** Hierarchy here is: Hashmap of sizes mapped to to ArrayList of Images */
+    private HashMap<Integer,ArrayList> resolutionList = new HashMap<Integer, ArrayList>();
+    // the reference step-list (each step references the correct image number) for animating this entity per category
+    private HashMap<String,ArrayList> animationCategorySteps = new HashMap<String, ArrayList>();
+
+    private ArrayList<IntPair> stepList = new ArrayList<IntPair>();
+    // current, resolution specific Textures mapped to gameframe
+    private TextureRegion[] currentTextures = null;
 
     /**
      * @return Width of graphics in level blocks
@@ -49,22 +67,6 @@ public class Graphics {
     public int getHeight() {
         return blockHeight;
     }
-
-
-    // Remember all graphics for game
-    static private ArrayList<Graphics> allGraphics = new ArrayList<Graphics>();
-
-    final int precision = 10; // not more precise than 10ms -? 1/100s second
-    private int[] timeList = null;
-
-    /** Hierarchy here is: Hashmap of sizes mapped to to ArrayList of Images */
-    private HashMap<Integer,ArrayList> resolutionList = new HashMap<Integer, ArrayList>();
-    // the reference step-list (each step references the correct image number) for animating this entity per category
-    private HashMap<String,ArrayList> animationCategorySteps = new HashMap<String, ArrayList>();
-
-    private ArrayList<IntPair> stepList = new ArrayList<IntPair>();
-    // current, resolution specific Textures mapped to gameframe
-    private TextureRegion[] currentTextures = null;
 
     /**
      * Create a new Graphics
@@ -116,6 +118,12 @@ public class Graphics {
 //        Texture texture = new Texture( Gdx.files.internal( file ) );
         textures.add(ar);
         numberImagesLoaded += 1;
+
+        if(name == null) { // not yet given
+            // compute basename in removing animation number
+            name = file.split("_[0-9]*$")[0];
+            allGraphicsByName.put(name, this);
+        }
     }
 
     /**
@@ -154,6 +162,11 @@ public class Graphics {
         gameframe %= totalAnimationFrames;
         gameframe /= precision;
         return stepList.get(timeList[(int)gameframe]).first;
+    }
+
+    public TextureRegion getTextureDirectStep(int res, int gfxStep) {
+        ArrayList<TextureRegion> textures = resolutionList.get(res);
+        return textures.get( gfxStep );
     }
 
     /**
@@ -299,7 +312,7 @@ public class Graphics {
         return totalAnimationFrames;
     }
 
-    public int getAllGraphicsIndex() {
+/*    public int getAllGraphicsIndex() {
         return graphicsIndex;
     }
 
@@ -308,5 +321,15 @@ public class Graphics {
             return allGraphics.get(index);
         else
             return null;
+    } */
+
+    public String getName() {
+        return name;
     }
+
+    public static Graphics getByName(String name) {
+        if(name.length() == 0) return null;
+        return allGraphicsByName.get(name);
+    }
+
 }

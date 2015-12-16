@@ -7,10 +7,21 @@
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
+SYMBOL:   extras_whisky
 
 NUMBR:    15
 SHOWNR:   15
 ACCCD:    15
+
+; Textinfo -----------
+TITLE: Don't drink and ...
+TITLE-de: Kein Alkohol am ...
+BODY:
+If you get drunk you lose control. Just don't.
+#
+BODY-de:
+Wenn du dich im Spiel betrinkst, verlierst du die Kontrolle. Besser sein lassen.
+#
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   7

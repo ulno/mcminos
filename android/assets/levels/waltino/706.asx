@@ -6,8 +6,17 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    706
-ACCCD:    
 VERSION:  1100
+
+; Textinfo -----------
+TITLE: Ghost Seduction
+TITLE-de: Geisterverführung
+BODY:
+Let them do the dirty work.
+#
+BODY-de:
+Lass doch die Geister die Arbeit verrichten.
+#
 
 ; LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
@@ -15,7 +24,7 @@ LWID:   29
 LHI:    12
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 2
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

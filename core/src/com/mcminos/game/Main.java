@@ -3,16 +3,12 @@ package com.mcminos.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -32,14 +28,15 @@ public class Main extends com.badlogic.gdx.Game {
     private HashMap<Integer, Skin> levelSkinList = new HashMap<>();
     private HashMap<Integer, Skin> menuSkinList = new HashMap<>();
     private int symbolResolution;
-    private ArrayList<String> levelNamesList;
+    // obsolet with new menu private ArrayList<String> levelNamesList;
     public final static String versionStringFile = "VERSIONSTRING";
     private String versionString;
-    public final static String levelsConfigFile = "levels/config.json";
-    private LevelsConfig levelConfig;
+    private LevelsConfig levelsConfig;
+    private MainMenu mainMenu;
+    private InputProcessor defaultInputProcessor;
 
-    public LevelsConfig getLevelConfig() {
-        return levelConfig;
+    public LevelsConfig getLevelsConfig() {
+        return levelsConfig;
     }
 
     @Override
@@ -47,11 +44,12 @@ public class Main extends com.badlogic.gdx.Game {
         Gdx.app.setLogLevel(Application.LOG_DEBUG); // TODO: set to info again
         Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         audio = new Audio();
-        loadSkinAndFont(8);
-        loadSkinAndFont(16);
+        //loadSkinAndFont(8);
+        //loadSkinAndFont(16);
         loadSkinAndFont(32);
-        loadSkinAndFont(64);
-        loadSkinAndFont(128);
+        //loadSkinAndFont(64);
+        //loadSkinAndFont(128);
+        defaultInputProcessor = Gdx.input.getInputProcessor();
 
         //  Basically, based on density and screensize, we want to set our default zoomlevel.
         // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
@@ -80,14 +78,23 @@ public class Main extends com.badlogic.gdx.Game {
             versionString = "undefined";
         }
 
-        Json json = new Json();
-        levelConfig = json.fromJson(LevelsConfig.class, Gdx.files.internal((levelsConfigFile)));
-
-        readLevelList();
-
         this.setScreen(new Load(this));
     }
 
+    /**
+     * callback from Load to save levelsconfig here
+     * @param lc
+     */
+    public void initLevelsConfig(LevelsConfig lc) {
+        this.levelsConfig = lc;
+    }
+
+    public void initMainMenu( MainMenu mainMenu ) {
+        this.mainMenu = mainMenu;
+    }
+
+
+    /* obsolet with new menu
     private void readLevelList() {
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(Gdx.files.internal("levels/list").read()), 2048);
@@ -103,7 +110,7 @@ public class Main extends com.badlogic.gdx.Game {
             e.printStackTrace();
         }
 
-    }
+    } */
 
     public int getSymbolResolution() {
         return symbolResolution;
@@ -115,7 +122,7 @@ public class Main extends com.badlogic.gdx.Game {
         this.symbolResolution = symbolResolution;
     }
 
-    private void loadSkinAndFont(int res) {
+    public void loadSkinAndFont(int res) {
         String fontName = "fonts/" + LEVEL_FONT + "-" + res + ".fnt";
         BitmapFont levelFont = new BitmapFont(Gdx.files.internal(fontName));
         levelFontList.put(res, levelFont);
@@ -168,6 +175,7 @@ public class Main extends com.badlogic.gdx.Game {
         for (BitmapFont f : levelFontList.values()) {
             f.dispose();
         }
+        mainMenu.dispose();
         Gdx.app.exit();
     }
 
@@ -191,10 +199,13 @@ public class Main extends com.badlogic.gdx.Game {
         return audio;
     }
 
+    /* obsolet with new menu
     public ArrayList<String> getLevelNames() {
         return levelNamesList;
     }
+*/
 
+    /* obsolet with new menu
     public String getNextLevel(String currentLevel) {
         int index = levelNamesList.indexOf(currentLevel);
         if (index < 0) return null;
@@ -204,8 +215,16 @@ public class Main extends com.badlogic.gdx.Game {
         }
         return levelNamesList.get(index + 1);
     }
+*/
 
     public String getVersionString() {
         return versionString;
+    }
+
+    public void activateMainMenu( LevelConfig currentLevel ) {
+        mainMenu.activateLevel(currentLevel);
+        mainMenu.resize();
+        setScreen(mainMenu);
+        mainMenu.restoreInputProcessor();
     }
 }

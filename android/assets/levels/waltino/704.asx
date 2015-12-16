@@ -6,8 +6,15 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    704
-ACCCD:    
 VERSION:  1100
+
+; Textinfo -----------
+TITLE: Timing Problems
+TITLE-de: Abstimmunsprobleme
+BODY:
+#
+BODY-de:
+#
 
 ; LEVELFORMAT -------------------------------------------*
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
@@ -15,7 +22,7 @@ LWID:   11
 LHI:    11
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0
