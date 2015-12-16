@@ -1,9 +1,8 @@
 ; LEVEL 11
 ; FOR MAC MINOS - Versions 1.10
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    11
-ACCCD:    816795
 VERSION:  1100
 
 ; UN-FIXED WRAP-AROUND FIXES
@@ -39,8 +38,6 @@ GHOST4:   8
 GHSPEED4: 1
 AGIL4:    40
 GRTIME4:  5
-
-
 
 LEVEL:
   X   X     XX   

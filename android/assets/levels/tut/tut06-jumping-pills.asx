@@ -1,17 +1,15 @@
-; LEVEL NEW ---------------------------------------------+
+; LEVEL NEW
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-17
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 SYMBOL:   ghosts_jumpingpill,4
 
 NUMBR:    6
 SHOWNR:   6
-ACCCD:    6
-
 ; Textinfo -----------
 TITLE: Go, get the jumping peas!
 TITLE-de: Schnell, iss die Hüpfpillen!

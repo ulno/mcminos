@@ -1,11 +1,10 @@
-; LEVEL 044 ---------------------------------------------*
+; LEVEL 044
 ; FOR McMINOS - Version 1.10
 ; Created.....: 05.04.93
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    44
-ACCCD:    588124
 VERSION:  1100
 
 LWID:   32

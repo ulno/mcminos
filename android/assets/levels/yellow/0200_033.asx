@@ -1,11 +1,10 @@
-; LEVEL 033 ---------------------------------------------*
+; LEVEL 033
 ; FOR McMINOS - Version 1.10
 ; Created.....: 07.04.93
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    33
-ACCCD:    6131233
 VERSION:  1100
 
 LWID:   30

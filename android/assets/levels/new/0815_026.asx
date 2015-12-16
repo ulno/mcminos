@@ -1,10 +1,8 @@
-; LEVEL 026 ---------------------------------------------*
+; LEVEL 026
 ; FOR McMINOS - Versions >= 0.815
 
-AUTHOR:   NoPe  ; Andreas Neudecker
+AUTHOR: Andreas_Neudecker  ; Andreas Neudecker
 NUMBR:    26
-ACCCD:    1002
-
 LWID:   31
 LHI:    31
 SCROLLX:  0
@@ -39,7 +37,6 @@ GHOST4:   0
 GHSPEED4: 1
 AGIL4:    10
 GRTIME1:  5
-
 
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ

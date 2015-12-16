@@ -1,17 +1,15 @@
-; LEVEL NEW ---------------------------------------------+
+; LEVEL NEW
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-14
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 SYMBOL:   pills_power_pill_chocolate
 
 NUMBR:    3
 SHOWNR:   3
-ACCCD:    3
-
 ; Textinfo -----------
 TITLE: Chocolate Take Away
 TITLE-de: Schoki für unterwegs

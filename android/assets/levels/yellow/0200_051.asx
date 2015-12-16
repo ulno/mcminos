@@ -1,9 +1,8 @@
 ; LEVEL 51
 ; FOR MAC MINOS - Version 1.10
 
-AUTHOR:   NoPe_+_TWoT;    Andreas Neudecker
+AUTHOR: Andreas_Neudecker_+_TWoT;    Andreas Neudecker
 NUMBR:    51
-ACCCD:    1551000
 VERSION:  1100
 
 ; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES

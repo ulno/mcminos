@@ -1,11 +1,10 @@
-; LEVEL 040 ---------------------------------------------*
+; LEVEL 040
 ; FOR McMINOS - Version 1.10
 ; Created.....: 16.7.93
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    40
-ACCCD:    1990100
 VERSION:  1100
 
 LWID:   20

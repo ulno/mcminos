@@ -1,12 +1,11 @@
-; LEVEL 073 ---------------------------------------------*
+; LEVEL 073
 ; FOR McMINOS - Version 1.10
 ; Created.....: 12.06.93
 ; Last changes: 20.06.93
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    73
-ACCCD:    890123400
 VERSION:  1100
 
 LWID:   40

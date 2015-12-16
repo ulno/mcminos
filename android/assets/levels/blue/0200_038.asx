@@ -1,9 +1,8 @@
 ; LEVEL 38
 ; FOR MAC MINOS - Version 0.6
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    38
-ACCCD:    191832
 VERSION:  1100
 
 ; 2DO: EDIT TO FIX DOUBLE WALLS AT LEVEL EDGES (if possible, and if level is kept)

@@ -1,17 +1,15 @@
-; LEVEL NEW ---------------------------------------------+
+; LEVEL NEW
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-13
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 SYMBOL:   pills_pill_default
 
 NUMBR:    1
 SHOWNR:   1
-ACCCD:    1
-
 ; Textinfo
 TITLE: Peas'n'walls
 TITLE-de: Mauern und Pillen

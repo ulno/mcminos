@@ -1,17 +1,15 @@
-; LEVEL NEW ---------------------------------------------+
+; LEVEL NEW
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-18
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 SYMBOL:   extras_dynamite_default
 
 NUMBR:    11
 SHOWNR:   11
-ACCCD:    11
-
 ; Textinfo -----------
 TITLE: Dynamite
 TITLE-de: Dynamit

@@ -1,9 +1,8 @@
 ; LEVEL 13
 ; FOR McMINOS - Version 1.10
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    13
-ACCCD:    180808698
 VERSION:  1100
 
 ; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES

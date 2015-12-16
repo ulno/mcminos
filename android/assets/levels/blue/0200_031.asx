@@ -1,11 +1,10 @@
-; LEVEL 031 ---------------------------------------------*
+; LEVEL 031
 ; FOR McMINOS - Version 1.10
 ; Created.....: 07.04.93
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    31
-ACCCD:    6012341
 VERSION:  1100
 
 ; UN-FIXED WRAP-AROUND FIXES

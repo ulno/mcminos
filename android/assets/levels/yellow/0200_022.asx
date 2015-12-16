@@ -1,9 +1,8 @@
 ; LEVEL 22
 ; FOR McMINOS - Version 1.10
 
-AUTHOR:   NoPe    ; Andreas Neudecker
+AUTHOR: Andreas_Neudecker    ; Andreas Neudecker
 NUMBR:    22
-ACCCD:    79631
 VERSION:  1100
 
 ; 2DO: EDIT TO REMOVE DOUBLE WALLS ON EDGES, if possible

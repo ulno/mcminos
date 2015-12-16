@@ -1,11 +1,10 @@
-; LEVEL 015 ---------------------------------------------*
+; LEVEL 015
 ; FOR McMINOS - Version 1.10
 ; Created.....: 10.04.93
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    15
-ACCCD:    913482
 VERSION:  1100
 
 LWID:   25

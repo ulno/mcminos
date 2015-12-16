@@ -1,17 +1,15 @@
-; LEVEL NEW ---------------------------------------------+
+; LEVEL NEW
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-19
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
 SYMBOL:   extras_whisky
 
 NUMBR:    15
 SHOWNR:   15
-ACCCD:    15
-
 ; Textinfo -----------
 TITLE: Don't drink and ...
 TITLE-de: Kein Alkohol am ...

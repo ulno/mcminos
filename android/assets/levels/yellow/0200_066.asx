@@ -1,12 +1,11 @@
-; LEVEL 066 ---------------------------------------------*
+; LEVEL 066
 ; FOR McMINOS - Version 1.10
 ; Created.....: 11.06.93
 ; Last changes: 12.06.93
 ; Done by.....: Andreas Neudecker
 
-AUTHOR:   NoPe;   Andreas Neudecker
+AUTHOR: Andreas_Neudecker
 NUMBR:    66
-ACCCD:    830000014
 VERSION:  1100
 
 LWID:   30
