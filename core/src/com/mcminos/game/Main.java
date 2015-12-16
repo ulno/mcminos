@@ -31,8 +31,9 @@ public class Main extends com.badlogic.gdx.Game {
     // obsolet with new menu private ArrayList<String> levelNamesList;
     public final static String versionStringFile = "VERSIONSTRING";
     private String versionString;
-    public final static String levelsConfigFile = "levels/config.json";
     private LevelsConfig levelsConfig;
+    private MainMenu mainMenu;
+    private InputProcessor defaultInputProcessor;
 
     public LevelsConfig getLevelsConfig() {
         return levelsConfig;
@@ -48,6 +49,7 @@ public class Main extends com.badlogic.gdx.Game {
         loadSkinAndFont(32);
         //loadSkinAndFont(64);
         //loadSkinAndFont(128);
+        defaultInputProcessor = Gdx.input.getInputProcessor();
 
         //  Basically, based on density and screensize, we want to set our default zoomlevel.
         // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
@@ -76,19 +78,21 @@ public class Main extends com.badlogic.gdx.Game {
             versionString = "undefined";
         }
 
-/*
-will be read in load
-        Json json = new Json();
-        levelsConfig = json.fromJson(LevelsConfig.class, Gdx.files.internal((levelsConfigFile)));
-*/
-        // obsolet with new menu readLevelList();
-
         this.setScreen(new Load(this));
     }
 
-    public void initGlobals(LevelsConfig lc) {
+    /**
+     * callback from Load to save levelsconfig here
+     * @param lc
+     */
+    public void initLevelsConfig(LevelsConfig lc) {
         this.levelsConfig = lc;
     }
+
+    public void initMainMenu( MainMenu mainMenu ) {
+        this.mainMenu = mainMenu;
+    }
+
 
     /* obsolet with new menu
     private void readLevelList() {
@@ -171,6 +175,7 @@ will be read in load
         for (BitmapFont f : levelFontList.values()) {
             f.dispose();
         }
+        mainMenu.dispose();
         Gdx.app.exit();
     }
 
@@ -214,5 +219,12 @@ will be read in load
 
     public String getVersionString() {
         return versionString;
+    }
+
+    public void activateMainMenu( LevelConfig currentLevel ) {
+        mainMenu.activateLevel(currentLevel);
+        mainMenu.resize();
+        setScreen(mainMenu);
+        mainMenu.restoreInputProcessor();
     }
 }

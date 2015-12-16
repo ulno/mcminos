@@ -46,13 +46,9 @@ public class MainMenu implements Screen {
     private HashMap<String, Texture> textureCache = new HashMap<>();
 
 
-    public MainMenu(final Main main, LevelConfig levelPreselect) {
-        final MainMenu thisScreen = this; // TODO: check why we need this
+    public MainMenu(final Main main) {
+//        final MainMenu thisScreen = this; // TODO: check why we need this
         this.main = main;
-        this.activatedLevel = levelPreselect;
-        if (activatedLevel != null) {
-            activatedCategory = activatedLevel.getCategoryNr();
-        }
         batch = new SpriteBatch();
         levelsConfig = main.getLevelsConfig();
         bg = Entities.backgrounds_amoeboid_01.getTexture(128, 0); // can be fixed as bg is not so critical
@@ -165,8 +161,14 @@ public class MainMenu implements Screen {
         LevelCategory levelCategory = levelsConfig.get(this.activatedCategory);
         LevelConfig lc = levelCategory.get(level);
         activatedLevel = lc;
-        this.dispose();
         main.setScreen(new Play(main, lc, 0, 3));
+    }
+
+    public void activateLevel(LevelConfig currentLevel) {
+        this.activatedLevel = currentLevel;
+        if (activatedLevel != null) {
+            activatedCategory = activatedLevel.getCategoryNr();
+        }
     }
 
     // inner class for menu
@@ -240,7 +242,6 @@ public class MainMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Play p = new Play(main, 1);
                 if (p.getGame() != null) { // init was successful
-                    dispose();
                     main.setScreen(p); // TODO: allow more slots?
                 }
             }
@@ -251,7 +252,16 @@ public class MainMenu implements Screen {
         title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
         topRow.add(title).prefHeight(res).fillX().expandX();
 
-        Image quitButton = new Image(Entities.menu_button_stop.getTexture(res, 0));
+        Image infoButton = new Image(Entities.menu_button_info.getTexture(res, 0));
+        infoButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // TODO: show credits
+            }
+        });
+        topRow.add(infoButton).right().minHeight(res);
+
+        Image quitButton = new Image(Entities.menu_button_exit_variant.getTexture(res, 0));
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -375,7 +385,6 @@ public class MainMenu implements Screen {
         if (resumeRequested) {
             Play p = new Play(main, 0);
             if (p.getGame() != null) { //load successfull
-                dispose();
                 main.setScreen(p); // resume
             } else { //if not just continue with this screen
                 resumeRequested = false;
@@ -406,6 +415,11 @@ public class MainMenu implements Screen {
         table.setBounds(0, 0, width, height);
         stage.getViewport().update(width, height, true);
         levelFont = main.getLevelFont(main.getSymbolResolution() / 2);
+    }
+
+    public void restoreInputProcessor() {
+        Gdx.input.setInputProcessor(stage); // restore inputprocessor
+
     }
 
     @Override

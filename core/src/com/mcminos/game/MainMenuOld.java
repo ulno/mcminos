@@ -95,7 +95,7 @@ public class MainMenuOld implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 thisScreen.dispose();
-                main.setScreen(new MainMenu(main,null));
+                main.activateMainMenu(null);
             }
         });
 

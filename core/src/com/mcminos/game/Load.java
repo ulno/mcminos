@@ -29,6 +29,7 @@ public class Load implements Screen {
     private ProgressBar bar;
     private boolean loadingDone = false;
     private float progress = 0.0f;
+    private LevelsConfig levelsConfig;
 
     public Load(Main main) {
 
@@ -124,8 +125,7 @@ public class Load implements Screen {
                 step++;
                 break;
             case 9:
-                LevelsConfig lc = new LevelsConfig("levels/list");
-                main.initGlobals(lc);
+                levelsConfig = new LevelsConfig("levels/list");
                 progress = 1.0f;
                 return true;
         }
@@ -154,8 +154,10 @@ public class Load implements Screen {
         if ( loadNext() ) {
             // Then switch screen
             this.dispose();
-            MainMenu screen = new MainMenu(main, null);
-            main.setScreen(screen);
+            main.initLevelsConfig(levelsConfig);
+            MainMenu mainMenu = new MainMenu(main);
+            main.initMainMenu( mainMenu );
+            main.activateMainMenu( null );
         }
 
     }

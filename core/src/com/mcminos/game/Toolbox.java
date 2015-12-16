@@ -583,6 +583,7 @@ allows cheating */
         scrollPane = new ScrollPane(storyTable);
         d.add(scrollPane).fill().expand();
         d.row();
+        int padSize = res / 16;
 
         // Fill topMenu
         final Group soundButton = new Group();
@@ -602,7 +603,7 @@ allows cheating */
                 play.savePreferences();
             }
         });
-        topMenu.add(soundButton).left().prefSize(res, res);
+        topMenu.add(soundButton).left().prefSize(res, res).padRight(padSize);
 
         final Group musicButton = new Group();
         //musicButton.addActor(new Image(emptyButtonGfx));
@@ -620,7 +621,7 @@ allows cheating */
                 play.savePreferences();
             }
         });
-        topMenu.add(musicButton).left().prefSize(res, res);
+        topMenu.add(musicButton).left().prefSize(res, res).padRight(padSize);
 
 /*        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
         musicButton.addListener(new ClickListener() {
@@ -630,7 +631,7 @@ allows cheating */
                 ((Label) musicButton.getChildren().first()).setText("Music\n" + (audio.getMusic() ? "on" : "off"));
             }
         });
-        topMenu.add(musicButton).prefSize(res, res);
+        topMenu.add(musicButton).prefSize(res, res).padRight(padSize);
 */
 
         final Group touchpadButton = new Group();
@@ -650,7 +651,7 @@ allows cheating */
 
             }
         });
-        topMenu.add(touchpadButton).prefSize(res, res);
+        topMenu.add(touchpadButton).prefSize(res, res).padRight(padSize);
 
 //        Button saveButton = new TextButton("Save", writingSkin);
         Image saveButton = new Image(Entities.menu_button_game_save.getTexture(res,0));
@@ -660,7 +661,7 @@ allows cheating */
                 play.getGame().saveGame(1); // TODO: allow several game-saves
             }
         });
-        topMenu.add(saveButton).prefSize(res, res);
+        topMenu.add(saveButton).prefSize(res, res).padRight(padSize);
 
         Group plusButton = new Group();
         //plusButton.addActor(new Image(emptyButtonGfx));
@@ -675,7 +676,7 @@ allows cheating */
             }
         });
 
-        topMenu.add(plusButton).prefSize(res, res);
+        topMenu.add(plusButton).prefSize(res, res).padRight(padSize);
 
         Group minusButton = new Group();
         //minusButton.addActor(new Image(emptyButtonGfx));
@@ -689,7 +690,7 @@ allows cheating */
                 gameMenu(); // TODO: check if this leaks too much memory
             }
         });
-        topMenu.add(minusButton).prefSize(res, res);
+        topMenu.add(minusButton).prefSize(res, res).padRight(padSize);
 
         Button symbolPlusButton = new TextButton("S+", writingSkin);
         symbolPlusButton.addListener(new ClickListener() {
@@ -701,7 +702,7 @@ allows cheating */
                 gameMenu(); // TODO: check if this leaks too much memory
             }
         });
-        topMenu.add(symbolPlusButton).prefSize(res, res);
+        topMenu.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
 
         Button symbolMinusButton = new TextButton("S-", writingSkin);
         symbolMinusButton.addListener(new ClickListener() {
@@ -713,9 +714,11 @@ allows cheating */
                 gameMenu();
             }
         });
-        topMenu.add(symbolMinusButton).prefSize(res, res);
+        topMenu.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
 
-        TextButton restartButton = new TextButton("Rstr", writingSkin);
+//        TextButton restartButton = new TextButton("Rstr", writingSkin);
+        Group restartButton = new Group();
+        restartButton.addActor(new Image(Entities.menu_button_restart.getTexture(res,0)));
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -724,7 +727,7 @@ allows cheating */
                 deactivate();
             }
         });
-        topMenu.add(restartButton).prefSize(res, res);
+        topMenu.add(restartButton).prefSize(res, res).padRight(padSize);
 
         Group leaveButton = new Group();
         //leaveButton.addActor(new Image(emptyButtonGfx));
@@ -736,7 +739,7 @@ allows cheating */
                 play.backToMenu();
             }
         });
-        topMenu.add(leaveButton).prefSize(res,res);
+        topMenu.add(leaveButton).prefSize(res,res).padRight(padSize);
 
         Group pauseButton = new Group();
         //pauseButton.addActor(new Image(emptyButtonGfx));
@@ -747,7 +750,7 @@ allows cheating */
                 removeDialog();
             }
         });
-        topMenu.add(pauseButton).prefSize(res,res);
+        topMenu.add(pauseButton).prefSize(res,res).padRight(padSize);
 
         Group continueButton = new Group();
         //continueButton.addActor(new Image(emptyButtonGfx));

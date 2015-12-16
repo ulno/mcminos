@@ -230,7 +230,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void backToMenu() {
         this.dispose();
         Game.getSaveFileHandle(0).delete();
-        main.setScreen(new MainMenu(main, level.getLevelConfig()));
+        main.activateMainMenu( level.getLevelConfig() );
     }
 
     @Override
