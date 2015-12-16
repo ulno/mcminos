@@ -4,28 +4,23 @@
 ; Last changes: 20.06.93
 ; Done by.....: Andreas Neudecker
 
-; HEADER ------------------------------------------------*
 AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    73
 ACCCD:    890123400
 VERSION:  1100
 
-; LEVELFORMAT -------------------------------------------*
 LWID:   40
 LHI:    25
 SCROLLX:  0
 SCROLLY:  0
 BACK:   12
 
-; STATUS-Angaben ----------------------------------------*
 LTIME:    0
 RSTRT:    0
 MIRROR:   0
 
-; McMINOS -----------------------------------------------*
 MCSPEED:  1
 
-; GEISTER -----------------------------------------------*
 GHOST1:   0
 GHSPEED1: 1
 AGIL1:    30
@@ -49,9 +44,6 @@ GHSPEED4: 1
 AGIL4:    50
 GRTIME4:  10
 
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-
-; LEVELDATEN --------------------------------------------*
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 ZCC  , , , , , , , ,O , , , , , ,   ,CCZ

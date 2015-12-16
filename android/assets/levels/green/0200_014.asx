@@ -3,28 +3,23 @@
 ; Created.....: 30.03.93
 ; Done by.....: Andreas Neudecker
 
-;   HEADER ------------------------------------------------*
 AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    14
 ACCCD:    1867167
 VERSION:  1100
 
-;   LEVELFORMAT -------------------------------------------*
 LWID:   50
 LHI:    8
 SCROLLX:  1
 SCROLLY:  0
 BACK:   37
 
-;   STATUS-Angaben ----------------------------------------*
 LTIME:    0
 RSTRT:    0
 MIRROR:   0
 
-;   McMINOS -----------------------------------------------*
 MCSPEED:  2
 
-;   GEISTER -----------------------------------------------*
 GHOST1:   1
 GHSPEED1: 2
 AGIL1:    12
@@ -48,7 +43,6 @@ GHSPEED4: 1
 AGIL4:    10
 GRTIME4:  5
 
-;   LEVELDATEN --------------------------------------------*
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ...........CC..X...X..............X...X...kX......

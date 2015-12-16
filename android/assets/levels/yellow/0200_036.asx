@@ -1,34 +1,26 @@
-; HEADER ------------------------------------------------*
 AUTHOR:   TWoT    ; Ulrich Norbisrath
 NUMBR:    36
 ACCCD:    8080
 VERSION:  1100
 
-; LEVELFORMAT -------------------------------------------*
 LWID:   42
 LHI:    7
 SCROLLX:  1
 SCROLLY:  0
 BACK:   43
 
-; STATUS-Angaben ----------------------------------------*
 LTIME:    0
 RSTRT:    0
 MIRROR:   0
 
-; McMINOS -----------------------------------------------*
 MCSPEED:  2
 
-; GEISTER -----------------------------------------------*
 GHOST2:   1
 GHSPEED2: 2
 AGIL2:    0
 PILLMAX2: 979
 PILLFREQ2:  1
 
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-
-; LEVELDATEN --------------------------------------------*
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 (*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)(*)

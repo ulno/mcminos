@@ -5,37 +5,27 @@
 
 ; ~16:9 level; size 12:7 to test possibilities on typical modern wide screens
 
-
-; HEADER ------------------------------------------------+
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3140
 
 NUMBR:    76
 ACCCD:    76
 
-; LEVELFORMAT -------------------------------------------+
 LWID:   12
 LHI:    7
 SCROLLX:  1
 SCROLLY:  0
 BACK:   1
 
-; STATUS-Angaben ----------------------------------------+
 RSTRT:    16
 
-; McMINOS -----------------------------------------------+
 MCSPEED:  1
-
-; GEISTER -----------------------------------------------+
 
 GHOST4:   3
 GHSPEED4: 1
 AGIL4:    0
 GRTIME4:  1
 
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-
-; LEVELDATEN --------------------------------------------+
 LEVEL:
 ZZZZZZZZZZZZ
 ZP   6   odZ

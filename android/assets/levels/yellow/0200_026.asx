@@ -6,7 +6,6 @@ NUMBR:    26
 ACCCD:    2081342
 VERSION:  1100
 
-
 LWID:   30
 LHI:    30
 SCROLLX:  1
@@ -28,9 +27,6 @@ GHOST2:   0
 GHOST3:   0
 GHOST4:   0
 
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
-
-; LEVELDATEN --------------------------------------------*
 LEVEL:
 ZZZZZ.XXXXX.XXXXX.XXXXX.XXXXX.
 ZCC.Z.X...X.X . X.XkkkX.X...X.

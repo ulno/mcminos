@@ -3,7 +3,6 @@
 ; Created.....: 2015-10-20
 ; Done by.....: Andreas Neudecker
 
-; HEADER ------------------------------------------------+
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3.14;
 SHAREWARE:  0
@@ -23,7 +22,6 @@ BODY-de:
 Wo fängt es an? Wo hört es auf? Weißt Du's? Hier war ich doch schon einmal?
 #
 
-; LEVELFORMAT -------------------------------------------+
 LWID:   7
 LHI:    7
 ; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
@@ -31,15 +29,12 @@ SCROLLX:  1
 SCROLLY:  1
 BACK: 1
 
-; STATUS-Angaben ----------------------------------------+
 LTIME:    0
 RSTRT:    1
 MIRROR:   0
 
-; McMINOS -----------------------------------------------+
 MCSPEED:  1
 
-; GEISTER -----------------------------------------------+
 GHOST1:   1
 GHSPEED1: 1
 AGIL1:    15
@@ -63,8 +58,6 @@ GHSPEED4: 1
 AGIL4:    15
 GRTIME4:  3
 
-
-; LEVELDATEN --------------------------------------------+
 LEVEL:
 X.XXX.X
 .G..CC.

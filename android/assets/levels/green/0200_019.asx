@@ -2,12 +2,10 @@
 ;   FOR MAC MINOS - Version 0.1
 ;   Level von Walter Norbisrath
 
-
 AUTHOR:     TBD
 NUMBR:      19
 ACCCD:      141272000
 VERSION:    1100
-
 
 LWID:       26
 LHI:        21
@@ -29,7 +27,6 @@ AGIL1:      50
 GHOST2:     0
 GHOST3:     0
 GHOST3:     0
-
 
 LEVEL:
 XXXX XXXX XXXX XXXX XXXX 
