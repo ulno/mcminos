@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="64" height="64" id="svg3505" sodipodi:version="0.32" inkscape:version="0.91 r13725" sodipodi:docname="one-way-down-00.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" version="1.1" viewBox="0 0 64 64">
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="11.0625" inkscape:cx="32" inkscape:cy="32" inkscape:current-layer="svg3505" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" gridtolerance="10000" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:object-paths="true" inkscape:object-nodes="true" inkscape:snap-bbox="true" inkscape:snap-guide="true" showguides="true" inkscape:guide-bbox="true" inkscape:window-maximized="1" inkscape:snap-perpendicular="true" inkscape:snap-tangential="true" inkscape:snap-path-clip="true" inkscape:snap-path-mask="true">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="64" height="64" id="svg3505" sodipodi:version="0.32" inkscape:version="0.91 r13725" sodipodi:docname="down-00.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" version="1.1" viewBox="0 0 64 64">
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="11.0625" inkscape:cx="32" inkscape:cy="29.255455" inkscape:current-layer="svg3505" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" gridtolerance="10000" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:object-paths="true" inkscape:object-nodes="true" inkscape:snap-bbox="true" inkscape:snap-guide="true" showguides="true" inkscape:guide-bbox="true" inkscape:window-maximized="1" inkscape:snap-perpendicular="true" inkscape:snap-tangential="true" inkscape:snap-path-clip="true" inkscape:snap-path-mask="true">
     <inkscape:grid type="xygrid" id="grid3515" units="px" visible="true" enabled="true" spacingx="1px" spacingy="1px" empspacing="4" snapvisiblegridlinesonly="true" />
     <sodipodi:guide orientation="1,0" position="32,32" id="guide2868" />
     <sodipodi:guide orientation="0,1" position="35,32" id="guide2870" />
@@ -21,7 +21,7 @@
       <cc:Work rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:date>2010-05-08</dc:date>
         <dc:creator>
           <cc:Agent>

@@ -6,6 +6,15 @@ AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    77
 
+TITLE: Apart (playable, please test)
+TITLE-de: Auseinander (spielbar, bitte testen)
+BODY:
+It's easy once you leave the ghost behind.
+#
+BODY-de:
+Wenn Du erst einmal den Geist hinter Dir lässt, ist es ganz leicht.
+#
+
 LWID:   16
 LHI:    9
 SCROLLX:  1

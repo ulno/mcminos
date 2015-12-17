@@ -6,6 +6,15 @@ AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    78
 
+TITLE: Running in circles (in the making)
+TITLE-de: Immer rings herum (noch in der Mache)
+BODY:
+Left or right? But always round and round. Will you get to the centre?
+#
+BODY-de:
+Nach links oder nach rechts? Aber immer rings herum. Wirst Du zum Zentrum vorstoßen?
+#
+
 LWID:   50
 LHI:    50
 SCROLLX:  0
@@ -43,24 +52,24 @@ GRTIME4:  5
 
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZPFkmk_k_ _      L      |       L               +Z
+ZPFkmk_k_ _      L     h|       L               +Z
 Z XXXXXXXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXXXXXXXXXX Z
-ZkX+         _ _ _                            +X Z
+ZkX+         _ _ _      h                     +X Z
 Z|X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X Z
-Z X Xb                           L          bX X Z
+Z X Xb                   h       L          bX X Z
 Z X X XXXXXXXXXXXXXXDXrrrrrrXDXXXXXXXXXXXXXX X X Z
-Z X X Xd               LOO                dX X_X Z
+Z X X Xd               LOOh               dX X_X Z
 Z X X X XXXXXXXXXXXXDXrrrrrrXDXXXXXXXXXXXX X X_X Z
-Z X X X X+                              *X X X_X Z
+Z X X X X+              h               *X X X_X Z
 Z X X X X XXXXXXXXXXDXXrrrrXXDXXXXXXXXXX X X X X Z
-Z X X X X X             OO      .      X X X X X Z
+Z X X X X X             OOh     .      X X X X X Z
 Z X X X X X XXXXXXXXDXXrrrrXXDXXXXXXXX X X X X X Z
-Z X X X X X X                        X X X X X X Z
-Z X X X X X X XXXXXXXXXXrrXXXXXXXXXX X X X X X X Z
-Z X X X X X X X                    X X X X X X X Z
+Z X X X X X X     _     h            X X X X X X Z
+Z X X X X X X XXXXXXXXXXrrXXXXXXXXXX X X X X X X_Z
+Z X X X X X X X          h         X X X X X X X Z
 Z X X X X X X X XXXXXXXXrrXXXXXXXX X X X X X X X Z
-Z X X X X X X X X>>              X X X X X X X X Z
-Z X X X X X X X X XXXXXXXXXXXXXb X X X X X X X X Z
+Z X X X X X X X X>>     h        X X X X X X X X Z
+Z X X X X X X X X XXXXXXXXXXXXXb X X X X X XdX X Z
 Z X X X X X X X X Xb b  OO  bLbX X X X XLX X X X Z
 Z X X X X X X X X X bZZZZZZZZb X X X X X X X X X Z
 Z X X X X X X X X XbZb b  b bZbX X X X X X X X X Z
@@ -78,17 +87,17 @@ Z X X X X X X X X       H     b bXbX X X X X X X Z
 Z X X X X X X X XXXXXXXXXXXXXXXXXb X X X X X X X Z
 Z X X X X X X Xb         H      b bX X X X X X X Z
 Z X X X X X X XXXXXXXXXXXXXXXXXXXXXb X X X X X_X Z
-Z X X X X X Xb          H           bX X X X X_X Z
+Z X X XdX X Xb          H           bX X X X X_X Z
 Z X X X X X XXXXXXXXXXXXXXXXXXXXXXXXXb X X X X_X Z
 Z X X X X Xb             H            bX X X X X Z
 Z X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXb X X X X Z
 Z X X X Xd              H               bX X X X Z
 Z X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXb X X X Z
-Z X X Xb        .        H                bX X X Z
+Z X X Xb        _        H        _       bX X X Z
 Z X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXb X X Z
 Z X Xb                  H                   bX X Z
 Z XkXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXkX Z
-Z Xd                     H                    bX Z
+Z Xd             _       H                    bX Z
 Z XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXDZ
 Z*                      Hk                     D+Z
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
