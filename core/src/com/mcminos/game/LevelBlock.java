@@ -667,6 +667,7 @@ public class LevelBlock implements KryoSerializable {
         LevelObject lo = new LevelObject(level,x,y,Entities.arrows_static_down.getzIndex(),LevelObject.Types.OneWay);
         oneWayType = i;
         lo.setOneWayGfx(i);
+        lo.animationStartRandom(level.getGame());
         oneWay = lo;
     }
 
