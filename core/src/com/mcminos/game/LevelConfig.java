@@ -296,6 +296,10 @@ public class LevelConfig {
             case "sand-01":
                 background = Entities.backgrounds_sand_01_sand;
                 break;
+            case "5":
+            case "soil-01":
+                background = Entities.backgrounds_soil_01;
+                break;
             default:
                 background = Entities.backgrounds_pavement_01;
                 break;

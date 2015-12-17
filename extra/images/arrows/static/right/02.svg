@@ -101,7 +101,7 @@
     <g
        id="g3957"
        transform="matrix(0,-1,1,0,4.2915346e-8,32)"
-       style="fill:#ffcc00">
+       style="fill:#00ff00">
       <path
          transform="matrix(1.5,0,0,1.5,-5,-4.2915346e-8)"
          inkscape:tile-y0="1"
@@ -116,7 +116,7 @@
          sodipodi:cy="2"
          sodipodi:cx="10"
          id="path3763"
-         style="fill:#ffcc00;fill-opacity:1;stroke:none;filter:url(#filter3877)"
+         style="fill:#00ff00;fill-opacity:1;stroke:none;filter:url(#filter3877)"
          sodipodi:type="arc" />
       <use
          height="32"
@@ -127,7 +127,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -137,7 +137,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -147,7 +147,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -157,7 +157,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -167,7 +167,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -177,7 +177,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -187,7 +187,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -197,7 +197,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -207,7 +207,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -217,7 +217,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -227,7 +227,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -237,7 +237,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -247,7 +247,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -257,7 +257,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -267,7 +267,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -277,7 +277,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -287,7 +287,7 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          height="32"
          width="32"
@@ -297,15 +297,15 @@
          inkscape:tiled-clone-of="#path3763"
          y="0"
          x="0"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
     </g>
     <g
        id="g3978"
        transform="matrix(0,-1,1,0,4.2915346e-8,32)"
-       style="fill:#ffcc00">
+       style="fill:#00ff00">
       <path
          sodipodi:type="arc"
-         style="fill:#ffcc00;fill-opacity:1;stroke:none;filter:url(#filter3877)"
+         style="fill:#00ff00;fill-opacity:1;stroke:none;filter:url(#filter3877)"
          id="path3980"
          sodipodi:cx="10"
          sodipodi:cy="2"
@@ -328,7 +328,7 @@
          transform="translate(6,26)"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -338,7 +338,7 @@
          id="use3984"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -348,7 +348,7 @@
          id="use3986"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -358,7 +358,7 @@
          id="use3988"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -368,7 +368,7 @@
          id="use3990"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -378,7 +378,7 @@
          id="use3992"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -388,7 +388,7 @@
          id="use3994"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -398,7 +398,7 @@
          id="use3996"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -408,7 +408,7 @@
          id="use3998"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -418,7 +418,7 @@
          id="use4000"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -428,7 +428,7 @@
          id="use4002"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -438,7 +438,7 @@
          id="use4004"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -448,7 +448,7 @@
          id="use4006"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -458,7 +458,7 @@
          id="use4008"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -468,7 +468,7 @@
          id="use4010"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -478,7 +478,7 @@
          id="use4012"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -488,7 +488,7 @@
          id="use4014"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
       <use
          x="0"
          y="0"
@@ -498,7 +498,7 @@
          id="use4016"
          width="32"
          height="32"
-         style="fill:#ffcc00" />
+         style="fill:#00ff00" />
     </g>
   </g>
 </svg>
