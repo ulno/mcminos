@@ -7,11 +7,11 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    9
 VERSION:  0900
 
-LWID:   21
-LHI:    11
+LWID:     21
+LHI:      11
 SCROLLX:  0
 SCROLLY:  0
-BACK:   6
+BACK:     6
 
 LTIME:    0
 RSTRT:    0

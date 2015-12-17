@@ -1,30 +1,23 @@
-; LEVEL NEW ---------------------------------------------+
+; LEVEL 078
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-23
-; Done by.....: Andreas Neudecker
 
-; HEADER ------------------------------------------------+
 AUTHOR:   NoPe;   Andreas Neudecker
 VERSION:  3140
 NUMBR:    78
-ACCCD:    78
 
-; LEVELFORMAT -------------------------------------------+
 LWID:   50
 LHI:    50
 SCROLLX:  0
 SCROLLY:  0
 BACK:   1
 
-; STATUS-Angaben ----------------------------------------+
 LTIME:    0
 RSTRT:    16
 MIRROR:   0
 
-; McMINOS -----------------------------------------------+
 MCSPEED:  1
 
-; GEISTER -----------------------------------------------+
 GHOST1:   10
 GHSPEED1: 1
 AGIL1:    15
@@ -48,18 +41,17 @@ GHSPEED4: 1
 AGIL4:    15
 GRTIME4:  5
 
-; LEVELDATEN --------------------------------------------+
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZP.k.k.k.........L......|.......L...............*Z
+ZPFk.k.k.........L......|....+..L...............+Z
 Z.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.Z
-ZkX+..........................................+X.Z
+ZkX+.....................F....................+X.Z
 Z|X.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X.Z
-Z.X.Xb...........................L..........bX.X.Z
+Z.X.Xb..................F........L..........bX.X.Z
 Z.X.X.XXXXXXXXXXXXXXXXrrrrrrXXXXXXXXXXXXXXXX.X.X.Z
 Z.X.X.Xd...............LOO................dX.X.X.Z
 Z.X.X.X.XXXXXXXXXXXXXXrrrrrrXXXXXXXXXXXXXX.X.X.X.Z
-Z.X.X.X.X+..............................*X.X.X.X.Z
+Z.X.X.X.X+...............F..............*X.X.X.X.Z
 Z.X.X.X.X.XXXXXXXXXXXXXrrrrXXXXXXXXXXXXX.X.X.X.X.Z
 Z.X.X.X.X.X.............OO.............X.X.X.X.X.Z
 Z.X.X.X.X.X.XXXXXXXXXXXrrrrXXXXXXXXXXX.X.X.X.X.X.Z
