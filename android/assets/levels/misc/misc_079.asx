@@ -8,8 +8,12 @@ NUMBR:    79
 
 TITLE: Close quarters (playable, please test)
 TITLE-de: (spielbar, bitte testen)
-BODY: 
+BODY:
+Keep moving, but mind the details.
+#
 BODY-de:
+Immer in Begung bleiben! Aber achte auf die Details.
+#
 
 LWID:   20
 LHI:    11
@@ -45,4 +49,4 @@ X   hX     PXh  1  X
 X XXXXXXXXXXXXXXXX X
 X1       .        GX
 XXXXXXXXXXXXXXXXXXXX
-# ;_ENDE_DER_LEVELDATEN_---------------------------------*
+#
