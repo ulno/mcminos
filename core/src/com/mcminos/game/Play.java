@@ -53,6 +53,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private SegmentString framerateScore;*/
 
     private Toolbox toolbox;
+    private PlayDialogs dialogs;
     private boolean menusActivated = true;
     private long toolboxRebuildTimePoint = 0;
     public final static int offScreen=-0xffffff;
@@ -64,6 +65,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private long panning = 0;
     static final long panScrollBackPause = 60; // wait how long until slowly scrolling back in pan-mode
 
+    private boolean paused = true; // start paused
 
     private void preInit(final Main main) {
         this.main = main;
@@ -141,7 +143,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution, main.getSymbolResolution());
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
-        toolbox = new Toolbox(this, playwindow, mcminos, audio, level, stage);
+        toolbox = new Toolbox(this);
+        dialogs = new PlayDialogs(this);
 
         // init scoreinfo display
         scoreInfo = new StringBuilder(28);
@@ -164,7 +167,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (!toolbox.isActivated()) {
+                if (!isPaused()) {
                     mcminos.updateTouchpadDirections(touchpad.getKnobPercentX(), touchpad.getKnobPercentY());
                     if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
                         game.startMovement();
@@ -180,11 +183,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         InputMultiplexer im = new InputMultiplexer(stage, gd, this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
 
-        toolbox.activate(); // make sure it's active and game is paused
+        pauseOn(); // make sure it's active and game is paused
 
-        // read teh preferences from storage
+        // read the preferences from storage
         game.loadPreferences();
 
+        dialogs.openLevelStory();
     }
 
     public boolean isTouchpadActive() {
@@ -305,7 +309,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             backgroundBatch.end();
         }
 
-        if (!toolbox.isActivated()) {
+        if (!isPaused()) {
             panning = 0;
             playwindow.updateCoordinates(mcminos.getSpeed(), getSymbolResolution()); // fix coordinates and compute scrolling else coordinates come from panning
         } else if ( panning == 0 ) { // if nobody is currently looking
@@ -365,7 +369,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private void setDestination() {
         if (!mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-            toolbox.deactivate();
+            pauseOff();
         }
         int x = windowToGameX(destinationX);
         int y = windowToGameY(destinationY);
@@ -517,9 +521,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         mcminos.updateKeyDirections();
-        if (!toolbox.dialogActive()) {
+        if (!dialogs.active()) {
             if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                toolbox.deactivate();
+                pauseOff();
             }
         }
         return false;
@@ -528,7 +532,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         mcminos.updateKeyDirections();
-        toolbox.checkDoorKey(keycode);
+        dialogs.checkDoorKey(keycode);
         return false;
     }
 
@@ -552,31 +556,31 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 increaseSymbolResolution();
                 break;
             case '1':
-                toolbox.activate();
+                pauseOn();
                 toolbox.activateChocolate();
                 break;
             case '2':
-                toolbox.activate();
-                toolbox.doorOpener();
+                pauseOn();
+                dialogs.openDoorOpener();
                 break;
             case '3':
-                toolbox.activate();
+                pauseOn();
                 toolbox.activateBomb();
                 break;
             case '4':
-                toolbox.activate();
+                pauseOn();
                 toolbox.activateDynamite();
                 break;
             case '5':
-                toolbox.activate();
+                pauseOn();
                 toolbox.activateLandmine();
                 break;
             case '6':
-                toolbox.activate();
+                pauseOn();
                 toolbox.activateUmbrella();
                 break;
             case '7':
-                toolbox.activate();
+                pauseOn();
                 toolbox.activateMedicine();
                 break;
             case '9':
@@ -589,19 +593,19 @@ public class Play implements Screen, GestureListener, InputProcessor {
             case 't':
             case 'T':
             case ' ':
-                if (toolbox.isActivated()) {
-                    toolbox.deactivate();
+                if (isPaused()) {
+                    pauseOff();
                 } else {
-                    toolbox.activate();
+                    pauseOn();
                 }
                 break;
             case 'p':
             case 'P':
-                if (!toolbox.dialogActive()) {
-                    if (toolbox.isActivated()) {
-                        toolbox.deactivate();
+                if (!dialogs.active()) {
+                    if (isPaused()) {
+                        pauseOff();
                     } else {
-                        toolbox.activate();
+                        pauseOn();
                     }
                 }
                 break;
@@ -625,7 +629,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     private boolean destinationDown(int screenX, int screenY, int button, boolean detectDoorDoubleClick) {
-        if (!toolbox.isActivated()) { // just pan in this case or wait for a registered click -> see tap
+        if (!isPaused()) { // just pan in this case or wait for a registered click -> see tap
             if (button > 0) return false;
             destinationX = screenX;
             destinationY = screenY;
@@ -717,12 +721,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        if (toolbox.dialogActive()) return false; //here we don't handle these events
+        if (dialogs.active()) return false; //here we don't handle these events
         if (button > 0) {
-            if (toolbox.isActivated()) {
-                toolbox.deactivate();
+            if (isPaused()) {
+                pauseOff();
             } else {
-                toolbox.activate();
+                pauseOn();
             }
             return true;
         }
@@ -734,8 +738,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             return false;
         }
         // this was a single tap
-        if (toolbox.isActivated()) {
-            toolbox.deactivate(); // this exits eventually toolbox-mode
+        if (isPaused()) {
+            pauseOff(); // this exits eventually toolbox-mode
             destinationDown((int) x, (int) y, button, false);
             setDestination();
             destinationX = offScreen;
@@ -757,7 +761,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             // TODO: does the radius need to be better checked to allow only neighboring doors?
             int delta = blockDistance(lb, mcminos.getLevelBlock());
             if (delta <= 2 && delta > 0) {
-                toolbox.toggleDoor(lb);
+                dialogs.toggleDoor(lb);
                 return true;
             }
         }
@@ -794,7 +798,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean pan(float screenX, float screenY, float deltaX, float deltaY) {
-        if (toolbox.isActivated()) {
+        if (isPaused()) {
             panning = panScrollBackPause; // approx two seconds delay before moving back
             int dxi = Util.shiftLeftLogical((int) deltaX, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
             int dyi = Util.shiftLeftLogical((int) deltaY, PlayWindow.virtualBlockResolutionExponent - playwindow.resolutionExponent);
@@ -858,7 +862,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void activateToolbox() {
-        toolbox.activate();
+        pauseOn();
     }
 
     public void savePreferences() {
@@ -884,5 +888,42 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public Main getMain() {
         return main;
+    }
+
+    public void pauseOn() {
+        game.stopTimer();
+        if(!paused) {
+            paused = true;
+            toolbox.rebuild();
+        }
+    }
+
+    public void pauseOff() {
+        if( paused ) {
+            paused = false;
+            dialogs.close();
+            toolbox.rebuild();
+        }
+        game.startTimer();
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public PlayWindow getPlayWindow() {
+        return playwindow;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void dialogGameMenu() {
+        dialogs.openGameMenu();
+    }
+
+    public void dialogDoorOpener() {
+        dialogs.openDoorOpener();
     }
 }

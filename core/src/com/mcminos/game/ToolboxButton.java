@@ -23,7 +23,7 @@ public class ToolboxButton  {
     private boolean lastVisible = true; // we start with all visible (last and actual have to be the same in the start)
     private int lastResolution;
 
-    public ToolboxButton(Toolbox toolbox, Graphics gfx, int labelLength, EventListener listener) {
+    public ToolboxButton(Toolbox toolbox, Graphics gfx, int res, int labelLength, EventListener listener) {
         this.toolbox = toolbox;
         this.table = toolbox.getTable();
         this.gfx = gfx;
@@ -34,6 +34,7 @@ public class ToolboxButton  {
             label = new Label(text.getStringBuilder(), toolbox.getLevelSkin());
         }
         button.addListener(listener);
+        lastResolution = res;
     }
 
     public void rebuildButton(int resolution) {

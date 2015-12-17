@@ -664,7 +664,7 @@ public class LevelBlock implements KryoSerializable {
       * @param i
      */
     public void makeOneWay(int i) {
-        LevelObject lo = new LevelObject(level,x,y,Entities.holes_0.getzIndex(),LevelObject.Types.OneWay);
+        LevelObject lo = new LevelObject(level,x,y,Entities.arrows_static_down.getzIndex(),LevelObject.Types.OneWay);
         oneWayType = i;
         lo.setOneWayGfx(i);
         oneWay = lo;
@@ -675,7 +675,7 @@ public class LevelBlock implements KryoSerializable {
     }
 
     public void makeChocolate() {
-        LevelObject lo = new LevelObject(level,x,y,Entities.holes_0.getzIndex(),LevelObject.Types.Chocolate);
+        LevelObject lo = new LevelObject(level,x,y,Entities.pills_power_pill_chocolate.getzIndex(),LevelObject.Types.Chocolate);
         lo.setGfx(Entities.pills_power_pill_chocolate);
         // add(lo), already done in new LevelObject;
     }
@@ -807,5 +807,7 @@ public class LevelBlock implements KryoSerializable {
 
         return false;
     }
+
+
 
 }
