@@ -48,8 +48,8 @@ useVerbosity = True
 if useVerbosity:
   import verbosity
   verbose = verbosity.Verbosity (
-    #"Info",
-    #"Value",
+    "Info",
+    "Value",
     "Testing",
     "Warning",
     #"Debugging"
@@ -76,7 +76,7 @@ HIDE_PNG   = True
 HIDE_GIF   = True
 DELETE_PNG = False
 DELETE_GIF = False
-FORCE_CONVERSION = False
+FORCE_CONVERSION = True
 HIDE = "."         # prefix for hidden files; only works on Unix-like systems
 # Here go the classes, functions, etc. -----------------------------------------
 
@@ -172,10 +172,10 @@ def main ():
       execfile( "CONFIG" )
 
       for option in config_options:
-        verbose( "Testing", "option = ", option )
+        verbose( "Debugging", "option = ", option )
         try:
           config_options[option]=eval(option)
-          verbose( "Testing", "config_options[option] = ", config_options[option] )
+          verbose( "Testing", "config_options[", option, "] = ", config_options[option] )
         # Doesn't matter if a non-used value like zindex is not found in CONFIG!
         except:
           verbose( "Error", "config_options[option] could not be set." )

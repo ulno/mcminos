@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg4150"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   viewBox="0 0 32 32"
+   sodipodi:docname="02.svg">
+  <defs
+     id="defs4152">
+    <filter
+       inkscape:collect="always"
+       id="filter3877"
+       x="-0.36"
+       width="1.72"
+       y="-0.36"
+       height="1.72">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.3"
+         id="feGaussianBlur3879" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.787109"
+     inkscape:cx="14.891501"
+     inkscape:cy="16"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="10000"
+     inkscape:snap-perpendicular="true"
+     guidetolerance="10000"
+     inkscape:window-width="1024"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
+     inkscape:window-y="2"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4698"
+       empspacing="4"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="1px"
+       spacingy="1px" />
+    <sodipodi:guide
+       position="16,32"
+       orientation="1,0"
+       id="guide4769" />
+    <sodipodi:guide
+       position="-4,16"
+       orientation="0,1"
+       id="guide4771" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="-0.70710678,0.70710678"
+       id="guide4773" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="0.70710678,0.70710678"
+       id="guide4775" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4155">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       style="fill:none;fill-opacity:0.25098039000000000;stroke:none"
+       d="m 10,3 12,0 0,16 4,0 -10,10 -10,-10 4,0 z"
+       id="path2993"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccc" />
+    <g
+       id="g3957"
+       transform="matrix(0,-1,1,0,4.2915346e-8,32)">
+      <path
+         transform="matrix(1.5,0,0,1.5,-5,-4.2915346e-8)"
+         inkscape:tile-y0="1"
+         inkscape:tile-x0="9"
+         inkscape:tile-h="2"
+         inkscape:tile-w="2"
+         inkscape:tile-cy="2"
+         inkscape:tile-cx="10"
+         d="M 11,2 C 11,2.5522847 10.552285,3 10,3 9.4477153,3 9,2.5522847 9,2 9,1.4477153 9.4477153,1 10,1 c 0.552285,0 1,0.4477153 1,1 z"
+         sodipodi:ry="1"
+         sodipodi:rx="1"
+         sodipodi:cy="2"
+         sodipodi:cx="10"
+         id="path3763"
+         style="fill:red;fill-opacity:1;stroke:none;filter:url(#filter3877)"
+         sodipodi:type="arc" />
+      <use
+         height="32"
+         width="32"
+         transform="translate(6,26)"
+         id="use3825"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3827"
+         transform="translate(9,23)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3829"
+         transform="translate(3,23)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3831"
+         transform="translate(0,12)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3833"
+         transform="translate(-4,16)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3835"
+         transform="translate(0,8)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3837"
+         transform="translate(0,4)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3839"
+         transform="translate(0,16)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3841"
+         transform="translate(4,0)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3843"
+         transform="translate(12,12)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3847"
+         transform="translate(-0.5,19.5)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3849"
+         transform="translate(12,0)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3851"
+         transform="translate(12,8)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3855"
+         transform="translate(12.5,19.5)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3857"
+         transform="translate(8,0)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3859"
+         transform="translate(12,4)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3861"
+         transform="translate(12,16)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+      <use
+         height="32"
+         width="32"
+         id="use3863"
+         transform="translate(16,16)"
+         xlink:href="#path3763"
+         inkscape:tiled-clone-of="#path3763"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       id="g3978"
+       transform="matrix(0,-1,1,0,4.2915346e-8,32)">
+      <path
+         sodipodi:type="arc"
+         style="fill:red;fill-opacity:1;stroke:none;filter:url(#filter3877)"
+         id="path3980"
+         sodipodi:cx="10"
+         sodipodi:cy="2"
+         sodipodi:rx="1"
+         sodipodi:ry="1"
+         d="M 11,2 C 11,2.5522847 10.552285,3 10,3 9.4477153,3 9,2.5522847 9,2 9,1.4477153 9.4477153,1 10,1 c 0.552285,0 1,0.4477153 1,1 z"
+         inkscape:tile-cx="10"
+         inkscape:tile-cy="2"
+         inkscape:tile-w="2"
+         inkscape:tile-h="2"
+         inkscape:tile-x0="9"
+         inkscape:tile-y0="1"
+         transform="matrix(1.5,0,0,1.5,-5,-4.2915346e-8)" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         id="use3982"
+         transform="translate(6,26)"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(9,23)"
+         id="use3984"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(3,23)"
+         id="use3986"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(0,12)"
+         id="use3988"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(-4,16)"
+         id="use3990"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(0,8)"
+         id="use3992"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(0,4)"
+         id="use3994"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(0,16)"
+         id="use3996"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(4,0)"
+         id="use3998"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(12,12)"
+         id="use4000"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(-0.5,19.5)"
+         id="use4002"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(12,0)"
+         id="use4004"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(12,8)"
+         id="use4006"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(12.5,19.5)"
+         id="use4008"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(8,0)"
+         id="use4010"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(12,4)"
+         id="use4012"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(12,16)"
+         id="use4014"
+         width="32"
+         height="32" />
+      <use
+         x="0"
+         y="0"
+         inkscape:tiled-clone-of="#path3763"
+         xlink:href="#path3763"
+         transform="translate(16,16)"
+         id="use4016"
+         width="32"
+         height="32" />
+    </g>
+  </g>
+</svg>
