@@ -1,9 +1,17 @@
 ; LEVEL 017
 ; FOR McMINOS
 AUTHOR:   NoPe;   Andreas Neudecker
-
 NUMBR:    17
 ACCCD:    914789717
+
+TITLE: Level seventeen
+TITLE-de: Siebzehnte Spielebene
+BODY:
+Holy ... - are you joking?
+#
+BODY-de:
+Heilige ... - soll das ein Witz sein?
+#
 
 LWID:   9
 LHI:    9
@@ -31,13 +39,13 @@ GRTIME4:  5
 
 
 LEVEL:
-UUUXXXUUU
-UG XPX hU
-U .XWX. U
+rvvXXXvvr
+>G XPX h<
+> .XWX. <
 XXXXXXXXX
-XW DxXW1X
+XW3DxXW3X
 XXXXXXXXX
-U .XWX. U
-Uh XkX GU
-UUUXXXUUU
+> .XWX. <
+>h XkX G<
+r^^XXX^^r
 #

@@ -10,8 +10,6 @@ ACCCD:    1867167
 VERSION:  1100
 
 ;   LEVELFORMAT -------------------------------------------*
-; FIX FOR WRAP-AROUND NOT REQUIRED. OK.
-
 LWID:   50
 LHI:    8
 SCROLLX:  1
@@ -49,7 +47,6 @@ GHOST4:   0
 GHSPEED4: 1
 AGIL4:    10
 GRTIME4:  5
-
 
 ;   LEVELDATEN --------------------------------------------*
 LEVEL:

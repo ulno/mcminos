@@ -4,7 +4,15 @@
 AUTHOR:   TWoT;   Ulrich Norbisrath
 NUMBR:    15
 ACCCD:    15
-SHAREWARE:  2
+
+TITLE: Level fifteen
+TITLE-de: Fünfzehnte Spielebene
+BODY:
+It is not always as it seems. Watch the details and think well.
+#
+BODY-de:
+Nicht immer ist es, wie es scheint. Schau genau und denke nach!
+#
 
 LWID:   13
 LHI:    19
@@ -25,7 +33,6 @@ GRTIME1:  5
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
 
 LEVEL:
 XXXXXXXXXXXXX

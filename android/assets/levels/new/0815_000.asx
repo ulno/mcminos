@@ -5,6 +5,15 @@ AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    000
 ACCCD:    0
 
+TITLE: Level zero
+TITLE-de: Spielebene null
+BODY:
+Eat all peas. And stay alive.
+#
+BODY-de:
+Iss alle Pillen. Und bleib am Leben.
+#
+s
 LWID:   12
 LHI:    12
 SCROLLX:  0

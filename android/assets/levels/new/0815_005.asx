@@ -1,9 +1,19 @@
 ; LEVEL 005
 ; FOR McMINOS - Versions > 0.1
-AUTHOR:   NoPe;   Andreas Neudecker
 
+AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    5
 ACCCD:    123456781
+
+TITLE: Level five
+TITLE-de: Fünfte Spielebene
+BODY:
+Always keep a wall, a door, a rock between you and the ghosts! Good luck!
+#
+BODY-de:
+Pass auf, dass immer eine Wand, eine Tür, ein Felsblock zwischen Dir und den 
+Geistern ist. Viel Glück!
+#
 
 LWID:   40
 LHI:    14

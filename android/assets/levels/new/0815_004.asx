@@ -1,9 +1,18 @@
 ; LEVEL 004
 ; FOR McMINOS - Versions > 0.51
-AUTHOR:   NoPe;   Andreas Neudecker
 
+AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    4
 ACCCD:    2299
+
+TITLE: Level four
+TITLE-de: Vierte Spielebene
+BODY:
+Run, run, don't look back!
+#
+BODY-de:
+Lauf, lauf, sieh nicht zurück!
+#
 
 LWID:   20
 LHI:    20
@@ -25,7 +34,6 @@ GRTIME1:  1
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXX

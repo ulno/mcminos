@@ -5,17 +5,13 @@
 
 ; HEADER ------------------------------------------------+
 AUTHOR:   Andreas Neudecker
-VERSION:  3.14;
-SHAREWARE:  0
-
+VERSION:  3140
 NUMBR:    79
-SHOWNR:   79
 ACCCD:    79
 
 ; LEVELFORMAT -------------------------------------------+
 LWID:   20
 LHI:    11
-; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
 SCROLLX:  1
 SCROLLY:  1
 BACK:   1

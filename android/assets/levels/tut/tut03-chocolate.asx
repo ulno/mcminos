@@ -20,7 +20,7 @@ BODY:
 Collect chocolate in your toolbox. Eat it to hunt ghosts.
 #
 BODY-de:
-Sammel Shokolade ein und hebe sie für später in der Toolbox auf. Auch Schokolade gibt Energie, um Geister jagen zu können.
+Sammel Schokolade ein und hebe sie für später in der Toolbox auf. Iss sie, um Geister zu jagen.
 #
 
 ; LEVELFORMAT -------------------------------------------+
@@ -61,23 +61,6 @@ GHOST4:   0
 GHSPEED4: 1
 AGIL4:    15
 GRTIME4:  3
-
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   999,999
-KEYS:   0,0
-BMBS:   0,0
-DYNA:   0,0
-MINE:   0,0
-CHOC:   0,0
-MEDC:   0,0
-UMBR:   0,0
-
-; DESCRIPTION -------------------------------------------+
-
-;TITLE: "More ghosts. And Chocolate"
-
-;DESCRIPTION: "Collect chocolate in your toolbox. Eat it when needed to hunt ghosts."
-
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:

@@ -1,10 +1,20 @@
 ; LEVEL 008
 ; FOR McMINOS - Versions > 0.51
+
 AUTHOR:   NoPe; Andreas Neudecker
-
-
 NUMBR:    8
 ACCCD:    31415927
+
+TITLE: Level eight
+TITLE-de: Achte Spielebene
+BODY:
+You are going to wish for Arachne's thread. But you shall have to do without. 
+Good luck.
+#
+BODY-de:
+Du wirst wünschen, Du hättest Arachnes Faden. Aber Du wirst ohne auskommen 
+müssen. Viel Glück!
+#
 
 LWID:   50
 LHI:    50

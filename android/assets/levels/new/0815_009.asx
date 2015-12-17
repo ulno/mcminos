@@ -4,7 +4,15 @@
 AUTHOR:   NoPe
 NUMBR:    9
 ACCCD:    831451
-SHAREWARE:  1
+
+TITLE: Level nine
+TITLE-de: Neunte Spielebene
+BODY:
+Use the rocks to block the ways, and lock all the doors you can.
+#
+BODY-de:
+Blockier die Wege mit Felsblöcken und schließ die Türen, wo Du kannst.
+#
 
 LWID:   32
 LHI:    30

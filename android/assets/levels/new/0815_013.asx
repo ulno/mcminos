@@ -5,6 +5,15 @@ AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    13
 ACCCD:    13131313
 
+TITLE: Level thirteen
+TITLE-de: Dreizehnte Spielebene
+BODY:
+You gotta run again. And this time there and back again.
+#
+BODY-de:
+Du musst schon wieder rennen. Und diesmal dorthin und wieder zurück.
+#
+
 LWID:   21
 LHI:    21
 SCROLLX:  0
@@ -24,7 +33,6 @@ GRTIME1:  5
 GHOST2:   0
 GHOST3:   0
 GHOST4:   0
-
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXX

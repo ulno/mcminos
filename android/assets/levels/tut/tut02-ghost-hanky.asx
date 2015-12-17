@@ -17,10 +17,10 @@ ACCCD:    2
 TITLE: Ghost "Hanky"
 TITLE-de: Der Geist "Hänki"
 BODY:
-Ghosts live in spooky fortresses. When they come out, they hunt you. Eating the big yellow cookie gives you enough power to hunt the ghosts - for a short while.
+Ghosts live in haunted castles. When they come out, they hunt you. Eat the big yellow cookie. It provides the power to hunt ghosts - for a short while.
 #
 BODY-de:
-Geister leben in Burgen. Wenn sie herauskommen, jagen sie dich. Wenn du den großen gelben Keks isst, bekommst du genug Energie, um selber die Geister zu jagen - zumindest füë kurze Zeit.
+Geister leben in Spukschlössern. Wenn sie herauskommen, jagen sie dich. Iss den gelben Keks, dann hast Du genug Energie, um die Geister zu jagen - zumindest für kurze Zeit.
 #
 
 ; LEVELFORMAT -------------------------------------------+
@@ -61,23 +61,6 @@ GHOST4:   0
 GHSPEED4: 1
 AGIL4:    15
 GRTIME4:  3
-
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   999,999
-KEYS:   0,0
-BMBS:   0,0
-DYNA:   0,0
-MINE:   0,0
-CHOC:   0,0
-MEDC:   0,0
-UMBR:   0,0
-
-; DESCRIPTION -------------------------------------------+
-
-;TITLE: "Avoid the ghosts"
-
-;DESCRIPTION: "Ghosts live in the castle(s). When they come out, they hunt you. Don't lose your head, just get away in time. Eating a cookie gives you enough power to hunt the ghosts - for a while."
-
 
 ; LEVELDATEN --------------------------------------------+
 LEVEL:

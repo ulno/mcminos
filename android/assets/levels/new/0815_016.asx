@@ -5,6 +5,15 @@ AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    16
 ACCCD:    415
 
+TITLE: Level sixteen
+TITLE-de: Sechzehnte Spielebene
+BODY:
+Run! Do I need to say more?
+#
+BODY-de:
+Lauf! Muss ich wirklich mehr sagen?
+#
+
 LWID:   40
 LHI:    40
 SCROLLX:  0
@@ -25,7 +34,6 @@ GRTIME1:  1
 GHOST2:   0
 GHOST3:   0
 GHOST3:   0
-
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

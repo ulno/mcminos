@@ -62,23 +62,6 @@ GHSPEED4: 1
 AGIL4:    0
 GRTIME4:  3
 
-; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------+
-LIVE:   999,999
-KEYS:   0,0
-BMBS:   0,0
-DYNA:   0,0
-MINE:   0,0
-CHOC:   0,0
-MEDC:   0,0
-UMBR:   0,0
-
-; DESCRIPTION -------------------------------------------+
-
-;TITLE: "Go, get the jumping pills!"
-
-;DESCRIPTION: "It's easy to eat the pills along the way to finish a level, right? Well, not if they run away. Go, get them!"
-
-
 ; LEVELDATEN --------------------------------------------+
 LEVEL:
 XXXXXXX
