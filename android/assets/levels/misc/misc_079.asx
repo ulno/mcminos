@@ -2,15 +2,23 @@
 ; FOR McMINOS - Version 3.14
 ; Created.....: 2015-12-09
 
-AUTHOR:   Andreas Neudecker
+AUTHOR:   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    79
-ACCCD:    79
+
+TITLE: Close quarters (playable, please test)
+TITLE-de: (spielbar, bitte testen)
+BODY:
+Keep moving, but mind the details.
+#
+BODY-de:
+Immer in Begung bleiben! Aber achte auf die Details.
+#
 
 LWID:   20
 LHI:    11
-SCROLLX:  1
-SCROLLY:  1
+SCROLLX:  0
+SCROLLY:  0
 BACK:   1
 
 LTIME:    0
@@ -24,34 +32,21 @@ GHSPEED1: 1
 AGIL1:    15
 GRTIME1:  60
 
-GHOST2:   0
-GHSPEED2: 1
-AGIL2:    15
-GRTIME2:  61
-PILLMAX2: 100
-PILLFREQ2:  100
-
-GHOST3:   0
-GHSPEED3: 1
-AGIL3:    15
-GRTIME3:  63
-TRANSWALL3: 3
-
 GHOST4:   0
 GHSPEED4: 1
-AGIL4:    15
-GRTIME4:  67
+AGIL4:    0
+GRTIME4:  301
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXX
-X                  X
+X3        L        X
 X XXXXXXXXXXXXXXXX X
-X    ,dXCC    Xh   X
+X    ,dXCC    Xh2  X
 X rrrrXXCC O XXrrr X
-X    .X   O  X     X
+X    .X   O  X3    X
 X rrrXX  O  XXrrrr X
-X   hX     PXh     X
+X   hX     PXh  1  X
 X XXXXXXXXXXXXXXXX X
-X        .        GX
+X1       .        GX
 XXXXXXXXXXXXXXXXXXXX
-# ;_ENDE_DER_LEVELDATEN_---------------------------------*
+#

@@ -157,11 +157,9 @@ public class MainMenu implements Screen {
         twoColumns.add(levelSelector).fill().expand();
     }
 
-    private void selectLevel(int level) {
-        LevelCategory levelCategory = levelsConfig.get(this.activatedCategory);
-        LevelConfig lc = levelCategory.get(level);
-        activatedLevel = lc;
-        main.setScreen(new Play(main, lc, 0, 3));
+    private void selectLevel(LevelConfig level) {
+        activatedLevel = level;
+        main.setScreen(new Play(main, level, 0, 3));
     }
 
     public void activateLevel(LevelConfig currentLevel) {
@@ -201,10 +199,10 @@ public class MainMenu implements Screen {
     // inner class for menu
     class LevelClickListener extends ClickListener {
 
-        public int level;
+        public LevelConfig level;
 
-        LevelClickListener(int level) {
-            this.level = level;
+        LevelClickListener(LevelConfig lc) {
+            this.level = lc;
         }
 
         @Override
@@ -303,7 +301,7 @@ public class MainMenu implements Screen {
                 levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
                 lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
                 levelSelectorTable.row();
-                levelRow.addListener(new LevelClickListener(i));
+                levelRow.addListener(new LevelClickListener(levelsConfig.get(c).get(i)));
                 if (activatedLevel != null) {
                     if (i == activatedLevel.getNr()) {
                         //levelRow.setBackground(new NinePatchDrawable(bigMenuSkin.getPatch("default-rect"))); // TODO: check for memory leak here
