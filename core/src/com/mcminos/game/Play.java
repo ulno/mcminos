@@ -185,8 +185,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         pauseOn(); // make sure it's active and game is paused
 
-        // read teh preferences from storage
+        // read the preferences from storage
         game.loadPreferences();
+
+        dialogs.openLevelStory();
     }
 
     public boolean isTouchpadActive() {
@@ -519,7 +521,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         mcminos.updateKeyDirections();
-        if (!dialogs.dialogActive()) {
+        if (!dialogs.active()) {
             if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
                 pauseOff();
             }
@@ -559,7 +561,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 break;
             case '2':
                 pauseOn();
-                dialogs.doorOpener();
+                dialogs.openDoorOpener();
                 break;
             case '3':
                 pauseOn();
@@ -599,7 +601,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 break;
             case 'p':
             case 'P':
-                if (!dialogs.dialogActive()) {
+                if (!dialogs.active()) {
                     if (isPaused()) {
                         pauseOff();
                     } else {
@@ -719,7 +721,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        if (dialogs.dialogActive()) return false; //here we don't handle these events
+        if (dialogs.active()) return false; //here we don't handle these events
         if (button > 0) {
             if (isPaused()) {
                 pauseOff();
@@ -899,7 +901,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void pauseOff() {
         if( paused ) {
             paused = false;
-            dialogs.removeDialog();
+            dialogs.close();
             toolbox.rebuild();
         }
         game.startTimer();
@@ -918,10 +920,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void dialogGameMenu() {
-        dialogs.gameMenu();
+        dialogs.openGameMenu();
     }
 
     public void dialogDoorOpener() {
-        dialogs.doorOpener();
+        dialogs.openDoorOpener();
     }
 }

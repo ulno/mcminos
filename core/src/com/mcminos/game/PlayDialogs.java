@@ -32,7 +32,7 @@ public class PlayDialogs {
     private Skin levelSkin;
     private Skin menuSkin;
 
-    private Table toolboxDialog = null;
+    private Table dialog = null;
     private final LevelBlock doorBlocks[] = new LevelBlock[4];
     private Label pillLabel;
     private SegmentString pillLabelText;
@@ -53,41 +53,76 @@ public class PlayDialogs {
         selectSkins(main.getSymbolResolution());
     }
 
-    private void selectSkins( int res ) {
+    private void selectSkins(int res) {
         menuSkin = main.getMenuSkin(res);
-        levelSkin = main.getLevelSkin(res/2);
+        levelSkin = main.getLevelSkin(res / 2);
     }
 
-    public void removeDialog() {
-        if (toolboxDialog != null) toolboxDialog.remove();
-        toolboxDialog = null;
-        for (int i = 0; i < doorBlocks.length; i++)
-            doorBlocks[i] = null;
+    public void close() {
+        if (dialog != null) dialog.remove();
+        dialog = null;
     }
 
 
-    public void gameMenu() {
-        removeDialog(); // make sure any other one is gone
-        Table d = new Table();
+    public void openText( CharSequence title, CharSequence body ) {
         int res = play.getSymbolResolution();
         Skin writingSkin = main.getMenuSkin(res / 2);
         Skin menuSkin = main.getMenuSkin(res);
-        d.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
-        d.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
-        d.setSize(Gdx.graphics.getWidth() * 4 / 5, Gdx.graphics.getHeight() * 4 / 5);
-        d.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
+        Table thisDialog = new Table();
+        thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
+        thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
+        thisDialog.setSize(Gdx.graphics.getWidth() * 4 / 5, Gdx.graphics.getHeight() * 4 / 5);
+        thisDialog.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
+
+        Table topRow = new Table();
+        Label titleLabel = new Label(title, menuSkin);
+        titleLabel.setWrap(true);
+        titleLabel.setAlignment(Align.center);
+        topRow.add(titleLabel).top().center().minHeight(res).fillX().expandX().pad(res/2);
+        Image closeButton = new Image(Entities.toolbox_abort.getTexture(res,0));
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+            }
+        });
+        topRow.add(closeButton).right();
+        thisDialog.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
+        Label bodyLabel = new Label(body, writingSkin);
+        bodyLabel.setWrap(true);
+        thisDialog.add(new ScrollPane(bodyLabel)).fillX().fillY().pad(res/2).row();
+
+        open(thisDialog);
+    }
+
+    public void openLevelStory() {
+        LevelConfig lc = level.getLevelConfig();
+
+        openText(lc.getTitle("en"),lc.getBody("en"));
+    }
+
+    public void openGameMenu() {
+        int res = play.getSymbolResolution();
+        Skin writingSkin = main.getMenuSkin(res / 2);
+        Skin menuSkin = main.getMenuSkin(res);
+        Table thisDialog = new Table();
+        thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
+        thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
+        thisDialog.setSize(Gdx.graphics.getWidth() * 9 / 10, Gdx.graphics.getHeight() * 9 / 10);
+        thisDialog.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
+
         // Basic layout
         Table topMenu = new Table(menuSkin);
         topMenu.setHeight(res);
         ScrollPane scrollPane = new ScrollPane(topMenu);
-        d.add(scrollPane).colspan(2).expandX().fillX().top().minHeight(res).row();
+        thisDialog.add(scrollPane).colspan(2).expandX().fillX().top().minHeight(res).row();
         Table statisticsTable = new Table(menuSkin);
         scrollPane = new ScrollPane(statisticsTable);
-        d.add(scrollPane).fill().expand();
+        thisDialog.add(scrollPane).fill().expand();
         Table storyTable = new Table(menuSkin);
         scrollPane = new ScrollPane(storyTable);
-        d.add(scrollPane).fill().expand();
-        d.row();
+        thisDialog.add(scrollPane).fill().expand();
+        thisDialog.row();
         int padSize = res / 16;
 
         // Fill topMenu
@@ -174,10 +209,10 @@ public class PlayDialogs {
         plusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
+                close();
                 play.zoomPlus();
                 play.savePreferences();
-                gameMenu(); // TODO: check if this leaks too much memory
+                openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
 
@@ -189,10 +224,10 @@ public class PlayDialogs {
         minusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
+                close();
                 play.zoomMinus();
                 play.savePreferences();
-                gameMenu(); // TODO: check if this leaks too much memory
+                openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
         topMenu.add(minusButton).prefSize(res, res).padRight(padSize);
@@ -201,10 +236,10 @@ public class PlayDialogs {
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
+                close();
                 play.increaseSymbolResolution();
                 play.savePreferences();
-                gameMenu(); // TODO: check if this leaks too much memory
+                openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
         topMenu.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
@@ -213,10 +248,10 @@ public class PlayDialogs {
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
+                close();
                 play.decreaseSymbolResolution();
                 play.savePreferences();
-                gameMenu();
+                openGameMenu();
             }
         });
         topMenu.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
@@ -227,7 +262,7 @@ public class PlayDialogs {
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
+                close();
                 mcminos.kill("skullkill", Entities.mcminos_dying, true);
                 play.pauseOff();
             }
@@ -240,7 +275,7 @@ public class PlayDialogs {
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
+                close();
                 play.backToMenu();
             }
         });
@@ -252,7 +287,7 @@ public class PlayDialogs {
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                removeDialog();
+                close();
             }
         });
         topMenu.add(pauseButton).prefSize(res, res).padRight(padSize);
@@ -297,13 +332,18 @@ public class PlayDialogs {
         storyTable.add(new Label("Story", menuSkin)).top().center().padBottom(res / 4).row();
         Label story = new Label(level.getLevelConfig().getBody("en"), writingSkin);
         story.setWrap(true);
-        storyTable.add(story).top().left().width(d.getWidth() / 2);
+        storyTable.add(story).top().left().width(thisDialog.getWidth() / 2);
 
 //        table.setWidth(play.getSymbolResolution() + 4);
 //        table.setHeight(playwindow.getHeightInPixels() + 4);
+        open( thisDialog );
+    }
 
-        toolboxDialog = d;
-        stage.addActor(toolboxDialog);
+    private void open(Table dialog) {
+        close(); // old one needs to be gone
+        play.pause(); // make sure game is paused
+        this.dialog = dialog;
+        stage.addActor(dialog);
     }
 
     private LevelBlock checkDoor(LevelBlock lb1, LevelBlock lb2) {
@@ -314,8 +354,12 @@ public class PlayDialogs {
         return null;
     }
 
-    public void doorOpener() {
-        removeDialog(); // be sure to remove last
+    private void resetDoorBlocks() {
+        for (int i = 0; i < doorBlocks.length; i++)
+            doorBlocks[i] = null;
+    }
+
+    public void openDoorOpener() {
         if (mcminos.getKeys() <= 0) {
             audio.soundPlay("error");
             return;
@@ -405,7 +449,7 @@ allows cheating */
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         toggleDoor(doorBlock);
-                        removeDialog();
+                        close();
                         //super.clicked(event, x, y);
                     }
                 }
@@ -439,8 +483,7 @@ allows cheating */
                 else buttonTable.add(empty).pad(res / 2);
                 buttonTable.add(empty).pad(res / 2).row();
 
-                toolboxDialog = outerTable;
-                stage.addActor(toolboxDialog);
+                open(outerTable);
             }
         } else { // no door found
             audio.soundPlay("error");
@@ -457,13 +500,14 @@ allows cheating */
                         audio.soundPlay("rums");
                     else audio.soundPlay("quietsch");
                     play.pauseOff(); // close table
+                    resetDoorBlocks(); // don't use it again
                 }
             }
         }
     }
 
     public void checkDoorKey(int keycode) {
-        if (toolboxDialog != null) {
+        if (dialog != null) {
             LevelBlock lb = null;
             switch (keycode) {
                 case Input.Keys.W:
@@ -485,14 +529,14 @@ allows cheating */
             }
             if (lb != null) {
                 toggleDoor(lb);
-                removeDialog();
+                close();
             }
         }
 
     }
 
-    public boolean dialogActive() {
-        return toolboxDialog != null;
+    public boolean active() {
+        return dialog != null;
     }
 
 }
