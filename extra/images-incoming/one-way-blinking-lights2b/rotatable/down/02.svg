@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:docname="02.svg" viewBox="0 0 32 32" inkscape:version="0.91 r13725" version="1.1" id="svg4150" height="32" width="32">
+  <defs id="defs4152" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="use5664" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+    <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
+    <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
+    <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
+    <sodipodi:guide position="16,16" orientation="-0.70710678,0.70710678" id="guide4773" />
+    <sodipodi:guide position="16,16" orientation="0.70710678,0.70710678" id="guide4775" />
+  </sodipodi:namedview>
+  <metadata id="metadata4155">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g4929">
+      <rect y="0" x="0" height="32" width="32" id="rect4927" style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <g id="g3121">
+        <path id="path3208" d="M 10 1 C 8.3431458 1 7 2.3431458 7 4 C 7 5.6568542 8.3431458 7 10 7 C 11.656854 7 13 5.6568542 13 4 C 13 2.3431458 11.656854 1 10 1 z M 10 3 C 10.552285 3 11 3.4477153 11 4 C 11 4.5522847 10.552285 5 10 5 C 9.4477153 5 9 4.5522847 9 4 C 9 3.4477153 9.4477153 3 10 3 z " style="fill:#6aff6a;fill-opacity:0.50196081;stroke:none" />
+        <path sodipodi:type="arc" style="fill:lime;fill-opacity:1;stroke:none" id="path4220" sodipodi:cx="16" sodipodi:cy="30" sodipodi:rx="1" sodipodi:ry="1" d="m 17,30 a 1,1 0 0 1 -1,1 1,1 0 0 1 -1,-1 1,1 0 0 1 1,-1 1,1 0 0 1 1,1 z" transform="translate(-6,-26)" />
+      </g>
+      <use height="32" width="32" transform="translate(6,0)" id="use3125" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(12,0)" id="use3127" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(0,6)" id="use3129" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(0,12)" id="use3131" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(12,6)" id="use3133" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(12,12)" id="use3135" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(-6,13)" id="use3175" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(-2,17)" id="use3177" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(2,21)" id="use3179" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(6,25)" id="use3181" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(18,13)" id="use3183" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(14,17)" id="use3185" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(10,21)" id="use3187" xlink:href="#g3121" y="0" x="0" />
+      <g id="use5664" transform="translate(6,12)" style="fill:blue">
+        <path style="opacity:1;fill:#fc0;fill-opacity:0.50364966;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 10,1 A 3,3 0 0 0 7,4 3,3 0 0 0 10,7 3,3 0 0 0 13,4 3,3 0 0 0 10,1 Z m 0,2 A 1,1 0 0 1 11,4 1,1 0 0 1 10,5 1,1 0 0 1 9,4 1,1 0 0 1 10,3 Z" id="path6335" inkscape:connector-curvature="0" />
+        <circle transform="translate(-6,-26)" id="path5670" style="fill:#fc0;fill-opacity:1;stroke:none" cx="16" cy="30" r="1" />
+      </g>
+    </g>
+  </g>
+</svg>
