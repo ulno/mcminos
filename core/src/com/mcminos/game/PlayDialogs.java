@@ -232,6 +232,21 @@ public class PlayDialogs {
         });
         topMenu.add(minusButton).prefSize(res, res).padRight(padSize);
 
+        /** Andreas 2015-12-19 Replaced text button (below) with graphic button */
+        Group symbolPlusButton = new Group();
+        symbolPlusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_in.getTexture(res, 0)));
+        symbolPlusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+                play.increaseSymbolResolution();
+                play.savePreferences();
+                openGameMenu(); // TODO: check if this leaks too much memory
+            } 
+        });
+        topMenu.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
+        
+        /*
         Button symbolPlusButton = new TextButton("S+", writingSkin);
         symbolPlusButton.addListener(new ClickListener() {
             @Override
@@ -243,7 +258,23 @@ public class PlayDialogs {
             }
         });
         topMenu.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
+        */
 
+        /** Andreas 2015-12-19 Replaced text button (below) with graphic button */
+        Group symbolMinusButton = new Group();
+        symbolMinusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_out.getTexture(res, 0)));
+        symbolMinusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+                play.decreaseSymbolResolution();
+                play.savePreferences();
+                openGameMenu(); // TODO: check if this leaks too much memory
+            } 
+        });
+        topMenu.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+
+        /*
         Button symbolMinusButton = new TextButton("S-", writingSkin);
         symbolMinusButton.addListener(new ClickListener() {
             @Override
@@ -255,6 +286,7 @@ public class PlayDialogs {
             }
         });
         topMenu.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+        */
 
 //        TextButton restartButton = new TextButton("Rstr", writingSkin);
         Group restartButton = new Group();
