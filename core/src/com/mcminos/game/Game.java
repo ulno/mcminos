@@ -320,7 +320,7 @@ public class Game {
     private Kryo kryo;
 
     /**
-     * Init cryptographic variables and Kryofor load and save
+     * Init cryptographic variables and Kryo for load and save
      */
     void initKryo() {
         try {

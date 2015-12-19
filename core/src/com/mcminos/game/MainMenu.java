@@ -25,6 +25,7 @@ import java.util.HashMap;
  */
 public class MainMenu implements Screen {
     private final LevelsConfig levelsConfig;
+    private final Statistics statistics;
     private boolean resumeRequested = false; // only resume, if resume-file detected
     private Skin bigMenuSkin;
     private Skin levelSkin;
@@ -49,6 +50,7 @@ public class MainMenu implements Screen {
     public MainMenu(final Main main) {
 //        final MainMenu thisScreen = this; // TODO: check why we need this
         this.main = main;
+        this.statistics = main.getUserStats();
         batch = new SpriteBatch();
         levelsConfig = main.getLevelsConfig();
         bg = Entities.backgrounds_amoeboid_01.getTexture(128, 0); // can be fixed as bg is not so critical
@@ -138,7 +140,7 @@ public class MainMenu implements Screen {
             }
         });
 
-        rebuildMenu();
+// happens in resize        rebuildMenu();
 
         // eventually continue a paused/suspended game
         if (Game.getSaveFileHandle(0).exists()) {
@@ -301,13 +303,18 @@ public class MainMenu implements Screen {
                 levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
                 lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
                 levelSelectorTable.row();
-                levelRow.addListener(new LevelClickListener(levelsConfig.get(c).get(i)));
+                if(statistics.activated(lc)) {
+                    levelRow.addListener(new LevelClickListener(levelsConfig.get(c).get(i)));
+                } else {
+                    // t.setColor(0.5f,0.5f,0.5f,1.0f); does not work as this is a colored font
+                    levelRowGroup.setColor(0.5f,0.5f,0.5f,0.7f); // sets only transparency
+                }
                 if (activatedLevel != null) {
                     if (i == activatedLevel.getNr()) {
                         //levelRow.setBackground(new NinePatchDrawable(bigMenuSkin.getPatch("default-rect"))); // TODO: check for memory leak here
                         levelRow.background("default-rect");
-                        levelRowGroup.setColor(0, 1, 0, 0.7f);
-                        //TODO: check why this does not work at all
+                        levelRowGroup.setColor(0, 1, 0, 0.7f); // sets only transparency
+                        //TODO: check why we can't set a background?
                     }
                 }
             }
@@ -361,7 +368,7 @@ public class MainMenu implements Screen {
 
         });
         Gdx.input.setInputProcessor(stage);
-        resize();
+// called from there        resize();
 
         // Layout
         table.add(topRow).prefHeight(res).minHeight(res).top().fillX().expandX().padBottom(res / 8).row();
@@ -413,6 +420,7 @@ public class MainMenu implements Screen {
         table.setBounds(0, 0, width, height);
         stage.getViewport().update(width, height, true);
         levelFont = main.getLevelFont(main.getSymbolResolution() / 2);
+        rebuildMenu();
     }
 
     public void restoreInputProcessor() {

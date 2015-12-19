@@ -20,7 +20,7 @@ public class LevelCategory {
     private LevelsConfig levelsConfig;
     private Graphics gfx = null;
     private int gfxStep = 0;
-
+    private String activated="all"; // by default, we activate all
 
     public LevelCategory(LevelsConfig lc, String id) {
         this.levelsConfig = lc;
@@ -51,6 +51,9 @@ public class LevelCategory {
                         break;
                     case "end":
                         endmessage.put("en", kv.value);
+                        break;
+                    case "activated":
+                        activated = kv.value;
                         break;
                     default:
                         if (kv.key.startsWith("end-")) {
@@ -101,6 +104,20 @@ public class LevelCategory {
     public TextureRegion getTexture(int res) {
         if(gfx != null) {
             return gfx.getTextureDirectStep(res, gfxStep);
+        }
+        return null;
+    }
+
+    public String getActivated() {
+        return activated;
+    }
+
+    public LevelConfig getLevel(String levelId) {
+        for(int index = size()-1; index >= 0; index--) {
+            LevelConfig lc = get(index);
+            if(lc.getId().equals(levelId)) {
+                return lc;
+            }
         }
         return null;
     }

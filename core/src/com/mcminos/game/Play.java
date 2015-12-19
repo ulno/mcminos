@@ -188,6 +188,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         // read the preferences from storage
         game.loadPreferences();
 
+        // activate level
+        main.getUserStats().activate(level.getLevelConfig());
         dialogs.openLevelStory();
     }
 

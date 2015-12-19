@@ -419,4 +419,8 @@ public class LevelConfig {
         }
         return null;
     }
+
+    public LevelCategory getCategory() {
+        return category;
+    }
 }

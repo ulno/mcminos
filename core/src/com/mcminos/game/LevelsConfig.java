@@ -36,14 +36,14 @@ public class LevelsConfig {
     }
 
     public LevelCategory getCategory(String categoryId) {
-        int index = findById(categoryId);
+        int index = findCategoryIndexById(categoryId);
         if(index>=0) { // found
             return get(index);
         }
         return null;
     }
 
-    private int findById(String categoryId) {
+    private int findCategoryIndexById(String categoryId) {
         int index;
         for(index = categories.size()-1; index>=0; index--) {
             if(categories.get(index).getId().equals(categoryId)) {
@@ -51,6 +51,15 @@ public class LevelsConfig {
             }
         }
         return index;
+    }
+
+    public LevelConfig getLevel(String name) {
+        String split[] = name.split("/"); // TODO: also catch wrong names?
+        String categoryId = split[0];
+        LevelCategory c = getCategory(categoryId);
+        String levelId = split[1];
+        LevelConfig l = c.getLevel(levelId);
+        return l;
     }
 
     public void add(LevelCategory category) {
