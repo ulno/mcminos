@@ -78,7 +78,8 @@ public class PlayDialogs {
         Label titleLabel = new Label(title, menuSkin);
         titleLabel.setWrap(true);
         titleLabel.setAlignment(Align.center);
-        topRow.add(titleLabel).top().center().minHeight(res).fillX().expandX().pad(res/2);
+        ScrollPane titleScroller = new ScrollPane(titleLabel);
+        topRow.add(titleScroller).top().center().minHeight(res).maxHeight(2*res+res*3/4).fillX().expandX().pad(res/2);
         Image closeButton = new Image(Entities.toolbox_abort.getTexture(res,0));
         closeButton.addListener(new ClickListener() {
             @Override
@@ -90,7 +91,7 @@ public class PlayDialogs {
         thisDialog.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
         Label bodyLabel = new Label(body, writingSkin);
         bodyLabel.setWrap(true);
-        thisDialog.add(new ScrollPane(bodyLabel)).fillX().fillY().pad(res/2).row();
+        thisDialog.add(new ScrollPane(bodyLabel)).minHeight(res*2).fillX().fillY().pad(res/2).row();
 
         open(thisDialog);
     }
