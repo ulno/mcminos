@@ -1,311 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="32"
-   height="32"
-   id="svg4150"
-   version="1.1"
-   inkscape:version="0.91 r13725"
-   viewBox="0 0 32 32"
-   sodipodi:docname="01.svg">
-  <defs
-     id="defs4152">
-    <filter
-       inkscape:collect="always"
-       id="filter3877"
-       x="-0.36"
-       width="1.72"
-       y="-0.36"
-       height="1.72">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.3"
-         id="feGaussianBlur3879" />
-    </filter>
-  </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="16.5"
-     inkscape:cx="18.523545"
-     inkscape:cy="15.878788"
-     inkscape:current-layer="layer1"
-     showgrid="true"
-     inkscape:grid-bbox="true"
-     inkscape:document-units="px"
-     objecttolerance="10000"
-     inkscape:snap-perpendicular="true"
-     guidetolerance="10000"
-     inkscape:window-width="1920"
-     inkscape:window-height="1021"
-     inkscape:window-x="0"
-     inkscape:window-y="30"
-     inkscape:window-maximized="1"
-     showguides="true"
-     inkscape:guide-bbox="true">
-    <inkscape:grid
-       type="xygrid"
-       id="grid4698"
-       empspacing="4"
-       visible="true"
-       enabled="true"
-       snapvisiblegridlinesonly="true"
-       spacingx="1px"
-       spacingy="1px" />
-    <sodipodi:guide
-       position="16,32"
-       orientation="1,0"
-       id="guide4769" />
-    <sodipodi:guide
-       position="-4,16"
-       orientation="0,1"
-       id="guide4771" />
-    <sodipodi:guide
-       position="16,16"
-       orientation="-0.70710678,0.70710678"
-       id="guide4773" />
-    <sodipodi:guide
-       position="16,16"
-       orientation="0.70710678,0.70710678"
-       id="guide4775" />
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:docname="01.svg" viewBox="0 0 32 32" inkscape:version="0.91 r13725" version="1.1" id="svg4150" height="32" width="32">
+  <defs id="defs4152" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="16" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+    <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
+    <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
+    <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
+    <sodipodi:guide position="16,16" orientation="-0.70710678,0.70710678" id="guide4773" />
+    <sodipodi:guide position="16,16" orientation="0.70710678,0.70710678" id="guide4775" />
   </sodipodi:namedview>
-  <metadata
-     id="metadata4155">
+  <metadata id="metadata4155">
     <rdf:RDF>
-      <cc:Work
-         rdf:about="">
+      <cc:Work rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     id="layer1"
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer">
-    <g
-       id="g3011"
-       style="fill:#ffcc00">
-      <path
-         transform="matrix(1.5,0,0,1.5,-5,-4.2915346e-8)"
-         inkscape:tile-y0="1"
-         inkscape:tile-x0="9"
-         inkscape:tile-h="2"
-         inkscape:tile-w="2"
-         inkscape:tile-cy="2"
-         inkscape:tile-cx="10"
-         d="M 11,2 C 11,2.5522847 10.552285,3 10,3 9.4477153,3 9,2.5522847 9,2 9,1.4477153 9.4477153,1 10,1 c 0.552285,0 1,0.4477153 1,1 z"
-         sodipodi:ry="1"
-         sodipodi:rx="1"
-         sodipodi:cy="2"
-         sodipodi:cx="10"
-         id="path3763"
-         style="fill:#ffcc00;fill-opacity:1;stroke:none;filter:url(#filter3877)"
-         sodipodi:type="arc" />
-      <use
-         height="32"
-         width="32"
-         transform="translate(6,26)"
-         id="use3825"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3827"
-         transform="translate(9,23)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3829"
-         transform="translate(3,23)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3831"
-         transform="translate(0,12)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3833"
-         transform="translate(-4,16)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3835"
-         transform="translate(0,8)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3837"
-         transform="translate(0,4)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3839"
-         transform="translate(0,16)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3841"
-         transform="translate(4,0)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3843"
-         transform="translate(12,12)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3847"
-         transform="translate(-0.5,19.5)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3849"
-         transform="translate(12,0)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3851"
-         transform="translate(12,8)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3855"
-         transform="translate(12.5,19.5)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3857"
-         transform="translate(8,0)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3859"
-         transform="translate(12,4)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3861"
-         transform="translate(12,16)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         height="32"
-         width="32"
-         id="use3863"
-         transform="translate(16,16)"
-         xlink:href="#path3763"
-         inkscape:tiled-clone-of="#path3763"
-         y="0"
-         x="0"
-         style="fill:#ffcc00" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#path3763"
-         id="use3465"
-         transform="translate(6,13)"
-         width="32"
-         height="32"
-         style="fill:#ffcc00" />
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <g id="g6399">
+      <g id="g3121">
+        <path style="fill:green;fill-opacity:1;stroke:none" d="M 10,2 C 8.8954305,2 8,2.8954305 8,4 8,5.1045695 8.8954305,6 10,6 11.104569,6 12,5.1045695 12,4 12,2.8954305 11.104569,2 10,2 Z m 0,1 c 0.552285,0 1,0.4477153 1,1 0,0.5522847 -0.447715,1 -1,1 C 9.4477153,5 9,4.5522847 9,4 9,3.4477153 9.4477153,3 10,3 Z" id="path2995" inkscape:connector-curvature="0" />
+        <circle style="fill:lime;fill-opacity:1;stroke:none" id="path4220" transform="translate(-6,-26)" cx="16" cy="30" r="1" />
+      </g>
+      <use height="32" width="32" transform="translate(6,0)" id="use3125" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(12,0)" id="use3127" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(0,6)" id="use3129" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(0,12)" id="use3131" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(12,6)" id="use3133" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(12,12)" id="use3135" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(-6,13)" id="use3175" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(-2,17)" id="use3177" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(2,21)" id="use3179" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(6,25)" id="use3181" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(18,13)" id="use3183" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(14,17)" id="use3185" xlink:href="#g3121" y="0" x="0" />
+      <use height="32" width="32" transform="translate(10,21)" id="use3187" xlink:href="#g3121" y="0" x="0" />
+      <g id="use5664" transform="translate(6,12)" style="fill:blue">
+        <path inkscape:connector-curvature="0" id="path5668" d="M 10,2 C 8.8954305,2 8,2.8954305 8,4 8,5.1045695 8.8954305,6 10,6 11.104569,6 12,5.1045695 12,4 12,2.8954305 11.104569,2 10,2 Z m 0,1 c 0.552285,0 1,0.4477153 1,1 0,0.5522847 -0.447715,1 -1,1 C 9.4477153,5 9,4.5522847 9,4 9,3.4477153 9.4477153,3 10,3 Z" style="fill:#a80;fill-opacity:1;stroke:none" />
+        <circle transform="translate(-6,-26)" id="path5670" style="fill:#fc0;fill-opacity:1;stroke:none" cx="16" cy="30" r="1" />
+      </g>
+      <rect y="0" x="0" height="32" width="32" id="rect6397" style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
   </g>
 </svg>

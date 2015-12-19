@@ -36,14 +36,14 @@ GHOST2:   10
 GHSPEED2: 1
 AGIL2:    15
 GRTIME2:  15
-PILLMAX2: 100
-PILLFREQ2:  1
+PILLMAX2: 3000
+PILLFREQ2: 1
 
 GHOST3:   10
 GHSPEED3: 1
 AGIL3:    15
 GRTIME3:  5
-TRANSWALL3: 3
+TRANSWALL3: 7
 
 GHOST4:   10
 GHSPEED4: 1
@@ -68,7 +68,7 @@ Z X X X X X X     _     h            X X X X X X Z
 Z X X X X X X XXXXXXXXXXrrXXXXXXXXXX X X X X X X_Z
 Z X X X X X X X          h         X X X X X X X Z
 Z X X X X X X X XXXXXXXXrrXXXXXXXX X X X X X X X Z
-Z X X X X X X X X>>     h        X X X X X X X X Z
+Z X X X X X X X X>      h       vX X X X X X X X Z
 Z X X X X X X X X XXXXXXXXXXXXXb X X X X X XdX X Z
 Z X X X X X X X X Xb b  OO  bLbX X X X XLX X X X Z
 Z X X X X X X X X X bZZZZZZZZb X X X X X X X X X Z
@@ -83,7 +83,7 @@ Z X X X X X X X X X Zb b  b bZ X X X X X X X X X Z
 Z X X X X X X X X X bZZZZZZZZb X X X X X X X X X Z
 Z X X X X X X X X Xb     H    bXbX X X X X XLX X Z
 Z X X X X X X X X.bXXXXXXXXXXXXb X X X X X X X X Z
-Z X X X X X X X X       H     b bXbX X X X X X X Z
+Z X X X X X X X X^      H     b<bXbX X X X X X X Z
 Z X X X X X X X XXXXXXXXXXXXXXXXXb X X X X X X X Z
 Z X X X X X X Xb         H      b bX X X X X X X Z
 Z X X X X X X XXXXXXXXXXXXXXXXXXXXXb X X X X X_X Z
