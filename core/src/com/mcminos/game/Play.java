@@ -228,8 +228,17 @@ public class Play implements Screen, GestureListener, InputProcessor {
             this.dispose();
             main.setScreen(new Play(main, nextLevelConfig, score, lives));
         } else {
-            // TODO: show congratulationscreen
-            backToMenu();
+            LevelCategory c = currentLevelConfig.getCategory();
+            int categoryNr = c.getNr();
+            if(categoryNr < main.getLevelsConfig().size()-1 ) {
+                // one is following -> unlock
+                LevelCategory nc = main.getLevelsConfig().get(categoryNr+1);
+                nextLevelConfig = nc.get(0);
+                main.getUserStats().activate(nextLevelConfig);
+            }
+            this.dispose();
+            Game.getSaveFileHandle(0).delete();
+            main.levelEndCongrats(currentLevelConfig);
         }
     }
 

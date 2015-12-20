@@ -136,7 +136,7 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void loadUserStats() {
-        userStats = new Statistics(this,Gdx.files.external(GAME_STATS_FILE));
+        userStats = new Statistics(this,GAME_STATS_FILE);
     }
 
     public Statistics getUserStats() {
@@ -236,5 +236,9 @@ public class Main extends com.badlogic.gdx.Game {
         mainMenu.resize();
         setScreen(mainMenu);
         mainMenu.restoreInputProcessor();
+    }
+
+    public void levelEndCongrats( LevelConfig currentLevelConfig) {
+        setScreen( new Congrats(this, currentLevelConfig) );
     }
 }

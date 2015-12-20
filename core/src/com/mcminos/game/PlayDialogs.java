@@ -200,6 +200,7 @@ public class PlayDialogs {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 play.getGame().saveGame(1); // TODO: allow several game-saves
+                openText("Save Game","Game successfully saved."); // TODO: check that it really was successful
             }
         });
         topMenu.add(saveButton).prefSize(res, res).padRight(padSize);

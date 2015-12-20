@@ -25,7 +25,9 @@ import java.util.zip.InflaterInputStream;
  */
 public class Statistics {
     private final Main main;
-    private final FileHandle saveFile;
+    private final String saveFileName;
+    private final static int nrOfFileHandles = 5;
+    private final FileHandle[] saveFiles = new FileHandle[nrOfFileHandles];
 
     HashMap<String, LevelStatistics> statsRecord;
 
@@ -35,9 +37,12 @@ public class Statistics {
     private Cipher cipher;
     private Kryo kryo;
 
-    public Statistics(Main main, FileHandle saveFile) {
+    public Statistics(Main main, String saveFileName) {
         this.main = main;
-        this.saveFile = saveFile;
+        this.saveFileName = saveFileName;
+        for(int i=0; i<nrOfFileHandles; i++) {
+            saveFiles[i] = Gdx.files.external(saveFileName+i);
+        }
         initKryo();
         if (!load()) {
             statsRecord = new HashMap<>(); // reinit, if file can't be read
@@ -95,8 +100,17 @@ public class Statistics {
 
 
     public void save() {
-        // TODO: make backup and build fallback
-        FileHandle fh = saveFile;
+        // forget oldest and move others
+        for(int i=nrOfFileHandles-1; i>=1; i--) {
+            try {
+                saveFiles[i-1].moveTo(saveFiles[i]);
+            } catch (Exception e) {
+                Gdx.app.log("save stats", "can't move file trying next.", e);
+            }
+        }
+
+        // try now to save current
+        FileHandle fh = saveFiles[0];
 
         try {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -111,29 +125,30 @@ public class Statistics {
     }
 
     public boolean load() {
-        FileHandle fh = saveFile;
+        for( int i=0; i<nrOfFileHandles; i++) {
+            FileHandle fh = saveFiles[i];
 
-        // check if the save-game exists
-        if (fh.exists()) {
-            try {
-                cipher.init(Cipher.DECRYPT_MODE, secretKey);
-                Input input = new Input(new BufferedInputStream(new InflaterInputStream(new CipherInputStream(fh.read(), cipher))));
+            // check if the save-game exists
+            if (fh.exists()) {
+                try {
+                    cipher.init(Cipher.DECRYPT_MODE, secretKey);
+                    Input input = new Input(new BufferedInputStream(new InflaterInputStream(new CipherInputStream(fh.read(), cipher))));
 
-                // set context for kryo
-                ObjectMap context = kryo.getContext();
-                context.put("main", main); // is needed in level
+                    // set context for kryo
+                    ObjectMap context = kryo.getContext();
+                    context.put("main", main); // is needed in level
 
-                // restore the state
-                statsRecord = kryo.readObject(input, HashMap.class);
+                    // restore the state
+                    statsRecord = kryo.readObject(input, HashMap.class);
 
-                input.close();
-            } catch (Exception e) {
-                Gdx.app.log("Unable to load stats file", e.toString());
-                return false; // not successful
+                    input.close();
+                    return true;
+                } catch (Exception e) {
+                    Gdx.app.log("exception in load stats", "Unable to load stats file "+i, e);
+                    // try next
+                }
             }
-        } else {
-            return false; // doesn't exist, can't load
         }
-        return true; // success
+        return false; // none worked
     }
 }

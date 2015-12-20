@@ -121,4 +121,8 @@ public class LevelCategory {
         }
         return null;
     }
+
+    public String getEndMessage( String lang ) {
+        return endmessage.get(lang);
+    }
 }
