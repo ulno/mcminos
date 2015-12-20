@@ -1,0 +1,64 @@
+; LEVEL 078
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-12-20
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    80
+
+TITLE: Testing power 'pills'
+TITLE-de: Kraftpillen-Test
+BODY:
+Besides the powerful big yellow cookie, there are the milk bottle and the mushroom. They have different effects: while the cookie doubles McMinos' speed, the milk bottle doubles the speed of the ghosts. With the mushroom nobody gains speed. But all power pills provide the power to hunt ghosts for 10 seconds, and time of multiple power pills add up.
+#
+BODY-de:
+Neben dem kraftspendenen großen gelben Keks gibt es noch die Milchflasche und den Pilz. Sie alle haben verschiedene Effekte: während der Keks die Geschwindigkeit von McMinos verdoppelt, verdoppelt die Milch die Geschwindigkeit der Geister. Der Pilz ändert gar nichts and den Geschwindigkeiten. Aber alle Kraftpillen verleihen McMinos für zehn Sekunden die Kraft, Geister zu jagen. Die Zeit mehrerer Kraftpillen addiert sich.
+#
+
+LWID:   16
+LHI:    16
+SCROLLX:  0
+SCROLLY:  0
+BACK:   1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   10
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  5
+
+GHOST2:   10
+GHSPEED2: 1
+AGIL2:    15
+GRTIME2:  15
+PILLMAX2: 30
+PILLFREQ2: 5
+
+GHOST4:   10
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  5
+
+LEVEL:
+ZZZZZZZZZZZZZZZZ
+Zg            dZ
+Z XXXrXXXXrXXX Z
+Z XG   hk   LX Z
+Z X XXXXXXXX X Z
+Z X)DG  k LX X Z
+Z X)X XXXX X X Z
+Z X)X XP*X X X Z
+Z X X XkOD(X X Z
+Z X X XXXX(X X+Z
+Z X XL k h(X XLZ
+Z X XXXXXXXX X+Z
+Z XL    k    DFZ
+Z XXXXXXXXXXXX+Z
+Zd     hk     dZ
+ZZZZZZZZZZZZZZZZ
+#
