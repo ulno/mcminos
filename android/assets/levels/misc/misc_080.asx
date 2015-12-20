@@ -1,0 +1,96 @@
+; LEVEL 078
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-12-19
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    80
+
+TITLE: New level in the making, yet unplayable 
+TITLE-de: Neue Spielebene in der Mache, noch nicht spielbar
+BODY:
+What can I say: just wait for it!
+#
+BODY-de:
+Was soll ich sagen? Warte einfach noch etwas.
+#
+
+LWID:   42
+LHI:    42
+SCROLLX:  0
+SCROLLY:  0
+BACK:   1
+
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   10
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  5
+
+GHOST2:   10
+GHSPEED2: 1
+AGIL2:    15
+GRTIME2:  15
+PILLMAX2: 3000
+PILLFREQ2: 1
+
+GHOST3:   10
+GHSPEED3: 1
+AGIL3:    15
+GRTIME3:  5
+TRANSWALL3: 7
+
+GHOST4:   10
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  5
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X        X         X         X         X X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+XX                                       X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X              XXXXXDXXXXX               X
+X              XW        X               X
+X              X XXXXXXX X               X
+XX             X XG    X X               X
+X              X X XXX X X               X
+X              X X  X  X X               X
+X              D X XXX X D               X
+X              X X  X  X X               X
+X              X X XXX X X               X
+X              X X     X X               X
+X              X XXXXXXX X               X
+X              X        PX               X
+X              XXXXXDXXXXX               X
+XX                                       X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                        X
+X                                    XXXXX
+X                                    X   X
+XX                                   X W X
+X                                    X   X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#
