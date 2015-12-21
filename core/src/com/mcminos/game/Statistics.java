@@ -70,7 +70,7 @@ public class Statistics {
                     return true;
                 }
                 break;
-            // when none, just see, if it was activateby finishing last category
+            // when none, just see, if it was activated by finishing last category
         }
 
         if (statsRecord.containsKey(name)) {
