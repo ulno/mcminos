@@ -41,7 +41,7 @@ public class Statistics {
         this.main = main;
         this.saveFileName = saveFileName;
         for(int i=0; i<nrOfFileHandles; i++) {
-            saveFiles[i] = Gdx.files.external(saveFileName+i);
+            saveFiles[i] = Gdx.files.local(saveFileName+i);
         }
         initKryo();
         if (!load()) {
