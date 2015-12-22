@@ -64,7 +64,7 @@ public class PlayDialogs {
     }
 
 
-    public void openText( CharSequence title, CharSequence body ) {
+    public Table openText( CharSequence title, CharSequence body ) {
         int res = play.getSymbolResolution();
         Skin writingSkin = main.getMenuSkin(res / 2);
         Skin menuSkin = main.getMenuSkin(res);
@@ -94,39 +94,69 @@ public class PlayDialogs {
         thisDialog.add(new ScrollPane(bodyLabel)).minHeight(res*2).fillX().fillY().pad(res/2).row();
 
         open(thisDialog);
+        return(thisDialog);
     }
 
     public void openLevelStory() {
         LevelConfig lc = level.getLevelConfig();
 
-        openText(lc.getTitle("en"),lc.getBody("en"));
+        Table dialogTable = openText(lc.getTitle("en"),lc.getBody("en"));
+
+        ///// Fill statistics
+        int res = play.getSymbolResolution();
+        Skin writingSkin = main.getMenuSkin(res / 2);
+
+        Table statisticsTable = new Table(menuSkin);
+        ScrollPane statistics = new ScrollPane(statisticsTable);
+        dialogTable.row();
+        dialogTable.add(statistics);
+
+        statisticsTable.add(new Label("Levelname: " + level.getLevelConfig().getName(), writingSkin)).colspan(2).left().row();
+        // Zoomlevel + Resolution
+        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().row();
+        // Remaining pills
+        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res / 2, 0))).left();
+        pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), writingSkin);
+        statisticsTable.add(pillLabel).left();
+        statisticsTable.row();
+        // Remaining rockmes
+        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res / 2, 0))).left();
+        rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), writingSkin);
+        statisticsTable.add(rockmeLabel).left();
+        statisticsTable.row();
+
     }
 
     public void openGameMenu() {
         int res = play.getSymbolResolution();
-        Skin writingSkin = main.getMenuSkin(res / 2);
+        int padSize = res / 16;
         Skin menuSkin = main.getMenuSkin(res);
         Table thisDialog = new Table();
         thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
         thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
-        thisDialog.setSize(Gdx.graphics.getWidth() * 9 / 10, Gdx.graphics.getHeight() * 9 / 10);
-        thisDialog.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
+        thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 7*res + 10 * padSize),
+                Math.min(Gdx.graphics.getHeight(), 2*res + 4*padSize) );
+        thisDialog.setPosition( res + padSize, Gdx.graphics.getHeight() - thisDialog.getHeight() - play.getGameResolution() );
 
         // Basic layout
-        Table topMenu = new Table(menuSkin);
-        topMenu.setHeight(res);
-        ScrollPane scrollPane = new ScrollPane(topMenu);
-        thisDialog.add(scrollPane).colspan(2).expandX().fillX().top().minHeight(res).row();
-        Table statisticsTable = new Table(menuSkin);
-        scrollPane = new ScrollPane(statisticsTable);
-        thisDialog.add(scrollPane).fill().expand();
-        Table storyTable = new Table(menuSkin);
-        scrollPane = new ScrollPane(storyTable);
-        thisDialog.add(scrollPane).fill().expand();
-        thisDialog.row();
-        int padSize = res / 16;
+        Table rowGamePrefsTable = new Table(menuSkin);
+        rowGamePrefsTable.setHeight(res);
+        ScrollPane rowGamePrefs = new ScrollPane(rowGamePrefsTable);
 
-        // Fill topMenu
+        Table rowActionsTable = new Table(menuSkin);
+        rowActionsTable.setHeight(res);
+        ScrollPane rowActions = new ScrollPane(rowActionsTable);
+
+        thisDialog.add(rowActions).expandX().fillX().pad(padSize).top().minHeight(res).row();
+        thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
+
+        ///// Fill game prefs row
         final Group soundButton = new Group();
         final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res, 0);
         //soundButton.addActor(new Image(emptyButtonGfx));
@@ -144,7 +174,7 @@ public class PlayDialogs {
                 play.savePreferences();
             }
         });
-        topMenu.add(soundButton).left().prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(soundButton).prefSize(res, res).padRight(padSize);
 
         final Group musicButton = new Group();
         //musicButton.addActor(new Image(emptyButtonGfx));
@@ -162,7 +192,7 @@ public class PlayDialogs {
                 play.savePreferences();
             }
         });
-        topMenu.add(musicButton).left().prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(musicButton).prefSize(res, res).padRight(padSize);
 
 /*        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
         musicButton.addListener(new ClickListener() {
@@ -192,18 +222,7 @@ public class PlayDialogs {
 
             }
         });
-        topMenu.add(touchpadButton).prefSize(res, res).padRight(padSize);
-
-//        Button saveButton = new TextButton("Save", writingSkin);
-        Image saveButton = new Image(Entities.menu_button_game_save.getTexture(res, 0));
-        saveButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                play.getGame().saveGame(1); // TODO: allow several game-saves
-                openText("Save Game","Game successfully saved."); // TODO: check that it really was successful
-            }
-        });
-        topMenu.add(saveButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(touchpadButton).prefSize(res, res).padRight(padSize * 2);
 
         Group plusButton = new Group();
         //plusButton.addActor(new Image(emptyButtonGfx));
@@ -218,7 +237,7 @@ public class PlayDialogs {
             }
         });
 
-        topMenu.add(plusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(plusButton).prefSize(res, res).padRight(padSize);
 
         Group minusButton = new Group();
         //minusButton.addActor(new Image(emptyButtonGfx));
@@ -232,9 +251,8 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
-        topMenu.add(minusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(minusButton).prefSize(res, res).padRight(padSize*2);
 
-        /** Andreas 2015-12-19 Replaced text button (below) with graphic button */
         Group symbolPlusButton = new Group();
         symbolPlusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_in.getTexture(res, 0)));
         symbolPlusButton.addListener(new ClickListener() {
@@ -246,23 +264,8 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             } 
         });
-        topMenu.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
         
-        /*
-        Button symbolPlusButton = new TextButton("S+", writingSkin);
-        symbolPlusButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                close();
-                play.increaseSymbolResolution();
-                play.savePreferences();
-                openGameMenu(); // TODO: check if this leaks too much memory
-            }
-        });
-        topMenu.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
-        */
-
-        /** Andreas 2015-12-19 Replaced text button (below) with graphic button */
         Group symbolMinusButton = new Group();
         symbolMinusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_out.getTexture(res, 0)));
         symbolMinusButton.addListener(new ClickListener() {
@@ -274,23 +277,29 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             } 
         });
-        topMenu.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
 
-        /*
-        Button symbolMinusButton = new TextButton("S-", writingSkin);
-        symbolMinusButton.addListener(new ClickListener() {
+        // action row
+        //        Button saveButton = new TextButton("Save", writingSkin);
+        Image saveButton = new Image(Entities.menu_button_game_save.getTexture(res, 0));
+        saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                play.decreaseSymbolResolution();
-                play.savePreferences();
-                openGameMenu();
+                play.getGame().saveGame(1); // TODO: allow several game-saves
+                openText("Save Game","Game successfully saved."); // TODO: check that it really was successful
             }
         });
-        topMenu.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
-        */
+        rowActionsTable.add(saveButton).prefSize(res, res).padRight(padSize);
 
-//        TextButton restartButton = new TextButton("Rstr", writingSkin);
+        Image infoButton = new Image(Entities.menu_button_info.getTexture(res, 0));
+        infoButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openLevelStory();
+            }
+        });
+        rowActionsTable.add(infoButton).prefSize(res, res).padRight(padSize*2);
+
         Group restartButton = new Group();
         restartButton.addActor(new Image(Entities.menu_button_restart.getTexture(res, 0)));
         restartButton.addListener(new ClickListener() {
@@ -301,7 +310,7 @@ public class PlayDialogs {
                 play.pauseOff();
             }
         });
-        topMenu.add(restartButton).prefSize(res, res).padRight(padSize);
+        rowActionsTable.add(restartButton).prefSize(res, res).padRight(padSize);
 
         Group leaveButton = new Group();
         //leaveButton.addActor(new Image(emptyButtonGfx));
@@ -313,7 +322,7 @@ public class PlayDialogs {
                 play.backToMenu();
             }
         });
-        topMenu.add(leaveButton).prefSize(res, res).padRight(padSize);
+        rowActionsTable.add(leaveButton).prefSize(res, res).padRight(padSize * 2);
 
         Group pauseButton = new Group();
         //pauseButton.addActor(new Image(emptyButtonGfx));
@@ -324,7 +333,7 @@ public class PlayDialogs {
                 close();
             }
         });
-        topMenu.add(pauseButton).prefSize(res, res).padRight(padSize);
+        rowActionsTable.add(pauseButton).prefSize(res, res).padRight(padSize);
 
         Group continueButton = new Group();
         //continueButton.addActor(new Image(emptyButtonGfx));
@@ -336,40 +345,8 @@ public class PlayDialogs {
                 //super.clicked(event, x, y);
             }
         });
-        topMenu.add(continueButton).prefSize(res, res).maxSize(res).left().fillX().expandX();
+        rowActionsTable.add(continueButton).prefSize(res, res).maxSize(res);
 
-        ///// Fill statistics
-        statisticsTable.add(new Label("Statistics", menuSkin)).top().colspan(2).center().padBottom(res / 4).row();
-        // Levelname
-        statisticsTable.add(new Label("Levelname: " + level.getLevelConfig().getName(), writingSkin)).colspan(2).left().row();
-        // Zoomlevel + Resolution
-        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().row();
-        // Remaining pills
-        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res / 2, 0))).left();
-        pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), writingSkin);
-        statisticsTable.add(pillLabel).left();
-        statisticsTable.row();
-        // Remaining rockmes
-        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res / 2, 0))).left();
-        rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), writingSkin);
-        statisticsTable.add(rockmeLabel).left();
-        statisticsTable.row();
-
-        //// Fill the story
-
-        storyTable.add(new Label("Story", menuSkin)).top().center().padBottom(res / 4).row();
-        Label story = new Label(level.getLevelConfig().getBody("en"), writingSkin);
-        story.setWrap(true);
-        storyTable.add(story).top().left().width(thisDialog.getWidth() / 2);
-
-//        table.setWidth(play.getSymbolResolution() + 4);
-//        table.setHeight(playwindow.getHeightInPixels() + 4);
         open( thisDialog );
     }
 
