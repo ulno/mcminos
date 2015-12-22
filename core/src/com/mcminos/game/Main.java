@@ -23,6 +23,7 @@ public class Main extends com.badlogic.gdx.Game {
     public static final String DEFAULT_ATLAS = "uiskin.atlas";
     public static final String LEVEL_FONT = "level";
     public static final String MENU_FONT = "menu";
+    public static final String GAME_STATS_FILE = "user-stats";
     private HashMap<Integer, BitmapFont> levelFontList = new HashMap<>();
     private HashMap<Integer, BitmapFont> menuFontList = new HashMap<>();
     private HashMap<Integer, Skin> levelSkinList = new HashMap<>();
@@ -34,6 +35,7 @@ public class Main extends com.badlogic.gdx.Game {
     private LevelsConfig levelsConfig;
     private MainMenu mainMenu;
     private InputProcessor defaultInputProcessor;
+    private Statistics userStats;
 
     public LevelsConfig getLevelsConfig() {
         return levelsConfig;
@@ -133,6 +135,14 @@ public class Main extends com.badlogic.gdx.Game {
         menuSkinList.put(res, createSkinWithFont(menuFont));
     }
 
+    public void loadUserStats() {
+        userStats = new Statistics(this,GAME_STATS_FILE);
+    }
+
+    public Statistics getUserStats() {
+        return userStats;
+    }
+
     private Skin createSkinWithFont(BitmapFont font) {
         Skin skin = new Skin();
         skin.add("default-font", font, BitmapFont.class);
@@ -226,5 +236,9 @@ public class Main extends com.badlogic.gdx.Game {
         mainMenu.resize();
         setScreen(mainMenu);
         mainMenu.restoreInputProcessor();
+    }
+
+    public void levelEndCongrats( LevelConfig currentLevelConfig) {
+        setScreen( new Congrats(this, currentLevelConfig) );
     }
 }

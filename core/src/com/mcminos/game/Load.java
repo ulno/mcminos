@@ -126,6 +126,11 @@ public class Load implements Screen {
                 break;
             case 9:
                 levelsConfig = new LevelsConfig("levels/list");
+                progress = 0.98f;
+                step ++;
+                break;
+            case 10:
+                main.loadUserStats();
                 progress = 1.0f;
                 return true;
         }
