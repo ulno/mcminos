@@ -1,0 +1,46 @@
+; LEVEL 079
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-12-23
+
+AUTHOR:   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    82
+SHOWNR:   82
+
+TITLE: Rocky range (playable, please test)
+TITLE-de: Felsige Gegend (spielbar, bitte testen)
+BODY:
+You can push, not pull. Ponder before you push.
+#
+BODY-de:
+Du kannst schieben, nicht ziehen. Erst denken, dann drücken.
+#
+
+LWID:   16
+LHI:    9
+SCROLLX:  0
+SCROLLY:  0
+BACK:   3
+
+LTIME:    0
+RSTRT:    16
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    0
+GRTIME1:  600
+
+LEVEL:
+XXXXXXXXXXXXXXXX
+XOO  X   X CCX X
+XOO        CC  X
+XX XX XXX XXX XX
+X              X
+XXXX XXXX XX r X
+X  X    X  rrr X
+XO         r  PX
+XXXXXXXXXXXXXXXX
+#
