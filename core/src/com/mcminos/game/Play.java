@@ -939,4 +939,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public void dialogDoorOpener() {
         dialogs.openDoorOpener();
     }
+
+    public boolean hasDialog() {
+        return dialogs.active();
+    }
+
+    public void closeDialog() {
+        dialogs.close();
+    }
 }

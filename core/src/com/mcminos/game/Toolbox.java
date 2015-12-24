@@ -163,7 +163,8 @@ public class Toolbox {
         menuButton = new ToolboxButton( this, Entities.menu_settings, res, 0, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                play.dialogGameMenu();
+                if(play.hasDialog()) play.closeDialog();
+                else play.dialogGameMenu();
             }
         });
         chocolateButton = new ToolboxButton( this, Entities.pills_power_pill_chocolate, res, 2, new ClickListener() {

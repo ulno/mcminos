@@ -2,6 +2,7 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -46,6 +48,7 @@ public class MainMenu implements Screen {
     private String language = "en";
     private BitmapFont levelFont;
     private HashMap<String, Texture> textureCache = new HashMap<>();
+    private Table currentDialog = null;
 
 
     public MainMenu(final Main main) {
@@ -165,7 +168,8 @@ public class MainMenu implements Screen {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: call/activate preferences menu
+                if(currentDialog == null) dialogPreferences();
+                else dialogClose();
             }
         });
         topRow.add(settingsButton).left().minHeight(res).padRight(res / 16);
@@ -190,7 +194,7 @@ public class MainMenu implements Screen {
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: show credits
+                main.setScreen(new Credits(main, activatedLevel));
             }
         });
         topRow.add(infoButton).right().minHeight(res);
@@ -413,5 +417,133 @@ public class MainMenu implements Screen {
         }
         Game.preferencesHandle.putBoolean("fs", fullscreen);
         Game.preferencesHandle.flush();
+    }
+    
+    private void dialogPreferences() {
+        int res = main.getSymbolResolution();
+        int padSize = res / 16;
+        Skin menuSkin = main.getMenuSkin(res);
+        Table thisDialog = new Table();
+        thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
+        thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
+        thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 5*res + 8 * padSize),
+                Math.min(Gdx.graphics.getHeight(), 1*res + 4*padSize) );
+        thisDialog.setPosition( 0, Gdx.graphics.getHeight() - thisDialog.getHeight() - res );
+
+        // Basic layout
+        Table rowGamePrefsTable = new Table(menuSkin);
+        rowGamePrefsTable.setHeight(res);
+        ScrollPane rowGamePrefs = new ScrollPane(rowGamePrefsTable);
+        
+        thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
+
+        ///// Fill game prefs row
+        final Group soundButton = new Group();
+        final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res, 0);
+        //soundButton.addActor(new Image(emptyButtonGfx));
+        soundButton.addActor(new Image(audio.getSound() ?
+                Entities.menu_button_sound_on.getTexture(res, 0)
+                : Entities.menu_button_sound_off.getTexture(res, 0)));
+        soundButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int res = main.getSymbolResolution();
+                audio.toggleSound();
+                soundButton.clearChildren();
+                soundButton.addActor(new Image(audio.getSound() ?
+                        Entities.menu_button_sound_on.getTexture(res, 0)
+                        : Entities.menu_button_sound_off.getTexture(res, 0)));
+                savePreferences();
+            }
+        });
+        rowGamePrefsTable.add(soundButton).prefSize(res, res).padRight(padSize);
+
+        final Group musicButton = new Group();
+        //musicButton.addActor(new Image(emptyButtonGfx));
+        musicButton.addActor(new Image(audio.getMusic() ?
+                Entities.menu_button_music_on.getTexture(res, 0)
+                : Entities.menu_button_music_off.getTexture(res, 0)));
+        musicButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int res = main.getSymbolResolution();
+                audio.toggleMusic();
+                musicButton.clearChildren();
+                musicButton.addActor(new Image(audio.getMusic() ?
+                        Entities.menu_button_music_on.getTexture(res, 0)
+                        : Entities.menu_button_music_off.getTexture(res, 0)));
+                savePreferences();
+            }
+        });
+        rowGamePrefsTable.add(musicButton).prefSize(res, res).padRight(padSize);
+
+        Group symbolPlusButton = new Group();
+        symbolPlusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_in.getTexture(res, 0)));
+        symbolPlusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                dialogClose();
+                increaseSymbolResolution();
+                savePreferences();
+                dialogPreferences();
+            }
+        });
+        rowGamePrefsTable.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
+
+        Group symbolMinusButton = new Group();
+        symbolMinusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_out.getTexture(res, 0)));
+        symbolMinusButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                dialogClose();
+                decreaseSymbolResolution();
+                savePreferences();
+                dialogPreferences();
+            }
+        });
+        rowGamePrefsTable.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+
+        Group closeButton = new Group();
+        closeButton.addActor(new Image(Entities.toolbox_abort.getTexture(res, 0)));
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                dialogClose();
+            }
+        });
+        rowGamePrefsTable.add(closeButton).prefSize(res, res).padRight(padSize);
+
+
+        stage.addActor(thisDialog);
+        currentDialog = thisDialog;
+    }
+
+    private void dialogClose() {
+        if(currentDialog != null) {
+            currentDialog.remove();
+            currentDialog = null;
+        }
+    }
+
+    public void setSymbolResolution(int symbolResolution) {
+        main.setSymbolResolution(symbolResolution);
+        resize();
+    }
+
+    public void increaseSymbolResolution() {
+        setSymbolResolution(main.getSymbolResolution()*2);
+    }
+
+    public void decreaseSymbolResolution() {
+        setSymbolResolution(main.getSymbolResolution()/2);
+    }
+
+
+    private void savePreferences() {
+        Game.preferencesHandle.putBoolean("s", audio.getSound());
+        Game.preferencesHandle.putBoolean("m", audio.getMusic());
+        Game.preferencesHandle.putInteger("sr", main.getSymbolResolution());
+        Game.preferencesHandle.flush();
+
     }
 }
