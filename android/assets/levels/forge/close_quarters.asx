@@ -6,8 +6,8 @@ AUTHOR:   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    79
 SYMBOL:   extras_rock_me
-TITLE: Close quarters (playable, please test)
-TITLE-de: (spielbar, bitte testen)
+TITLE: Close quarters (99 % done, please rate)
+TITLE-de: (zu 99 % fertig, bitte bewerten)
 BODY:
 Keep moving, but mind the details.
 #
@@ -15,11 +15,11 @@ BODY-de:
 Immer in Begung bleiben! Aber achte auf die Details.
 #
 
-LWID:   20
-LHI:    11
+LWID:     20
+LHI:      11
 SCROLLX:  0
 SCROLLY:  0
-BACK:   1
+BACK:     1
 
 LTIME:    0
 RSTRT:    16
