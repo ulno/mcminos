@@ -1,0 +1,9 @@
+name: Name of level set
+gfx: destination ; name of grafic entity
+end:
+Congratulations, you finished all the <name of level set> levels. To play more select a different set.
+#
+end-de:
+Glückwunsch. Du hast alle Spielebenen der Kategorie "<name of level set>" gemeistert. Um weitere Level zu spielen, wähle eine andere Kategorie.
+#
+activated: all (default)|none|first
