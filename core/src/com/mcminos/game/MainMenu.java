@@ -26,6 +26,7 @@ import java.util.HashMap;
 public class MainMenu implements Screen {
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
+    private final Audio audio;
     private boolean resumeRequested = false; // only resume, if resume-file detected
     private Skin bigMenuSkin;
     private Skin levelSkin;
@@ -50,6 +51,7 @@ public class MainMenu implements Screen {
     public MainMenu(final Main main) {
 //        final MainMenu thisScreen = this; // TODO: check why we need this
         this.main = main;
+        this.audio = main.getAudio();
         this.statistics = main.getUserStats();
         batch = new SpriteBatch();
         levelsConfig = main.getLevelsConfig();
@@ -97,6 +99,10 @@ public class MainMenu implements Screen {
         if (activatedLevel != null) {
             activatedCategory = activatedLevel.getCategoryNr();
         }
+    }
+
+    public void init() {
+        audio.musicFixed(0);
     }
 
     // inner class for menu

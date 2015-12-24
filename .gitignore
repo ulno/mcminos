@@ -3,6 +3,7 @@
 **/assets/user-save*
 **/assets/user-stats*
 **/extra/images-packer-input/
+**/music/random/
 # Entities.java is generated, so ignore
 /core/src/com/mcminos/game/Entities.java
 

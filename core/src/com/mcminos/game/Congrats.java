@@ -24,9 +24,12 @@ public class Congrats implements Screen {
     private final Stage stage;
     private final Statistics statistics;
     private final SpriteBatch batch;
+    private final Audio audio;
 
     public Congrats(Main main, LevelConfig currentLevelConfig) {
         this.main = main;
+        this.audio = main.getAudio();
+        audio.musicFixed(1);
         this.category = currentLevelConfig.getCategory();
         this.levelConfig = currentLevelConfig;
         batch = new SpriteBatch();

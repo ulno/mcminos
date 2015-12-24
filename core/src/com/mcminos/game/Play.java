@@ -129,6 +129,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void initAfterLevel() {
+        audio.musicRandom();
+
         mcminos = game.getMcMinos(); // only works after level has been loaded/initialized
 
         // prepare stuff for graphics output
