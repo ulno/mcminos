@@ -33,7 +33,8 @@ public class Statistics {
 
     /* kryo and crypto init */
     private static final String ALGORITHM = "Blowfish";
-    private final Key secretKey = new SecretKeySpec("stats.mcminos.ulno.net".getBytes(), ALGORITHM);
+    private final Key secretKey = new SecretKeySpec(
+            "mcmstat.ulno.net".getBytes(), ALGORITHM); // must have a length of power of 2
     private Cipher cipher;
     private Kryo kryo;
 
@@ -70,7 +71,7 @@ public class Statistics {
                     return true;
                 }
                 break;
-            // when none, just see, if it was activateby finishing last category
+            // when none, just see, if it was activated by finishing last category
         }
 
         if (statsRecord.containsKey(name)) {
@@ -105,7 +106,7 @@ public class Statistics {
             try {
                 saveFiles[i-1].moveTo(saveFiles[i]);
             } catch (Exception e) {
-                Gdx.app.log("save stats", "can't move file trying next.", e);
+                Gdx.app.log("save stats", "can't move file trying next.");
             }
         }
 

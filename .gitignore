@@ -1,6 +1,7 @@
 ############ project specific stuff #####################
 **/assets/entities/
 **/assets/user-save*
+**/assets/user-stats*
 **/extra/images-packer-input/
 # Entities.java is generated, so ignore
 /core/src/com/mcminos/game/Entities.java
