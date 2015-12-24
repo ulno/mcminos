@@ -119,6 +119,10 @@ public class LevelBlock implements KryoSerializable {
         return oneWayType;
     }
 
+    public boolean hasCollectibles() {
+        return collectibles != null && collectibles.size() > 0;
+    }
+
     enum oneWayDir {FREE, UP, RIGHT, DOWN, LEFT};
     private final oneWayDir oneWayDirMap[] = {oneWayDir.FREE, oneWayDir.UP, oneWayDir.RIGHT, oneWayDir.DOWN, oneWayDir.LEFT};
     private ArrayList<LevelObject> movables=new ArrayList<>(); // ghosts, mcminos, explosions, rocks hovering here.
@@ -249,6 +253,7 @@ public class LevelBlock implements KryoSerializable {
         // depending on type add it to the right fields
         switch(lo.getType()) {
             case Unspecified:
+            case Background:
                 break;
             case McMinos:
                 movables.add(lo);

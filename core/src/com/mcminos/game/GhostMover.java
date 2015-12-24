@@ -161,7 +161,9 @@ public class GhostMover extends Mover {
             LevelBlock currentBlock = currentLevelBlock;
             if(ghostnr == 1 ) { // pill dropper
                 if(level.getGhostPillDrop() > 0) {
-                    if(!currentBlock.hasPill() && game.random(level.getGhostPillFreq()) == 0) {
+                    if(!currentBlock.hasPill() && !currentBlock.hasOneWay() &&
+                            !currentBlock.hasCollectibles() && !currentBlock.hasHole() &&
+                            game.random(level.getGhostPillFreq()) == 0) {
                         currentBlock.makePill();
                         level.decreaseGhostPillDrop();
                     }

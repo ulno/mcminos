@@ -1,15 +1,17 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by ulno on 05.10.15.
  */
 public class Audio {
-    public static String[] soundNames = new String[]{"aaahhh",
+    public final static String[] soundNames = new String[]{"aaahhh",
             "antidot",
             "applaus",
             "beep",
@@ -47,12 +49,42 @@ public class Audio {
             "trommeln",
             "treasure",
             "wind",
-            "zisch"};
+            "zisch"
+    };
 
-    boolean sound = true; // TODO: load from settings
-    boolean music = true; // TODO: load from settings
+    public final static String[] musicNames = new String[]{
+            "Clumsy-Monster-Bash_remixed",
+            "Creaky-Country-Fair",
+            "Cyber-Streets",
+            "Disco-Ants-Go-Clubbin",
+            "Ghoulish-Fun",
+            "Off-to-Another-Heist",
+            "Runaway-Technology",
+            "Star-Light",
+            "The-Hairy-Monsters-Dance-a-Thon",
+            "The-Toy-Factory",
+            "The-Triumph-of-Technology_v001",
+            "Urban-Sci-Fi-Heroes"
+    };
+
+    public final static String title = "McMinos-Title";
+    public final static String screenLoop = "Chamber-of-Jewels";
+
+    boolean sound = true;
+    boolean music = true;
+
+    Music musicPlayed = null;
+
+    enum MusicType {None,Fixed,Random};
+    MusicType currentMusicType = MusicType.None;
+    String currentMusic = "";
+
+    private Random randomGenerator = new Random();
 
     public HashMap<String, com.badlogic.gdx.audio.Sound> soundList = new HashMap<>();
+
+    public Audio() {
+    }
 
     public void soundPlay(String s) {
         if (sound && s != null && s != "")
@@ -69,7 +101,8 @@ public class Audio {
     }
 
     public void toggleMusic() {
-        setMusic(!music);    }
+        setMusic(!music);
+    }
 
     public boolean getSound() {
         return sound;
@@ -90,7 +123,74 @@ public class Audio {
 
     public void setMusic(boolean music) {
         this.music = music;
-        // TODO: switch off all playing music
+        if(music) {
+            if(musicPlayed != null) {
+                musicPlayed.play();
+            }
+        } else {
+            if(musicPlayed != null)
+                musicPlayed.stop();
+            // musicStop(); resets too much
+        }
+    }
+
+    public void musicFixed(int select) {
+        String musicFile;
+
+        musicStop();
+
+        switch(select) {
+            case 1:
+                musicFile = screenLoop;
+                break;
+            default:
+                musicFile = title;
+                break;
+        }
+
+        musicFile = "music/fixed/" + musicFile + ".mp3";
+
+        musicPlayed = Gdx.audio.newMusic(Gdx.files.internal(musicFile));
+        musicPlayed.setLooping(true); // loop cleaner - so far only possible when volume reduced and built up again
+        if(music) musicPlayed.play();
+    }
+
+    private void musicStop() {
+        if(musicPlayed != null) {
+            musicPlayed.stop();
+            musicPlayed.dispose();
+            currentMusic = "";
+            currentMusicType = MusicType.None;
+        }
+    }
+
+    public void musicRandom() {
+        if(currentMusicType != MusicType.Random ) {
+            musicStop();
+            currentMusicType = MusicType.Random;
+            selectAndPlayNext();
+        }
+    }
+
+    private void selectAndPlayNext() {
+        musicStop();
+
+        int index = randomGenerator.nextInt(musicNames.length);
+        String newMusic = musicNames[index];
+        if(newMusic.equals(currentMusic)) {
+            newMusic = musicNames[(index+1)%musicNames.length];
+        }
+
+        String musicFile = "music/random/" + newMusic + ".mp3";
+
+        musicPlayed = Gdx.audio.newMusic(Gdx.files.internal(musicFile));
+        musicPlayed.setOnCompletionListener(new Music.OnCompletionListener() {
+            @Override
+            public void onCompletion(Music music) {
+                selectAndPlayNext();
+            }
+        });
+        if(music) musicPlayed.play();
     }
 }
 

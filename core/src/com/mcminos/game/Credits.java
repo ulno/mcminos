@@ -15,27 +15,25 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
- * Created by ulno on 20.12.15.
+ * Created by ulno on 24.12.15.
  */
-public class Congrats implements Screen {
+public class Credits implements Screen {
     private final Main main;
-    private final LevelCategory category;
-    private final LevelConfig levelConfig;
     private final Stage stage;
-    private final Statistics statistics;
     private final SpriteBatch batch;
     private final Audio audio;
+    private final LevelConfig levelConfig;
 
-    public Congrats(Main main, LevelConfig currentLevelConfig) {
+    public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;
         this.audio = main.getAudio();
+        this.levelConfig = levelConfig;
         audio.musicFixed(1);
-        this.category = currentLevelConfig.getCategory();
-        this.levelConfig = currentLevelConfig;
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage); // set inputprocessor
-        statistics = main.getUserStats();
+
+        audio.musicFixed(1);
 
         rebuild();
     }
@@ -62,7 +60,7 @@ public class Congrats implements Screen {
         rootTable.setBackground(new BackroundDrawer(bg));
 
         // Congrat-message
-        Label m = new Label(category.getEndMessage("en"),main.getLevelSkin(res/2));
+        Label m = new Label("Credits will be here and scrolling.\n\nUlNo+Nope",main.getLevelSkin(res));
         m.setWrap(true);
         table.add(m).maxWidth(Gdx.graphics.getWidth()*9/10).fill().expand();
 

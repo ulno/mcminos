@@ -93,6 +93,7 @@ public class Main extends com.badlogic.gdx.Game {
 
     public void initMainMenu( MainMenu mainMenu ) {
         this.mainMenu = mainMenu;
+        mainMenu.init();
     }
 
 
@@ -232,6 +233,7 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void activateMainMenu( LevelConfig currentLevel ) {
+        mainMenu.init();
         mainMenu.activateLevel(currentLevel);
         mainMenu.resize();
         setScreen(mainMenu);
