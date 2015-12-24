@@ -89,12 +89,13 @@ public class PlayDialogs {
         });
         topRow.add(closeButton).right();
         thisDialog.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
+        Table bodyTable = new Table();
         Label bodyLabel = new Label(body, writingSkin);
         bodyLabel.setWrap(true);
-        thisDialog.add(new ScrollPane(bodyLabel)).minHeight(res*2).fillX().fillY().pad(res/2).row();
-
+        bodyTable.add(bodyLabel).fillX().expandX().row();
+        thisDialog.add(new ScrollPane(bodyTable)).minHeight(res*2).fillX().fillY().pad(res/2);
         open(thisDialog);
-        return(thisDialog);
+        return(bodyTable);
     }
 
     public void openLevelStory() {
@@ -109,9 +110,19 @@ public class PlayDialogs {
         Table statisticsTable = new Table(menuSkin);
         ScrollPane statistics = new ScrollPane(statisticsTable);
         dialogTable.row();
-        dialogTable.add(statistics);
+        dialogTable.add(statistics).fillX().expandX().padTop(res/2);
 
-        statisticsTable.add(new Label("Levelname: " + level.getLevelConfig().getName(), writingSkin)).colspan(2).left().row();
+        // Remaining pills and rockmes (todos)
+        Table todosTable = new Table();
+        statisticsTable.add(todosTable).fillX().expandX().row();
+        todosTable.add(new Image(Entities.pills_pill_default.getTexture(res / 2, 0))).left();
+        pillLabel = new Label(": " + level.getPillsNumber() +", ", writingSkin);
+        todosTable.add(pillLabel).left();
+        todosTable.add(new Image(Entities.extras_rock_me.getTexture(res / 2, 0))).left();
+        rockmeLabel = new Label(": " + level.getRockmesNumber(), writingSkin);
+        todosTable.add(rockmeLabel).left().fillX().expandX();
+
+        statisticsTable.add(new Label("Levelname: " + level.getLevelConfig().getName(), writingSkin)).left().row();
         // Zoomlevel + Resolution
         statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().row();
@@ -120,17 +131,6 @@ public class PlayDialogs {
         statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution), writingSkin)).left().row();
         statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().row();
-        // Remaining pills
-        statisticsTable.add(new Image(Entities.pills_pill_default.getTexture(res / 2, 0))).left();
-        pillLabel = new Label(new StringBuilder(5).append(level.getPillsNumber()), writingSkin);
-        statisticsTable.add(pillLabel).left();
-        statisticsTable.row();
-        // Remaining rockmes
-        statisticsTable.add(new Image(Entities.extras_rock_me.getTexture(res / 2, 0))).left();
-        rockmeLabel = new Label(new StringBuilder(2).append(level.getRockmesNumber()), writingSkin);
-        statisticsTable.add(rockmeLabel).left();
-        statisticsTable.row();
-
     }
 
     public void openGameMenu() {
