@@ -68,33 +68,43 @@ public class PlayDialogs {
         int res = play.getSymbolResolution();
         Skin writingSkin = main.getMenuSkin(res / 2);
         Skin menuSkin = main.getMenuSkin(res);
-        Table thisDialog = new Table();
-        thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
-        thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
-        thisDialog.setSize(Gdx.graphics.getWidth() * 4 / 5, Gdx.graphics.getHeight() * 4 / 5);
-        thisDialog.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
+        Table rootTable = new Table();
+        Group rootGroup = new Group();
+        rootTable.add(rootGroup);
+        rootTable.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
+        rootTable.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
+        int rootWidth = Gdx.graphics.getWidth() * 4 / 5;
+        int rootHeight = Gdx.graphics.getHeight() * 4 / 5;
+        rootTable.setSize(rootWidth, rootHeight);
+        rootGroup.setSize(rootWidth, rootHeight);
+        rootTable.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
 
+        Table mainTable = new Table();
         Table topRow = new Table();
         Label titleLabel = new Label(title, menuSkin);
         titleLabel.setWrap(true);
         titleLabel.setAlignment(Align.center);
-        ScrollPane titleScroller = new ScrollPane(titleLabel);
-        topRow.add(titleScroller).top().center().minHeight(res).maxHeight(2*res+res*3/4).fillX().expandX().pad(res/2);
+        topRow.add(titleLabel).top().center().fillX().expandX().pad(res/2);
         Image closeButton = new Image(Entities.toolbox_abort.getTexture(res,0));
+        mainTable.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
+        Table bodyTable = new Table();
+        Label bodyLabel = new Label(body, writingSkin);
+        bodyLabel.setWrap(true);
+        bodyTable.add(bodyLabel).fillX().expandX().row();
+        mainTable.add(bodyTable).minHeight(res*2).fill().expand().pad(res/2);
+        ScrollPane mainScroll = new ScrollPane(mainTable);
+        mainScroll.setSize(rootWidth, rootHeight);
+        rootGroup.addActor(mainScroll);
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 close();
             }
         });
-        topRow.add(closeButton).right();
-        thisDialog.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
-        Table bodyTable = new Table();
-        Label bodyLabel = new Label(body, writingSkin);
-        bodyLabel.setWrap(true);
-        bodyTable.add(bodyLabel).fillX().expandX().row();
-        thisDialog.add(new ScrollPane(bodyTable)).minHeight(res*2).fillX().fillY().pad(res/2);
-        open(thisDialog);
+        //       topRow.add(closeButton).right();
+        closeButton.setPosition(rootWidth-res/8,rootHeight-res/8,Align.topRight);
+        rootGroup.addActor(closeButton);
+        open(rootTable);
         return(bodyTable);
     }
 
@@ -122,15 +132,16 @@ public class PlayDialogs {
         rockmeLabel = new Label(": " + level.getRockmesNumber(), writingSkin);
         todosTable.add(rockmeLabel).left().fillX().expandX();
 
-        statisticsTable.add(new Label("Levelname: " + level.getLevelConfig().getName(), writingSkin)).left().row();
+        statisticsTable.add(new Label("Level name: " + level.getLevelConfig().getName(), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label("Level author: " + level.getLevelConfig().getAuthor(), writingSkin)).left().fillX().expandX().row();
         // Zoomlevel + Resolution
-        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution), writingSkin)).left().row();
-        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().row();
+        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().fillX().expandX().row();
     }
 
     public void openGameMenu() {
