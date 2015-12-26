@@ -8,6 +8,8 @@ import com.esotericsoftware.kryo.Registration;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+import java.util.Random;
+
 /**
  * Created by ulno on 17.08.15.
  *
@@ -299,8 +301,8 @@ public class LevelObject implements  Comparable<LevelObject>, KryoSerializable {
         animDelta = len - (int)(game.getTimerFrame() % (long)len); // TODO: check if we need to use Timer or Animationframe here
     }
 
-    void animationStartRandom(Game game) {
-        animDelta = game.random(gfx.getAnimationFramesLength());
+    void animationStartRandom() {
+        animDelta = level.random(gfx.getAnimationFramesLength());
     }
 
     public boolean fullOnBlock() {
@@ -365,5 +367,4 @@ public class LevelObject implements  Comparable<LevelObject>, KryoSerializable {
     public int getzIndex() {
         return zIndex;
     }
-
 }

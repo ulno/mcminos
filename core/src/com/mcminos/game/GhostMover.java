@@ -72,7 +72,7 @@ public class GhostMover extends Mover {
 
         // Let's get our possibilities
         int dirs;
-        if(transWall>0 && game.random(transWall) == 0) { // if transwall and lucky
+        if(transWall>0 && level.random(transWall) == 0) { // if transwall and lucky
             dirs = getUnblockedDirs(ALL, true, true);
         } else { // normal
             dirs = getUnblockedDirs(ALL, true, false);
@@ -97,7 +97,7 @@ public class GhostMover extends Mover {
                     int ghostNr = levelObject.getType().ordinal() - LevelObject.Types.Ghost1.ordinal();
                     //level.ghostAgility[ghostNr] = 0; // force intelligence
                     if (ghosts.evalAgility(ghostNr)) {
-                        newdir = dirList[game.random(dircounter)]; // play stupid TODO: check if a turn around is allowed here
+                        newdir = dirList[level.random(dircounter)]; // play stupid TODO: check if a turn around is allowed here
                     } else { // try to be "smart" and either go to mcminos or flee
                         // check screen distance
                         int x = mcminos.getVX();
@@ -163,7 +163,7 @@ public class GhostMover extends Mover {
                 if(level.getGhostPillDrop() > 0) {
                     if(!currentBlock.hasPill() && !currentBlock.hasOneWay() &&
                             !currentBlock.hasCollectibles() && !currentBlock.hasHole() &&
-                            game.random(level.getGhostPillFreq()) == 0) {
+                            level.random(level.getGhostPillFreq()) == 0) {
                         currentBlock.makePill();
                         level.decreaseGhostPillDrop();
                     }

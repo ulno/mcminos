@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * Created by ulno on 17.08.15.
@@ -34,6 +35,7 @@ public class Level implements KryoSerializable {
     private int levelCategory=-1;
     private int levelNr=-1;
     private Main main;
+    private Random randomGenerator = new Random();
 
     // values set from levelconfig
     private int width;
@@ -117,8 +119,15 @@ public class Level implements KryoSerializable {
         allLevelObjects.add(index, lo);
     }
 
+    /**
+     * does not know game as called in kryo -> take care of randomly animated objects
+     *
+     * @param lc
+     * @param doUpdateBlocks
+     */
     public void load(LevelConfig lc, boolean doUpdateBlocks) {
         this.levelConfig = lc;
+        this.game = game;
 
         // reset start positions
         for(int i=0; i<4; i++) {
@@ -548,7 +557,7 @@ Missing:
         LevelBlock returnBlock = null;
 
         for( int i=0; i<5; i++ ) { // Try 5 times random
-            LevelBlock testBlock = warpHoleBlocks.get(game.random(warpHoleBlocks.size()));
+            LevelBlock testBlock = warpHoleBlocks.get(random(warpHoleBlocks.size()));
             if( !testBlock.hasRock() && testBlock != origin) {
                 returnBlock = testBlock;
                 break;
@@ -578,7 +587,7 @@ Missing:
         if(castleList.size() == 0) {
             return null;
         }
-        return castleList.get(game.random(castleList.size()));
+        return castleList.get(random(castleList.size()));
     }
 
     public Game getGame() {
@@ -767,4 +776,8 @@ Missing:
         allLevelObjects.remove(loOld);
         allLevelObjects.add(loNew);
     }*/
+
+    public int random(int interval) {
+        return randomGenerator.nextInt(interval);
+    }
 }

@@ -71,7 +71,7 @@ public class Ghosts implements KryoSerializable {
     public LevelObject create(LevelBlock block, int ghostnr) {
         LevelObject.Types ghosttype = ghostTypes[ghostnr];
         LevelObject lo = new LevelObject( block, ghostEntities[ghostnr], ghosttype );
-        lo.animationStartRandom(game);
+        lo.animationStartRandom();
         block.add(lo);
         level = block.getLevel();
         Mover mover = new GhostMover(game, lo, ghostSpeed[ghostnr],
@@ -131,7 +131,7 @@ public class Ghosts implements KryoSerializable {
     }
 
     public boolean evalAgility(int ghostNr) {
-        return level.getGhostAgility(ghostNr) != 0 && game.random(level.getGhostAgility(ghostNr)) == 0;
+        return level.getGhostAgility(ghostNr) != 0 && level.random(level.getGhostAgility(ghostNr)) == 0;
     }
 
     public void init() {

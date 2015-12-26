@@ -433,7 +433,7 @@ public class LevelBlock implements KryoSerializable {
             if (u != null && u.hasCastle()
                     && r != null && r.hasCastle()) {
                 castle.setGfx(Entities.castle_default);
-                castle.animationStartRandom(game); // make sure not all are animated the same
+                castle.animationStartRandom(); // make sure not all are animated the same
             }
         }
     }
@@ -672,7 +672,7 @@ public class LevelBlock implements KryoSerializable {
         LevelObject lo = new LevelObject(level,x,y,Entities.arrows_static_down.getzIndex(),LevelObject.Types.OneWay);
         oneWayType = i;
         lo.setOneWayGfx(i);
-        lo.animationStartRandom(level.getGame());
+        lo.animationStartRandom();
         oneWay = lo;
     }
 

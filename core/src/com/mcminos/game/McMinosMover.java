@@ -58,8 +58,8 @@ public class McMinosMover extends Mover {
             int directions = getKeyDirections(); // direction bit field
             int drunkLevel = mcminos.getDrunkLevel();
             if (drunkLevel > 0) /* if drunk, 3 bottles -> 30 seconds mean no control */
-                if (game.random(Math.max(1, 30 - (drunkLevel >> Game.timeResolutionExponent))) == 0)
-                    directions = game.random(15) + 1;
+                if (level.random(Math.max(1, 30 - (drunkLevel >> Game.timeResolutionExponent))) == 0)
+                    directions = level.random(15) + 1;
 
             if (directions == 0) { // if no key, then try to get from destination
                 // the following includes the call to unblocked dirs already

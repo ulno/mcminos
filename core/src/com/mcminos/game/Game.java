@@ -182,10 +182,10 @@ public class Game {
         mcminos.reset();
     }
 
-    int random(int interval) {
+/*    int random(int interval) {
         return randomGenerator.nextInt(interval);
     }
-
+*/
     public McMinos getMcMinos() {
         return mcminos;
     }
@@ -414,7 +414,7 @@ public class Game {
                 }
 
             } catch (Exception e) {
-                Gdx.app.log("Unable to load data file in loadGame", e.toString());
+                Gdx.app.log("Game.loadGame", "Unable to load data file.", e);
                 /*// recover by creating a fresh new profile data file;
                 // note that the player will lose all game progress
                 profile = new Profile();
