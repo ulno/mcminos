@@ -83,8 +83,8 @@ public class PlayDialogs {
         Table topRow = new Table();
         Label titleLabel = new Label(title, menuSkin);
         titleLabel.setWrap(true);
-        titleLabel.setAlignment(Align.center);
-        topRow.add(titleLabel).top().center().fillX().expandX().pad(res/2);
+        titleLabel.setAlignment(Align.left);
+        topRow.add(titleLabel).top().left().fillX().expandX();
         Image closeButton = new Image(Entities.toolbox_abort.getTexture(res,0));
         mainTable.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
         Table bodyTable = new Table();
@@ -101,7 +101,7 @@ public class PlayDialogs {
                 close();
             }
         });
-        //       topRow.add(closeButton).right();
+        //       topRow.add(closeButton).right(); better to have th ebutton fixed in group on top
         closeButton.setPosition(rootWidth-res/8,rootHeight-res/8,Align.topRight);
         rootGroup.addActor(closeButton);
         open(rootTable);
@@ -118,9 +118,8 @@ public class PlayDialogs {
         Skin writingSkin = main.getMenuSkin(res / 2);
 
         Table statisticsTable = new Table(menuSkin);
-        ScrollPane statistics = new ScrollPane(statisticsTable);
         dialogTable.row();
-        dialogTable.add(statistics).fillX().expandX().padTop(res/2);
+        dialogTable.add(statisticsTable).fillX().expandX().padTop(res/2);
 
         // Remaining pills and rockmes (todos)
         Table todosTable = new Table();
