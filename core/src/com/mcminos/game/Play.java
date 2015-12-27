@@ -392,6 +392,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private void renderScore() {
         int v;
 
+        // TODO: render score as part of the stage with nice symbols instead of letters
+
         scoreInfo.setLength(1);
         scoreInfo.append(mcminos.getScore());
         scoreInfo.append(" L");
