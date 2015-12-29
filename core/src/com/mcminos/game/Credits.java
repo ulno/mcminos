@@ -28,6 +28,7 @@ public class Credits implements Screen {
     private String credits = "Credits will be here and scrolling.\n\nUlNo+Nope";
     private ScrollPane scroller;
     private long realTime = 0;
+    private long realTimePassed = 0;
     private long lastDeltaTimeLeft = 0;
 
     public Credits(Main main, LevelConfig levelConfig) {
@@ -106,7 +107,8 @@ public class Credits implements Screen {
 
         float current = scroller.getScrollY();
         float scrollmax = scroller.getMaxY();
-        if(current < scrollmax) {        float gdxtime = Gdx.graphics.getDeltaTime();
+        if(current < scrollmax) {
+            float gdxtime = Gdx.graphics.getDeltaTime();
             realTime = (long) (gdxtime * 1000);
 
             long deltaTime = (long) (gdxtime * Game.timeResolutionSquare); // needs to have long in front as gdxtime is float (don't apply long directly to gdxtime)
@@ -114,8 +116,12 @@ public class Credits implements Screen {
             long step = deltaTime / Game.timeResolution;
             deltaTime -= step * Game.timeResolution;
             lastDeltaTimeLeft = deltaTime;
-            current += (float)step * 16 / main.getSymbolResolution()  ;
-            scroller.setScrollY(current);
+            if (realTimePassed > Game.timeResolutionSquare * 5) {
+                current += (float) step * 16 / main.getSymbolResolution();
+                scroller.setScrollY(current);
+            } else {
+                realTimePassed += step * Game.timeResolution;
+            }
         }
         stage.draw();
         stage.act();
