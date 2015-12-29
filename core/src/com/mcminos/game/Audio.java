@@ -67,8 +67,9 @@ public class Audio {
             "Urban-Sci-Fi-Heroes"
     };
 
-    public final static String title = "McMinos-Title";
-    public final static String screenLoop = "Chamber-of-Jewels";
+    public final static String creditsLoop = "McMinos-Title";
+    public final static String congratsLoop = "Chamber-of-Jewels";
+    public final static String titleLoop = "The-Princess-Haunted";
 
     boolean sound = true;
     boolean music = true;
@@ -140,12 +141,17 @@ public class Audio {
         musicStop();
 
         switch(select) {
+            case 0:
+                musicFile = titleLoop;
+                break;
             case 1:
-                musicFile = screenLoop;
+                musicFile = congratsLoop;
+                break;
+            case 2:
+                musicFile = creditsLoop;
                 break;
             default:
-                musicFile = title;
-                break;
+                musicFile = creditsLoop;
         }
 
         musicFile = "music/fixed/" + musicFile + ".mp3";

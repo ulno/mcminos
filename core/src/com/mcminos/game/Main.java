@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class Main extends com.badlogic.gdx.Game {
     private static final int MINRES = 16;
     private Audio audio;
+    public static final String TEXT_FILE = "text";
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
     public static final String DEFAULT_ATLAS = "uiskin.atlas";
     public static final String LEVEL_FONT = "level";

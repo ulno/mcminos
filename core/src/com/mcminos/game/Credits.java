@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.io.BufferedReader;
+
 /**
  * Created by ulno on 24.12.15.
  */
@@ -23,18 +25,27 @@ public class Credits implements Screen {
     private final SpriteBatch batch;
     private final Audio audio;
     private final LevelConfig levelConfig;
+    private String credits = "Credits will be here and scrolling.\n\nUlNo+Nope";
+    private ScrollPane scroller;
+    private long realTime = 0;
+    private long lastDeltaTimeLeft = 0;
 
     public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;
         this.audio = main.getAudio();
         this.levelConfig = levelConfig;
-        audio.musicFixed(1);
+        audio.musicFixed(2);
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage); // set inputprocessor
 
-        audio.musicFixed(1);
-
+        // read credits for current language TODO: language
+        BufferedReader br = new BufferedReader(Gdx.files.internal(Main.TEXT_FILE).reader());
+        for(KeyValue kv = new KeyValue(br); kv.key!=null; kv = new KeyValue(br)) {
+            if(kv.key.equals("credits")) {
+                credits = kv.value;
+            }
+        }
         rebuild();
     }
 
@@ -50,17 +61,17 @@ public class Credits implements Screen {
 
         stage.addActor(rootTable);
 
-        int res = main.getSymbolResolution();
+        int res = main.getSymbolResolution()/2;
 
         // table for menu
         Table table = new Table();
-        ScrollPane scroller = new ScrollPane(table);
+        scroller = new ScrollPane(table);
         rootTable.add(scroller).top().center().fill().expand();
 
         rootTable.setBackground(new BackroundDrawer(bg));
 
         // Congrat-message
-        Label m = new Label("Credits will be here and scrolling.\n\nUlNo+Nope",main.getLevelSkin(res));
+        Label m = new Label(credits,main.getLevelSkin(res));
         m.setWrap(true);
         table.add(m).maxWidth(Gdx.graphics.getWidth()*9/10).fill().expand();
 
@@ -93,6 +104,19 @@ public class Credits implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        float current = scroller.getScrollY();
+        float scrollmax = scroller.getMaxY();
+        if(current < scrollmax) {        float gdxtime = Gdx.graphics.getDeltaTime();
+            realTime = (long) (gdxtime * 1000);
+
+            long deltaTime = (long) (gdxtime * Game.timeResolutionSquare); // needs to have long in front as gdxtime is float (don't apply long directly to gdxtime)
+            deltaTime += lastDeltaTimeLeft; // apply what is left
+            long step = deltaTime / Game.timeResolution;
+            deltaTime -= step * Game.timeResolution;
+            lastDeltaTimeLeft = deltaTime;
+            current += (float)step * 16 / main.getSymbolResolution()  ;
+            scroller.setScrollY(current);
+        }
         stage.draw();
         stage.act();
     }
