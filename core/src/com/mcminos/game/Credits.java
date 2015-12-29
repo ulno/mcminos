@@ -117,7 +117,7 @@ public class Credits implements Screen {
             deltaTime -= step * Game.timeResolution;
             lastDeltaTimeLeft = deltaTime;
             if (realTimePassed > Game.timeResolutionSquare * 5) {
-                current += (float) step * 16 / main.getSymbolResolution();
+                current += (float) step * main.getSymbolResolution() / PlayWindow.virtualBlockResolution;
                 scroller.setScrollY(current);
             } else {
                 realTimePassed += step * Game.timeResolution;
