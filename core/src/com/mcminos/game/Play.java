@@ -286,6 +286,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             }
         }
         /////// Handle timing events (like moving and events)
+        dialogs.updateTimer();
         if (!game.updateTime()) { // update and exit, if game finished
             if(mcminos.isWinning()) { // This level was actually won
                 advanceToNextLevel();

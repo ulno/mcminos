@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="checked-00.svg"
+   viewBox="0 0 128 128"
+   version="1.1"
+   inkscape:version="0.91 r13725">
+  <defs
+     id="defs4">
+    <filter
+       id="filter3895"
+       inkscape:collect="always"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3897"
+         stdDeviation="1.1"
+         inkscape:collect="always" />
+    </filter>
+    <filter
+       id="filter3973"
+       inkscape:collect="always"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3975"
+         stdDeviation="0.44890625"
+         inkscape:collect="always" />
+    </filter>
+    <linearGradient
+       id="linearGradient3982"
+       y2="2.4637"
+       gradientUnits="userSpaceOnUse"
+       x2="86.244"
+       y1="73.737"
+       x1="8"
+       inkscape:collect="always">
+      <stop
+         id="stop3873"
+         style="stop-color:#00aa00"
+         offset="0" />
+      <stop
+         id="stop3879"
+         style="stop-color:#00ff00"
+         offset=".29524" />
+      <stop
+         id="stop3875"
+         style="stop-color:#d5ffd5"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3984"
+       y2="79.832"
+       gradientUnits="userSpaceOnUse"
+       x2="47.125"
+       y1="4.5156"
+       x1="47.125"
+       inkscape:collect="always">
+      <stop
+         id="stop3929"
+         style="stop-color:#ffffff"
+         offset="0" />
+      <stop
+         id="stop3931"
+         style="stop-color:#ffffff;stop-opacity:0"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3986"
+       y2="59.766"
+       gradientUnits="userSpaceOnUse"
+       x2="60.753"
+       y1="4.5156"
+       x1="47.125"
+       inkscape:collect="always">
+      <stop
+         id="stop3955"
+         style="stop-color:#ffffff"
+         offset="0" />
+      <stop
+         id="stop3957"
+         style="stop-color:#ffffff;stop-opacity:0"
+         offset="1" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="30"
+     pagecolor="#ffffff"
+     inkscape:window-height="1021"
+     inkscape:window-maximized="1"
+     inkscape:zoom="1"
+     inkscape:window-x="0"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="-93.110505"
+     inkscape:cy="76.026004"
+     inkscape:window-width="1920"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px">
+    <inkscape:grid
+       id="grid2994"
+       enabled="true"
+       visible="true"
+       snapvisiblegridlinesonly="true"
+       type="xygrid"
+       empspacing="5" />
+  </sodipodi:namedview>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0 -924.36)">
+    <g
+       id="g3977"
+       transform="matrix(1.8813 0 0 1.8813 -10.225 899.05)"
+       style="opacity:0.7">
+      <path
+         id="path3881"
+         sodipodi:nodetypes="ccccccc"
+         style="opacity:0.65158;filter:url(#filter3895);fill:#000000"
+         inkscape:connector-curvature="0"
+         d="m20 42.362 10 10 30-30 10 10-40 40-20-20z" />
+      <path
+         id="path2996"
+         d="m20 42.362 10 10 30-30 10 10-40 40-20-20z"
+         sodipodi:nodetypes="ccccccc"
+         style="fill:url(#linearGradient3982)"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3949"
+         style="filter:url(#filter3973);stroke:url(#linearGradient3986);stroke-width:0.26578;fill:url(#linearGradient3984)"
+         sodipodi:type="inkscape:offset"
+         d="m60 23.5-27.344 27.344c0.66374-0.12971 1.3313-0.25542 2-0.375 3.3646-0.60167 7.5261-1.2467 10.906-1.6875 2.6453-0.34494 5.1032-0.59175 7.6562-0.75l15.657-15.657-8.875-8.875zm-40 20-8.875 8.875 3.1562 3.1562c4.597-1.352 9.218-2.781 13.969-3.781l-8.25-8.25z"
+         inkscape:original="M 60 22.375 L 30.25 52.125 C 31.759428 51.832546 33.268641 51.520491 34.78125 51.25 C 38.131586 50.650878 42.292564 50.001114 45.65625 49.5625 C 48.40866 49.203595 50.940177 48.935357 53.59375 48.78125 L 70 32.375 L 60 22.375 z M 20 42.375 L 10 52.375 L 14.03125 56.40625 C 19.237958 54.881463 24.442107 53.235169 29.78125 52.21875 C 29.80132 52.21495 29.82368 52.22255 29.84375 52.21875 L 20 42.375 z "
+         inkscape:radius="-0.79549515" />
+    </g>
+  </g>
+  <metadata
+     id="metadata25">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Check mark</dc:title>
+        <dc:date>2010-09-10T21:09:32</dc:date>
+        <dc:description>Check mark icon.</dc:description>
+        <dc:source>https://openclipart.org/detail/84289/check-mark-by-jhnri4</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>jhnri4</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>accepted</rdf:li>
+            <rdf:li>approval</rdf:li>
+            <rdf:li>approved</rdf:li>
+            <rdf:li>certified</rdf:li>
+            <rdf:li>check</rdf:li>
+            <rdf:li>good</rdf:li>
+            <rdf:li>how i did it</rdf:li>
+            <rdf:li>ok</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
