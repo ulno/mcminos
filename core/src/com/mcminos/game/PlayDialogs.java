@@ -38,6 +38,7 @@ public class PlayDialogs {
     private SegmentString pillLabelText;
     private Label rockmeLabel;
     private SegmentString rockmeLabelText;
+    private int closeTimer = 0;
 
     public PlayDialogs(Play play) {
         this.play = play;
@@ -59,6 +60,7 @@ public class PlayDialogs {
     }
 
     public void close() {
+        closeTimer = 0;
         if (dialog != null) dialog.remove();
         dialog = null;
     }
@@ -296,7 +298,7 @@ public class PlayDialogs {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 play.getGame().saveGame(1); // TODO: allow several game-saves
-                openText("Save Game","Game successfully saved."); // TODO: check that it really was successful
+                openSavedGameConfirm();
             }
         });
         rowActionsTable.add(saveButton).prefSize(res, res).padRight(padSize);
@@ -358,6 +360,32 @@ public class PlayDialogs {
         rowActionsTable.add(continueButton).prefSize(res, res).maxSize(res);
 
         open( thisDialog );
+    }
+
+    private void openSavedGameConfirm() {
+        close();
+
+        int res = play.getSymbolResolution();
+        Skin writingSkin = main.getMenuSkin(res / 2);
+        Skin menuSkin = main.getMenuSkin(res);
+        Table thisDialog = new Table();
+        int padSize = res / 16;
+
+        thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
+        thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
+        thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), res + 2 * padSize),
+                Math.min(Gdx.graphics.getHeight(), res + 2 * padSize) );
+        thisDialog.setPosition( res + padSize, Gdx.graphics.getHeight() - thisDialog.getHeight() - play.getGameResolution() );
+
+
+        // TODO: check that it really was successfully saved
+        Group g = new Group();
+        g.setSize(res,res);
+        g.addActor(new Image(Entities.menu_button_game_save.getTexture(res,0)));
+        g.addActor(new Image(Entities.menu_checked.getTexture(res,0)));
+        thisDialog.add(g).pad(padSize);
+        open(thisDialog);
+        closeTimer = 180; // 3 seconds: TODO: do not hardcode here
     }
 
     private void open(Table dialog) {
@@ -560,4 +588,12 @@ allows cheating */
         return dialog != null;
     }
 
+    public void updateTimer() {
+        if(closeTimer > 0) {
+            closeTimer --;
+            if(closeTimer == 0) {
+                close();
+            }
+        }
+    }
 }
