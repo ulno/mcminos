@@ -384,6 +384,11 @@ public class PlayDialogs {
         g.addActor(new Image(Entities.menu_button_game_save.getTexture(res,0)));
         g.addActor(new Image(Entities.menu_checked.getTexture(res,0)));
         thisDialog.add(g).pad(padSize);
+        thisDialog.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+            }
+        });
         open(thisDialog);
         closeTimer = 180; // 3 seconds: TODO: do not hardcode here
     }
