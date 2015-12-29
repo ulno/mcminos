@@ -103,22 +103,24 @@ public class PlayWindow {
         // However, scrollability of the level needs to be respected.
 
         int totalVPixels = totalBlocks << virtualBlockResolutionExponent;
-/*        if ( totalVPixels > visibleVPixels) { // if it is not totally visible -- now we scroll allways */
-            int center = (inputPos + (visibleVPixels >> 1)) % totalVPixels; // center of the visible screen
-            // compute the distance of mcminos from the center
-            int delta = mcmPos - center; // < 0 means mcminos is under/left of center
-            if (scroll) { // the level scrolls in this direction
-                if (Math.abs(delta) > totalBlocks << (virtualBlockResolutionExponent - 1))
-                    delta = (int) Math.signum(delta) * (Math.abs(delta) - totalVPixels);
-                if(scrollSpeed > 0) // if this is 0, apply full delta
-                    delta /=   (virtualBlockResolution>>1)/scrollSpeed ; // do it a little slowly depending on distance
-                inputPos += delta;
-                if (inputPos < 0) inputPos += totalVPixels;
-                else {
-                    if (inputPos >= totalVPixels)
-                        inputPos -= totalVPixels;
-                }
-            } else { // not all is visible, so we can scroll, but not as far as in the scrolling case
+        int center = (inputPos + (visibleVPixels >> 1)) % totalVPixels; // center of the visible screen
+        // compute the distance of mcminos from the center
+        int delta = mcmPos - center; // < 0 means mcminos is under/left of center
+        if (scroll) { // the level scrolls in this direction
+            if (Math.abs(delta) > totalBlocks << (virtualBlockResolutionExponent - 1))
+                delta = (int) Math.signum(delta) * (Math.abs(delta) - totalVPixels);
+            if (scrollSpeed > 0) // if this is 0, apply full delta
+                delta /= (virtualBlockResolution >> 1) / scrollSpeed; // do it a little slowly depending on distance
+            inputPos += delta;
+            if (inputPos < 0) inputPos += totalVPixels;
+            else {
+                if (inputPos >= totalVPixels)
+                    inputPos -= totalVPixels;
+            }
+        } else { // not all is visible, so we can scroll, but not as far as in the scrolling case
+//            if (totalVPixels > visibleVPixels) { // if it is not totally visible
+                if (scrollSpeed > 0) // if this is 0, apply full delta
+                    delta /= (virtualBlockResolution >> 1) / scrollSpeed; // do it a little slowly depending on distance
                 inputPos += delta;
                 if (inputPos < 0)
                     inputPos = 0;
@@ -126,17 +128,8 @@ public class PlayWindow {
                     if (inputPos >= totalVPixels - visibleVPixels)
                         inputPos = totalVPixels - visibleVPixels;
                 }
-            }
-/*        }
-        else { // the visible area is bigger than the actual level
-            // if level is small, it needs to be centered
-            // When no scrolling is enabled, we
-            // also need to account for some black borders to allow giving the direction by setting the
-            // destination field
-            // if( ! scroll )// not scroll and not too small -> make sure level aligned
-            inputPos = 0;
-            //inputPos = ((totalBlocks << virtualBlockResolutionExponent) -( visibleVPixels - totalVPixels ) / 2 ) % (totalBlocks << virtualBlockResolutionExponent);
-        } */
+//            }
+        }
         return inputPos;
     }
 
