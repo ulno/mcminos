@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 public class Toolbox {
     private final Stage stage;
+    private final Preferences preferences;
     private Skin levelSkin;
     private Skin menuSkin;
     private final PlayWindow playwindow;
@@ -106,6 +107,7 @@ public class Toolbox {
     public Toolbox(final Play play) {
         this.play = play;
         this.main = play.getMain();
+        this.preferences = main.getPreferences();
         this.stage = play.getStage();
         this.playwindow = play.getPlayWindow();
 
@@ -114,8 +116,8 @@ public class Toolbox {
         this.audio = game.getAudio();
         this.level = game.getLevel();
 
-        menuSkin = main.getMenuSkin(main.getSymbolResolution());
-        levelSkin = main.getLevelSkin(main.getSymbolResolution()/2);
+        menuSkin = main.getMenuSkin(preferences.getSymbolResolution());
+        levelSkin = main.getLevelSkin(preferences.getSymbolResolution()/2);
 
         rootTable = new Table(menuSkin); // This is just the root of the table, updated by resize
         rootTable.setPosition(0, 0);
@@ -146,7 +148,7 @@ public class Toolbox {
             }
         });
 
-        int res = main.getSymbolResolution();
+        int res = preferences.getSymbolResolution();
 
         playPauseButton = new ToolboxButton( this, Entities.menu_pause, res, 0, new ClickListener() {
             @Override
@@ -266,7 +268,7 @@ public class Toolbox {
         if( rebuildNecessary ) {
             Cell<Group> last = null;
             boolean rowadded = true;
-            int res = main.getSymbolResolution();
+            int res = preferences.getSymbolResolution();
 
             // make all visible
             table.clearChildren();

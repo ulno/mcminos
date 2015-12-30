@@ -19,6 +19,8 @@ public class PlayWindow {
     public final static int virtualBlockResolutionExponent = Util.log2binary(virtualBlockResolution);
     private final McMinos mcminos;
     private final OrthographicCamera camera;
+    private final Main main;
+    private final Preferences preferences;
     public SpriteBatch batch;
     public BitmapFont defaultFont;
     public Skin skin;
@@ -48,12 +50,14 @@ public class PlayWindow {
     private int miniY;
     private boolean miniMapLeft = false;
 
-    public PlayWindow(SpriteBatch batch, OrthographicCamera camera, Level level, McMinos mcminos) {
+    public PlayWindow(Main main, SpriteBatch batch, OrthographicCamera camera, Level level, McMinos mcminos) {
+        this.main = main;
         this.batch = batch;
         this.camera = camera;
         this.level = level;
         this.game = level.getGame();
         this.mcminos = mcminos;
+        this.preferences = main.getPreferences();
     }
 
 /*    seems obsolete public void loadLevel() {
@@ -64,28 +68,13 @@ public class PlayWindow {
     }*/
 
 
-    public void setResolution(int resolutionCounter, int toolboxWidth) {
-        resolution = Entities.resolutionList[resolutionCounter];
+    public void setResolution(int res, int toolboxWidth) {
+        resolution = preferences.setGameResolution(res);
         resolutionExponent = Util.log2binary(resolution);
         Graphics.setResolutionAll(this, resolution, toolboxWidth);
         currentResolutionBitsLeftShifter = Util.log2binary(resolution) - PlayWindow.virtualBlockResolutionExponent;
         resize(toolboxWidth);
     }
-
-    public int setClosestResolution( int resolutionValue, int toolboxWidth ) {
-        int delta = 0x1000000;
-        int counter = -1;
-        for( int i=0; i<Entities.resolutionList.length; i++ ) {
-            int diff = Math.abs( resolutionValue - Entities.resolutionList[i] );
-            if( diff < delta) {
-                delta = diff;
-                counter = i;
-            }
-        }
-        setResolution(counter, toolboxWidth);
-        return counter;
-    }
-
 
     /**
      *

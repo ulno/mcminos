@@ -123,6 +123,10 @@ public class LevelCategory {
     }
 
     public String getEndMessage( String lang ) {
-        return endmessage.get(lang);
+        if(endmessage.containsKey(lang)) {
+            return endmessage.get(lang);
+        } else {
+            return endmessage.get("en");
+        }
     }
 }

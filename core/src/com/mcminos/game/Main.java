@@ -17,7 +17,6 @@ import java.util.HashMap;
  * This is the Main class from where the game is controlled.
  */
 public class Main extends com.badlogic.gdx.Game {
-    private static final int MINRES = 16;
     private Audio audio;
     public static final String TEXT_FILE = "text";
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
@@ -37,6 +36,7 @@ public class Main extends com.badlogic.gdx.Game {
     private MainMenu mainMenu;
     private InputProcessor defaultInputProcessor;
     private Statistics userStats;
+    private Preferences preferences;
 
     public LevelsConfig getLevelsConfig() {
         return levelsConfig;
@@ -47,32 +47,13 @@ public class Main extends com.badlogic.gdx.Game {
         Gdx.app.setLogLevel(Application.LOG_DEBUG); // TODO: set to info again
         Gdx.graphics.setVSync(true); // try some magic on the desktop TODO: check if this has any effect
         audio = new Audio();
+        preferences = new Preferences(this);
         //loadSkinAndFont(8);
         //loadSkinAndFont(16);
         loadSkinAndFont(32);
         //loadSkinAndFont(64);
         //loadSkinAndFont(128);
         defaultInputProcessor = Gdx.input.getInputProcessor();
-
-        //  Basically, based on density and screensize, we want to set our default zoomlevel.
-        // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
-        // let's do everything based on width and height - we assume width>height
-        if (Game.preferencesHandle.contains("sr")) {
-            symbolResolution = Game.preferencesHandle.getInteger("sr");
-        } else { // guess something reasonable
-            symbolResolution = Math.max(MINRES,
-                    Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 8
-            );
-            int closestPowerOf2 = MINRES;
-            int nearest = MINRES;
-            while (closestPowerOf2 <= 128) {
-                if (Math.abs(symbolResolution - closestPowerOf2) < Math.abs(symbolResolution - nearest)) {
-                    nearest = closestPowerOf2;
-                }
-                closestPowerOf2 *= 2;
-            }
-            symbolResolution = nearest;
-        }
 
         try {
             versionString = new BufferedReader(Gdx.files.internal(versionStringFile).reader()).readLine();
@@ -115,16 +96,6 @@ public class Main extends com.badlogic.gdx.Game {
         }
 
     } */
-
-    public int getSymbolResolution() {
-        return symbolResolution;
-    }
-
-    public void setSymbolResolution(int symbolResolution) {
-        if (symbolResolution < MINRES) symbolResolution = MINRES;
-        if (symbolResolution > 128) symbolResolution = 128;
-        this.symbolResolution = symbolResolution;
-    }
 
     public void loadSkinAndFont(int res) {
         String fontName = "fonts/" + LEVEL_FONT + "-" + res + ".fnt";
@@ -243,5 +214,9 @@ public class Main extends com.badlogic.gdx.Game {
 
     public void levelEndCongrats( LevelConfig currentLevelConfig) {
         setScreen( new Congrats(this, currentLevelConfig) );
+    }
+
+    public Preferences getPreferences() {
+        return preferences;
     }
 }

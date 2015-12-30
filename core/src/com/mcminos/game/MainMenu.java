@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -29,6 +27,7 @@ public class MainMenu implements Screen {
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
     private final Audio audio;
+    private final Preferences preferences;
     private boolean resumeRequested = false; // only resume, if resume-file detected
     private Skin bigMenuSkin;
     private Skin levelSkin;
@@ -42,10 +41,10 @@ public class MainMenu implements Screen {
     private final Table rootTable;
 //    private Label versionStringActor;
 
-    private boolean fullscreen = Game.preferencesHandle.getBoolean("fs");
+    private boolean fullscreen;
     private LevelConfig activatedLevel = null; // nothing selected in the beginning
     private int activatedCategory = 0; // first is selected by default
-    private String language = "en";
+    private String language;
     private BitmapFont levelFont;
     private HashMap<String, Texture> textureCache = new HashMap<>();
     private Table currentDialog = null;
@@ -54,6 +53,8 @@ public class MainMenu implements Screen {
     public MainMenu(final Main main) {
 //        final MainMenu thisScreen = this; // TODO: check why we need this
         this.main = main;
+        this.preferences = main.getPreferences();
+        this.fullscreen = preferences.getFullScreen();
         this.audio = main.getAudio();
         this.statistics = main.getUserStats();
         batch = new SpriteBatch();
@@ -151,7 +152,8 @@ public class MainMenu implements Screen {
     }
 
     private void rebuildMenu() {
-        int res = main.getSymbolResolution();
+        language = preferences.getLanguage();
+        int res = preferences.getSymbolResolution();
         bigMenuSkin = main.getMenuSkin(res);
         textSkin = main.getMenuSkin(res / 2);
         levelSkin = main.getLevelSkin(res / 2);
@@ -336,7 +338,7 @@ public class MainMenu implements Screen {
             stage.act(delta);
             stage.draw();
             batch.begin();
-            levelFont.draw(batch, main.getVersionString(), 0, main.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
+            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
             batch.end();
 
         }
@@ -348,7 +350,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        int res = main.getSymbolResolution();
+        int res = preferences.getSymbolResolution();
         bigMenuSkin = main.getMenuSkin(res);
         bigLevelSkin = main.getLevelSkin(res);
         levelSkin = main.getLevelSkin(res / 2);
@@ -357,7 +359,7 @@ public class MainMenu implements Screen {
         rootTable.setSize(width, height);
         table.setBounds(0, 0, width, height);
         stage.getViewport().update(width, height, true);
-        levelFont = main.getLevelFont(main.getSymbolResolution() / 2);
+        levelFont = main.getLevelFont(preferences.getSymbolResolution() / 2);
         rebuildMenu();
     }
 
@@ -415,18 +417,17 @@ public class MainMenu implements Screen {
             fullscreen = false;
             Gdx.graphics.setDisplayMode(1280, 900, false);
         }
-        Game.preferencesHandle.putBoolean("fs", fullscreen);
-        Game.preferencesHandle.flush();
+        preferences.setFullScreen(fullscreen);
     }
     
     private void dialogPreferences() {
-        int res = main.getSymbolResolution();
+        int res = preferences.getSymbolResolution();
         int padSize = res / 16;
         Skin menuSkin = main.getMenuSkin(res);
         Table thisDialog = new Table();
         thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
         thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
-        thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 5*res + 8 * padSize),
+        thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 6*res + 9 * padSize),
                 Math.min(Gdx.graphics.getHeight(), 1*res + 4*padSize) );
         thisDialog.setPosition( 0, Gdx.graphics.getHeight() - thisDialog.getHeight() - res );
 
@@ -447,13 +448,12 @@ public class MainMenu implements Screen {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int res = main.getSymbolResolution();
-                audio.toggleSound();
+                int res = preferences.getSymbolResolution();
+                preferences.toggleSound();
                 soundButton.clearChildren();
-                soundButton.addActor(new Image(audio.getSound() ?
+                soundButton.addActor(new Image(preferences.getSound() ?
                         Entities.menu_button_sound_on.getTexture(res, 0)
                         : Entities.menu_button_sound_off.getTexture(res, 0)));
-                savePreferences();
             }
         });
         rowGamePrefsTable.add(soundButton).prefSize(res, res).padRight(padSize);
@@ -466,13 +466,12 @@ public class MainMenu implements Screen {
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int res = main.getSymbolResolution();
-                audio.toggleMusic();
+                int res = preferences.getSymbolResolution();
+                preferences.toggleMusic();
                 musicButton.clearChildren();
-                musicButton.addActor(new Image(audio.getMusic() ?
+                musicButton.addActor(new Image(preferences.getMusic() ?
                         Entities.menu_button_music_on.getTexture(res, 0)
                         : Entities.menu_button_music_off.getTexture(res, 0)));
-                savePreferences();
             }
         });
         rowGamePrefsTable.add(musicButton).prefSize(res, res).padRight(padSize);
@@ -484,7 +483,6 @@ public class MainMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 dialogClose();
                 increaseSymbolResolution();
-                savePreferences();
                 dialogPreferences();
             }
         });
@@ -497,11 +495,25 @@ public class MainMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 dialogClose();
                 decreaseSymbolResolution();
-                savePreferences();
                 dialogPreferences();
             }
         });
         rowGamePrefsTable.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+
+        Group langButton = new Group();
+        langButton.addActor(new Image(Entities.menu_button_empty.getTexture(res, 0)));
+        langButton.addActor(new Image(preferences.languageGfx().getTexture(res,0)));
+        langButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                dialogClose();
+                preferences.nextLanguage();
+                rebuildMenu(); // TODO: jump to current level
+                dialogPreferences();
+            }
+        });
+        rowGamePrefsTable.add(langButton).prefSize(res, res).padRight(padSize);
+
 
         Group closeButton = new Group();
         closeButton.addActor(new Image(Entities.toolbox_abort.getTexture(res, 0)));
@@ -526,24 +538,15 @@ public class MainMenu implements Screen {
     }
 
     public void setSymbolResolution(int symbolResolution) {
-        main.setSymbolResolution(symbolResolution);
+        preferences.setSymbolResolution(symbolResolution);
         resize();
     }
 
     public void increaseSymbolResolution() {
-        setSymbolResolution(main.getSymbolResolution()*2);
+        setSymbolResolution(preferences.getSymbolResolution()*2);
     }
 
     public void decreaseSymbolResolution() {
-        setSymbolResolution(main.getSymbolResolution()/2);
-    }
-
-
-    private void savePreferences() {
-        Game.preferencesHandle.putBoolean("s", audio.getSound());
-        Game.preferencesHandle.putBoolean("m", audio.getMusic());
-        Game.preferencesHandle.putInteger("sr", main.getSymbolResolution());
-        Game.preferencesHandle.flush();
-
+        setSymbolResolution(preferences.getSymbolResolution()/2);
     }
 }

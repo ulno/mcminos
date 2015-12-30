@@ -28,6 +28,7 @@ public class PlayDialogs {
     private final McMinos mcminos;
     private final PlayWindow playwindow;
     private final Stage stage;
+    private final Preferences preferences;
 
     private Skin levelSkin;
     private Skin menuSkin;
@@ -43,6 +44,7 @@ public class PlayDialogs {
     public PlayDialogs(Play play) {
         this.play = play;
         this.main = play.getMain();
+        this.preferences = main.getPreferences();
         this.stage = play.getStage();
         this.game = play.getGame();
 
@@ -51,7 +53,7 @@ public class PlayDialogs {
         this.level = game.getLevel();
         this.mcminos = game.getMcMinos();
 
-        selectSkins(main.getSymbolResolution());
+        selectSkins(preferences.getSymbolResolution());
     }
 
     private void selectSkins(int res) {
@@ -113,7 +115,7 @@ public class PlayDialogs {
     public void openLevelStory() {
         LevelConfig lc = level.getLevelConfig();
 
-        Table dialogTable = openText(lc.getTitle("en"),lc.getBody("en"));
+        Table dialogTable = openText(lc.getTitle(preferences.getLanguage()),lc.getBody(preferences.getLanguage()));
 
         ///// Fill statistics
         int res = play.getSymbolResolution();
@@ -137,9 +139,8 @@ public class PlayDialogs {
         statisticsTable.add(new Label("Level author: " + level.getLevelConfig().getAuthor(), writingSkin)).left().fillX().expandX().row();
         // Zoomlevel + Resolution
         statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().fillX().expandX().row();
-        statisticsTable.add(new Label(new StringBuilder("Zoom Level: ").append(play.getGameResolutionCounter()), writingSkin)).left().fillX().expandX().row();
         statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), writingSkin)).left().fillX().expandX().row();
-        statisticsTable.add(new Label(new StringBuilder("Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(new StringBuilder("Sprite Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().fillX().expandX().row();
         statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().fillX().expandX().row();
         statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution), writingSkin)).left().fillX().expandX().row();
         statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().fillX().expandX().row();
@@ -152,7 +153,7 @@ public class PlayDialogs {
         Table thisDialog = new Table();
         thisDialog.setBackground(new NinePatchDrawable(menuSkin.getPatch(("default-rect"))));
         thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
-        thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 7*res + 10 * padSize),
+        thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 7*res + 11 * padSize),
                 Math.min(Gdx.graphics.getHeight(), 2*res + 4*padSize) );
         thisDialog.setPosition( res + padSize, Gdx.graphics.getHeight() - thisDialog.getHeight() - play.getGameResolution() );
 
@@ -178,12 +179,11 @@ public class PlayDialogs {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                audio.toggleSound();
+                preferences.toggleSound();
                 soundButton.clearChildren();
-                soundButton.addActor(new Image(audio.getSound() ?
+                soundButton.addActor(new Image(preferences.getSound() ?
                         Entities.menu_button_sound_on.getTexture(play.getSymbolResolution(), 0)
                         : Entities.menu_button_sound_off.getTexture(play.getSymbolResolution(), 0)));
-                play.savePreferences();
             }
         });
         rowGamePrefsTable.add(soundButton).prefSize(res, res).padRight(padSize);
@@ -196,12 +196,11 @@ public class PlayDialogs {
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                audio.toggleMusic();
+                preferences.toggleMusic();
                 musicButton.clearChildren();
-                musicButton.addActor(new Image(audio.getMusic() ?
+                musicButton.addActor(new Image(preferences.getMusic() ?
                         Entities.menu_button_music_on.getTexture(play.getSymbolResolution(), 0)
                         : Entities.menu_button_music_off.getTexture(play.getSymbolResolution(), 0)));
-                play.savePreferences();
             }
         });
         rowGamePrefsTable.add(musicButton).prefSize(res, res).padRight(padSize);
@@ -230,7 +229,6 @@ public class PlayDialogs {
                 touchpadButton.addActor(new Image(play.toggleTouchpad() ?
                         Entities.menu_button_touchpad_on.getTexture(play.getSymbolResolution(), 0)
                         : Entities.menu_button_touchpad_off.getTexture(play.getSymbolResolution(), 0)));
-                play.savePreferences();
 
             }
         });
@@ -244,7 +242,6 @@ public class PlayDialogs {
             public void clicked(InputEvent event, float x, float y) {
                 close();
                 play.zoomPlus();
-                play.savePreferences();
                 openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
@@ -259,7 +256,6 @@ public class PlayDialogs {
             public void clicked(InputEvent event, float x, float y) {
                 close();
                 play.zoomMinus();
-                play.savePreferences();
                 openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
@@ -272,7 +268,6 @@ public class PlayDialogs {
             public void clicked(InputEvent event, float x, float y) {
                 close();
                 play.increaseSymbolResolution();
-                play.savePreferences();
                 openGameMenu(); // TODO: check if this leaks too much memory
             } 
         });
@@ -285,7 +280,6 @@ public class PlayDialogs {
             public void clicked(InputEvent event, float x, float y) {
                 close();
                 play.decreaseSymbolResolution();
-                play.savePreferences();
                 openGameMenu(); // TODO: check if this leaks too much memory
             } 
         });
@@ -302,6 +296,19 @@ public class PlayDialogs {
             }
         });
         rowActionsTable.add(saveButton).prefSize(res, res).padRight(padSize);
+
+        Group langButton = new Group();
+        langButton.addActor(new Image(Entities.menu_button_empty.getTexture(res, 0)));
+        langButton.addActor(new Image(preferences.languageGfx().getTexture(res,0)));
+        langButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+                preferences.nextLanguage();
+                openGameMenu();
+            }
+        });
+        rowActionsTable.add(langButton).prefSize(res, res).padRight(padSize);
 
         Image infoButton = new Image(Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {

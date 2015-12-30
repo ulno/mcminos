@@ -25,6 +25,7 @@ public class Credits implements Screen {
     private final SpriteBatch batch;
     private final Audio audio;
     private final LevelConfig levelConfig;
+    private final Preferences preferences;
     private String credits = "Credits will be here and scrolling.\n\nUlNo+Nope";
     private ScrollPane scroller;
     private long realTime = 0;
@@ -33,6 +34,7 @@ public class Credits implements Screen {
 
     public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;
+        this.preferences = main.getPreferences();
         this.audio = main.getAudio();
         this.levelConfig = levelConfig;
         audio.musicFixed(2);
@@ -42,9 +44,22 @@ public class Credits implements Screen {
 
         // read credits for current language TODO: language
         BufferedReader br = new BufferedReader(Gdx.files.internal(Main.TEXT_FILE).reader());
-        for(KeyValue kv = new KeyValue(br); kv.key!=null; kv = new KeyValue(br)) {
-            if(kv.key.equals("credits")) {
-                credits = kv.value;
+        KeyValue kv;
+        boolean creditsRead = false;
+        while ((kv = new KeyValue(br)).key != null) {
+            switch (kv.key) {
+                case "credits":
+                    if(!creditsRead)
+                        credits = kv.value;
+                    break;
+                default:
+                    if (kv.key.startsWith("credits-")) {
+                        String lang = kv.key.substring(8);
+                        if(lang.equals(preferences.getLanguage())) {
+                            credits = kv.value;
+                            creditsRead = true;
+                        }
+                    }
             }
         }
         rebuild();
@@ -62,7 +77,7 @@ public class Credits implements Screen {
 
         stage.addActor(rootTable);
 
-        int res = main.getSymbolResolution()/2;
+        int res = preferences.getSymbolResolution()/2;
 
         // table for menu
         Table table = new Table();
@@ -117,7 +132,7 @@ public class Credits implements Screen {
             deltaTime -= step * Game.timeResolution;
             lastDeltaTimeLeft = deltaTime;
             if (realTimePassed > Game.timeResolutionSquare * 5) {
-                current += (float) step * main.getSymbolResolution() / PlayWindow.virtualBlockResolution;
+                current += (float) step * preferences.getSymbolResolution() / PlayWindow.virtualBlockResolution;
                 scroller.setScrollY(current);
             } else {
                 realTimePassed += step * Game.timeResolution;

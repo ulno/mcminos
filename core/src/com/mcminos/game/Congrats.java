@@ -25,10 +25,12 @@ public class Congrats implements Screen {
     private final Statistics statistics;
     private final SpriteBatch batch;
     private final Audio audio;
+    private final Preferences preferences;
 
     public Congrats(Main main, LevelConfig currentLevelConfig) {
         this.main = main;
         this.audio = main.getAudio();
+        this.preferences = main.getPreferences();
         audio.musicFixed(1);
         this.category = currentLevelConfig.getCategory();
         this.levelConfig = currentLevelConfig;
@@ -52,7 +54,7 @@ public class Congrats implements Screen {
 
         stage.addActor(rootTable);
 
-        int res = main.getSymbolResolution();
+        int res = preferences.getSymbolResolution();
 
         // table for menu
         Table table = new Table();
@@ -62,7 +64,7 @@ public class Congrats implements Screen {
         rootTable.setBackground(new BackroundDrawer(bg));
 
         // Congrat-message
-        Label m = new Label(category.getEndMessage("en"),main.getLevelSkin(res/2));
+        Label m = new Label(category.getEndMessage(preferences.getLanguage()),main.getLevelSkin(res/2));
         m.setWrap(true);
         table.add(m).maxWidth(Gdx.graphics.getWidth()*9/10).fill().expand();
 

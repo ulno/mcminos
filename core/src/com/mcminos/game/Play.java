@@ -40,7 +40,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private Main main;
     private Level level;
     private long lastZoomTime = 0;
-    private int gameResolutionCounter = 0;
     Graphics background;
     private Touchpad touchpad;
     private StringBuilder scoreInfo;
@@ -66,9 +65,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
     static final long panScrollBackPause = 60; // wait how long until slowly scrolling back in pan-mode
 
     private boolean paused = true; // start paused
+    private Preferences preferences;
 
     private void preInit(final Main main) {
         this.main = main;
+        this.preferences = main.getPreferences();
         camera = new OrthographicCamera();
         skin = main.getLevelSkin(getSymbolResolution());
         audio = main.getAudio();
@@ -129,20 +130,16 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void initAfterLevel() {
+
         audio.musicRandom();
 
         mcminos = game.getMcMinos(); // only works after level has been loaded/initialized
 
         // prepare stuff for graphics output
-        playwindow = new PlayWindow(gameBatch, camera, level, mcminos);
+        playwindow = new PlayWindow(main, gameBatch, camera, level, mcminos);
 
-        //  Basically, based on density and screensize, we want to set out default zoomlevel.
-        // densityvalue is BS float density = Gdx.graphics.getDensity(); // figure out resolution - if this is 1, that means about 160DPI, 2: 320DPI
-        // let's do everything based on width and height - we assume width>height
-        int preferredGameResolution = Math.max(16,
-                Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 12 // often reported too big
-        );
-        gameResolutionCounter = playwindow.setClosestResolution(preferredGameResolution, main.getSymbolResolution());
+        // init resolution
+        setGameResolution(preferences.getGameResolution());
 
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
         toolbox = new Toolbox(this);
@@ -187,9 +184,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         pauseOn(); // make sure it's active and game is paused
 
-        // read the preferences from storage
-        game.loadPreferences();
-
         // activate level
         main.getUserStats().activate(level.getLevelConfig());
         dialogs.openLevelStory();
@@ -202,10 +196,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
     public boolean toggleTouchpad() {
         if (touchpad.hasParent()) {
             touchpad.remove();
+            preferences.setTouchpadActive(false);
             return false; // it's gone
         } else {
             touchpadResize();
             stage.addActor(touchpad);
+            preferences.setTouchpadActive(true);
             return true; // now it's visible
         }
     }
@@ -490,7 +486,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         stageBatch.setProjectionMatrix(matrix);
         miniScreenBackground.setProjectionMatrix(matrix);
 
-        playwindow.resize(width, height, main.getSymbolResolution());
+        playwindow.resize(width, height, preferences.getSymbolResolution());
         fontResize();
         //menuTable.setBounds(0, 0, width, height);
         //toolboxTable.setBounds(0, 0, width, height); no these are fixed in little window
@@ -557,12 +553,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
         switch (character) {
             case '+':
                 zoomPlus();
-                playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
                 resize();
                 break;
             case '-':
                 zoomMinus();
-                playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
                 resize();
                 break;
             case '<':
@@ -630,17 +624,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void zoomPlus() {
-        gameResolutionCounter--;
-        if (gameResolutionCounter < 0) gameResolutionCounter = 0;
-        playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
+        playwindow.setResolution(preferences.getGameResolution()*2, preferences.getSymbolResolution());
         resize();
     }
 
     public void zoomMinus() {
-        gameResolutionCounter++;
-        if (gameResolutionCounter > Entities.resolutionList.length - 1)
-            gameResolutionCounter = Entities.resolutionList.length - 1;
-        playwindow.setResolution(gameResolutionCounter, main.getSymbolResolution());
+        playwindow.setResolution(preferences.getGameResolution()/2, preferences.getSymbolResolution());
         resize();
     }
 
@@ -861,16 +850,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         return false;
     }
 
-    public int getGameResolutionCounter() {
-        return gameResolutionCounter;
-    }
-
     public int getGameResolution() {
         return playwindow.resolution;
     }
 
     public void setGameResolution( int resolution ) {
-        gameResolutionCounter = playwindow.setClosestResolution( resolution, main.getSymbolResolution() );
+        playwindow.setResolution(resolution, preferences.getSymbolResolution());
     }
 
     public Game getGame() {
@@ -881,16 +866,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
         pauseOn();
     }
 
-    public void savePreferences() {
-        game.savePreferences();
-    }
-
     public int getSymbolResolution() {
-        return main.getSymbolResolution();
+        return preferences.getSymbolResolution();
     }
 
     public void setSymbolResolution(int symbolResolution) {
-        main.setSymbolResolution(symbolResolution);
+        preferences.setSymbolResolution(symbolResolution);
         resize();
     }
 

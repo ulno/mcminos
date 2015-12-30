@@ -51,7 +51,6 @@ public class Game {
     private long animationFrame = 0; // This one continues running when movement is stopped, and is updated to animationframe when game continues
     private long realGameTime = 0; // this value comes from libgdx, we just sync our frames against it
     private long lastDeltaTimeLeft = 0;
-    public static final Preferences preferencesHandle = Gdx.app.getPreferences("com.mcminos.game.prefs");
     public static final String suspendFileName = "user-save";
 
     public Game(Main main, Play playScreen) {
@@ -287,31 +286,6 @@ public class Game {
         startMovement(); // make sure everything can move
     }
 
-    public void savePreferences() {
-        preferencesHandle.putBoolean("s", audio.getSound());
-        preferencesHandle.putBoolean("m", audio.getMusic());
-        preferencesHandle.putBoolean("t", playScreen.isTouchpadActive());
-        preferencesHandle.putInteger("r", playScreen.getGameResolution());
-        preferencesHandle.putInteger("sr", playScreen.getSymbolResolution());
-        preferencesHandle.flush();
-    }
-
-    public void loadPreferences() {
-        if (!preferencesHandle.contains("s")) { // first time, so generate
-            audio.setSound(true);
-            audio.setMusic(true);
-            // touchpad should be off by default
-            // game resolution should also have been guessed
-            // as well as symbol resolution
-            savePreferences(); // create preference file
-        }
-        audio.setSound(preferencesHandle.getBoolean("s"));
-        audio.setMusic(preferencesHandle.getBoolean("m"));
-        boolean tp = preferencesHandle.getBoolean("t");
-        if (tp != playScreen.isTouchpadActive()) playScreen.toggleTouchpad();
-        playScreen.setGameResolution(preferencesHandle.getInteger("r"));
-        playScreen.setSymbolResolution(preferencesHandle.getInteger("sr"));
-    }
 
     /* kryo and crypto init */
     private static final String ALGORITHM = "Blowfish";

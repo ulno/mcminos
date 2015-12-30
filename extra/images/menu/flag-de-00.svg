@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+
+<!-- /Creative Commons Public Domain -->
+
+<!--
+
+-->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg378"
+   viewBox="0 0 1200 1200"
+   version="1.0"
+   y="0"
+   x="0"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="germany-flag-00.svg"
+   width="1200"
+   height="1200">
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1734"
+     inkscape:window-height="930"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="0.25493885"
+     inkscape:cx="539.34502"
+     inkscape:cy="318.89999"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg378" />
+  <g
+     id="g4138"
+     transform="translate(68.5,-281.10005)">
+    <rect
+       x="0"
+       y="987.40002"
+       width="1063"
+       height="212.60001"
+       style="fill:#ffe600;fill-rule:evenodd;stroke-width:1pt"
+       id="rect171" />
+    <rect
+       x="0"
+       y="562.20007"
+       width="1063"
+       height="212.60001"
+       style="fill-rule:evenodd;stroke-width:1pt"
+       id="rect256" />
+    <rect
+       x="0"
+       y="774.80005"
+       width="1063"
+       height="212.60001"
+       style="fill:#ff0000;fill-rule:evenodd;stroke-width:1pt"
+       id="rect255" />
+  </g>
+  <metadata
+     id="metadata6">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Flag of Germany</dc:title>
+        <dc:date>2008-02-05T04:38:35</dc:date>
+        <dc:description />
+        <dc:source>https://openclipart.org/detail/12785/flag-of-germany-by-anonymous-12785</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Anonymous</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>country</rdf:li>
+            <rdf:li>europe</rdf:li>
+            <rdf:li>european union</rdf:li>
+            <rdf:li>flag</rdf:li>
+            <rdf:li>germany</rdf:li>
+            <rdf:li>nation</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

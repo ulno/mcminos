@@ -261,7 +261,7 @@ public class LevelConfig {
                         String lang = kv.key.substring(6);
                         title.put(lang, kv.value);
                     } else if (kv.key.startsWith("BODY-")) {
-                        String lang = kv.key.substring(6);
+                        String lang = kv.key.substring(5);
                         body.put(lang, kv.value);
                     }
             } // end switch
@@ -308,8 +308,12 @@ public class LevelConfig {
 
 
     public String getTitle(String lang) {
-        if (!hasTitle(lang)) return null;
-        return title.get(lang);
+        if (hasTitle(lang)) {
+            return title.get(lang);
+        } else {
+            if(!hasTitle("en")) return null;
+            return title.get("en");
+        }
     }
 
     public boolean hasTitle(String lang) {
@@ -317,8 +321,12 @@ public class LevelConfig {
     }
 
     public String getBody(String lang) {
-        if (!hasBody(lang)) return null;
-        return body.get(lang);
+        if (hasBody(lang)) {
+            return body.get(lang);
+        } else {
+            if(!hasBody("en")) return null;
+            return body.get("en");
+        }
     }
 
     public boolean hasBody(String lang) {
