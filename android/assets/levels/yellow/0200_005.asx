@@ -5,10 +5,8 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    5
 VERSION:  0900
 
-; UN-FIXED WRAP-AROUND FIXES
-
-LWID:   20
-LHI:    20
+LWID:   19
+LHI:    18
 SCROLLX: 1
 SCROLLY: 1
 BACK:   4
@@ -32,24 +30,22 @@ SCROLLX:  1
 SCROLLY:  1
 
 LEVEL:
-X.XXXXXXXXXXXXXXXXXX
-X.................*X
-X.XXXX.X.XX.XXXX.X.X
-X.X*.X.X..X.X.PX.X.X
-X.X....X..X.X..X.X.X
-X.XXXX.XXXX.XX.X.X.X
-X..................X
-XXXXXX.XXXXXXX.XXXXX
-.....X.......X.X....
-....1X.XXXXX.X...X..
-XXXXXX.X.X.X.X.XXXXX
-X..........X*X.....X
-X.XXXX.XXX.XXXX.CC.X
-X...*X.X........CC.X
-X...*X.XXX.XXXX....X
-X.XXXX.........XXXXX
-.......XXXXXXXXX....
-XXXXXXXX...X...X.X.X
-X........X...X.....X
-X.XXXXXXXXXXXXXXXXXX
+X.X..X.X.X.X....X..
+X.XX.X.X.X.XXXX.XXX
+.........X.........
+XXXX.XXXXXXXX.X.XXX
+...X.........1X....
+XX.X.XXXXXXXXXX.X.X
+..*X.....X.........
+.XXXX.CC.X.XXXX.XXX
+......CC.X...*X.X..
+.XXXX....X...*X.XXX
+.....XXXXX.XXXX....
+XXXXXX..........XXX
+.X...X.X.XXXXXXXX..
+...X.....X........X
+XXXXXXXXXX.XXXXXXXX
+........*X.........
+X.XXXX.X.X.XXXX.X.X
+X.X.PX.X.X.X*.X.X..
 #
