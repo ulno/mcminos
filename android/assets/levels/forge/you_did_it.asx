@@ -1,0 +1,80 @@
+; LEVEL 078
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-23
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    99
+SYMBOL:   mcminos_cheering
+TITLE: Finale (in the making)
+TITLE-de: Finale (noch in der Mache)
+BODY:
+You are close! Just one left. Do it!
+#
+BODY-de:
+Fast geschafft! Nur noch eins. Du schaffst das!
+#
+
+LWID:   50
+LHI:    50
+SCROLLX:  0
+SCROLLY:  0
+BACK:   1
+
+LTIME:    0
+RSTRT:    16
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   10
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  5
+
+GHOST2:   10
+GHSPEED2: 1
+AGIL2:    15
+GRTIME2:  15
+PILLMAX2: 1000
+PILLFREQ2: 1
+
+GHOST3:   10
+GHSPEED3: 1
+AGIL3:    15
+GRTIME3:  5
+TRANSWALL3: 7
+
+GHOST4:   10
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  5
+
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Zh                                              hZ
+Z                  P                             Z
+Z   X   X               X  X     X    X  X   v   Z
+Z   X   X               X        X       X   v   Z
+Z    XXX  XX  X  X    XXX XX   XXX   XX XXXX v   Z
+Z     X  X  X X  X   X  X  X  X  X    X  X   v   Z
+Z     X  X  X X  X   X  X  X  X  X    X  X       Z
+Z     X   XX   XX     XXX XXX  XXX   XXX  XX o   Z
+Z                                                Z
+Z   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Z
+Z   123212321232123212321232123212321232123212   Z
+Z   v<<<<<<<<<2>>>>>>>>>v1v<<<<<<<<<2>>>>>>>>v   Z
+Z   vo       ^1^        v2v       o^3^       v   Z
+Z   v GGGGGG ^2^ gggggg v3v XXXXXX ^2^ hhhhh v   Z
+Z   v GGGGGG ^3^ gggggg v2v XHHHHX ^1^ hhhhh v   Z
+Z   v GGGGGG ^2^ gggggg v1v XHHHHX ^2^ hhhhh v   Z
+Z   v GGGGGG ^1^ gggggg v2v XHHHHX ^3^ hhhhh v   Z
+Z   v GGGGGG ^2^ gggggg v3v XHHHHX ^2^ hhhhh v   Z
+Z   v GGGGGG ^3^ gggggg v2v XXXXXX ^1^ hhhhh v   Z
+Z   v       X^2^X      ov1v   X    ^2^o      v   Z
+Z   >>>>>>>> ^1^ <<<<<<<<2>>>> >>>>>3^ <<<<<<<   Z
+Z          XDXDXDX           XDX     XDX         Z
+Z                                                Z
+Zh                                              hZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+#
