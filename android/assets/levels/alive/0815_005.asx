@@ -1,0 +1,52 @@
+; LEVEL 005
+; FOR McMINOS - Versions > 0.1
+
+AUTHOR: Andreas_Neudecker
+NUMBR:    5
+TITLE: Level five
+TITLE-de: Fünfte Spielebene
+BODY:
+Always keep a wall, a door, a rock between you and the ghosts! Good luck!
+#
+BODY-de:
+Pass auf, dass immer eine Wand, eine Tür, ein Felsblock zwischen Dir und den 
+Geistern ist. Viel Glück!
+#
+
+LWID:   40
+LHI:    14
+SCROLLX:  0
+SCROLLY:  1
+BACK: 1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   6
+GHSPEED1: 1
+AGIL1:    40
+GRTIME1:  5
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
+
+LEVEL:
+X.XXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXX
+X...........pDP.............D..........X
+X.XXXXXXXXXX.X.XXXXXXXXXX.X.XXXXXXXXXX.X
+XGXk.........X.........M<.X.r.+.....M..X
+X.X.XSXXXXXX.X.XXXXXXSX.X.X.XXXXXXXXXXkX
+X.X.Xk.......X.......mX.X.X.........*X.X
+X.X.X.XXXXXX.X.XXXXXX.X.X.X.XXXXXXXXXX.X
+X.X.X..*.....X........X.X.X.r.......k..X
+X.X.X.X.XXXX.X.XXXX.X.X.X.X.XXXXXXXXXX.X
+X.X.X.X.X....X....X.X.X.X.X.......X....X
+X.X.X.X.X.XX.X.XX.X.X.X.X.X.r.r.r.X.CC.X
+X.X.X.X.X.XG.X.1X.X.X.X.X.X.r.r.r.X.CC.X
+X...........pD..r...2.............D....X
+X.XXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXX
+#
