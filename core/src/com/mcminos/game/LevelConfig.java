@@ -431,4 +431,12 @@ public class LevelConfig {
     public LevelCategory getCategory() {
         return category;
     }
+
+    public int getMcMinosSpeed() {
+        return mcminosSpeed;
+    }
+
+    public int getGhostSpeed(int ghostNr) {
+        return ghostSpeed[ghostNr];
+    }
 }

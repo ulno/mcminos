@@ -90,6 +90,7 @@ public class Preferences {
         setSymbolResolution(preferencesHandle.getInteger("sr"));
         fullScreen = preferencesHandle.getBoolean("fs");
         language = preferencesHandle.getString("l");
+        if(language.equals("")) language="en";
         dontSave = false;
     }
 

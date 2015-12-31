@@ -28,6 +28,7 @@ public abstract class Mover implements KryoSerializable {
     protected LevelBlock lastBlock = null;
     protected LevelBlock headingTo;  // Block this object is heading to
     private boolean accelerated = false;
+    private int baseSpeed = 1;
 
     /**
      *
@@ -35,7 +36,7 @@ public abstract class Mover implements KryoSerializable {
      */
     protected void computeSpeeds() {
         int accelerator = accelerated ? 2 : 1;
-        vPixelSpeed = Game.baseSpeed * accelerator * speedFactor * PlayWindow.virtualBlockResolution / Game.timeResolution;
+        vPixelSpeed = baseSpeed * Game.baseSpeed * accelerator * speedFactor * PlayWindow.virtualBlockResolution / Game.timeResolution;
         pixelSpeedAnder = 0x1000000 - vPixelSpeed;
     }
 
@@ -84,10 +85,11 @@ public abstract class Mover implements KryoSerializable {
      * @param lo levelobject to move
      * @param speed mulitplier for Game.baseSpeed (usually 1.0)
      */
-    public void init( LevelObject lo, int speed, boolean canMoveRocks, int transwall) {
+    public void init( LevelObject lo, int baseSpeed, int speed, boolean canMoveRocks, int transwall) {
         levelObject = lo;
         speedFactor = speed;
         this.transWall = transwall;
+        this.baseSpeed = baseSpeed;
         computeSpeeds();
         this.canMoveRocks = canMoveRocks;
         // obsolet lo.setMover(this);
@@ -106,20 +108,20 @@ public abstract class Mover implements KryoSerializable {
      * @param down graphics for moving down
      * @param left  graphics for moving left
      */
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, int transWall, Graphics still, Graphics up, Graphics right, Graphics down, Graphics left) {
-        init(lo, speed, canMoveRocks, transWall);
+    public Mover( LevelObject lo, int baseSpeed, int speed, boolean canMoveRocks, int transWall, Graphics still, Graphics up, Graphics right, Graphics down, Graphics left) {
+        init(lo, baseSpeed, speed, canMoveRocks, transWall);
         setGfx(still, up, right, down, left);
     }
 
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, int transWall, Graphics gfx )
+    public Mover( LevelObject lo, int baseSpeed, int speed, boolean canMoveRocks, int transWall, Graphics gfx )
     {
-        init(lo, speed, canMoveRocks, transWall);
+        init(lo, baseSpeed, speed, canMoveRocks, transWall);
         setGfx(gfx);
     }
 
-    public Mover( LevelObject lo, int speed, boolean canMoveRocks, int transWall )
+    public Mover( LevelObject lo, int baseSpeed, int speed, boolean canMoveRocks, int transWall )
     {
-        init(lo, speed, canMoveRocks, transWall);
+        init(lo, baseSpeed, speed, canMoveRocks, transWall);
     }
 
     // empty for create by kryo (values are written in read andinitialized by InitAfterKryoLoad
@@ -227,6 +229,7 @@ public abstract class Mover implements KryoSerializable {
         kryo.writeObjectOrNull(output,currentLevelBlock,LevelBlock.class);
         kryo.writeObjectOrNull(output,lastBlock,LevelBlock.class);
         kryo.writeObjectOrNull(output,headingTo,LevelBlock.class);
+        kryo.writeObject(output,baseSpeed);
         kryo.writeObject(output,speedFactor);
         kryo.writeObject(output,accelerated);
         kryo.writeObject(output,currentDirection);
@@ -244,6 +247,7 @@ public abstract class Mover implements KryoSerializable {
         currentLevelBlock = kryo.readObjectOrNull(input,LevelBlock.class);
         lastBlock = kryo.readObjectOrNull(input,LevelBlock.class);
         headingTo = kryo.readObjectOrNull(input,LevelBlock.class);
+        baseSpeed =  kryo.readObject(input,Integer.class);
         speedFactor =  kryo.readObject(input,Integer.class);
         accelerated =  kryo.readObject(input,Boolean.class);
         currentDirection = kryo.readObject(input,Integer.class);

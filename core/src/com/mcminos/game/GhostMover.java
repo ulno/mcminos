@@ -29,7 +29,7 @@ public class GhostMover extends Mover {
     }
 
     public GhostMover(Game game, LevelObject ghost, int speed, int transwall, Graphics gfx) {
-        super(ghost, speed, false, transwall, gfx);
+        super(ghost, ghost.getLevelBlock().getLevel().getLevelConfig().getGhostSpeed(ghost.getGhostNr()),speed, false, transwall, gfx);
         this.game = game;
         audio = game.getAudio();
         ghosts = game.getGhosts();

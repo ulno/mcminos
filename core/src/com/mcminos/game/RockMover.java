@@ -16,7 +16,7 @@ public class RockMover extends Mover {
 
 
     public RockMover(Game game, LevelObject rock, int speed, boolean accelerated, int currentDirection, LevelBlock headingToNew) {
-        super(rock, speed, false, 0, Entities.extras_rock);
+        super(rock, game.getLevel().getLevelConfig().getMcMinosSpeed(), speed, false, 0, Entities.extras_rock);
         setSpeedAccelerated(accelerated);
         this.currentDirection = currentDirection;
         headingTo = headingToNew;
