@@ -1,0 +1,57 @@
+; LEVEL 004
+; FOR McMINOS - Versions > 0.51
+
+AUTHOR: Andreas_Neudecker
+NUMBR:    4
+TITLE: Level four
+TITLE-de: Vierte Spielebene
+BODY:
+Run, run, don't look back!
+#
+BODY-de:
+Lauf, lauf, sieh nicht zurück!
+#
+
+LWID:   20
+LHI:    20
+SCROLLX:  0
+SCROLLY:  0
+BACK: 1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    50
+GRTIME1:  1
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXX
+XG P               X
+XXXXXXXXXXXXXXXXXX X
+X    .      .  . . X
+X.XXXXXXXXXXXXXXXXXX
+X. 1   .. .... .  .X
+XXXXXXXXXXXXXXXXXX X
+X.   2   X   X  .X.X
+X XXXXXX X X X X X X
+X.     X.X.X X X X X
+XXXXXX X X X X X X.X
+X..    X. .X ..X   X
+X.XXXXXXXXXXXXXXXXXX
+X      ...   3  . .X
+XXXXXXXXXXXXXXXXXX X
+X    X   X   X   X X
+X.XX X.X.X X.X X X.X
+XBXX X X X.X X.X X X
+X .X. .X. .X. .X. .X
+XXXXXXXXXXXXXXXXXXXX
+#

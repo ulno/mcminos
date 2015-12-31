@@ -1,0 +1,57 @@
+; LEVEL 007
+; FOR McMINOS - VERSIONs > 0.6
+
+AUTHOR: Andreas_Neudecker
+NUMBR:    7
+TITLE: Level seven
+TITLE-de: Siebte Spielebene
+BODY:
+If you put the ghosts under lock and key, you will succeed soon!
+#
+BODY-de:
+Wenn Du die Geister hinter Schloss und Riegel bringst, hast Du es bald geschafft. 
+#
+
+LWID:   33
+LHI:    21
+SCROLLX:  1
+SCROLLY:  1
+BACK: 1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   10
+GHSPEED1: 1
+AGIL1:    10
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
+GRTIME1:  5
+
+LEVEL:
+X.XXXXXXXXXXX.XXXXX.XXXXX|XXXXX.X
+X+X*....Xkk...kkkkX.............X
+XkXXXDX.XXXDXkXXXXX.XXXXX.XXXXX.X
+XbX..GX.XkkkXXX.GkX.X.kbX.Xbb.X.X
+XbX.X.X.XkX.....XkX.XXXbXpXbXbX.X
+XbX...X.XkG.XXX..bX.DG..X.XbbbX.X
+XDXXXXX.XXXXXPXXXXX.XXXXX.XDXXX.X
+..|.|.|.....|1|.........|........
+X.XXXXX.XXXXX|XXXXX|XXXXXXXXXXXXX
+X.Xb..D.DGkkX.Xb..|.X+G  kkkkkXbX
+X.X.X.X.XbXkX.X.XXX|X XXXXXDXkXbX
+XkX.G.X.Xkk.X...Xkk.X XG    XkXkX
+XXXXXXX.XXXXXDXXXkX|XkXkXDX XkXkX
+....|.D..|......|...XkXkX.X XkXk.
+X|XXXXX.XXX|XXX|XXX|XkXkXXX X XXX
+X.XbbbX.X.......CCX.XkXkkkkkX DbX
+XbX.XGX.X.XXXDXXCCX.XkXXXXXXX XbX
+XbX...X.|....kkk.pX.Xkkkkkkk  X.X
+XbXXXDX.XXX|XXXXXXX|XXXXXXXXXXX.X
+X.Xbb...........|...|.........|.X
+X.XXXXXXXXXXX.XXXXX.XXXXXXXXXXX.X
+#

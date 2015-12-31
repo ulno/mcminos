@@ -1,0 +1,81 @@
+; LEVEL 707---------------------------------------------*
+; FOR McMINOS - Version x.x
+; Created.....: 05.12.2015
+; Done by.....: Walter Norbisrath
+
+; HEADER ------------------------------------------------*
+AUTHOR:   waltino; Walter Norbisrath
+NUMBR:    707
+VERSION:  1100
+
+; Textinfo -----------
+TITLE: Advanced Ghost Seduction
+TITLE-de: Geisterverführung für Fortgeschrittene
+BODY:
+Trick the ghosts to work for you and don't get caught.
+#
+BODY-de:
+Verführe die Geister die richtige Arbeit zu verrichten ohne dich zu jagen.
+#
+
+; LEVELFORMAT -------------------------------------------*
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
+LWID:   29
+LHI:    12
+SCROLLX:  0
+SCROLLY:  0
+BACK: 1
+
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+; McMINOS -----------------------------------------------*
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------*
+GHOST1:   4
+GHSPEED1: 0
+AGIL1:    10
+GRTIME1:  5
+
+GHOST2:   0
+GHSPEED2: 0
+AGIL2:    0
+GRTIME2:  0
+PILLMAX2: 0
+PILLFREQ2:  0
+
+GHOST3:   0
+GHSPEED3: 0
+AGIL3:    0
+GRTIME3:  0
+TRANSWALL3: 0
+
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
+
+; LEVELDATEN --------------------------------------------*
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X   d     8                 X
+X^XXXXXXXXXXXXXXXXXXXXXXXXX X
+X X.d,  X     ,dX    X ,d.X X
+X XXXXX XCCX,.X.X X  X  X X X
+X X   X XCCXXXX X X  X  X X X
+X X,X X    X.,    X   ,.X X X
+X XdX XXXX XXXXXX XXXXXXX X X
+X X.X.d,    X.d,    X.d,  X X
+X XXXXXXXXXXXXXXXXXXXXXXXXX X
+XP 7                      < X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*
