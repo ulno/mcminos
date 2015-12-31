@@ -1,0 +1,74 @@
+; LEVEL 078
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-12-30
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    98
+SYMBOL:   mcminos_default_front,22
+TITLE: You win! (in the making)
+TITLE-de: Du gewinnst! (noch in der Mache)
+BODY:
+Almost done. Go for it!
+#
+BODY-de:
+Fast geschafft! Auf, auf!
+#
+
+LWID:       48
+LHI:        20
+SCROLLX:    0
+SCROLLY:    0
+BACK:       1
+
+LTIME:      0
+RSTRT:      8
+MIRROR:     0
+
+MCSPEED:    1
+
+GHOST1:     3
+GHSPEED1:   1
+AGIL1:      0
+GRTIME1:    1
+
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      0
+GRTIME2:    1
+PILLMAX2:   1
+PILLFREQ2:  1
+
+GHOST3:     1
+GHSPEED3:   1
+AGIL3:      0
+GRTIME3:    1
+TRANSWALL3: 0
+
+GHOST4:     25
+GHSPEED4:   1
+AGIL4:      15
+GRTIME4:    1
+
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z3333333333333333333333333333333333333333      Z
+Z oo(o(>>ovmXXXX XDXX ZZZZ rrrr_Z^^Z_6666 3333 Z
+Z o**o(^G vm|ddX Xg X Z21Z rd_r_<CC>_6rx6 3333 Z
+Z o**o(^  vmXdd| X  X Z3WZ r__r_<CC>_6+(6 3333 Z
+Z o(oom^<<<mXXXX XXDX ZZZZ rrrr_ZvvZ_6666 3333 Z
+Z                                              Z
+Z, , r   r , , , , , , , , , , L , , , , r , , Z
+Z3   r   r                               r    3Z
+Z3    rrr  rr  r  r   r  r  r rr  r rr   r    3Z
+Z3     r  r  r r  r   rP r  r  r  rr  r  r    3Z
+Z3     r  r  r r  r    rr rr   r  r   r       3Z
+Z, , , r , rr , rr , , ,r r , rrr r , r  O , , Z
+Z                                              Z
+Z ZZZZmXXXXm>ü>>(oooo ZZZZ oooo oooo(3333mrrrr Z
+Z ZW1ZmX  Xmö  >(oA 9 ZgGZ 3333 ooWo(3333mrOOr Z
+Z Z32ZmX  Xm<  ä(9  o ZHhZ AFfS oooo(3333mrOOr Z
+Z ZZZZmXXXXm<ẞ<<(oooo ZZZZ oooo oooo(3333mrrrr Z
+Z3333333333333333333333333333333333333333333333Z
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+#
