@@ -27,7 +27,7 @@ public class McMinosMover extends Mover {
     }
 
     public McMinosMover(Game game) {
-        super(game.getMcMinos().getLevelObject(), 1, true, 0);
+        super(game.getMcMinos().getLevelObject(), game.getLevel().getLevelConfig().getMcMinosSpeed(),1, true, 0);
         this.game = game;
         initFromGame();
     }
