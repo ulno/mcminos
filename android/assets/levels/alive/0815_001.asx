@@ -1,0 +1,54 @@
+; LEVEL 001
+; FOR McMINOS - Versions > 0.1
+
+AUTHOR:   TWoT;   Ulrich Norbisrath (edited by Andreas Neudecker)
+NUMBR:    1
+TITLE: Level one
+TITLE-de: Spielebene eins
+BODY:
+There are more peas. And more ghosts. Good luck.
+#
+BODY-de:
+Mehr Pillen. Mehr Ghosts. Viel Glück!
+#
+ 
+LWID:    30
+LHI:     17
+SCROLLX:  1
+SCROLLY:  1
+BACK: 1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   4
+GRTIME1:  3
+GHSPEED1: 1
+AGIL1:    20
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
+
+LEVEL:
+XXXXXXXXXXXXXX..XXXXXXXXXXXXXX
+X*..........................*X
+X.X.XXXXXXXXXXXXXXXXXXXXXX.X.X
+X.X..........X1.X..........X.X
+X.XXXXXXXXXX......XXXXXXXXXX.X
+X..........X.XXXX.X..........X
+X.XXXXXXXX....CC....XXXXXXXX.X
+X.X+.......X..CC..X.......*X.X
+X.X.XXXXXX.X.XXXX.X.XXXXXX.X.X
+X.X..bX.......XX.......Xb..X.X
+....XXX.XXXXX....XXXXX.XXX....
+XXX...X.....XXXXXX.....X...XXX
+X*XXX.XXXXX........XXXXX.XXX*X
+X...........XXXXXX...........X
+X.XXXXXXXXXXXLXXSXXXXXXXXXXX.X
+X.............P..............X
+XXXXXXXXXXXXXX..XXXXXXXXXXXXXX
+#

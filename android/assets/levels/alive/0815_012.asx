@@ -1,0 +1,54 @@
+;   LEVEL 012
+;   FOR McMINOS Versions > 0.68
+
+AUTHOR:   TWoT;   Ulrich Norbisrath
+NUMBR:    12
+TITLE: Level twelve
+TITLE-de: Zwölfte Spielebene
+BODY:
+Rocks and boulders lie everywhere. Push them around and don't despair.
+#
+BODY-de: Steine und Felsbrocken liegen überall herum. Verzweifle nicht, 
+schieb sie aus dem Weg.
+#
+
+LWID:   18
+LHI:    18
+SCROLLX:  1
+SCROLLY:  1
+BACK: 1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+GHOST1:   4
+GHSPEED1: 1
+AGIL1:    20
+GRTIME1:  5
+
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
+
+LEVEL:
+ r r r r r r r r r
+r1r r r r r r r r
+ rPr r.r r.r r r r
+r r r r r r r r.r
+ r.r r r r r r r r
+r r r r.r r r r r
+ r r r r r rGr r r
+r r r.r r r r r r
+ rGr r r r.r r r r
+r r r r r r r r r
+ r r r r rGr r r r
+r r r.r r r r r r
+ r r r r r r r r r
+r r rGr r r.r r.r
+ r r r r r r r r r
+r r r r r.r r r r
+ r r r r r r r r r
+r r r r r r r r r
+#

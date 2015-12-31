@@ -1,0 +1,52 @@
+; LEVEL 19
+; FOR McMINOS - Versions > 0.1
+
+AUTHOR:   TBD;    Walter Norbisrath
+NUMBR:    19
+TITLE: Level nineteen
+TITLE-de: Neunzehnte Spielebene
+BODY:
+Be in the right spot at the right time!
+#
+BODY-de:
+Sei zur rechten Zeit am rechten Ort!
+#
+
+LWID:   21
+LHI:    17
+SCROLLX:  0
+SCROLLY:  0
+BACK: 1
+
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+MCSPEED:  2
+GHOST1:   1
+GHSPEED1: 2
+AGIL1:    50
+GRTIME1:  10
+GHOST2:   0
+GHOST3:   0
+GHOST4:   0
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXX
+X      3.X1         X
+X XXXXXXXX XXXXXXXX X
+X X     dX X1       X
+X X XXXXXX X XXXX X X
+X X X  1.X X    X X X
+X X X XXXX XXXX X X1X
+X3X X XO3X Xr3X X X X
+X X2X XX1X X ,X X X X
+X X X  DrX X OX X.X X
+X X X XXXX XXXX X X X
+X X X    X X.3  XGX X
+X X XXXX X XXXXXXXX X
+X       1X X   13kX X
+X XXXXXXXX X XXXXXX X
+X        P X     2  X
+XXXXXXXXXXXXXXXXXXXXX
+#
