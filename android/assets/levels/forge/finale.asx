@@ -1,0 +1,73 @@
+; LEVEL 078
+; FOR McMINOS - Version 3.14
+; Created.....: 2016-01-01
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    99
+SYMBOL:   mcminos_default_front,22
+TITLE: Finale (in the making)
+TITLE-de: Finale (noch in der Mache)
+BODY:
+You are close! Just one left. Do it!
+#
+BODY-de:
+Fast geschafft! Nur noch eins. Du schaffst das!
+#
+
+LWID:       50
+LHI:        19
+SCROLLX:    0
+SCROLLY:    0
+BACK:       3
+
+LTIME:      0
+RSTRT:      0
+MIRROR:     0
+
+MCSPEED:    1
+
+GHOST1:     1
+GHSPEED1:   1
+AGIL1:      0
+GRTIME1:    5
+
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      0
+GRTIME2:    5
+PILLMAX2:   3
+PILLFREQ2:  100
+
+GHOST3:     1
+GHSPEED3:   1
+AGIL3:      0
+GRTIME3:    5
+TRANSWALL3: 0
+
+GHOST4:   1
+GHSPEED4: 1
+AGIL4:    0
+GRTIME4:  1
+
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Zg                                              HZ
+Z  m           o        CC      oo            m  Z
+Z               o       CC                       Z
+Z                                                Z
+Z   1rrrrrr2rO                   2rO     o       Z
+Z   1rO    2rO          oP       2rO      o      Z
+Z   1rO                *      ,, 2rO             Z
+Z   1rrrrr 2rO 3rO rrr   1rrr,rO,2rO  3rrrr      Z
+Z   1rO    2rO 3rrr  rr 1rO ,rrO,2rO 3rOh rO     Z
+Z   1rO    2rO 3rO   rr 1rO   rO,2rO 3rrrrrr     Z
+Z   1rO    2rO 3rO   rr 1rO G rO,2rO 3rO         Z
+Z   1rO    2rO 3rO   rr 1rO ,rrO,2rO 3rO  rO     Z
+Z   1rO    2rO 3rO   rr  1rrr,rO,2rO  3rrrr      Z
+Z                           ,    ,               Z
+Z   Lb_db_bb_bb_bb_bb_bb_bb_db_db_db,db,db,db    Z
+Z m                oo                         m  Z
+Zh                                              hZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+#

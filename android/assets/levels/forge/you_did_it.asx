@@ -1,25 +1,25 @@
 ; LEVEL 078
 ; FOR McMINOS - Version 3.14
-; Created.....: 2015-10-23
+; Created.....: 2016-10-23
 
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    99
-SYMBOL:   mcminos_cheering
-TITLE: Finale (in the making)
-TITLE-de: Finale (noch in der Mache)
+SYMBOL:   mcminos_default_front,22
+TITLE: You did it (in the making)
+TITLE-de: Du hast es geschafft! (noch in der Mache)
 BODY:
-You are close! Just one left. Do it!
+Almost! Just this one left. Do it!
 #
 BODY-de:
-Fast geschafft! Nur noch eins. Du schaffst das!
+Fast! Nur noch dieses eine. Tu's!
 #
 
 LWID:       50
 LHI:        26
 SCROLLX:    0
 SCROLLY:    0
-BACK:       1
+BACK:       3
 
 LTIME:      0
 RSTRT:      8
@@ -54,12 +54,12 @@ LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 Zh                 A                            hZ
 Z                                                Z
-Z   r   r               r  L     r    W  r   v   Z
-Z   r   r               r        r       r   v   Z
-Z    rrr  rr  r  r    rrr rr   rrr   rr rrrr v   Z
-Z     r  r  r r  r   r  r  r  r  r    r  r   v   Z
-Z     r  r  r r  r   r  r  r  r  r    r  r       Z
-Z     r   rr   rr     rrr rrr  rrr   rrr  rr L   Z
+Z   0   0               0  L     0    W  0   v   Z
+Z   0   0               0        0       0   v   Z
+Z    000  00  0  0    000 00   000   00 0000 v   Z
+Z     0  0  0 0  0   0  0  0  0  0    0  0   v   Z
+Z     0  0  0 0  0   0  0  0  0  0    0  0       Z
+Z     0   00   00     000 000  000   000  00 L   Z
 Z                  P                             Z
 Z   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Z
 Z   k232k232k232u232k232u232k232k232u232k232x23  Z
