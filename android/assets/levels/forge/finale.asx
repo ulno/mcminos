@@ -1,5 +1,3 @@
-; LEVEL 078
-; FOR McMINOS - Version 3.14
 ; Created.....: 2016-01-01
 
 AUTHOR:   NoPe;   Andreas_Neudecker
@@ -56,15 +54,15 @@ Zg                                              HZ
 Z  m           o        CC      oo            m  Z
 Z               o       CC                       Z
 Z                                                Z
-Z   1rrrrrr2rO                   2rO     o       Z
+Z   1rrrrrr2rO           o       2rO     o       Z
 Z   1rO    2rO          oP       2rO      o      Z
 Z   1rO                *      ,, 2rO             Z
-Z   1rrrrr 2rO 3rO rrr   1rrr,rO,2rO  3rrrr      Z
-Z   1rO    2rO 3rrr  rr 1rO ,rrO,2rO 3rOh rO     Z
-Z   1rO    2rO 3rO   rr 1rO   rO,2rO 3rrrrrr     Z
-Z   1rO    2rO 3rO   rr 1rO G rO,2rO 3rO         Z
-Z   1rO    2rO 3rO   rr 1rO ,rrO,2rO 3rO  rO     Z
-Z   1rO    2rO 3rO   rr  1rrr,rO,2rO  3rrrr      Z
+Z   1rrrrr 2rO 3rO rr0   1rrr,rO,2rO  3rrrr      Z
+Z   1rO    2rO 3rrr  rO 1rO ,rrO,2rO 3rOh rO     Z
+Z   1rO    2rO 3rO   rO 1rO   rO,2rO 3rrrrrr     Z
+Z   1rO    2rO 3rO   rO 1rO G rO,2rO 3rO         Z
+Z   1rO    2rO 3rO   rO 1rO ,rrO,2rO 3rO  rO     Z
+Z   1rO    2rO 3rO   rO  1rrr,rO,2rO  3rrrr      Z
 Z                           ,    ,               Z
 Z   Lb_db_bb_bb_bb_bb_bb_bb_db_db_db,db,db,db    Z
 Z m                oo                         m  Z
