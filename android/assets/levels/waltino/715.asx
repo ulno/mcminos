@@ -1,0 +1,84 @@
+; LEVEL 716---------------------------------------------*
+; FOR McMINOS - Version x.x
+; Created.....: 12.12.2015
+; Done by.....: Walter Norbisrath
+
+; HEADER ------------------------------------------------*
+AUTHOR:   waltino; Walter Norbisrath
+NUMBR:    716
+ACCCD:    
+VERSION:  1100
+
+; LEVELFORMAT -------------------------------------------*
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
+LWID:   63
+LHI:    24
+SCROLLX:  1
+SCROLLY:  1
+BACK:
+
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+; McMINOS -----------------------------------------------*
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------*
+GHOST1:   0
+GHSPEED1: 0
+AGIL1:    0
+GRTIME1:  0
+
+GHOST2:   1
+GHSPEED2: 1
+AGIL2:    5
+GRTIME2:  1
+PILLMAX2: 1
+PILLFREQ2:  50
+
+GHOST3:   0
+GHSPEED3: 0
+AGIL3:    0
+GRTIME3:  0
+TRANSWALL3: 0
+
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
+
+; LEVELDATEN --------------------------------------------*
+LEVEL:
+X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X..X  X  X..
+ X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X..X  X  X  X.
+..X  X  X  XmmX  X  X  X  X  X..X  X  X  X  X  X  X  X  X  X  X
+X  X dX  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X 
+ X  X  X  X  X  X  X  X  X  X  ,  X  X  X  X  X  X  X  X  X  X
+  X  X  X..X  X  X  X  X  X,,,,,,,,,  X  X  X  X  X  X  X  X  X
+X  X  X  brrX  XbbX  X  X  X  X  ,  X  X  X  X  X  X  X  X  X 
+ X  X  X  X..X  X  X  X  X  X,,X  ,  X  X  X  X  X  X  X  X  X
+  X  X  X  X  X  X  X  X  X  X  X  ,  X  X  X  X  X  X  X  X  X
+X  X  X  X..r  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X 
+ X  X  Xb X  X  X  X  X  X,,X  X  XmmX  X,,X  X  X  X  X  X  X
+  X  X  X  X  X  X  X  X  X..X..X..X..X  X  X  X  X  X  X  X  X
+X  X  X  X  X  X  X  X  X   r X CC  r .X  X  X  X  X  X  X  X 
+ X  X  X  X  X  X  X  X  X  X  PCC   X..X  X  X  X  X  X  X  X
+  X  X  X  X  X  X  X  X  X  X.....X..X..X  r  Xm X  X  X  X  X
+X  X  X  X  X,,X  X  X  X  X  X  Xr X  X  X  X  X,,X  X,,X  X 
+ X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+  X  X  X  X  X  X  XbbX  X  X  X  X  X  X  X  X  X  X  X  X  X
+X  X  X  X..rrrX  X  X  X  X  X  X  X  X  X  X  X  X..r..X..X 
+ X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+X  X  X  X  Xrr..rX,,,, X  X  X  X  X  X  X  X  X  X  X  X  X 
+ X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

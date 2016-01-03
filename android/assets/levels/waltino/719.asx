@@ -1,0 +1,79 @@
+; LEVEL 719 ---------------------------------------------*
+; FOR McMINOS - Version x.x
+; Created.....: 02.01.2016
+; Done by.....: Walter Norbisrath
+
+; HEADER ------------------------------------------------*
+AUTHOR:   waltino; Walter Norbisrath
+NUMBR:    719
+ACCCD:     
+VERSION:  1100
+
+; LEVELFORMAT -------------------------------------------*
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
+LWID:   57
+LHI:    19
+SCROLLX:  0
+SCROLLY:  0
+BACK:
+
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+; McMINOS -----------------------------------------------*
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------*
+GHOST1:   1
+GHSPEED1: 0
+AGIL1:    0
+GRTIME1:  0
+
+GHOST2:   0
+GHSPEED2: 0
+AGIL2:    0
+GRTIME2:  0
+PILLMAX2: 0
+PILLFREQ2:  0
+
+GHOST3:   0
+GHSPEED3: 0
+AGIL3:    0
+GRTIME3:  0
+TRANSWALL3: 0
+
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
+
+; LEVELDATEN --------------------------------------------*
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z GU, d dU    . GU, d,dU   U.UGU, d d     . GU, d dU    Z
+Z Ub , ,U       Ub ,  U     UU b , ,U       Ub , ,U     Z
+Z  Ub,UUUUUU  .  Ub,UUUUUU  .  Ub,UUUUUU  .  Ub,UUUUUU  Z
+Z   Udd,.d U  .   Udd,.d U  .   Udd,.d U  .   Udd,.d U  Z
+Z    U.,.,.U  .    U.,.,.U  .    U.,.,.U  .    U.,.,.U  Z
+Z     U.b. U  .     U.b. U  .     U.b. U  .     U.b. U  Z
+Z     U, , U  .     U, , U  .     U, , U  .     U, , U  Z
+Z     UUUUdUd .     UUUUdUd .     UUUUdUd .U    UUUUdUd Z
+Zb         bU .b         bUU.b        UbU UbU       Ub  Z
+Z bU     Ub   . bU     Ub   .UbU    UbU   .UbU     Ub   Z
+Z U,U   U,U   . U,U   U,U   . U,U   U,U   . U,U   U,U   Z
+Z  Ud   dU    .  Ud   dU    .  Ud   dU    .  Ud   dU    Z
+Z  U bUbU     .  U bUbU     .  U bUbU     .  U.bUbU     Z
+Z  UUU,U      .  UUU,U      .  UUU,U      .  UUU,U      Z
+Z    UbU      .    UbU      .    UbU      .    UbU      Z
+Z    U,U      .    U,U      .    U,U      .    U,U      Z 
+ZP                 U               U             U      Z
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*
