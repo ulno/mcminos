@@ -1,0 +1,92 @@
+; Created.....: 2015-12-30
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    96
+SYMBOL:   mcminos_default_front,22
+TITLE: Thank you for playing McMinos (version B, in the making)
+TITLE-de: Vielen Dank, dass Du McMinos spielst (Version B, noch in der Mache)
+BODY:
+We hope you enjoyed yourself. Please check out the full version with 50 levels. - www.mcminos.com
+#
+BODY-de:
+Wir hoffen, es hat Dir Spaß gemacht. Probiere auch unsere Vollversion mit 50 Spielebenen aus! - www.mcminos.de
+#
+
+LWID:       50
+LHI:        40
+SCROLLX:    0
+SCROLLY:    0
+BACK:       3
+
+LTIME:      0
+RSTRT:      8
+MIRROR:     0
+
+MCSPEED:    1
+
+GHOST1:     3
+GHSPEED1:   1
+AGIL1:      15
+GRTIME1:    5
+
+GHOST2:     3
+GHSPEED2:   1
+AGIL2:      25
+GRTIME2:    15
+PILLMAX2:   3
+PILLFREQ2:  1
+
+GHOST3:     3
+GHSPEED3:   1
+AGIL3:      15
+GRTIME3:    5
+TRANSWALL3: 0
+
+GHOST4:     12
+GHSPEED4:   1
+AGIL4:      15
+GRTIME4:    1
+
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z   b _ d b _ m b _ d b _ m b _ d b _ d m _ d ,  Z
+Z h                                            h Z
+Z     0000000 0     o         o       0          Z
+Z 3      0    0      o         o      0        u Z
+Z        0    0                       0          Z
+Z u      0    0 000    000 0  0 000   0  0     3 Z
+Z        0    00   0  0   00  00   0  0 0        Z
+Z 3      0    0    0  0 G  0  0    0  000      + Z
+Z        0    0    0  0   00  0    0  0  0       Z
+Z *      0    0    0   000 0  0    0  0   0    3 Z
+Z                                                Z
+Z 3   h       o        o       000     o       u Z
+Z             (o       (o     0                  Z
+Z m                           0                3 Z
+Z     0   0   000   0   0     000  000   0 00    Z
+Z 3   0   0  0   0  0   0     0   0   0  00    ( Z
+Z     0   0  0 g 0  0   0     0   0 H 0  0       Z
+Z (   0   0  0   0  0  00     0   0   0  0     3 Z
+Z      000    000    00 0     0    000   0       Z
+Z 3     0                                      m Z
+Z      0              F P  o               h     Z
+Z 3   0           o         o         o        3 Z
+Z                  o   rO            o           Z
+Z         0                                    0 Z
+Z         0                 A                  0 Z
+Z         0                                    0 Z
+Z  0 00   0   000 0  0   0  0  0 000    000 0  0 Z
+Z  00  0  0  0   00  0   0  0  00   0  0   00  0 Z
+Z  0 g 0  0  0 H  0  0   0  0  0    0  0 G  0  0 Z
+Z  0   0  0  0   00  0   0  0  0    0  0   00    Z
+Z  0000   0   000 0   000   0  0    0   000 0  x Z
+Z  0                   0                    0    Z
+Z  0            o     0                0   0     Z
+Z  0      h    o     0           h      000      Z
+Z                       vv                       Z
+Z            o9  76ö  ><CC><  ä67  9o            Z
+Z h 3 m 3 3 3  88   ><  CC  ><   88  3 3 3 m 3 h Z
+Z(+)m(*)+(+)*(+)m(+)m(*)m(*)m(+)m(+)m123123123123Z
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+#

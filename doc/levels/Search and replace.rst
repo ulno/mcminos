@@ -39,3 +39,14 @@ Remove deprecated min/max tools settings:
 ^(AUTHOR\:)\s+(NoPe)
 
 \1\ Andreas\_Neudecker
+
+
+"info" files: to activate all temporarily
+
+^(activated\:)
+\;\1
+
+and back:
+^(\;activated\:)
+\1
+

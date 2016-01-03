@@ -1,0 +1,81 @@
+; LEVEL 709 ---------------------------------------------*
+; FOR McMINOS - Version x.x
+; Created.....: 
+; Done by.....: Walter Norbisrath
+
+; HEADER ------------------------------------------------*
+AUTHOR:   waltino; Walter Norbisrath
+NUMBR:    709
+VERSION:  1100
+
+; Textinfo -----------
+TITLE: The Ultimate Hole Challenge
+TITLE-de: Das ultimative Löcherpuzzle
+BODY:
+Lots of ghosts and unstable ground - run before you think, but think while you run.
+#
+BODY-de:
+Viele Geister und unsicherer Untergrund - renn bevor du zu lange nachdenkst, aber denk während du rennst.
+#
+
+; LEVELFORMAT -------------------------------------------*
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
+LWID:   13
+LHI:    12
+SCROLLX:  0
+SCROLLY:  0
+BACK: 1
+
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+; McMINOS -----------------------------------------------*
+MCSPEED:  1
+
+; GEISTER -----------------------------------------------*
+GHOST1:   6
+GHSPEED1: 0
+AGIL1:    9
+GRTIME1:  5
+
+GHOST2:   0
+GHSPEED2: 0
+AGIL2:    0
+GRTIME2:  0
+PILLMAX2: 0
+PILLFREQ2:  0
+
+GHOST3:   0
+GHSPEED3: 0
+AGIL3:    0
+GRTIME3:  0
+TRANSWALL3: 0
+
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
+
+; LEVELDATEN --------------------------------------------*
+LEVEL:
+ZZZZZZZZZZZZZ
+ZCC ........Z
+ZCC ........Z
+Z   ........Z
+Z  rrrrrrr..Z
+Z  r88888r..Z
+Z99999.99987Z
+Z..r99999r..Z
+Z..rrrrrrr..Z
+Z.........99Z
+ZP........9.Z
+ZZZZZZZZZZZZZ
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

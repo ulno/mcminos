@@ -1,25 +1,23 @@
-; LEVEL 078
-; FOR McMINOS - Version 3.14
 ; Created.....: 2015-10-23
 
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    99
-SYMBOL:   mcminos_cheering
-TITLE: Finale (in the making)
-TITLE-de: Finale (noch in der Mache)
+SYMBOL:   mcminos_default_front,22
+TITLE: You did it (in the making)
+TITLE-de: Du hast es geschafft! (noch in der Mache)
 BODY:
-You are close! Just one left. Do it!
+Almost! Just this one left. Do it!
 #
 BODY-de:
-Fast geschafft! Nur noch eins. Du schaffst das!
+Fast! Nur noch dieses eine. Tu's!
 #
 
 LWID:       50
 LHI:        26
 SCROLLX:    0
 SCROLLY:    0
-BACK:       1
+BACK:       3
 
 LTIME:      0
 RSTRT:      8
@@ -36,14 +34,14 @@ GHOST2:     25
 GHSPEED2:   1
 AGIL2:      25
 GRTIME2:    15
-PILLMAX2:   1000
-PILLFREQ2:  1
+PILLMAX2:   0
+PILLFREQ2:  0
 
 GHOST3:     25
 GHSPEED3:   1
 AGIL3:      15
 GRTIME3:    5
-TRANSWALL3: 7
+TRANSWALL3: 20
 
 GHOST4:   25
 GHSPEED4: 1
@@ -52,29 +50,29 @@ GRTIME4:  5
 
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-Zh                                              hZ
+Zh                 A                            hZ
 Z                                                Z
-Z   r   r               r  L     r    W  r   v   Z
-Z   r   r               r        r       r   v   Z
-Z    rrr  rr  r  r    rrr rr   rrr   rr rrrr v   Z
-Z     r  r  r r  r   r  r  r  r  r    r  r   v   Z
-Z     r  r  r r  r   r  r  r  r  r    r  r       Z
-Z     r   rr   rr     rrr rrr  rrr   rrr  rr L   Z
+Z   0   0               0  L     0    W  0   v   Z
+Z   0   0               0        0       0   v   Z
+Z    000  00  0  0    000 00   000   00 0000 v   Z
+Z     0  0  0 0  0   0  0  0  0  0    0  0   v   Z
+Z     0  0  0 0  0   0  0  0  0  0    0  0       Z
+Z     0   00   00     000 000  000   000  00 L   Z
 Z                  P                             Z
 Z   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Z
-Z   123212321232u2321232u23212321232u2321232123  Z
+Z   k232k232k232u232k232u232k232k232u232k232x23  Z
 Z   v<<<<<<<<<2>>>>>>>>>v1v<<<<<<<<<2>>>>>>>>>v  Z
-Z   vo,bbbbbo^1^obbbbb,ov2v,bbbbbbo^3^,bbbbbbov  Z
+Z   vo,bbbbbo^k^obbbbb,ov2v,bbbbbbo^3^,bbbbbbov  Z
 Z   vbGGGGGG,^2^,ggggggbv3vbXXXXXX,^2^bhhhhhhbv  Z
 Z   vbGGGGGGb^3^bggggggbv2vbXHHHHXb^u^bhhhhhhbv  Z
-Z   vbGGCCGGb^2^bggCCggbvuvbXHCCHXb^2^bhhCChhbv  Z
-Z   vbGGCCGGb^1^bggCCggbv2vbXHCCHXb^3^bhhCChhbv  Z
+Z   vbGGCCGGb^u^bggCCggbvuvbXHCCHXb^2^bhhCChhbv  Z
+Z   vbGGCCGGb^k^bggCCggbv2vbXHCCHXb^3^bhhCChhbv  Z
 Z   vbGGGGGGb^2^bggggggbv3vbXHHHHXb^2^bhhhhhhbv  Z
 Z   v,GGGGGGb^3^bgggggg,v2vbXXXXXXb^1^bhhhhhh,v  Z
 Z   vobbbbbdX^2^Xbbbbb,ov1vbbbbbbbo^2^dbbbbbbov  Z
-Z   >>>>>>>>6^1^o<<<<<<<<2>>>>>>>>^X3^6<<<<<<<<  Z
+Z   >>>>>>>>6^u^o<<<<<<<<2>>>>>>>>^X3^6<<<<<<<<  Z
 Z          XDXDXDX                   XDX         Z
-Z   A                    W        F          rO  Z
+Z   A               x    W        F          rO  Z
 Zh                                              hZ
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 #

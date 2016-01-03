@@ -1,5 +1,3 @@
-; LEVEL 078
-; FOR McMINOS - Version 3.14
 ; Created.....: 2015-12-30
 
 AUTHOR:   NoPe;   Andreas_Neudecker
@@ -19,7 +17,7 @@ LWID:       50
 LHI:        40
 SCROLLX:    0
 SCROLLY:    0
-BACK:       1
+BACK:       3
 
 LTIME:      0
 RSTRT:      8
@@ -52,7 +50,7 @@ GRTIME4:    1
 
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-Z   b _ d b _ d b _ d b _ d b _ d b _ d b _ d ,  Z
+Z   b _ d b _ m b _ d b _ m b _ d b _ d m _ d ,  Z
 Z h                                            h Z
 Z     rrrrrrr r     o         o       r          Z
 Z 3      r    r      o         o      r        u Z
@@ -65,13 +63,13 @@ Z *      r    r    r   rrr r  r    r  r   r    3 Z
 Z                                                Z
 Z 3   h       o        o       rrr     o       u Z
 Z             (o       (o     r                  Z
-Z u                           r                3 Z
+Z m                           r                3 Z
 Z     r   r   rrr   r   r     rrr  rrr   r rr    Z
 Z 3   r   r  r   r  r   r     r   r   r  rr    ( Z
 Z     r   r  r g r  r   r     r   r H r  r       Z
 Z (   r   r  r   r  r  rr     r   r   r  r     3 Z
 Z      rrr    rrr    rr r     r    rrr   r       Z
-Z 3     r                                      ( Z
+Z 3     r                                      m Z
 Z      r              F P  o               h     Z
 Z 3   r           o         o         o        3 Z
 Z                  o   rO            o           Z
@@ -88,7 +86,7 @@ Z  r            o     r                r   r     Z
 Z  r      h    o     r           h      rrr      Z
 Z                       vv                       Z
 Z            o9  76ö  ><CC><  ä67  9o            Z
-Z h 3 3 3 3 3  88   ><  CC  ><   88  3 3 3 3 3 h Z
-Z                                                Z
+Z h 3 m 3 3 3  88   ><  CC  ><   88  3 3 3 m 3 h Z
+Z(+)m(*)+(+)*(+)m(+)m(*)m(*)m(+)m(+)m123123123123Z
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 #
