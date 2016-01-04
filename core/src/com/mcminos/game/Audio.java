@@ -52,19 +52,24 @@ public class Audio {
             "zisch"
     };
 
+//    public final static String[] musicNames = new String[]{
+//            "Clumsy-Monster-Bash_remixed",
+//            "Creaky-Country-Fair",
+//            "Cyber-Streets",
+//            "Disco-Ants-Go-Clubbin",
+//            "Ghoulish-Fun",
+//            "Off-to-Another-Heist",
+//            "Runaway-Technology",
+//            "Star-Light",
+//            "The-Hairy-Monsters-Dance-a-Thon",
+//            "The-Toy-Factory",
+//            "The-Triumph-of-Technology_v001",
+//            "Urban-Sci-Fi-Heroes"
+//    };
     public final static String[] musicNames = new String[]{
-            "Clumsy-Monster-Bash_remixed",
-            "Creaky-Country-Fair",
             "Cyber-Streets",
-            "Disco-Ants-Go-Clubbin",
             "Ghoulish-Fun",
-            "Off-to-Another-Heist",
-            "Runaway-Technology",
             "Star-Light",
-            "The-Hairy-Monsters-Dance-a-Thon",
-            "The-Toy-Factory",
-            "The-Triumph-of-Technology_v001",
-            "Urban-Sci-Fi-Heroes"
     };
 
     public final static String creditsLoop = "McMinos-Title";

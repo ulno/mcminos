@@ -45,8 +45,8 @@ alive/0815_025
 
 ; The second set of mcminos is alive (levelup)
 levelup/0200_009 ; Hunting Jumping Peas
-levelup/703      ; Herding Ghosts
 levelup/0815_003 ; Tubemania
+levelup/703      ; Herding Ghosts
 levelup/0200_076 ; Little Thinkbox
 levelup/0200_021 ; Haunted Rock Range
 levelup/0815_005 ; Chambers of Poison

@@ -175,7 +175,7 @@ public class Load implements Screen {
     public void scheduleLoadsAudio() {
         // Sounds
         for (String s : Audio.soundNames) {
-            manager.load("sounds/" + s + ".wav", Sound.class);
+            manager.load("sounds/" + s + ".mp3", Sound.class);
         }
         // UIs
         // manager.load(DEFAULT_UISKIN, Skin.class); needs to be pre-loaded
@@ -184,7 +184,7 @@ public class Load implements Screen {
     public void finishLoads() {
         // Sounds
         for (String s : Audio.soundNames) {
-            Sound sound = manager.get("sounds/" + s + ".wav");
+            Sound sound = manager.get("sounds/" + s + ".mp3");
             audio.addSound(s, sound);
         }
         // UIs
