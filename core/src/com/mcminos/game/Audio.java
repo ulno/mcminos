@@ -68,8 +68,8 @@ public class Audio {
 //    };
     public final static String[] musicNames = new String[]{
             "Cyber-Streets",
-            "Ghoulish-Fun",
-            "Star-Light",
+            "The-Toy-Factory",
+            "The-Triumph-of-Technology_v001",
     };
 
     public final static String creditsLoop = "McMinos-Title";
