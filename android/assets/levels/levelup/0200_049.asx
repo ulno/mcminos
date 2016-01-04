@@ -5,6 +5,12 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    49
 VERSION:  1100
 
+TITLE: Stone Fence
+TITLE-de: Felsenzaun
+
+BODY: Be careful with moving the stone fence, there are ghosts outside. Should you let them in?
+BODY-de: Sei vorsichtig, wenn du den Felsenzaun verschiebst. Da draußen sind Geister. Hoffentlich müssen wir sie nicht hereinlassen?
+
 LWID:   25
 LHI:    13
 SCROLLX:  1

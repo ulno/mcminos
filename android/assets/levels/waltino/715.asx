@@ -6,7 +6,6 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    716
-ACCCD:    
 VERSION:  1100
 
 ; LEVELFORMAT -------------------------------------------*
@@ -15,7 +14,7 @@ LWID:   63
 LHI:    24
 SCROLLX:  1
 SCROLLY:  1
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

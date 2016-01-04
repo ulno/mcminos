@@ -6,7 +6,6 @@
 ; HEADER ------------------------------------------------*
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    716
-ACCCD:    
 VERSION:  1100
 
 ; LEVELFORMAT -------------------------------------------*
@@ -15,7 +14,7 @@ LWID:   59
 LHI:    25
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0
@@ -23,29 +22,29 @@ RSTRT:    1
 MIRROR:   0
 
 ; McMINOS -----------------------------------------------*
-MCSPEED:  1
+MCSPEED:  2
 
 ; GEISTER -----------------------------------------------*
 GHOST1:   0
-GHSPEED1: 0
+GHSPEED1: 2
 AGIL1:    0
 GRTIME1:  0
 
 GHOST2:   0
-GHSPEED2: 1
+GHSPEED2: 2
 AGIL2:    5
 GRTIME2:  1
 PILLMAX2: 1
 PILLFREQ2: 10
 
 GHOST3:   0
-GHSPEED3: 0
+GHSPEED3: 2
 AGIL3:   0
 GRTIME3:  0
 TRANSWALL3: 0
 
 GHOST4:  30  
-GHSPEED4: 0   
+GHSPEED4: 2   
 AGIL4:    10  
 GRTIME4:  15
 

@@ -13,7 +13,17 @@ SCROLLX:  1
 SCROLLY:  1
 BACK:   19
 
-LTIME:    200
+TITLE: Explosive
+TITLE-de: Explosiv
+
+STORY:
+That all looks pretty fragile here! Is there a way to prevent everything from exploding directly?
+#
+STORY-de:
+Das sieht aber alles ziemlich instabil aus. Gibt es eine Möglichkeit, dass hier nicht gleich alles in die Luft geht?
+#
+
+;LTIME:    200
 RSTRT:    1
 MIRROR:   0
 MCSPEED:  2

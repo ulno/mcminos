@@ -9,6 +9,16 @@ SCROLLX:  1
 SCROLLY:  1
 BACK: 1
 
+TITLE: Pilot in a Haunted Castle
+TITLE-de: Schlosspilot
+
+BODY:
+Use your speed and umbrellas wisely.
+#
+BODY-de:
+Setze deine Geschwindigkeit und die Regenschrime gewissenhaft ein.
+#
+
 LTIME:    0
 RSTRT:    1
 MIRROR:   0

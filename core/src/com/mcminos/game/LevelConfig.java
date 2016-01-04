@@ -95,6 +95,8 @@ public class LevelConfig {
                 }
             }
 
+            int speed = 0;
+
             // apply minmax on existing mcminos - we don't do this anymore, levels are always started with 0
             switch (kv.key) {
                 case "AUTHOR":
@@ -150,7 +152,8 @@ public class LevelConfig {
                     ghostTime[0] = Integer.parseInt(kv.value);
                     break;
                 case "GHSPEED1":
-                    ghostSpeed[0] = Integer.parseInt(kv.value);
+                    speed = Integer.parseInt(kv.value);
+                    ghostSpeed[0] = 1 << Util.log2binary(speed);
                     break;
                 case "AGIL1":
                     ghostAgility[0] = Integer.parseInt(kv.value);
@@ -165,7 +168,8 @@ public class LevelConfig {
                     ghostTime[1] = Integer.parseInt(kv.value);
                     break;
                 case "GHSPEED2":
-                    ghostSpeed[1] = Integer.parseInt(kv.value);
+                    speed = Integer.parseInt(kv.value);
+                    ghostSpeed[1] = 1 << Util.log2binary(speed);
                     break;
                 case "AGIL2":
                     ghostAgility[1] = Integer.parseInt(kv.value);
@@ -186,7 +190,8 @@ public class LevelConfig {
                     ghostTime[2] = Integer.parseInt(kv.value);
                     break;
                 case "GHSPEED3":
-                    ghostSpeed[2] = Integer.parseInt(kv.value);
+                    speed = Integer.parseInt(kv.value);
+                    ghostSpeed[2] = 1 << Util.log2binary(speed);
                     break;
                 case "AGIL3":
                     ghostAgility[2] = Integer.parseInt(kv.value);
@@ -201,7 +206,8 @@ public class LevelConfig {
                     ghostTime[3] = Integer.parseInt(kv.value);
                     break;
                 case "GHSPEED4":
-                    ghostSpeed[3] = Integer.parseInt(kv.value);
+                    speed = Integer.parseInt(kv.value);
+                    ghostSpeed[3] = 1 << Util.log2binary(speed);
                     break;
                 case "AGIL4":
                     ghostAgility[3] = Integer.parseInt(kv.value);

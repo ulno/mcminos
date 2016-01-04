@@ -1,15 +1,15 @@
 ; LEVEL 001
 ; FOR McMINOS - Versions > 0.1
 
-AUTHOR:   TWoT;   Ulrich Norbisrath (edited by Andreas Neudecker)
+AUTHOR:   UlNo;   Ulrich Norbisrath (edited by Andreas Neudecker)
 NUMBR:    1
-TITLE: Level one
-TITLE-de: Spielebene eins
+TITLE: The Awakening
+TITLE-de: Das Aufwachen
 BODY:
-There are more peas. And more ghosts. Good luck.
+Classic: Peas and ghosts. Good luck.
 #
 BODY-de:
-Mehr Pillen. Mehr Ghosts. Viel Glück!
+Klassisch: Pillen und Geister. Viel Glück!
 #
  
 LWID:    30

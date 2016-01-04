@@ -9,9 +9,8 @@ NUMBR:    717
 VERSION:  1100
 
 ; LEVELFORMAT -------------------------------------------*
-; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
-LWID:   16
-LHI:    16
+LWID:   3
+LHI:    3
 SCROLLX:  0
 SCROLLY:  0
 BACK: 1
@@ -26,19 +25,19 @@ MCSPEED:  1
 
 ; GEISTER -----------------------------------------------*
 GHOST1:   4
-GHSPEED1: 1
+GHSPEED1: 0
 AGIL1:    9
 GRTIME1:  5
 
 GHOST2:   0
-GHSPEED2: 1
+GHSPEED2: 0
 AGIL2:    0
 GRTIME2:  0
 PILLMAX2: 0
 PILLFREQ2:  0
 
 GHOST3:   0
-GHSPEED3: 1
+GHSPEED3: 0
 AGIL3:    0
 GRTIME3:  0
 TRANSWALL3: 0
@@ -56,20 +55,7 @@ UMBR:   0,999
 
 ; LEVELDATEN --------------------------------------------*
 LEVEL:
-ZZZZZZZZZZZZZZZZ
-Z             PZ
-Z UUUUUUUUUUUb Z
-Z U      U,U,U Z
-Z U UU,.U,U,.U Z
-Z U GU,UUUUUUU Z
-Z UUUUUU    GU Z
-Z.U G  U UUUUU Z
-Z UUUUUU U   U Z
-Z U    U U U U Z
-Z.U U    U U.U Z
-Z.U UUUUUU U,U Z
-Z.U.       U.U Z
-Z.bUUUUUUUUUUU.Z
-Z         .... Z
-ZZZZZZZZZZZZZZZZ
+ .P
+   
+ G 
 # ;_ENDE_DER_LEVELDATEN_---------------------------------*

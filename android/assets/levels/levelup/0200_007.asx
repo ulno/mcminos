@@ -5,6 +5,16 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    7
 VERSION:  0900
 
+TITLE: Spiral Chambers
+TITLE-de: Spiralräume
+
+BODY:
+We will now see your skills with keys and doors.
+#
+BODY-de:
+Jetzt werden uns mal genauer die Schlüsselfertigkeiten vornehmen.
+#
+
 LWID:   20
 LHI:    20
 SCROLLX:  0

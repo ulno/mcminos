@@ -6,6 +6,12 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    28
 VERSION:  1100
 
+TITLE: Chambers of Explosion
+TITLE-de: Explosionskammern
+
+BODY: Be aware of all the explosives here. Tread carefully and avoid the ghosts.
+BODY-de: Sei vorsichtig mit all dem Sprengstoff hier. Und geh den Geistern aus dem Weg.
+
 ; 2DO: edit to get rid of double walls (if possible without breaking the level)
 
 LWID:   21

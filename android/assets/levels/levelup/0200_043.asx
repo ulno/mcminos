@@ -7,6 +7,12 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    43
 VERSION:  1100
 
+TITLE: Indestructable?
+TITLE-de: Unzerstörbar?
+
+BODY: Hey, this is all behind indestructable walls! How can you get in there?
+BODY-de: Hey, das ist ja alles hinter unzerstörbaren Wänden! Wie kannst du dort bloß hineinkommen?
+
 LWID:   20
 LHI:    15
 SCROLLX:  0

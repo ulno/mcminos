@@ -1,7 +1,7 @@
 ;   LEVEL 25
 ;   FOR McMINOS
 
-AUTHOR:   TWoT;   Ulrich Norbisrath
+AUTHOR:   UlNo;   Ulrich Norbisrath
 NUMBR:    25
 LWID:   50
 LHI:    50
@@ -9,7 +9,17 @@ SCROLLX:  1
 SCROLLY:  0
 BACK: 1
 
-LTIME:    400
+TITLE: UlNo's Lair
+TITLE-de: UlNo's Geisterschloss
+
+BODY:
+It's big, spooky, has treasures, traps, and puzzles. What else do you need?
+#
+BODY-de:
+Es ist groß, es spukt, voller Schätze und Fallen so wie Puzzles. Was sonst?
+#
+
+;LTIME:    400
 RSTRT:    1
 MIRROR:   0
 

@@ -15,7 +15,7 @@ LWID:   24
 LHI:    13
 SCROLLX:  0
 SCROLLY:  0
-BACK:
+BACK: 1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0
@@ -23,11 +23,11 @@ RSTRT:    0
 MIRROR:   0
 
 ; McMINOS -----------------------------------------------*
-MCSPEED:  1
+MCSPEED:  2
 
 ; GEISTER -----------------------------------------------*
 GHOST1:   0
-GHSPEED1: 0
+GHSPEED1: 2
 AGIL1:    0
 GRTIME1:  0
 
