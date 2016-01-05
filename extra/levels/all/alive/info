@@ -1,0 +1,9 @@
+name: McMinos is Alive
+gfx: mcminos_default_front,18
+end:
+Congratulations, you finished all levels of the category "McMinos is Alive". You just enabled the next category "McMinos - A Level Up". Proceed with caution and wits. Enjoy!
+#
+end-de:
+Glückwunsch. Du hast alle Spielebenen der Kategorie "McMinos is Alive" gemeistert. Du hast soeben die nächste Kategorie "McMinos - A Level Up" freigeschaltet. Viel Spaß!
+#
+activated: all ; first

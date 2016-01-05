@@ -173,22 +173,11 @@ public class Load implements Screen {
     }
 
     public void scheduleLoadsAudio() {
-        // Sounds
-        for (String s : Audio.soundNames) {
-            manager.load("sounds/" + s + ".wav", Sound.class);
-        }
-        // UIs
-        // manager.load(DEFAULT_UISKIN, Skin.class); needs to be pre-loaded
+        audio.scheduleLoads(manager);
     }
 
     public void finishLoads() {
-        // Sounds
-        for (String s : Audio.soundNames) {
-            Sound sound = manager.get("sounds/" + s + ".wav");
-            audio.addSound(s, sound);
-        }
-        // UIs
-        // Game.skin =  manager.get(DEFAULT_UISKIN); needs to be pre-laoded
+        audio.finishLoads(manager);
     }
 
     @Override

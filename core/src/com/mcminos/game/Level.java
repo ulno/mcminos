@@ -190,8 +190,16 @@ public class Level implements KryoSerializable {
      */
     private void parseLevelLine(int levelline, String line) {
         int destinationLine = height - levelline - 1; // Flip position for inverted windowVPixelYPos in libgdx
+        if(destinationLine < 0 || destinationLine >= height) {
+            Gdx.app.log("parseLevelLine","levelinput out of dimension, ignoring. " + levelConfig.getId() + " y: " + destinationLine );
+            return;
+        }
         int linepos = 0;
         for(char c : line.toCharArray()) {
+            if(linepos>width) {
+                Gdx.app.log("parseLevelLine","levelinput out of dimension, ignoring. " + levelConfig.getId() + " x: " + linepos );
+                break;
+            }
             LevelBlock lb = field[linepos][destinationLine];
             switch(c) {
                 case 'P':

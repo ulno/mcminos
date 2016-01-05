@@ -2,10 +2,12 @@
 **/assets/entities/
 **/assets/user-save*
 **/assets/user-stats*
+**/assets/levels
 **/extra/images-packer-input/
 **/music/random/
 # Entities.java is generated, so ignore
 /core/src/com/mcminos/game/Entities.java
+robovm-build
 
 # Hidden images from generation of test animated gifs
 .*png

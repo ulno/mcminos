@@ -1,9 +1,0 @@
-name: Green Listed Levels
-gfx: pills_pill_default
-end:
-Congratulations, you finished all the green levels. Continue with another catagory of levels.
-#
-end-de:
-Glückwunsch. Du hast alle Spielebenen der Grünkategorie gemeistert. Fahre mit einer anderen Kategorie fort.
-#
-activated: first

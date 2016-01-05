@@ -20,7 +20,13 @@ public class LevelsConfig {
         BufferedReader br = new BufferedReader(Gdx.files.internal(levelListFile).reader());
         try {
             for(String line = br.readLine();  line != null; line = br.readLine() ) {
-                new LevelConfig(this,line);
+                if(line.length() > 0) { // ignore comments and empty lines
+                    line = line.split(";")[0];
+                }
+                line = line.trim();
+                if(line.length() > 0) {
+                    new LevelConfig(this, line);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

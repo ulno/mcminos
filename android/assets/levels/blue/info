@@ -1,9 +1,0 @@
-name: Blue Listed Levels
-gfx: walls_default_00
-end:
-Congratulations, you finished all the blue levels. Continue with another catagory of levels.
-#
-end-de:
-Glückwunsch. Du hast alle Spielebenen der Blaukategorie gemeistert. Fahre mit einer anderen Kategorie fort.
-#
-activated: none

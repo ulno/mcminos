@@ -1,0 +1,93 @@
+; LEVEL 716---------------------------------------------*
+; FOR McMINOS - Version x.x
+; Created.....: 12.12.2015
+; Done by.....: Walter Norbisrath
+
+; HEADER ------------------------------------------------*
+AUTHOR:   waltino; Walter Norbisrath
+NUMBR:    716
+VERSION:  1100
+
+; LEVELFORMAT -------------------------------------------*
+; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
+LWID:   59
+LHI:    25
+SCROLLX:  0
+SCROLLY:  0
+BACK: 1
+
+; STATUS-Angaben ----------------------------------------*
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+; McMINOS -----------------------------------------------*
+MCSPEED:  2
+
+; GEISTER -----------------------------------------------*
+GHOST1:   0
+GHSPEED1: 2
+AGIL1:    0
+GRTIME1:  0
+
+GHOST2:   0
+GHSPEED2: 2
+AGIL2:    5
+GRTIME2:  1
+PILLMAX2: 1
+PILLFREQ2: 10
+
+GHOST3:   0
+GHSPEED3: 2
+AGIL3:   0
+GRTIME3:  0
+TRANSWALL3: 0
+
+GHOST4:  30  
+GHSPEED4: 2   
+AGIL4:    10  
+GRTIME4:  15
+
+
+
+; MIN-/MAX-ZAHL DER WERKZEUGE ---------------------------*
+LIVE:   0,999
+KEYS:   0,0
+BMBS:   0,0
+DYNA:   0,0
+MINE:   0,0
+CHOC:   0,0
+MEDC:   0,0
+UMBR:   0,999
+
+; LEVELDATEN --------------------------------------------*
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X_  X   X   X   X   X   X   X   XCC,  X   X   X   X   X   X
+X X,X X X X X X X X X X X X X X XCC X X X   X X X X X X X X
+X.X,X X X X X X X X X X X X X X XX ,X X XXXXX X X X X X X X
+XXX,X X X X X X X X X X   X   X   X X X    bX X X , X X X X
+X ,,X X X X X X X X X XXXXXXXXXXX X X XXXXX X X XXXXX X X X
+X XXX X X X X X X X X X  rb       X,X,X   X X X X   X   X X
+Xf  X X X X X X X X X X X XXXXXMX X X X X X X X X X XXXXX X
+XXX X X X X X X X X X X X     X X X X X X X,X   X X       X
+X   X X X X X X X X X X X XXX X X X X X X X XXXXX XXXXXXXXX
+X XXX X X X X,X X X X X XrXPX X X X X X X X X     X       X
+X   X X X,X X X X X X X X   X X X X X X X X X XXXXX XXXXX X
+XXX X X X X X X X X X X XXXXX XrX X X X X X X X     X     X
+X   X X X X X X X X X X       X X X X X X X X X XXXXX XXXXX
+X XXX X X X X X X X XMXXXXXXXXX X X X X X X X X X     X   X
+X     X   X  FX,X X    r_       X X X X X X X X XrXXXXX X X
+XXXXXXXXXXXXXXX X X XXXXXXXXXXX X X X X X X X X X       X X
+X               X X               X X X X X X X X XXXXXXX X 
+X XXXXXXXXXXXXX X XXXXXXXXXXXXXXXXX X X X X X X X         X
+X           X   Xb_                 X   X   X   X XXXXXXXXX
+XXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         X
+X           X   X   X   X   X   X   X   X   X   XXXXXXXXX X
+X XXXXXXXXXXX X X X X X X X X X X X X X X X X X X   X   X X
+X             X   X   X   X   X   X   X   X   X   X   X   X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+# ;_ENDE_DER_LEVELDATEN_---------------------------------*

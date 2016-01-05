@@ -1,0 +1,42 @@
+; LEVEL NEW
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-23
+; Done by.....: Andreas Neudecker
+
+; ~16:9 level; size 12:7 to test possibilities on typical modern wide screens
+
+AUTHOR: Andreas_Neudecker
+VERSION:  3140
+
+
+TITLE: Little Thinkbox
+TITLE-de: Kleiner Rätselraum
+
+BODY: Not much space, but lots of problems.
+BODY-de: Nicht viel PLatz aber Nachdenken ist schon gefragt.
+
+NUMBR:    76
+LWID:   12
+LHI:    7
+SCROLLX:  1
+SCROLLY:  0
+BACK:   1
+
+RSTRT:    16
+
+MCSPEED:  1
+
+GHOST4:   3
+GHSPEED4: 1
+AGIL4:    0
+GRTIME4:  1
+
+LEVEL:
+ZZZZZZZZZZZZ
+ZP   6   odZ
+Z   rr 7 68Z
+    rrrr8   
+ZCC   rr9  Z
+ZCCOOOOOO dZ
+ZZZZZZZZZZZZ
+#
