@@ -19,45 +19,44 @@ AGIL1:    5
 GHSPEED:  1
 
 LEVEL:
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X ....1  1X ,,,   ,,X...r  rGGX ,   ,,,,X
-X , .  ,, X  ,,b,   X...r r rrX  ö ü ü  X
-X üüüüüüü X  ,  ,,, X...r   r X, ä, , , X
-X üüüüüüü X,   ,,   X...r  r  X ,ä,ä, , X
-X.äääWPää X  ,,W,  ,XG  r rGr X, ä,W,ö ,X
-X.äääääää X ,,,ü,, ,X   r  r rX  ä, ,ü, X
-X.äääääää X   ,ü,,  XGG r r   X  ä, ,ö  X
-X ,.....,,X   ,   , X  r  r rrX, ä,r, ö,X
-X.,..,,,33X,  ,,,   XGr  rr rWX  ,      X
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXvXXXXX
-X  ,X XG  XG        X3> < > < X   Xr    X
-X X,...XXXXXXXXXXXX X XvX^XvX X  Xd7XXX X
-X X  ,  2 X .,.   X X < > < < X  Xb,  X X
-X X XvXXX X  XXXXXX XvX^XXXXX X  X b  X X
-X X >W> X X  XbW  X X   XW<.. <rrX    X X
-X X,XvX X X  X    X XvX^XXX..rX..X.XX X X
-X X   < X XXXX  r X X  ü  X XXX..X XdXXbX
-X XXXXX X X  dXXXXX X X ü. ß  XXXXXX ,,XX
-X     < > X         X  X X..  X.G.  X.. X
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X...,,....XGG  O  GGX GGG  GG XW o99999oX
-X.üüüüüüß.X   O O   XXXXXXXXXXX9999ooo9oX
-X.öüüüüßß.X  O   O  X  r rrdX Xooo993o99X
-X.öö   ßß.X O rrr O Xrr r  rX.X999ooooo9X
-X,öö W ßß,XO  rWr  OX  r  r X,X9o9999999X
-X.öö   ßß.X   rOr   Xr r r  X.X9o9ooooooX
-X.ööääääß.X   rOr   X r r r X,X9o3o999ooX
-X.öääääää.X   rrr   Xr r rr X.X9oo99o9..X
-X...,,....X    O    XWr r rbX,X9999oo..uX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-XG.......3X,<.>.> >,X      XXXX.öööö ßß.X
-X XXXXXXX X^X^XvXvX^X XXXXXXdXX..ö üüüßßX
-X X  9  X X > < >,< X X2    XXX..ö......X
-X XDXXX X X^XvXvX^X^XGX rrr X.XßßßßßüüüüX
-X Xk WX X X >,>W> > XXX  Wr X.X üüüäößßßX
-X XDXX  X X^X^X^XvXvX.X b r X.Xüöäßüöä..X
-X X 9rk X X < >,>,< X,X     X.XüüöäßüäößX
-X XXX XXX X^X^X^X^XvX9X    XX.X  ößöüäßßX
-X3........X,< < < < X      .. XW öäßüöäßX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+r  X.X9o9ooooooX.öö   ßß.X   rOr   Xr r 
+ r X,X9o3o999ooX.ööääääß.X   rOr   X r r
+rr X.X9oo99o9..X.öääääää.X   rrr   Xr r 
+ rbX,X9999oo..uX...,,....X    O    XWr r
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  XXXX.öööö ßß.XG.......3X,<.>.> >,X    
+XXXdXX..ö üüüßßX XXXXXXX X^X^XvXvX^X XXX
+   XXX..ö......X X  9  X X > < >,< X X2 
+rr X.XßßßßßüüüüX XDXXX X X^XvXvX^X^XGX r
+Wr X.X üüüäößßßX Xk WX X X >,>W> > XXX  
+ r X.Xüöäßüöä..X XDXX  X X^X^X^XvXvX.X b
+   X.XüüöäßüäößX X 9rk X X < >,>,< X,X  
+  XX.X  ößöüäßßX XXX XXX X^X^X^X^XvX9X  
+  .. XW öäßüöäßX3........X,< < < < X    
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  rGGX ,   ,,,,X ....1  1X ,,,   ,,X...r
+ r rrX  ö ü ü  X , .  ,, X  ,,b,   X...r
+   r X, ä, , , X üüüüüüü X  ,  ,,, X...r
+  r  X ,ä,ä, , X üüüüüüü X,   ,,   X...r
+ rGr X, ä,W,ö ,X.äääWPää X  ,,W,  ,XG  r
+  r rX  ä, ,ü, X.äääääää X ,,,ü,, ,X   r
+ r   X  ä, ,ö  X.äääääää X   ,ü,,  XGG r
+ r rrX, ä,r, ö,X ,.....,,X   ,   , X  r 
+rr rWX  ,      X.,..,,,33X,  ,,,   XGr  
+XXXXXXXXXXvXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ > < X   Xr    X  ,X XG  XG        X3> <
+^XvX X  Xd7XXX X X,...XXXXXXXXXXXX X XvX
+ < < X  Xb,  X X X  ,  2 X .,.   X X < >
+XXXX X  X b  X X X XvXXX X  XXXXXX XvX^X
+W<.. <rrX    X X X >W> X X  XbW  X X   X
+XX..rX..X.XX X X X,XvX X X  X    X XvX^X
+ X XXX..X XdXXbX X   < X XXXX  r X X  ü 
+. ß  XXXXXX ,,XX XXXXX X X  dXXXXX X X ü
+X..  X.G.  X.. X     < > X         X  X 
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  GG XW o99999oX...,,....XGG  O  GGX GGG
+XXXXXX9999ooo9oX.üüüüüüß.X   O O   XXXXX
+rrdX Xooo993o99X.öüüüüßß.X  O   O  X  r 
+  rX.X999ooooo9X.öö   ßß.X O rrr O Xrr r
+ r X,X9o9999999X,öö W ßß,XO  rWr  OX  r 
 #

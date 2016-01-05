@@ -4,8 +4,8 @@ AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    98
 SYMBOL:   mcminos_default_front,22
-TITLE: You win! (in the making)
-TITLE-de: Du gewinnst! (noch in der Mache)
+TITLE: You win!
+TITLE-de: Du gewinnst!
 BODY:
 Almost done. Go for it!
 #
@@ -34,8 +34,8 @@ GHOST2:     1
 GHSPEED2:   1
 AGIL2:      0
 GRTIME2:    1
-PILLMAX2:   1
-PILLFREQ2:  1
+PILLMAX2:   10
+PILLFREQ2:  10
 
 GHOST3:     1
 GHSPEED3:   1
@@ -64,8 +64,8 @@ Z3     0  0  0 0  0    00 00   0  0   0       uZ
 Z, , , 0 , 00 , 00 , , ,0 0 , 000 0 , 0  O , , Z
 Z                                              Z
 Z ZZZZmXXXXm>ü>>(oooo ZZZZ oooo oooo(3333mrrrr Z
-Z ZW1ZmX  Xmöuu>(oA 9 ZgGZ 3333 ouWo(3333mrOOr Z
-Z Z32ZmX  Xm<uuä(9  o ZHhZ AFfS ouuo(3333mrOOr Z
+Z ZW1ZmXkkXmöuu>(oA 9 ZgGZ 3333 ouWo(3333mrOOr Z
+Z Z32ZmXkkXm<uuä(9  o ZHh< AFfS ouuo(3333mrOOr Z
 Z ZZZZmXXXXm<ẞ<<(oooo ZZZZ oooo oooo(3333mrrrr Z
 Z3333333333333333333333333333333333333333333333Z
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
