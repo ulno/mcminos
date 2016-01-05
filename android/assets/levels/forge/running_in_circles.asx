@@ -15,52 +15,52 @@ BODY-de:
 Nach links oder nach rechts? Aber immer rings herum. Wirst Du zum Zentrum vorstoßen?
 #
 
-LWID:   50
-LHI:    50
-SCROLLX:  0
-SCROLLY:  0
-BACK:   1
+LWID:       50
+LHI:        50
+SCROLLX:    0
+SCROLLY:    0
+BACK:       1
 
-LTIME:    0
-RSTRT:    16
-MIRROR:   0
+LTIME:      0
+RSTRT:      1
+MIRROR:     0
 
-MCSPEED:  1
+MCSPEED:    1
 
-GHOST1:   10
-GHSPEED1: 1
-AGIL1:    15
-GRTIME1:  5
+GHOST1:     10
+GHSPEED1:   1
+AGIL1:      15
+GRTIME1:    5
 
-GHOST2:   10
-GHSPEED2: 1
-AGIL2:    15
-GRTIME2:  5
-PILLMAX2: 1000
-PILLFREQ2: 1
+GHOST2:     10
+GHSPEED2:   1
+AGIL2:      15
+GRTIME2:    5
+PILLMAX2:   1000
+PILLFREQ2:  1
 
-GHOST3:   10
-GHSPEED3: 1
-AGIL3:    15
-GRTIME3:  5
+GHOST3:     10
+GHSPEED3:   1
+AGIL3:      15
+GRTIME3:    5
 TRANSWALL3: 7
 
-GHOST4:   10
-GHSPEED4: 1
-AGIL4:    15
-GRTIME4:  5
+GHOST4:     10
+GHSPEED4:   1
+AGIL4:      15
+GRTIME4:    5
 
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 ZPFkmk_k_ _      L     h|       L               +Z
 Z XXXXXXXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXXXXXXXXXX Z
-ZkX+         _ _ _      h                     +X Z
+ZkX+         _ _ _      hm                    +X Z
 Z|X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X Z
-Z X Xb                   h       L          bX X Z
+Z X Xb                  mh       L          bX X Z
 Z X X XXXXXXXXXXXXXXDXrrrrrrXDXXXXXXXXXXXXXX X X Z
-Z X X Xd               LOOh               dX X_X Z
+Z X X Xd               LOOhm              dX X_X Z
 Z X X X XXXXXXXXXXXXDXrrrrrrXDXXXXXXXXXXXX X X_X Z
-Z X X X X+              h               *X X X_X Z
+Z X X X X+              hm              *X X X_X Z
 Z X X X X XXXXXXXXXXDXXrrrrXXDXXXXXXXXXX X X X X Z
 Z X X X X X             OOh            X X X X X Z
 Z X X X X X XXXXXXXXDXXrrrrXXDXXXXXXXX X X X X X Z
@@ -72,14 +72,14 @@ Z X X X X X X X X>      h       vX X X X X X X X Z
 Z X X X X X X X X XXXXXXXXXXXXXb X X X X X XdX X Z
 Z X X X X X X X X Xb b  OO  bLbX X X X XLX X X X Z
 Z X X X X X X X X X bZZZZZZZZb X X X X X X X X X Z
-Z X X X X X X X X XbZ_ b  b _ZbX X X X X X X X X Z
-Z X X X X X X X X X Z _ZZZZ_ Z X X X X X X X X X Z
-Z X X X X X X X X X ZbZ____ZbZ X X X X X X X X X Z
+Z X X X X X X,X X XbZ_ b  b _ZbX X X X X X X X X Z
+Z X X X X X XdX X X Z _ZZZZ_ Z X X X X X X X X X Z
+Z X X X X X X,X X X ZbZ____ZbZ X X X X X X X X X Z
 ZGXkXGX XGX XGX XGX Z Z_CC_Z ZgX XgX XgX XgXkXgX+Z
 Z XGX XGX XGX XGX XGZ Z_CC_Z Z XgX XgX XgX XgX XgZ
-Z X X X X X X X X X ZbZ_L__ZbZ X X X X X X X X X Z
-Z X X X X X X X X X Z _ZZZZ_ ZLX X X X X X X X X Z
-Z X X X X X X X X X Z_ b  b _Z X X X X X X X X X Z
+Z,X X X X X X X X X ZbZ____ZbZ X X X X X X X X X Z
+ZdXmX X X X X X X X Z _ZZZZ_ ZLX D X X X X X X X Z
+Z,X X X X X X X X X Z_ b  b _Z X X X X X X X X X Z
 Z X X X X X X X X X bZZZZZZZZb X X X X X X X X X Z
 Z X X X X X X X X Xb     H    bXbX X X X X XLX X Z
 Z X X X X X X X X.bXXXXXXXXXXXXb X X X X X X X X Z
@@ -89,16 +89,16 @@ Z X X X X X X Xb         H      b bX X X X X X X Z
 Z X X X X X X XXXXXXXXXXXXXXXXXXXXXb X X X X X_X Z
 Z X X XdX X Xb          H           bX X X X X_X Z
 Z X X X X X XXXXXXXXXXXXXXXXXXXXXXXXXb X X X X_X Z
-Z X X X X Xb             H            _X X X X X Z
+Z X X X X Xb        ,d,  H            _X X X X X Z
 Z X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXb X X X X Z
 Z X X X Xd              H               _X X X X Z
 Z X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXb X X X Z
 Z X X X_        _        H        _       bX X X Z
 Z X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXb X X Z
-Z X Xb                  H                   _X X Z
+Z X Xb                  H           m       _X X Z
 Z XkXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXkX Z
-Z Xd             _       H                    bX Z
+Z Xd             _       H         ,d,        bX Z
 Z XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXDZ
-Z*                      Hk                     D+Z
+Z*                      Hk         m           D+Z
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 #
