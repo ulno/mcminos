@@ -2,6 +2,7 @@
 **/assets/entities/
 **/assets/user-save*
 **/assets/user-stats*
+**/assets/levels
 **/extra/images-packer-input/
 **/music/random/
 # Entities.java is generated, so ignore

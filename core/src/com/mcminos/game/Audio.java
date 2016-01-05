@@ -1,10 +1,12 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 import java.util.HashMap;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -70,6 +72,7 @@ public class Audio {
             "Cyber-Streets",
             "The-Toy-Factory",
             "The-Triumph-of-Technology_v001",
+            "Urban-Sci-Fi-Heroes"
     };
 
     public final static String creditsLoop = "McMinos-Title";
@@ -80,6 +83,7 @@ public class Audio {
     boolean music = true;
 
     Music musicPlayed = null;
+    private final static int maxQueueLength = 5;
 
     enum MusicType {None,Fixed,Random};
     MusicType currentMusicType = MusicType.None;
@@ -87,19 +91,72 @@ public class Audio {
 
     private Random randomGenerator = new Random();
 
-    public HashMap<String, com.badlogic.gdx.audio.Sound> soundList = new HashMap<>();
+    class MySound {
+        private com.badlogic.gdx.audio.Sound snd;
+        private long ids[] = new long[maxQueueLength];
+        private int idPtr = 0;
+
+        MySound(Sound snd) {
+            this.snd = snd;
+            for(int i=maxQueueLength-1; i>=0; i--) {
+                ids[i] = -1;
+            }
+        }
+
+        public void stop() {
+            for(int i=maxQueueLength-1; i>=0; i--) {
+                long id = ids[i];
+                if(id!=-1) {
+                    snd.stop(id);
+                }
+            }
+        }
+
+        public void play() {
+            long lastId = ids[idPtr];
+            if(lastId != -1) {
+                snd.stop(lastId);
+            }
+            ids[idPtr] = snd.play(0.8f); // all a little too loud, so 0.8 instead of 1.0
+            idPtr = (idPtr + 1)%maxQueueLength;
+        }
+    }
+
+    public HashMap<String, MySound> soundList = new HashMap<>();
 
     public Audio() {
     }
 
+
+    public void scheduleLoads(AssetManager manager) {
+        // Sounds
+        for (String s : Audio.soundNames) {
+            manager.load("sounds/" + s + ".mp3", Sound.class);
+        }
+        // UIs
+        // manager.load(DEFAULT_UISKIN, Skin.class); needs to be pre-loaded
+    }
+
+    public void finishLoads(AssetManager manager) {
+        // Sounds
+        for (String s : Audio.soundNames) {
+            Sound sound = manager.get("sounds/" + s + ".mp3");
+            addSound(s, sound);
+        }
+        // UIs
+        // Game.skin =  manager.get(DEFAULT_UISKIN); needs to be pre-laoded
+    }
+
     public void soundPlay(String s) {
-        if (sound && s != null && s != "")
-            soundList.get(s).play(1.0f);
+        if (sound && s != null && s != "") {
+            MySound snd = soundList.get(s);
+            snd.play();
+        }
         // TODO: add volume
     }
 
     public void addSound(String s, Sound sound) {
-        soundList.put(s, sound);
+        soundList.put(s, new MySound(sound));
     }
 
     public void toggleSound() {
@@ -121,7 +178,7 @@ public class Audio {
     public void setSound(boolean sound) {
         this.sound = sound;
         if(sound == false) {
-            for(com.badlogic.gdx.audio.Sound s:soundList.values()) {
+            for(MySound s:soundList.values()) {
                 s.stop();
             }
         }

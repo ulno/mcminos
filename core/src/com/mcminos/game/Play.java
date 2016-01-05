@@ -388,6 +388,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private void renderScore() {
         int v;
+        int res = preferences.getSymbolResolution();
 
         // TODO: render score as part of the stage with nice symbols instead of letters
 
@@ -422,7 +423,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         toxicScore.writeInteger((mcminos.getPoisonDuration() + mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
         framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
         mirroredScore.writeChar(0, mcminos.isMirrored() ? 'M' : ' '); */
-        font.draw(stageBatch, scoreInfo, playwindow.resolution + (playwindow.resolution >> 3), Gdx.graphics.getHeight() - (playwindow.resolution >> 3));
+        font.draw(stageBatch, scoreInfo, res + (res >> 3), Gdx.graphics.getHeight() - (res >> 3));
 
     }
 

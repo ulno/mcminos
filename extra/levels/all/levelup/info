@@ -6,5 +6,4 @@ Congratulations, you finished all levels. To play more, visit http://mcminos.com
 end-de:
 Glückwunsch. Du hast alle Spielebenen gemeistert. Um weiter zu spielen besuche http://mcminos.de, um dich über weitere Versionen zu informieren.
 #
-activated: all
-; TODO: set all to none
+activated: none
