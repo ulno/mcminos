@@ -24,7 +24,7 @@ allprojects {
     }
     // Use abbreviatedId commit id in the version.
     //version = "0.0.1.${git.head().abbreviatedId}"
-    version = "0.1"
+    version = "0.2"
     ext {
         appName = 'mcminos-mobile'
         gdxVersion = '1.6.4'
