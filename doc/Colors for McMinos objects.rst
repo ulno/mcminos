@@ -8,7 +8,6 @@ For use with inkscape
 
 :Authors:
   Andreas Neudecker <zapyon@gmx.net>,
-  Ulrich Norbisrath <ulno@ulno.net>
 
 :Date: 2015-10-24
 
@@ -21,17 +20,29 @@ For use with inkscape
 Creatures
 =========
 
-McMinos
--------
+McMinos, default
+----------------
 
-* default
+================================================================
+element                  colour code  colour
+================================================================
+base                     ff0000ff     red
+mouth                    800000ff     slightly darker red
+inner mouth              550000ff
+uvula                    ff0001ff
+================================================================
 
-  * base:  ff0000ff
-  * mouth: 800000ff
-  * inner mouth: 550000ff
-  * uvula: ff0001ff
 
-* doped
+McMinos, doped
+--------------
+
+================================================================
+element                  colour code  colour
+================================================================
+base                     ff8000ff     orange
+stars                    ffff00ff     yellow
+other parts              see "McMinos, default" above
+================================================================
 
 * drunken
 
@@ -57,66 +68,74 @@ Ghosts
 Walls and parts
 ===============
 
-* wall, default
+Wall, default
+-------------
 
-* wall, destroyed
+================================================================
+element                  colour code  colour
+================================================================
+light side base          00ffffff     cyan
+light side stripes.      c3c3c3ff     light grey
+shadow side base         0000ffff     navy blue
+shadow side stripes      6b6b6bff     grey
+top                      0080ffff     medium blue
+top button               00005cff     dark blue
+================================================================
 
-* .
+Wall, destroyed
+---------------
+
+see "Wall, default" above
 
 Castle
 ------
 
-* default
+================================================================
+element                  colour code  colour
+================================================================
+base                     c0c0c0ff
+darker stones            a0a0a0ff
+lighter stones           dededeff
+shadows                  00000040
+----------------------------------------------------------------
+door base                d0aa00ff
+door shadows             805500ff
+door lights              e6be00ff
+----------------------------------------------------------------
+knob base                b3b3b3ff
+knob shadows             808080ff
+knob lights              ccccccff
+knob glare               ffffffc0 
+knob ball base           a0a0a0ff
+knob ball shadow         606060ff
+knob ball light          ffffffff
+----------------------------------------------------------------
+key hole shadow          00000041
+----------------------------------------------------------------
+window pane              00ffff40
+window cross             4d4d4dff
+================================================================
 
-  * base: c0c0c0ff
-  * darker stones: a0a0a0ff
-  * lighter stones: dededeff
-  * shadows: 00000040
-  * door
-    * base: d0aa00ff
-    * shadows: 805500ff
-    * lights: e6be00ff
-    * door knob
-      * base: b3b3b3ff
-      * shadows: 808080ff
-      * lights: ccccccff
-      * glare: ffffffc0 
-      * door knob ball
-        * base: a0a0a0ff
-        * shadow: 606060ff
-        * light: ffffffff
-    * door hole
-      * shadow: 00000041
-  * window
-    * pane: 00ffff40
-    * cross: 4d4d4dff
 
+Bomb holes (ex-walls)
+---------------------
 
-* Bomb holes (ex-walls):
+================================================================
+element                  colour code  colour
+================================================================
+base                     99999980
+shaded wall              00000080
+lighted wall             cccccc80
+wall traces              00000080
+================================================================
 
-  * base: 99999980
-  * shaded wall: 00000080
-  * lighted wall: cccccc80
-  * wall traces: 00000080
 
 Arrows (= one-ways)
 ===================
 
-New version with white stripes
+New version with green lights
 ------------------------------
 
-* static
-
-  * base color: ffffffff
-
-* rotatable
-
-  * base color: ffffffff
-  * glass base: 0000ff20
-  * screw: ccccccff
-  * shadow: 00000040
-  * light: ffffff66
-  * darker shade: 00000066
 
 Extras
 ======
@@ -124,14 +143,16 @@ Extras
 Bomb
 ----
 
-* default
-
-  * base colour: 808080ff
-  * lighter: 909090ff
-  * light spot: c0c0c0ff
-  * shadow: 606060ff
-  
-  * fuse (contour): e00000ff
+================================================================
+element                  colour code  colour
+================================================================
+base colour              808080ff     grey
+lighter                  909090ff     grey
+light spot               c0c0c0ff     light grey
+shadow                   606060ff     darker grey
+----------------------------------------------------------------  
+fuse (contour)           e00000ff     wine red
+================================================================
 
 Bonus1 + Bonus2
 ---------------

@@ -5,6 +5,12 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    5
 VERSION:  0900
 
+SYMBOL:   extras_wrap_around_horizontal
+TITLE: Over the seam
+TITLE-de: Über die Naht
+BODY: If you haven't played the tutorial levels yet, now is a good time to check out "Infinite world". Come back after you have been there.
+BODY-de: Wenn Du die Tutorial-Spielebenen noch nicht gespielt hast, ist jetzt ein guter Zeitpunkt, "Unendliche Weiten" auszuprobieren. Dann komm wieder.
+
 LWID:   19
 LHI:    18
 SCROLLX: 1

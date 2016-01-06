@@ -19,7 +19,9 @@ tut/tut16-infinite-world
 ; Teaserlevel
 teaser/0815_000 ; simple small, classic
 teaser/702 ; just some rocks and oneways
+teaser/over_the_seam
 teaser/0815_011 ; nice dynamite-level
+teaser/thank_you_for_playing
 
 ; Mcminos is alive
 alive/0815_001 ; very classic
@@ -97,7 +99,6 @@ green/0200_075
 
 ; yelow listed, can be used with minor changes
 yellow/0200_001
-yellow/0200_005
 yellow/0815_008 ; Huge Labyrinth -> boring
 yellow/0200_010
 yellow/0200_011
@@ -140,5 +141,4 @@ forge/running_in_circles
 forge/misc_080
 forge/you_did_it
 forge/finale
-forge/thank_you_for_playing_b
 forge/you_win

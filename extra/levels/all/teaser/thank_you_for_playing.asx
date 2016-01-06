@@ -4,13 +4,13 @@ AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    96
 SYMBOL:   mcminos_default_front,22
-TITLE: Thank you for playing McMinos (version B, in the making)
-TITLE-de: Vielen Dank, dass Du McMinos spielst (Version B, noch in der Mache)
+TITLE: Thank you for playing McMinos
+TITLE-de: Vielen Dank, dass Du McMinos spielst
 BODY:
-We hope you enjoyed yourself. Please check out the full version with 50 levels. - www.mcminos.com
+We hope you enjoyed playing this McMinos teaser. Please check out the full version with 50 levels at www.mcminos.com!
 #
 BODY-de:
-Wir hoffen, es hat Dir Spaß gemacht. Probiere auch unsere Vollversion mit 50 Spielebenen aus! - www.mcminos.de
+Wir hoffen, es hat Dir Spaß gemacht, diese Schnupperversion von McMinos zu spielen. Probier' unsere Vollversion mit 50 Spielebenen aus! Infos auf www.mcminos.de!
 #
 
 LWID:       50
