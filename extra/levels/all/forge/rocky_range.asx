@@ -29,7 +29,7 @@ MIRROR:   0
 MCSPEED:  1
 
 GHOST1:   1
-GHSPEED1: 2 ; this value is not honoured by the game (2015-12-24)
+GHSPEED1: 1   ;# level works with GHSPEED1 = 2, but it loses some charme.
 AGIL1:    0
 GRTIME1:  30
 
