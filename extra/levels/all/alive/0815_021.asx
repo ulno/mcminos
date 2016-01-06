@@ -3,21 +3,21 @@
 
 AUTHOR: Andreas_Neudecker
 NUMBR:    21
-LWID:   50
-LHI:    30
-SCROLLX:  1
-SCROLLY:  1
-BACK: 1
-
+SYMBOL:   extras_kill_all_ghosts
 TITLE: Ghostbuster's Apprentice
 TITLE-de: Als Praktikant bei den Ghostbusters
-
 BODY:
 Take your time and make a good dent in the ghost popultion.
 #
 BODY-de:
 Lass dir Zeit und dezimiere derweilen die Geisterbevölkerung.
 #
+
+LWID:     50
+LHI:      30
+SCROLLX:  1
+SCROLLY:  1
+BACK: 1
 
 LTIME:    0
 RSTRT:    0

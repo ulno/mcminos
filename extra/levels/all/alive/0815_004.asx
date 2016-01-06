@@ -1,8 +1,9 @@
 ; LEVEL 004
 ; FOR McMINOS - Versions > 0.51
 
-AUTHOR: Andreas_Neudecker
+AUTHOR:   Andreas_Neudecker
 NUMBR:    4
+SYMBOL: mcminos_default_right,7
 TITLE: Hunted by a Ghost
 TITLE-de: Geist auf den Fersen
 BODY:
@@ -12,8 +13,8 @@ BODY-de:
 Lauf, lauf, sieh nicht zurück!
 #
 
-LWID:   20
-LHI:    20
+LWID:     20
+LHI:      20
 SCROLLX:  0
 SCROLLY:  0
 BACK: 1

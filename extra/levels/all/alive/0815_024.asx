@@ -3,12 +3,7 @@
 
 AUTHOR:   waltino;    Walter Norbisrath
 NUMBR:    24
-LWID:   28
-LHI:    28
-SCROLLX:  0
-SCROLLY:  0
-BACK: 1
-
+SYMBOL:   level_symbol_explosion
 TITLE: Master of the Chain Reaction
 TITLE-de: Meister der Kettenreaktion
 
@@ -18,6 +13,12 @@ Did you finally learn how to handle explosives?
 BODY-de:
 Hast du jetzt gelernt, wie man mit Sprengstoff umgeht?
 #
+
+LWID:     28
+LHI:      28
+SCROLLX:  0
+SCROLLY:  0
+BACK: 1
 
 LTIME:    0
 RSTRT:    1

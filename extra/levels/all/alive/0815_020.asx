@@ -3,12 +3,7 @@
 
 AUTHOR:   waltino;    Walter Norbisrath
 NUMBR:    20
-LWID:   13
-LHI:    23
-SCROLLX:  0
-SCROLLY:  0
-BACK: 1
-
+SYMBOL:   extras_rock
 TITLE: Haunted Rocky Forrest
 TITLE-de: Der verwunschene Steinwald
 
@@ -18,6 +13,12 @@ Rocks and ghosts. It will get hard to pick the right way.
 BODY-de:
 Steine, Geister, dieser Weg wird wohl recht steinig.
 #
+
+LWID:     13
+LHI:      23
+SCROLLX:  0
+SCROLLY:  0
+BACK:     1
 
 LTIME:    0
 RSTRT:    0

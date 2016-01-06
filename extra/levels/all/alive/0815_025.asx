@@ -3,13 +3,14 @@
 
 AUTHOR:   UlNo;   Ulrich Norbisrath
 NUMBR:    25
-LWID:   50
-LHI:    50
+LWID:     50
+LHI:      50
 SCROLLX:  1
 SCROLLY:  0
-BACK: 1
+BACK:     1
 
-TITLE: UlNo's Lair
+SYMBOL:   level_symbol_castle
+TITLE:    UlNo's Lair
 TITLE-de: UlNo's Geisterschloss
 
 BODY:
