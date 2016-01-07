@@ -194,6 +194,25 @@ def generate_name(name, description):
             name = name + "_" + description
     return name
 
+process_list = []
+
+def convert(input_file,output_file, resx, resy):
+    # only change if not exists or source is newer
+    # absolut path is required for inkscape on MacOSX
+    output_path = os.path.abspath(output_file)
+    input_path = os.path.abspath(input_file)
+    if not os.path.isfile(output_path) or os.path.getmtime(os.path.join(root,file)) > os.path.getmtime(output_path):
+        if len(process_list) == 8:
+            # wait until all are done
+            for p in process_list:
+                p.wait()
+        p = subprocess.Popen(["inkscape",
+                              "-w", "%d"%(int(resx)),
+                              "-h", "%d"%(int(resy)),
+                              "-e", output_path, input_path],
+                             stdout=subprocess.PIPE)
+        process_list.append(p)
+
 
 def convert_images(sizes, name, animation_number, root, file):
     # check if entity exists
@@ -219,15 +238,9 @@ def convert_images(sizes, name, animation_number, root, file):
         image_name = "%s_%s" \
                      % (name,animation_number)
         output_file = os.path.join( OUTPUT_DIRECTORY, str(resolution), image_name + ".png" ) # check if destination already exists and skip
-        # only change if not exists or source is newer
-        if not os.path.isfile(output_file) or os.path.getmtime(os.path.join(root,file)) > os.path.getmtime(output_file):
-            p = subprocess.Popen(["inkscape",
-                                  "-w", "%d"%(int(resolution)*multiple_w),
-                                  "-h", "%d"%(int(resolution)*multiple_h),
-                                  "-e", output_file,
-                                  os.path.join(root,file)],
-                                 stdout=subprocess.PIPE)
-            p.wait()
+        input_file = os.path.join(root,file)
+
+        convert(input_file, output_file,int(resolution)*multiple_w,int(resolution)*multiple_h )
         current_entity.add_image(output_file,
                                  int(resolution),
                                  multiple_w,multiple_h,
@@ -382,8 +395,43 @@ f.write( \
 """ % images_count)
 f.close()
 
-# now call teh packer
+# create icon-images for ios and android
+print
+print "============= Now creating icons ============"
+icon = os.path.join(IMAGE_DIRECTORY,"icon.svg")
+icon_output_path = os.path.join("..", "..", "android", "res")
+for (path,res) in [("hdpi",72), ("mdpi",48), ("xhdpi",96), ("xxhdpi",144), ]:
+    output_file = os.path.join(icon_output_path, "drawable-" + path, "ic_launcher.png")
+    convert(icon,output_file,res,res)
+
+icon_output_path = os.path.join("..", "..", "ios", "data")
+for (path,res) in [("",57), ("-72",72), ("@2x",114), ("-72@2x",144), ]:
+    output_file = os.path.join(icon_output_path, "Icon" + path + ".png")
+    convert(icon,output_file,res,res)
+
+icon = os.path.join(IMAGE_DIRECTORY,"logo-3-4.svg")
+for (path,resx,resy) in [("",320,480), ("@2x",640,960) ]:
+    output_file = os.path.join(icon_output_path, "Default" + path + ".png")
+    convert(icon,output_file,resx,resy)
+
+icon = os.path.join(IMAGE_DIRECTORY,"logo-9-16.svg")
+for (path,resx,resy) in [("-375w-667h",375,667), ("-375w-667h@2x",375*2,667*2), ("-414w-736h",414,736), ("-414w-736h@3x",414*3,736*3), ("-568h@2x",640,1136) ]:
+    output_file = os.path.join(icon_output_path, "Default" + path + ".png")
+    convert(icon,output_file,resx,resy)
+
+icon = os.path.join(IMAGE_DIRECTORY,"logo-10-13.svg")
+for (path,resx,resy) in [("@2x~ipad",1536,2008), ("~ipad",768,1004), ]:
+    output_file = os.path.join(icon_output_path, "Default" + path + ".png")
+    convert(icon,output_file,resx,resy)
+
+# finish inkscape processes first
+for p in process_list:
+    p.wait()
+
+# now call the packer
+print
 print "============= Now packing textures ============"
 os.chdir("..")
 os.chdir("..")
 os.system("./gradlew texturePacker --stacktrace")
+
