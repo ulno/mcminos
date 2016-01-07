@@ -4,10 +4,10 @@
 AUTHOR:   NoPe;   Andreas Neudecker
 NUMBR:    21
 ACCCD:    100200300
-
+SYMBOL: level_symbol_explosion
 ; Textinfo -----------
-TITLE: Development Testlevel 50x50
-TITLE-de: Test-Spielebene 50x50
+TITLE: Development test level 50x50 fields
+TITLE-de: Test-Spielebene mit 50x50 Feldern
 BODY:
 Test level - Maximum size, many animations
 #

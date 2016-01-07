@@ -1,9 +1,17 @@
 name: McMinos - A Level Up
 gfx: mcminos_powered_right,6
 end:
-Congratulations, you finished all levels. To play more, visit http://mcminos.com to check out the schedule of new versions.
+Congratulations, 
+
+you finished all levels. Please visit mcminos.com to check out the schedule of new versions.
+
+Thank you for playing McMinos
 #
 end-de:
-Glückwunsch. Du hast alle Spielebenen gemeistert. Um weiter zu spielen besuche http://mcminos.de, um dich über weitere Versionen zu informieren.
+Glückwunsch. 
+
+Du hast alle Spielebenen gemeistert. Um weiter zu spielen besuche mcminos.de, um dich über weitere Versionen zu informieren.
+
+Vielen Dank, dass Du McMinos spielst
 #
 activated: none

@@ -5,21 +5,21 @@
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    80
-
-TITLE: New level (in the making, yet unplayable)
-TITLE-de: Neue Spielebene (in der Mache, noch nicht spielbar)
+SYMBOL:   ghosts_hanky,4
+TITLE: Your ghost works for you
+TITLE-de: Dein Geist arbeitet für Dich
 BODY:
-What can I say: just wait for it!
+Just run along. Be in the right places at the right times.
 #
 BODY-de:
-Was soll ich sagen? Warte einfach noch etwas.
+Lauf einfach rum. Sei zur richtigen Zeit an den richtigen Orten.
 #
 
-LWID:   42
-LHI:    42
+LWID:     19
+LHI:      20
 SCROLLX:  0
 SCROLLY:  0
-BACK:   1
+BACK:     1
 
 LTIME:    0
 RSTRT:    0
@@ -27,70 +27,30 @@ MIRROR:   0
 
 MCSPEED:  1
 
-GHOST1:   10
+GHOST1:   1
 GHSPEED1: 1
-AGIL1:    15
-GRTIME1:  5
-
-GHOST2:   10
-GHSPEED2: 1
-AGIL2:    15
-GRTIME2:  15
-PILLMAX2: 3000
-PILLFREQ2: 1
-
-GHOST3:   10
-GHSPEED3: 1
-AGIL3:    15
-GRTIME3:  5
-TRANSWALL3: 7
-
-GHOST4:   10
-GHSPEED4: 1
-AGIL4:    15
-GRTIME4:  5
+AGIL1:    0
+GRTIME1:  1
 
 LEVEL:
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X        |         |         |         CCX
-X W XXXXXXvX^XXXXXXXXXXXXXXXXXXXXXXXXX CCX
-X   S    X X X                       XW  X
-X XSX    X   X                       XXX X
-X X      XXXXX                         X X
-X X                                    X X
-X X                                    X X
-X X                                    X X
-X|X                                    X X
-X X                                    X X
-X X                                    X X
-X X                                    X X
-X X                                    X X
-X X         XXXXXXXXDXXXXXXXX          X X
-X X         XW ,X   .       X          X X
-X X         X XSXXXXDXXXXXX X          X X
-X X         X,Sk         _X X          X X
-X X         XXX XXXXvXXXXbX X          X X
-X|X         X X XG      X_X X          X X
-X X         X X X XXXXX XbX X          X X
-X X         X X X   X   X X X          X X
-X X         D D X XXXXX X D D          X X
-X X         X X X   X,b X X X          X X
-X X         X X X XXXXXbX X X          X X
-X X         X X X    db X X X          X X
-X X         X X XXXXXXXXX X X          X X
-X X         X X_L_  _    PX X          X X
-X X         X XXXXXXDXXXXXX X          X X
-X|X         X              kX          X X
-X X         XXXXXXXXDXXXXXXXX          X X
-X X                                    X X
-X X                                    X X
-X X                                    X X
-X X                                    X X
-X X                                    X X
-X X                                    X X
-X XSX                                XSX|X
-X   S                                S   X
-X|X|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX W X
-XW                                   |   X
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXX
+Xr1r2r3r          X
+X        XXXXXXX1 X
+X 3XXXXXX      XX X
+X Xo      XXX.  X X
+X X  .XXX   ,XX X X
+X X XX,   XXX.  X X
+X X  .XXXCC .XX X X
+X X XX.  CCXX,  X X
+X X  ,XXX   .XX X X
+X X XX.   XXX.  X X
+X X  .XXX   ,XX X X
+X X XX,   XXX.  X X
+X X  .XXX   .XX X X
+X X XX.   XXX,  X X
+X X  ,XXX      XX X
+X XX     GXXXXXX1 X
+X 2XXXXXXXF       X
+X        FPr1r2r3rX
+XXXXXXXXXXXXXXXXXXX
 #
