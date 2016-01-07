@@ -6,11 +6,11 @@ AUTHOR:     waltino
 NUMBR:      19
 VERSION:    1100
 
-TITLE: Little Boxes
-TITLE-de: Kleine Schachteln
-
+SYMBOL: level_symbol_door_closed
+TITLE: Little chambers
+TITLE-de: Kleine Kammern
 BODY: From dynamite to door to key to dynamite. How shall you open all these?
-BODY-de: Von Dynamit zur Tür zum Schlüssel zurüçk zu Dynamit. Wie soll man bloß all diese kleinen Schachteln öffnen?
+BODY-de: Von Dynamit, Tür, Schlüssel, doch Dynamit? Wie öffnet man bloß all diese Kammern?
 
 LWID:       26
 LHI:        21

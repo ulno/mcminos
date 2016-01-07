@@ -7,6 +7,15 @@
 AUTHOR:   waltino; Walter Norbisrath
 NUMBR:    717
 VERSION:  1100
+SYMBOL: ghosts_hanky
+TITLE: Ghost test
+TITLE-de: Geister-Test
+BODY:
+Just an experiment.
+#
+BODY-de:
+Ein Experiment.
+#
 
 ; LEVELFORMAT -------------------------------------------*
 LWID:   3

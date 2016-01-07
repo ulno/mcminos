@@ -8,7 +8,7 @@ LHI:    50
 SCROLLX:  1
 SCROLLY:  1
 BACK: 1
-
+SYMBOL: level_symbol_castle
 TITLE: Pilot in a Haunted Castle
 TITLE-de: Schlosspilot
 

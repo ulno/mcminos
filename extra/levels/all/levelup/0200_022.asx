@@ -7,12 +7,7 @@ VERSION:  1100
 
 ; 2DO: EDIT TO REMOVE DOUBLE WALLS ON EDGES, if possible
 
-LWID:   50
-LHI:    20
-SCROLLX:  1
-SCROLLY:  1
-BACK:   19
-
+SYMBOL: level_symbol_explosion
 TITLE: Explosive
 TITLE-de: Explosiv
 
@@ -23,6 +18,11 @@ STORY-de:
 Das sieht aber alles ziemlich instabil aus. Gibt es eine Möglichkeit, dass hier nicht gleich alles in die Luft geht?
 #
 
+LWID:   50
+LHI:    20
+SCROLLX:  1
+SCROLLY:  1
+BACK:   19
 ;LTIME:    200
 RSTRT:    1
 MIRROR:   0
