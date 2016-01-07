@@ -7,8 +7,8 @@ VERSION:  3140
 NUMBR:    81
 SHOWNR:   81
 SYMBOL:   extras_rock
-TITLE: Rookie rocks (99 % done, please rate)
-TITLE-de: Anfängerfelsen (zu 99 % fertig, bitte bewerten)
+TITLE: Rookie rocks
+TITLE-de: Anfängerfelsen
 BODY:
 You can push, not pull. Ponder before you push.
 #
@@ -30,8 +30,8 @@ MCSPEED:  1
 
 LEVEL:
 ZZZZZZZZ
-Z  d   Z
-Z oOO  Z
+Z 9d   Z
+Z oOO 9Z
 Z  OO 9Z
 Zo XX oZ
 ZrrrrrrZ

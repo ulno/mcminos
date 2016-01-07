@@ -1,8 +1,9 @@
 ; LEVEL 007
 ; FOR McMINOS - VERSIONs > 0.6
 
-AUTHOR: Andreas_Neudecker
+AUTHOR:   Andreas_Neudecker
 NUMBR:    7
+SYMBOL:   level_symbol_door_closed
 TITLE: Ghosts under Arrest
 TITLE-de: Geister in Haft
 BODY:

@@ -7,8 +7,8 @@ VERSION:  3140
 NUMBR:    82
 SHOWNR:   82
 SYMBOL:   extras_rock
-TITLE: Rocky range (99 % done, please rate)
-TITLE-de: Felsige Gegend (zu 99 % fertig, bitte bewerten)
+TITLE: Rocky range
+TITLE-de: Felsige Gegend
 BODY:
 You can push, but can you get away, too?
 #
@@ -29,18 +29,18 @@ MIRROR:   0
 MCSPEED:  1
 
 GHOST1:   1
-GHSPEED1: 2 ; this value is not honoured by the game (2015-12-24)
+GHSPEED1: 1   ;# level works with GHSPEED1 = 2, but it loses some charme.
 AGIL1:    0
 GRTIME1:  30
 
 LEVEL:
 XXXXXXXXXXXXXXXX
-XOO      X CCX X
-XOO   rr O CC  X
+XOO1     X CCXLX
+XOO2  rr O3CC  X
 XX XX 8r OXXXOXX
-X      r       X
+X      r     3 X
 XXrr XXrr rr r X
 X rr   rr rrrr X
-XO         r  PX
+XO1        r  PX
 XXXXXXXXXXXXXXXX
 #

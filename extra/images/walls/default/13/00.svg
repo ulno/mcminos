@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -12,9 +13,10 @@
    height="32px"
    id="svg3505"
    sodipodi:version="0.32"
-   inkscape:version="0.46"
-   sodipodi:docname="wall-default-13.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="00.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
   <defs
      id="defs3507">
     <inkscape:perspective
@@ -46,26 +48,27 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="10.783378"
-     inkscape:cx="16"
+     inkscape:zoom="11.364021"
+     inkscape:cx="14.460052"
      inkscape:cy="16"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
-     objecttolerance="4"
-     gridtolerance="4"
-     guidetolerance="4"
-     inkscape:window-width="1280"
-     inkscape:window-height="713"
+     objecttolerance="10000"
+     gridtolerance="10000"
+     guidetolerance="10000"
+     inkscape:window-width="1024"
+     inkscape:window-height="741"
      inkscape:window-x="0"
-     inkscape:window-y="37"
+     inkscape:window-y="2"
      inkscape:object-paths="true"
      inkscape:object-nodes="true"
      inkscape:snap-bbox="true"
      inkscape:snap-guide="true"
      showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:guide-bbox="true"
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
        id="grid3515"
@@ -73,7 +76,9 @@
        visible="true"
        enabled="true"
        spacingx="1px"
-       spacingy="1px" />
+       spacingy="1px"
+       empspacing="4"
+       snapvisiblegridlinesonly="true" />
     <sodipodi:guide
        orientation="-0.70710678,0.70710678"
        position="33.245902,33.245902"
