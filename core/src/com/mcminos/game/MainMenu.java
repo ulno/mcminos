@@ -415,7 +415,7 @@ public class MainMenu implements Screen {
             //TODO: setting here to fs does not work
         } else {
             fullscreen = false;
-            Gdx.graphics.setDisplayMode(1280, 900, false);
+            Gdx.graphics.setWindowedMode(1280,900);
         }
         preferences.setFullScreen(fullscreen);
     }
