@@ -2,9 +2,13 @@ name: The Level Forge
 name-de: Die Level-Schmiede
 gfx: pills_power_pill_mushroom
 end:
-Congratulations, you finished all the levels in this set. Please select another set of levels to continue with.
+Congratulations, 
+
+you finished all the levels in this set. Please select another set of levels to continue with.
 #
 end-de:
-Glückwunsch. Du hast alle Spielebenen dieser Reihe gemeistert. Bitte wähle die Level-Reihe aus, mit der Du fortfahren möchtest.
+Herzlichen Glückwunsch. 
+
+Du hast alle Spielebenen dieser Reihe gemeistert. Bitte wähle die Level-Reihe aus, mit der Du fortfahren möchtest.
 #
 activated: all
