@@ -74,7 +74,7 @@ public class Preferences {
             symbolResolution = nearest;
 
             gameResolution = Math.max(16,
-                    Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 12 // often reported too big
+                    Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 8 // often reported too big
             );
 
             save(); // create preference file
