@@ -162,16 +162,16 @@ public class PlayDialogs {
         thisDialog.setPosition( res + padSize, Gdx.graphics.getHeight() - thisDialog.getHeight() - play.getGameResolution() );
 
         // Basic layout
-        Table rowGamePrefsTable = new Table(menuSkin);
-        rowGamePrefsTable.setHeight(res);
-        ScrollPane rowGamePrefs = new ScrollPane(rowGamePrefsTable);
-
         Table rowActionsTable = new Table(menuSkin);
         rowActionsTable.setHeight(res);
         ScrollPane rowActions = new ScrollPane(rowActionsTable);
 
+        Table rowGamePrefsTable = new Table(menuSkin);
+        rowGamePrefsTable.setHeight(res);
+        ScrollPane rowGamePrefs = new ScrollPane(rowGamePrefsTable);
+
         thisDialog.add(rowActions).expandX().fillX().pad(padSize).top().minHeight(res).row();
-        thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
+        thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).minHeight(res).row();
 
         ///// Fill game prefs row
         soundButton = new SymbolButton(res, audio.getSound() ?
@@ -270,7 +270,7 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             } 
         });
-        rowGamePrefsTable.add(symbolMinusButton.getCell()).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolMinusButton.getCell()).prefSize(res, res);
 
         // action row
         //        Button saveButton = new TextButton("Save", writingSkin);
