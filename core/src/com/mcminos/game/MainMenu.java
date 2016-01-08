@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -82,7 +79,7 @@ public class MainMenu implements Screen {
         }
     }
 
-    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, Button[] categorySelectorButtons, ScrollPane levelSelector, int res) {
+    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, Image[] categorySelectorButtons, ScrollPane levelSelector, int res) {
         categoryLabel.setText(levelsConfig.get(category).getName());
         categorySelectorButtons[activatedCategory].setColor(1,1,1,1);
         activatedCategory = category;
@@ -116,11 +113,13 @@ public class MainMenu implements Screen {
         private final ScrollPane categorySelector;
         private final ScrollPane levelSelector;
         private final int resolution;
-        private final Button[] categorySelectorButtons;
+        private final Image[] categorySelectorButtons;
         private final Label categoryLabel;
         public int category;
+        private boolean touchDown = false;
+        private boolean entered = false;
 
-        public CategoryClickListener(int c, Label categoryLabel, Table twoColumns, ScrollPane categorySelector, Button[] buttons, ScrollPane levelSelector, int res) {
+        public CategoryClickListener(int c, Label categoryLabel, Table twoColumns, ScrollPane categorySelector, Image[] buttons, ScrollPane levelSelector, int res) {
             category = c;
             this.categoryLabel = categoryLabel;
             this.twoColumns = twoColumns;
@@ -130,9 +129,54 @@ public class MainMenu implements Screen {
             this.resolution = res;
         }
 
+        private void selectColor() {
+            Gdx.app.log("selectColor() in categorylistener","entered: "+entered+" touchdown "+touchDown);
+            if (touchDown && entered) {
+                categorySelectorButtons[category].setColor(1, 0, 0, 1);
+            } else if (category == activatedCategory) {
+                categorySelectorButtons[category].setColor(0.5f, 0, 0, 1);
+            } else {
+                categorySelectorButtons[category].setColor(1, 1, 1, 1);
+            }
+        }
+
+        @Override
+        public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            touchDown = false;
+            /*if(!touchDown && entered)
+                switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
+            else*/
+            selectColor();
+            super.touchUp(event, x, y, pointer, button);
+        }
+
+
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            touchDown = true;
+            selectColor();
+            super.touchDown(event, x, y, pointer, button);
+            return true;
+        }
+
+        @Override
+        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+            entered = true;
+            selectColor();
+            //super.enter(event, x, y, pointer, fromActor);
+        }
+
+        @Override
+        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+            entered = false;
+            selectColor();
+            //super.exit(event, x, y, pointer, toActor);
+        }
+
         @Override
         public void clicked(InputEvent event, float x, float y) {
             switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
+            //super.clicked(event,x,y);
         }
     }
 
@@ -188,7 +232,7 @@ public class MainMenu implements Screen {
         });
         topRow.add(loadButton).left().minHeight(res);
 
-        Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with old white graphics
+        Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with mcminos logo graphics
         title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
         topRow.add(title).prefHeight(res).fillX().expandX();
 
@@ -266,22 +310,26 @@ public class MainMenu implements Screen {
         // add the buttons for the different level categories to the toolbar
         Table categorySelectorTable = new Table();
         ScrollPane categorySelector = new ScrollPane(categorySelectorTable);
-        Button categorySelectorButtons[] = new Button[levelsConfig.size()];
+        Image categorySelectorButtons[] = new Image[levelsConfig.size()];
         Cell<Group> lastCategory = null;
         for (int i = 0; i < levelsConfig.size(); i++) { // loop through categories
             Group g = new Group();
-            g.setHeight(res);
-            Button b = new Button(bigMenuSkin);
+            g.setSize(res,res);
+            Image b = new Image(Entities.menu_button_empty_bottom.getTexture(res,0));
+            b.setSize(res, res);
+            g.addActor(b);
             categorySelectorButtons[i] = b;
             TextureRegion t = levelsConfig.get(i).getTexture(res);
             if (t != null) {
                 Image img = new Image(t);
                 img.setSize(res, res);
-                b.add(img);
+                g.addActor(img);
             }
+            b = new Image(Entities.menu_button_empty_top.getTexture(res,0));
             b.setSize(res, res);
             g.addActor(b);
-            b.addListener(new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[i], res));
+            CategoryClickListener listener = new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[i], res);
+            g.addListener(listener);
             lastCategory = categorySelectorTable.add(g).top().left().prefSize(res).padBottom(res / 16);
             categorySelectorTable.row();
         }
@@ -312,7 +360,7 @@ public class MainMenu implements Screen {
 
         // Layout
         table.add(topRow).prefHeight(res).minHeight(res).top().fillX().expandX().padBottom(res / 8).row();
-        table.add(categoryLabel).minHeight(res).prefHeight(res).padBottom(res / 16).left().row();
+        table.add(categoryLabel).minHeight(res).prefHeight(res).padBottom(res / 16).padLeft(res+res/2).left().row();
         switchLevelCategory(activatedCategory, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[activatedCategory], res);
         table.add(twoColumns).fill().expand();
 
