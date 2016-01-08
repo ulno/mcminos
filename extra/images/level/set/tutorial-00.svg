@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="symbol-tutorial-00.svg">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="tutorial-00.svg">
   <defs id="defs4152" />
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true" inkscape:snap-path-clip="true" inkscape:snap-path-mask="true" inkscape:snap-tangential="true">
     <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
     <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
     <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
     <sodipodi:guide position="16,16" orientation="-0.70710678,0.70710678" id="guide4773" />
     <sodipodi:guide position="16,16" orientation="0.70710678,0.70710678" id="guide4775" />
+    <sodipodi:guide position="3,16" orientation="1,0" id="guide4150" />
   </sodipodi:namedview>
   <metadata id="metadata4155">
     <rdf:RDF>
@@ -20,12 +21,14 @@
     </rdf:RDF>
   </metadata>
   <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
-    <g id="g16440">
+    <g id="g16440" transform="matrix(1.2879011,-0.34509205,0.34509205,1.2879011,-8.6378011,0.90375591)">
+      <g id="g4145" inkscape:transform-center-x="0.085777006" inkscape:transform-center-y="5.3649123" transform="matrix(0.96592583,0.25881905,-0.25881905,0.96592583,3.7116014,-1.23978)">
+        <path style="fill:#d40000;fill-opacity:1;stroke:none" d="M 6,13.714286 6,18 7,18 7,13 6,13 Z" id="path5484" inkscape:connector-curvature="0" inkscape:transform-center-x="-0.61310606" inkscape:transform-center-y="2.6213413" />
+        <circle style="fill:#d40000;fill-opacity:1;stroke:none" id="path5486" transform="translate(-0.5,-3)" cx="7" cy="21" r="1" />
+        <path style="fill:#d40000;fill-opacity:1;stroke:none" d="M 6.5,18 5,22 8,22 Z" id="path5488" inkscape:connector-curvature="0" sodipodi:nodetypes="cccc" />
+      </g>
       <path inkscape:connector-curvature="0" id="path5462" d="m 16,12 c -3.882729,0 -7.0312498,3.581722 -7.03125,8 0,-0.552285 3.148521,-1 7.03125,-1 3.882729,0 7.03125,0.447715 7.03125,1 0,-4.418278 -3.148521,-8 -7.03125,-8 z" style="fill:black;fill-opacity:1;stroke:none" />
-      <path inkscape:connector-curvature="0" id="path5484" d="M 6,13.714286 6,18 7,18 7,13 6,13 Z" style="fill:#d40000;fill-opacity:1;stroke:none" />
       <path inkscape:connector-curvature="0" id="path5478" d="M 16,10 4,13 16,16 28,13 Z" style="fill:black;fill-opacity:1;stroke:none" />
-      <circle r="1" cy="21" cx="7" transform="translate(-0.5,-3)" id="path5486" style="fill:#d40000;fill-opacity:1;stroke:none" />
-      <path sodipodi:nodetypes="cccc" inkscape:connector-curvature="0" id="path5488" d="M 6.5,18 5,22 8,22 Z" style="fill:#d40000;fill-opacity:1;stroke:none" />
       <ellipse ry="1" rx="7" cy="20" cx="16" id="path5494" style="fill:maroon;fill-opacity:1;stroke:none" />
     </g>
   </g>
