@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg4150"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   viewBox="0 0 32 32"
+   sodipodi:docname="button-music-on-00.svg">
+  <defs
+     id="defs4152" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.125"
+     inkscape:cx="8.8361582"
+     inkscape:cy="15.909605"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     objecttolerance="10000"
+     inkscape:snap-perpendicular="true"
+     guidetolerance="10000"
+     inkscape:window-width="1440"
+     inkscape:window-height="781"
+     inkscape:window-x="0"
+     inkscape:window-y="270"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4698"
+       empspacing="8"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="0.5px"
+       spacingy="0.5px" />
+    <sodipodi:guide
+       position="16,32"
+       orientation="1,0"
+       id="guide4769" />
+    <sodipodi:guide
+       position="-4,16"
+       orientation="0,1"
+       id="guide4771" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="-0.70710678,0.70710678"
+       id="guide4773" />
+    <sodipodi:guide
+       position="16,16"
+       orientation="0.70710678,0.70710678"
+       id="guide4775" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="13,15"
+       id="guide9481" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4155">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="symbol">
+    <g
+       id="g9485"
+       transform="matrix(1.0000168,0,0,1,-4.3320562e-4,1.4998645)">
+      <rect
+         y="6"
+         x="12"
+         height="4"
+         width="11"
+         id="rect8965"
+         style="fill:#000000;fill-opacity:1;stroke:none" />
+      <rect
+         y="10"
+         x="22"
+         height="9.5"
+         width="1"
+         id="rect9475"
+         style="fill:#000000;fill-opacity:1;stroke:none" />
+      <rect
+         y="10"
+         x="12"
+         height="9.5"
+         width="1"
+         id="rect9477"
+         style="fill:#000000;fill-opacity:1;stroke:none" />
+      <ellipse
+         ry="2"
+         rx="3.236068"
+         cy="22"
+         cx="9"
+         transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,-4.5551672,1.0790032)"
+         id="path9479"
+         style="fill:#000000;fill-opacity:1;stroke:none" />
+      <ellipse
+         ry="2"
+         rx="3.236068"
+         cy="22"
+         cx="9"
+         style="fill:#000000;fill-opacity:1;stroke:none"
+         id="path9483"
+         transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,5.4448328,1.0790032)" />
+    </g>
+  </g>
+</svg>

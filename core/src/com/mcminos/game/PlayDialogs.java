@@ -89,7 +89,6 @@ public class PlayDialogs {
         titleLabel.setWrap(true);
         titleLabel.setAlignment(Align.left);
         topRow.add(titleLabel).top().left().fillX().expandX();
-        Image closeButton = new Image(Entities.toolbox_abort.getTexture(res,0));
         mainTable.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
         Table bodyTable = new Table();
         Label bodyLabel = new Label(body, writingSkin);
@@ -99,6 +98,7 @@ public class PlayDialogs {
         ScrollPane mainScroll = new ScrollPane(mainTable);
         mainScroll.setSize(rootWidth, rootHeight);
         rootGroup.addActor(mainScroll);
+        SymbolButton closeButton = new SymbolButton(res,Entities.toolbox_abort.getTexture(res,0));
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -106,8 +106,8 @@ public class PlayDialogs {
             }
         });
         //       topRow.add(closeButton).right(); better to have th ebutton fixed in group on top
-        closeButton.setPosition(rootWidth-res/8,rootHeight-res/8,Align.topRight);
-        rootGroup.addActor(closeButton);
+        closeButton.getCell().setPosition(rootWidth-res/8,rootHeight-res/8,Align.topRight);
+        rootGroup.addActor(closeButton.getCell());
         open(rootTable);
         return(bodyTable);
     }
@@ -146,6 +146,10 @@ public class PlayDialogs {
         statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().fillX().expandX().row();
     }
 
+
+    private SymbolButton soundButton;
+    private SymbolButton musicButton;
+    private SymbolButton touchpadButton;
     public void openGameMenu() {
         int res = play.getSymbolResolution();
         int padSize = res / 16;
@@ -170,40 +174,33 @@ public class PlayDialogs {
         thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
 
         ///// Fill game prefs row
-        final Group soundButton = new Group();
-        final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res, 0);
-        //soundButton.addActor(new Image(emptyButtonGfx));
-        soundButton.addActor(new Image(audio.getSound() ?
-                Entities.menu_button_sound_on.getTexture(play.getSymbolResolution(), 0)
-                : Entities.menu_button_sound_off.getTexture(play.getSymbolResolution(), 0)));
+        soundButton = new SymbolButton(res, audio.getSound() ?
+                Entities.menu_symbol_sound_on.getTexture(play.getSymbolResolution(), 0)
+                : Entities.menu_symbol_sound_off.getTexture(play.getSymbolResolution(), 0));
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 preferences.toggleSound();
-                soundButton.clearChildren();
-                soundButton.addActor(new Image(preferences.getSound() ?
-                        Entities.menu_button_sound_on.getTexture(play.getSymbolResolution(), 0)
-                        : Entities.menu_button_sound_off.getTexture(play.getSymbolResolution(), 0)));
+                soundButton.setSymbol(audio.getSound() ?
+                        Entities.menu_symbol_sound_on.getTexture(play.getSymbolResolution(), 0)
+                        : Entities.menu_symbol_sound_off.getTexture(play.getSymbolResolution(), 0));
             }
         });
-        rowGamePrefsTable.add(soundButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(soundButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        final Group musicButton = new Group();
-        //musicButton.addActor(new Image(emptyButtonGfx));
-        musicButton.addActor(new Image(audio.getMusic() ?
-                Entities.menu_button_music_on.getTexture(play.getSymbolResolution(), 0)
-                : Entities.menu_button_music_off.getTexture(play.getSymbolResolution(), 0)));
+        musicButton = new SymbolButton(res, audio.getMusic() ?
+                Entities.menu_symbol_music_on.getTexture(play.getSymbolResolution(), 0)
+                : Entities.menu_symbol_music_off.getTexture(play.getSymbolResolution(), 0));
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 preferences.toggleMusic();
-                musicButton.clearChildren();
-                musicButton.addActor(new Image(preferences.getMusic() ?
-                        Entities.menu_button_music_on.getTexture(play.getSymbolResolution(), 0)
-                        : Entities.menu_button_music_off.getTexture(play.getSymbolResolution(), 0)));
+                musicButton.setSymbol(audio.getMusic() ?
+                        Entities.menu_symbol_music_on.getTexture(play.getSymbolResolution(), 0)
+                        : Entities.menu_symbol_music_off.getTexture(play.getSymbolResolution(), 0));
             }
         });
-        rowGamePrefsTable.add(musicButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(musicButton.getCell()).prefSize(res, res).padRight(padSize);
 
 /*        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
         musicButton.addListener(new ClickListener() {
@@ -216,27 +213,22 @@ public class PlayDialogs {
         topMenu.add(musicButton).prefSize(res, res).padRight(padSize);
 */
 
-        final Group touchpadButton = new Group();
-        //touchpadButton.addActor(new Image(emptyButtonGfx));
-        touchpadButton.addActor(new Image(Entities.menu_button_touchpad_off.getTexture(res, 0)));
-        touchpadButton.addActor(new Image(play.isTouchpadActive() ?
-                Entities.menu_button_touchpad_on.getTexture(play.getSymbolResolution(), 0)
-                : Entities.menu_button_touchpad_off.getTexture(play.getSymbolResolution(), 0)));
+        touchpadButton = new SymbolButton(res,play.isTouchpadActive() ?
+                Entities.menu_symbol_touchpad_on.getTexture(play.getSymbolResolution(), 0)
+                : Entities.menu_symbol_touchpad_off.getTexture(play.getSymbolResolution(), 0));
         touchpadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                touchpadButton.clearChildren();
-                touchpadButton.addActor(new Image(play.toggleTouchpad() ?
-                        Entities.menu_button_touchpad_on.getTexture(play.getSymbolResolution(), 0)
-                        : Entities.menu_button_touchpad_off.getTexture(play.getSymbolResolution(), 0)));
+                play.toggleTouchpad();
+                touchpadButton.setSymbol(play.isTouchpadActive() ?
+                        Entities.menu_symbol_touchpad_on.getTexture(play.getSymbolResolution(), 0)
+                        : Entities.menu_symbol_touchpad_off.getTexture(play.getSymbolResolution(), 0));
 
             }
         });
-        rowGamePrefsTable.add(touchpadButton).prefSize(res, res).padRight(padSize * 2);
+        rowGamePrefsTable.add(touchpadButton.getCell()).prefSize(res, res).padRight(padSize * 2);
 
-        Group plusButton = new Group();
-        //plusButton.addActor(new Image(emptyButtonGfx));
-        plusButton.addActor(new Image(Entities.menu_button_zoom_in.getTexture(res, 0)));
+        SymbolButton plusButton = new SymbolButton(res, Entities.menu_symbol_zoom_in.getTexture(res, 0));
         plusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -245,12 +237,9 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
+        rowGamePrefsTable.add(plusButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        rowGamePrefsTable.add(plusButton).prefSize(res, res).padRight(padSize);
-
-        Group minusButton = new Group();
-        //minusButton.addActor(new Image(emptyButtonGfx));
-        minusButton.addActor(new Image(Entities.menu_button_zoom_out.getTexture(res, 0)));
+        SymbolButton minusButton = new SymbolButton(res, Entities.menu_symbol_zoom_out.getTexture(res, 0));
         minusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -259,10 +248,9 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             }
         });
-        rowGamePrefsTable.add(minusButton).prefSize(res, res).padRight(padSize*2);
+        rowGamePrefsTable.add(minusButton.getCell()).prefSize(res, res).padRight(padSize*2);
 
-        Group symbolPlusButton = new Group();
-        symbolPlusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_in.getTexture(res, 0)));
+        SymbolButton symbolPlusButton = new SymbolButton(res, Entities.menu_symbol_toolbar_zoom_in.getTexture(res, 0));
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -271,10 +259,9 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             } 
         });
-        rowGamePrefsTable.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
-        
-        Group symbolMinusButton = new Group();
-        symbolMinusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_out.getTexture(res, 0)));
+        rowGamePrefsTable.add(symbolPlusButton.getCell()).prefSize(res, res).padRight(padSize);
+
+        SymbolButton symbolMinusButton = new SymbolButton(res, Entities.menu_symbol_toolbar_zoom_out.getTexture(res, 0));
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -283,11 +270,11 @@ public class PlayDialogs {
                 openGameMenu(); // TODO: check if this leaks too much memory
             } 
         });
-        rowGamePrefsTable.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolMinusButton.getCell()).prefSize(res, res).padRight(padSize);
 
         // action row
         //        Button saveButton = new TextButton("Save", writingSkin);
-        Image saveButton = new Image(Entities.menu_button_game_save.getTexture(res, 0));
+        SymbolButton saveButton = new SymbolButton(res,Entities.menu_symbol_game_save.getTexture(res, 0));
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -295,11 +282,9 @@ public class PlayDialogs {
                 openSavedGameConfirm();
             }
         });
-        rowActionsTable.add(saveButton).prefSize(res, res).padRight(padSize);
+        rowActionsTable.add(saveButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group langButton = new Group();
-        langButton.addActor(new Image(Entities.menu_button_empty.getTexture(res, 0)));
-        langButton.addActor(new Image(preferences.languageGfx().getTexture(res,0)));
+        SymbolButton langButton = new SymbolButton(res, preferences.languageGfx().getTexture(res,0));
         langButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -308,19 +293,18 @@ public class PlayDialogs {
                 openGameMenu();
             }
         });
-        rowActionsTable.add(langButton).prefSize(res, res).padRight(padSize);
+        rowActionsTable.add(langButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Image infoButton = new Image(Entities.menu_button_info.getTexture(res, 0));
+        SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 openLevelStory();
             }
         });
-        rowActionsTable.add(infoButton).prefSize(res, res).padRight(padSize*2);
+        rowActionsTable.add(infoButton.getCell()).prefSize(res, res).padRight(padSize*2);
 
-        Group restartButton = new Group();
-        restartButton.addActor(new Image(Entities.menu_button_restart.getTexture(res, 0)));
+        SymbolButton restartButton = new SymbolButton(res,Entities.menu_symbol_restart.getTexture(res, 0));
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -329,11 +313,9 @@ public class PlayDialogs {
                 play.pauseOff();
             }
         });
-        rowActionsTable.add(restartButton).prefSize(res, res).padRight(padSize);
+        rowActionsTable.add(restartButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group leaveButton = new Group();
-        //leaveButton.addActor(new Image(emptyButtonGfx));
-        leaveButton.addActor(new Image(Entities.menu_button_stop.getTexture(res, 0)));
+        SymbolButton leaveButton = new SymbolButton(res,Entities.menu_symbol_stop.getTexture(res, 0));
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -341,22 +323,18 @@ public class PlayDialogs {
                 play.backToMenu();
             }
         });
-        rowActionsTable.add(leaveButton).prefSize(res, res).padRight(padSize * 2);
+        rowActionsTable.add(leaveButton.getCell()).prefSize(res, res).padRight(padSize * 2);
 
-        Group pauseButton = new Group();
-        //pauseButton.addActor(new Image(emptyButtonGfx));
-        pauseButton.addActor(new Image(Entities.menu_button_pause.getTexture(res, 0)));
+        SymbolButton pauseButton = new SymbolButton(res, Entities.menu_symbol_pause.getTexture(res, 0));
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 close();
             }
         });
-        rowActionsTable.add(pauseButton).prefSize(res, res).padRight(padSize);
+        rowActionsTable.add(pauseButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group continueButton = new Group();
-        //continueButton.addActor(new Image(emptyButtonGfx));
-        continueButton.addActor(new Image(Entities.menu_button_play.getTexture(res, 0)));
+        SymbolButton continueButton = new SymbolButton(res, Entities.menu_symbol_play.getTexture(res, 0));
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -364,7 +342,7 @@ public class PlayDialogs {
                 //super.clicked(event, x, y);
             }
         });
-        rowActionsTable.add(continueButton).prefSize(res, res).maxSize(res);
+        rowActionsTable.add(continueButton.getCell()).prefSize(res, res).maxSize(res);
 
         open( thisDialog );
     }
@@ -386,10 +364,9 @@ public class PlayDialogs {
 
 
         // TODO: check that it really was successfully saved
-        Group g = new Group();
-        g.setSize(res,res);
-        g.addActor(new Image(Entities.menu_button_game_save.getTexture(res,0)));
-        g.addActor(new Image(Entities.menu_checked.getTexture(res,0)));
+        SymbolButton sb = new SymbolButton(res,Entities.menu_symbol_game_save.getTexture(res,0));
+        Group g = sb.getCell();
+        g.addActor(new Image(Entities.menu_symbol_checked.getTexture(res,0)));
         thisDialog.add(g).pad(padSize);
         thisDialog.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

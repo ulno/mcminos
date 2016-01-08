@@ -79,11 +79,11 @@ public class MainMenu implements Screen {
         }
     }
 
-    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, Image[] categorySelectorButtons, ScrollPane levelSelector, int res) {
+    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, SymbolButton[] categorySelectorButtons, ScrollPane levelSelector, int res) {
         categoryLabel.setText(levelsConfig.get(category).getName());
-        categorySelectorButtons[activatedCategory].setColor(1,1,1,1);
+        categorySelectorButtons[activatedCategory].unselect();
         activatedCategory = category;
-        categorySelectorButtons[activatedCategory].setColor(0.5f,0,0,1);
+        categorySelectorButtons[activatedCategory].select();
         activatedLevel = null; //deselect
         twoColumns.clear();
         twoColumns.add(folderSelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
@@ -113,13 +113,11 @@ public class MainMenu implements Screen {
         private final ScrollPane categorySelector;
         private final ScrollPane levelSelector;
         private final int resolution;
-        private final Image[] categorySelectorButtons;
+        private final SymbolButton[] categorySelectorButtons;
         private final Label categoryLabel;
         public int category;
-        private boolean touchDown = false;
-        private boolean entered = false;
 
-        public CategoryClickListener(int c, Label categoryLabel, Table twoColumns, ScrollPane categorySelector, Image[] buttons, ScrollPane levelSelector, int res) {
+        public CategoryClickListener(int c, Label categoryLabel, Table twoColumns, ScrollPane categorySelector, SymbolButton[] buttons, ScrollPane levelSelector, int res) {
             category = c;
             this.categoryLabel = categoryLabel;
             this.twoColumns = twoColumns;
@@ -127,50 +125,6 @@ public class MainMenu implements Screen {
             this.categorySelectorButtons = buttons;
             this.levelSelector = levelSelector;
             this.resolution = res;
-        }
-
-        private void selectColor() {
-            Gdx.app.log("selectColor() in categorylistener","entered: "+entered+" touchdown "+touchDown);
-            if (touchDown && entered) {
-                categorySelectorButtons[category].setColor(1, 0, 0, 1);
-            } else if (category == activatedCategory) {
-                categorySelectorButtons[category].setColor(0.5f, 0, 0, 1);
-            } else {
-                categorySelectorButtons[category].setColor(1, 1, 1, 1);
-            }
-        }
-
-        @Override
-        public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-            touchDown = false;
-            /*if(!touchDown && entered)
-                switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
-            else*/
-            selectColor();
-            super.touchUp(event, x, y, pointer, button);
-        }
-
-
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            touchDown = true;
-            selectColor();
-            super.touchDown(event, x, y, pointer, button);
-            return true;
-        }
-
-        @Override
-        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-            entered = true;
-            selectColor();
-            //super.enter(event, x, y, pointer, fromActor);
-        }
-
-        @Override
-        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-            entered = false;
-            selectColor();
-            //super.exit(event, x, y, pointer, toActor);
         }
 
         @Override
@@ -210,7 +164,7 @@ public class MainMenu implements Screen {
         // first build only elements, layout later
         Table topRow = new Table();
 
-        Image settingsButton = new Image(Entities.menu_button_settings.getTexture(res, 0));
+        SymbolButton settingsButton = new SymbolButton(res, Entities.menu_symbol_settings.getTexture(res, 0));
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -218,9 +172,9 @@ public class MainMenu implements Screen {
                 else dialogClose();
             }
         });
-        topRow.add(settingsButton).left().minHeight(res).padRight(res / 16);
+        topRow.add(settingsButton.getCell()).left().minHeight(res).padRight(res / 16);
 
-        Image loadButton = new Image(Entities.menu_button_game_load.getTexture(res, 0));
+        SymbolButton loadButton = new SymbolButton(res,Entities.menu_symbol_game_load.getTexture(res, 0));
         loadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -230,29 +184,29 @@ public class MainMenu implements Screen {
                 }
             }
         });
-        topRow.add(loadButton).left().minHeight(res);
+        topRow.add(loadButton.getCell()).left().minHeight(res);
 
         Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with mcminos logo graphics
         title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
         topRow.add(title).prefHeight(res).fillX().expandX();
 
-        Image infoButton = new Image(Entities.menu_button_info.getTexture(res, 0));
+        SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new Credits(main, activatedLevel));
             }
         });
-        topRow.add(infoButton).right().minHeight(res);
+        topRow.add(infoButton.getCell()).right().minHeight(res);
 
-        Image quitButton = new Image(Entities.menu_button_exit_variant.getTexture(res, 0));
+        SymbolButton quitButton = new SymbolButton(res,Entities.menu_button_exit_variant.getTexture(res, 0));
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
             }
         });
-        topRow.add(quitButton).right().minHeight(res);
+        topRow.add(quitButton.getCell()).right().minHeight(res);
 
 
         Label categoryLabel = new Label(levelsConfig.get(activatedCategory).getName(), levelSkin);
@@ -310,27 +264,15 @@ public class MainMenu implements Screen {
         // add the buttons for the different level categories to the toolbar
         Table categorySelectorTable = new Table();
         ScrollPane categorySelector = new ScrollPane(categorySelectorTable);
-        Image categorySelectorButtons[] = new Image[levelsConfig.size()];
+        SymbolButton categorySelectorButtons[] = new SymbolButton[levelsConfig.size()];
         Cell<Group> lastCategory = null;
         for (int i = 0; i < levelsConfig.size(); i++) { // loop through categories
-            Group g = new Group();
-            g.setSize(res,res);
-            Image b = new Image(Entities.menu_button_empty_bottom.getTexture(res,0));
-            b.setSize(res, res);
-            g.addActor(b);
-            categorySelectorButtons[i] = b;
-            TextureRegion t = levelsConfig.get(i).getTexture(res);
-            if (t != null) {
-                Image img = new Image(t);
-                img.setSize(res, res);
-                g.addActor(img);
-            }
-            b = new Image(Entities.menu_button_empty_top.getTexture(res,0));
-            b.setSize(res, res);
-            g.addActor(b);
+            SymbolButton b = new SymbolButton(res, levelsConfig.get(i).getTexture(res));
             CategoryClickListener listener = new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[i], res);
-            g.addListener(listener);
-            lastCategory = categorySelectorTable.add(g).top().left().prefSize(res).padBottom(res / 16);
+            b.addListener(listener);
+            categorySelectorButtons[i] = b;
+
+            lastCategory = categorySelectorTable.add(b.getCell()).top().left().prefSize(res).padBottom(res / 16);
             categorySelectorTable.row();
         }
         lastCategory.fillY().expandY();
@@ -467,7 +409,10 @@ public class MainMenu implements Screen {
         }
         preferences.setFullScreen(fullscreen);
     }
-    
+
+    private SymbolButton soundButton;
+    private SymbolButton musicButton;
+
     private void dialogPreferences() {
         int res = preferences.getSymbolResolution();
         int padSize = res / 16;
@@ -487,45 +432,40 @@ public class MainMenu implements Screen {
         thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
 
         ///// Fill game prefs row
-        final Group soundButton = new Group();
-        final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res, 0);
-        //soundButton.addActor(new Image(emptyButtonGfx));
-        soundButton.addActor(new Image(audio.getSound() ?
-                Entities.menu_button_sound_on.getTexture(res, 0)
-                : Entities.menu_button_sound_off.getTexture(res, 0)));
+        soundButton = new SymbolButton(res,
+                audio.getSound() ?
+                Entities.menu_symbol_sound_on.getTexture(res, 0)
+                : Entities.menu_symbol_sound_off.getTexture(res, 0));
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int res = preferences.getSymbolResolution();
                 preferences.toggleSound();
-                soundButton.clearChildren();
-                soundButton.addActor(new Image(preferences.getSound() ?
-                        Entities.menu_button_sound_on.getTexture(res, 0)
-                        : Entities.menu_button_sound_off.getTexture(res, 0)));
+                soundButton.setSymbol(res,
+                        preferences.getSound() ?
+                        Entities.menu_symbol_sound_on.getTexture(res, 0)
+                        : Entities.menu_symbol_sound_off.getTexture(res, 0));
             }
         });
-        rowGamePrefsTable.add(soundButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(soundButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        final Group musicButton = new Group();
-        //musicButton.addActor(new Image(emptyButtonGfx));
-        musicButton.addActor(new Image(audio.getMusic() ?
-                Entities.menu_button_music_on.getTexture(res, 0)
-                : Entities.menu_button_music_off.getTexture(res, 0)));
+        musicButton = new SymbolButton(res,
+                audio.getMusic() ?
+                Entities.menu_symbol_music_on.getTexture(res, 0)
+                : Entities.menu_symbol_music_off.getTexture(res, 0));
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int res = preferences.getSymbolResolution();
                 preferences.toggleMusic();
-                musicButton.clearChildren();
-                musicButton.addActor(new Image(preferences.getMusic() ?
-                        Entities.menu_button_music_on.getTexture(res, 0)
-                        : Entities.menu_button_music_off.getTexture(res, 0)));
+                musicButton.setSymbol(res,preferences.getMusic() ?
+                        Entities.menu_symbol_music_on.getTexture(res, 0)
+                        : Entities.menu_symbol_music_off.getTexture(res, 0));
             }
         });
-        rowGamePrefsTable.add(musicButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(musicButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group symbolPlusButton = new Group();
-        symbolPlusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_in.getTexture(res, 0)));
+        SymbolButton symbolPlusButton = new SymbolButton(res, Entities.menu_symbol_toolbar_zoom_in.getTexture(res, 0));
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -534,10 +474,10 @@ public class MainMenu implements Screen {
                 dialogPreferences();
             }
         });
-        rowGamePrefsTable.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolPlusButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group symbolMinusButton = new Group();
-        symbolMinusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_out.getTexture(res, 0)));
+        SymbolButton symbolMinusButton = new SymbolButton(res,
+                Entities.menu_symbol_toolbar_zoom_out.getTexture(res, 0));
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -546,11 +486,9 @@ public class MainMenu implements Screen {
                 dialogPreferences();
             }
         });
-        rowGamePrefsTable.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolMinusButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group langButton = new Group();
-        langButton.addActor(new Image(Entities.menu_button_empty.getTexture(res, 0)));
-        langButton.addActor(new Image(preferences.languageGfx().getTexture(res,0)));
+        SymbolButton langButton = new SymbolButton(res,preferences.languageGfx().getTexture(res,0));
         langButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -560,19 +498,17 @@ public class MainMenu implements Screen {
                 dialogPreferences();
             }
         });
-        rowGamePrefsTable.add(langButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(langButton.getCell()).prefSize(res, res).padRight(padSize);
 
 
-        Group closeButton = new Group();
-        closeButton.addActor(new Image(Entities.toolbox_abort.getTexture(res, 0)));
+        SymbolButton closeButton = new SymbolButton(res, Entities.toolbox_abort.getTexture(res, 0));
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dialogClose();
             }
         });
-        rowGamePrefsTable.add(closeButton).prefSize(res, res).padRight(padSize);
-
+        rowGamePrefsTable.add(closeButton.getCell()).prefSize(res, res).padRight(padSize);
 
         stage.addActor(thisDialog);
         currentDialog = thisDialog;
