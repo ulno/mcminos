@@ -152,6 +152,7 @@ public class Main extends com.badlogic.gdx.Game {
 
     @Override
     public void dispose() {
+        audio.dispose();
         for (Skin s : levelSkinList.values()) {
             s.dispose();
         }
@@ -218,5 +219,10 @@ public class Main extends com.badlogic.gdx.Game {
 
     public Preferences getPreferences() {
         return preferences;
+    }
+
+    public void exit() {
+        dispose();
+        Gdx.app.exit();
     }
 }

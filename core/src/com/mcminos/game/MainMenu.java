@@ -203,7 +203,8 @@ public class MainMenu implements Screen {
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                dispose();
+                main.exit();
             }
         });
         topRow.add(quitButton.getCell()).right().minHeight(res);
@@ -533,4 +534,5 @@ public class MainMenu implements Screen {
     public void decreaseSymbolResolution() {
         setSymbolResolution(preferences.getSymbolResolution()/2);
     }
+
 }
