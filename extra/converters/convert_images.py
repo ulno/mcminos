@@ -206,7 +206,7 @@ def convert(input_file,output_file, resx, resy):
             # wait until all are done
             for p in process_list:
                 p.wait()
-                p.close()
+            process_list=[]
         p = subprocess.Popen(["inkscape",
                               "-w", "%d"%(int(resx)),
                               "-h", "%d"%(int(resy)),
