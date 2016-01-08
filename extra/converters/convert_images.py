@@ -197,6 +197,7 @@ def generate_name(name, description):
 process_list = []
 
 def convert(input_file,output_file, resx, resy):
+    global process_list
     # only change if not exists or source is newer
     # absolut path is required for inkscape on MacOSX
     output_path = os.path.abspath(output_file)
