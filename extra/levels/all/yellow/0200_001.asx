@@ -5,6 +5,10 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    001
 ACCCD:    299792458 ; = c (Lichtgeschwindigkeit)
 VERSION:  0900
+SYMBOL: extras_rock
+TITLE: One piece of rock
+TITLE-de: Ein Felsen
+BODY: 
 
 LWID:   24
 LHI:    12
