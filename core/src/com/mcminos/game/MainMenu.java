@@ -254,7 +254,7 @@ public class MainMenu implements Screen {
                     indicator.addActor(indicatorImage);
                     levelRow.add(t).prefHeight(res).top().left();
                     levelRow.add(indicator).top().left().fillX().expandX();
-                    //TODO: check why we can't set a background?
+                    // check why we can't set a background? - doesn't matter showing the symbol looks nice
                 } else {
                     t =  new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
                     levelRow.add(t).prefHeight(res).top().left().fillX().expandX();

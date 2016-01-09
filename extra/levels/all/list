@@ -31,7 +31,7 @@ alive/0815_004
 alive/0815_007
 alive/0815_009
 alive/708
-alive/0815_010
+alive/0200_076 ; Little Thinkbox
 alive/0815_012
 alive/0815_015
 alive/0815_011
@@ -49,7 +49,6 @@ alive/0815_025
 levelup/0200_009 ; Hunting Jumping Peas
 levelup/0815_003 ; Tubemania
 levelup/703      ; Herding Ghosts
-levelup/0200_076 ; Little Thinkbox
 levelup/0200_021 ; Haunted Rock Range
 levelup/0815_005 ; Chambers of Poison
 levelup/705      ; Race of Holes
@@ -57,6 +56,7 @@ levelup/0200_028 ; Chambers of Explosion
 levelup/0200_049 ; Stone Fence
 levelup/0200_019 ; Little Boxes
 levelup/706      ; Ghost Seduction
+levelup/0815_010
 levelup/0200_043 ; Indestructable?
 levelup/0815_006 ; Traffic Law for Ghosts
 levelup/704      ; Timing Problems

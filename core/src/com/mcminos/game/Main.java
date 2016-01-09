@@ -163,7 +163,9 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public BitmapFont getLevelFont(int res) {
-        return levelFontList.get(res);
+        BitmapFont font = levelFontList.get(res);
+        font.setColor(1,1,1,1); // always reset to bright here, so if it needs to be changed, color has to be set after getting
+        return font;
     }
 
     public BitmapFont getMenuFont(int res) {

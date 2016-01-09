@@ -113,6 +113,7 @@ public class Audio {
         }
 
         public void play() {
+            // TODO: check why the second silence on Mac OS X is necessary
             long lastId = ids[idPtr];
             if(lastId != -1) {
                 snd.stop(lastId);

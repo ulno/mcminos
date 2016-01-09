@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
@@ -29,12 +30,12 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private Skin skin;
     private McMinos mcminos;
     private Audio audio;
-    private BitmapFont font;
     private SpriteBatch stageBatch;
     private SpriteBatch gameBatch;
     private SpriteBatch backgroundBatch;
     private SpriteBatch miniBatch;
     private ShapeRenderer miniScreenBackground;
+    private ShapeRenderer box;
 
     private Stage stage;
     private Main main;
@@ -42,14 +43,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private long lastZoomTime = 0;
     Graphics background;
     private Touchpad touchpad;
-    private StringBuilder scoreInfo;
-    /*private SegmentString score;
-    private SegmentString powerScore;
-    private SegmentString umbrellaScore;
-    private SegmentString toxicScore;
-    private SegmentString livesScore;
-    private SegmentString mirroredScore;
-    private SegmentString framerateScore;*/
+
+    private BitmapFont font;
+    private StringBuilder score = new StringBuilder(8);
+    private StringBuilder livesScore = new StringBuilder(2);
+    private StringBuilder framerateScore = new StringBuilder(2);
 
     private Toolbox toolbox;
     private PlayDialogs dialogs;
@@ -79,6 +77,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         backgroundBatch = new SpriteBatch();
         miniBatch = new SpriteBatch();
         miniScreenBackground = new ShapeRenderer();
+        box = new ShapeRenderer();
 //        background = Entities.backgrounds_punched_plate_03;
         background = Entities.backgrounds_amoeboid_01;
     }
@@ -144,18 +143,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
         stage = new Stage(new ScreenViewport(), stageBatch); // Init stage
         toolbox = new Toolbox(this);
         dialogs = new PlayDialogs(this);
-
-        // init scoreinfo display
-        scoreInfo = new StringBuilder(28);
-        scoreInfo.append("S");
-//        scoreInfo = new SegmentString( "S00000 P00 U00 T00 L00 F00 M" );
-        /*score = scoreInfo.sub(1,5);
-        powerScore = scoreInfo.sub(8,2);
-        umbrellaScore = scoreInfo.sub(12,2);
-        toxicScore = scoreInfo.sub(16,2);
-        livesScore = scoreInfo.sub(20,2);
-        framerateScore = scoreInfo.sub(24,2);
-        mirroredScore = scoreInfo.sub(27,1);*/
 
         // virtual joystick (called touchpad in libgdx)
         touchpad = new Touchpad(32, skin);
@@ -368,11 +355,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
             toolbox.update(); // update toolbox based on inventory
 
             // add stage and menu
-            stage.draw();
-            stageBatch.begin();
             renderScore(); // score etc.
-            stageBatch.end();
-
+            stage.draw();
             stage.act(delta); // evaluate interaction with menu
         }
     }
@@ -386,45 +370,94 @@ public class Play implements Screen, GestureListener, InputProcessor {
         mcminos.setDestination(playwindow, x, y);
     }
 
+    /**
+     * draw score, energy bars and time used or time left
+     */
+    static final int livesMaxDraw = 5;
+    int[] barLengths = new int[3]; // power, umbrella, poison/alcohol
+    Color[] barColors = new Color[3];
     private void renderScore() {
-        int v;
-        int res = preferences.getSymbolResolution();
+        SpriteBatch batch = stageBatch;
+        int v; // amount of specific energy
+        int bars = 0; // how many energy bars to draw;
+        int barHeight = 0; // height of one bar
+        int res = preferences.getSymbolResolution()/2;
+        int x = res * 2 + (res/4);
+        int yText = Gdx.graphics.getHeight() - res/8;
+        int ySymbol = yText - res + res/16;
 
-        // TODO: render score as part of the stage with nice symbols instead of letters
+        batch.begin();
 
-        scoreInfo.setLength(1);
-        scoreInfo.append(mcminos.getScore());
-        scoreInfo.append(" L");
-        scoreInfo.append(mcminos.getLives());
+        batch.setColor(1,1,1,0.7f);
+
+        score.setLength(0);
+        score.append(mcminos.getScore());
+        batch.draw(Entities.level_score.getTexture(res,0),x,ySymbol);
+        x += res + res/8;
+        GlyphLayout layout = font.draw(batch, score, x, yText );
+        x += layout.width + res/4;
+
+        framerateScore.setLength(0);
+        framerateScore.append("F");
+        framerateScore.append(Gdx.graphics.getFramesPerSecond());
+        layout = font.draw(batch, framerateScore, x, yText );
+        x += layout.width + res/4;
+
+        livesScore.setLength(0);
+        int lives = mcminos.getLives();
+        int livesDraw = Math.min(lives,livesMaxDraw);
+        if(lives>livesMaxDraw) {
+            livesScore.append(lives);
+        } else if(lives>99) {
+            livesScore.append("++");
+        }
+        for(int i=0; i<livesDraw; i++) {
+            batch.draw(Entities.pills_heart.getTexture(res,0),x+res*i/4,ySymbol);
+        }
+        x += res/2;
+        layout = font.draw(batch, livesScore, x, yText );
+        x += Math.max( layout.width, (livesDraw-2)*res/4 + res );
+
+        if (mcminos.isMirrored()) {
+            batch.draw(Entities.extras_mirror.getTexture(res,0),x,ySymbol);
+            x+= res + res/4;
+        }
+
+        batch.end();
+
         v = mcminos.getPowerDuration();
         if (v > 0) {
-            scoreInfo.append(" P");
-            scoreInfo.append(v >> game.timeResolutionExponent);
+            barLengths[bars] = v;
+            barColors[bars] = Color.ORANGE;
+            bars ++;
         }
         v = mcminos.getUmbrellaDuration();
         if (v > 0) {
-            scoreInfo.append(" U");
-            scoreInfo.append(v >> game.timeResolutionExponent);
+            barLengths[bars] = v;
+            barColors[bars] = Color.BLUE;
+            bars ++;
         }
         v = mcminos.getPoisonDuration() + mcminos.getDrunkLevel();
         if (v > 0) {
-            scoreInfo.append(" T");
-            scoreInfo.append(v >> game.timeResolutionExponent);
-        }
-        scoreInfo.append(" F");
-        scoreInfo.append(Gdx.graphics.getFramesPerSecond());
-        if (mcminos.isMirrored()) {
-            scoreInfo.append(" M");
+            barLengths[bars] = v;
+            barColors[bars] = Color.GREEN;
+            bars ++;
         }
 
-/*        score.writeInteger(mcminos.getScore());
-        powerScore.writeInteger(mcminos.getPowerDuration() >> game.timeResolutionExponent);
-        umbrellaScore.writeInteger(mcminos.getUmbrellaDuration() >> game.timeResolutionExponent);
-        toxicScore.writeInteger((mcminos.getPoisonDuration() + mcminos.getDrunkLevel()) >> game.timeResolutionExponent);
-        framerateScore.writeInteger(Gdx.graphics.getFramesPerSecond());
-        mirroredScore.writeChar(0, mcminos.isMirrored() ? 'M' : ' '); */
-        font.draw(stageBatch, scoreInfo, res + (res >> 3), Gdx.graphics.getHeight() - (res >> 3));
+        if(bars>0) barHeight = res / bars;
 
+
+        int yBars = ySymbol;
+        box.begin(ShapeRenderer.ShapeType.Filled);
+        for(int i=bars-1; i >= 0; i--) {
+            box.setColor(barColors[i]); // a little transparent
+            box.rect(x,
+                    yBars,
+                    res*barLengths[i] / Game.timeResolution / 5, // fill two fileds for two seconds
+                    barHeight);
+            yBars += barHeight;
+        }
+        box.end();
     }
 
     private void drawVisibleMarker() {
@@ -506,6 +539,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         if (fontRes < 32) fontRes = 32;
         if (fontRes > 128) fontRes = 128;
         font = main.getLevelFont(fontRes);
+        font.setColor(1,1,1,0.8f);
     }
 
     @Override
@@ -529,6 +563,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         backgroundBatch.dispose();
         miniBatch.dispose();
         stageBatch.dispose();
+        miniScreenBackground.dispose();
+        box.dispose();
     }
 
     @Override
