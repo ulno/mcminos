@@ -1,0 +1,56 @@
+; LEVEL 078
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-12-19
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    101
+SYMBOL:   extras_missing
+TITLE: Your ghost works for you
+TITLE-de: Dein Geist arbeitet für Dich
+BODY:
+Just run along. Be in the right places at the right times.
+#
+BODY-de:
+Lauf einfach rum. Sei zur richtigen Zeit an den richtigen Orten.
+#
+
+LWID:     19
+LHI:      20
+SCROLLX:  0
+SCROLLY:  0
+BACK:     1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    0
+GRTIME1:  1
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXX
+Xr1r2r3r          X
+X        XXXXXXX1 X
+X 3XXXXXX      XX X
+X Xo      XXX.  X X
+X X  .XXX   ,XX X X
+X X XX,   XXX.  X X
+X X  .XXXCC .XX X X
+X X XX.  CCXX,  X X
+X X  ,XXX   .XX X X
+X X XX.   XXX.  X X
+X X  .XXX   ,XX X X
+X X XX,   XXX.  X X
+X X  .XXX   .XX X X
+X X XX.   XXX,  X X
+X X  ,XXX      XX X
+X XX     GXXXXXX1 X
+X 2XXXXXXXF       X
+X        FPr1r2r3rX
+XXXXXXXXXXXXXXXXXXX
+#
