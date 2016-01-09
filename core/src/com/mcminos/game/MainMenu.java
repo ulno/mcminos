@@ -39,7 +39,7 @@ public class MainMenu implements Screen {
 //    private Label versionStringActor;
 
     private boolean fullscreen;
-    private LevelConfig activatedLevel = null; // nothing selected in the beginning
+    private LevelConfig selectedLevel = null; // nothing selected in the beginning
     private int activatedCategory = 0; // first is selected by default
     private String language;
     private BitmapFont levelFont;
@@ -53,7 +53,7 @@ public class MainMenu implements Screen {
         this.preferences = main.getPreferences();
         this.fullscreen = preferences.getFullScreen();
         this.audio = main.getAudio();
-        this.statistics = main.getUserStats();
+        this.statistics = main.getStatistics();
         batch = new SpriteBatch();
         levelsConfig = main.getLevelsConfig();
         bg = Entities.backgrounds_amoeboid_01.getTexture(128, 0); // can be fixed as bg is not so critical
@@ -73,6 +73,10 @@ public class MainMenu implements Screen {
 
 // happens in resize        rebuildMenu();
 
+/*        selectedLevel = statistics.getLastLevel();  // make sure, we can scroll to start
+        activatedCategory = selectedLevel.getCategoryNr();
+        later set in activate level through main
+*/
         // eventually continue a paused/suspended game
         if (Game.getSaveFileHandle(0).exists()) {
             resumeRequested = true;
@@ -84,21 +88,22 @@ public class MainMenu implements Screen {
         categorySelectorButtons[activatedCategory].unselect();
         activatedCategory = category;
         categorySelectorButtons[activatedCategory].select();
-        activatedLevel = null; //deselect
+        // selectedLevel = null; //deselect -- not necessary as it can stay selected
         twoColumns.clear();
         twoColumns.add(folderSelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
         twoColumns.add(levelSelector).fill().expand();
     }
 
     private void selectLevel(LevelConfig level) {
-        activatedLevel = level;
+        selectedLevel = level;
         main.setScreen(new Play(main, level, 0, 3));
     }
 
+
     public void activateLevel(LevelConfig currentLevel) {
-        this.activatedLevel = currentLevel;
-        if (activatedLevel != null) {
-            activatedCategory = activatedLevel.getCategoryNr();
+        this.selectedLevel = currentLevel;
+        if (selectedLevel != null) {
+            activatedCategory = selectedLevel.getCategoryNr();
         }
     }
 
@@ -194,7 +199,7 @@ public class MainMenu implements Screen {
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Credits(main, activatedLevel));
+                main.setScreen(new Credits(main, selectedLevel));
             }
         });
         topRow.add(infoButton.getCell()).right().minHeight(res);
@@ -237,28 +242,33 @@ public class MainMenu implements Screen {
                     snapshot.setSize(res, res);
                     thumbnail.addActor(snapshot);
                 }
-                Label t = new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
                 levelRow.add(thumbnail).prefHeight(res).top().left().padRight(res / 4);
-                levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
+                Label t;
+                t =  new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+                if (selectedLevel != null && c == activatedCategory && i == selectedLevel.getNr()) {
+                    t =  new Label((i + 1) + ". >" + lc.getTitle(language), levelSkin);
+                    Group indicator = new Group();
+                    indicator.setSize(res, res);
+                    Image indicatorImage = new Image(Entities.mcminos_default_left.getTextureDirectStep(res, 7));
+                    indicator.setSize(res, res);
+                    indicator.addActor(indicatorImage);
+                    levelRow.add(t).prefHeight(res).top().left();
+                    levelRow.add(indicator).top().left().fillX().expandX();
+                    //TODO: check why we can't set a background?
+                } else {
+                    t =  new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+                    levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
+                }
+
                 lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
                 levelSelectorTable.row();
                 if(statistics.activated(lc)) {
                     levelRow.addListener(new LevelClickListener(levelsConfig.get(c).get(i)));
                 } else {
                     // t.setColor(0.5f,0.5f,0.5f,1.0f); does not work as this is a colored font
-                    levelRowGroup.setColor(0.5f,0.5f,0.5f,0.7f); // sets only transparency
+                    levelRowGroup.setColor(1,1,1,0.6f); // sets only transparency
                 }
-                if (activatedLevel != null) {
-                    if (i == activatedLevel.getNr()) {
-                        //levelRow.setBackground(new NinePatchDrawable(bigMenuSkin.getPatch("default-rect"))); // TODO: check for memory leak here
-                        levelRow.background("default-rect");
-                        levelRowGroup.setColor(0, 1, 0, 0.7f); // sets only transparency
-                        //TODO: check why we can't set a background?
-                    }
-                }
-            }
-            if (lastCell != null) {
-                lastCell.expandY().fillY();
+                // mark last active level
             }
         }
 
@@ -306,6 +316,17 @@ public class MainMenu implements Screen {
         table.add(categoryLabel).minHeight(res).prefHeight(res).padBottom(res / 16).padLeft(res+res/2).left().row();
         switchLevelCategory(activatedCategory, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[activatedCategory], res);
         table.add(twoColumns).fill().expand();
+
+        //table.pack(); // fit table into root-table to update coordinates
+        table.layout(); // force layout to have coordinates and dimensions in pane
+        // scroll pane to activated level
+        if(selectedLevel != null) {
+            ScrollPane pane = levelSelector[selectedLevel.getCategory().getNr()];
+            pane.setScrollY((res + res / 8) * selectedLevel.getNr());
+            if (lastCell != null) {
+                lastCell.expandY().fillY();
+            }
+        }
 
     }
 
@@ -379,7 +400,7 @@ public class MainMenu implements Screen {
         for (Texture t : textureCache.values())
             t.dispose();
         stage.dispose();
-        batch.dispose();
+//        batch.dispose(); akready disposed? TODO: check
     }
 
     private void toggleFullscreen() {
