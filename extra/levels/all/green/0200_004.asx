@@ -4,11 +4,14 @@
 AUTHOR: Andreas_Neudecker
 NUMBR:    4
 VERSION:  0900
+SYMBOL: level_mcminos_outline
+TITLE: Level 4 of McMinos for Atari 1.10
+TITLE-de: Spielebene 4 von McMinos für Atari 1.10
 
 ; UN-FIXED WRAP-AROUND FIXES
 
-LWID:    13
-LHI:     20
+LWID:    12
+LHI:     19
 SCROLLX:  1
 SCROLLY:  1
 BACK:     4
@@ -32,24 +35,23 @@ SCROLLX:  1
 SCROLLY:  1
 
 LEVEL:
-X.XXX..XXXXDX
-X......L....X
-X.XXXX.XXXX.X
-..kkb..>..D..
-X.XXXX.XXXX.X
-X.D..<..kkk.X
-X.XXXX.XXXXGX
-X.kk.k.>k.D.X
-X.XXXX.XXXX.X
-..D..<b.kkk..
-X.XXXX.XXXXkX
-X.>..D..kkk.X
-X.XXXX.XXXX.X
-..kkk..>b.D..
-X.XXXX.XXXX.X
-X.kkk.P>..D.X
-X.XXXXXXXXX.X
-....XCC...1..
-X....CCXb...X
-X.XXX..XXXXDX
+X......L....
+X.XXXX.XXXX.
+..kkb..>..D.
+X.XXXX.XXXX.
+X.D..<..kkk.
+..XXXX.XXXXG
+X.kk.k.>k.D.
+X.XXXX.XXXX.
+..D..<b.kkk.
+X.XXXX.XXXXk
+X.>..D..kkk.
+X.XXXX.XXXX.
+..kkk..>b.D.
+X.XXXX.XXXX.
+X.kkk.P>..D.
+X.XXXXXXXXX.
+....XCC...1.
+X....CCXb...
+X.XXX..XXXDX
 #

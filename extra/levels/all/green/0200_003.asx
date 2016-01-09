@@ -4,6 +4,9 @@
 AUTHOR: Andreas_Neudecker
 NUMBR:    3
 VERSION:  0900
+SYMBOL: level_mcminos_outline
+TITLE: Level 3 of McMinos for Atari 1.10
+TITLE-de: Spielebene 3 von McMinos für Atari 1.10
 
 ; UN-FIXED WRAP-AROUND FIXES
 
