@@ -126,6 +126,7 @@ public class Load implements Screen {
                 break;
             case 9:
                 levelsConfig = new LevelsConfig("levels/list");
+                main.initLevelsConfig(levelsConfig);
                 progress = 0.98f;
                 step ++;
                 break;
@@ -159,7 +160,7 @@ public class Load implements Screen {
         if ( loadNext() ) {
             // Then switch screen
             this.dispose();
-            main.initLevelsConfig(levelsConfig);
+            // was done begore main.initLevelsConfig(levelsConfig);
             MainMenu mainMenu = new MainMenu(main);
             main.initMainMenu( mainMenu );
             main.activateMainMenu( null );

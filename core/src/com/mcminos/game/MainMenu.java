@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -42,7 +39,7 @@ public class MainMenu implements Screen {
 //    private Label versionStringActor;
 
     private boolean fullscreen;
-    private LevelConfig activatedLevel = null; // nothing selected in the beginning
+    private LevelConfig selectedLevel = null; // nothing selected in the beginning
     private int activatedCategory = 0; // first is selected by default
     private String language;
     private BitmapFont levelFont;
@@ -56,7 +53,7 @@ public class MainMenu implements Screen {
         this.preferences = main.getPreferences();
         this.fullscreen = preferences.getFullScreen();
         this.audio = main.getAudio();
-        this.statistics = main.getUserStats();
+        this.statistics = main.getStatistics();
         batch = new SpriteBatch();
         levelsConfig = main.getLevelsConfig();
         bg = Entities.backgrounds_amoeboid_01.getTexture(128, 0); // can be fixed as bg is not so critical
@@ -76,32 +73,37 @@ public class MainMenu implements Screen {
 
 // happens in resize        rebuildMenu();
 
+/*        selectedLevel = statistics.getLastLevel();  // make sure, we can scroll to start
+        activatedCategory = selectedLevel.getCategoryNr();
+        later set in activate level through main
+*/
         // eventually continue a paused/suspended game
         if (Game.getSaveFileHandle(0).exists()) {
             resumeRequested = true;
         }
     }
 
-    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, Button[] categorySelectorButtons, ScrollPane levelSelector, int res) {
+    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, SymbolButton[] categorySelectorButtons, ScrollPane levelSelector, int res) {
         categoryLabel.setText(levelsConfig.get(category).getName());
-        categorySelectorButtons[activatedCategory].setColor(1,1,1,1);
+        categorySelectorButtons[activatedCategory].unselect();
         activatedCategory = category;
-        categorySelectorButtons[activatedCategory].setColor(0.5f,0,0,1);
-        activatedLevel = null; //deselect
+        categorySelectorButtons[activatedCategory].select();
+        // selectedLevel = null; //deselect -- not necessary as it can stay selected
         twoColumns.clear();
         twoColumns.add(folderSelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
         twoColumns.add(levelSelector).fill().expand();
     }
 
     private void selectLevel(LevelConfig level) {
-        activatedLevel = level;
+        selectedLevel = level;
         main.setScreen(new Play(main, level, 0, 3));
     }
 
+
     public void activateLevel(LevelConfig currentLevel) {
-        this.activatedLevel = currentLevel;
-        if (activatedLevel != null) {
-            activatedCategory = activatedLevel.getCategoryNr();
+        this.selectedLevel = currentLevel;
+        if (selectedLevel != null) {
+            activatedCategory = selectedLevel.getCategoryNr();
         }
     }
 
@@ -116,11 +118,11 @@ public class MainMenu implements Screen {
         private final ScrollPane categorySelector;
         private final ScrollPane levelSelector;
         private final int resolution;
-        private final Button[] categorySelectorButtons;
+        private final SymbolButton[] categorySelectorButtons;
         private final Label categoryLabel;
         public int category;
 
-        public CategoryClickListener(int c, Label categoryLabel, Table twoColumns, ScrollPane categorySelector, Button[] buttons, ScrollPane levelSelector, int res) {
+        public CategoryClickListener(int c, Label categoryLabel, Table twoColumns, ScrollPane categorySelector, SymbolButton[] buttons, ScrollPane levelSelector, int res) {
             category = c;
             this.categoryLabel = categoryLabel;
             this.twoColumns = twoColumns;
@@ -133,6 +135,7 @@ public class MainMenu implements Screen {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
+            //super.clicked(event,x,y);
         }
     }
 
@@ -166,7 +169,7 @@ public class MainMenu implements Screen {
         // first build only elements, layout later
         Table topRow = new Table();
 
-        Image settingsButton = new Image(Entities.menu_button_settings.getTexture(res, 0));
+        SymbolButton settingsButton = new SymbolButton(res, Entities.menu_symbol_settings.getTexture(res, 0));
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -174,9 +177,9 @@ public class MainMenu implements Screen {
                 else dialogClose();
             }
         });
-        topRow.add(settingsButton).left().minHeight(res).padRight(res / 16);
+        topRow.add(settingsButton.getCell()).left().minHeight(res).padRight(res / 16);
 
-        Image loadButton = new Image(Entities.menu_button_game_load.getTexture(res, 0));
+        SymbolButton loadButton = new SymbolButton(res,Entities.menu_symbol_game_load.getTexture(res, 0));
         loadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -186,29 +189,30 @@ public class MainMenu implements Screen {
                 }
             }
         });
-        topRow.add(loadButton).left().minHeight(res);
+        topRow.add(loadButton.getCell()).left().minHeight(res);
 
-        Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with old white graphics
+        Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with mcminos logo graphics
         title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
         topRow.add(title).prefHeight(res).fillX().expandX();
 
-        Image infoButton = new Image(Entities.menu_button_info.getTexture(res, 0));
+        SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Credits(main, activatedLevel));
+                main.setScreen(new Credits(main, selectedLevel));
             }
         });
-        topRow.add(infoButton).right().minHeight(res);
+        topRow.add(infoButton.getCell()).right().minHeight(res);
 
-        Image quitButton = new Image(Entities.menu_button_exit_variant.getTexture(res, 0));
+        SymbolButton quitButton = new SymbolButton(res,Entities.menu_button_exit_variant.getTexture(res, 0));
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                dispose();
+                main.exit();
             }
         });
-        topRow.add(quitButton).right().minHeight(res);
+        topRow.add(quitButton.getCell()).right().minHeight(res);
 
 
         Label categoryLabel = new Label(levelsConfig.get(activatedCategory).getName(), levelSkin);
@@ -238,51 +242,48 @@ public class MainMenu implements Screen {
                     snapshot.setSize(res, res);
                     thumbnail.addActor(snapshot);
                 }
-                Label t = new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
                 levelRow.add(thumbnail).prefHeight(res).top().left().padRight(res / 4);
-                levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
+                Label t;
+                t =  new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+                if (selectedLevel != null && c == activatedCategory && i == selectedLevel.getNr()) {
+                    t =  new Label((i + 1) + ". >" + lc.getTitle(language), levelSkin);
+                    Group indicator = new Group();
+                    indicator.setSize(res, res);
+                    Image indicatorImage = new Image(Entities.mcminos_default_left.getTextureDirectStep(res, 7));
+                    indicator.setSize(res, res);
+                    indicator.addActor(indicatorImage);
+                    levelRow.add(t).prefHeight(res).top().left();
+                    levelRow.add(indicator).top().left().fillX().expandX();
+                    //TODO: check why we can't set a background?
+                } else {
+                    t =  new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+                    levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
+                }
+
                 lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
                 levelSelectorTable.row();
                 if(statistics.activated(lc)) {
                     levelRow.addListener(new LevelClickListener(levelsConfig.get(c).get(i)));
                 } else {
                     // t.setColor(0.5f,0.5f,0.5f,1.0f); does not work as this is a colored font
-                    levelRowGroup.setColor(0.5f,0.5f,0.5f,0.7f); // sets only transparency
+                    levelRowGroup.setColor(1,1,1,0.6f); // sets only transparency
                 }
-                if (activatedLevel != null) {
-                    if (i == activatedLevel.getNr()) {
-                        //levelRow.setBackground(new NinePatchDrawable(bigMenuSkin.getPatch("default-rect"))); // TODO: check for memory leak here
-                        levelRow.background("default-rect");
-                        levelRowGroup.setColor(0, 1, 0, 0.7f); // sets only transparency
-                        //TODO: check why we can't set a background?
-                    }
-                }
-            }
-            if (lastCell != null) {
-                lastCell.expandY().fillY();
+                // mark last active level
             }
         }
 
         // add the buttons for the different level categories to the toolbar
         Table categorySelectorTable = new Table();
         ScrollPane categorySelector = new ScrollPane(categorySelectorTable);
-        Button categorySelectorButtons[] = new Button[levelsConfig.size()];
+        SymbolButton categorySelectorButtons[] = new SymbolButton[levelsConfig.size()];
         Cell<Group> lastCategory = null;
         for (int i = 0; i < levelsConfig.size(); i++) { // loop through categories
-            Group g = new Group();
-            g.setHeight(res);
-            Button b = new Button(bigMenuSkin);
+            SymbolButton b = new SymbolButton(res, levelsConfig.get(i).getTexture(res));
+            CategoryClickListener listener = new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[i], res);
+            b.addListener(listener);
             categorySelectorButtons[i] = b;
-            TextureRegion t = levelsConfig.get(i).getTexture(res);
-            if (t != null) {
-                Image img = new Image(t);
-                img.setSize(res, res);
-                b.add(img);
-            }
-            b.setSize(res, res);
-            g.addActor(b);
-            b.addListener(new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[i], res));
-            lastCategory = categorySelectorTable.add(g).top().left().prefSize(res).padBottom(res / 16);
+
+            lastCategory = categorySelectorTable.add(b.getCell()).top().left().prefSize(res).padBottom(res / 16);
             categorySelectorTable.row();
         }
         lastCategory.fillY().expandY();
@@ -312,9 +313,20 @@ public class MainMenu implements Screen {
 
         // Layout
         table.add(topRow).prefHeight(res).minHeight(res).top().fillX().expandX().padBottom(res / 8).row();
-        table.add(categoryLabel).minHeight(res).prefHeight(res).padBottom(res / 16).left().row();
+        table.add(categoryLabel).minHeight(res).prefHeight(res).padBottom(res / 16).padLeft(res+res/2).left().row();
         switchLevelCategory(activatedCategory, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[activatedCategory], res);
         table.add(twoColumns).fill().expand();
+
+        //table.pack(); // fit table into root-table to update coordinates
+        table.layout(); // force layout to have coordinates and dimensions in pane
+        // scroll pane to activated level
+        if(selectedLevel != null) {
+            ScrollPane pane = levelSelector[selectedLevel.getCategory().getNr()];
+            pane.setScrollY((res + res / 8) * selectedLevel.getNr());
+            if (lastCell != null) {
+                lastCell.expandY().fillY();
+            }
+        }
 
     }
 
@@ -388,7 +400,7 @@ public class MainMenu implements Screen {
         for (Texture t : textureCache.values())
             t.dispose();
         stage.dispose();
-        batch.dispose();
+//        batch.dispose(); akready disposed? TODO: check
     }
 
     private void toggleFullscreen() {
@@ -419,7 +431,10 @@ public class MainMenu implements Screen {
         }
         preferences.setFullScreen(fullscreen);
     }
-    
+
+    private SymbolButton soundButton;
+    private SymbolButton musicButton;
+
     private void dialogPreferences() {
         int res = preferences.getSymbolResolution();
         int padSize = res / 16;
@@ -439,45 +454,40 @@ public class MainMenu implements Screen {
         thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
 
         ///// Fill game prefs row
-        final Group soundButton = new Group();
-        final TextureRegion emptyButtonGfx = Entities.menu_button_empty.getTexture(res, 0);
-        //soundButton.addActor(new Image(emptyButtonGfx));
-        soundButton.addActor(new Image(audio.getSound() ?
-                Entities.menu_button_sound_on.getTexture(res, 0)
-                : Entities.menu_button_sound_off.getTexture(res, 0)));
+        soundButton = new SymbolButton(res,
+                audio.getSound() ?
+                Entities.menu_symbol_sound_on.getTexture(res, 0)
+                : Entities.menu_symbol_sound_off.getTexture(res, 0));
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int res = preferences.getSymbolResolution();
                 preferences.toggleSound();
-                soundButton.clearChildren();
-                soundButton.addActor(new Image(preferences.getSound() ?
-                        Entities.menu_button_sound_on.getTexture(res, 0)
-                        : Entities.menu_button_sound_off.getTexture(res, 0)));
+                soundButton.setSymbol(res,
+                        preferences.getSound() ?
+                        Entities.menu_symbol_sound_on.getTexture(res, 0)
+                        : Entities.menu_symbol_sound_off.getTexture(res, 0));
             }
         });
-        rowGamePrefsTable.add(soundButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(soundButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        final Group musicButton = new Group();
-        //musicButton.addActor(new Image(emptyButtonGfx));
-        musicButton.addActor(new Image(audio.getMusic() ?
-                Entities.menu_button_music_on.getTexture(res, 0)
-                : Entities.menu_button_music_off.getTexture(res, 0)));
+        musicButton = new SymbolButton(res,
+                audio.getMusic() ?
+                Entities.menu_symbol_music_on.getTexture(res, 0)
+                : Entities.menu_symbol_music_off.getTexture(res, 0));
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int res = preferences.getSymbolResolution();
                 preferences.toggleMusic();
-                musicButton.clearChildren();
-                musicButton.addActor(new Image(preferences.getMusic() ?
-                        Entities.menu_button_music_on.getTexture(res, 0)
-                        : Entities.menu_button_music_off.getTexture(res, 0)));
+                musicButton.setSymbol(res,preferences.getMusic() ?
+                        Entities.menu_symbol_music_on.getTexture(res, 0)
+                        : Entities.menu_symbol_music_off.getTexture(res, 0));
             }
         });
-        rowGamePrefsTable.add(musicButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(musicButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group symbolPlusButton = new Group();
-        symbolPlusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_in.getTexture(res, 0)));
+        SymbolButton symbolPlusButton = new SymbolButton(res, Entities.menu_symbol_toolbar_zoom_in.getTexture(res, 0));
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -486,10 +496,10 @@ public class MainMenu implements Screen {
                 dialogPreferences();
             }
         });
-        rowGamePrefsTable.add(symbolPlusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolPlusButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group symbolMinusButton = new Group();
-        symbolMinusButton.addActor(new Image(Entities.menu_button_toolbar_zoom_out.getTexture(res, 0)));
+        SymbolButton symbolMinusButton = new SymbolButton(res,
+                Entities.menu_symbol_toolbar_zoom_out.getTexture(res, 0));
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -498,11 +508,9 @@ public class MainMenu implements Screen {
                 dialogPreferences();
             }
         });
-        rowGamePrefsTable.add(symbolMinusButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(symbolMinusButton.getCell()).prefSize(res, res).padRight(padSize);
 
-        Group langButton = new Group();
-        langButton.addActor(new Image(Entities.menu_button_empty.getTexture(res, 0)));
-        langButton.addActor(new Image(preferences.languageGfx().getTexture(res,0)));
+        SymbolButton langButton = new SymbolButton(res,preferences.languageGfx().getTexture(res,0));
         langButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -512,19 +520,17 @@ public class MainMenu implements Screen {
                 dialogPreferences();
             }
         });
-        rowGamePrefsTable.add(langButton).prefSize(res, res).padRight(padSize);
+        rowGamePrefsTable.add(langButton.getCell()).prefSize(res, res).padRight(padSize);
 
 
-        Group closeButton = new Group();
-        closeButton.addActor(new Image(Entities.toolbox_abort.getTexture(res, 0)));
+        SymbolButton closeButton = new SymbolButton(res, Entities.toolbox_abort.getTexture(res, 0));
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dialogClose();
             }
         });
-        rowGamePrefsTable.add(closeButton).prefSize(res, res).padRight(padSize);
-
+        rowGamePrefsTable.add(closeButton.getCell()).prefSize(res, res).padRight(padSize);
 
         stage.addActor(thisDialog);
         currentDialog = thisDialog;
@@ -549,4 +555,5 @@ public class MainMenu implements Screen {
     public void decreaseSymbolResolution() {
         setSymbolResolution(preferences.getSymbolResolution()/2);
     }
+
 }

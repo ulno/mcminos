@@ -181,11 +181,11 @@ public class Preferences {
 
         switch (getLanguage()) {
             case "de":
-                gfx = Entities.menu_flag_de;
+                gfx = Entities.menu_symbol_flag_german_dach;
                 break;
             case "en":
             default:
-                gfx = Entities.menu_flag_en;
+                gfx = Entities.menu_symbol_flag_en;
                 break;
         }
         return gfx;

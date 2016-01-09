@@ -120,6 +120,11 @@ public class Audio {
             ids[idPtr] = snd.play(0.8f); // all a little too loud, so 0.8 instead of 1.0
             idPtr = (idPtr + 1)%maxQueueLength;
         }
+
+        public void dispose() {
+            snd.stop();
+            snd.dispose();
+        }
     }
 
     public HashMap<String, MySound> soundList = new HashMap<>();
@@ -260,62 +265,11 @@ public class Audio {
         });
         if(music) musicPlayed.play();
     }
+
+    public void dispose() {
+        musicStop();
+        for(MySound s:soundList.values()) {
+            s.dispose();
+        }
+    }
 }
-
-/*
-
-Sound fr nchsten Level
-        void snd_levelend( void )
-        {
-                play_sound(APPLAUS, 255, 800 );
-        }
-
-        Sound fr Gegengift
-        void snd_antidot( void )
-        {
-        play_sound( TOOLS, 1, 30 );
-        }
-
-
-        Sound fr letter
-        void snd_letter( void )
-        {
-        play_sound( TOOLS, 1, 30 );
-        }
-
-        // replaced by rumble
-        Sound fr fallenden Stein bzw. aufbrechenden Boden
-        void snd_rockfall( void )
-        {
-        play_sound( SPLASH, 3, 200 );
-        }
-
-        Sound fr warpin
-        void snd_warpin( void )
-        {
-        play_sound( BLUB, 2, 200 );
-        }
-
-        Sound fr warpout
-        void snd_warpout( void )
-        {
-        play_sound( BULB, 2, 200 );
-        }
-
-        Sound fr fallenden McMinos
-        void snd_falling( void )
-        {
-        play_sound( FALLING, 2, 300 );
-        }
-
-        Uhrticken
-        void snd_tick( void )
-        {
-        play_sound( TICK, 0, 0 );
-        }
-
-        Beep
-        void snd_beep( void )
-        {
-        play_sound( BEEP, 2, 30 );}
-        */

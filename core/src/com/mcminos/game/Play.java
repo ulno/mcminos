@@ -185,7 +185,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         pauseOn(); // make sure it's active and game is paused
 
         // activate level
-        main.getUserStats().activate(level.getLevelConfig());
+        main.getStatistics().activate(level.getLevelConfig());
         dialogs.openLevelStory();
     }
 
@@ -232,7 +232,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 // one is following -> unlock
                 LevelCategory nc = main.getLevelsConfig().get(categoryNr+1);
                 nextLevelConfig = nc.get(0);
-                main.getUserStats().activate(nextLevelConfig);
+                main.getStatistics().activate(nextLevelConfig);
             }
             this.dispose();
             Game.getSaveFileHandle(0).delete();
@@ -603,25 +603,32 @@ public class Play implements Screen, GestureListener, InputProcessor {
             case 27: // Escape
             case 't':
             case 'T':
-            case ' ':
-                if (isPaused()) {
-                    pauseOff();
-                } else {
+            case 'm':
+            case 'M':
+                if(hasDialog()) togglePause();
+                else {
                     pauseOn();
+                    dialogs.openGameMenu();
                 }
                 break;
+            case ' ':
             case 'p':
             case 'P':
-                if (!dialogs.active()) {
-                    if (isPaused()) {
-                        pauseOff();
-                    } else {
-                        pauseOn();
-                    }
-                }
+                togglePause();
                 break;
         }
         return false;
+    }
+
+    private void togglePause() {
+        if (isPaused()) {
+            if(hasDialog()) {
+                closeDialog(); // first close dialog
+            }
+            else pauseOff();
+        } else {
+            pauseOn();
+        }
     }
 
     public void zoomPlus() {

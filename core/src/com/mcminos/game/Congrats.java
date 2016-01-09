@@ -37,7 +37,7 @@ public class Congrats implements Screen {
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage); // set inputprocessor
-        statistics = main.getUserStats();
+        statistics = main.getStatistics();
 
         rebuild();
     }

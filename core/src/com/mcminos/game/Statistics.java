@@ -29,7 +29,9 @@ public class Statistics {
     private final static int nrOfFileHandles = 5;
     private final FileHandle[] saveFiles = new FileHandle[nrOfFileHandles];
 
-    HashMap<String, LevelStatistics> statsRecord;
+    /* Saved data */
+    private HashMap<String, LevelStatistics> statsRecord;
+    private LevelConfig lastLevel = null;
 
     /* kryo and crypto init */
     private static final String ALGORITHM = "Blowfish";
@@ -55,7 +57,8 @@ public class Statistics {
         if (!statsRecord.containsKey(name)) {
             statsRecord.put(name, new LevelStatistics());
         }
-        save(); // TODO: save only when necessary
+        lastLevel = newLevel;
+        save(); // save always to remember last played level
     }
 
     public boolean activated(LevelConfig level) {
@@ -118,6 +121,9 @@ public class Statistics {
             Output output = new Output(new BufferedOutputStream(new DeflaterOutputStream(new CipherOutputStream(fh.write(false), cipher))));
 
             kryo.writeObject(output, statsRecord);
+            getLastLevel(); // make sure it's initialized
+            kryo.writeObject(output, lastLevel.getCategory().getId());
+            kryo.writeObject(output, lastLevel.getId());
 
             output.close();
         } catch (Exception e) {
@@ -141,15 +147,31 @@ public class Statistics {
 
                     // restore the state
                     statsRecord = kryo.readObject(input, HashMap.class);
-
+                    try {
+                        String categoryId = kryo.readObject(input, String.class);
+                        String levelId = kryo.readObject(input, String.class);
+                        lastLevel = main.getLevelsConfig().getCategory(categoryId).getLevel(levelId);
+                    } catch (Exception e) {
+                        Gdx.app.log("exception in load stats", "Unable to load lastLevel, using first as default " + i, e);
+                        lastLevel = null;
+                        getLastLevel(); //set to sth reasonable
+                    }
                     input.close();
                     return true;
                 } catch (Exception e) {
                     Gdx.app.log("exception in load stats", "Unable to load stats file "+i, e);
+                    getLastLevel(); // make sure it is not null
                     // try next
                 }
             }
         }
         return false; // none worked
+    }
+
+    public LevelConfig getLastLevel() {
+        if(lastLevel == null) {
+            lastLevel = main.getLevelsConfig().get(0).get(0); //get first
+        }
+        return lastLevel;
     }
 }

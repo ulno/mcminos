@@ -150,7 +150,7 @@ public class Toolbox {
 
         int res = preferences.getSymbolResolution();
 
-        playPauseButton = new ToolboxButton( this, Entities.menu_pause, res, 0, new ClickListener() {
+        playPauseButton = new ToolboxButton( this, Entities.menu_symbol_pause, res, 0, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(!activatingTouchInProgress ) {
@@ -162,7 +162,7 @@ public class Toolbox {
                 }
             }
         });
-        menuButton = new ToolboxButton( this, Entities.menu_settings, res, 0, new ClickListener() {
+        menuButton = new ToolboxButton( this, Entities.menu_symbol_settings, res, 0, new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(play.hasDialog()) play.closeDialog();
@@ -293,7 +293,7 @@ public class Toolbox {
 
     public void update() {
         boolean c = false;
-        c = c || playPauseButton.setGraphics(play.isPaused()?Entities.menu_play:Entities.menu_pause); // set right image in pause-button
+        c = c || playPauseButton.setGraphics(play.isPaused()?Entities.menu_symbol_play:Entities.menu_symbol_pause); // set right image in pause-button
         c = c || chocolateButton.setValue(mcminos.getChocolates());
         c = c || keyButton.setValue(mcminos.getKeys());
         c = c || bombButton.setValue(mcminos.getBombs());

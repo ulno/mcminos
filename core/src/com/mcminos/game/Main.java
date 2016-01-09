@@ -5,7 +5,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Json;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class Main extends com.badlogic.gdx.Game {
     private LevelsConfig levelsConfig;
     private MainMenu mainMenu;
     private InputProcessor defaultInputProcessor;
-    private Statistics userStats;
+    private Statistics statistics;
     private Preferences preferences;
 
     public LevelsConfig getLevelsConfig() {
@@ -109,11 +108,11 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void loadUserStats() {
-        userStats = new Statistics(this,GAME_STATS_FILE);
+        statistics = new Statistics(this,GAME_STATS_FILE);
     }
 
-    public Statistics getUserStats() {
-        return userStats;
+    public Statistics getStatistics() {
+        return statistics;
     }
 
     private Skin createSkinWithFont(BitmapFont font) {
@@ -152,6 +151,7 @@ public class Main extends com.badlogic.gdx.Game {
 
     @Override
     public void dispose() {
+        audio.dispose();
         for (Skin s : levelSkinList.values()) {
             s.dispose();
         }
@@ -205,6 +205,9 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void activateMainMenu( LevelConfig currentLevel ) {
+        if(currentLevel == null) { // if not given, find last level played
+            currentLevel = statistics.getLastLevel();
+        }
         mainMenu.init();
         mainMenu.activateLevel(currentLevel);
         mainMenu.resize();
@@ -218,5 +221,10 @@ public class Main extends com.badlogic.gdx.Game {
 
     public Preferences getPreferences() {
         return preferences;
+    }
+
+    public void exit() {
+        dispose();
+        Gdx.app.exit();
     }
 }
