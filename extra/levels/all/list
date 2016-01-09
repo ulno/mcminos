@@ -1,20 +1,20 @@
 ; Tutorial
-tut/tut01-pills
-tut/tut02-ghost-hanky
-tut/tut03-chocolate
-tut/tut04-doors-and-keys
-tut/tut05-rock-and-rock-me
-tut/tut06-jumping-pills
-tut/tut07-bombs
-tut/tut08-holes
-tut/tut09-warp-holes
-tut/tut10-poison-and-medicine
-tut/tut11-dynamite
-tut/tut12-oneways
-tut/tut13-mirror
-tut/tut14-speed-up-and-down-killall-field
-tut/tut15-whisky
-tut/tut16-infinite-world
+tutorial/01-pills
+tutorial/02-ghost-hanky
+tutorial/03-chocolate
+tutorial/04-doors-and-keys
+tutorial/05-rock-and-rock-me
+tutorial/06-jumping-pills
+tutorial/07-bombs
+tutorial/08-holes
+tutorial/09-warp-holes
+tutorial/10-poison-and-medicine
+tutorial/11-dynamite
+tutorial/12-oneways
+tutorial/13-mirror
+tutorial/14-speed-up-and-down-killall-field
+tutorial/15-whisky
+tutorial/16-infinite-world
 
 ; Teaserlevel
 teaser/0815_000 ; simple small, classic
