@@ -270,6 +270,7 @@ public class MainMenu implements Screen {
                 }
                 // mark last active level
             }
+            lastCell.expandY().fillY();
         }
 
         // add the buttons for the different level categories to the toolbar
