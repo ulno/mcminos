@@ -89,7 +89,7 @@ public class PlayDialogs {
         titleLabel.setWrap(true);
         titleLabel.setAlignment(Align.left);
         topRow.add(titleLabel).top().left().fillX().expandX();
-        mainTable.add(topRow).fillX().expandX().padLeft(res/2).padRight(res/2).row();
+        mainTable.add(topRow).fillX().expandX().padLeft(res/2).padRight(res+res/4).row();
         Table bodyTable = new Table();
         Label bodyLabel = new Label(body, writingSkin);
         bodyLabel.setWrap(true);
