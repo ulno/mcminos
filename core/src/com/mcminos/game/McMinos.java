@@ -734,4 +734,7 @@ public class McMinos implements KryoSerializable {
         this.lives = lives;
     }
 
+    public McMinosMover getMover() {
+        return mover;
+    }
 }

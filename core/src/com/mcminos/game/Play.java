@@ -76,6 +76,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         stageBatch = new SpriteBatch();
         backgroundBatch = new SpriteBatch();
         miniBatch = new SpriteBatch();
+        miniBatch.enableBlending();
+        miniBatch.setColor(1,1,1,0.7f);
         miniScreenBackground = new ShapeRenderer();
         box = new ShapeRenderer();
 //        background = Entities.backgrounds_punched_plate_03;
@@ -329,6 +331,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         gameBatch.end(); // must end before other layers
 
         if (menusActivated) {
+            renderScore(); // score etc.
+
             // only draw minimap if parts of map are not visible (be one half block tolerant in favor of not drawing)
             if(level.getVPixelsWidth() > playwindow.getVisibleWidthInVPixels() + PlayWindow.virtualBlockResolution/2
                     || level.getVPixelsHeight() > playwindow.getVisibleHeightInVPixels() + PlayWindow.virtualBlockResolution/2 ) {
@@ -337,7 +341,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
                 miniScreenBackground.begin(ShapeRenderer.ShapeType.Filled);
-                miniScreenBackground.setColor(0, 0, 0, 0.5f); // a little transparent
+                miniScreenBackground.setColor(0, 0, 0, 0.4f); // a quite transparent
                 miniScreenBackground.rect(playwindow.getMiniX(),
                         playwindow.getMiniY(),
                         (level.getWidth() + 2) * playwindow.virtual2MiniResolution,
@@ -355,7 +359,6 @@ public class Play implements Screen, GestureListener, InputProcessor {
             toolbox.update(); // update toolbox based on inventory
 
             // add stage and menu
-            renderScore(); // score etc.
             stage.draw();
             stage.act(delta); // evaluate interaction with menu
         }
@@ -374,8 +377,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
      * draw score, energy bars and time used or time left
      */
     static final int livesMaxDraw = 5;
-    int[] barLengths = new int[3]; // power, umbrella, poison/alcohol
-    Color[] barColors = new Color[3];
+    static final int maxBars = 4;
+    int[] barLengths = new int[maxBars]; // power, umbrella, poison/alcohol
+    Color[] barColors = new Color[maxBars];
     private void renderScore() {
         SpriteBatch batch = stageBatch;
         int v; // amount of specific energy
@@ -385,6 +389,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int x = res * 2 + (res/4);
         int yText = Gdx.graphics.getHeight() - res/8;
         int ySymbol = yText - res + res/16;
+        boolean addDiff;
 
         batch.begin();
 
@@ -402,6 +407,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
         framerateScore.append(Gdx.graphics.getFramesPerSecond());
         layout = font.draw(batch, framerateScore, x, yText );
         x += layout.width + res/4;
+
+        // avoid too much moving, due to variable font size
+        x = Math.max(x, res * (2 + Math.max(5,score.length() + framerateScore.length()) ));
 
         livesScore.setLength(0);
         int lives = mcminos.getLives();
@@ -423,6 +431,20 @@ public class Play implements Screen, GestureListener, InputProcessor {
             x+= res + res/4;
         }
 
+        addDiff = false;
+        if(mcminos.getMover().isAccelerated()) {
+            batch.draw(Entities.fields_field_speed_up.getTexture(res,0),x,ySymbol);
+            x+= res/4;
+            addDiff = true;
+        }
+        if( level.getLevelConfig().getMcMinosSpeed() > 1 ) {
+            batch.draw(Entities.fields_field_speed_up.getTexture(res,0),x,ySymbol);
+            x+= res/4;
+            addDiff = true;
+        }
+
+        if(addDiff) x += res;
+
         batch.end();
 
         v = mcminos.getPowerDuration();
@@ -437,7 +459,13 @@ public class Play implements Screen, GestureListener, InputProcessor {
             barColors[bars] = Color.BLUE;
             bars ++;
         }
-        v = mcminos.getPoisonDuration() + mcminos.getDrunkLevel();
+        v = mcminos.getDrunkLevel();
+        if (v > 0) {
+            barLengths[bars] = v;
+            barColors[bars] = Color.PURPLE;
+            bars ++;
+        }
+        v = mcminos.getPoisonDuration();
         if (v > 0) {
             barLengths[bars] = v;
             barColors[bars] = Color.GREEN;
