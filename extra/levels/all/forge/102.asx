@@ -26,31 +26,36 @@ MIRROR:   0
 
 MCSPEED:  1
 
-GHOST1:   4
+GHOST1:   3
 GHSPEED1: 1
 AGIL1:    0
-GRTIME1:  1
+GRTIME1:  5
+
+GHOST4:   3
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  30
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXX
-XG         h         GX
-X X1X X X XXX X X X3X X
-X 1.X X Xu   uX X X.1 X
-X XXX1X XXX XXX X3XXX X
-X   2.X.       .X.2   X
-X XXXXXXXXX XXXXXXXXX X
-X    1X         X3    X
-X XXX.X.XXX XXX.X.XXX X
-X    2X         X2    X
+XG.........h.........uX
+X.o1X.X.X.XXCCX.X.X3o.X
+X.1.X.X.Xu..CCX.X.X.1.X
+X.XXX1X.XXX.XXX.X3XXX.X
+X...2.X.........X.u...X
+X.XXXXXXXXX.XXXXXXXXX.X
+X....1X.........X3....X
+X.XXX.X.XXX.XXX.X.XXX.X
+X....2X.........X2....X
 XhXXXXXXXXXPXXXXXXXXXhX
-X     X         X     X
-X XXX.o.XXX XXX.o.XXX X
-X     X         X     X
-X XXXXXXXXX XXXXXXXXX X
-X   1.X.       .X.2   X
-X XXX2X XXX XXX X1XXX X
-X 2.X X X.   .X X X.1 X
-X X3X X X XXX X X X3X X
-XG         h         GX
+X.....X.........X.....X
+X.XXX.o.XXX.XXX.9.XXX.X
+X.....X.........X.....X
+X.XXXXXXXXX.XXXXXXXXX.X
+X...1.X.........X.2...X
+X.XXX2X.XXX.XXX.X1XXX.X
+X.2.X.X.X.....X.X.X.1.X
+X.o3X.X.X.XXX.X.X.X3o.X
+XG.........u.........GX
 XXXXXXXXXXXXXXXXXXXXXXX
 #

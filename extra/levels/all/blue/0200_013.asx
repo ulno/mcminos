@@ -4,10 +4,9 @@
 AUTHOR: Andreas_Neudecker
 NUMBR:    13
 VERSION:  1100
-
-; FIXED SCROLLX|Y, LWID, LHI, REMOVED DOUBLE WALLS ON EDGES
-; NO NEED TO UN-FIX WRAP-AROUND FIXES
-; 2DO: test & fix if required
+SYMBOL: level_mcminos_outline
+TITLE: Level 13 of McMinos for Atari 1.10
+TITLE-de: Spielebene 13 von McMinos für Atari 1.10
 
 LWID:   14
 LHI:    14

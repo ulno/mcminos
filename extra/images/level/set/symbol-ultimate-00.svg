@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="symbol-ultimate-00.svg">
+  <defs id="defs4152" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+    <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
+    <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
+    <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
+    <sodipodi:guide position="16,16" orientation="-0.70710678,0.70710678" id="guide4773" />
+    <sodipodi:guide position="16,16" orientation="0.70710678,0.70710678" id="guide4775" />
+  </sodipodi:namedview>
+  <metadata id="metadata4155">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
+    <circle r="13.125" cy="15.999996" cx="15.999997" style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3403" />
+    <path sodipodi:type="arc" style="fill:maroon;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3429" sodipodi:cx="15.999997" sodipodi:cy="16.00001" sodipodi:rx="12.1875" sodipodi:ry="12.187493" d="m 28.187497,16.00001 a 12.1875,12.187493 0 0 1 -6.09375,10.554678 12.1875,12.187493 0 0 1 -12.1875002,0 12.1875,12.187493 0 0 1 -6.0937497,-10.554679" sodipodi:start="0" sodipodi:end="3.1415927" sodipodi:open="true" />
+    <ellipse ry="4.6352549" rx="7.5" cy="20.6875" cx="16" style="fill:#500;fill-opacity:1;stroke:none" id="path5770" />
+    <path style="fill:red;fill-opacity:1;stroke:none" d="m 8.5,25.890267 c 0,0 2.982109,-1.980553 4.6875,-2.390267 0.911562,-0.218999 1.875,0 2.8125,0 0.9375,0 1.893107,-0.183365 2.8125,0 1.841666,0.367304 5.202767,2.16126 5.202767,2.16126 0,0 -5.515267,3.034351 -8.015267,3.034351 -2.5,0 -7.5,-2.805344 -7.5,-2.805344 z" id="path5768" inkscape:connector-curvature="0" sodipodi:nodetypes="caaaczc" />
+    <circle r="5.6250024" cy="10.374995" cx="9.4374971" style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3407" />
+    <circle r="5.6250029" cy="10.374995" cx="22.562498" id="path3425" style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <circle r="2.8125" cy="10.375" cx="9.4375" style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3409" />
+    <circle r="2.8125" cy="10.375" cx="22.5625" id="path3427" style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <ellipse ry="1.875" rx="0.9375" cy="20.036259" cx="16" style="fill:red;fill-opacity:1;stroke:none" id="path5707" />
+    <path sodipodi:end="6.2831853" sodipodi:start="3.1415927" sodipodi:ry="1.2621254e-06" sodipodi:rx="13.125002" sodipodi:cy="15.999996" sodipodi:cx="16" id="path3443" style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none" sodipodi:type="arc" sodipodi:open="true" />
+    <ellipse ry="0.19735253" rx="0.0035222631" cy="16.260662" cx="16.518789" style="fill:#500;fill-opacity:1;stroke:none" id="path5772" />
+  </g>
+</svg>
