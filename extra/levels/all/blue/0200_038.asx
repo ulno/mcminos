@@ -4,6 +4,9 @@
 AUTHOR: Andreas_Neudecker
 NUMBR:    38
 VERSION:  1100
+SYMBOL: level_mcminos_outline
+TITLE: Level 38 of McMinos for Atari 1.10
+TITLE-de: Spielebene 38 von McMinos für Atari 1.10
 
 ; 2DO: EDIT TO FIX DOUBLE WALLS AT LEVEL EDGES (if possible, and if level is kept)
 
