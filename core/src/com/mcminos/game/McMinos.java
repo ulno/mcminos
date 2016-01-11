@@ -159,11 +159,11 @@ public class McMinos implements KryoSerializable {
     }
 
     public void increaseScore(int increment) {
-        int old = score/5000;
+        /*int old = score/5000;
         score += increment;
         if(score/5000 > old) { // just passed 5000
            increaseLives();
-        }
+        } diabled until challenge system works TODO: enable again at one point */
     }
 
     private void gfxNormal() {

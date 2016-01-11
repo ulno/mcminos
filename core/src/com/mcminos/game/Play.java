@@ -64,6 +64,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     private boolean paused = true; // start paused
     private Preferences preferences;
+    private Fader fader;
 
     private void preInit(final Main main) {
         this.main = main;
@@ -82,6 +83,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         box = new ShapeRenderer();
 //        background = Entities.backgrounds_punched_plate_03;
         background = Entities.backgrounds_amoeboid_01;
+        fader = new Fader(main);
     }
 
     public Play(Main main, LevelConfig levelConfig, int score, int lives ) {
@@ -131,6 +133,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
     }
 
     public void initAfterLevel() {
+
+        fader.fadeIn();
 
         audio.musicRandom();
 
@@ -271,14 +275,18 @@ public class Play implements Screen, GestureListener, InputProcessor {
             }
         }
         /////// Handle timing events (like moving and events)
-        dialogs.updateTimer();
-        if (!game.updateTime()) { // update and exit, if game finished
-            if(mcminos.isWinning()) { // This level was actually won
-                advanceToNextLevel();
-            } else { // lost
-                backToMenu();
+        if(fader.isActive()) { // if this is the fading out handle exit events in the end
+
+        } else { // only handle when we are not transitioning
+            dialogs.updateTimer();
+            if (!game.updateTime()) { // update and exit, if game finished
+                if (mcminos.isWinning()) { // This level was actually won
+                    advanceToNextLevel();
+                } else { // lost
+                    backToMenu();
+                }
+                return;
             }
-            return;
         }
 
         //////// Handle drawing
@@ -361,6 +369,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
             // add stage and menu
             stage.draw();
             stage.act(delta); // evaluate interaction with menu
+
+            // add fader shade
+            fader.render();
         }
     }
 
@@ -390,17 +401,18 @@ public class Play implements Screen, GestureListener, InputProcessor {
         int yText = Gdx.graphics.getHeight() - res/8;
         int ySymbol = yText - res + res/16;
         boolean addDiff;
+        GlyphLayout layout;
 
         batch.begin();
 
         batch.setColor(1,1,1,0.7f);
 
         score.setLength(0);
-        score.append(mcminos.getScore());
+        /*score.append(mcminos.getScore());
         batch.draw(Entities.level_score.getTexture(res,0),x,ySymbol);
         x += res + res/8;
-        GlyphLayout layout = font.draw(batch, score, x, yText );
-        x += layout.width + res/4;
+        layout = font.draw(batch, score, x, yText );
+        x += layout.width + res/4;*/
 
         framerateScore.setLength(0);
         framerateScore.append("F");
@@ -585,6 +597,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     @Override
     public void dispose() {
+        fader.dispose();
         game.dispose();
         stage.dispose();
         gameBatch.dispose();

@@ -480,7 +480,7 @@ public class McMinosMover extends Mover {
                             ghosts.killall();
                             audio.soundPlay("killall");
                             break;
-                        case Bonus1:
+ /*                       case Bonus1:
                             item.dispose();
                             mcminos.increaseScore(100);
                             audio.soundPlay("treasure");
@@ -494,7 +494,7 @@ public class McMinosMover extends Mover {
                             item.dispose();
                             mcminos.increaseScore(300);
                             audio.soundPlay("treasure");
-                            break;
+                            break; Bonus currently deactivated */
                         case WarpHole:
                             if (currentDirection != STOP) { // only teleport when moving onto field
                                 audio.soundPlay("blub");

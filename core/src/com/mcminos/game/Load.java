@@ -160,7 +160,7 @@ public class Load implements Screen {
         if ( loadNext() ) {
             // Then switch screen
             this.dispose();
-            // was done begore main.initLevelsConfig(levelsConfig);
+            // was done before -  main.initLevelsConfig(levelsConfig);
             MainMenu mainMenu = new MainMenu(main);
             main.initMainMenu( mainMenu );
             main.activateMainMenu( null );

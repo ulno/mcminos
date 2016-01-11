@@ -36,6 +36,7 @@ public class MainMenu implements Screen {
     private final SpriteBatch batch;
     private final Main main;
     private final Table rootTable;
+    private final Fader fader;
 //    private Label versionStringActor;
 
     private boolean fullscreen;
@@ -59,6 +60,8 @@ public class MainMenu implements Screen {
         bg = Entities.backgrounds_amoeboid_01.getTexture(128, 0); // can be fixed as bg is not so critical
 
         stage = new Stage(new ScreenViewport(), batch);
+
+        fader = new Fader(main);
 
         // root table covering the screen
         rootTable = new Table();
@@ -109,6 +112,7 @@ public class MainMenu implements Screen {
 
     public void init() {
         audio.musicFixed(0);
+        fader.fadeIn();
     }
 
     // inner class for menu
@@ -348,12 +352,12 @@ public class MainMenu implements Screen {
                 resumeRequested = false;
             }
         } else {
-            stage.act(delta);
+            if(!fader.isActive()) stage.act(delta);
             stage.draw();
             batch.begin();
             levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
             batch.end();
-
+            fader.render();
         }
     }
 
