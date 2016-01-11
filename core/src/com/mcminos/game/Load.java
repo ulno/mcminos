@@ -157,15 +157,19 @@ public class Load implements Screen {
         stage.act(delta);
         stage.draw();
 
-        if ( loadNext() ) {
+        if(progress > 0.9999f) {
             // Then switch screen
             this.dispose();
             // was done before -  main.initLevelsConfig(levelsConfig);
             MainMenu mainMenu = new MainMenu(main);
-            main.initMainMenu( mainMenu );
-            main.activateMainMenu( null );
-        }
+            main.initMainMenu(mainMenu);
+            main.activateMainMenu(null);
+        } else {
 
+            if (loadNext()) {
+                progress = 1.0f;
+            }
+        }
     }
 
     public void scheduleLoadsGraphics() {

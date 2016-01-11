@@ -26,6 +26,7 @@ public class Credits implements Screen {
     private final Audio audio;
     private final LevelConfig levelConfig;
     private final Preferences preferences;
+    private final Fader fader;
     private String credits = "Credits will be here and scrolling.\n\nUlNo+Nope";
     private ScrollPane scroller;
     private long realTime = 0;
@@ -37,9 +38,11 @@ public class Credits implements Screen {
         this.preferences = main.getPreferences();
         this.audio = main.getAudio();
         this.levelConfig = levelConfig;
-        audio.musicFixed(2);
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
+        fader = new Fader(main);
+        fader.fadeOutInMusicFixed(1);
+
         Gdx.input.setInputProcessor(stage); // set inputprocessor
 
         // read credits for current language TODO: language
@@ -120,26 +123,29 @@ public class Credits implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        float current = scroller.getScrollY();
-        float scrollmax = scroller.getMaxY();
-        if(current < scrollmax) {
-            float gdxtime = Gdx.graphics.getDeltaTime();
-            realTime = (long) (gdxtime * 1000);
+        if(!fader.isActive()) {
+            float current = scroller.getScrollY();
+            float scrollmax = scroller.getMaxY();
+            if (current < scrollmax) {
+                float gdxtime = Gdx.graphics.getDeltaTime();
+                realTime = (long) (gdxtime * 1000);
 
-            long deltaTime = (long) (gdxtime * Game.timeResolutionSquare); // needs to have long in front as gdxtime is float (don't apply long directly to gdxtime)
-            deltaTime += lastDeltaTimeLeft; // apply what is left
-            long step = deltaTime / Game.timeResolution;
-            deltaTime -= step * Game.timeResolution;
-            lastDeltaTimeLeft = deltaTime;
-            if (realTimePassed > Game.timeResolutionSquare * 5) {
-                current += (float) step * preferences.getSymbolResolution() / PlayWindow.virtualBlockResolution;
-                scroller.setScrollY(current);
-            } else {
-                realTimePassed += step * Game.timeResolution;
+                long deltaTime = (long) (gdxtime * Game.timeResolutionSquare); // needs to have long in front as gdxtime is float (don't apply long directly to gdxtime)
+                deltaTime += lastDeltaTimeLeft; // apply what is left
+                long step = deltaTime / Game.timeResolution;
+                deltaTime -= step * Game.timeResolution;
+                lastDeltaTimeLeft = deltaTime;
+                if (realTimePassed > Game.timeResolutionSquare * 5) {
+                    current += (float) step * preferences.getSymbolResolution() / PlayWindow.virtualBlockResolution;
+                    scroller.setScrollY(current);
+                } else {
+                    realTimePassed += step * Game.timeResolution;
+                }
             }
+            stage.act();
         }
         stage.draw();
-        stage.act();
+        fader.render();
     }
 
     @Override
@@ -164,6 +170,7 @@ public class Credits implements Screen {
 
     @Override
     public void dispose() {
-
+        fader.dispose();
+        stage.dispose();
     }
 }
