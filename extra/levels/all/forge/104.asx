@@ -1,11 +1,11 @@
 ; FOR McMINOS - Version 3.14
-; Created.....: 2016-01-10
+; Created.....: 2016-01-11
 
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    104
 SYMBOL:   level_symbol_dynamite_fused
-TITLE: Boulder bang!
+TITLE:    Boulder bang!
 TITLE-de: Felsen-Bumm!
 BODY: Do not waste your dynamite.
 #

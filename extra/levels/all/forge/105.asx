@@ -1,11 +1,11 @@
 ; FOR McMINOS - Version 3.14
-; Created.....: 2016-01-10
+; Created.....: 2016-01-11
 
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    105
 SYMBOL:   level_mcminos_outline
-TITLE: Level 105 (unfinished)
+TITLE:    Level 105 (unfinished)
 TITLE-de: Spielebene 105 (unvollendet)
 BODY:
 No comment yet.
@@ -14,80 +14,56 @@ BODY-de:
 Noch kein Kommentar.
 #
 
-LWID:     50
-LHI:      50
-SCROLLX:  0
-SCROLLY:  0
-BACK:     5
+LWID:       30
+LHI:        23
+SCROLLX:    0
+SCROLLY:    0
+BACK:       2
 
-LTIME:    0
-RSTRT:    0
-MIRROR:   0
+LTIME:      0
+RSTRT:      0
+MIRROR:     0
 
-MCSPEED:  1
+MCSPEED:    1
 
-GHOST1:   1
-GHSPEED1: 1
-AGIL1:    0
-GRTIME1:  7
+GHOST1:     1
+GHSPEED1:   1
+AGIL1:      0
+GRTIME1:    7
 
-GHOST2:   1
-GHSPEED2: 1
-AGIL2:    0
-GRTIME2:  999999
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      0
+GRTIME2:    999999
 
-
+GHOST3:     3
+GHSPEED3:   1
+AGIL3:      15
+GRTIME3:    7
+TRANSWALL3: 7
 
 LEVEL:
-01                                                
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-11                                                
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-21                                                
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-31                                                
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-.1                                                
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+Z1                          1Z
+Z XrX X X XrX X9X XrX X8X CC Z
+Z  O  rOr  O  r r  O  rOr CC Z
+Z XrX X X XrX XoX XrX X9X rr Z
+Z3                          2Z
+ZXXXXXXXXXXXXXXXXXXXXXXXXXXXXZ
+Z.d.d.d8d.d.d.d.d.d3d.d.d.d.dZ
+Zd.drd.d2d.d.d.d.d.d.d.d.drd1Z
+ZZbZrZZZZZZZZZZZZZZZZZZZZZrZZZ
+Z Z r                     r  Z
+Z      XXXXXXXXXXXXXXXXX     Z
+Z XXXX X               X XXX Z
+Z        XXXXXXXXXXXXX       Z
+Z XrXXXX X           X XXXrX Z
+Z          XXXXXXXXX         Z
+Z XrX XXXX X       X XXX XrX Z
+Z            XXXXX           Z
+Z XrXrXXXXXX X   X XXXXXrXrX Z
+Z              X             Z
+Z XXX XXXXXXX XXX XXXXXX XXX Z
+Z                           PZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 #
