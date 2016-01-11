@@ -1,0 +1,93 @@
+; FOR McMINOS - Version 3.14
+; Created.....: 2016-01-10
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    105
+SYMBOL:   level_mcminos_outline
+TITLE: Level 105 (unfinished)
+TITLE-de: Spielebene 105 (unvollendet)
+BODY:
+No comment yet.
+#
+BODY-de:
+Noch kein Kommentar.
+#
+
+LWID:     50
+LHI:      50
+SCROLLX:  0
+SCROLLY:  0
+BACK:     5
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    0
+GRTIME1:  7
+
+GHOST2:   1
+GHSPEED2: 1
+AGIL2:    0
+GRTIME2:  999999
+
+
+
+LEVEL:
+01                                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+11                                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+21                                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+31                                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+.1                                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+#
