@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -41,7 +42,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
     private Main main;
     private Level level;
     private long lastZoomTime = 0;
-    Graphics background;
+    TextureRegion background;
     private Touchpad touchpad;
 
     private BitmapFont font;
@@ -82,7 +83,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         miniScreenBackground = new ShapeRenderer();
         box = new ShapeRenderer();
 //        background = Entities.backgrounds_punched_plate_03;
-        background = Entities.backgrounds_amoeboid_01;
+        background = Entities.backgrounds_amoeboid_01.getTexture(Preferences.MAXRES,0);
         fader = new Fader(main);
     }
 
@@ -306,11 +307,11 @@ public class Play implements Screen, GestureListener, InputProcessor {
             }
 
             backgroundBatch.begin();
-            int xoffset = playwindow.resolution * background.getWidth();
-            int yoffset = playwindow.resolution * background.getHeight();
+            int xoffset = background.getRegionWidth();
+            int yoffset = background.getRegionHeight();
             for (int x = 0; x < playwindow.getWidthInPixels() + playwindow.resolution; x += xoffset) {
                 for (int y = 0; y < playwindow.getHeightInPixels() + playwindow.resolution; y += yoffset) {
-                    background.draw(playwindow, backgroundBatch, x, y);
+                    backgroundBatch.draw(background, x, y);
                 }
             }
             backgroundBatch.end();

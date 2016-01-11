@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * Game prefereces like playing music oraudio, game and symbol resolution, selected language
  */
 public class Preferences {
-    private static final int MINRES = 16;
-    private static final int MAXRES = 128;
+    public static final int MINRES = 16;
+    public static final int MAXRES = 128;
     private int symbolMinRes;
 
     public static final com.badlogic.gdx.Preferences preferencesHandle = Gdx.app.getPreferences("com.mcminos.game.prefs");

@@ -67,7 +67,7 @@ public class Fader {
             int w = Gdx.graphics.getWidth();
             int h = Gdx.graphics.getHeight();
             if(outInActive) {
-                int res = main.getPreferences().getGameResolution();
+                int res = Preferences.MAXRES;
                 TextureRegion background = Entities.backgrounds_amoeboid_01.getTexture(res, 0);
                 batch.begin();
                 int xoffset = background.getRegionWidth();

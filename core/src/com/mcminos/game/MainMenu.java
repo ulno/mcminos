@@ -57,7 +57,7 @@ public class MainMenu implements Screen {
         this.statistics = main.getStatistics();
         batch = new SpriteBatch();
         levelsConfig = main.getLevelsConfig();
-        bg = Entities.backgrounds_amoeboid_01.getTexture(128, 0); // can be fixed as bg is not so critical
+        bg = Entities.backgrounds_amoeboid_01.getTexture(Preferences.MAXRES, 0); // can be fixed as bg is not so critical
 
         stage = new Stage(new ScreenViewport(), batch);
 
