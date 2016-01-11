@@ -1,0 +1,8 @@
+symbol='X'
+zindex=400
+order=[1,2,3]
+##  animation step: 100 h - this is meant to create a pseud-animation
+#   because animations usually start with a random animation step this leads
+#   to less monotonous graphics. "Animation" will only appear if the level is
+#   running(!) 100 h.
+speed=360000000
