@@ -273,7 +273,7 @@ public abstract class Mover implements KryoSerializable {
                 break;
             case Ghost3:
                 game.addMover(this);
-                level.increasePills();
+// done in Ghosts-initAfterKryo                level.increasePills();
                 break;
             case Rock:
                 game.addMover(this);
