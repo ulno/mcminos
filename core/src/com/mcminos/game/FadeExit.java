@@ -1,6 +1,8 @@
 package com.mcminos.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 
 /**
  * Created by ulno on 11.01.16.
@@ -24,6 +26,9 @@ public class FadeExit implements Screen {
     @Override
     public void render(float delta) {
         if(!fader.isActive()) {
+            // just stay black
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             lingerTime --;
         }
         fader.render();
