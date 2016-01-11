@@ -12,8 +12,8 @@ TITLE-de: Spielebene 31 von McMinos für Atari 1.10
 
 LWID:   25
 LHI:    15
-SCROLLX:  1
-SCROLLY:  1
+SCROLLX:  0
+SCROLLY:  0
 BACK:   9
 
 LTIME:    0
@@ -53,7 +53,7 @@ X   X CC X     X OO X3  X
 X XrX      XXX      X X X
 X X X XXXX X+X XXXX X X X
 X X X               X X X
-  X   XXXXXXXXXXXXX   X  
+W X   XXXXXXXXXXXXX   X W
 X X X ...r......... X X X
 X X X XXXXXXXXXXXXX X X X
 X X X               XrX X

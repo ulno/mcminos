@@ -4,14 +4,14 @@
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    103
-SYMBOL:   level_mcminos_outline
-TITLE: Level 103 (unfinished)
-TITLE-de: Spielebene 103 (unvollendet)
+SYMBOL:   walls_default_00
+TITLE: Left and right and right and left
+TITLE-de: Links und rechts und rechts und links
 BODY:
-No comment yet.
+Zig-zag away.
 #
 BODY-de:
-Noch kein Kommentar.
+Im Zickzack entkommst Du den Geistern.
 #
 
 LWID:     23
@@ -37,27 +37,27 @@ AGIL2:    0
 GRTIME2:  999999
 
 LEVEL:
-X.X.X.X.X.rrr.X.X.X.XgX
-.dX.X.X.X.....X.X.X.X..
+X.X.X.X.X.X.X.X.X.X.XgX
+.dX.X.X.........X.X.X..
 XX..X.X.X.X_X.X.X.X..XX
-........X.X_X.X........
-XXX.XXXXX.X_X.XXXXX.XXX
-....X.............X....
-XXX.X.X.XXX.XXX.X.X.XXX
-..........._...........
-XXX.X.X.XXX_XXX.XbX.XXX
+.......2..X_X..3.......
+XXX.XXX.X.X_X.X.XXX.XXX
+....X2...........1X....
+XXX.X.9.XXX.XXX.9.X.XXX
+...1......._.......2...
+X.X.X.X.XXX_XXX.XbX.X.X
 ......X.X.._..X.X......
-r.XXX.X.X.XPX.X.X.XXX.r
-r.___.....CC......___.r
-r.XXX.X.X.CCX.X.X.XXX.r
+X.XXX.X.X.XPX.X.X.XXX.X
+..___.....CC......___..
+X.XXX.X.X.CCX.X.X.XXX.X
 ......X.X.....X.X......
-XXX.X.X.XXX.XXX.X.X.XXX
-....X.............X....
-XXX.X.X.XXX.XXX.X.X.XXX
-.......................
-XXX.XXXXX.X_X.XXXXX.XXX
-........X.X_X.X........
+X.X.X.X.XXX.XXX.X.X.X.X
+...3...............3...
+XXX.X.9.XXX.XXX.9.X.XXX
+....X1...........1X....
+XXX.XXX.X.X_X.X.XXX.XXX
+.......1..X_X..2.......
 XX..X.X.X.X_X.X.X.X..XX
-..X.X.X.X.....X.X.X.X..
-X.X.X.X.X.rrr.X.X.X.X.X
+..X.X.X.........X.X.X..
+X.X.X.X.X.X.X.X.X.X.X.X
 #

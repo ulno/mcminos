@@ -4,14 +4,14 @@
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    102
-SYMBOL:   level_mcminos_outline
-TITLE: Level 102 (unfinished)
-TITLE-de: Spielebene 102 (unvollendet)
+SYMBOL:   extras_umbrella
+TITLE: Glide away!
+TITLE-de: Schweb' davon!
 BODY:
-No comment yet.
+Don't fall for the holes. Let the ghosts fall into them.
 #
 BODY-de:
-Noch kein Kommentar.
+Lock die Geister ins Loch.
 #
 
 LWID:     23

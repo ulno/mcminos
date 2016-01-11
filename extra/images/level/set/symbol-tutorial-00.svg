@@ -3,7 +3,7 @@
 
 <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="32" height="32" id="svg4150" version="1.1" inkscape:version="0.91 r13725" viewBox="0 0 32 32" sodipodi:docname="symbol-tutorial-00.svg">
   <defs id="defs4152" />
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.125" inkscape:cx="16" inkscape:cy="16" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="21.81953" inkscape:cx="15.358373" inkscape:cy="15.863539" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" objecttolerance="10000" inkscape:snap-perpendicular="true" guidetolerance="10000" inkscape:window-width="1600" inkscape:window-height="878" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" showguides="true" inkscape:guide-bbox="true">
     <inkscape:grid type="xygrid" id="grid4698" empspacing="4" />
     <sodipodi:guide position="16,32" orientation="1,0" id="guide4769" />
     <sodipodi:guide position="-4,16" orientation="0,1" id="guide4771" />
@@ -20,7 +20,7 @@
     </rdf:RDF>
   </metadata>
   <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer">
-    <g transform="matrix(1.2074073,-0.3235238,0.3235238,1.2074073,-7.5243262,0.30191714)" id="g16440">
+    <g transform="matrix(1.2074073,-0.3235238,0.3235238,1.2074073,-7.5244386,3.2414628)" id="g16440">
       <path inkscape:connector-curvature="0" id="path5462" d="m 16,12 c -3.882729,0 -7.0312498,3.581722 -7.03125,8 0,-0.552285 3.148521,-1 7.03125,-1 3.882729,0 7.03125,0.447715 7.03125,1 0,-4.418278 -3.148521,-8 -7.03125,-8 z" style="fill:black;fill-opacity:1;stroke:none" />
       <path style="fill:#d40000;fill-opacity:1;stroke:none" d="M 7.122865,13.079872 6.1626409,12.843029 5.9766954,13.515096 5.0719676,16.832131 c -0.3265882,0.09344 -0.5971883,0.345724 -0.6915063,0.697724 -0.1116044,0.416513 0.062111,0.830752 0.3952722,1.065368 L 2.8567753,21.268956 5.7557489,22.047787 5.4478007,18.781169 C 5.8493163,18.740656 6.1994178,18.450615 6.3100602,18.037691 6.4051166,17.682936 6.2813566,17.34744 6.0413424,17.103124 L 7.122865,13.079872 Z" id="path5484" inkscape:connector-curvature="0" inkscape:transform-center-x="0.28848603" inkscape:transform-center-y="4.9812915" />
       <path inkscape:connector-curvature="0" id="path5478" d="M 16,10 4,13 16,16 28,13 Z" style="fill:black;fill-opacity:1;stroke:none" />

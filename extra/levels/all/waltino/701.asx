@@ -9,6 +9,7 @@ NUMBR:    701
 VERSION:  1100
 
 ; Textinfo -----------
+SYMBOL: extras_rock
 TITLE: Rocks Warm-Up
 TITLE-de: Kleines Aufwärmen mit Steinen
 BODY:
