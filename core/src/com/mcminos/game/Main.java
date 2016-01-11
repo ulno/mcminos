@@ -151,6 +151,7 @@ public class Main extends com.badlogic.gdx.Game {
 
     @Override
     public void dispose() {
+        // this is also called by Gdx.app.exit()
         audio.dispose();
         for (Skin s : levelSkinList.values()) {
             s.dispose();
@@ -159,7 +160,6 @@ public class Main extends com.badlogic.gdx.Game {
             f.dispose();
         }
         mainMenu.dispose();
-        Gdx.app.exit();
     }
 
     public BitmapFont getLevelFont(int res) {
@@ -226,7 +226,11 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void exit() {
-        dispose();
+        // dispose(); is called by Gdx.app.exit()
         Gdx.app.exit();
+    }
+
+    public void fadeExit() {
+        setScreen( new FadeExit(this) );
     }
 }

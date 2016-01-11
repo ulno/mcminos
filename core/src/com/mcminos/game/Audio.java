@@ -229,7 +229,7 @@ public class Audio {
         if(music) musicPlayed.play();
     }
 
-    private void musicStop() {
+    public void musicStop() {
         if(musicPlayed != null) {
             musicPlayed.stop();
             musicPlayed.dispose();

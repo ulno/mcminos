@@ -212,8 +212,8 @@ public class MainMenu implements Screen {
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dispose();
-                main.exit();
+                //dispose(); // done from main
+                main.fadeExit();
             }
         });
         topRow.add(quitButton.getCell()).right().minHeight(res);
@@ -342,8 +342,6 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (resumeRequested) {
             Play p = new Play(main, 0);
             if (p.getGame() != null) { //load successfull
@@ -352,6 +350,8 @@ public class MainMenu implements Screen {
                 resumeRequested = false;
             }
         } else {
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) stage.act(delta);
             stage.draw();
             batch.begin();
@@ -405,7 +405,8 @@ public class MainMenu implements Screen {
         for (Texture t : textureCache.values())
             t.dispose();
         stage.dispose();
-//        batch.dispose(); akready disposed? TODO: check
+//        batch.dispose(); in stage
+        fader.dispose();
     }
 
     private void toggleFullscreen() {

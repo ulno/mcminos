@@ -26,18 +26,20 @@ public class Congrats implements Screen {
     private final SpriteBatch batch;
     private final Audio audio;
     private final Preferences preferences;
+    private final Fader fader;
 
     public Congrats(Main main, LevelConfig currentLevelConfig) {
         this.main = main;
         this.audio = main.getAudio();
         this.preferences = main.getPreferences();
-        audio.musicFixed(1);
         this.category = currentLevelConfig.getCategory();
         this.levelConfig = currentLevelConfig;
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage); // set inputprocessor
         statistics = main.getStatistics();
+        fader = new Fader(main);
+        fader.fadeOutInMusicFixed(1);
 
         rebuild();
     }
@@ -72,6 +74,7 @@ public class Congrats implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.activateMainMenu( levelConfig );
+                dispose();
             }
         });
 
@@ -80,6 +83,7 @@ public class Congrats implements Screen {
             @Override
             public boolean keyTyped(InputEvent event, char character) {
                 main.activateMainMenu( levelConfig );
+                dispose();
                 return true;
             }
 
@@ -96,9 +100,12 @@ public class Congrats implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         stage.draw();
-        stage.act();
+        if(fader.isActive()) {
+            fader.render();
+        } else {
+            stage.act();
+        }
     }
 
     @Override
@@ -123,6 +130,8 @@ public class Congrats implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+         // batch.dispose(); in stage
+        fader.dispose();
     }
 }

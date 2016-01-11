@@ -169,7 +169,7 @@ public class Game {
         level.dispose();
     }
 
-    public void reset() {
+    public void reset() { // called when restart necessary
         disposeEventManagerTasks();
         // disposeTimerTask(); // will be reused
         // mcminos.dispose(); // will be reused
@@ -179,6 +179,7 @@ public class Game {
         level.addToAllLevelObjects(mcminos.getLevelObject());
         mcminos.clearInventory();
         mcminos.reset();
+        playScreen.triggerFade();
     }
 
 /*    int random(int interval) {

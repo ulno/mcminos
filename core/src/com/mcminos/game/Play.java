@@ -135,7 +135,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void initAfterLevel() {
 
-        fader.fadeOutIn();
+        triggerFade();
 
         audio.musicRandom();
 
@@ -422,7 +422,8 @@ public class Play implements Screen, GestureListener, InputProcessor {
         x += layout.width + res/4;
 
         // avoid too much moving, due to variable font size
-        x = Math.max(x, res * (2 + Math.max(5,score.length() + framerateScore.length()) ));
+//        x = Math.max(x, res * (2 + Math.max(5,score.length() + framerateScore.length()) ));
+        x = Math.max(x, res * 5);
 
         livesScore.setLength(0);
         int lives = mcminos.getLives();
@@ -1016,5 +1017,9 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void closeDialog() {
         dialogs.close();
+    }
+
+    public void triggerFade() {
+        fader.fadeOutIn();
     }
 }
