@@ -2,6 +2,8 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
@@ -16,12 +18,15 @@ public class Fader {
     private float fadeStep;
     private float fadeValue;
     private boolean fadingIn;
+    private boolean outInActive = false;
+    private SpriteBatch batch;
     public final long fadeFrames = 45;
 
 
     public Fader(Main main) {
         this.main = main;
         this.audio = main.getAudio();
+        batch = new SpriteBatch();
         box = new ShapeRenderer();
     }
 
@@ -43,6 +48,11 @@ public class Fader {
         audio.soundPlay("fade2");
     }
 
+    public void fadeOutIn() {
+        outInActive = true;
+        fadeOut();
+    }
+
     public void dispose() {
 
     }
@@ -54,6 +64,25 @@ public class Fader {
     public void render() {
         fadeFramesLeft--;
         if (fadeFramesLeft > 0) {
+            int w = Gdx.graphics.getWidth();
+            int h = Gdx.graphics.getHeight();
+            if(outInActive) {
+                int res = main.getPreferences().getGameResolution();
+                TextureRegion background = Entities.backgrounds_amoeboid_01.getTexture(res, 0);
+                batch.begin();
+                int xoffset = background.getRegionWidth();
+                int yoffset = background.getRegionHeight();
+                for (int x = 0; x < w + res; x += xoffset) {
+                    for (int y = 0; y < h + res; y += yoffset) {
+                        batch.draw(background, x, y);
+                    }
+                }
+                batch.end();
+                if (fadeFramesLeft == 1) {
+                    outInActive = false;
+                    fadeIn();
+                }
+            }
             if (fadingIn) {
                 fadeValue -= fadeStep;
             } else { // fading Out
@@ -64,7 +93,7 @@ public class Fader {
 
             box.begin(ShapeRenderer.ShapeType.Filled);
             box.setColor(0, 0, 0, fadeValue);
-            box.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            box.rect(0, 0, w, h);
             box.end();
         }
     }

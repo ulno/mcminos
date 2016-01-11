@@ -134,7 +134,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void initAfterLevel() {
 
-        fader.fadeIn();
+        fader.fadeOutIn();
 
         audio.musicRandom();
 

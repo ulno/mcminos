@@ -112,7 +112,7 @@ public class MainMenu implements Screen {
 
     public void init() {
         audio.musicFixed(0);
-        fader.fadeIn();
+        fader.fadeOutIn();
     }
 
     // inner class for menu
