@@ -61,7 +61,7 @@ public class MainMenu implements Screen {
 
         stage = new Stage(new ScreenViewport(), batch);
 
-        fader = new Fader(main);
+        fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
         // root table covering the screen
         rootTable = new Table();

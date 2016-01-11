@@ -38,7 +38,7 @@ public class Congrats implements Screen {
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage); // set inputprocessor
         statistics = main.getStatistics();
-        fader = new Fader(main);
+        fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         fader.fadeOutInMusicFixed(1);
 
         rebuild();
@@ -111,6 +111,7 @@ public class Congrats implements Screen {
     @Override
     public void resize(int width, int height) {
         rebuild();
+        fader.resize(width,height);
     }
 
     @Override

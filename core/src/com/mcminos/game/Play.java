@@ -84,7 +84,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         box = new ShapeRenderer();
 //        background = Entities.backgrounds_punched_plate_03;
         background = Entities.backgrounds_amoeboid_01.getTexture(Preferences.MAXRES,0);
-        fader = new Fader(main);
+        fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     }
 
     public Play(Main main, LevelConfig levelConfig, int score, int lives ) {
@@ -570,6 +570,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         //toolboxTable.setSize(width / 3, height * 4 / 5);
         toolbox.resize();
         touchpadResize();
+        fader.resize(width,height);
     }
 
     public void resize() {

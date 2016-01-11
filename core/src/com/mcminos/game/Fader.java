@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class Fader {
     private final Main main;
     private final Audio audio;
+    private int width;
+    private int height;
     private ShapeRenderer box;
     private long fadeFramesLeft = 0;
     private float fadeStep;
@@ -26,11 +28,13 @@ public class Fader {
     private int playMusicFixedType = -1;
 
 
-    public Fader(Main main) {
+    public Fader(Main main, int width, int height) {
         this.main = main;
         this.audio = main.getAudio();
         batch = new SpriteBatch();
         box = new ShapeRenderer();
+        this.width = width;
+        this.height = height;
     }
 
     public void fadeIn() {
@@ -41,7 +45,8 @@ public class Fader {
     }
 
     public void fadeOut() {
-        lastScreen = ScreenUtils.getFrameBufferTexture();
+//        lastScreen = ScreenUtils.getFrameBufferTexture();
+        lastScreen = ScreenUtils.getFrameBufferTexture(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         fadingIn = false;
         fadeFramesLeft = fadeFrames;
         fadeStep = 1.0f/ fadeFrames;
@@ -69,12 +74,14 @@ public class Fader {
                 if(fadingIn) audio.soundPlay("fade");
                 else audio.soundPlay("fade2");
             }
-            int w = Gdx.graphics.getWidth();
-            int h = Gdx.graphics.getHeight();
+            int w = width;
+            int h = height;
             if(outInActive) {
-                int res = Preferences.MAXRES;
+                Gdx.gl.glClearColor(0, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 batch.begin();
                 /*TextureRegion background = Entities.backgrounds_amoeboid_01.getTexture(res, 0);
+                int res = Preferences.MAXRES;
                 int xoffset = background.getRegionWidth();
                 int yoffset = background.getRegionHeight();
                 for (int x = 0; x < w + res; x += xoffset) {
@@ -82,7 +89,7 @@ public class Fader {
                         batch.draw(background, x, y);
                     }
                 }*/
-                batch.draw(lastScreen,0,0);
+                batch.draw(lastScreen,0,0,w,h);
                 batch.end();
                 if (fadeFramesLeft == 1) {
                     lastScreen.getTexture().dispose();
@@ -107,6 +114,11 @@ public class Fader {
             box.rect(0, 0, w, h);
             box.end();
         }
+    }
+
+    public void resize(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     public void fadeOutInMusicFixed(int type) {

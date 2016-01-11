@@ -15,7 +15,7 @@ public class FadeExit implements Screen {
     public FadeExit(Main main) {
         this.main = main;
         main.getAudio().musicStop();
-        fader = new Fader(main);
+        fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         fader.fadeOut();
     }
 
@@ -40,7 +40,7 @@ public class FadeExit implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        fader.resize(width,height);
     }
 
     @Override

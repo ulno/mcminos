@@ -40,7 +40,7 @@ public class Credits implements Screen {
         this.levelConfig = levelConfig;
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
-        fader = new Fader(main);
+        fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         fader.fadeOutInMusicFixed(1);
 
         Gdx.input.setInputProcessor(stage); // set inputprocessor
@@ -151,6 +151,7 @@ public class Credits implements Screen {
     @Override
     public void resize(int width, int height) {
         rebuild();
+        fader.resize(width,height);
     }
 
     @Override
