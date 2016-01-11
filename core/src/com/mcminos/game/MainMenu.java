@@ -198,6 +198,12 @@ public class MainMenu implements Screen {
         Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with mcminos logo graphics
         title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
         topRow.add(title).prefHeight(res).fillX().expandX();
+        title.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.net.openURI("http://mcminos.com");
+            }
+        });
 
         SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
