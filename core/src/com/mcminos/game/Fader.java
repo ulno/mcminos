@@ -16,7 +16,7 @@ public class Fader {
     private float fadeStep;
     private float fadeValue;
     private boolean fadingIn;
-    public final long fadeFrames = 60;
+    public final long fadeFrames = 45;
 
 
     public Fader(Main main) {
