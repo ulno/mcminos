@@ -12,6 +12,7 @@ public class FadeExit implements Screen {
 
     public FadeExit(Main main) {
         this.main = main;
+        main.getAudio().musicStop();
         fader = new Fader(main);
         fader.fadeOut();
     }

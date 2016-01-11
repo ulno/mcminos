@@ -151,7 +151,10 @@ public class Main extends com.badlogic.gdx.Game {
 
     @Override
     public void dispose() {
-        // this is also called by Gdx.app.exit()
+        // this is also called by Gdx.app.exit(), but not on mac
+    }
+
+    public void preDispose() {
         audio.dispose();
         for (Skin s : levelSkinList.values()) {
             s.dispose();
@@ -227,6 +230,7 @@ public class Main extends com.badlogic.gdx.Game {
 
     public void exit() {
         // dispose(); is called by Gdx.app.exit()
+        preDispose(); // but not this
         Gdx.app.exit();
     }
 
