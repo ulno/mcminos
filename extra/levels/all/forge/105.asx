@@ -26,15 +26,10 @@ MIRROR:     0
 
 MCSPEED:    1
 
-GHOST1:     1
+GHOST1:     2
 GHSPEED1:   1
 AGIL1:      0
-GRTIME1:    7
-
-GHOST2:     1
-GHSPEED2:   1
-AGIL2:      0
-GRTIME2:    999999
+GRTIME1:    9999999
 
 GHOST3:     3
 GHSPEED3:   1
@@ -53,15 +48,15 @@ ZXXXXXXXXXXXXXXXXXXXXXXXXXXXXZ
 Z.d.d.d8d.d.d.d.d.d3d.d.d.d.dZ
 Zd.drd.d2d.d.d.d.d.d.d.d.drd1Z
 ZZbZrZZZZZZZZZZZZZZZZZZZZZrZZZ
-Z Z r                     r  Z
+Z Z r          G          r  Z
 Z      XXXXXXXXXXXXXXXXX     Z
-Z XXXX X               X XXX Z
+Z XXXX X       x       X XXX Z
 Z        XXXXXXXXXXXXX       Z
-Z XrXXXX X           X XXXrX Z
+Z XrXXXX X     G     X XXXrX Z
 Z          XXXXXXXXX         Z
-Z XrX XXXX X       X XXX XrX Z
+Z XrX XXXX X   _   X XXX XrX Z
 Z            XXXXX           Z
-Z XrXrXXXXXX X   X XXXXXrXrX Z
+Z XrXrXXXXXX X b X XXXXXrXrX Z
 Z              X             Z
 Z XXX XXXXXXX XXX XXXXXX XXX Z
 Z                           PZ
