@@ -24,26 +24,26 @@ teaser/0815_011 ; nice dynamite-level
 teaser/thank_you_for_playing
 
 ; Mcminos is alive
-alive/0815_001 ; very classic
-alive/701
-alive/0815_002
-alive/0815_004
-alive/0815_007
-alive/0815_009
-alive/708
+alive/0815_001 ; The awakening
+alive/701      ; Rock warm-up
+alive/0815_002 ; Ghost Hunter
+alive/0815_004 ; Hunted by a Ghost
+alive/0815_007 ; Ghosts under Arrest
+alive/0815_009 ; Rocks, Ghosts, and Doors
+alive/708      ; The Flying Cross
+alive/0815_012 ; The Rocky Forrest
+alive/0815_015 ; Something is odd
+alive/0815_011 ; Blast Master
+alive/0815_016 ; Marathon
+alive/0815_018 ; Unstable Grounds
+alive/0815_020 ; Haunted Rocky Forrest
+alive/0815_014 ; Wardinant's Casstle
 alive/0200_076 ; Little Thinkbox
-alive/0815_012
-alive/0815_015
-alive/0815_011
-alive/0815_016
-alive/0815_018
-alive/0815_013
-alive/0815_020
-alive/0815_014
-alive/0815_017
-alive/0815_021
-alive/0815_024
-alive/0815_025
+alive/0815_013 ; Born to be first
+alive/rocky_range
+alive/0815_021 ; Ghostbuster's Apprentice
+alive/0815_024 ; Master of the Chain Reaction
+alive/0815_025 ; UlNo's Lair
 
 ; The second set of mcminos is alive (levelup)
 levelup/0200_009 ; Hunting Jumping Peas
@@ -53,10 +53,10 @@ levelup/0200_021 ; Haunted Rock Range
 levelup/0815_005 ; Chambers of Poison
 levelup/705      ; Race of Holes
 levelup/0200_028 ; Chambers of Explosion
+levelup/0815_010 ; small but hard
 levelup/0200_049 ; Stone Fence
 levelup/0200_019 ; Little Boxes
 levelup/706      ; Ghost Seduction
-levelup/0815_010
 levelup/0200_043 ; Indestructable?
 levelup/0815_006 ; Traffic Law for Ghosts
 levelup/704      ; Timing Problems
@@ -66,7 +66,6 @@ levelup/707      ; Advanced Ghost Seduction
 levelup/709      ; The Ultimate Hole Challenge
 levelup/0200_022 ; Explosive
 levelup/0815_023 ; Pilot in a Haunted Castle
-
 ; testing
 testing/testing
 testing/50x50_many_animations
@@ -95,6 +94,7 @@ kids/203
 kids/204
 
 ; green listed -> can be used
+green/0815_017
 green/0200_002
 green/0200_003
 green/0200_004
@@ -141,7 +141,6 @@ blue/0200_060
 forge/apart
 forge/close_quarters
 forge/rookie_rocks
-forge/rocky_range
 forge/running_in_circles
 forge/you_did_it
 forge/finale
