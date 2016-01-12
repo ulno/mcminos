@@ -1,0 +1,14 @@
+name: McMinos for young Kids
+name-de: McMinos für kleine Kinder
+gfx: extras_bonus2
+end:
+Congratulations, 
+
+you finished all the levels in this set. Please select another set of levels to continue with.
+#
+end-de:
+Herzlichen Glückwunsch. 
+
+Du hast alle Spielebenen dieser Reihe gemeistert. Bitte wähle die Level-Reihe aus, mit der Du fortfahren möchtest.
+#
+activated: all
