@@ -4,7 +4,7 @@
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    201
-SYMBOL:   mcminos_default_front,60
+SYMBOL:   mcminos_default_front,7
 TITLE: An easy start
 TITLE-de: Ein leichter Anfang
 BODY:
@@ -31,13 +31,12 @@ GHSPEED1: 1
 AGIL1:    25
 GRTIME1:  5
 
-
 LEVEL:
 XXXXXXXXXXXX
 X*...P....*X
-X.XX XX XX.X
-X.X2XXXX3X.X
-X.X.XCCX.X.X
-X...3CC1...X
+X.XX.X.XXX.X
+X.X2.X..3X.X
+X.X.XXXX.CCX
+X2.......CCX
 XXXXXXXXXXXX
 #

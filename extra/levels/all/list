@@ -150,3 +150,9 @@ forge/102
 forge/103
 forge/104
 forge/105
+; category "McMinos for young kids" (see above)
+;forge/201
+;forge/202
+;forge/203
+;forge/204
+;A TRAILING BLANK LINE WILL CRASH MCMINOS AFTER THE LAST CATEGORY'S END NOTICE IS EXITED CLICK/KEY PRESS (2016-01-12)
