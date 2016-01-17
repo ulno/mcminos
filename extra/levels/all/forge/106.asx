@@ -14,8 +14,8 @@ BODY-de:
 Noch kein Kommentar.
 #
 
-LWID:     5
-LHI:      5
+LWID:     50
+LHI:      9
 SCROLLX:  0
 SCROLLY:  0
 BACK:     2
@@ -33,13 +33,13 @@ GRTIME1:  5
 
 
 LEVEL:
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                       X         X         X      
-XX                     XPX XX XX X X XX XX X X  XX
-                         X         X         X^   
-XXXDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXDXXX
-   V                                              
-XX                                              XX
-                                                  
+XXXxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   r         r         r         r         r      
+XX X X XX XX X X XX XX XPX XX XX X X XX XX X X XX 
+     r         r         r         r         r^   
+DXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXDXXX
+V  X         D         X         D         X      
+XX XrX XX XX XrX XX XX XrX XX XX XrX XX XX XrX XX 
+   D         X         D         X         D      
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 #

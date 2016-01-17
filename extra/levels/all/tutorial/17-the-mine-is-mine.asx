@@ -1,0 +1,44 @@
+; FOR McMINOS - Version 3.14
+; Created.....: 2016-01-17
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    99
+SYMBOL:   level_mcminos_outline
+TITLE: The mine is mine
+TITLE-de: Gute Minen zum bösen Spiel
+BODY:
+Put the mines in the way of ghost "Perry". But take care you do not tread on them yourself.
+#
+BODY-de:
+Leg' Geist „Perry“ die Minen in den Weg. Aber pass auf, dass Du nicht selbst darauf trittst.
+#
+
+LWID:       7
+LHI:        7
+SCROLLX:    1
+SCROLLY:    0
+BACK:       3
+
+LTIME:      0
+RSTRT:      0
+MIRROR:     0
+
+MCSPEED:    1
+
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      15
+GRTIME2:    1
+PILLMAX2:   50
+PILLFREQ2:  2
+
+LEVEL:
+XXXXXXX
+.   _CC
+X X XCC
+  _P  _
+X X,X X
+, _  _g
+XXXXXXX
+#

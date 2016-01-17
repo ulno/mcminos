@@ -15,6 +15,8 @@ tutorial/13-mirror
 tutorial/14-speed-up-and-down-killall-field
 tutorial/15-whisky
 tutorial/16-infinite-world
+tutorial/17-the-mine-is-mine
+tutorial/playground
 
 ; Teaserlevel
 teaser/0815_000 ; simple small, classic
@@ -150,6 +152,7 @@ forge/102
 forge/103
 forge/104
 forge/105
+forge/106
 ; category "McMinos for young kids" (see above)
 ;forge/201
 ;forge/202

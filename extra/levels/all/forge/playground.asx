@@ -1,17 +1,17 @@
 ; FOR McMINOS - Version 3.14
-; Created.....: 2016-01-10
+; Created.....: 2016-01-17
 
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    22
 SYMBOL:   level_mcminos_outline
-TITLE: Playground
-TITLE-de: Spielwiese
-BODY: Now, you have the opportunity to try out all items and features in one 
-level. Enjoy.
+TITLE: Playground (unfinished)
+TITLE-de: Spielwiese (unvollendet)
+BODY: You have successfully passed the tutorials. Now you may try out all items and features in one 
+level, just for fun. Enjoy.
 #
 BODY-de:
-Jetzt kannst Du alle Gegenstände und Möglichkeiten in einer Spielebene ausprobieren. Viel Spaß.
+Jetzt kannst Du zum Spaß alle Gegenstände und Möglichkeiten in einer Spielebene ausprobieren. Viel Spaß.
 #
 
 LWID:     49
@@ -33,18 +33,18 @@ GRTIME1:  5
 
 LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-                                                 
- XXXXXX XXXXDX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX
- XG  .X X    X X    X XkkkkX X    X X    X X    X
- X XX X X XX X X XX X^XkXXkX X XX X X XX X X XX X
- X____X X    X X    X XkkkkX X    X X    X X    X
- XDXXXX XDXXXX XDXXXX XDXXXX XDXXXX XDXXXX XDXXXX
-                        P   k                    
- XDXXXX XDXXXX XrXXXX XDXXXX ZvZZZZ XDXXXX XDXXXX
- X    X X    X X   GX XkkkkX Z d  Z X....X X    X
- X XX X r OO r X6XX X XkXXkX ZXXXXZ r XX r X XX X
- X    X X    X X    X XkkkkX Zh h Z X G  X X    X
- XXXXXX XXXXXX XXXXXX XXXXXX ZZZZZZ XXXXXX XXXXXX
-                                                 
+3      3      1      2      2      3      1      
+ XXXXXX XXXXDX ZZZZZZ XXXXXX XXXXXX XXXXXX ZZZZZZ
+ X_.G_X Xm..gX ZuOOuZ XkkkkX X+  hX X    X Zu CCZ
+6X.XX.X^XpXX.XvZ8OOOZ^XkXXkX6X XX XOX XX XvZrrCCZ
+ X_.._X Xmp.mX Z8698Z XkkkkX Xh  +X X    X Z    Z
+ XDXXX   XXDXX ZZrZZZ  XDXX   DXXX   XDXXX ZDZZZZ
+1      6      ä      1  P   k      6      3      
+ XDXXX   DXXXX XrXXXX  XDXX   ZvZZ  oXDXXX XXDXXX
+ X    X X   GX X   GX XkkkkX ZddZWZ X....XDX    X
+oX XX X r OO r X6XX X XkXXkX ZrrZrZ r XX r X XX X
+ X    X X    X X    X XkkkkX Zh  hZ X G  X X    X
+ XXXXXX XXXXXX XXXXXX XXXDXX ZZZZZZ XXXDXX XXXDXX
+2      1      3      3      1      1      2      
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 #
