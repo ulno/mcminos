@@ -1,0 +1,6 @@
+# Ghost Panky (used to be "Kondomi")
+symbol='g'
+zindex=770
+moving=True
+order=[1,2,3,2]
+speed=200
