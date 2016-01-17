@@ -470,7 +470,8 @@ public class McMinos implements KryoSerializable {
     public void executeDeath(boolean completeRestart) {
         if(!completeRestart) {
             // create gravestone
-            new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+            LevelObject graveStone = new LevelObject(getLevelBlock(), Entities.walls_gravestone, LevelObject.Types.Unspecified);
+            graveStone.setXY(levelObject.getVX(),levelObject.getVY());
         }
         decreaseLives();
         if(getLives() > 0) {
