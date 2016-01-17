@@ -213,7 +213,8 @@ public class Level implements KryoSerializable {
                     lb.makeIndestructableWall();
                     break;
                 case 'U':
-                    lb.makeInvisibleWall();
+//                    lb.makeInvisibleWall();
+                    lb.makeWall(); // testing to not have invisible walls, seems to work: TODO: re-discuss
                     break;
                 case '.':
                     lb.makePill();
