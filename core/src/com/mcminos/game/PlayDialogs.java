@@ -159,7 +159,7 @@ public class PlayDialogs {
         thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
         thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 7*res + 11 * padSize),
                 Math.min(Gdx.graphics.getHeight(), 2*res + 4*padSize) );
-        thisDialog.setPosition( res + padSize, Gdx.graphics.getHeight() - thisDialog.getHeight() - play.getGameResolution() );
+        thisDialog.setPosition( res + padSize, Gdx.graphics.getHeight() - thisDialog.getHeight() - res );
 
         // Basic layout
         Table rowActionsTable = new Table(menuSkin);

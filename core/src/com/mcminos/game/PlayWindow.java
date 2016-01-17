@@ -155,9 +155,10 @@ public class PlayWindow {
 
     public void resize(int width, int height, int toolboxWidth) {
         // apply globally
+        int symbolResolution = main.getPreferences().getSymbolResolution(); // for toolbarwidth
         viewWidthInPixels = width;
         viewHeightInPixels = height;
-        visibleWidthInPixels = width;
+        visibleWidthInPixels = width-symbolResolution; // substract toolbar
         visibleHeightInPixels = height;
         visibleWidthInVPixels = Util.shiftLeftLogical(visibleWidthInPixels, virtualBlockResolutionExponent - resolutionExponent );
         visibleHeightInVPixels = Util.shiftLeftLogical(visibleHeightInPixels, virtualBlockResolutionExponent - resolutionExponent );
@@ -200,9 +201,9 @@ public class PlayWindow {
         visibleHeightInBlocks = (visibleHeightInVPixels + virtualBlockResolution - 1)  >> virtualBlockResolutionExponent;
         // Solution from here: http://gamedev.stackexchange.com/questions/68785/why-does-resizing-my-game-window-move-and-distort-my-rendering
         Matrix4 matrix = new Matrix4();
-        projectionX = (width - visibleWidthInPixels) / 2;
+        projectionX = (width - symbolResolution - visibleWidthInPixels) / 2 + symbolResolution + 4; // add toolbar width
         projectionY = (height - visibleHeightInPixels) / 2;
-        matrix.setToOrtho2D(-projectionX, -projectionY, visibleWidthInPixels + 2 * projectionX, visibleHeightInPixels + 2 * projectionY);
+        matrix.setToOrtho2D(-projectionX, -projectionY, visibleWidthInPixels + 2 * projectionX - symbolResolution - 4, visibleHeightInPixels + 2 * projectionY);
 //        matrix.setToOrtho2D(0, 0, width, height);
         batch.setProjectionMatrix(matrix);
         camera.setToOrtho(false,viewWidthInPixels,viewHeightInPixels);
