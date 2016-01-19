@@ -32,8 +32,8 @@ alive/0815_007 ; Ghosts under Arrest
 alive/0815_009 ; Rocks, Ghosts, and Doors
 alive/708      ; The Flying Cross
 alive/0815_012 ; The Rocky Forrest
-alive/0815_015 ; Something is odd
 alive/0815_011 ; Blast Master
+alive/close_quarters ; close quarters
 alive/0815_016 ; Marathon
 alive/0815_018 ; Unstable Grounds
 alive/0815_020 ; Haunted Rocky Forrest
@@ -66,6 +66,7 @@ levelup/707      ; Advanced Ghost Seduction
 levelup/709      ; The Ultimate Hole Challenge
 levelup/0200_022 ; Explosive
 levelup/0815_023 ; Pilot in a Haunted Castle
+
 ; testing
 testing/testing
 testing/50x50_many_animations
@@ -102,6 +103,7 @@ green/0200_006
 green/0200_014
 green/0200_024
 green/0200_075
+green/0815_015 ; Something is odd
 
 ; yelow listed, can be used with minor changes
 yellow/0200_001
@@ -139,7 +141,6 @@ blue/0200_060
 
 ; Andreas' playground
 forge/apart
-forge/close_quarters
 forge/rookie_rocks
 forge/running_in_circles
 forge/you_did_it
