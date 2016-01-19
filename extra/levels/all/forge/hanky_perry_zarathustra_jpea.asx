@@ -5,8 +5,8 @@ AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    999
 SYMBOL:   level_mcminos_outline
-TITLE:    New level
-TITLE-de: Neue Spielebene
+TITLE:    Hanky, Perry, Zarathustra, and the jumping peas
+TITLE-de: Hänki, Perry, Zarathustra und die Springerbsen
 BODY:
 No comment yet.
 #
@@ -26,23 +26,23 @@ MIRROR:     0
 
 MCSPEED:    1
 
-GHOST1:     1
+GHOST1:     2
 GHSPEED1:   1
 AGIL1:      0
-GRTIME1:    5
+GRTIME1:    30
 
 GHOST2:     1
 GHSPEED2:   1
 AGIL2:      0
-GRTIME2:    5
+GRTIME2:    120
 PILLMAX2:   50
 PILLFREQ2:  5
 
 GHOST3:     1
 GHSPEED3:   1
 AGIL3:      0
-GRTIME3:    5
-TRANSWALL3: 25
+GRTIME3:    60
+TRANSWALL3: 100
 
 GHOST4:     3
 GHSPEED4:   1
@@ -53,13 +53,13 @@ GRTIME4:    9999999
 
 
 LEVEL:
-XXXxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
    r       h r   k     r         r    _  g r 3   _
-XX X X3XX XX X X XX XX XPX XX XX X X XX XX X X XX 
+XX X X3XX XX XTX XX XX XPX XX XX X XSXX XX X X XX 
      r     _  3r 3CC     r   3     r         r^  k
 DXXXXXXXXXXXXXXXXXCCXXXXXXXXXXXXXXXXXXXXXXXXXXDXXX
->  X      _  D   XrXX.3X     G   D    _+   X.     
-XX XrX3XX XX XrX |6.X  XrX XX XX XrX XX XX XrX XX 
-   D    h    X   X  G  D     _   X     H   D   h  
+>FkX k    _  DFk XrXX.3X   k G   D   k_+   X. k   
+XX XrX3XX XX XrX |6.X  XrX XX XXFXrX XX XX XrX XX 
+   Dfk  h k  X   Xk G fD k   _   X     Hk fDk  h  
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 #

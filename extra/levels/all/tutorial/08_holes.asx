@@ -12,17 +12,17 @@ SYMBOL:   holes_2
 TITLE: Small holes, big holes
 TITLE-de: Kleine Löcher, große Löcher
 BODY:
-Small holes grow, and down large holes you go. An umbrella may help you to glide.
+Small holes grow, and down large holes you go. An umbrella helps you to glide over holes, for a short time.
 #
 BODY-de:
-Kleine Löcher werden größer, wenn Du drüber läufst. In große fällst Du hinein. Mit einem Schirm kannst Du hinüber gleiten.
+Kleine Löcher werden größer, wenn Du drüber läufst. In große fällst Du hinein. Mit einem Schirm kannst Du für kurze Zeit über Löcher gleiten.
 #
 
 LWID:   7
 LHI:    7
 SCROLLX:  0
 SCROLLY:  0
-BACK: 1
+BACK: 4
 
 LTIME:    0
 RSTRT:    1

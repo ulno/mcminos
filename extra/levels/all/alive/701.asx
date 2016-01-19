@@ -19,12 +19,11 @@ Dies sollte nicht zu schwer sein. "Einfach" alle Steine auf ihre Zielfelder bewe
 #
 
 ; LEVELFORMAT -------------------------------------------*
-; UN-FIX FOR WRAP-AROUND FIXES NOT REQUIRED
-LWID:   12
-LHI:    12
+LWID:     12
+LHI:      12
 SCROLLX:  0
 SCROLLY:  0
-BACK: 1
+BACK:     1
 
 ; STATUS-Angaben ----------------------------------------*
 LTIME:    0

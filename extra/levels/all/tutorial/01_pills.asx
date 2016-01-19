@@ -17,7 +17,7 @@ BODY:
 In McMinos, levels have walls. You cannot pass through walls. Go and eat all peas to finish a level.
 #
 BODY-de:
-In McMinos-Spielebenen gibt es Wände. Du kannst nicht durch Wände gehen. Geh und sammles alle Pillen ein, um eine Spielebene zu beenden.
+In McMinos-Spielebenen gibt es Wände. Du kannst nicht durch Wände gehen. Geh und sammle alle Pillen ein, um eine Spielebene zu beenden.
 #
 
 LWID:   7
@@ -31,29 +31,6 @@ RSTRT:    1
 MIRROR:   0
 
 MCSPEED:  1
-
-GHOST1:   0
-GHSPEED1: 1
-AGIL1:    15
-GRTIME1:  15
-
-GHOST2:   0
-GHSPEED2: 1
-AGIL2:    15
-GRTIME2:  3
-PILLMAX2: 100
-PILLFREQ2:  1
-
-GHOST3:   0
-GHSPEED3: 1
-AGIL3:    15
-GRTIME3:  3
-TRANSWALL3: 3
-
-GHOST4:   0
-GHSPEED4: 1
-AGIL4:    15
-GRTIME4:  3
 
 LEVEL:
 XXXXXXX

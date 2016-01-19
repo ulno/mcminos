@@ -4,9 +4,9 @@
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    99
-SYMBOL:   level_mcminos_outline
-TITLE: Playground (unfinished)
-TITLE-de: Spielwiese (unvollendet)
+SYMBOL:   level_set_symbol_kids
+TITLE: Playground
+TITLE-de: Spielwiese
 BODY: 
 You have successfully passed the tutorials. In this level you may try out all items and features in one level, just for fun. Enjoy.
 #
@@ -52,9 +52,9 @@ LEVEL:
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 3      3      1      2      2      3      1      
  XDXXXX XXXXDX ZZZZZZSXXXXDX XXDXXX XXXXDX ZZZZZZ
- X_.G_XFXm..gX Z3.ouZ XkkkkX X+  hX X.  3X Zu.CCZ
+ X_.G_XFXm..gX Z3.ouZLXkkkkX X+  hXLX. H3X Zu.CCZ
 6X.X..X^XpmX.XvZ8oooZ^XkkXkX6X XX XOX XX XvZrrCCZ
- X_._XX XXp.mX Z8698Z XXkkkX Xh   X X    X <Wa^ Z
+ X_._XX XXp.mX Z8698Z XXkkkX Xh   X X___bX <Wa^ Z
  XDXXX   XXDXX ZZrZZZ  XXXDX XXDXXF XXDXXX ZDZZZZ
 1      6      ä      7  P   k      3      2      
  XXXXDX  XXXDX XrXXX   XDXXX oZvZ^Z fXXXDX XXDXXX
@@ -62,6 +62,6 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 oD X  D r OO r X6X  X XkkXkX ZrrZrZ r  X r X XX X
  Xb  XX X 2 )X X1   X XkkkkX Zh dhZ X G  X X3 g X
 fXDXXXFfXDXXXXfXXXDXXfXXXDXXfZZZZZZfXXXDXXfXXXDXX
-2      1      3      3      1   T  1      2      
+2      1      3   L  3      1   T  1      2      
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 #

@@ -1,21 +1,21 @@
 ; Tutorial
-tutorial/01-pills
-tutorial/02-ghost-hanky
-tutorial/03-chocolate
-tutorial/04-doors-and-keys
-tutorial/05-rock-and-rock-me
-tutorial/06-jumping-pills
-tutorial/07-bombs
-tutorial/08-holes
-tutorial/09-warp-holes
-tutorial/10-poison-and-medicine
-tutorial/11-dynamite
-tutorial/12-oneways
-tutorial/13-mirror
-tutorial/14-speed-up-and-down-killall-field
-tutorial/15-whisky
-tutorial/16-infinite-world
-tutorial/17-the-mine-is-mine
+tutorial/01_pills
+tutorial/02_ghost_hanky
+tutorial/03_chocolate
+tutorial/04_doors_and_keys
+tutorial/05_rock_and_rock_me
+tutorial/06_jumping_pills
+tutorial/07_bombs
+tutorial/08_holes
+tutorial/09_warp_holes
+tutorial/10_poison_and_medicine
+tutorial/11_dynamite
+tutorial/12_oneways
+tutorial/13_mirror
+tutorial/14_speedy_race
+tutorial/15_whisky
+tutorial/16_infinite_world
+tutorial/17_the_mine_is_mine
 tutorial/playground
 
 ; Teaserlevel
@@ -94,6 +94,8 @@ kids/201
 kids/202
 kids/203
 kids/204
+;kids/205
+kids/206
 
 ; green listed -> can be used
 green/0815_017
@@ -148,14 +150,9 @@ forge/you_did_it
 forge/finale
 forge/you_win
 forge/your_ghost_works_for_you
-forge/102
-forge/103
-forge/104
-forge/105
-forge/106
-; category "McMinos for young kids" (see above)
-;forge/201
-;forge/202
-;forge/203
-;forge/204
+forge/glide_away
+forge/left_and_right
+forge/boulder_bang
+forge/getting_through
+forge/hanky_perry_zarathustra_jpea
 ;A TRAILING BLANK LINE WILL CRASH MCMINOS AFTER THE LAST CATEGORY'S END NOTICE IS EXITED CLICK/KEY PRESS (2016-01-12)

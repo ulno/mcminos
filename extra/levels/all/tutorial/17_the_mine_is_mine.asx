@@ -4,7 +4,7 @@
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    17
-SYMBOL:   level_mcminos_outline
+SYMBOL:   extras_land_mine_default
 TITLE: The mine is mine
 TITLE-de: Böse Minen zum bösen Spiel
 BODY:
@@ -29,8 +29,8 @@ MCSPEED:    1
 GHOST2:     1
 GHSPEED2:   1
 AGIL2:      100
-GRTIME2:    1
-PILLMAX2:   50
+GRTIME2:    2
+PILLMAX2:   30
 PILLFREQ2:  2
 
 LEVEL:
@@ -38,7 +38,7 @@ XXXXXXX
 XCC,.WX
 XCCXXmX
 X__P__X
-XmXXX.X
+XmXmX.X
 XW.L_gX
 XXXXXXX
 #

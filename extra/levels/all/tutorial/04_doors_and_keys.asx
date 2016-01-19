@@ -15,16 +15,20 @@ TITLE: Of doors and keys
 TITLE-de: Von Türen und Schlüsseln
 BODY:
 Collect the keys you find. You may need them to open doors. Or to close them again.
+
+To open or close a door, stand next to it and tap the key in your toolbox. If you are standing between several doors, you can select the door to open. Alternatively, just double tap the door you want to open.
 #
 BODY-de:
-Sammel Schlüssel ein. Ein Schlüssel öffnet oder schließt eine Tür.
+Sammle die Schlüssel ein. Ein Schlüssel öffnet oder schließt eine Tür.
+
+Um eine Tür zu öffnen, stell Dich direkt daneben. Dann tipp den Schlüssel an. Stehlst Du zwischen mehreren Türen, kannst Du die gewünschte auswählen. Alternativ kannst Du doppelt auf die Tür tippen, die Du öffnen willst.
 #
 
 LWID:   7
 LHI:    7
 SCROLLX:  0
 SCROLLY:  0
-BACK: 1
+BACK: 5
 
 LTIME:    0
 RSTRT:    1
