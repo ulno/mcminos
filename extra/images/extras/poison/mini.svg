@@ -61,6 +61,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3722"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -72,7 +79,7 @@
      inkscape:zoom="132"
      inkscape:cx="2"
      inkscape:cy="2"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3026"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
@@ -89,11 +96,7 @@
      inkscape:snap-guide="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-maximized="1"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0">
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
        id="grid3515"
@@ -103,9 +106,7 @@
        spacingx="1px"
        spacingy="1px"
        empspacing="4"
-       snapvisiblegridlinesonly="true"
-       originx="4px"
-       originy="-4px" />
+       snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <metadata
      id="metadata3510">
@@ -115,7 +116,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Skull 00</dc:title>
+        <dc:title></dc:title>
         <dc:date>2010-05-06</dc:date>
         <dc:creator>
           <cc:Agent>
@@ -141,22 +142,38 @@
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     transform="translate(4,-24)">
+     transform="translate(0,-28)">
     <g
-       id="g3839">
-      <rect
-         ry="1"
-         y="24"
-         x="-4"
-         height="4"
-         width="4"
-         id="rect3064"
-         style="fill:#ccc;fill-opacity:1;stroke:none" />
+       id="g3026">
       <path
          inkscape:connector-curvature="0"
-         id="rect3066"
-         d="m -3,24 c -0.554,0 -1,0.446 -1,1 l 0,2 c 0,0.554 0.446,1 1,1 l 2,0 c 0.554,0 1,-0.446 1,-1 l -2,0 c -0.554,0 -1,-0.446 -1,-1 l 0,-2 z"
-         style="fill:black;fill-opacity:0.25490198;stroke:none" />
+         id="rect3007"
+         d="m 1.5,28 0,1 c -0.554,0 -1,0.446 -1,1 l 0,1 0,1 1,0 1,0 1,0 0,-1 0,-1 c 0,-0.554 -0.446,-1 -1,-1 l 0,-1 -1,0 z"
+         style="fill:green;fill-opacity:1;stroke:none" />
+      <rect
+         y="29.5"
+         x="1.25"
+         height="2"
+         width="1.5"
+         id="rect3013"
+         style="fill:yellow;fill-opacity:1;stroke:none" />
+      <rect
+         y="28"
+         x="1.5"
+         height="0.5"
+         width="1"
+         id="rect3024"
+         style="fill:yellow;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:type="arc"
+         style="fill:black;fill-opacity:1;stroke:none"
+         id="path3033"
+         sodipodi:cx="2.5"
+         sodipodi:cy="2.5"
+         sodipodi:rx="0.5"
+         sodipodi:ry="0.5"
+         d="m 3,2.5 a 0.5,0.5 0 1 1 -1,0 0.5,0.5 0 1 1 1,0 z"
+         transform="translate(-0.5,28)" />
     </g>
   </g>
 </svg>
