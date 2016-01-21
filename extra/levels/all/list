@@ -17,14 +17,12 @@ tutorial/15_whisky
 tutorial/16_infinite_world
 tutorial/17_the_mine_is_mine
 tutorial/playground
-
 ; Teaserlevel
 teaser/0815_000 ; simple small, classic
 teaser/702 ; just some rocks and oneways
 teaser/over_the_seam
 teaser/0815_011 ; nice dynamite-level
 teaser/thank_you_for_playing
-
 ; Mcminos is alive
 alive/0815_001 ; The awakening
 alive/701      ; Rock warm-up
@@ -69,10 +67,10 @@ levelup/709      ; The Ultimate Hole Challenge
 levelup/0200_022 ; Explosive
 levelup/0815_023 ; Pilot in a Haunted Castle
 ; testing
-testing/testing
-testing/50x50_many_animations
-testing/ghost-test ; testing ghost speed
-
+testing/testing               ; all available entities in one level
+testing/50x50_many_animations ; maximum size level with many animations
+testing/ghost-test            ; testing ghost speed
+testing/max_ghosts_hanky      ; stress test with 1600 Hankies
 ; Walter's Levels
 waltino/701
 waltino/702
