@@ -21,15 +21,28 @@
 
 -verbose
 
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+
 -dontwarn android.support.**
 -dontwarn com.badlogic.gdx.backends.android.AndroidFragmentApplication
 -dontwarn com.badlogic.gdx.utils.GdxBuild
 -dontwarn com.badlogic.gdx.physics.box2d.utils.Box2DBuild
 -dontwarn com.badlogic.gdx.jnigen.BuildTarget*
+-dontwarn com.badlogic.gdx.graphics.g2d.freetype.FreetypeBuild
+-dontwarn org.objenesis.instantiator.sun.UnsafeFactoryInstantiator
+-dontwarn com.esotericsoftware.kryo.**
 
--keepclassmembers class com.badlogic.gdx.backends.android.AndroidInput* {
-   <init>(com.badlogic.gdx.Application, android.content.Context, java.lang.Object, com.badlogic.gdx.backends.android.AndroidApplicationConfiguration);
-}
+#-keepclassmembers class com.badlogic.gdx.backends.android.AndroidInput* {
+#   <init>(com.badlogic.gdx.Application, android.content.Context, java.lang.Object, com.badlogic.gdx.backends.android.AndroidApplicationConfiguration);
+#}
+
+#-keepclasseswithmembernames class com.badlogic.gdx.Audio
+#-keepclasseswithmembernames class com.badlogic.gdx.**
+
 
 -keepclassmembers class com.badlogic.gdx.physics.box2d.World {
    boolean contactFilter(long, long);
@@ -40,3 +53,24 @@
    boolean reportFixture(long);
    float   reportRayFixture(long, float, float, float, float, float);
 }
+
+-keep class com.android.vending.billing.**
+-keep class com.amazon.** {*;}
+-keep class com.sec.android.iap.**
+-keep class com.nokia.payment.iap.aidl.**
+-keep class org.onepf.oms.appstore.**
+-dontwarn org.onepf.oms.appstore.**
+-keep class com.badlogic.gdx.** {*;}
+-keep class com.esotericsoftware.kryo.** {*;}
+# TODO: obfuscate these through transfer into integer
+-keep public enum com.mcminos.game.LevelObject$** {
+    **[] $VALUES;
+    public *;
+}
+
+# for crashlytics
+-keep class com.crashlytics.** { *; }
+-keep class com.crashlytics.android.**
+-keepattributes SourceFile,LineNumberTable
+
+#-printmapping mapping.txt

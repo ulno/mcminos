@@ -716,7 +716,7 @@ Missing:
         kryo.writeObject(output, levelConfig.getCategoryNr());
         kryo.writeObject(output, levelConfig.getNr());
         kryo.writeObject(output, ghostPillDrop );
-        kryo.writeObject(output,allLevelObjects);
+        kryo.writeObject(output, allLevelObjects);
     }
 
     @Override

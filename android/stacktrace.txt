@@ -1,0 +1,17 @@
+01-02 05:21:58.754  32486-32486/? V/Zygote﹕ Switching descriptor 33 to /dev/null
+01-02 05:21:58.754  32486-32486/? V/Zygote﹕ Switching descriptor 9 to /dev/null
+01-02 05:21:59.008  32486-32486/com.mcminos.game.android D/ActivityThread﹕ handleBindApplication:com.mcminos.game.android
+01-02 05:21:59.012  32486-32486/com.mcminos.game.android D/ActivityThread﹕ setTargetHeapUtilization:0.25
+01-02 05:21:59.016  32486-32486/com.mcminos.game.android D/ActivityThread﹕ setTargetHeapMinFree:524288
+01-02 05:21:59.086  32486-32486/com.mcminos.game.android D/dalvikvm﹕ Trying to load lib /data/app-lib/com.mcminos.game.android-1/libgdx.so 0x420e0f98
+01-02 05:21:59.090  32486-32486/com.mcminos.game.android D/dalvikvm﹕ Added shared lib /data/app-lib/com.mcminos.game.android-1/libgdx.so 0x420e0f98
+01-02 05:21:59.090  32486-32486/com.mcminos.game.android D/dalvikvm﹕ No JNI_OnLoad found in /data/app-lib/com.mcminos.game.android-1/libgdx.so 0x420e0f98, skipping init
+01-02 05:21:59.367  32486-32486/com.mcminos.game.android I/AndroidInput﹕ sensor listener setup
+01-02 05:21:59.504  32486-32486/com.mcminos.game.android D/OpenGLRenderer﹕ Enabling debug mode 0
+01-02 05:21:59.519  32486-32504/com.mcminos.game.android W/GL2JNIView﹕ creating OpenGL ES 2.0 context
+    java.lang.UnsatisfiedLinkError: Native method not found: com.a.a.c.a.i.f:()
+            at com.a.a.c.a.i.f(Native Method)
+            at com.a.a.c.a.i.<clinit>(Unknown Source)
+            at com.a.a.c.a.j.onSurfaceCreated(Unknown Source)
+            at android.opengl.GLSurfaceView$GLThread.guardedRun(GLSurfaceView.java:1503)
+            at android.opengl.GLSurfaceView$GLThread.run(GLSurfaceView.java:1242)

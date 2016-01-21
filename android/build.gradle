@@ -1,6 +1,15 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 android {
     buildToolsVersion "23.0.1"
-    compileSdkVersion 20
+    compileSdkVersion 23
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -13,6 +22,48 @@ android {
         }
 
         instrumentTest.setRoot('tests')
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+/*            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+*/            proguardFiles 'proguard-android.txt'
+
+        }
+    }
+
+    repositories {
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    apply plugin: 'com.android.application'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+    apply plugin: 'io.fabric'
+
+    dependencies {
+        // Crashlytics Kit
+        compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+            transitive = true
+        }
+        // Twitter Kit
+        compile('com.twitter.sdk.android:twitter:1.12.0@aar') {
+            transitive = true
+        }
+        // Digits Kit
+//        compile('com.digits.sdk.android: digits: 1.9.3@aar') {
+//            transitive = true
+//        }
+        // MoPub Kit
+//        compile('com.mopub.sdk.android:mopub:4.3.0@aar') {
+//            transitive = true
+//        }
     }
 }
 
