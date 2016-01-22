@@ -132,7 +132,7 @@ tasks.eclipse.doLast {
 writeVersionFile()
 
 def writeVersionFile () {
-/* TODO: there is probably a better way top do thsi in gradle
+/* TODO: there is probably a better way to do this in gradle
     new File("VERSION").text = "buildDate: " + new Date() \
             + "\nrevision: " + revision \
             + "\nversion: " + project.version \
