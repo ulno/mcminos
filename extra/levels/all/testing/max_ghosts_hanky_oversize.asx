@@ -9,9 +9,13 @@ TITLE: 6400 ghosts "Hanky" in a 91x95 squares level, AGIL1 = 0
 TITLE-de: 6400 Geister „Hänki“ in 91x95-Felder-Spielebene, AGIL1 = 0
 BODY:
 To stress-test the program, this level has 6400 ghosts and is very large (official size limit for levels is currently 50x50 squares). AGIL1 = 0 means there is no randomness in Hankys' movements.
+
+For best results start the level by tapping/clicking the play button on the toolbar instead of moving McMinos.
 #
 BODY-de:
 Als Stresstest hat diese Spielebene 6400 Geister und ist übergroß (offizielles Größen-Limit für Spielebenen ist zurzeit 50x50 Felder). AGIL1 = 0 bedeutet, dass kein Zufallselement Hänkis Bewegungen beeinflusst.
+
+Am besten startest Du die Spielebene, indem Du auf den Play-Knopf tippst/klickst und nicht, indem Du McMinos bewegst.
 #
 
 LWID:       91
