@@ -4,14 +4,18 @@
 AUTHOR:   NoPe;   Andreas_Neudecker
 VERSION:  3140
 NUMBR:    999
-SYMBOL:   level_mcminos_outline
+SYMBOL:   ghosts_perry
 TITLE: Huge level of 99x99 squares with sieve for ghosts
 TITLE-de: Riesige Spielebene, 99x99 Felder, mit Geister-Sieb
 BODY:
-This level is meant to test how ghosts move in a sieve-like mase that forces them to make directional decisions frequently, as they currently have an imbalance in their movement algorithm-
+This level is meant to test the movements of ghosts in a sieve-like maze that forces them to make directional decisions frequently, as they currently have an imbalance in their movement algorithm. - AGIL2 = 0
+
+For best results start the level by tapping/clicking the play button on the toolbar instead of moving McMinos.
 #
 BODY-de:
-Mit dieser Spielebene wird getestet, wie sich Geister in einem Gatter wie diesem bewegen, das sie zwingt häufig Entscheidungen über Richtungsänderungen zu treffen. Zurzeit bevorzugt nämlich der Bewegungsalgorithmus der Geister bestimmte Richtungen bzw. Richtungswechsel.
+Mit dieser Spielebene wird getestet, wie sich Geister in einem Gatter wie diesem bewegen, das sie zwingt häufig Entscheidungen über Richtungsänderungen zu treffen. Zurzeit bevorzugt nämlich der Bewegungsalgorithmus der Geister bestimmte Richtungen bzw. Richtungswechsel. - AGIL2 = 0
+
+Am besten startest Du die Spielebene, indem Du auf den Play-Knopf tippst/klickst und nicht, indem Du McMinos bewegst.
 #
 
 LWID:       99

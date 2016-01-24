@@ -8,10 +8,14 @@ SYMBOL:   ghosts_hanky
 TITLE: 6400 ghosts "Hanky" in a 91x95 squares level, AGIL1 = 5
 TITLE-de: 6400 Geister „Hänki“ in 91x95-Felder-Spielebene, AGIL1 = 5
 BODY:
-To stress-test the program, this level has 6400 ghosts and is very large (official size limit for levels is currently 50x50 squares). This version has AGIL1 set to 5 instead of 0 to add some randomness to the ghosts' movements.
+To stress-test the program, this level has 6400 ghosts and is very large (official size limit for levels is currently 50x50 squares). AGIL1 = 5, to add some randomness to the ghosts' movements.
+
+For best results start the level by tapping/clicking the play button on the toolbar instead of moving McMinos.
 #
 BODY-de:
-Als Stresstest hat diese Spielebene 6400 Geister und ist übergroß (offizielles Größen-Limit für Spielebenen ist zurzeit 50x50 Felder). In dieser Version ist AGIL1 auf 5 gesetzt (vorher: 0), um etwas Zufall in die Bewegungen der Geister zu bringen. 
+Als Stresstest hat diese Spielebene 6400 Geister und ist übergroß (offizielles Größen-Limit für Spielebenen ist zurzeit 50x50 Felder). — AGIL1 = 5, um etwas Zufall in die Bewegungen der Geister zu bringen.
+
+Am besten startest Du die Spielebene, indem Du auf den Play-Knopf tippst/klickst und nicht, indem Du McMinos bewegst.
 #
 
 LWID:       91

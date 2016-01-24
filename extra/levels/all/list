@@ -73,7 +73,9 @@ testing/ghost-test            ; testing ghost speed
 testing/max_ghosts_hanky      ; stress test with 1600 Hankies
 testing/max_ghosts_hanky_oversize ; larger, more ghosts (6400)
 testing/max_ghosts_hanky_oversize_agil_5 ; identical to previous except for agility
-testing/sieve
+testing/sieve                 ; sieve to force change of direction frequently
+testing/better_sieve          ; ... in any direction
+testing/cross_sieve           ; ... using crosses
 testing/power_pills
 ; Walter's Levels
 waltino/701

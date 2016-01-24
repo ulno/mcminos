@@ -123,10 +123,11 @@ parameter    | description
 
 The Atari versions of McMinos used to have 50 different backround tiles
 available. With McMinos mobile we decided to reduce the number of backgrounds
-to only five (not counting black = no background). While the background can be
-specified by using the image entitie's id (eg `backgrounds_pavement_01` for the
-current default), it is strongly recommended to use their numbers only, as
-these will work, even if image files are replaced.
+to only five (not counting black = no background). While it is possible to
+specify the background by it's image entitie's id (e.g.
+`backgrounds_pavement_01` for the current default), it is strongly recommended
+to use their numbers only, as these will work, even if image files are
+replaced.
 
 number | background tile
 ------ | -----------------------------------------------------------------------
