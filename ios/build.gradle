@@ -19,5 +19,5 @@ eclipse.project {
 }
 
 dependencies {
-    compile "org.robovm:robopods-facebook-ios:1.12.1-SNAPSHOT"
+    compile "org.robovm:robopods-fabric-ios:1.12.1-SNAPSHOT"
 }

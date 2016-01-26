@@ -1,11 +1,12 @@
 apply plugin: "java"
+apply from: "../flavorConfig.gradle"
 
 sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "com.mcminos.game.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets");
-project.ext.texturePacker = ["extra/images-packer-input", "android/assets/entities", "pack"]
+project.ext.texturePacker = ["extra/images-packer-input", "android/assets/entities"]
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName

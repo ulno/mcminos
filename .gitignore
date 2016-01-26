@@ -5,11 +5,12 @@
 **/assets/levels
 **/extra/images-packer-input/
 ic_launcher.png
-ios/data/*.png
+**/data/*.png
 **/music/random/
 # Entities.java is generated, so ignore
 /core/src/com/mcminos/game/Entities.java
 robovm-build
+FLAVOR
 
 # Hidden images from generation of test animated gifs
 .*png
