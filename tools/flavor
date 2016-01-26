@@ -62,6 +62,17 @@ ext {
 }
 EOF
 
+# write robovm config file
+# TODO: get version from version settings
+cat << EOF > "$rootdir/ios/robovm.properties"
+app.version=0.4
+app.id=$id
+app.mainclass=com.mcminos.game.IOSLauncher
+app.executable=IOSLauncher
+app.build=1
+app.name='$name'
+EOF
+
 # when done, confirm that this flavor is selected
 echo "$1" > "FLAVOR"
 

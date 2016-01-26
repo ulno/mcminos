@@ -30,7 +30,7 @@ allprojects {
     }
     // Use abbreviatedId commit id in the version.
     //version = "0.0.1.${git.head().abbreviatedId}"
-    version = "0.3"
+    version = "0.4"
     ext {
         //appName = 'mcminos-mobile'
         appName = fcApplicationName
