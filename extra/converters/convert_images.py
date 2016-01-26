@@ -196,6 +196,9 @@ def generate_name(name, description):
 
 process_list = []
 
+def mkdir(dir):
+    subprocess.call(["mkdir","-p",dir])
+
 def convert(input_file,output_file, resx, resy):
     global process_list
     # only change if not exists or source is newer
@@ -399,32 +402,41 @@ f.close()
 
 # create icon-images for ios and android
 print
-print "============= Now creating icons ============"
-icon = os.path.join(IMAGE_DIRECTORY,"icon.svg")
-icon_output_path = os.path.join("..", "..", "android", "res")
-for (path,res) in [("hdpi",72), ("mdpi",48), ("xhdpi",96), ("xxhdpi",144), ]:
-    output_file = os.path.join(icon_output_path, "drawable-" + path, "ic_launcher.png")
-    convert(icon,output_file,res,res)
+print "============= Now creating resource icons ============"
+for flavor in ["alive","forge","teaser"]:
 
-icon_output_path = os.path.join("..", "..", "ios", "data")
-for (path,res) in [("",57), ("-72",72), ("@2x",114), ("-72@2x",144), ]:
-    output_file = os.path.join(icon_output_path, "Icon" + path + ".png")
-    convert(icon,output_file,res,res)
+    image_dir = os.path.join(IMAGE_DIRECTORY,"flavors",flavor)
+    output_dir = os.path.join(IMAGE_DIRECTORY,"..","flavors",flavor)
+    print "Processing from " + image_dir + " to " + output_dir
 
-icon = os.path.join(IMAGE_DIRECTORY,"logo-3-4.svg")
-for (path,resx,resy) in [("",320,480), ("@2x",640,960) ]:
-    output_file = os.path.join(icon_output_path, "Default" + path + ".png")
-    convert(icon,output_file,resx,resy)
+    icon = os.path.join(image_dir,"icon.svg")
+    icon_output_path = os.path.join(output_dir, "res")
+    for (path,res) in [("hdpi",72), ("mdpi",48), ("xhdpi",96), ("xxhdpi",144), ]:
+        op = os.path.join(icon_output_path, "drawable-" + path)
+        mkdir(op)
+        output_file = os.path.join( op, "ic_launcher.png")
+        convert(icon,output_file,res,res)
 
-icon = os.path.join(IMAGE_DIRECTORY,"logo-9-16.svg")
-for (path,resx,resy) in [("-375w-667h",375,667), ("-375w-667h@2x",375*2,667*2), ("-414w-736h",414,736), ("-414w-736h@3x",414*3,736*3), ("-568h@2x",640,1136) ]:
-    output_file = os.path.join(icon_output_path, "Default" + path + ".png")
-    convert(icon,output_file,resx,resy)
+    icon_output_path = os.path.join(output_dir, "data")
+    mkdir(icon_output_path)
+    for (path,res) in [("",57), ("-72",72), ("@2x",114), ("-72@2x",144), ]:
+        output_file = os.path.join(icon_output_path, "Icon" + path + ".png")
+        convert(icon,output_file,res,res)
 
-icon = os.path.join(IMAGE_DIRECTORY,"logo-10-13.svg")
-for (path,resx,resy) in [("@2x~ipad",1536,2008), ("~ipad",768,1004), ]:
-    output_file = os.path.join(icon_output_path, "Default" + path + ".png")
-    convert(icon,output_file,resx,resy)
+    icon = os.path.join(image_dir,"logo-3-4.svg")
+    for (path,resx,resy) in [("",320,480), ("@2x",640,960) ]:
+        output_file = os.path.join(icon_output_path, "Default" + path + ".png")
+        convert(icon,output_file,resx,resy)
+
+    icon = os.path.join(image_dir,"logo-9-16.svg")
+    for (path,resx,resy) in [("-375w-667h",375,667), ("-375w-667h@2x",375*2,667*2), ("-414w-736h",414,736), ("-414w-736h@3x",414*3,736*3), ("-568h@2x",640,1136) ]:
+        output_file = os.path.join(icon_output_path, "Default" + path + ".png")
+        convert(icon,output_file,resx,resy)
+
+    icon = os.path.join(image_dir,"logo-10-13.svg")
+    for (path,resx,resy) in [("@2x~ipad",1536,2008), ("~ipad",768,1004), ]:
+        output_file = os.path.join(icon_output_path, "Default" + path + ".png")
+        convert(icon,output_file,resx,resy)
 
 # finish inkscape processes first
 for p in process_list:
