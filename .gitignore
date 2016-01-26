@@ -13,9 +13,10 @@ android/assets/text
 # Entities.java is generated, so ignore
 /core/src/com/mcminos/game/Entities.java
 robovm-build
-# the next two are created when selcting flavor
+# the next three are created when selcting flavor
 FLAVOR
 flavorConfig.gradle
+ios/robovm.properties
 
 # Hidden images from generation of test animated gifs
 .*png
