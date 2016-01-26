@@ -15,7 +15,7 @@ android/assets/text
 robovm-build
 # the next two are created when selcting flavor
 FLAVOR
-#flavorConfig.gradle
+flavorConfig.gradle
 
 # Hidden images from generation of test animated gifs
 .*png
