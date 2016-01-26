@@ -1,4 +1,0 @@
-ext {
-  fcApplicationName = 'McMinos Forge'
-  fcApplicationId = 'com.mcminos.gameForge'
-}

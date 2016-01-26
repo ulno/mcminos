@@ -65,7 +65,7 @@ EOF
 # when done, confirm that this flavor is selected
 echo "$1" > "FLAVOR"
 
-# TODO: if entities does not exist run the image compiler
+# if entities does not exist, run the image compiler
 entities="android/assets/entities"
 if test ! -e "$entities"; then
   echo "Entities doesn't exist. Running image converter."

@@ -7,10 +7,15 @@
 ic_launcher.png
 **/data/*.png
 **/music/random/
+**/drawable-*
+ios/data
+android/assets/text
 # Entities.java is generated, so ignore
 /core/src/com/mcminos/game/Entities.java
 robovm-build
+# the next two are created when selcting flavor
 FLAVOR
+#flavorConfig.gradle
 
 # Hidden images from generation of test animated gifs
 .*png
