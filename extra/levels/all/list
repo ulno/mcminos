@@ -69,6 +69,7 @@ levelup/0815_023 ; Pilot in a Haunted Castle
 ; testing
 testing/testing               ; all available entities in one level
 testing/50x50_many_animations ; maximum size level with many animations
+testing/foto_studio           ; provides nice screenshot scenery
 testing/ghost-test            ; testing ghost speed
 testing/max_ghosts_hanky      ; stress test with 1600 Hankies
 testing/max_ghosts_hanky_oversize ; larger, more ghosts (6400)
@@ -76,7 +77,7 @@ testing/max_ghosts_hanky_oversize_agil_5 ; identical to previous except for agil
 testing/sieve                 ; sieve to force change of direction frequently
 testing/better_sieve          ; ... in any direction
 testing/cross_sieve           ; ... using crosses
-testing/power_pills
+testing/power_pills           ; all types of power pills
 ; Walter's Levels
 waltino/701
 waltino/702

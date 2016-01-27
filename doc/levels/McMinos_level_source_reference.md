@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html><head>
-<meta charset=utf-8" />
+<meta charset="utf-8" />
 <title>McMinos level source reference</title>
-<style type="text/css">body{padding:1em 5%;} table,th,td,tr{border:1px solid black; padding: .25em .5em; border-collapse:collapse;} pre,code{font-family:DejaVu Sans Mono, Droid Mono, Inconsolata,monospace;} pre{padding:.5em 1.5em;} table{width: 100%;}</style>
-</head><body>
+<style type="text/css">
+  body{padding:1em 5%;} table,th,td,tr{
+    border:1px solid black; padding: .25em .5em; border-collapse:collapse;}
+  pre,code{font-family:DejaVu Sans Mono, Droid Mono, Inconsolata,monospace;}
+  pre{margin: 1em; padding:1em 2em; background: #ffffcc; 
+  box-shadow: .25em .25em .25em #bbbbbb; font-size: smaller;}
+  table{width: 100%;}
+</style></head><body>
 
 McMinos level source reference
 ==============================
@@ -16,12 +22,14 @@ Author: Andreas Neudecker
 Created: 1995-01-11
 
 
-McMinos level sources are simple text files. They used to be in ASCII (Atari flavour) and are now in UTF-8. The general level structure is very simple:
+McMinos level sources are simple text files. They used to be in ASCII (Atari
+flavour) and are now in UTF-8. The general level structure is very simple:
 
 Level parameters
 ----------------
 
-All settings and data in the level source are given as simple parameter and value pairs. There are two kinds of parameters: 
+All settings and data in the level source are given as simple parameter and
+value pairs. There are two kinds of parameters:
 
 1. single line parameters
 2. multi line
@@ -60,6 +68,7 @@ parameter    | description
 AUTHOR: Andreas_Neudecker
 NUMBR:  199
 ```
+
 
 ### Level story
 
@@ -145,7 +154,8 @@ number | background tile
 [sand]: img/backgrounds_sand_01_sand_0.png "backgrounds_sand_01"
 [soil]: img/backgrounds_soil_01_0.png "backgrounds_soil_01"
 
-Old levels may still have background numbers higher than 5. These will default to 1 (currently `backgrounds_pavement_01`)
+Old levels may still have background numbers higher than 5. These will default
+to 1 (currently `backgrounds_pavement_01`)
 
 **Example:**
 
@@ -223,25 +233,27 @@ MCSPEED     | McMinos' base speed at level start (1, 2, 4); default = 1
 
 parameter    | description
 ------------ | -----------------------------------------------------------------
-**GHOST1**   | max. of **Hanky** ghosts appearing simultaneously (default: 0)
+**GHOST1**   | max. **Hanky** ghosts appearing simultaneously (default: 0)
 GHSPEED1     | speed of ghost Hanky (1, 2, 4, 8 - default: 1)
-AGIL1        | ghost Hanky's probabilty of errors in pursuit of McMinos
+AGIL1        | Hanky's probabilty of errors in pursuit of McMinos
 GRTIME1      | seconds before a Hanky reappears (default: 1)
-**GHOST2**   | max. of **Perry** gnosts appearing simultaneously (default: 0)
+**GHOST2**   | max. **Perry** gnosts appearing simultaneously (default: 0)
 GHSPEED2     | speed of ghost Perry (1, 2, 4, 8 - default: 1)
 AGIL2        | ghost Perry's probabilty of errors in pursuit of McMinos
 GRTIME2      | seconds before a Perry reappears (default: 1)
-PILLMAX2     | maximum number of peas Perry will lay in the level (default: 0)
+PILLMAX2     | max. number of peas Perrys will lay in the level (default: 0)
 PILLFREQ2    | randomly lay peas every PILLFREQ2-th field; 1: each (default)
-**GHOST3**   | max. no. of **Zarathustra** appearing simultaneously (default: 0)
+**GHOST3**   | max. **Zarathustra** ghosts appearing simultaneously (default: 0)
 GHSPEED3     | speed of ghost Zarathustra (1, 2, 4, 8 - default: 1)
-AGIL3        | ghost Zarathustra's probabilty of errors in pursuit of McMinos
+AGIL3        | Zarathustra's probabilty of errors in pursuit of McMinos
 GRTIME3      | seconds before a Zarathustra reappears (default: 1)
 TRANSWALL3   | randmly traverse walls; probability is higher for small values
-**GHOST4**   | max. no. of **jumping peas** appearing simultaneously (default: 1)
+**GHOST4**   | max. **jumping peas** appearing simultaneously (default: 1)
 GHSPEED4     | speed of jumping peas (1, 2, 4, 8 - default: 1)
 AGIL4        | jumping peas' probabilty of errors in pursuit of McMinos
 GRTIME4      | seconds before a jumping pea reappears (default: 1)
+
+**Example:**
 
 ```
 MCSPEED:    1
@@ -294,6 +306,7 @@ fact that most monospace characters do not cover exact squares).
 The maximum size for a level is currently 50 by 50 squares, i.e. 50 lines with
 50 colums, each.
 
+
 #### Creatures
 
 While the number of ghosts in a level is not limited except by the number of
@@ -306,6 +319,7 @@ character       | description
 `g`             | ghost 2 -- Perry, the pea layer
 `H`             | ghost 3 -- Zarathustra, the ghost that can traverse walls
 `h`             | ghost 4 -- jumping pea
+
 
 #### The castle
 
@@ -325,7 +339,8 @@ character       | description
 
 #### Elements of the maze
 
-This is a very diverse group of items. It comprises walls and doors, holes, one-ways, effect fields like speed-up, kill-all-ghosts, etc.
+This is a very diverse group of items. It comprises walls and doors, holes,
+one-ways, effect fields like speed-up, kill-all-ghosts, etc.
 
 character       | description
 --------------- | --------------------------------------------------------------
@@ -372,7 +387,8 @@ character       | description
 
 #### Bad items
 
-Just like the useful items above, these items take effect immediately when McMinos walks on them.
+Just like the useful items above, these items take effect immediately when
+McMinos walks on them.
 
 character       | description
 --------------- | --------------------------------------------------------------

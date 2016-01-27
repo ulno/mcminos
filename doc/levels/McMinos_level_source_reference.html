@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html><head>
-<meta charset=utf-8" />
+<meta charset="utf-8" />
 <title>
 McMinos level source reference
 </title>
-<style type="text/css">body{padding:1em 5%;} table,th,td,tr{border:1px solid black; padding: .25em .5em; border-collapse:collapse;} pre,code{font-family:DejaVu Sans Mono, Droid Mono, Inconsolata,monospace;} pre{padding:.5em 1.5em;} table{width: 100%;}</style>
-</head><body>
+<style type="text/css">
+  body{padding:1em 5%;} table,th,td,tr{
+    border:1px solid black; padding: .25em .5em; border-collapse:collapse;}
+  pre,code{font-family:DejaVu Sans Mono, Droid Mono, Inconsolata,monospace;}
+  pre{margin: 1em; padding:1em 2em; background: #ffffcc; 
+  box-shadow: .25em .25em .25em #bbbbbb; font-size: smaller;}
+  table{width: 100%;}
+</style></head><body>
 
 <h1 id="mcminos-level-source-reference">McMinos level source reference</h1>
 <p><strong>for McMinos versions 0.815, 1.10, 2.00, and mobile</strong></p>
@@ -154,7 +160,7 @@ SCROLLY: 0</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The Atari versions of McMinos used to have 50 different backround tiles available. With McMinos mobile we decided to reduce the number of backgrounds to only five (not counting black = no background). While the background can be specified by using the image entitie's id (eg <code>backgrounds_pavement_01</code> for the current default), it is strongly recommended to use their numbers only, as these will work, even if image files are replaced.</p>
+<p>The Atari versions of McMinos used to have 50 different backround tiles available. With McMinos mobile we decided to reduce the number of backgrounds to only five (not counting black = no background). While it is possible to specify the background by it's image entitie's id (e.g. <code>backgrounds_pavement_01</code> for the current default), it is strongly recommended to use their numbers only, as these will work, even if image files are replaced.</p>
 <table>
 <thead>
 <tr class="header">
@@ -295,7 +301,7 @@ MIRROR: 0</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left"><strong>GHOST1</strong></td>
-<td align="left">max. of <strong>Hanky</strong> ghosts appearing simultaneously (default: 0)</td>
+<td align="left">max. <strong>Hanky</strong> ghosts appearing simultaneously (default: 0)</td>
 </tr>
 <tr class="even">
 <td align="left">GHSPEED1</td>
@@ -303,7 +309,7 @@ MIRROR: 0</code></pre>
 </tr>
 <tr class="odd">
 <td align="left">AGIL1</td>
-<td align="left">ghost Hanky's probabilty of errors in pursuit of McMinos</td>
+<td align="left">Hanky's probabilty of errors in pursuit of McMinos</td>
 </tr>
 <tr class="even">
 <td align="left">GRTIME1</td>
@@ -311,7 +317,7 @@ MIRROR: 0</code></pre>
 </tr>
 <tr class="odd">
 <td align="left"><strong>GHOST2</strong></td>
-<td align="left">max. of <strong>Perry</strong> gnosts appearing simultaneously (default: 0)</td>
+<td align="left">max. <strong>Perry</strong> gnosts appearing simultaneously (default: 0)</td>
 </tr>
 <tr class="even">
 <td align="left">GHSPEED2</td>
@@ -327,7 +333,7 @@ MIRROR: 0</code></pre>
 </tr>
 <tr class="odd">
 <td align="left">PILLMAX2</td>
-<td align="left">maximum number of peas Perry will lay in the level (default: 0)</td>
+<td align="left">max. number of peas Perrys will lay in the level (default: 0)</td>
 </tr>
 <tr class="even">
 <td align="left">PILLFREQ2</td>
@@ -335,7 +341,7 @@ MIRROR: 0</code></pre>
 </tr>
 <tr class="odd">
 <td align="left"><strong>GHOST3</strong></td>
-<td align="left">max. no. of <strong>Zarathustra</strong> appearing simultaneously (default: 0)</td>
+<td align="left">max. <strong>Zarathustra</strong> ghosts appearing simultaneously (default: 0)</td>
 </tr>
 <tr class="even">
 <td align="left">GHSPEED3</td>
@@ -343,7 +349,7 @@ MIRROR: 0</code></pre>
 </tr>
 <tr class="odd">
 <td align="left">AGIL3</td>
-<td align="left">ghost Zarathustra's probabilty of errors in pursuit of McMinos</td>
+<td align="left">Zarathustra's probabilty of errors in pursuit of McMinos</td>
 </tr>
 <tr class="even">
 <td align="left">GRTIME3</td>
@@ -355,7 +361,7 @@ MIRROR: 0</code></pre>
 </tr>
 <tr class="even">
 <td align="left"><strong>GHOST4</strong></td>
-<td align="left">max. no. of <strong>jumping peas</strong> appearing simultaneously (default: 1)</td>
+<td align="left">max. <strong>jumping peas</strong> appearing simultaneously (default: 1)</td>
 </tr>
 <tr class="odd">
 <td align="left">GHSPEED4</td>
@@ -371,6 +377,7 @@ MIRROR: 0</code></pre>
 </tr>
 </tbody>
 </table>
+<p><strong>Example:</strong></p>
 <pre><code>MCSPEED:    1
 GHOST1:     5
 GHSPEED1:   1
