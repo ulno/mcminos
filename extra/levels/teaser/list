@@ -1,23 +1,26 @@
 ; Tutorial
-tutorial/01-pills
-tutorial/02-ghost-hanky
-tutorial/03-chocolate
-tutorial/04-doors-and-keys
-tutorial/05-rock-and-rock-me
-tutorial/06-jumping-pills
-tutorial/07-bombs
-tutorial/08-holes
-tutorial/09-warp-holes
-tutorial/10-poison-and-medicine
-tutorial/11-dynamite
-tutorial/12-oneways
-tutorial/13-mirror
-tutorial/14-speed-up-and-down-killall-field
-tutorial/15-whisky
-tutorial/16-infinite-world
+tutorial/01_pills
+tutorial/02_ghost_hanky
+tutorial/03_chocolate
+tutorial/04_doors_and_keys
+tutorial/05_rock_and_rock_me
+tutorial/06_jumping_pills
+tutorial/07_bombs
+tutorial/08_holes
+tutorial/09_warp_holes
+tutorial/10_poison_and_medicine
+tutorial/11_dynamite
+tutorial/12_oneways
+tutorial/13_mirror
+tutorial/14_speedy_race
+tutorial/15_whisky
+tutorial/16_infinite_world
+tutorial/17_the_mine_is_mine
+tutorial/playground
 
 ; Teaserlevel
 teaser/0815_000 ; simple small, classic
 teaser/702 ; just some rocks and oneways
+teaser/over_the_seam
 teaser/0815_011 ; nice dynamite-level
-teaser/thank_you_for_playing_b
+teaser/thank_you_for_playing
