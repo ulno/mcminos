@@ -102,30 +102,32 @@ public class GhostMover extends Mover {
                     newDir = findDirForNr(level.random(dircounter), dirs); // play stupid
                 } else { // try to be "smart" and either go to mcminos or flee
                     // check screen distance
-                    int x = mcminos.getVX();
-                    int y = mcminos.getVY();
+                    int mx = mcminos.getVX();
+                    int my = mcminos.getVY();
                     int gx = levelObject.getVX();
                     int gy = levelObject.getVY();
                     // remove reverse direction
                     dirs &= 15 - currentReverse;
                     if (mcminos.isPowered() ^ ghostNr == 3) {// flee - reverse behaviour for jumping pill (type 3)
-                        // find best
-                        if (y < gy && (dirs & UP) > 0) newDir = UP;
-                        else if (x < gx && (dirs & RIGHT) > 0) newDir = RIGHT;
-                        else if (y > gy && (dirs & DOWN) > 0) newDir = DOWN;
-                        else if (x > gx && (dirs & LEFT) > 0) newDir = LEFT;
-                        else newDir = findDirForNr(0, dirs);
+                        // try to run away (make distance bigger)
+                        if      ((dirs & UP) > 0    && my < gy ) newDir = UP;
+                        else if ((dirs & RIGHT) > 0 && mx < gx ) newDir = RIGHT;
+                        else if ((dirs & DOWN) > 0  && my > gy ) newDir = DOWN;
+                        else if ((dirs & LEFT) > 0  && mx > gx ) newDir = LEFT;
+                        // no direction brings an immediate advantage
+                        else newDir = findDirForNr(level.random(dircounter), dirs); // take any
                     } else { // follow
-                        // find best
-                        if (y > gy && (dirs & UP) > 0) newDir = UP;
-                        else if (x > gx && (dirs & RIGHT) > 0) newDir = RIGHT;
-                        else if (y < gy && (dirs & DOWN) > 0) newDir = DOWN;
-                        else if (x < gx && (dirs & LEFT) > 0) newDir = LEFT;
-                        else newDir = findDirForNr(0, dirs);
+                        // try to go near (make distance smaller)
+                        if      ((dirs & UP) > 0    && my > gy ) newDir = UP;
+                        else if ((dirs & RIGHT) > 0 && mx > gx ) newDir = RIGHT;
+                        else if ((dirs & DOWN) > 0  && my < gy ) newDir = DOWN;
+                        else if ((dirs & LEFT) > 0  && mx < gx ) newDir = LEFT;
+                        // no direction brings an immediate advantage
+                        else newDir = findDirForNr(level.random(dircounter), dirs); // take any
                     }
                 }
             } else { // only 1 direction, this might for example be, when you need to turn back
-                newDir = findDirForNr(0, dirs);
+                newDir = dirs;
             }
         }
         currentDirection = newDir;
