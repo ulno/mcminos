@@ -1,0 +1,86 @@
+#!/bin/bash
+usage="Select flavor from teaser, alive, forge as parameter."
+
+mydir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+rootdir="$mydir/.."
+cd "$rootdir"
+
+case "$1" in
+  "teaser")
+    name="McMinos Teaser"
+    id="com.mcminos.gameTeaser"
+  ;;
+  
+  "alive")
+    name="McMinos Alive"
+    id="com.mcminos.gameAlive"
+  ;;
+  
+  "forge")
+    name="McMinos Forge"
+    id="com.mcminos.gameForge"
+  ;;
+  
+  *)
+  echo "$usage"
+  exit 1
+  ;;
+esac
+
+# create symbolic links for levels
+link="android/assets/levels"
+rm "$link" &>/dev/null
+ln -s "../../extra/levels/$1" "$link"
+
+# create symbolic links for resources
+source="../extra/flavors/$1"
+link="ios/data"
+rm "$link" &>/dev/null
+ln -s "$source/data" "$link"
+
+# next two are a dir higher
+source="../$source"
+
+# android links
+link="android/res"
+for d in xxhdpi xhdpi hdpi mdpi; do
+  l="$link/drawable-$d"
+  rm "$l" &>/dev/null
+  ln -s "$source/res/drawable-$d" "$l"
+done
+
+# text
+link="android/assets/text"
+rm "$link" &>/dev/null
+ln -s "$source/text" "$link"
+
+# write config file
+cat << EOF > "$rootdir/flavorConfig.gradle"
+ext {
+  fcApplicationName = '$name'
+  fcApplicationId = '$id'
+}
+EOF
+
+# write robovm config file
+# TODO: get version from version settings
+cat << EOF > "$rootdir/ios/robovm.properties"
+app.version=0.4
+app.id=$id
+app.mainclass=com.mcminos.game.IOSLauncher
+app.executable=IOSLauncher
+app.build=1
+app.name='$name'
+EOF
+
+# when done, confirm that this flavor is selected
+echo "$1" > "FLAVOR"
+
+# if entities does not exist, run the image compiler
+entities="android/assets/entities"
+if test ! -e "$entities"; then
+  echo "Entities doesn't exist. Running image converter."
+  echo
+  mkdir "$entities"
+  tools/images
+fi

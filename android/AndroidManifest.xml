@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="22" />
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="23" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="66b405305dc29fb4a23c4cb102f97554ce541f43" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

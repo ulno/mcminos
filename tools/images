@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mydir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+rootdir="$mydir/.."
+cd "$rootdir/extra/converters"
+
+python convert_images.py

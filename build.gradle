@@ -3,20 +3,26 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'org.robovm:robovm-gradle-plugin:1.12.1-SNAPSHOT'
         classpath 'com.badlogicgames.gdx:gdx-tools:1.6.4'
         // for git version information
         //classpath 'org.ajoberstar:grgit:1.1.0'
+        classpath 'io.fabric.tools:gradle:1.+'
+
     }
 }
+
+apply from: "flavorConfig.gradle"
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+
 
     ext {
         // Open the Git repository in the current directory.
@@ -24,18 +30,22 @@ allprojects {
     }
     // Use abbreviatedId commit id in the version.
     //version = "0.0.1.${git.head().abbreviatedId}"
-    version = "0.3"
+    version = "0.4"
     ext {
-        appName = 'mcminos-mobile'
+        //appName = 'mcminos-mobile'
+        appName = fcApplicationName
+        app_name = appName
+        //appName = app_name
         gdxVersion = '1.8.1-SNAPSHOT'
         roboVMVersion = '1.12.1-SNAPSHOT'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.6.0'
         aiVersion = '1.5.0'
+        applicationID = fcApplicationId
 
         // Get commit id of HEAD.
         //revision = git.head().id
-        revision = "test" // TODO: check how this works
+        revision = "live" // TODO: check how this works
         // Alternative is using abbreviatedId of head() method.
         // revision = git.head().abbreviatedId
     }
@@ -129,13 +139,24 @@ tasks.eclipse.doLast {
 writeVersionFile()
 
 def writeVersionFile () {
-/* TODO: there is probably a better way top do thsi in gradle
+    // TODO: also check if flavor needs to be run
+/* TODO: there is probably a better way to do this in gradle
     new File("VERSION").text = "buildDate: " + new Date() \
             + "\nrevision: " + revision \
             + "\nversion: " + project.version \
             + "\napplicationName: " + appName */
     exec {
-        executable "./set_version.sh"
+        executable "tools/set_version.sh"
         args revision, project.version, appName
+    }
+}
+
+task printFlavor() {
+    apply from: "flavorConfig.gradle"
+
+    doLast {
+        println "name: " + appName
+        println "applicationId: " + applicationId
+        println "assetDir: " + assetDir
     }
 }

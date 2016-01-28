@@ -41,7 +41,7 @@ public class Credits implements Screen {
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        fader.fadeOutInMusicFixed(1);
+        fader.fadeOutInMusicFixed(2);
 
         Gdx.input.setInputProcessor(stage); // set inputprocessor
 

@@ -17,3 +17,7 @@ eclipse.project {
     name = appName + "-ios"
     natures 'org.robovm.eclipse.RoboVMNature'
 }
+
+dependencies {
+    compile "org.robovm:robopods-fabric-ios:1.12.1-SNAPSHOT"
+}

@@ -3,13 +3,14 @@
 
 AUTHOR:   TWoT;   Ulrich Norbisrath
 NUMBR:    15
-TITLE: Level fifteen
-TITLE-de: Fünfzehnte Spielebene
+SYMBOL:   mcminos_dying,1
+TITLE:    Something is odd
+TITLE-de: Seltsam!
 BODY:
-It is not always as it seems. Watch the details and think well.
+It is not always as it seems. Watch the details and think well. Beware the invisible!
 #
 BODY-de:
-Nicht immer ist es, wie es scheint. Schau genau und denke nach!
+Nicht immer ist es, wie es scheint. Schau genau und denke nach! Fürchte nicht das unischtbare!
 #
 
 LWID:   13
