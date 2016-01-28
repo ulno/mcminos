@@ -679,6 +679,7 @@ public class McMinos implements KryoSerializable {
         disposeDestination();
         initDestination();
         initMover();
+        setSpeedAccelerated(false);
         gfxSelect();
     }
 
