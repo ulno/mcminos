@@ -54,6 +54,12 @@ link="android/assets/text"
 rm "$link" &>/dev/null
 ln -s "$source/text" "$link"
 
+# loadscreen
+link="android/assets/images/"
+mkdir -p "$link"
+rm "$link/loadscreen.png" &>/dev/null
+ln -s "../$source/loadscreen.png" "$link"
+
 # write config file
 cat << EOF > "$rootdir/flavorConfig.gradle"
 ext {

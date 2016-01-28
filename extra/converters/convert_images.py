@@ -254,7 +254,7 @@ def convert_images(sizes, name, animation_number, root, file):
 # main program -- walk input directory
 for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
     short_root = root[len(IMAGE_DIRECTORY)+1:] # cut off root
-    if len(short_root) > 0 and short_root.startswith("flavors"): # not main directory - any sub-directory, only folders in main-directory are read, skip flavors directory
+    if len(short_root) > 0 and not short_root.startswith("flavors"): # not main directory - any sub-directory, only folders in main-directory are read, skip flavors directory
         # construct the name
         short_root_elements = short_root.split(os.path.sep)
         root_class_name = "_".join(short_root_elements)
