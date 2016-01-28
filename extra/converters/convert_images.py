@@ -173,7 +173,6 @@ class Graphics_Element():
             break # only do for one size (should be the same for all sizes)
         return code
 
-# main program -- walk input directory
 def cleanup_description(desc):
     if desc == "": return ""
     # cut non-numerical letters from left and right
@@ -205,7 +204,7 @@ def convert(input_file,output_file, resx, resy):
     # absolut path is required for inkscape on MacOSX
     output_path = os.path.abspath(output_file)
     input_path = os.path.abspath(input_file)
-    if not os.path.isfile(output_path) or os.path.getmtime(os.path.join(root,file)) > os.path.getmtime(output_path):
+    if not os.path.isfile(output_path) or os.path.getmtime(input_path) > os.path.getmtime(output_path):
         if len(process_list) == 8:
             # wait until all are done
             for p in process_list:
@@ -252,9 +251,10 @@ def convert_images(sizes, name, animation_number, root, file):
                                  animation_step = animation_number)
 
 
+# main program -- walk input directory
 for root, dirs, files in os.walk(IMAGE_DIRECTORY,topdown=True):
     short_root = root[len(IMAGE_DIRECTORY)+1:] # cut off root
-    if len(short_root) > 0: # not main directory - any sub-directory, only folders in main-directory are read
+    if len(short_root) > 0 and short_root.startswith("flavors"): # not main directory - any sub-directory, only folders in main-directory are read, skip flavors directory
         # construct the name
         short_root_elements = short_root.split(os.path.sep)
         root_class_name = "_".join(short_root_elements)
@@ -409,6 +409,11 @@ for flavor in ["alive","forge","teaser"]:
     output_dir = os.path.join(IMAGE_DIRECTORY,"..","flavors",flavor)
     print "Processing from " + image_dir + " to " + output_dir
 
+    icon = os.path.join(image_dir,"loadscreen.svg")
+    output_file = os.path.join(output_dir, "loadscreen.png")
+    print output_file
+    convert(icon,output_file,1600,1600)
+
     icon = os.path.join(image_dir,"icon.svg")
     icon_output_path = os.path.join(output_dir, "res")
     for (path,res) in [("hdpi",72), ("mdpi",48), ("xhdpi",96), ("xxhdpi",144), ]:
@@ -437,6 +442,8 @@ for flavor in ["alive","forge","teaser"]:
     for (path,resx,resy) in [("@2x~ipad",1536,2008), ("~ipad",768,1004), ]:
         output_file = os.path.join(icon_output_path, "Default" + path + ".png")
         convert(icon,output_file,resx,resy)
+
+
 
 # finish inkscape processes first
 for p in process_list:
