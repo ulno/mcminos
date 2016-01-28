@@ -319,7 +319,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         if (!isPaused()) {
             panning = 0;
-            playwindow.updateCoordinates(Math.min(1,mcminos.getSpeed()), getSymbolResolution()); // fix coordinates and compute scrolling else coordinates come from panning
+            playwindow.updateCoordinates(Math.max(1,mcminos.getSpeed()), getSymbolResolution()); // fix coordinates and compute scrolling else coordinates come from panning
         } else if ( panning == 0 ) { // if nobody is currently looking
             playwindow.updateCoordinates(1, getSymbolResolution()); //slowly scroll back
         } else {
