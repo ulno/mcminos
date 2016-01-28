@@ -1,0 +1,70 @@
+; LEVEL NEW
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-14
+; Done by.....: Andreas Neudecker
+
+AUTHOR: Andreas_Neudecker
+VERSION:  3.14;
+SHAREWARE:  0
+SYMBOL:   extras_key
+
+NUMBR:    4
+SHOWNR:   4
+; Textinfo -----------
+TITLE: Of doors and keys
+TITLE-de: Von Türen und Schlüsseln
+BODY:
+Collect the keys you find. You may need them to open doors. Or to close them again.
+
+To open or close a door, stand next to it and tap the key in your toolbox. If you are standing between several doors, you can select the door to open. Alternatively, just double tap the door you want to open.
+#
+BODY-de:
+Sammle die Schlüssel ein. Ein Schlüssel öffnet oder schließt eine Tür.
+
+Um eine Tür zu öffnen, stell Dich direkt daneben. Dann tipp den Schlüssel an. Stehlst Du zwischen mehreren Türen, kannst Du die gewünschte auswählen. Alternativ kannst Du doppelt auf die Tür tippen, die Du öffnen willst.
+#
+
+LWID:   7
+LHI:    7
+SCROLLX:  0
+SCROLLY:  0
+BACK: 5
+
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    15
+GRTIME1:  15
+
+GHOST2:   0
+GHSPEED2: 1
+AGIL2:    15
+GRTIME2:  3
+PILLMAX2: 100
+PILLFREQ2:  1
+
+GHOST3:   0
+GHSPEED3: 1
+AGIL3:    15
+GRTIME3:  3
+TRANSWALL3: 3
+
+GHOST4:   0
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  3
+
+LEVEL:
+XXXXXXX
+Xk.X3.X
+XXDXDXX
+X.kDk.X
+XXDXDXX
+XPkXk.X
+XXXXXXX
+#

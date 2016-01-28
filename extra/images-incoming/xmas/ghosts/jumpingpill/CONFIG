@@ -1,0 +1,6 @@
+##  Jumping Pill, X-Mas Version
+symbol='h'
+zindex=720
+moving=True
+order=[1,2,3,4,3,2]
+speed=100

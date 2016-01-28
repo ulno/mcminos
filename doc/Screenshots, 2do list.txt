@@ -1,0 +1,88 @@
+================================================================================
+McMinos Screenshots
+================================================================================
+
+:Author: Andreas Neudecker
+
+:Created: 2016-01-24
+
+
+Required general screenshots
+============================
+
+* start-up screen
+
+* main menu
+
+  a) teaser only
+
+  b) full version with "alive" and "level up"
+
+* main menu's toolbox menu
+
+* level screen's toolbox menu
+
+* save button use
+
+
+Required level screenshots
+==========================
+
+To be taken at highest possible resolution.
+
+* ALL tutorial levels
+
+  1. Peas'n'walls
+
+  2. Ghost "Hanky"
+
+  3. Chocolate Take Away
+
+  4. Of doors and keys
+
+  5. Rock, rock me, baby!
+
+  6. Go, get the jumping peas!
+
+  7. It's a bomb!
+
+  8. Small holes, big holes
+
+  9. Warp holes
+
+  10. Potions good and bad
+
+  11. Dynamite
+
+  12. One-Ways
+
+  13. Mirror, mirror on the wall ...
+
+  14. Speedy race
+
+  15. Don't drink and ...
+
+  16. Infinite world
+
+  17. The mine is mine
+
+  18. Playground
+
+* ALL teaser levels
+
+* selection of full version's levels
+
+
+Required detail screenshots
+===========================
+
+* usage of key on door
+
+* usage of bomb, dynamite, mine
+
+* usage of chocolate
+
+* target symbol diplayed when playing on touch screen or with touch pad field on desktop
+
+* sample level story + statistics
+

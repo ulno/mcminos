@@ -14,8 +14,8 @@ BODY-de: Sei vorsichtig mit all dem Sprengstoff hier. Und geh den Geistern aus d
 
 ; 2DO: edit to get rid of double walls (if possible without breaking the level)
 
-LWID:   21
-LHI:    21
+LWID:   20
+LHI:    20
 SCROLLX:  1
 SCROLLY:  1
 BACK:   44
@@ -35,25 +35,24 @@ GHOST3:   0
 GHOST4:   0
 
 LEVEL:
-dXXXdXXXdXXXdXXXbXXXd
-X...Xb..X1.2X..bX.5bX
-X.P.X.b.X...X.b.X.b.X
-X...Xb..X4.3Xb..X.4bX
-.XXXdXXX.XXXdXXX.XXXd
-X..bX...X..bX...X..bX
-X.b.X.1.X.b.X.5.X.b.X
-Xb..X...Xb..X...Xb..X
-dXXXdXXXdXXXdXXXdXXXd
-X..bXb.bXCC.X..,X..bX
-X.b.X.b.XCC.XGb.X.bkX
-Xb..X...X...Xb..Xd.bX
-dXXXdXXXGXXXdXXXLZZZd
-X..bX..,X..bX...Z...Z
-Xkb.X...X.b.X.b.ZbbbZ
-Xb.bX...Xb..Xb.bZZDZZ
-dXXXdXXXdXXXdXXXbZDZd
-X...X..bX...X...Xb.bX
-X.d.X.b.X.b.X.d.X.b.X
-X...Xb..Xb.bXb.bX..bX
-dXXXdXXXdXXXdXXXdXXXd
+XXXdXXXdXXXdXXXbXXXd
+...Xb..X1.2X..bX.5bX
+.P.X.b.X...X.b.X.b.X
+...Xb..X4.3Xb..X.4bX
+XXXdXXX.XXXdXXX.XXXd
+..bX...X..bX...X..bX
+.b.X.1.X.b.X.5.X.b.X
+b..X...Xb..X...Xb..X
+XXXdXXXdXXXdXXXdXXXd
+..bXb.bXCC.X..,X..bX
+.b.X.b.XCC.XGb.X.bkX
+b..X...X...Xb..Xd.bX
+XXXdXXXGXXXdXXXLZZZd
+..bX..,X..bX...Z...Z
+kb.X...X.b.X.b.ZbbbZ
+b.bX...Xb..Xb.bZZDZZ
+XXXdXXXdXXXdXXXbZDZd
+...X..bX...X...Xb.bX
+.d.X.b.X.b.X.d.X.b.X
+...Xb..Xb.bXb.bX..bX
 #

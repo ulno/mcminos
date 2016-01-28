@@ -1,0 +1,65 @@
+; FOR McMINOS - Version 3.14
+; Created.....: 2016-01-11
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    999
+SYMBOL:   level_mcminos_outline
+TITLE:    Hanky, Perry, Zarathustra, and the jumping peas
+TITLE-de: Hänki, Perry, Zarathustra und die Springerbsen
+BODY:
+No comment yet.
+#
+BODY-de:
+Noch kein Kommentar.
+#
+
+LWID:       50
+LHI:        9
+SCROLLX:    1
+SCROLLY:    0
+BACK:       2
+
+LTIME:      0
+RSTRT:      0
+MIRROR:     0
+
+MCSPEED:    1
+
+GHOST1:     2
+GHSPEED1:   1
+AGIL1:      0
+GRTIME1:    30
+
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      0
+GRTIME2:    120
+PILLMAX2:   50
+PILLFREQ2:  5
+
+GHOST3:     1
+GHSPEED3:   1
+AGIL3:      0
+GRTIME3:    60
+TRANSWALL3: 100
+
+GHOST4:     3
+GHSPEED4:   1
+AGIL4:      0
+GRTIME4:    9999999
+
+
+
+
+LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   r       h r   k     r         r    _  g r 3   _
+XX X X3XX XX XTX XX XX XPX XX XX X XSXX XX X X XX 
+     r     _  3r 3CC     r   3     r         r^  k
+DXXXXXXXXXXXXXXXXXCCXXXXXXXXXXXXXXXXXXXXXXXXXXDXXX
+>FkX k    _  DFk XrXX.3X   k G   D   k_+   X. k   
+XX XrX3XX XX XrX |6.X  XrX XX XXFXrX XX XX XrX XX 
+   Dfk  h k  X   Xk G fD k   _   X     Hk fDk  h  
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#

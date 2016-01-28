@@ -15,10 +15,10 @@ Geistern ist. Viel Glück!
 #
 
 LWID:   40
-LHI:    14
+LHI:    13
 SCROLLX:  0
 SCROLLY:  1
-BACK: 1
+BACK: 2
 
 LTIME:    0
 RSTRT:    0
@@ -49,5 +49,4 @@ X.X.X.X.X....X....X.X.X.X.X.......X....X
 X.X.X.X.X.XX.X.XX.X.X.X.X.X.r.r.r.X.CC.X
 X.X.X.X.X.XG.X.1X.X.X.X.X.X.r.r.r.X.CC.X
 X...........pD..r...2.............D....X
-X.XXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXX
 #

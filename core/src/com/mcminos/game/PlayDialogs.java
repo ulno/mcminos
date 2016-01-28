@@ -135,7 +135,7 @@ public class PlayDialogs {
         rockmeLabel = new Label(": " + level.getRockmesNumber(), writingSkin);
         todosTable.add(rockmeLabel).left().fillX().expandX();
 
-        statisticsTable.add(new Label("Level name: " + level.getLevelConfig().getName(), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label("Level: " + level.getLevelConfig().getName(), writingSkin)).left().fillX().expandX().row();
         statisticsTable.add(new Label("Level author: " + level.getLevelConfig().getAuthor(), writingSkin)).left().fillX().expandX().row();
         // Zoomlevel + Resolution
         statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().fillX().expandX().row();

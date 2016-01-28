@@ -1,0 +1,67 @@
+; FOR McMINOS - Version 3.14
+; Created.....: 2016-01-17
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    99
+SYMBOL:   level_set_symbol_kids
+TITLE: Playground
+TITLE-de: Spielwiese
+BODY: 
+You have successfully passed the tutorials. In this level you may try out all items and features in one level, just for fun. Enjoy.
+#
+BODY-de:
+Du hast die Übungs-Spielebenen erfolgreich absolviert. In dieser Spielebene kannst Du zum Spaß alle Gegenstände und Möglichkeiten in einer Spielebene ausprobieren. Viel Spaß.
+#
+
+LWID:       49
+LHI:        15
+SCROLLX:    1
+SCROLLY:    0
+BACK:       4
+
+LTIME:      0
+RSTRT:      0
+MIRROR:     0
+
+MCSPEED:    1
+
+GHOST1:     1
+GHSPEED1:   1
+AGIL1:      0
+GRTIME1:    300
+
+;GHOST2:     1
+;GHSPEED2:   1
+;AGIL2:      0
+;GRTIME2:    300
+;PILLMAX2:   25
+
+GHOST3:     1
+GHSPEED3:   1
+AGIL3:      0
+GRTIME3:    300
+TRANSWALL3: 100
+
+GHOST4:     1
+GHSPEED4:   1
+AGIL4:      0
+GRTIME4:    999999
+
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+3      3      1      2      2      3      1      
+ XDXXXX XXXXDX ZZZZZZSXXXXDX XXDXXX XXXXDX ZZZZZZ
+ X_.G_XFXm..gX Z3.ouZLXkkkkX X+  hXLX. H3X Zu.CCZ
+6X.X..X^XpmX.XvZ8oooZ^XkkXkX6X XX XOX XX XvZrrCCZ
+ X_._XX XXp.mX Z8698Z XXkkkX Xh   X X___bX <Wa^ Z
+ XDXXX   XXDXX ZZrZZZ  XXXDX XXDXXF XXDXXX ZDZZZZ
+1      6      ä      7  P   k      3      2      
+ XXXXDX  XXXDX XrXXX   XDXXX oZvZ^Z fXXXDX XXDXXX
+ XG  bX XX  GX X  GXX XXkkkX ZddZWZ XX...XDX . (X
+oD X  D r OO r X6X  X XkkXkX ZrrZrZ r  X r X XX X
+ Xb  XX X 2 )X X1   X XkkkkX Zh dhZ X G  X X3 g X
+fXDXXXFfXDXXXXfXXXDXXfXXXDXXfZZZZZZfXXXDXXfXXXDXX
+2      1      3   L  3      1   T  1      2      
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+#

@@ -1,0 +1,29 @@
+===============
+Level shoot-out
+===============
+
+:Author: Andreas_Neudecker
+:Created:   2016-01-19
+
+
+* teaser/702 (Rocks and one-ways) und alive/701 (Rocks warm-up) sind fast identisch. Eins von beiden sollte ausgetauscht werden.
+
+* alive/708 (The Flying Cross): ich fänd das Level kleiner schöner. Und die große Ödnis der vier Quadranten sollte vielleicht ein wenig mit Blumen geschmückt werden.
+
+
+Nachlauf-Level
+==============
+
+* alive/0815_004 (Run, run, don't look back!)
+* alive/0815_013 (Born to be First)
+* alive/0815_016 (Marathon)
+
+004 ist als erstes dieser Art OK, 013 bringt eine neue Idee rein und ist nicht zu groß. Aber 016 ist mir zu groß, eine Wiederholung zu viel und irgend wie nichts Neues. Meine Meinung: 016 gegen ein anderes Level austauschen. Sind noch einige nette in green, yellow und forge - Andererseits frage ich mich sowieso, wie solche Levels auf mobilen Geräten ankommen. Ich finde die Navigation auf kleinen Touchscreens immer noch unangenehm und fummelig, erreiche bei weitem nicht eine so exakte Steuerung, wie auf dem Desktop mit der Tastatur. Selbst mit der Maus ist das noch besser. Und mein kleinster Touchscreen ist 7" - wie ist das bei 4 oder 5 Zoll auf dem Handy? Meinetwegen könnten wir auch ganz auf die reinen Nachlauf-Level verzichten.
+
+
+Level author
+============
+
+Ich fände es schöner, wenn statt nicknames echte Namen (oder wenigstens Vornamen) angezeigt würden. Habe für mich bereits "nope" entfernt, weil ich das nicht weiter nutzen möchte. Wollte aber natürlich Eure nicks nicht einfach ohne Einverständnis entfernen.
+
+

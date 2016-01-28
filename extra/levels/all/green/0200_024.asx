@@ -5,8 +5,10 @@ AUTHOR: Andreas_Neudecker
 NUMBR:    24
 VERSION:  1100
 SYMBOL: level_mcminos_outline
-TITLE: Level 24 of McMinos for Atari 1.10
-TITLE-de: Spielebene 24 von McMinos für Atari 1.10
+TITLE: The labyrinth of Knossos
+TITLE-de: Das Labyrinth von Knossos
+BODY: You may not always know where you are, but you should know where the ghosts are.
+BODY-de: Vielleicht weißt Du nicht immer, wo genau Du bist. Aber Du solltest immer wissen, wo die Geister rumgeistern.
 
 LWID:   19
 LHI:    19
@@ -24,13 +26,6 @@ GHOST1:   5
 GHSPEED1: 1
 AGIL1:    10
 GRTIME1:  3
-
-GHOST2:   0
-GHOST3:   0
-GHOST4:   0
-
-SCROLLX:    1
-SCROLLY:    1
 
 LEVEL:
 X.XXXXXXXX.X.X.X.X.

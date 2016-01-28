@@ -1,12 +1,11 @@
-; LEVEL 4
 ; FOR MAC MINOS - Versions > 0.51
 
 AUTHOR: Andreas_Neudecker
 NUMBR:    4
 VERSION:  0900
 SYMBOL: level_mcminos_outline
-TITLE: Level 4 of McMinos for Atari 1.10
-TITLE-de: Spielebene 4 von McMinos für Atari 1.10
+TITLE: Locking in ghosts, again
+TITLE-de: Geister einsperren, schon wieder
 
 ; UN-FIXED WRAP-AROUND FIXES
 
@@ -26,13 +25,6 @@ GHOST1:   6
 GHSPEED1: 1
 AGIL1:   30
 GRTIME1:  3
-
-GHOST2:   0
-GHOST3:   0
-GHOST4:   0
-
-SCROLLX:  1
-SCROLLY:  1
 
 LEVEL:
 X......L....

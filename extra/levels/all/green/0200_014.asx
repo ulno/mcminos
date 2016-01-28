@@ -1,7 +1,5 @@
-; LEVEL 014
 ; FOR McMINOS - Version 1.10
 ; Created.....: 30.03.93
-; Done by.....: Andreas Neudecker
 
 AUTHOR: Andreas_Neudecker
 NUMBR:    14
@@ -27,23 +25,11 @@ GHSPEED1: 2
 AGIL1:    12
 GRTIME1:  5
 
-GHOST2:   0
-GHSPEED2: 1
-AGIL2:    10
-GRTIME2:  5
-PILLMAX2: 0
-PILLFREQ2:  12
-
 GHOST3:   1
 GHSPEED3: 1
 AGIL3:    20
 GRTIME3:  10
 TRANSWALL3: 15
-
-GHOST4:   0
-GHSPEED4: 1
-AGIL4:    10
-GRTIME4:  5
 
 LEVEL:
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -54,4 +40,4 @@ XX.X.XXXXX.Xb...bX.<.XrXXXXXXrX...X...X.XX...X..kX
 .......X...XXXDXXX.X...X.1.X....X.X.X.X..ä.X.XXXXX
 .X...X...X.........X.X...X...r..X...X...X.........
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-# ; ENDE DER LEVELDATEN ---------------------------------*
+#

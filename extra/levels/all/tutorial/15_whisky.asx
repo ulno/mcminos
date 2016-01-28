@@ -1,0 +1,43 @@
+; LEVEL NEW
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-19
+; Done by.....: Andreas Neudecker
+
+AUTHOR: Andreas_Neudecker
+VERSION:  3.14;
+SHAREWARE:  0
+SYMBOL:   extras_whisky
+
+NUMBR:    15
+SHOWNR:   15
+; Textinfo -----------
+TITLE: Don't drink and ...
+TITLE-de: Kein Alkohol am ...
+BODY:
+If you get drunk you lose control. Just don't.
+#
+BODY-de:
+Wenn du dich im Spiel betrinkst, verlierst du die Kontrolle. Lass es lieber sein.
+#
+
+LWID:   7
+LHI:    7
+SCROLLX:  0
+SCROLLY:  0
+BACK: 2
+
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+MCSPEED:  1
+
+LEVEL:
+XXXXXXX
+X.   SX
+XL6  wX
+X wr  X
+XL   XX
+Xw  wPX
+XXXXXXX
+#

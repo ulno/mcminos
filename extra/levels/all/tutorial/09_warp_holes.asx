@@ -1,0 +1,48 @@
+; LEVEL NEW
+; FOR McMINOS - Version 3.14
+; Created.....: 2015-10-17
+; Done by.....: Andreas Neudecker
+
+AUTHOR: Andreas_Neudecker
+VERSION:  3.14;
+SHAREWARE:  0
+SYMBOL:   fields_warp_hole
+
+NUMBR:    9
+SHOWNR:   9
+; Textinfo -----------
+TITLE: Warp holes
+TITLE-de: Warp-Löcher
+BODY:
+Jump into one, exit from another.
+#
+BODY-de:
+Springst Du in eins, kommst Du aus einem anderen wieder heraus.
+#
+
+LWID:   7
+LHI:    7
+SCROLLX:  0
+SCROLLY:  0
+BACK: 4
+
+LTIME:    0
+RSTRT:    1
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST4:   1
+GHSPEED4: 1
+AGIL4:    15
+GRTIME4:  3
+
+LEVEL:
+XXXXXXX
+XW X WX
+X PX. X
+XXXXXXX
+X .X.hX
+XW X WX
+XXXXXXX
+#

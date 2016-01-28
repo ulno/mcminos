@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8" />
+<title>
+McMinos level source reference
+</title>
+<style type="text/css">
+  body{padding:1em 5%;} table,th,td,tr{
+    border:1px solid black; padding: .25em .5em; border-collapse:collapse;}
+  pre,code{font-family:DejaVu Sans Mono, Droid Mono, Inconsolata,monospace;}
+  pre{margin: 1em; padding:1em 2em; background: #ffffcc; 
+  box-shadow: .25em .25em .25em #bbbbbb; font-size: smaller;}
+  table{width: 100%;}
+</style></head><body>
+
+<h1 id="mcminos-level-source-reference">McMinos level source reference</h1>
+<p><strong>for McMinos versions 0.815, 1.10, 2.00, and mobile</strong></p>
+<p>Author: Andreas Neudecker</p>
+<p>Created: 1995-01-11</p>
+<p>McMinos level sources are simple text files. They used to be in ASCII (Atari flavour) and are now in UTF-8. The general level structure is very simple:</p>
+<h2 id="level-parameters">Level parameters</h2>
+<p>All settings and data in the level source are given as simple parameter and value pairs. There are two kinds of parameters:</p>
+<ol style="list-style-type: decimal">
+<li>single line parameters</li>
+<li>multi line</li>
+</ol>
+<p>Single-line parameters have the form</p>
+<pre><code>PARAMETER: data</code></pre>
+<p>while multi-line parameters have the form</p>
+<pre><code>PARAMETER:
+data
+#</code></pre>
+<p>where the '#' signals the end of a multi-line parameter's data.</p>
+<p>Comments start with ';' and stretch to the end of the line</p>
+<h3 id="header">Header</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>AUTHOR</code></td>
+<td align="left">level author; space not allowed; use &quot;_&quot; instead (optional)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>NUMBR</code></td>
+<td align="left">number of the level — <em>currently unused</em></td>
+</tr>
+<tr class="odd">
+<td align="left"><del><code>SHOWNR</code></del></td>
+<td align="left"><del>number of the level as displayed</del> — <strong>deprecated</strong></td>
+</tr>
+<tr class="even">
+<td align="left"><del><code>ACCCD</code></del></td>
+<td align="left"><del>level code (0 = no direct access)</del> — <strong>deprecated</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code>AUTHOR: Andreas_Neudecker
+NUMBR:  199</code></pre>
+<h3 id="level-story">Level story</h3>
+<p>The parameters in this section are new in McMinos mobile.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>SYMBOL</code></td>
+<td align="left">grafic entity; e.g.: ghosts_hanky,5 (name, animation image no.)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>TITLE</code></td>
+<td align="left">level title to be displayed in set menu and before level start</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>TITLE-de</code></td>
+<td align="left">German language level title</td>
+</tr>
+<tr class="even">
+<td align="left"><code>BODY</code></td>
+<td align="left">multi-line text, displayed before level start and in level menu</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>#</code></td>
+<td align="left">obligatory end symbol for multi-line <code>BODY</code> text</td>
+</tr>
+<tr class="even">
+<td align="left"><code>BODY-de</code></td>
+<td align="left">German language level text</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>#</code></td>
+<td align="left">obligatory end symbol for multiline <code>BODY-de</code> text</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code>SYMBOL:   level_symbol_castle
+TITLE:    One ghost, one cookie
+TITLE-de: Ein Geist, ein Keks
+BODY:
+Eat all peas. And stay alive.
+#
+BODY-de:
+Iss alle Pillen. Und bleib am Leben.
+#</code></pre>
+<h3 id="level-dimensions">Level dimensions</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>LWID</code></td>
+<td align="left">level width, measured in fields (max. 50)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>LHI</code></td>
+<td align="left">level height, measured in fields, too (max. 50)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>SCROLLX</code></td>
+<td align="left">horizontal wrap-around; 0 = off, 1 = on, default: 0</td>
+</tr>
+<tr class="even">
+<td align="left"><code>SCROLLY</code></td>
+<td align="left">vertical wrap-around; 0 = off, 1 = on, default: 0</td>
+</tr>
+</tbody>
+</table>
+<p>The paramters <code>VWID</code> and <code>VHI</code> that we used in the Atari version of McMinos to define a clipping box to limit the visible level area have been dropped in McMinos mobile, since they were only used in rare cases and did not provide any improvement to the game. Additionally, the vast range of display sizes today made this feature look useless.</p>
+<p><strong>Example:</strong></p>
+<pre><code>LWID:    20
+LHI:     20
+SCROLLX: 0
+SCROLLY: 0</code></pre>
+<h3 id="level-background">Level background</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>BACK</code></td>
+<td align="left">background style (0 = black; 1, …, 5 = tiles; default = 1)</td>
+</tr>
+</tbody>
+</table>
+<p>The Atari versions of McMinos used to have 50 different backround tiles available. With McMinos mobile we decided to reduce the number of backgrounds to only five (not counting black = no background). While it is possible to specify the background by it's image entitie's id (e.g. <code>backgrounds_pavement_01</code> for the current default), it is strongly recommended to use their numbers only, as these will work, even if image files are replaced.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">number</th>
+<th align="left">background tile</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="left"><img src="img/backgrounds_black_0.png" title="backgrounds_black" alt="backgrounds_black" /></td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left"><img src="img/backgrounds_pavement_01_0.png" title="backgrounds_pavement_01" alt="backgrounds_pavement_01" /></td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left"><img src="img/backgrounds_gravel_01_0.png" title="backgrounds_gravel_01" alt="backgrounds_gravel_01" /></td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left"><img src="img/backgrounds_meadow_flowers_0.png" title="backgrounds_meadow_flowers" alt="backgrounds_meadow_flowers" /></td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left"><img src="img/backgrounds_sand_01_sand_0.png" title="backgrounds_sand_01" alt="backgrounds_sand_01" /></td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left"><img src="img/backgrounds_soil_01_0.png" title="backgrounds_soil_01" alt="backgrounds_soil_01" /></td>
+</tr>
+</tbody>
+</table>
+<p>Old levels may still have background numbers higher than 5. These will default to 1 (currently <code>backgrounds_pavement_01</code>)</p>
+<p><strong>Example:</strong></p>
+<pre><code>BACK: 2</code></pre>
+<h3 id="start-up-settings">Start-up settings</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><del><code>LTIME</code></del></td>
+<td align="left">limited level solving time — <em>currently unused</em></td>
+</tr>
+<tr class="even">
+<td align="left"><code>RSTRT</code></td>
+<td align="left">restart mode after losing a life (details: see below)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>MIRROR</code></td>
+<td align="left">mirror player's movements; 1 = on, 0 = off (default)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="level-restart-mode">Level restart mode</h4>
+<p>After the demise of McMinos a level may continue in different modes, depending on the intentions of the level's author. Permitted values are:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mode</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="left">ghosts and McMinos start in their original positions (default)</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">level starts anew</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">ghosts start from castle(s), McMinos from original position</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">McMinos starts from where he died, ghosts from start positions</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">bonus level -- when McMinos dies, level is finished</td>
+</tr>
+<tr class="even">
+<td align="left">16</td>
+<td align="left">McMinos starts at spot of death, ghosts where they are</td>
+</tr>
+</tbody>
+</table>
+<p><em>Mode 16 is currently not implemented (2016-01-05)</em></p>
+<p><strong>Example:</strong></p>
+<pre><code>LTIME:  0
+RSTRT:  0
+MIRROR: 0</code></pre>
+<h3 id="creatures">Creatures</h3>
+<h4 id="mcminos">McMinos</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MCSPEED</td>
+<td align="left">McMinos' base speed at level start (1, 2, 4); default = 1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ghosts">Ghosts</h4>
+<ul>
+<li>There are four types of ghosts:
+<ol style="list-style-type: decimal">
+<li><strong>Hanky</strong> -- the white blanket ghost that hunts McMinos and kills him</li>
+<li><strong>Perry</strong> -- the <em>burger ghost</em> that lays new peas in the level, hunts McMinos and poisons him (curable with medicine)</li>
+<li><strong>Zarathustra</strong> -- the yellow ghost that can traverse walls (though not through indestructible walls, doors or rocks) and, of course, hunts and kills McMinos. Is killed by dynamite, but survives detonation of mines or bombs.</li>
+<li><strong>Jumping Pea</strong> -- this ghost is different: it flees from McMinos, unless McMinos has eaten a power cookie or similar, then it hunts McMinos to poison him (again, curable with medicine)</li>
+</ol></li>
+<li>Most setting options are identical for all ghosts (count, speed, &quot;agility&quot;, reappearance time); few are specific to one type of ghost.</li>
+<li>Ghosts that are not in the level at level start will only appear out of castles. (GHOST<em>n</em> - default: 0; GRTIME<em>n</em> - default: 1 <em>s</em>)</li>
+<li>&quot;agility&quot; -- this property describes the probability of errors a ghost makes in pursuit of McMinos: the higher the value the rarer a ghost makes mistakes; 0 means &quot;never&quot; (AGIL<em>n</em> - values: 0, …, 32768)</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>GHOST1</strong></td>
+<td align="left">max. <strong>Hanky</strong> ghosts appearing simultaneously (default: 0)</td>
+</tr>
+<tr class="even">
+<td align="left">GHSPEED1</td>
+<td align="left">speed of ghost Hanky (1, 2, 4, 8 - default: 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">AGIL1</td>
+<td align="left">Hanky's probabilty of errors in pursuit of McMinos</td>
+</tr>
+<tr class="even">
+<td align="left">GRTIME1</td>
+<td align="left">seconds before a Hanky reappears (default: 1)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>GHOST2</strong></td>
+<td align="left">max. <strong>Perry</strong> gnosts appearing simultaneously (default: 0)</td>
+</tr>
+<tr class="even">
+<td align="left">GHSPEED2</td>
+<td align="left">speed of ghost Perry (1, 2, 4, 8 - default: 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">AGIL2</td>
+<td align="left">ghost Perry's probabilty of errors in pursuit of McMinos</td>
+</tr>
+<tr class="even">
+<td align="left">GRTIME2</td>
+<td align="left">seconds before a Perry reappears (default: 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">PILLMAX2</td>
+<td align="left">max. number of peas Perrys will lay in the level (default: 0)</td>
+</tr>
+<tr class="even">
+<td align="left">PILLFREQ2</td>
+<td align="left">randomly lay peas every PILLFREQ2-th field; 1: each (default)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>GHOST3</strong></td>
+<td align="left">max. <strong>Zarathustra</strong> ghosts appearing simultaneously (default: 0)</td>
+</tr>
+<tr class="even">
+<td align="left">GHSPEED3</td>
+<td align="left">speed of ghost Zarathustra (1, 2, 4, 8 - default: 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">AGIL3</td>
+<td align="left">Zarathustra's probabilty of errors in pursuit of McMinos</td>
+</tr>
+<tr class="even">
+<td align="left">GRTIME3</td>
+<td align="left">seconds before a Zarathustra reappears (default: 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">TRANSWALL3</td>
+<td align="left">randmly traverse walls; probability is higher for small values</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>GHOST4</strong></td>
+<td align="left">max. <strong>jumping peas</strong> appearing simultaneously (default: 1)</td>
+</tr>
+<tr class="odd">
+<td align="left">GHSPEED4</td>
+<td align="left">speed of jumping peas (1, 2, 4, 8 - default: 1)</td>
+</tr>
+<tr class="even">
+<td align="left">AGIL4</td>
+<td align="left">jumping peas' probabilty of errors in pursuit of McMinos</td>
+</tr>
+<tr class="odd">
+<td align="left">GRTIME4</td>
+<td align="left">seconds before a jumping pea reappears (default: 1)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code>MCSPEED:    1
+GHOST1:     5
+GHSPEED1:   1
+AGIL1:      10
+GRTIME1:    1
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      10
+GRTIME2:    1
+PILLMAX2:   100
+PILLFREQ2:  10
+GHOST3:     0
+GHSPEED3:   1
+AGIL3:      10
+GRTIME3:    1
+TRANSWALL3: 10
+GHOST4:     1
+GHSPEED4:   1
+AGIL4:      10
+GRTIME4:    1</code></pre>
+<h3 id="minimum-and-maximum-amounts-of-items">Minimum and maximum amounts of items</h3>
+<p>Levels written for the Atari version of McMinos had a couple of min/max settings for items like bombs, chocolate, medicine etc. These are now deprecated and will be ignored. If a level requires certain items, please provide them inside the level!</p>
+<h3 id="level-data">Level data</h3>
+<p>The level data is a multi-line parameter (see above) and thus has the general form of</p>
+<pre><code>LEVEL:
+&lt;level data&gt;
+#</code></pre>
+<p>while <em>level data</em> is a simple character representation of all items in the level that, when viewed with a monospace font, may look just like the real level to an experienced level author (even though a little distorted due to the fact that most monospace characters do not cover exact squares).</p>
+<p>The maximum size for a level is currently 50 by 50 squares, i.e. 50 lines with 50 colums, each.</p>
+<h4 id="creatures-1">Creatures</h4>
+<p>While the number of ghosts in a level is not limited except by the number of free level available there must be <strong>exactly one McMinos</strong> in the level.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">character</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>P</code></td>
+<td align="left">player -- this is McMinos</td>
+</tr>
+<tr class="even">
+<td align="left"><code>G</code></td>
+<td align="left">ghost 1 -- Hanky, the white ghost</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>g</code></td>
+<td align="left">ghost 2 -- Perry, the pea layer</td>
+</tr>
+<tr class="even">
+<td align="left"><code>H</code></td>
+<td align="left">ghost 3 -- Zarathustra, the ghost that can traverse walls</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>h</code></td>
+<td align="left">ghost 4 -- jumping pea</td>
+</tr>
+</tbody>
+</table>
+<h4 id="the-castle">The castle</h4>
+<p>A complete castle must always look like this:</p>
+<pre><code>CC
+CC</code></pre>
+<p>The maximum count of castles is 64 per level!</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">character</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>C</code></td>
+<td align="left">ghosts' castle; must always consist of a 2 by 2 group of Cs</td>
+</tr>
+</tbody>
+</table>
+<h4 id="elements-of-the-maze">Elements of the maze</h4>
+<p>This is a very diverse group of items. It comprises walls and doors, holes, one-ways, effect fields like speed-up, kill-all-ghosts, etc.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">character</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>X</code></td>
+<td align="left">wall</td>
+</tr>
+<tr class="even">
+<td align="left"><code>Z</code></td>
+<td align="left">undestroyable wall</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>U</code></td>
+<td align="left">invisable wall</td>
+</tr>
+<tr class="even">
+<td align="left"><code>D</code></td>
+<td align="left">door, closed</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>\|</code></td>
+<td align="left">door, opened</td>
+</tr>
+<tr class="even">
+<td align="left"><code>F</code></td>
+<td align="left">speed-Up field</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>f</code></td>
+<td align="left">speed-Down field</td>
+</tr>
+<tr class="even">
+<td align="left"><code>W</code></td>
+<td align="left">warp hole</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>A</code></td>
+<td align="left">Kill All Field</td>
+</tr>
+<tr class="even">
+<td align="left"><code>^, &gt;, v, &lt;</code></td>
+<td align="left">one way fields; up, right, down, left, respectively</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>ä, ö, ü, ß</code></td>
+<td align="left">rotating one ways; preset directions: up, right, down, left</td>
+</tr>
+<tr class="even">
+<td align="left"><code>T</code></td>
+<td align="left">skull field</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>S</code></td>
+<td align="left">skull</td>
+</tr>
+<tr class="even">
+<td align="left"><del><code>?</code></del></td>
+<td align="left"><del>surprise field (positive or negative)</del> — <strong>deprecated</strong></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>r</code></td>
+<td align="left">rock</td>
+</tr>
+<tr class="even">
+<td align="left"><code>O</code></td>
+<td align="left">rock me field</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>0</code></td>
+<td align="left">rock me field with a stone on it</td>
+</tr>
+<tr class="even">
+<td align="left"><code>6,…, 9, o</code></td>
+<td align="left">holes in the ground (6 = smallest, o = biggest)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="useful-items">Useful items</h4>
+<p>They take effect immediately when McMinos walks on them.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">character</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>.</code></td>
+<td align="left">pea (pellet)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>x</code></td>
+<td align="left">exit to next level</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>a</code></td>
+<td align="left">kill all ghosts</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>power pills</strong></td>
+<td align="left"><em>effective for 10 sec (each)</em></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>*</code></td>
+<td align="left">cookie; multipliers: MCSPEED x2; GHSPEEDs x1</td>
+</tr>
+<tr class="even">
+<td align="left"><code>(</code></td>
+<td align="left">milk; multipliers: MCSPEED x1; GHSPEEDs x2</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>)</code></td>
+<td align="left">mushroom; multipliers: MCSPEED x1; GHSPEEDs x1</td>
+</tr>
+<tr class="even">
+<td align="left"><code>L</code></td>
+<td align="left">Life (currently heart symbol)</td>
+</tr>
+<tr class="odd">
+<td align="left"><del><code>$</code></del></td>
+<td align="left">clock, Level time + 60 sec. — <strong>deprecated</strong></td>
+</tr>
+<tr class="even">
+<td align="left"><del><code>c</code></del></td>
+<td align="left">Letter with level code — <strong>deprecated</strong></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>1</code></td>
+<td align="left"><del>Bonus 100 Pt</del>; currently replaced with decorative flower</td>
+</tr>
+<tr class="even">
+<td align="left"><code>2</code></td>
+<td align="left"><del>Bonus 250 Pt</del>; replaced with a decorative flower</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>3</code></td>
+<td align="left"><del>Bonus 500 Pt</del>; replaced with a decorative flower</td>
+</tr>
+</tbody>
+</table>
+<h4 id="bad-items">Bad items</h4>
+<p>Just like the useful items above, these items take effect immediately when McMinos walks on them.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">character</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>w</code></td>
+<td align="left">Whisky</td>
+</tr>
+<tr class="even">
+<td align="left"><code>M</code></td>
+<td align="left">mirror</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>p</code></td>
+<td align="left">poison; can be cured with medicine</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tools">Tools</h4>
+<p>These are the items that, when collected, are put into the <em>toolbox</em>, in McMinos mobile that is the bar on the left side of the level screen. From there, they can be used by tapping/clicking on the respective item.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">character</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>k</code></td>
+<td align="left">key</td>
+</tr>
+<tr class="even">
+<td align="left"><code>b</code></td>
+<td align="left">bomb</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>d</code></td>
+<td align="left">dynamite</td>
+</tr>
+<tr class="even">
+<td align="left"><code>_</code></td>
+<td align="left">mine (not aktivated)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>,</code></td>
+<td align="left">mine in the ground (aktivated)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>+</code></td>
+<td align="left">chocolate; power for later use; MCSPEED x2; GHSPEEDs x1</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>m</code></td>
+<td align="left">medicine (bottle of)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>u</code></td>
+<td align="left">umbrella; helps McMinos to hover over holes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code>LEVEL:
+XXXXXXXXXXXXXXXXXXXXXXXX
+X*..........P.........1X
+X.XXXX.XXXX..XXXX.XXXX.X
+X.X..................X.X
+X.X.XXX.XXXrOXXX.XXX.X.X
+X.X..................X.X
+X...XXXX.XXXXXX.XXXX...X
+X.XXX......CC......XXX.X
+X.....XXXX1CC.XXXX.....X
+X.XXX.X*.XXXXXX.*X.XXX.X
+X......................X
+XXXXXXXXXXXXXXXXXXXXXXXX
+#</code></pre>
+<h3 id="sample-level-source">Sample level source</h3>
+<p>Below is the modernised level source of the very first level of the Atari version of McMinos (version 0.815).</p>
+<pre><code>; LEVEL 000
+; FOR McMINOS - Versions &gt; 0.51
+
+AUTHOR: Andreas_Neudecker
+NUMBR:    000
+VERSION:  0815
+TITLE:    One ghost, one cookie
+TITLE-de: Ein Geist, ein Keks
+BODY:
+Eat all peas. And stay alive.
+#
+BODY-de:
+Iss alle Pillen. Und bleib am Leben.
+#
+
+LWID:     12
+LHI:      12
+SCROLLX:  0
+SCROLLY:  0
+BACK:     1
+
+LTIME:    0
+RSTRT:    0
+MIRROR:   0
+
+MCSPEED:  1
+
+GHOST1:   1
+GHSPEED1: 1
+AGIL1:    10
+GRTIME1:  5
+
+LEVEL:
+XXXXXXXXXXXX
+X....P.....X
+X.XX.XX.XX.X
+X.X......X.X
+X...XXXX...X
+XXX..G...XXX
+X...XXXX...X
+X.XXXCCXXX.X
+X....CC....X
+X.XX.XX.XX.X
+X*.........X
+XXXXXXXXXXXX
+#</code></pre>
+</body>
+</html>
+
+
