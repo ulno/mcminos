@@ -1,0 +1,81 @@
+; FOR McMINOS - Version 3.14
+; Created.....: 2016-01-26
+
+AUTHOR:   NoPe;   Andreas_Neudecker
+VERSION:  3140
+NUMBR:    999
+SYMBOL:   level_mcminos_outline
+TITLE: Foto Studio
+TITLE-de: Fotostudio
+BODY:
+This level is meant to provide nice series of explosions and a colourful maze for good screenshots.
+#
+BODY-de:
+Diese Spielebene soll nette Explosions-Serien und ein buntes Labyrinth für gute Schnappschüsse bieten.
+#
+
+LWID:       50
+LHI:        28
+SCROLLX:    0
+SCROLLY:    0
+BACK:       3
+
+LTIME:      0
+RSTRT:      0
+MIRROR:     0
+
+MCSPEED:    1
+
+GHOST1:     3
+GHSPEED1:   1
+AGIL1:      0
+GRTIME1:    1
+
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      0
+GRTIME2:    1
+PILLMAX2:   33
+PILLFREQ2:  3
+
+GHOST3:     0
+GHSPEED3:   1
+AGIL3:      0
+GRTIME3:    1
+TRANSWALL3: 10
+
+GHOST4:     0
+GHSPEED4:   1
+AGIL4:      0
+GRTIME4:    1
+
+LEVEL:
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZWkkbrrrrrrrrrrrrrHrb,.hr...._...G.._....bbbbb..kZ
+Zkkbrrrrrr.G..1.rrbrrrbrXXXXXbXXXXXXXXDXXXXXXXXX.Z
+ZkrrrrG.r.rr.rd.bbrbgrrbrbbb,r6,b.....bbbbb...kX.Z
+Zrrr_2rr...rr..drrbrr1rrbrr,b,XX.XXXXXDXXXXXXX.X.Z
+Zrr.r_.r..r2.r.rG.rbGr.rgbrr,bb,r...k...3..k.D.D.Z
+Zr.r._.rbr.rrrbrbbbrr.3.rrbrbr,b,XXXXXDXXXXX.X.X.Z
+Z.rrr._.rrr.rdrbrr......rdrGrrr,b,r.b.r..CCX.X.XhZ
+Z..r..r..r1.rrGrbdr.h1.rGrrr.r.6Xb,bXb3.XCCX.X.X.Z
+Zr1..rrr...rGrrdrr..2...rr.3...XXXbXXXbXXXbbr..X.Z
+Z..r..r..r..rdbrr.....1.L....3..X.bbX.1,Xb2bXX.X.Z
+Z.rrr...rrr.rrrb9..h...L3L.12.r.,bX.b.X.b.Xb,brb.Z
+Z..r..r..r...r.........+L1...rrrbXXXbXXX1XXX.ObXbZ
+Z.O.O.Odb9.ob6.o.odo.XdXmX.X..r,,,XbbbX.,.O.2.,XbZ
+Z,.,.,.,.,b,.,.,d,.,,X3XbX.X..r..67,,,8..r.r.3r.,Z
+Z.X.X.X.rbrbrbrbrbrb.X.XbX3X......2......r.......Z
+Z.X.X.X.rrdrbrbrbrbr.X.XmX.X.XXXDXXXDXXXDXXXDXXX.Z
+Z.X.X_X.rrrdGbrdGdrr.X2X_X.X.X2...............3X.Z
+Z.X_X.X.rrdrbrdrbrdr,X.X_X1X.X.XDXXXDXXXDXXXDX.X.Z
+Z_X.X.X.rrrrrrrrrrrb.D.DmD.D.X.X3.....h....1hX.X.Z
+Z.D.D.DG.......r..,.,X1X+X.X.D.X.X.X.X.XoX.X.X.D.Z
+Z.X.X.XXXXXXXXXDXrrr.X.X+X2X.X.D.X.XoXgX.X.X.D.X.Z
+Z.X.XG..,bbb3bb,.....X.XPX.X.X.Xh1..........2X.X.Z
+Z.X.XXXXXrrrdrXDXXrr.X2X^X.X.X.XDXXXDXXXDXXXDX.X.Z
+Z.XG....,bbb1bb,.....X...3.X.X3...............1X.Z
+Z.XXXXXXXXXXXXXDXXXXDXXXXXXX.XXXDXXXDXXXDXXXDXXXkZ
+ZG....._....._...._.........,...b...b...b.bb.,.kWZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+#
