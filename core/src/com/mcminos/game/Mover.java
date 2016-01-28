@@ -20,6 +20,7 @@ public abstract class Mover implements KryoSerializable {
     private int speedFactor = 1;
 
     public final static int STOP=0, UP=1, RIGHT=2, DOWN=4, LEFT=8, ALL=15;
+    public final static int dirMap[] = {-1,0,1,-1,2,-1,-1,-1,3,-1,-1,-1,-1,-1,-1,-1}; // for converting dirs into dirnumbers
     protected int currentDirection = STOP;
     protected LevelObject levelObject; // corresponding LevelObject
     protected LevelBlock currentLevelBlock; // current associated LevelBlock
