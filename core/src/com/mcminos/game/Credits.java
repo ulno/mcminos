@@ -89,8 +89,8 @@ public class Credits implements Screen {
 
         rootTable.setBackground(new BackroundDrawer(bg));
 
-        // Congrat-message
-        Label m = new Label(credits,main.getLevelSkin(res));
+        // Credits-message
+        Label m = new Label(credits + "\n\nVersion: " + main.getVersionString(),main.getLevelSkin(res));
         m.setWrap(true);
         table.add(m).maxWidth(Gdx.graphics.getWidth()*9/10).fill().expand();
 

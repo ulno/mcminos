@@ -379,9 +379,9 @@ public class MainMenu implements Screen {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) stage.act(delta);
             stage.draw();
-            batch.begin();
-            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
-            batch.end();
+//            batch.begin();
+//            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
+//            batch.end();
             fader.render();
         }
     }

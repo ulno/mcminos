@@ -115,7 +115,7 @@ public class PlayDialogs {
     public void openLevelStory() {
         LevelConfig lc = level.getLevelConfig();
 
-        Table dialogTable = openText(lc.getTitle(preferences.getLanguage()),lc.getBody(preferences.getLanguage()));
+        Table dialogTable = openText(lc.getTitle(preferences.getLanguage()), lc.getBody(preferences.getLanguage()));
 
         ///// Fill statistics
         int res = play.getSymbolResolution();
@@ -123,27 +123,31 @@ public class PlayDialogs {
 
         Table statisticsTable = new Table(menuSkin);
         dialogTable.row();
-        dialogTable.add(statisticsTable).fillX().expandX().padTop(res/2);
+        dialogTable.add(statisticsTable).fillX().expandX().padTop(res / 2);
 
         // Remaining pills and rockmes (todos)
         Table todosTable = new Table();
         statisticsTable.add(todosTable).fillX().expandX().row();
         todosTable.add(new Image(Entities.pills_pill_default.getTexture(res / 2, 0))).left();
-        pillLabel = new Label(": " + level.getPillsNumber() +", ", writingSkin);
+        pillLabel = new Label(": " + level.getPillsNumber() + ", ", writingSkin);
         todosTable.add(pillLabel).left();
         todosTable.add(new Image(Entities.extras_rock_me.getTexture(res / 2, 0))).left();
         rockmeLabel = new Label(": " + level.getRockmesNumber(), writingSkin);
         todosTable.add(rockmeLabel).left().fillX().expandX();
 
-        statisticsTable.add(new Label("Level: " + level.getLevelConfig().getName(), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label("Level: " + level.getLevelConfig().getName(), writingSkin)).left().fillX().expandX().padTop(res / 2).row();
         statisticsTable.add(new Label("Level author: " + level.getLevelConfig().getAuthor(), writingSkin)).left().fillX().expandX().row();
         // Zoomlevel + Resolution
-        statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().fillX().expandX().row();
-        statisticsTable.add(new Label(new StringBuilder("Sprite Size: ").append(playwindow.resolution), writingSkin)).left().fillX().expandX().row();
-        statisticsTable.add(new Label(new StringBuilder("Sprite Resolution: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight()), writingSkin)).left().fillX().expandX().row();
-        statisticsTable.add(new Label(new StringBuilder("Symbol Resolution: ").append(play.getSymbolResolution()), writingSkin)).left().fillX().expandX().row();
-        statisticsTable.add(new Label(new StringBuilder("Minimap Sprite Size: ").append(playwindow.virtual2MiniResolution), writingSkin)).left().fillX().expandX().row();
-        statisticsTable.add(new Label(new StringBuilder("FPS: ").append((int) (Gdx.graphics.getFramesPerSecond())), writingSkin)).left().fillX().expandX().row();
+        //statisticsTable.add(new Label(new StringBuilder("Density: ").append((int) (Gdx.graphics.getDensity() * 160)), writingSkin)).left().fillX().expandX().row();
+        statisticsTable.add(new Label(
+                new StringBuilder("Sprite size: ").append(playwindow.resolution)
+                        .append(", symbol size: ").append(play.getSymbolResolution())
+                        .append(", minimap sprite size: ").append(playwindow.virtual2MiniResolution)
+                , writingSkin)).left().fillX().expandX().padTop(res / 2).row();
+        statisticsTable.add(new Label(
+                new StringBuilder("Screen: ").append(Gdx.graphics.getWidth()).append("x").append(Gdx.graphics.getHeight())
+                        .append(", FPS: ").append((int) (Gdx.graphics.getFramesPerSecond()))
+                , writingSkin)).left().fillX().expandX().row();
     }
 
 
