@@ -74,9 +74,9 @@ cat << EOF > "$rootdir/ios/robovm.properties"
 app.version=1.0
 app.id=$id
 app.mainclass=com.mcminos.game.IOSLauncher
-app.executable='$name'
+app.executable=$name
 app.build=1
-app.name='$name'
+app.name=$name
 EOF
 
 # when done, confirm that this flavor is selected
