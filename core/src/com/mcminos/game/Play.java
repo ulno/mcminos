@@ -319,7 +319,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         if (!isPaused()) {
             panning = 0;
-            playwindow.updateCoordinates(mcminos.getSpeed(), getSymbolResolution()); // fix coordinates and compute scrolling else coordinates come from panning
+            playwindow.updateCoordinates(Math.max(1,mcminos.getSpeed()), getSymbolResolution()); // fix coordinates and compute scrolling else coordinates come from panning
         } else if ( panning == 0 ) { // if nobody is currently looking
             playwindow.updateCoordinates(1, getSymbolResolution()); //slowly scroll back
         } else {
@@ -408,22 +408,22 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
         batch.setColor(1,1,1,0.7f);
 
-        score.setLength(0);
+//        score.setLength(0);
         /*score.append(mcminos.getScore());
         batch.draw(Entities.level_score.getTexture(res,0),x,ySymbol);
         x += res + res/8;
         layout = font.draw(batch, score, x, yText );
         x += layout.width + res/4;*/
 
-        framerateScore.setLength(0);
-        framerateScore.append("F");
-        framerateScore.append(Gdx.graphics.getFramesPerSecond());
-        layout = font.draw(batch, framerateScore, x, yText );
-        x += layout.width + res/4;
+//        framerateScore.setLength(0);
+//        framerateScore.append("F");
+//        framerateScore.append(Gdx.graphics.getFramesPerSecond());
+//        layout = font.draw(batch, framerateScore, x, yText );
+//        x += layout.width + res/4;
 
         // avoid too much moving, due to variable font size
-//        x = Math.max(x, res * (2 + Math.max(5,score.length() + framerateScore.length()) ));
-        x = Math.max(x, res * 5);
+////        x = Math.max(x, res * (2 + Math.max(5,score.length() + framerateScore.length()) ));
+//        x = Math.max(x, res * 5);
 
         livesScore.setLength(0);
         int lives = mcminos.getLives();

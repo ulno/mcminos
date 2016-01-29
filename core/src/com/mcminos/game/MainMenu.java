@@ -21,6 +21,7 @@ import java.util.HashMap;
  * Created by ulno on 11.09.15.
  */
 public class MainMenu implements Screen {
+    public final static String WEBSITE="http://mcminos.com";
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
     private final Audio audio;
@@ -193,17 +194,35 @@ public class MainMenu implements Screen {
                 }
             }
         });
-        topRow.add(loadButton.getCell()).left().minHeight(res);
+        topRow.add(loadButton.getCell()).left().minHeight(res).expandX().fillX();
+
+        SymbolButton www1Button = new SymbolButton(res,Entities.menu_symbol_www.getTexture(res, 0));
+        www1Button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.net.openURI(WEBSITE);
+            }
+        });
+        topRow.add(www1Button.getCell()).left().minHeight(res);
 
         Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with mcminos logo graphics
         title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
-        topRow.add(title).prefHeight(res).fillX().expandX();
+        topRow.add(title).prefHeight(res);
         title.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.net.openURI("http://mcminos.com");
+                Gdx.net.openURI(WEBSITE);
             }
         });
+
+        SymbolButton www2Button = new SymbolButton(res,Entities.menu_symbol_www.getTexture(res, 0));
+        www2Button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.net.openURI(WEBSITE);
+            }
+        });
+        topRow.add(www2Button.getCell()).left().minHeight(res).fillX().expandX();
 
         SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
@@ -360,9 +379,9 @@ public class MainMenu implements Screen {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) stage.act(delta);
             stage.draw();
-            batch.begin();
-            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
-            batch.end();
+//            batch.begin();
+//            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
+//            batch.end();
             fader.render();
         }
     }

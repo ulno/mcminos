@@ -19,7 +19,6 @@ public class GhostMover extends Mover {
     private McMinos mcminos;
     private LevelBlock rememberedBlock;
     private ArrayList<LevelObject> currentItems;
-    int[] dirList = {0, 0, 0, 0};
 
     /**
      * needed for kryo-read
@@ -77,64 +76,63 @@ public class GhostMover extends Mover {
         } else { // normal
             dirs = getUnblockedDirs(ALL, true, false);
         }
-        for(int i= 3; i>=0; i--)
-            dirList[i] = 0;
         int dircounter = 0;
         int dir = 1;
         for (int i = 0; i < 4; i++) {
             if ((dirs & dir) > 0)
-                dirList[dircounter++] = dir;
+                dircounter++;
             dir <<= 1;
         }
-        int newdir = STOP;
+        int currentReverse = currentDirection << 2;
+        if (currentReverse > 15) currentReverse >>= 4;
+        int newDir = STOP;
         if (dircounter > 0) {
-            if (dircounter > 1) {
-                int currentReverse = currentDirection << 2;
-                if (currentReverse > 15) currentReverse >>= 4;
-                if (dircounter > 2) {
-                    // There is actually choice, so let's catch (or flee) from Mcminos
-                    // Play out agility/stupidity(random)
-                    int ghostNr = levelObject.getType().ordinal() - LevelObject.Types.Ghost1.ordinal();
-                    //level.ghostAgility[ghostNr] = 0; // force intelligence
-                    if (ghosts.evalAgility(ghostNr)) {
-                        newdir = dirList[level.random(dircounter)]; // play stupid TODO: check if a turn around is allowed here
-                    } else { // try to be "smart" and either go to mcminos or flee
-                        // check screen distance
-                        int x = mcminos.getVX();
-                        int y = mcminos.getVY();
-                        int gx = levelObject.getVX();
-                        int gy = levelObject.getVY();
-                        // remove reverse direction
-                        dirs &= 15 - currentReverse;
-                        if (mcminos.isPowered() ^ ghostNr == 3) {// flee - reverse bahavour for jumping pill (type 3)
-                            // find best
-                            if (y < gy && (dirs & UP) > 0) newdir = UP;
-                            else if (x < gx && (dirs & RIGHT) > 0) newdir = RIGHT;
-                            else if (y > gy && (dirs & DOWN) > 0) newdir = DOWN;
-                            else if (x > gx && (dirs & LEFT) > 0) newdir = LEFT;
-                            else if (dirList[0] != currentReverse) newdir = dirList[0];
-                            else newdir = dirList[1];
-                        } else { // follow
-                            // find best
-                            if (y > gy && (dirs & UP) > 0) newdir = UP;
-                            else if (x > gx && (dirs & RIGHT) > 0) newdir = RIGHT;
-                            else if (y < gy && (dirs & DOWN) > 0) newdir = DOWN;
-                            else if (x < gx && (dirs & LEFT) > 0) newdir = LEFT;
-                            else if (dirList[0] != currentReverse) newdir = dirList[0];
-                            else newdir = dirList[1];
-                        }
-                    }
-                } else { // Two options, just make sure we are not turning around
-                    if (dirList[0] != currentReverse) newdir = dirList[0];
-                    else newdir = dirList[1];
+            if (dircounter > 1) { // 2-4 directions left
+                if ((dirs & currentReverse) > 0) { // there is choice -> make sure to never turn back and remove reverse dir
+                    dirs -= currentReverse;
+                    dircounter--;
                 }
-            } else { // only 1 direction
-                newdir = dirList[0];
+            }
+            if (dircounter > 1) { // Still 2 or 3 left
+                // There is actually choice, so let's catch (or flee) from Mcminos
+                // Play out agility/stupidity(random)
+                int ghostNr = levelObject.getType().ordinal() - LevelObject.Types.Ghost1.ordinal();
+                //level.ghostAgility[ghostNr] = 0; // force intelligence
+                if (ghosts.evalAgility(ghostNr)) {
+                    newDir = findDirForNr(level.random(dircounter), dirs); // play stupid
+                } else { // try to be "smart" and either go to mcminos or flee
+                    // check screen distance
+                    int mx = mcminos.getVX();
+                    int my = mcminos.getVY();
+                    int gx = levelObject.getVX();
+                    int gy = levelObject.getVY();
+                    // remove reverse direction
+                    dirs &= 15 - currentReverse;
+                    if (mcminos.isPowered() ^ ghostNr == 3) {// flee - reverse behaviour for jumping pill (type 3)
+                        // try to run away (make distance bigger)
+                        if      ((dirs & UP) > 0    && my < gy ) newDir = UP;
+                        else if ((dirs & RIGHT) > 0 && mx < gx ) newDir = RIGHT;
+                        else if ((dirs & DOWN) > 0  && my > gy ) newDir = DOWN;
+                        else if ((dirs & LEFT) > 0  && mx > gx ) newDir = LEFT;
+                        // no direction brings an immediate advantage
+                        else newDir = findDirForNr(level.random(dircounter), dirs); // take any
+                    } else { // follow
+                        // try to go near (make distance smaller)
+                        if      ((dirs & UP) > 0    && my > gy ) newDir = UP;
+                        else if ((dirs & RIGHT) > 0 && mx > gx ) newDir = RIGHT;
+                        else if ((dirs & DOWN) > 0  && my < gy ) newDir = DOWN;
+                        else if ((dirs & LEFT) > 0  && mx < gx ) newDir = LEFT;
+                        // no direction brings an immediate advantage
+                        else newDir = findDirForNr(level.random(dircounter), dirs); // take any
+                    }
+                }
+            } else { // only 1 direction, this might for example be, when you need to turn back
+                newDir = dirs;
             }
         }
-        currentDirection = newdir;
+        currentDirection = newDir;
         LevelBlock headingTo = currentLevelBlock;
-        switch (newdir) {
+        switch (newDir) {
             case UP:
                 return currentLevelBlock.up();
             case RIGHT:
@@ -145,6 +143,19 @@ public class GhostMover extends Mover {
                 return currentLevelBlock.left();
         }
         return currentLevelBlock;
+    }
+
+    private int findDirForNr(int nr, int dirField) {
+        for(int i=3; i>=0; i--) {
+            if((dirField&1)==1) {
+                if(nr==0) {
+                    return 8>>i;
+                }
+                nr --;
+            }
+            dirField /= 2;
+        }
+        return STOP;
     }
 
     @Override

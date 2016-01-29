@@ -35,6 +35,11 @@ Level Design:
 - UlNo
 - Walter Norbisrath (waltino and previously: The Black Daddy/TBD)
 
+Frameworks:
+- libgdx
+- RoboVM
+- Fabric crashlytics
+
 A special thanks goes also to our current testers and all the people who encouraged us two decades ago to build this game for the Atari ST/TT/Falcon.
 #
 
@@ -68,6 +73,11 @@ Website:
 
 Marketing:
 - Nope
+
+Frameworks:
+- libgdx
+- RoboVM
+- Fabric crashlytics
 
 Level Design:
 - Nope

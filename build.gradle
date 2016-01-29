@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'org.robovm:robovm-gradle-plugin:1.12.1-SNAPSHOT'
+        classpath 'org.robovm:robovm-gradle-plugin:1.13.0'
         classpath 'com.badlogicgames.gdx:gdx-tools:1.6.4'
         // for git version information
         //classpath 'org.ajoberstar:grgit:1.1.0'
@@ -30,14 +30,14 @@ allprojects {
     }
     // Use abbreviatedId commit id in the version.
     //version = "0.0.1.${git.head().abbreviatedId}"
-    version = "0.4"
+    version = "1.0"
     ext {
         //appName = 'mcminos-mobile'
         appName = fcApplicationName
         app_name = appName
         //appName = app_name
         gdxVersion = '1.8.1-SNAPSHOT'
-        roboVMVersion = '1.12.1-SNAPSHOT'
+        roboVMVersion = '1.13.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.6.0'
         aiVersion = '1.5.0'
