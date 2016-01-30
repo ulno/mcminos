@@ -28,6 +28,8 @@
     <false/>
     <key>UIStatusBarHidden</key>
     <true/>
+    <key>UIRequiresFullScreen</key>
+    <true/>
     <key>UIDeviceFamily</key>
     <array>
         <integer>1</integer>
