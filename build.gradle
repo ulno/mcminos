@@ -9,7 +9,7 @@ buildscript {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'org.robovm:robovm-gradle-plugin:1.13.0'
-        classpath 'com.badlogicgames.gdx:gdx-tools:1.6.4'
+        classpath 'com.badlogicgames.gdx:gdx-tools:1.9.1'
         // for git version information
         //classpath 'org.ajoberstar:grgit:1.1.0'
         classpath 'io.fabric.tools:gradle:1.+'
@@ -36,7 +36,7 @@ allprojects {
         appName = fcApplicationName
         app_name = appName
         //appName = app_name
-        gdxVersion = '1.8.1-SNAPSHOT'
+        gdxVersion = '1.9.1'
         roboVMVersion = '1.13.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.6.0'

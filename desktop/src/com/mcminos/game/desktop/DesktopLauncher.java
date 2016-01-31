@@ -20,8 +20,10 @@ public class DesktopLauncher {
         config.fullscreen = fs;
         config.vSyncEnabled = true;
         if(!fs) {
-            config.width = 1280;
-            config.height = 896;
+//            config.width = 1280;
+//            config.height = 896;
+            config.width = 960;
+            config.height = 640;
         } else {
             config.width = config.getDesktopDisplayMode().width;
             config.height = config.getDesktopDisplayMode().height;

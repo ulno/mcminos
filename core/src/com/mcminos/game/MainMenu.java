@@ -73,7 +73,7 @@ public class MainMenu implements Screen {
         table = new Table();
         rootTable.add(table).top().center().fill().expand();
 
-        rootTable.setBackground(new BackroundDrawer(bg));
+        rootTable.background(new BackroundDrawer(bg));
 
 // happens in resize        rebuildMenu();
 
@@ -172,7 +172,9 @@ public class MainMenu implements Screen {
         Table twoColumns = new Table();
 
         // first build only elements, layout later
-        Table topRow = new Table();
+        Table topRowTable = new Table();
+        ScrollPane topRowPane = new ScrollPane(topRowTable);
+        topRowPane.isScrollingDisabledY();
 
         SymbolButton settingsButton = new SymbolButton(res, Entities.menu_symbol_settings.getTexture(res, 0));
         settingsButton.addListener(new ClickListener() {
@@ -182,7 +184,7 @@ public class MainMenu implements Screen {
                 else dialogClose();
             }
         });
-        topRow.add(settingsButton.getCell()).left().minHeight(res).padRight(res / 16);
+        topRowTable.add(settingsButton.getCell()).left().minHeight(res).padRight(res / 16);
 
         SymbolButton loadButton = new SymbolButton(res,Entities.menu_symbol_game_load.getTexture(res, 0));
         loadButton.addListener(new ClickListener() {
@@ -194,7 +196,8 @@ public class MainMenu implements Screen {
                 }
             }
         });
-        topRow.add(loadButton.getCell()).left().minHeight(res).expandX().fillX();
+        topRowTable.add(loadButton.getCell()).left().minHeight(res).expandX().fillX();
+
 
         SymbolButton www1Button = new SymbolButton(res,Entities.menu_symbol_www.getTexture(res, 0));
         www1Button.addListener(new ClickListener() {
@@ -203,11 +206,10 @@ public class MainMenu implements Screen {
                 Gdx.net.openURI(WEBSITE);
             }
         });
-        topRow.add(www1Button.getCell()).left().minHeight(res);
+        topRowTable.add(www1Button.getCell()).left().minHeight(res).padLeft(res/4);
 
-        Label title = new Label("McMinos", bigLevelSkin); // TODO: replace with mcminos logo graphics
-        title.setAlignment(Align.center); // TODO: add left shift to position to compensate number of buttons
-        topRow.add(title).prefHeight(res);
+        Image title = new Image( Entities.logo.getTexture(res,0) );
+        topRowTable.add(title).prefHeight(res);
         title.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -222,7 +224,7 @@ public class MainMenu implements Screen {
                 Gdx.net.openURI(WEBSITE);
             }
         });
-        topRow.add(www2Button.getCell()).left().minHeight(res).fillX().expandX();
+        topRowTable.add(www2Button.getCell()).left().minHeight(res).padRight(res/4).expandX().fillX();
 
         SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
@@ -231,7 +233,7 @@ public class MainMenu implements Screen {
                 main.setScreen(new Credits(main, selectedLevel));
             }
         });
-        topRow.add(infoButton.getCell()).right().minHeight(res);
+        topRowTable.add(infoButton.getCell()).right().minHeight(res);
 
         SymbolButton quitButton = new SymbolButton(res,Entities.menu_button_exit_variant.getTexture(res, 0));
         quitButton.addListener(new ClickListener() {
@@ -241,28 +243,28 @@ public class MainMenu implements Screen {
                 main.fadeExit();
             }
         });
-        topRow.add(quitButton.getCell()).right().minHeight(res);
+        topRowTable.add(quitButton.getCell()).right().minHeight(res);
 
 
         Label categoryLabel = new Label(levelsConfig.get(activatedCategory).getName(), levelSkin);
 
         // the scrollpanes with the respective levels for each category
         ScrollPane[] levelSelector = new ScrollPane[levelsConfig.size()];
-        Cell<Group> lastCell = null;
+        Cell<Table> lastCell = null;
         for (int c = 0; c < levelsConfig.size(); c++) {
             LevelCategory cat = levelsConfig.get(c);
 
             Table levelSelectorTable = new Table();
             levelSelector[c] = new ScrollPane(levelSelectorTable);
-            levelSelector[c].setForceScroll(false, true);
+            //levelSelector[c].setForceScroll(false, true);
 
             for (int i = 0; i < cat.size(); i++) {
                 LevelConfig lc = cat.get(i);
-                Group levelRowGroup = new Group();
-                levelRowGroup.setHeight(res + res / 8);
+                //Table levelRow = new Table();
+                //levelRow.setHeight(res + res / 8);
                 Table levelRow = new Table(bigLevelSkin);
-                levelRow.setPosition(0, res / 2 + res / 8); // TODO: figure out why this shift is necessary -> bug in libgdx?
-                levelRowGroup.addActor(levelRow);
+                //levelRow.setPosition(0, res / 2 + res / 8); // figure out why this shift is necessary -> bug in libgdx? -- not anymore
+                //levelRow.addActor(levelRow);
                 Group thumbnail = new Group();
                 thumbnail.setSize(res, res);
                 TextureRegion texture = lc.getSymbol(res);
@@ -289,17 +291,17 @@ public class MainMenu implements Screen {
                     levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
                 }
 
-                lastCell = levelSelectorTable.add(levelRowGroup).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
+                lastCell = levelSelectorTable.add(levelRow).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
                 levelSelectorTable.row();
                 if(statistics.activated(lc)) {
                     levelRow.addListener(new LevelClickListener(levelsConfig.get(c).get(i)));
                 } else {
                     // t.setColor(0.5f,0.5f,0.5f,1.0f); does not work as this is a colored font
-                    levelRowGroup.setColor(1,1,1,0.6f); // sets only transparency
+                    levelRow.setColor(1, 1, 1, 0.6f); // sets only transparency
                 }
                 // mark last active level
             }
-            lastCell.expandY().fillY();
+            //lastCell.expandY().fillY().align(Align.topLeft);
         }
 
         // add the buttons for the different level categories to the toolbar
@@ -332,7 +334,10 @@ public class MainMenu implements Screen {
                 switch (character) {
                     case 'F': // only capital:
                         toggleFullscreen();
-                        break;
+                        return true;
+                    case '9':
+                        ScreenshotFactory.saveScreenshot();
+                        return true;
                 }
                 return false;
             }
@@ -342,10 +347,11 @@ public class MainMenu implements Screen {
 // called from there        resize();
 
         // Layout
-        table.add(topRow).prefHeight(res).minHeight(res).top().fillX().expandX().padBottom(res / 8).row();
-        table.add(categoryLabel).minHeight(res).prefHeight(res).padBottom(res / 16).padLeft(res+res/2).left().row();
+        table.align(Align.topLeft);
+        table.add(topRowPane).minHeight(res).prefHeight(res).top().fillX().expandX().row();
+        table.add(categoryLabel).minHeight(res / 2).prefHeight(res).padLeft(res + res / 2).left().row();
         switchLevelCategory(activatedCategory, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[activatedCategory], res);
-        table.add(twoColumns).fill().expand();
+        table.add(twoColumns).top().left().fillX().expandX();
 
         //table.pack(); // fit table into root-table to update coordinates
         table.layout(); // force layout to have coordinates and dimensions in pane
@@ -401,6 +407,7 @@ public class MainMenu implements Screen {
         rootTable.setSize(width, height);
         table.setBounds(0, 0, width, height);
         stage.getViewport().update(width, height, true);
+
         levelFont = main.getLevelFont(preferences.getSymbolResolution() / 2);
         rebuildMenu();
     }

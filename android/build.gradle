@@ -46,6 +46,8 @@ android {
         always {
             resValue "string", "app_name", fcApplicationName
             applicationId = fcApplicationId
+            versionCode = 2
+            versionName = version
         }
     }
 
