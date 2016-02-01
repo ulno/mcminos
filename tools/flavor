@@ -75,7 +75,7 @@ app.version=1.0
 app.id=$id
 app.mainclass=com.mcminos.game.IOSLauncher
 app.executable=$name
-app.build=1
+app.build=2
 app.name=$name
 EOF
 
