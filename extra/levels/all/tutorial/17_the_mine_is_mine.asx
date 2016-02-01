@@ -8,10 +8,10 @@ SYMBOL:   extras_land_mine_default
 TITLE: The mine is mine
 TITLE-de: Böse Minen zum bösen Spiel
 BODY:
-Put the mines in the way of the ghosts. But take care you do not tread on them yourself.
+Put the mines in the way of ghost "Perry". But take care you do not tread on them yourself.
 #
 BODY-de:
-Leg' den Geistern die Minen in den Weg. Aber pass auf, dass Du nicht selbst darauf trittst.
+Leg' Geist „Perry“ die Minen in den Weg. Aber pass auf, dass Du nicht selbst darauf trittst.
 #
 
 LWID:       7
@@ -26,17 +26,19 @@ MIRROR:     0
 
 MCSPEED:    1
 
-GHOST1:     1
-GHSPEED1:   1
-AGIL1:      100
-GRTIME1:    5
+GHOST2:     1
+GHSPEED2:   1
+AGIL2:      100
+GRTIME2:    5
+PILLMAX2:   20
+PILLFREQ2:  2
 
 LEVEL:
 XXXXXXX
-XP..,PX
-X.XXX,X
-X.._..X
-X.XXX_X
-XL.._GX
+XCC,.WX
+XCCXXmX
+X__P__X
+XmXmX.X
+XW.L_gX
 XXXXXXX
 #
