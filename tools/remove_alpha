@@ -1,0 +1,10 @@
+#!/bin/bash
+# remove alpha channel from all png images found starting from current directory
+# and create respective images having a .noalpha.png extemnsion
+
+find .|grep ".png"|grep -v ."noalpha."| while read f; do
+  echo "Removing alpha from $f"
+  d=$(dirname "$f")
+  b=$(basename "$f" .png)
+  convert "$f" -alpha off "$d/$b.noalpha.png"
+done

@@ -1,6 +1,8 @@
 #!/bin/bash
 usage="Select flavor from teaser, alive, forge as parameter."
 
+VERSIONCODE=4
+
 mydir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 rootdir="$mydir/.."
 cd "$rootdir"
@@ -65,6 +67,7 @@ cat << EOF > "$rootdir/flavorConfig.gradle"
 ext {
   fcApplicationName = '$name'
   fcApplicationId = '$id'
+  fcVersionCode = $VERSIONCODE
 }
 EOF
 
@@ -75,7 +78,7 @@ app.version=1.0
 app.id=$id
 app.mainclass=com.mcminos.game.IOSLauncher
 app.executable=$name
-app.build=1
+app.build=$VERSIONCODE
 app.name=$name
 EOF
 

@@ -424,7 +424,7 @@ for flavor in ["alive","forge","teaser"]:
 
     icon_output_path = os.path.join(output_dir, "data")
     mkdir(icon_output_path)
-    for (path,res) in [("",57), ("-72",72), ("@2x",114), ("-72@2x",144), ]:
+    for (path,res) in [("",57), ("-72",72), ("-76",76), ("@2x",114), ("-120",120), ("-72@2x",144), ("-152",152), ]:
         output_file = os.path.join(icon_output_path, "Icon" + path + ".png")
         convert(icon,output_file,res,res)
 

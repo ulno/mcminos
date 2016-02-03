@@ -1,0 +1,11 @@
+#!/bin/bash
+mydir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+rootdir="$mydir/.."
+cd "$rootdir"
+
+cd android/assets
+rm user-stats*
+rm game-save*
+rm screenshot*
+rm *.log
+*
