@@ -358,7 +358,7 @@ public class MainMenu implements Screen {
         // scroll pane to activated level
         if(selectedLevel != null) {
             ScrollPane pane = levelSelector[selectedLevel.getCategory().getNr()];
-            pane.setScrollY((res + res / 8) * selectedLevel.getNr());
+            pane.setScrollY((res + res / 8) * (selectedLevel.getNr()-1));
             if (lastCell != null) {
                 lastCell.expandY().fillY();
             }
