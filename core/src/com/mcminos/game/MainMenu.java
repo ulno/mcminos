@@ -5,6 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,11 +16,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.HashMap;
@@ -24,7 +30,7 @@ import java.util.HashMap;
 /**
  * Created by ulno on 11.09.15.
  */
-public class MainMenu implements Screen, InputProcessor {
+public class MainMenu implements Screen, InputProcessor, ControllerListener {
     public final static String WEBSITE="http://mcminos.com";
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
@@ -60,6 +66,7 @@ public class MainMenu implements Screen, InputProcessor {
 
     public MainMenu(final Main main) {
 //        final MainMenu thisScreen = this; // TODO: check why we need this
+
         this.main = main;
         this.preferences = main.getPreferences();
         this.fullscreen = preferences.getFullScreen();
@@ -129,6 +136,69 @@ public class MainMenu implements Screen, InputProcessor {
         audio.musicFixed(0);
         fader.fadeOutIn();
         Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
+        Controllers.clearListeners();
+        Controllers.addListener(this);
+    }
+
+    @Override
+    public void connected(Controller controller) {
+    }
+
+    @Override
+    public void disconnected(Controller controller) {
+
+    }
+
+    @Override
+    public boolean buttonDown(Controller controller, int buttonCode) {
+        return false;
+    }
+
+    @Override
+    public boolean buttonUp(Controller controller, int buttonCode) {
+        activateSelection();
+        return true;
+//        return false;
+    }
+
+    @Override
+    public boolean axisMoved(Controller controller, int axisCode, float value) {
+        //Gdx.app.log("axisMoved","code: "+axisCode+" val: "+value);
+        return false;
+    }
+
+    @Override
+    public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+        switch(value) {
+            case north:
+                moveCursor(Mover.UP);
+                break;
+            case east:
+                moveCursor(Mover.RIGHT);
+                break;
+            case south:
+                moveCursor(Mover.DOWN);
+                break;
+            case west:
+                moveCursor(Mover.LEFT);
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+        return false;
+    }
+
+    @Override
+    public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+        return false;
+    }
+
+    @Override
+    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+        return false;
     }
 
 
@@ -426,7 +496,6 @@ public class MainMenu implements Screen, InputProcessor {
             selectLevel(levelsConfig.get(activatedCategory).get(hint));
         } else if (hint >= 100) { // a category was selected
             hint -= 100;
-            hotSpotSelected = hotSpotRoot;
             switchLevelCategory(hint);
         } else {
             switch(hint) {
@@ -494,6 +563,23 @@ public class MainMenu implements Screen, InputProcessor {
             }
         } else {
             frames += 2;
+            if(frames % 40 == 0) {
+                Array<Controller> controllers = Controllers.getControllers();
+                for(int i=controllers.size-1; i>=0; i--) {
+                    Controller c = controllers.get(i);
+                    float x = c.getAxis(0);
+                    float y = c.getAxis(1);
+                    if(y<-McMinosMover.CONTROLLER_THRESHOLD) {
+                        moveCursor(Mover.UP);
+                    } else if(x> McMinosMover.CONTROLLER_THRESHOLD) {
+                        moveCursor(Mover.RIGHT);
+                    } else if(y> McMinosMover.CONTROLLER_THRESHOLD) {
+                        moveCursor(Mover.DOWN);
+                    } else if(x<-McMinosMover.CONTROLLER_THRESHOLD) {
+                        moveCursor(Mover.LEFT);
+                    }
+                }
+            }
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) stage.act(delta);

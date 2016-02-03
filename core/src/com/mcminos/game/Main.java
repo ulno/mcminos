@@ -74,7 +74,7 @@ public class Main extends com.badlogic.gdx.Game {
 
     public void initMainMenu( MainMenu mainMenu ) {
         this.mainMenu = mainMenu;
-        mainMenu.init();
+        //mainMenu.init();
     }
 
 

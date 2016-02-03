@@ -1,6 +1,10 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,6 +18,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
@@ -23,7 +28,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by ulno on 10.09.15.
  */
-public class Play implements Screen, GestureListener, InputProcessor {
+public class Play implements Screen, GestureListener, InputProcessor, ControllerListener {
     public final static long doubleClickFrames = Game.timeResolution / 3;
     private OrthographicCamera camera;
     private Game game;
@@ -175,6 +180,10 @@ public class Play implements Screen, GestureListener, InputProcessor {
         GestureDetector gd = new GestureDetector(this);
         InputMultiplexer im = new InputMultiplexer(stage, gd, this);
         Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
+
+        Controllers.clearListeners();
+        Controllers.addListener(this);
+
 
         pauseOn(); // make sure it's active and game is paused
 
@@ -570,7 +579,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         //toolboxTable.setSize(width / 3, height * 4 / 5);
         toolbox.resize();
         touchpadResize();
-        fader.resize(width,height);
+        fader.resize(width, height);
     }
 
     public void resize() {
@@ -582,7 +591,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
         if (fontRes < 32) fontRes = 32;
         if (fontRes > 128) fontRes = 128;
         font = main.getLevelFont(fontRes);
-        font.setColor(1,1,1,0.8f);
+        font.setColor(1, 1, 1, 0.8f);
     }
 
     @Override
@@ -685,11 +694,7 @@ public class Play implements Screen, GestureListener, InputProcessor {
             case 'T':
             case 'm':
             case 'M':
-                if(hasDialog()) togglePause();
-                else {
-                    pauseOn();
-                    dialogs.openGameMenu();
-                }
+                toggleGameMenu();
                 break;
             case ' ':
             case 'p':
@@ -698,6 +703,14 @@ public class Play implements Screen, GestureListener, InputProcessor {
                 break;
         }
         return false;
+    }
+
+    private void toggleGameMenu() {
+        if(hasDialog()) togglePause();
+        else {
+            pauseOn();
+            dialogs.openGameMenu();
+        }
     }
 
     private void togglePause() {
@@ -1022,5 +1035,63 @@ public class Play implements Screen, GestureListener, InputProcessor {
 
     public void triggerFade() {
         fader.fadeOutIn();
+    }
+
+    @Override
+    public void connected(Controller controller) {
+
+    }
+
+    @Override
+    public void disconnected(Controller controller) {
+
+    }
+
+    @Override
+    public boolean buttonDown(Controller controller, int buttonCode) {
+        toggleGameMenu();
+        return true;
+    }
+
+    @Override
+    public boolean buttonUp(Controller controller, int buttonCode) {
+        return false;
+    }
+
+    @Override
+    public boolean axisMoved(Controller controller, int axisCode, float value) {
+        mcminos.updateKeyDirections();
+        if (!dialogs.active()) {
+            if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                pauseOff();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+        mcminos.updateKeyDirections();
+        if (!dialogs.active()) {
+            if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                pauseOff();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+        return false;
+    }
+
+    @Override
+    public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+        return false;
+    }
+
+    @Override
+    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+        return false;
     }
 }
