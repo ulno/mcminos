@@ -1,7 +1,7 @@
 #!/bin/bash
 usage="Select flavor from teaser, alive, forge as parameter."
 
-VERSIONCODE=3
+VERSIONCODE=4
 
 mydir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 rootdir="$mydir/.."
