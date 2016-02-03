@@ -17,6 +17,7 @@ public class SymbolButton {
     private Group group;
     private Image bottom,top,selectLayer;
     private boolean selected = false;
+    private Actor firstActor = null;
 
     public void setSymbol(TextureRegion symbol) {
         group.clearChildren();
@@ -24,6 +25,7 @@ public class SymbolButton {
         bottom = new Image(Entities.menu_button_empty_bottom.getTexture(res,0));
         bottom.setSize(res, res);
         group.addActor(bottom);
+        firstActor = bottom;
         selectLayer = new Image(Entities.menu_button_empty_bottom.getTexture(res,0));
         selectLayer.setSize(res, res);
         group.addActor(bottom);

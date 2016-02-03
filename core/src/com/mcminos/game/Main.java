@@ -217,7 +217,7 @@ public class Main extends com.badlogic.gdx.Game {
         mainMenu.activateLevel(currentLevel);
         mainMenu.resize();
         setScreen(mainMenu);
-        mainMenu.restoreInputProcessor();
+        //mainMenu.restoreInputProcessor();
     }
 
     public void levelEndCongrats( LevelConfig currentLevelConfig) {

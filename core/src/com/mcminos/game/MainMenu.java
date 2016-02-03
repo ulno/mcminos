@@ -1,6 +1,9 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -20,7 +24,7 @@ import java.util.HashMap;
 /**
  * Created by ulno on 11.09.15.
  */
-public class MainMenu implements Screen {
+public class MainMenu implements Screen, InputProcessor {
     public final static String WEBSITE="http://mcminos.com";
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
@@ -47,6 +51,11 @@ public class MainMenu implements Screen {
     private BitmapFont levelFont;
     private HashMap<String, Texture> textureCache = new HashMap<>();
     private Table currentDialog = null;
+    private HotSpot hotSpotRoot;
+    private HotSpot hotSpotSelected;
+    private long frames = 0;
+
+    Vector2 coords = new Vector2();
 
 
     public MainMenu(final Main main) {
@@ -62,6 +71,8 @@ public class MainMenu implements Screen {
 
         stage = new Stage(new ScreenViewport(), batch);
 
+        // in init Gdx.input.setInputProcessor(new InputMultiplexer(stage,this));
+
         fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
         // root table covering the screen
@@ -75,6 +86,9 @@ public class MainMenu implements Screen {
 
         rootTable.background(new BackroundDrawer(bg));
 
+        hotSpotRoot = new HotSpot(null,null,-1);
+        hotSpotSelected = hotSpotRoot;
+
 // happens in resize        rebuildMenu();
 
 /*        selectedLevel = statistics.getLastLevel();  // make sure, we can scroll to start
@@ -87,15 +101,15 @@ public class MainMenu implements Screen {
         }
     }
 
-    private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, SymbolButton[] categorySelectorButtons, ScrollPane levelSelector, int res) {
-        categoryLabel.setText(levelsConfig.get(category).getName());
-        categorySelectorButtons[activatedCategory].unselect();
+    private void switchLevelCategory(int category) {
+//        private void switchLevelCategory(int category, Label categoryLabel, Table twoColumns, ScrollPane folderSelector, SymbolButton[] categorySelectorButtons, ScrollPane levelSelector, int res) {
+//        categoryLabel.setText(levelsConfig.get(category).getName());
+//        categorySelectorButtons[activatedCategory].unselect();
         activatedCategory = category;
-        categorySelectorButtons[activatedCategory].select();
-        // selectedLevel = null; //deselect -- not necessary as it can stay selected
-        twoColumns.clear();
-        twoColumns.add(folderSelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
-        twoColumns.add(levelSelector).fill().expand();
+//        categorySelectorButtons[activatedCategory].select();
+//        // selectedLevel = null; //deselect -- not necessary as it can stay selected
+
+        rebuildMenu();
     }
 
     private void selectLevel(LevelConfig level) {
@@ -114,7 +128,9 @@ public class MainMenu implements Screen {
     public void init() {
         audio.musicFixed(0);
         fader.fadeOutIn();
+        Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
     }
+
 
     // inner class for menu
     class CategoryClickListener extends ClickListener {
@@ -139,7 +155,8 @@ public class MainMenu implements Screen {
 
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
+            switchLevelCategory(category);
+//            switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
             //super.clicked(event,x,y);
         }
     }
@@ -180,24 +197,26 @@ public class MainMenu implements Screen {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(currentDialog == null) dialogPreferences();
-                else dialogClose();
+                settings();
             }
         });
         topRowTable.add(settingsButton.getCell()).left().minHeight(res).padRight(res / 16);
+
+        HotSpot hotSpotSettings = hotSpotRoot.getCreateRight(settingsButton.getCell(), topRowPane, 1);
+        HotSpot hs = hotSpotSettings;
+        hotSpotRoot.setUp(hs);
+        hotSpotRoot.setDown(hs);
+        hotSpotRoot.setLeft(hs);
 
         SymbolButton loadButton = new SymbolButton(res,Entities.menu_symbol_game_load.getTexture(res, 0));
         loadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Play p = new Play(main, 1);
-                if (p.getGame() != null) { // init was successful
-                    main.setScreen(p); // TODO: allow more slots?
-                }
+                save();
             }
         });
         topRowTable.add(loadButton.getCell()).left().minHeight(res).expandX().fillX();
-
+        hs = hs.getCreateRight(loadButton.getCell(), topRowPane, 2);
 
         SymbolButton www1Button = new SymbolButton(res,Entities.menu_symbol_www.getTexture(res, 0));
         www1Button.addListener(new ClickListener() {
@@ -206,7 +225,8 @@ public class MainMenu implements Screen {
                 Gdx.net.openURI(WEBSITE);
             }
         });
-        topRowTable.add(www1Button.getCell()).left().minHeight(res).padLeft(res/4);
+        topRowTable.add(www1Button.getCell()).left().minHeight(res).padLeft(res / 4);
+        hs = hs.getCreateRight(www1Button.getCell(), topRowPane, 3);
 
         Image title = new Image( Entities.logo.getTexture(res,0) );
         topRowTable.add(title).prefHeight(res);
@@ -217,6 +237,7 @@ public class MainMenu implements Screen {
             }
         });
 
+
         SymbolButton www2Button = new SymbolButton(res,Entities.menu_symbol_www.getTexture(res, 0));
         www2Button.addListener(new ClickListener() {
             @Override
@@ -225,83 +246,98 @@ public class MainMenu implements Screen {
             }
         });
         topRowTable.add(www2Button.getCell()).left().minHeight(res).padRight(res/4).expandX().fillX();
+        hs = hs.getCreateRight(www2Button.getCell(), topRowPane, 3);
 
         SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Credits(main, selectedLevel));
+                credits();
             }
         });
         topRowTable.add(infoButton.getCell()).right().minHeight(res);
+        hs = hs.getCreateRight(infoButton.getCell(), topRowPane, 4);
+
 
         SymbolButton quitButton = new SymbolButton(res,Entities.menu_button_exit_variant.getTexture(res, 0));
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //dispose(); // done from main
-                main.fadeExit();
+                leave();
             }
         });
         topRowTable.add(quitButton.getCell()).right().minHeight(res);
-
+        hs.getCreateRight(quitButton.getCell(), topRowPane, 5);
 
         Label categoryLabel = new Label(levelsConfig.get(activatedCategory).getName(), levelSkin);
 
         // the scrollpanes with the respective levels for each category
-        ScrollPane[] levelSelector = new ScrollPane[levelsConfig.size()];
         Cell<Table> lastCell = null;
-        for (int c = 0; c < levelsConfig.size(); c++) {
-            LevelCategory cat = levelsConfig.get(c);
+        LevelCategory cat = levelsConfig.get(activatedCategory);
 
-            Table levelSelectorTable = new Table();
-            levelSelector[c] = new ScrollPane(levelSelectorTable);
-            //levelSelector[c].setForceScroll(false, true);
+        Table levelSelectorTable = new Table();
+        ScrollPane levelSelector = new ScrollPane(levelSelectorTable);
+        //levelSelector[c].setForceScroll(false, true);
 
-            for (int i = 0; i < cat.size(); i++) {
-                LevelConfig lc = cat.get(i);
-                //Table levelRow = new Table();
-                //levelRow.setHeight(res + res / 8);
-                Table levelRow = new Table(bigLevelSkin);
-                //levelRow.setPosition(0, res / 2 + res / 8); // figure out why this shift is necessary -> bug in libgdx? -- not anymore
-                //levelRow.addActor(levelRow);
-                Group thumbnail = new Group();
-                thumbnail.setSize(res, res);
-                TextureRegion texture = lc.getSymbol(res);
-                if (texture != null) {
-                    Image snapshot = new Image(texture);
-                    snapshot.setSize(res, res);
-                    thumbnail.addActor(snapshot);
-                }
-                levelRow.add(thumbnail).prefHeight(res).top().left().padRight(res / 4);
-                Label t;
-                t =  new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
-                if (selectedLevel != null && c == activatedCategory && i == selectedLevel.getNr()) {
-                    t =  new Label((i + 1) + ". >" + lc.getTitle(language), levelSkin);
-                    Group indicator = new Group();
-                    indicator.setSize(res, res);
-                    Image indicatorImage = new Image(Entities.mcminos_default_left.getTextureDirectStep(res, 7));
-                    indicator.setSize(res, res);
-                    indicator.addActor(indicatorImage);
-                    levelRow.add(t).prefHeight(res).top().left();
-                    levelRow.add(indicator).top().left().fillX().expandX();
-                    // check why we can't set a background? - doesn't matter showing the symbol looks nice
-                } else {
-                    t =  new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
-                    levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
-                }
-
-                lastCell = levelSelectorTable.add(levelRow).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
-                levelSelectorTable.row();
-                if(statistics.activated(lc)) {
-                    levelRow.addListener(new LevelClickListener(levelsConfig.get(c).get(i)));
-                } else {
-                    // t.setColor(0.5f,0.5f,0.5f,1.0f); does not work as this is a colored font
-                    levelRow.setColor(1, 1, 1, 0.6f); // sets only transparency
-                }
-                // mark last active level
+        HotSpot levelsHotSpotRoot = null;
+        for (int i = 0; i < cat.size(); i++) {
+            LevelConfig lc = cat.get(i);
+            //Table levelRow = new Table();
+            //levelRow.setHeight(res + res / 8);
+            Table levelRow = new Table(bigLevelSkin);
+            HotSpot levelHS  = new HotSpot(levelRow,levelSelector,1000+i);
+            if(levelsHotSpotRoot == null) levelsHotSpotRoot = levelHS;
+            else {
+                hs.setDown(levelHS);
+                levelHS.setUp(hs);
             }
-            //lastCell.expandY().fillY().align(Align.topLeft);
+            hs = levelHS;
+            //levelRow.setPosition(0, res / 2 + res / 8); // figure out why this shift is necessary -> bug in libgdx? -- not anymore
+            //levelRow.addActor(levelRow);
+            Group thumbnail = new Group();
+            thumbnail.setSize(res, res);
+            TextureRegion texture = lc.getSymbol(res);
+            if (texture != null) {
+                Image snapshot = new Image(texture);
+                snapshot.setSize(res, res);
+                thumbnail.addActor(snapshot);
+            }
+            levelRow.add(thumbnail).prefHeight(res).top().left().padRight(res / 4);
+
+            Label t;
+            t = new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+            if (selectedLevel != null && cat.getNr() == selectedLevel.getCategory().getNr() && i == selectedLevel.getNr()) {
+                t = new Label((i + 1) + ". >" + lc.getTitle(language), levelSkin);
+                Group indicator = new Group();
+                indicator.setSize(res, res);
+                Image indicatorImage = new Image(Entities.mcminos_default_left.getTextureDirectStep(res, 7));
+                indicator.setSize(res, res);
+                indicator.addActor(indicatorImage);
+                levelRow.add(t).prefHeight(res).top().left();
+                levelRow.add(indicator).top().left().fillX().expandX();
+                // check why we can't set a background? - doesn't matter showing the symbol looks nice
+            } else {
+                t = new Label((i + 1) + ". " + lc.getTitle(language), levelSkin);
+                levelRow.add(t).prefHeight(res).top().left().fillX().expandX();
+            }
+
+            lastCell = levelSelectorTable.add(levelRow).prefHeight(res).top().left().padBottom(res / 16).fillX().expandX();
+            levelSelectorTable.row();
+            if (statistics.activated(lc)) {
+                levelRow.addListener(new LevelClickListener(cat.get(i)));
+            } else {
+                // t.setColor(0.5f,0.5f,0.5f,1.0f); does not work as this is a colored font
+                levelRow.setColor(1, 1, 1, 0.6f); // sets only transparency
+            }
+            // mark last active level
+        }
+        //lastCell.expandY().fillY().align(Align.topLeft);
+        levelsHotSpotRoot.setUp(hotSpotSettings.getRight());
+        for(hs = hotSpotSettings.getRight(); hs !=null; hs=hs.getRight()) {
+            hs.setDown(levelsHotSpotRoot);
+        }
+        for(hs = levelsHotSpotRoot; hs!=null; hs=hs.getDown()) {
+            hs.setLeft(hotSpotSettings.getDown());
         }
 
         // add the buttons for the different level categories to the toolbar
@@ -309,9 +345,12 @@ public class MainMenu implements Screen {
         ScrollPane categorySelector = new ScrollPane(categorySelectorTable);
         SymbolButton categorySelectorButtons[] = new SymbolButton[levelsConfig.size()];
         Cell<Group> lastCategory = null;
+        hs = hotSpotSettings;
         for (int i = 0; i < levelsConfig.size(); i++) { // loop through categories
             SymbolButton b = new SymbolButton(res, levelsConfig.get(i).getTexture(res));
-            CategoryClickListener listener = new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[i], res);
+            hs = hs.getCreateDown(b.getCell(), categorySelector, 100 + i);
+            hs.setRight(levelsHotSpotRoot);
+            CategoryClickListener listener = new CategoryClickListener(i, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, res);
             b.addListener(listener);
             categorySelectorButtons[i] = b;
 
@@ -319,6 +358,7 @@ public class MainMenu implements Screen {
             categorySelectorTable.row();
         }
         lastCategory.fillY().expandY();
+        categorySelectorButtons[activatedCategory].select();
 
 /*        if(versionStringActor != null) {
             versionStringActor.remove();
@@ -328,42 +368,114 @@ public class MainMenu implements Screen {
 //        versionStringActor.setColor(1,1,1,0.5f);
         rootTable.addActor(versionStringActor); */
 
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyTyped(InputEvent event, char character) {
-                switch (character) {
-                    case 'F': // only capital:
-                        toggleFullscreen();
-                        return true;
-                    case '9':
-                        ScreenshotFactory.saveScreenshot();
-                        return true;
-                }
-                return false;
-            }
-
-        });
-        Gdx.input.setInputProcessor(stage);
 // called from there        resize();
 
         // Layout
         table.align(Align.topLeft);
         table.add(topRowPane).minHeight(res).prefHeight(res).top().fillX().expandX().row();
         table.add(categoryLabel).minHeight(res / 2).prefHeight(res).padLeft(res + res / 2).left().row();
-        switchLevelCategory(activatedCategory, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector[activatedCategory], res);
+        //switchLevelCategory(activatedCategory, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, res);
+        twoColumns.clear();
+        twoColumns.add(categorySelector).fillY().expandY().minWidth(res).prefWidth(res).padRight(res / 2);
+        twoColumns.add(levelSelector).fill().expand();
         table.add(twoColumns).top().left().fillX().expandX();
 
         //table.pack(); // fit table into root-table to update coordinates
         table.layout(); // force layout to have coordinates and dimensions in pane
         // scroll pane to activated level
-        if(selectedLevel != null) {
-            ScrollPane pane = levelSelector[selectedLevel.getCategory().getNr()];
+        if(selectedLevel != null && cat.getNr() == selectedLevel.getCategory().getNr()) {
+            ScrollPane pane = levelSelector;
             pane.setScrollY((res + res / 8) * (selectedLevel.getNr()-1));
             if (lastCell != null) {
                 lastCell.expandY().fillY();
             }
         }
 
+    }
+
+    private void leave() {
+        //dispose(); // done from main
+        main.fadeExit();
+    }
+
+    private void credits() {
+        main.setScreen(new Credits(main, selectedLevel));
+    }
+
+    private void settings() {
+        if (currentDialog == null) dialogPreferences();
+        else dialogClose();
+    }
+
+    private void save() {
+        Play p = new Play(main, 1);
+        if (p.getGame() != null) { // init was successful
+            main.setScreen(p); // TODO: allow more slots?
+        }
+    }
+
+    /**
+     * the activated hotspot is executed (after space, return, or fire)
+     */
+    private void activateSelection() {
+        int hint = hotSpotSelected.getActivateHint();
+        Gdx.app.log("activateSelection","Hint: "+hint);
+        if(hint>=1000) { // a level was selected, needs to be started
+            hint -= 1000;
+            hotSpotSelected = hotSpotRoot;
+            selectLevel(levelsConfig.get(activatedCategory).get(hint));
+        } else if (hint >= 100) { // a category was selected
+            hint -= 100;
+            hotSpotSelected = hotSpotRoot;
+            switchLevelCategory(hint);
+        } else {
+            switch(hint) {
+                case 1:
+                    settings();
+                    break;
+                case 2:
+                    save();
+                    break;
+                case 3:
+                    Gdx.net.openURI(WEBSITE);
+                    break;
+                case 4:
+                    credits();
+                    break;
+                case 5:
+                    leave();
+                    break;
+            }
+            hotSpotSelected = hotSpotRoot;
+        }
+    }
+
+    private void moveCursor(int direction) {
+        HotSpot newHS = hotSpotSelected;
+        switch(direction) {
+            case Mover.UP:
+                newHS = hotSpotSelected.getUp();
+                break;
+            case Mover.RIGHT:
+                newHS = hotSpotSelected.getRight();
+                break;
+            case Mover.DOWN:
+                newHS = hotSpotSelected.getDown();
+                break;
+            case Mover.LEFT:
+                newHS = hotSpotSelected.getLeft();
+                break;
+        }
+        if(newHS != null) {
+            hotSpotSelected = newHS;
+            // scroll underlying scrollpane
+            ScrollPane pane = hotSpotSelected.getScrollPane();
+            if(pane != null) {
+                Actor a = hotSpotSelected.getActor();
+                pane.setScrollX(a.getX() - pane.getScrollWidth() / 2);
+                pane.setScrollY(pane.getMaxY() + pane.getScrollHeight() / 2 - a.getY());
+             }
+        }
     }
 
     @Override
@@ -381,6 +493,7 @@ public class MainMenu implements Screen {
                 resumeRequested = false;
             }
         } else {
+            frames += 2;
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) stage.act(delta);
@@ -389,6 +502,19 @@ public class MainMenu implements Screen {
 //            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
 //            batch.end();
             fader.render();
+            Actor a = hotSpotSelected.getActor();
+            if(a != null) {
+                int res = preferences.getSymbolResolution();
+                batch.setColor(1, 1, 1, 1); // restore batch color
+//                Vector2 coords = new Vector2(a.getX(),a.getY());
+                coords.x = 0;
+                coords.y = 0;
+                a.localToStageCoordinates(/*in/out*/coords);
+                //stage.stageToScreenCoordinates(/*in/out*/coords);
+                batch.begin();
+                batch.draw(Entities.destination.getTexture(res, frames), coords.x, coords.y);
+                batch.end();
+            }
         }
     }
 
@@ -591,7 +717,79 @@ public class MainMenu implements Screen {
     }
 
     public void decreaseSymbolResolution() {
-        setSymbolResolution(preferences.getSymbolResolution()/2);
+        setSymbolResolution(preferences.getSymbolResolution() / 2);
+    }
+
+
+    @Override
+    public boolean keyDown(int keycode) {
+        switch( keycode ) {
+            case Input.Keys.W:
+            case Input.Keys.UP:
+                moveCursor(Mover.UP);
+                return true;
+            case Input.Keys.D:
+            case Input.Keys.RIGHT:
+                moveCursor(Mover.RIGHT);
+                return true;
+            case Input.Keys.S:
+            case Input.Keys.DOWN:
+                moveCursor(Mover.DOWN);
+                return true;
+            case Input.Keys.A:
+            case Input.Keys.LEFT:
+                moveCursor(Mover.LEFT);
+                return true;
+        }
+        //return super.keyDown(event, keycode);
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        switch (character) {
+            case 'F': // only capital:
+                toggleFullscreen();
+                return true;
+            case '9':
+                ScreenshotFactory.saveScreenshot();
+                return true;
+            case ' ':
+            case 13:
+                activateSelection();
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 
 }
