@@ -3,7 +3,6 @@ package com.mcminos.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -41,6 +40,8 @@ public class PlayDialogs {
     private SegmentString rockmeLabelText;
     private int closeTimer = 0;
 
+    private HotSpot hotSpotRoot;
+
     public PlayDialogs(Play play) {
         this.play = play;
         this.main = play.getMain();
@@ -69,6 +70,7 @@ public class PlayDialogs {
 
 
     public Table openText( CharSequence title, CharSequence body ) {
+        hotSpotRoot = null;
         int res = play.getSymbolResolution();
         Skin writingSkin = main.getMenuSkin(res / 2);
         Skin menuSkin = main.getMenuSkin(res);
@@ -155,6 +157,7 @@ public class PlayDialogs {
     private SymbolButton musicButton;
     private SymbolButton touchpadButton;
     public void openGameMenu() {
+        hotSpotRoot = null;
         int res = play.getSymbolResolution();
         int padSize = res / 16;
         Skin menuSkin = main.getMenuSkin(res);
@@ -184,13 +187,12 @@ public class PlayDialogs {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                preferences.toggleSound();
-                soundButton.setSymbol(audio.getSound() ?
-                        Entities.menu_symbol_sound_on.getTexture(play.getSymbolResolution(), 0)
-                        : Entities.menu_symbol_sound_off.getTexture(play.getSymbolResolution(), 0));
+                toggleSound();
             }
         });
         rowGamePrefsTable.add(soundButton.getCell()).prefSize(res, res).padRight(padSize);
+        hotSpotRoot = new HotSpot(soundButton.getCell(), rowGamePrefs, 1);
+        HotSpot hs = hotSpotRoot;
 
         musicButton = new SymbolButton(res, audio.getMusic() ?
                 Entities.menu_symbol_music_on.getTexture(play.getSymbolResolution(), 0)
@@ -198,24 +200,11 @@ public class PlayDialogs {
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                preferences.toggleMusic();
-                musicButton.setSymbol(audio.getMusic() ?
-                        Entities.menu_symbol_music_on.getTexture(play.getSymbolResolution(), 0)
-                        : Entities.menu_symbol_music_off.getTexture(play.getSymbolResolution(), 0));
+                toggleMusic();
             }
         });
         rowGamePrefsTable.add(musicButton.getCell()).prefSize(res, res).padRight(padSize);
-
-/*        final Button musicButton = new TextButton("Music\n"+ (audio.getMusic()?"on":"off"), skin);
-        musicButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                audio.toggleMusic();
-                ((Label) musicButton.getChildren().first()).setText("Music\n" + (audio.getMusic() ? "on" : "off"));
-            }
-        });
-        topMenu.add(musicButton).prefSize(res, res).padRight(padSize);
-*/
+        hs = hs.getCreateRight(musicButton.getCell(), rowGamePrefs, 2);
 
         touchpadButton = new SymbolButton(res,play.isTouchpadActive() ?
                 Entities.menu_symbol_touchpad_on.getTexture(play.getSymbolResolution(), 0)
@@ -223,58 +212,52 @@ public class PlayDialogs {
         touchpadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                play.toggleTouchpad();
-                touchpadButton.setSymbol(play.isTouchpadActive() ?
-                        Entities.menu_symbol_touchpad_on.getTexture(play.getSymbolResolution(), 0)
-                        : Entities.menu_symbol_touchpad_off.getTexture(play.getSymbolResolution(), 0));
-
+                toggleTouchpad();
             }
         });
         rowGamePrefsTable.add(touchpadButton.getCell()).prefSize(res, res).padRight(padSize * 2);
+        hs = hs.getCreateRight(touchpadButton.getCell(), rowGamePrefs, 3);
 
         SymbolButton plusButton = new SymbolButton(res, Entities.menu_symbol_zoom_in.getTexture(res, 0));
         plusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                play.zoomPlus();
-                openGameMenu(); // TODO: check if this leaks too much memory
+                zoomPlusGame();
             }
         });
         rowGamePrefsTable.add(plusButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(plusButton.getCell(), rowGamePrefs, 4);
+
 
         SymbolButton minusButton = new SymbolButton(res, Entities.menu_symbol_zoom_out.getTexture(res, 0));
         minusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                play.zoomMinus();
-                openGameMenu(); // TODO: check if this leaks too much memory
+                zoomMinusGame();
             }
         });
-        rowGamePrefsTable.add(minusButton.getCell()).prefSize(res, res).padRight(padSize*2);
+        rowGamePrefsTable.add(minusButton.getCell()).prefSize(res, res).padRight(padSize * 2);
+        hs = hs.getCreateRight(minusButton.getCell(), rowGamePrefs, 5);
 
         SymbolButton symbolPlusButton = new SymbolButton(res, Entities.menu_symbol_toolbar_zoom_in.getTexture(res, 0));
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                play.increaseSymbolResolution();
-                openGameMenu(); // TODO: check if this leaks too much memory
+                zoomPlusSymbol();
             } 
         });
         rowGamePrefsTable.add(symbolPlusButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(symbolPlusButton.getCell(), rowGamePrefs, 6);
 
         SymbolButton symbolMinusButton = new SymbolButton(res, Entities.menu_symbol_toolbar_zoom_out.getTexture(res, 0));
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                play.decreaseSymbolResolution();
-                openGameMenu(); // TODO: check if this leaks too much memory
+                zoomMinusSymbol();
             } 
         });
         rowGamePrefsTable.add(symbolMinusButton.getCell()).prefSize(res, res);
+        hs.getCreateRight(symbolMinusButton.getCell(), rowGamePrefs, 7);
 
         // action row
         //        Button saveButton = new TextButton("Save", writingSkin);
@@ -282,22 +265,26 @@ public class PlayDialogs {
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                play.getGame().saveGame(1); // TODO: allow several game-saves
-                openSavedGameConfirm();
+                saveGame();
             }
         });
         rowActionsTable.add(saveButton.getCell()).prefSize(res, res).padRight(padSize);
+        HotSpot lowerRowHS = hotSpotRoot;
+        hs = lowerRowHS.getCreateUp(saveButton.getCell(), rowGamePrefs, 51);
+        lowerRowHS = lowerRowHS.getRight();
 
         SymbolButton langButton = new SymbolButton(res, preferences.languageGfx().getTexture(res,0));
         langButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                preferences.nextLanguage();
-                openGameMenu();
+                changeLanguage();
             }
         });
         rowActionsTable.add(langButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(langButton.getCell(), rowGamePrefs, 52);
+        lowerRowHS.setUp(hs);
+        hs.setDown(lowerRowHS);
+        lowerRowHS = lowerRowHS.getRight();
 
         SymbolButton infoButton = new SymbolButton(res,Entities.menu_button_info.getTexture(res, 0));
         infoButton.addListener(new ClickListener() {
@@ -306,28 +293,37 @@ public class PlayDialogs {
                 openLevelStory();
             }
         });
-        rowActionsTable.add(infoButton.getCell()).prefSize(res, res).padRight(padSize*2);
+        rowActionsTable.add(infoButton.getCell()).prefSize(res, res).padRight(padSize * 2);
+        hs = hs.getCreateRight(infoButton.getCell(), rowGamePrefs, 53);
+        lowerRowHS.setUp(hs);
+        hs.setDown(lowerRowHS);
+        lowerRowHS = lowerRowHS.getRight();
 
         SymbolButton restartButton = new SymbolButton(res,Entities.menu_symbol_restart.getTexture(res, 0));
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                mcminos.kill("skullkill", Entities.mcminos_dying, true);
-                play.pauseOff();
+                restartLevel();
             }
         });
         rowActionsTable.add(restartButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(restartButton.getCell(), rowGamePrefs, 54);
+        lowerRowHS.setUp(hs);
+        hs.setDown(lowerRowHS);
+        lowerRowHS = lowerRowHS.getRight();
 
         SymbolButton leaveButton = new SymbolButton(res,Entities.menu_symbol_stop.getTexture(res, 0));
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                close();
-                play.backToMenu();
+                leaveGame();
             }
         });
         rowActionsTable.add(leaveButton.getCell()).prefSize(res, res).padRight(padSize * 2);
+        hs = hs.getCreateRight(leaveButton.getCell(), rowGamePrefs, 55);
+        lowerRowHS.setUp(hs);
+        hs.setDown(lowerRowHS);
+        lowerRowHS = lowerRowHS.getRight();
 
         SymbolButton pauseButton = new SymbolButton(res, Entities.menu_symbol_pause.getTexture(res, 0));
         pauseButton.addListener(new ClickListener() {
@@ -337,6 +333,10 @@ public class PlayDialogs {
             }
         });
         rowActionsTable.add(pauseButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(pauseButton.getCell(), rowGamePrefs, 56);
+        lowerRowHS.setUp(hs);
+        hs.setDown(lowerRowHS);
+        lowerRowHS = lowerRowHS.getRight();
 
         SymbolButton continueButton = new SymbolButton(res, Entities.menu_symbol_play.getTexture(res, 0));
         continueButton.addListener(new ClickListener() {
@@ -347,8 +347,84 @@ public class PlayDialogs {
             }
         });
         rowActionsTable.add(continueButton.getCell()).prefSize(res, res).maxSize(res);
+        hs = hs.getCreateRight(continueButton.getCell(), rowGamePrefs, 57);
+        lowerRowHS.setUp(hs);
+        hs.setDown(lowerRowHS);
+
+        hotSpotRoot = hotSpotRoot.getUp();
 
         open( thisDialog );
+    }
+
+    private void leaveGame() {
+        close();
+        play.backToMenu();
+    }
+
+    private void restartLevel() {
+        close();
+        mcminos.kill("skullkill", Entities.mcminos_dying, true);
+        play.pauseOff();
+    }
+
+    private void changeLanguage() {
+        close();
+        preferences.nextLanguage();
+        openGameMenu();
+    }
+
+    private void saveGame() {
+        play.getGame().saveGame(1); // TODO: allow several game-saves
+        openSavedGameConfirm();
+    }
+
+    private void zoomMinusSymbol() {
+        close();
+        play.decreaseSymbolResolution();
+        openGameMenu(); // TODO: check if this leaks too much memory
+    }
+
+    private void zoomPlusSymbol() {
+        close();
+        play.increaseSymbolResolution();
+        openGameMenu(); // TODO: check if this leaks too much memory
+    }
+
+    private void zoomMinusGame() {
+        close();
+        play.zoomMinus();
+        openGameMenu(); // TODO: check if this leaks too much memory
+    }
+
+    private void zoomPlusGame() {
+        close();
+        play.zoomPlus();
+        openGameMenu(); // TODO: check if this leaks too much memory
+    }
+
+    private void toggleTouchpad() {
+        play.toggleTouchpad();
+        touchpadButton.setSymbol(play.isTouchpadActive() ?
+                Entities.menu_symbol_touchpad_on.getTexture(play.getSymbolResolution(), 0)
+                : Entities.menu_symbol_touchpad_off.getTexture(play.getSymbolResolution(), 0));
+    }
+
+    private void toggleMusic() {
+        preferences.toggleMusic();
+        musicButton.setSymbol(audio.getMusic() ?
+                Entities.menu_symbol_music_on.getTexture(play.getSymbolResolution(), 0)
+                : Entities.menu_symbol_music_off.getTexture(play.getSymbolResolution(), 0));
+    }
+
+    private void toggleSound() {
+        preferences.toggleSound();
+        soundButton.setSymbol(audio.getSound() ?
+                Entities.menu_symbol_sound_on.getTexture(play.getSymbolResolution(), 0)
+                : Entities.menu_symbol_sound_off.getTexture(play.getSymbolResolution(), 0));
+    }
+
+    public HotSpot getHotSpotRoot() {
+        return hotSpotRoot;
     }
 
     private void openSavedGameConfirm() {
@@ -587,6 +663,70 @@ allows cheating */
             if(closeTimer == 0) {
                 close();
             }
+        }
+    }
+
+    public void triggerAction(int hint) {
+        switch( hint ) {
+            case 1:
+                toggleSound();
+                break;
+            case 2:
+                toggleMusic();
+                break;
+            case 3:
+                toggleTouchpad();
+                break;
+            case 4:
+                zoomPlusGame();
+                break;
+            case 5:
+                zoomMinusGame();
+                break;
+            case 6:
+                zoomPlusSymbol();
+                play.setHotSpotSelected(
+                        hotSpotRoot.getDown()
+                                .getRight().getRight().getRight()
+                                .getRight().getRight().getRight()
+                );
+                break;
+            case 7:
+                zoomMinusSymbol();
+                play.setHotSpotSelected(
+                        hotSpotRoot.getDown()
+                                .getRight().getRight().getRight()
+                                .getRight().getRight().getRight().getRight()
+                );
+                break;
+            case 51:
+                play.hideHotSpot();
+                saveGame();
+                break;
+            case 52:
+                changeLanguage();
+                break;
+            case 53:
+                play.hideHotSpot();
+                openLevelStory();
+                break;
+            case 54:
+                play.hideHotSpot();
+                restartLevel();
+                break;
+            case 55:
+                play.hideHotSpot();
+                leaveGame();
+                break;
+            case 56:
+                play.setHotSpotSettings();
+                close();
+                break;
+            case 57:
+                play.hideHotSpot();
+                play.pauseOff();
+                break;
+
         }
     }
 }

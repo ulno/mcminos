@@ -12,13 +12,18 @@ public class HtmlLauncher extends GwtApplication {
     // methods adapted from: http://stackoverflow.com/questions/22419472/how-to-handle-resize-in-libgdx-on-html-gwtapplication
     // TODO: check why size seems to be a littel bigger than visible size
 
-    @Override
+/*    @Override
     public ApplicationListener getApplicationListener() {
+        return new Main();
+    } */
+
+    @Override
+    public ApplicationListener createApplicationListener () {
         return new Main();
     }
 
 
-    @Override
+/*    @Override
     public void onModuleLoad() {
         super.onModuleLoad();
         com.google.gwt.user.client.Window.addResizeHandler(new ResizeHandler() {
@@ -26,7 +31,7 @@ public class HtmlLauncher extends GwtApplication {
                 Gdx.graphics.setDisplayMode(ev.getWidth() * 9 / 10, ev.getHeight() * 9 / 10, false);
             }
         });
-    }
+    } */
 
     @Override
     public GwtApplicationConfiguration getConfig() {

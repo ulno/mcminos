@@ -17,7 +17,7 @@ import java.util.HashSet;
  */
 public class McMinosMover extends Mover {
 
-    static final float CONTROLLER_THRESHOLD = 0.1f;
+    static final float CONTROLLER_THRESHOLD = 0.2f;
     private Game game;
     private McMinos mcminos;
     private Audio audio;
@@ -63,7 +63,7 @@ public class McMinosMover extends Mover {
             int directions = getKeyDirections(); // direction bit field
             int drunkLevel = mcminos.getDrunkLevel();
             if (drunkLevel > 0) /* if drunk, 3 bottles -> 30 seconds mean no control */
-                if (level.random(Math.max(1, 30 - (drunkLevel >> Game.timeResolutionExponent))) == 0)
+                if (level.random(Math.max(1, 30 - (drunkLevel / Game.timeResolution))) == 0)
                     directions = level.random(15) + 1;
 
             if (directions == 0) { // if no key, then try to get from destination
@@ -627,29 +627,31 @@ public class McMinosMover extends Mover {
             } else if(x<-CONTROLLER_THRESHOLD) {
                 keyDirections |= 8;
             }
-            switch( c.getPov(0) ) {
-                case north:
-                    keyDirections |= 1;
-                    break;
-                case northEast:
-                    keyDirections |= 3;
-                    break;
-                case east:
-                    keyDirections |= 2;
-                    break;
-                case southEast:
-                    keyDirections |= 6;
-                case south:
-                    keyDirections |= 4;
-                    break;
-                case southWest:
-                    keyDirections |= 12;
-                    break;
-                case west:
-                    keyDirections |= 8;
-                    break;
-                case northWest:
-                    keyDirections |= 9;
+            for( int pov=0; pov<1; pov ++ ) { // TODO: check how many
+                switch (c.getPov(pov)) {
+                    case north:
+                        keyDirections |= 1;
+                        break;
+                    case northEast:
+                        keyDirections |= 3;
+                        break;
+                    case east:
+                        keyDirections |= 2;
+                        break;
+                    case southEast:
+                        keyDirections |= 6;
+                    case south:
+                        keyDirections |= 4;
+                        break;
+                    case southWest:
+                        keyDirections |= 12;
+                        break;
+                    case west:
+                        keyDirections |= 8;
+                        break;
+                    case northWest:
+                        keyDirections |= 9;
+                }
             }
         }
 

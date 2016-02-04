@@ -97,7 +97,7 @@ public class Ghosts implements KryoSerializable {
             if(ghostsActive[i] < level.getGhostMax(i) ) {
                 if(ghostSpawnCounter[i] == -1) { // nothing counting right now
                     // initialize new spawn counter
-                    ghostSpawnCounter[i] = level.getGhostTime(i) << Game.timeResolutionExponent;
+                    ghostSpawnCounter[i] = level.getGhostTime(i) * Game.timeResolution;
                 }
                 if(ghostSpawnCounter[i] >= 0) {
                     ghostSpawnCounter[i] --;

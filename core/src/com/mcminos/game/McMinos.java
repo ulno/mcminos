@@ -249,7 +249,7 @@ public class McMinos implements KryoSerializable {
         game.getGhosts().setSpeedFactor(gosNewFactor);
         if(duration > 0) // something was actually consumed
         {
-            powerDuration += duration << game.timeResolutionExponent;
+            powerDuration += duration * Game.timeResolution;
             audio.soundPlay("power");
             gfxPowered(); // turn mcminos into nice graphics
             increaseScore(10);
@@ -381,7 +381,7 @@ public class McMinos implements KryoSerializable {
 
     public void consumeUmbrella() {
         decreaseUmbrellas();
-        umbrellaDuration += 10 << Game.timeResolutionExponent;
+        umbrellaDuration += 10 * Game.timeResolution;
     }
 
     public int getUmbrellas() {
@@ -514,7 +514,7 @@ public class McMinos implements KryoSerializable {
 
     public void poison() {
         if (poisonDuration == 0) { // not already poisoned
-            poisonDuration = 10 << Game.timeResolutionExponent;
+            poisonDuration = 10 * Game.timeResolution;
             audio.soundPlay("poison");
             //stop();
             gfxPoisoned();
@@ -522,7 +522,7 @@ public class McMinos implements KryoSerializable {
     }
 
     public void makeDrunk() {
-        drunkLevel += 10 << Game.timeResolutionExponent;
+        drunkLevel += 10 * Game.timeResolution;
         audio.soundPlay("ethanole");
         gfxDrunk();
     }

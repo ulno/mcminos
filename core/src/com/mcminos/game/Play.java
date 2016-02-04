@@ -71,6 +71,9 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     private boolean paused = true; // start paused
     private Preferences preferences;
     private Fader fader;
+    private HotSpot hotSpotSelected = null;
+    private Vector2 coords = new Vector2();
+    private long lastControllerGameFrame;
 
     private void preInit(final Main main) {
         this.main = main;
@@ -139,6 +142,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     }
 
     public void initAfterLevel() {
+        lastControllerGameFrame = 0;
 
         triggerFade();
 
@@ -379,6 +383,24 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
             // add stage and menu
             stage.draw();
             stage.act(delta); // evaluate interaction with menu
+            evaluateDirections();
+
+            // draw selected hotspot
+            if(hotSpotSelected != null) {
+                Actor a = hotSpotSelected.getActor();
+                if(a != null) {
+                    int res = preferences.getSymbolResolution();
+                     stageBatch.setColor(1, 1, 1, 1); // restore batch color
+//                Vector2 coords = new Vector2(a.getX(),a.getY());
+                    coords.x = 0;
+                    coords.y = 0;
+                    a.localToStageCoordinates(/*in/out*/coords);
+                    //stage.stageToScreenCoordinates(/*in/out*/coords);
+                    stageBatch.begin();
+                    stageBatch.draw(Entities.destination.getTexture(res, gameFrame), coords.x, coords.y);
+                    stageBatch.end();
+                }
+            }
 
             // add fader shade
             fader.render();
@@ -622,19 +644,39 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public boolean keyDown(int keycode) {
+        evaluateDirections();
+        return false;
+    }
+
+    private void evaluateDirections() {
         mcminos.updateKeyDirections();
-        if (!dialogs.active()) {
-            if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                pauseOff();
+        if (isPaused()) {
+            long gameFrame = game.getAnimationFrame();
+            if (gameFrame - lastControllerGameFrame > 40) {
+                int dirs = mcminos.getKeyDirections();
+                if(dirs > 0) Gdx.app.log("evaluateDirections","Code: "+dirs);
+                if (dirs > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                    if (hotSpotSelected == null) pauseOff();
+                    else {
+                        if ((dirs & Mover.UP) > 0)
+                            moveCursor(Mover.UP);
+                        else if ((dirs & Mover.RIGHT) > 0)
+                            moveCursor(Mover.RIGHT);
+                        else if ((dirs & Mover.DOWN) > 0)
+                            moveCursor(Mover.DOWN);
+                        else if ((dirs & Mover.LEFT) > 0)
+                            moveCursor(Mover.LEFT);
+                    }
+                }
             }
         }
-        return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
         mcminos.updateKeyDirections();
-        dialogs.checkDoorKey(keycode);
+        //evaluateDirections();
+        dialogs.checkDoorKey(keycode); // TODO: check if this can be done in evaluate
         return false;
     }
 
@@ -697,9 +739,15 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
                 toggleGameMenu();
                 break;
             case ' ':
+            case 13:
+                triggerAction();
+                break;
             case 'p':
             case 'P':
                 togglePause();
+                break;
+            default:
+//                evaluateDirections();
                 break;
         }
         return false;
@@ -721,6 +769,53 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
             else pauseOff();
         } else {
             pauseOn();
+            hotSpotSelected = toolbox.getHotSpotRoot();
+        }
+    }
+
+    private void triggerAction() {
+        if(!isPaused()) {
+            togglePause();
+        } else {
+            if(hotSpotSelected != null ) { // something is selected
+                int hint = hotSpotSelected.getActivateHint();
+                if(hint < 100) {
+                    dialogs.triggerAction(hint);
+                } else {
+                    switch (hint) {
+                        case 100:
+                            togglePause();
+                            break;
+                        case 101:
+                            toggleGameMenu();
+                            hotSpotSelected = dialogs.getHotSpotRoot();
+                            break;
+                        case 102:
+                            toolbox.activateChocolate();
+                            break;
+                        case 103:
+                            dialogs.openDoorOpener();
+                            break;
+                        case 104:
+                            toolbox.activateBomb();
+                            break;
+                        case 105:
+                            toolbox.activateDynamite();
+                            break;
+                        case 106:
+                            toolbox.activateLandmine();
+                            break;
+                        case 107:
+                            toolbox.activateUmbrella();
+                            break;
+                        case 108:
+                            toolbox.activateMedicine();
+                            break;
+                    }
+                }
+            } else {
+                togglePause();
+            }
         }
     }
 
@@ -977,7 +1072,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     }
 
     public void increaseSymbolResolution() {
-        setSymbolResolution(getSymbolResolution()*2);
+        setSymbolResolution(getSymbolResolution() * 2);
     }
 
     public void decreaseSymbolResolution() {
@@ -1001,6 +1096,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
             paused = false;
             dialogs.close();
             toolbox.rebuild();
+            hotSpotSelected = null;
         }
         game.startTimer();
     }
@@ -1049,7 +1145,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
-        toggleGameMenu();
+        triggerAction();
         return true;
     }
 
@@ -1060,23 +1156,13 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        mcminos.updateKeyDirections();
-        if (!dialogs.active()) {
-            if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                pauseOff();
-            }
-        }
+        evaluateDirections();
         return false;
     }
 
     @Override
     public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-        mcminos.updateKeyDirections();
-        if (!dialogs.active()) {
-            if (mcminos.getKeyDirections() > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                pauseOff();
-            }
-        }
+        evaluateDirections();
         return false;
     }
 
@@ -1093,5 +1179,46 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     @Override
     public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
         return false;
+    }
+
+    private void moveCursor(int direction) {
+        HotSpot newHS = hotSpotSelected;
+        switch(direction) {
+            case Mover.UP:
+                newHS = hotSpotSelected.getUp();
+                break;
+            case Mover.RIGHT:
+                newHS = hotSpotSelected.getRight();
+                break;
+            case Mover.DOWN:
+                newHS = hotSpotSelected.getDown();
+                break;
+            case Mover.LEFT:
+                newHS = hotSpotSelected.getLeft();
+                break;
+        }
+        if(newHS != null) {
+            lastControllerGameFrame = game.getAnimationFrame();
+            hotSpotSelected = newHS;
+            // scroll underlying scrollpane
+            ScrollPane pane = hotSpotSelected.getScrollPane();
+            if(pane != null) {
+                Actor a = hotSpotSelected.getActor();
+                pane.setScrollX(a.getX() - pane.getScrollWidth() / 2);
+                pane.setScrollY(pane.getMaxY() + pane.getScrollHeight() / 2 - a.getY());
+            }
+        }
+    }
+
+    public void setHotSpotSelected(HotSpot hotSpotSelected) {
+        this.hotSpotSelected = hotSpotSelected;
+    }
+
+    public void setHotSpotSettings() {
+        hotSpotSelected = toolbox.getHotSpotRoot().getDown();
+    }
+
+    public void hideHotSpot() {
+        hotSpotSelected = null;
     }
 }

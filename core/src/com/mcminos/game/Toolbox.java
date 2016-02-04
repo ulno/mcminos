@@ -44,6 +44,8 @@ public class Toolbox {
     private Image menuButtonImage;
     private Image chocolatesImage;
 
+    private HotSpot hotSpotRoot = null;
+
 
     private ArrayList<ToolboxButton> buttonList = new ArrayList<>();
     private boolean rebuildNecessary = true; // at the beginning it has to be rebuilt
@@ -265,28 +267,41 @@ public class Toolbox {
     }
 
     public void rebuild() {
+        HotSpot hs;
+
         if( rebuildNecessary ) {
-            Cell<Group> last = null;
+            Cell<Group> lastTB = null;
             boolean rowadded = true;
             int res = preferences.getSymbolResolution();
+            hotSpotRoot = null;
+            HotSpot lastHS = null;
 
             // make all visible
             table.clearChildren();
 
             for (int i = 0; i < buttonList.size(); i++) {
                 if (!rowadded) {
-                    last.row();
+                    lastTB.row();
                     rowadded = true;
                 }
                 ToolboxButton tb = buttonList.get(i);
                 if (tb.isVisible()) {
                     tb.rebuildButton( res ); // TODO: check, if this creates memory leak
-                    last = tb.addToTable();
+                    lastTB = tb.addToTable();
                     rowadded = false;
+                    // also build hotspot list
+                    hs = new HotSpot(tb.getActor(),toolboxScroller,100 + i);
+                    if(lastHS == null) {
+                        hotSpotRoot = hs;
+                    } else {
+                        lastHS.setDown(hs);
+                        hs.setUp(lastHS);
+                    }
+                    lastHS = hs;
                 }
             }
-            if (last != null)
-                last.expandY().top().left().row();
+            if (lastTB != null)
+                lastTB.expandY().top().left().row();
             rebuildNecessary = false;
         }
     }
@@ -351,7 +366,7 @@ public class Toolbox {
     public void activateBomb() {
         if (mcminos.hasBomb()) {
             mcminos.decreaseBombs();
-            level.getGame().schedule(EventManager.Types.FuseBomb,mcminos.getFromLevelBlock());
+            level.getGame().schedule(EventManager.Types.FuseBomb, mcminos.getFromLevelBlock());
             play.pauseOff(); // close rootTable
         } else audio.soundPlay("error");
     }
@@ -397,5 +412,9 @@ public class Toolbox {
 
     public boolean isRebuildNecessary() {
         return rebuildNecessary;
+    }
+
+    public HotSpot getHotSpotRoot() {
+        return hotSpotRoot;
     }
 }

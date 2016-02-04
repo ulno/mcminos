@@ -62,6 +62,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
     private long frames = 0;
 
     Vector2 coords = new Vector2();
+    private HotSpot hotSpotSettingsRoot;
 
 
     public MainMenu(final Main main) {
@@ -501,6 +502,9 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
             switch(hint) {
                 case 1:
                     settings();
+                    if(currentDialog!=null) { // if menu was opened (should usually happen)
+                        hotSpotSelected = hotSpotSettingsRoot.getRight();
+                    }
                     break;
                 case 2:
                     save();
@@ -514,8 +518,29 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
                 case 5:
                     leave();
                     break;
+                case 10:
+                    toggleSound();
+                    break;
+                case 11:
+                    toggleMusic();
+                    break;
+                case 12:
+                    increaseSymbolSize();
+                    hotSpotSelected = hotSpotSettingsRoot.getRight().getRight().getRight();
+                    break;
+                case 13:
+                    decreaseSymbolSize();
+                    hotSpotSelected = hotSpotSettingsRoot.getRight().getRight().getRight().getRight();
+                    break;
+                case 14:
+                    changeLanguage();
+                    hotSpotSelected = hotSpotSettingsRoot.getRight().getRight().getRight().getRight().getRight();
+                    break;
+                case 15:
+                    dialogClose();
+                    hotSpotSelected = hotSpotRoot.getRight();
+                    break;
             }
-            hotSpotSelected = hotSpotRoot;
         }
     }
 
@@ -587,7 +612,6 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
 //            batch.begin();
 //            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
 //            batch.end();
-            fader.render();
             Actor a = hotSpotSelected.getActor();
             if(a != null) {
                 int res = preferences.getSymbolResolution();
@@ -601,6 +625,8 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
                 batch.draw(Entities.destination.getTexture(res, frames), coords.x, coords.y);
                 batch.end();
             }
+
+            fader.render();
         }
     }
 
@@ -694,13 +720,14 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         thisDialog.setColor(new Color(1, 1, 1, 0.9f)); // little transparent
         thisDialog.setSize(Math.min(Gdx.graphics.getWidth(), 6*res + 9 * padSize),
                 Math.min(Gdx.graphics.getHeight(), 1*res + 4*padSize) );
-        thisDialog.setPosition( 0, Gdx.graphics.getHeight() - thisDialog.getHeight() - res );
+        thisDialog.setPosition(0, Gdx.graphics.getHeight() - thisDialog.getHeight() - res);
 
         // Basic layout
         Table rowGamePrefsTable = new Table(menuSkin);
         rowGamePrefsTable.setHeight(res);
         ScrollPane rowGamePrefs = new ScrollPane(rowGamePrefsTable);
-        
+        hotSpotSettingsRoot = new HotSpot(null,null,-1);
+
         thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
 
         ///// Fill game prefs row
@@ -711,15 +738,14 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int res = preferences.getSymbolResolution();
-                preferences.toggleSound();
-                soundButton.setSymbol(res,
-                        preferences.getSound() ?
-                        Entities.menu_symbol_sound_on.getTexture(res, 0)
-                        : Entities.menu_symbol_sound_off.getTexture(res, 0));
+                toggleSound();
             }
         });
         rowGamePrefsTable.add(soundButton.getCell()).prefSize(res, res).padRight(padSize);
+        HotSpot hs = hotSpotSettingsRoot.getCreateRight(soundButton.getCell(),rowGamePrefs,10);
+        hotSpotSettingsRoot.setUp(hs);
+        hotSpotSettingsRoot.setDown(hs);
+        hotSpotSettingsRoot.setLeft(hs);
 
         musicButton = new SymbolButton(res,
                 audio.getMusic() ?
@@ -728,50 +754,42 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int res = preferences.getSymbolResolution();
-                preferences.toggleMusic();
-                musicButton.setSymbol(res,preferences.getMusic() ?
-                        Entities.menu_symbol_music_on.getTexture(res, 0)
-                        : Entities.menu_symbol_music_off.getTexture(res, 0));
+                toggleMusic();
             }
         });
         rowGamePrefsTable.add(musicButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(musicButton.getCell(),rowGamePrefs,11);
 
         SymbolButton symbolPlusButton = new SymbolButton(res, Entities.menu_symbol_toolbar_zoom_in.getTexture(res, 0));
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dialogClose();
-                increaseSymbolResolution();
-                dialogPreferences();
+                increaseSymbolSize();
             }
         });
         rowGamePrefsTable.add(symbolPlusButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(symbolPlusButton.getCell(),rowGamePrefs,12);
 
         SymbolButton symbolMinusButton = new SymbolButton(res,
                 Entities.menu_symbol_toolbar_zoom_out.getTexture(res, 0));
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dialogClose();
-                decreaseSymbolResolution();
-                dialogPreferences();
+                decreaseSymbolSize();
             }
         });
         rowGamePrefsTable.add(symbolMinusButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs = hs.getCreateRight(symbolMinusButton.getCell(),rowGamePrefs,13);
 
         SymbolButton langButton = new SymbolButton(res,preferences.languageGfx().getTexture(res,0));
         langButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dialogClose();
-                preferences.nextLanguage();
-                rebuildMenu(); // TODO: jump to current level
-                dialogPreferences();
+                changeLanguage();
             }
         });
         rowGamePrefsTable.add(langButton.getCell()).prefSize(res, res).padRight(padSize);
-
+        hs = hs.getCreateRight(langButton.getCell(),rowGamePrefs,14);
 
         SymbolButton closeButton = new SymbolButton(res, Entities.toolbox_abort.getTexture(res, 0));
         closeButton.addListener(new ClickListener() {
@@ -781,9 +799,46 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
             }
         });
         rowGamePrefsTable.add(closeButton.getCell()).prefSize(res, res).padRight(padSize);
+        hs.getCreateRight(closeButton.getCell(),rowGamePrefs,15);
 
         stage.addActor(thisDialog);
         currentDialog = thisDialog;
+    }
+
+    private void changeLanguage() {
+        dialogClose();
+        preferences.nextLanguage();
+        rebuildMenu(); // TODO: jump to current level
+        dialogPreferences();
+    }
+
+    private void decreaseSymbolSize() {
+        dialogClose();
+        decreaseSymbolResolution();
+        dialogPreferences();
+    }
+
+    private void increaseSymbolSize() {
+        dialogClose();
+        increaseSymbolResolution();
+        dialogPreferences();
+    }
+
+    private void toggleMusic() {
+        int res = preferences.getSymbolResolution();
+        preferences.toggleMusic();
+        musicButton.setSymbol(res, preferences.getMusic() ?
+                Entities.menu_symbol_music_on.getTexture(res, 0)
+                : Entities.menu_symbol_music_off.getTexture(res, 0));
+    }
+
+    private void toggleSound() {
+        int res = preferences.getSymbolResolution();
+        preferences.toggleSound();
+        soundButton.setSymbol(res,
+                preferences.getSound() ?
+                        Entities.menu_symbol_sound_on.getTexture(res, 0)
+                        : Entities.menu_symbol_sound_off.getTexture(res, 0));
     }
 
     private void dialogClose() {
