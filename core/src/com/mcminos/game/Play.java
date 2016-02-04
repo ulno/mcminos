@@ -1197,7 +1197,6 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     public boolean buttonDown(Controller controller, int buttonCode) {
         //Gdx.app.log("buttonDown","Controller: "+controller.getName()
         //        + " buttonCode: " + buttonCode);
-        triggerAction();
         return true;
     }
 
@@ -1205,6 +1204,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     public boolean buttonUp(Controller controller, int buttonCode) {
         //Gdx.app.log("buttonUp", "Controller: " + controller.getName()
         //        + " buttonCode: " + buttonCode);
+        triggerAction();
         return false;
     }
 
