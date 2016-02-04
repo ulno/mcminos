@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -75,6 +76,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     private Vector2 coords = new Vector2();
     private long lastControllerGameFrame;
     private int evaluateDirectionsLastDirs = 0;
+    private BitmapFont pauseFont;
 
 
     private void preInit(final Main main) {
@@ -492,6 +494,13 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
         if(addDiff) x += res;
 
+        if(isPaused()) {
+            if(((game.getRealFrame()/60)%2)==0){
+                int w = Gdx.graphics.getWidth();
+                pauseFont.draw(batch, "P A U S E", 0, stage.getHeight()/2+res, w, Align.center, false);
+            }
+        }
+
         batch.end();
 
         v = mcminos.getPowerDuration();
@@ -616,6 +625,9 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         if (fontRes > 128) fontRes = 128;
         font = main.getLevelFont(fontRes);
         font.setColor(1, 1, 1, 0.8f);
+        int pauseRes = playwindow.resolution;
+        pauseFont = main.getLevelFont(pauseRes);
+        pauseFont.setColor(1,1,1,0.8f);
     }
 
     @Override
