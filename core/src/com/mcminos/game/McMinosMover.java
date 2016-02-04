@@ -368,7 +368,7 @@ public class McMinosMover extends Mover {
 
     @Override
     public void initAfterKryoLoad(Game game,LevelObject lo) {
-        super.initAfterKryoLoad(game,lo);
+        super.initAfterKryoLoad(game, lo);
         this.game = game;
         initFromGame();
     }

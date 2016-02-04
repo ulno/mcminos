@@ -49,6 +49,7 @@ public class Game {
     private long timerFrame = 0; // The game time in frames
     private boolean timer = false; // Does the timer currently run (or only the animations)?
     private long animationFrame = 0; // This one continues running when movement is stopped, and is updated to animationframe when game continues
+    private long realFrame = 0; // This frame is always coutned up and never synced to the timerFrame
     private long realGameTime = 0; // this value comes from libgdx, we just sync our frames against it
     private long lastDeltaTimeLeft = 0;
     public static final String suspendFileName = "user-save";
@@ -103,11 +104,21 @@ public class Game {
 
     /**
      * This is the framecounter which is also updated, when in pause-mode
+     * this is resynced with timer when unpaused
      *
      * @return
      */
     public long getAnimationFrame() {
         return animationFrame;
+    }
+
+    /**
+     * This is the framecounter which is always updated and guarantied to always increase
+     *
+     * @return
+     */
+    public long getRealFrame() {
+        return realFrame;
     }
 
     /**
@@ -121,6 +132,7 @@ public class Game {
         }
         // do animation timer
         animationFrame++;
+        realFrame++;
 
         if (timer) {
             // timer

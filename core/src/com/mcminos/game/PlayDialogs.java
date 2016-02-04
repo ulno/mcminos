@@ -688,7 +688,7 @@ allows cheating */
                 play.setHotSpotSelected(
                         hotSpotRoot.getDown()
                                 .getRight().getRight().getRight()
-                                .getRight().getRight().getRight()
+                                .getRight().getRight()
                 );
                 break;
             case 7:
@@ -696,7 +696,7 @@ allows cheating */
                 play.setHotSpotSelected(
                         hotSpotRoot.getDown()
                                 .getRight().getRight().getRight()
-                                .getRight().getRight().getRight().getRight()
+                                .getRight().getRight().getRight()
                 );
                 break;
             case 51:

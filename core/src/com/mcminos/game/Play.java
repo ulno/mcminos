@@ -262,7 +262,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     @Override
     public void render(float delta) {
         /// check if single click occurred
-        long gameFrame = game.getAnimationFrame();
+        long gameFrame = game.getRealFrame();
         if (destinationX != offScreen) {
             if( gameFrame - lastTouchDown > doubleClickFrames) { // there was a single click
                 // attention: this is called every frame until touchUp
@@ -310,12 +310,12 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         if (menusActivated) {
             if (toolbox.isRebuildNecessary()) {
                 if (toolboxRebuildTimePoint > 0) { // already scheduled
-                    if (game.getAnimationFrame() >= toolboxRebuildTimePoint) {
+                    if (game.getRealFrame() >= toolboxRebuildTimePoint) {
                         toolboxRebuildTimePoint = 0;
                         toolbox.rebuild();
                     }
                 } else { // set schedule time
-                    toolboxRebuildTimePoint = game.getAnimationFrame() + Game.timeResolution / 8;
+                    toolboxRebuildTimePoint = game.getRealFrame() + Game.timeResolution / 8;
                 }
             }
 
@@ -651,10 +651,9 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     private void evaluateDirections() {
         mcminos.updateKeyDirections();
         if (isPaused()) {
-            long gameFrame = game.getAnimationFrame();
+            long gameFrame = game.getRealFrame();
             if (gameFrame - lastControllerGameFrame > 40) {
                 int dirs = mcminos.getKeyDirections();
-                if(dirs > 0) Gdx.app.log("evaluateDirections","Code: "+dirs);
                 if (dirs > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
                     if (hotSpotSelected == null) pauseOff();
                     else {
@@ -674,8 +673,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public boolean keyUp(int keycode) {
-        mcminos.updateKeyDirections();
-        //evaluateDirections();
+        evaluateDirections();
         dialogs.checkDoorKey(keycode); // TODO: check if this can be done in evaluate
         return false;
     }
@@ -839,7 +837,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
                 int y = windowToGameY(screenY);
                 LevelBlock lb = level.getLevelBlockFromVPixelRounded(x, y);
                 if (lb.hasDoor() && blockDistance(lb, mcminos.getLevelBlock()) <= 2) { // ok, be careful, somebody clicked on a nearby door
-                    long gameFrame = game.getAnimationFrame();
+                    long gameFrame = game.getRealFrame();
                     if (gameFrame - lastTouchDown > doubleClickFrames) { // this is not part of a double click
                         lastTouchDown = gameFrame;
                         //Gdx.app.log("destinationDown","lastTouchDown="+lastTouchDown);
@@ -888,7 +886,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        lastTouchUp = game.getAnimationFrame();
+        lastTouchUp = game.getRealFrame();
         return false;
     }
 
@@ -933,7 +931,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         }
         if (count > 1) { // Double click
             // only register, when in own double-click time
-            if (game.getAnimationFrame() - lastTouchDown <= doubleClickFrames) {
+            if (game.getRealFrame() - lastTouchDown <= doubleClickFrames) {
                 return tryDoor((int) x, (int) y);
             }
             return false;
@@ -1024,7 +1022,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
         // will count down itself panning = false;
-        lastTouchUp = game.getAnimationFrame();
+        lastTouchUp = game.getRealFrame();
         return false;
     }
 
@@ -1198,7 +1196,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
                 break;
         }
         if(newHS != null) {
-            lastControllerGameFrame = game.getAnimationFrame();
+            lastControllerGameFrame = game.getRealFrame();
             hotSpotSelected = newHS;
             // scroll underlying scrollpane
             ScrollPane pane = hotSpotSelected.getScrollPane();
