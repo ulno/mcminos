@@ -70,6 +70,7 @@ public class PlayDialogs {
 
 
     public Table openText( CharSequence title, CharSequence body ) {
+        play.hideHotSpot();
         hotSpotRoot = null;
         int res = play.getSymbolResolution();
         Skin writingSkin = main.getMenuSkin(res / 2);
@@ -104,6 +105,7 @@ public class PlayDialogs {
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 close();
             }
         });
@@ -187,6 +189,7 @@ public class PlayDialogs {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 toggleSound();
             }
         });
@@ -200,6 +203,7 @@ public class PlayDialogs {
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 toggleMusic();
             }
         });
@@ -212,6 +216,7 @@ public class PlayDialogs {
         touchpadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 toggleTouchpad();
             }
         });
@@ -222,6 +227,7 @@ public class PlayDialogs {
         plusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 zoomPlusGame();
             }
         });
@@ -233,6 +239,7 @@ public class PlayDialogs {
         minusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 zoomMinusGame();
             }
         });
@@ -243,6 +250,7 @@ public class PlayDialogs {
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 zoomPlusSymbol();
             } 
         });
@@ -253,6 +261,7 @@ public class PlayDialogs {
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 zoomMinusSymbol();
             } 
         });
@@ -265,6 +274,7 @@ public class PlayDialogs {
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 saveGame();
             }
         });
@@ -277,6 +287,7 @@ public class PlayDialogs {
         langButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 changeLanguage();
             }
         });
@@ -290,6 +301,7 @@ public class PlayDialogs {
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 openLevelStory();
             }
         });
@@ -303,6 +315,7 @@ public class PlayDialogs {
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 restartLevel();
             }
         });
@@ -316,6 +329,7 @@ public class PlayDialogs {
         leaveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 leaveGame();
             }
         });
@@ -329,6 +343,7 @@ public class PlayDialogs {
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 close();
             }
         });
@@ -342,6 +357,7 @@ public class PlayDialogs {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                play.hideHotSpot();
                 play.pauseOff();
                 //super.clicked(event, x, y);
             }
@@ -624,26 +640,17 @@ allows cheating */
         }
     }
 
-    public void checkDoorKey(int keycode) {
+    public void checkDoorKey(int dirs) {
         if (dialog != null) {
             LevelBlock lb = null;
-            switch (keycode) {
-                case Input.Keys.W:
-                case Input.Keys.UP:
-                    lb = doorBlocks[0];
-                    break;
-                case Input.Keys.D:
-                case Input.Keys.RIGHT:
-                    lb = doorBlocks[1];
-                    break;
-                case Input.Keys.S:
-                case Input.Keys.DOWN:
-                    lb = doorBlocks[2];
-                    break;
-                case Input.Keys.A:
-                case Input.Keys.LEFT:
-                    lb = doorBlocks[3];
-                    break;
+            if ((dirs & Mover.UP) > 0) {
+                lb = doorBlocks[0];
+            } else if ((dirs & Mover.RIGHT) > 0) {
+                lb = doorBlocks[1];
+            } else if ((dirs & Mover.DOWN) > 0) {
+                lb = doorBlocks[2];
+            } else if ((dirs & Mover.LEFT) > 0) {
+                lb = doorBlocks[3];
             }
             if (lb != null) {
                 toggleDoor(lb);

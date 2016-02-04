@@ -51,61 +51,6 @@ public class Toolbox {
     private boolean rebuildNecessary = true; // at the beginning it has to be rebuilt
     private boolean activatingTouchInProgress = false;
 
-            /* old rootTable
-            menuTable = new Table();
-        menuTable.setWidth(stage.getWidth());
-        menuTable.align(Align.center | Align.top);
-        TextButton toolboxButton = new TextButton("Toolbox", skin);
-        toolboxButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                toggleToolbox();
-            }
-        });
-
-        menuTable.align(Align.topRight)
-                .add(toolboxButton)
-                .prefSize(128, 64)
-                .padTop(16)
-                .padRight(16);
-        menuTable.setColor(new Color(1, 1, 1, 0.7f));
-        stage.addActor(menuTable);*/
-
-        /*rootTable = new Window("Toolbox", skin);
-
-        rootTable.setMovable(false);
-        rootTable.setResizable(false);
-        //rootTable.setResizeBorder(8); // big border so it works also onphones
-        rootTable.setSize(stage.getWidth() / 3, stage.getWidth() * 4 / 5);
-        rootTable.setPosition(stage.getWidth(), 0, Align.bottomRight);
-        rootTable.align(Align.topLeft); // stuff in here move to top left
-        rootTable.setColor(new Color(1, 1, 1, 0.8f)); // just a little transparent
-        rootTable.addListener(new DragListener() {
-            float downx, downy;
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //return super.touchDown(event, x, y, pointer, button);
-                if (pointer == 0) {
-                    downx = x;
-                    downy = y;
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                //super.touchDragged(event, x, y, pointer);
-                if (pointer == 0) {
-                    float posx = rootTable.getX();
-                    float posy = rootTable.getY();
-                    rootTable.setPosition(posx - downx + x, posy - downy + y, Align.bottomLeft);
-                }
-            }
-        });*/
-
-
     public Toolbox(final Play play) {
         this.play = play;
         this.main = play.getMain();

@@ -60,9 +60,11 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
     private HotSpot hotSpotRoot;
     private HotSpot hotSpotSelected;
     private long frames = 0;
+    private long lastFrames=0;
 
     Vector2 coords = new Vector2();
-    private HotSpot hotSpotSettingsRoot;
+    private HotSpot hotSpotPreferencesRoot;
+    private int keyDirections;
 
 
     public MainMenu(final Main main) {
@@ -139,6 +141,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
         Controllers.clearListeners();
         Controllers.addListener(this);
+        keyDirections = 0;
     }
 
     @Override
@@ -152,11 +155,13 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
 
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
+        updateDirections();
         return false;
     }
 
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
+        updateDirections();
         activateSelection();
         return true;
 //        return false;
@@ -164,26 +169,13 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        //Gdx.app.log("axisMoved","code: "+axisCode+" val: "+value);
+        updateDirections();
         return false;
     }
 
     @Override
     public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-        switch(value) {
-            case north:
-                moveCursor(Mover.UP);
-                break;
-            case east:
-                moveCursor(Mover.RIGHT);
-                break;
-            case south:
-                moveCursor(Mover.DOWN);
-                break;
-            case west:
-                moveCursor(Mover.LEFT);
-                break;
-        }
+        updateDirections();
         return false;
     }
 
@@ -226,6 +218,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
 
         @Override
         public void clicked(InputEvent event, float x, float y) {
+            hotSpotSelected = hotSpotRoot;
             switchLevelCategory(category);
 //            switchLevelCategory(category, categoryLabel, twoColumns, categorySelector, categorySelectorButtons, levelSelector, resolution);
             //super.clicked(event,x,y);
@@ -268,7 +261,8 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                settings();
+                hotSpotSelected = hotSpotRoot;
+                preferences();
             }
         });
         topRowTable.add(settingsButton.getCell()).left().minHeight(res).padRight(res / 16);
@@ -293,6 +287,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         www1Button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 Gdx.net.openURI(WEBSITE);
             }
         });
@@ -304,6 +299,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         title.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 Gdx.net.openURI(WEBSITE);
             }
         });
@@ -313,6 +309,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         www2Button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 Gdx.net.openURI(WEBSITE);
             }
         });
@@ -323,6 +320,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 credits();
             }
         });
@@ -334,6 +332,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 leave();
             }
         });
@@ -473,7 +472,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         main.setScreen(new Credits(main, selectedLevel));
     }
 
-    private void settings() {
+    private void preferences() {
         if (currentDialog == null) dialogPreferences();
         else dialogClose();
     }
@@ -490,7 +489,6 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
      */
     private void activateSelection() {
         int hint = hotSpotSelected.getActivateHint();
-        Gdx.app.log("activateSelection","Hint: "+hint);
         if(hint>=1000) { // a level was selected, needs to be started
             hint -= 1000;
             hotSpotSelected = hotSpotRoot;
@@ -501,9 +499,9 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         } else {
             switch(hint) {
                 case 1:
-                    settings();
+                    preferences();
                     if(currentDialog!=null) { // if menu was opened (should usually happen)
-                        hotSpotSelected = hotSpotSettingsRoot.getRight();
+                        hotSpotSelected = hotSpotPreferencesRoot.getRight();
                     }
                     break;
                 case 2:
@@ -526,15 +524,15 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
                     break;
                 case 12:
                     increaseSymbolSize();
-                    hotSpotSelected = hotSpotSettingsRoot.getRight().getRight().getRight();
+                    hotSpotSelected = hotSpotPreferencesRoot.getRight().getRight().getRight();
                     break;
                 case 13:
                     decreaseSymbolSize();
-                    hotSpotSelected = hotSpotSettingsRoot.getRight().getRight().getRight().getRight();
+                    hotSpotSelected = hotSpotPreferencesRoot.getRight().getRight().getRight().getRight();
                     break;
                 case 14:
                     changeLanguage();
-                    hotSpotSelected = hotSpotSettingsRoot.getRight().getRight().getRight().getRight().getRight();
+                    hotSpotSelected = hotSpotPreferencesRoot.getRight().getRight().getRight().getRight().getRight();
                     break;
                 case 15:
                     dialogClose();
@@ -545,30 +543,33 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
     }
 
     private void moveCursor(int direction) {
-        HotSpot newHS = hotSpotSelected;
-        switch(direction) {
-            case Mover.UP:
-                newHS = hotSpotSelected.getUp();
-                break;
-            case Mover.RIGHT:
-                newHS = hotSpotSelected.getRight();
-                break;
-            case Mover.DOWN:
-                newHS = hotSpotSelected.getDown();
-                break;
-            case Mover.LEFT:
-                newHS = hotSpotSelected.getLeft();
-                break;
-        }
-        if(newHS != null) {
-            hotSpotSelected = newHS;
-            // scroll underlying scrollpane
-            ScrollPane pane = hotSpotSelected.getScrollPane();
-            if(pane != null) {
-                Actor a = hotSpotSelected.getActor();
-                pane.setScrollX(a.getX() - pane.getScrollWidth() / 2);
-                pane.setScrollY(pane.getMaxY() + pane.getScrollHeight() / 2 - a.getY());
-             }
+        if(frames-lastFrames>30) {
+            HotSpot newHS = hotSpotSelected;
+            switch (direction) {
+                case Mover.UP:
+                    newHS = hotSpotSelected.getUp();
+                    break;
+                case Mover.RIGHT:
+                    newHS = hotSpotSelected.getRight();
+                    break;
+                case Mover.DOWN:
+                    newHS = hotSpotSelected.getDown();
+                    break;
+                case Mover.LEFT:
+                    newHS = hotSpotSelected.getLeft();
+                    break;
+            }
+            if (newHS != null) {
+                hotSpotSelected = newHS;
+                // scroll underlying scrollpane
+                ScrollPane pane = hotSpotSelected.getScrollPane();
+                if (pane != null) {
+                    Actor a = hotSpotSelected.getActor();
+                    pane.setScrollX(a.getX() - pane.getScrollWidth() / 2);
+                    pane.setScrollY(pane.getMaxY() + pane.getScrollHeight() / 2 - a.getY());
+                }
+            }
+            lastFrames = frames;
         }
     }
 
@@ -588,26 +589,12 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
             }
         } else {
             frames += 2;
-            if(frames % 40 == 0) {
-                Array<Controller> controllers = Controllers.getControllers();
-                for(int i=controllers.size-1; i>=0; i--) {
-                    Controller c = controllers.get(i);
-                    float x = c.getAxis(0);
-                    float y = c.getAxis(1);
-                    if(y<-McMinosMover.CONTROLLER_THRESHOLD) {
-                        moveCursor(Mover.UP);
-                    } else if(x> McMinosMover.CONTROLLER_THRESHOLD) {
-                        moveCursor(Mover.RIGHT);
-                    } else if(y> McMinosMover.CONTROLLER_THRESHOLD) {
-                        moveCursor(Mover.DOWN);
-                    } else if(x<-McMinosMover.CONTROLLER_THRESHOLD) {
-                        moveCursor(Mover.LEFT);
-                    }
-                }
-            }
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            if(!fader.isActive()) stage.act(delta);
+            if(!fader.isActive()) {
+                stage.act(delta);
+                evaluateDirections();
+            }
             stage.draw();
 //            batch.begin();
 //            levelFont.draw(batch, main.getVersionString(), 0, preferences.getSymbolResolution() / 2, Gdx.graphics.getWidth(), 0, false);
@@ -726,7 +713,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         Table rowGamePrefsTable = new Table(menuSkin);
         rowGamePrefsTable.setHeight(res);
         ScrollPane rowGamePrefs = new ScrollPane(rowGamePrefsTable);
-        hotSpotSettingsRoot = new HotSpot(null,null,-1);
+        hotSpotPreferencesRoot = new HotSpot(null,null,-1);
 
         thisDialog.add(rowGamePrefs).expandX().fillX().pad(padSize).top().minHeight(res).row();
 
@@ -738,14 +725,15 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 toggleSound();
             }
         });
         rowGamePrefsTable.add(soundButton.getCell()).prefSize(res, res).padRight(padSize);
-        HotSpot hs = hotSpotSettingsRoot.getCreateRight(soundButton.getCell(),rowGamePrefs,10);
-        hotSpotSettingsRoot.setUp(hs);
-        hotSpotSettingsRoot.setDown(hs);
-        hotSpotSettingsRoot.setLeft(hs);
+        HotSpot hs = hotSpotPreferencesRoot.getCreateRight(soundButton.getCell(),rowGamePrefs,10);
+        hotSpotPreferencesRoot.setUp(hs);
+        hotSpotPreferencesRoot.setDown(hs);
+        hotSpotPreferencesRoot.setLeft(hs);
 
         musicButton = new SymbolButton(res,
                 audio.getMusic() ?
@@ -754,6 +742,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         musicButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 toggleMusic();
             }
         });
@@ -764,6 +753,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         symbolPlusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 increaseSymbolSize();
             }
         });
@@ -775,6 +765,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         symbolMinusButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 decreaseSymbolSize();
             }
         });
@@ -785,6 +776,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         langButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 changeLanguage();
             }
         });
@@ -795,6 +787,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hotSpotSelected = hotSpotRoot;
                 dialogClose();
             }
         });
@@ -861,27 +854,26 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         setSymbolResolution(preferences.getSymbolResolution() / 2);
     }
 
+    public void updateDirections() {
+        keyDirections = Util.getKeyDirections();
+    }
+
+    public void evaluateDirections() {
+        if(keyDirections>0) {
+            if((keyDirections&Mover.UP)>0)
+                moveCursor(Mover.UP);
+            else if((keyDirections&Mover.RIGHT)>0)
+                moveCursor(Mover.RIGHT);
+            else if((keyDirections&Mover.DOWN)>0)
+                moveCursor(Mover.DOWN);
+            else if((keyDirections&Mover.LEFT)>0)
+                moveCursor(Mover.LEFT);
+        }
+    }
 
     @Override
     public boolean keyDown(int keycode) {
-        switch( keycode ) {
-            case Input.Keys.W:
-            case Input.Keys.UP:
-                moveCursor(Mover.UP);
-                return true;
-            case Input.Keys.D:
-            case Input.Keys.RIGHT:
-                moveCursor(Mover.RIGHT);
-                return true;
-            case Input.Keys.S:
-            case Input.Keys.DOWN:
-                moveCursor(Mover.DOWN);
-                return true;
-            case Input.Keys.A:
-            case Input.Keys.LEFT:
-                moveCursor(Mover.LEFT);
-                return true;
-        }
+        updateDirections();
         //return super.keyDown(event, keycode);
         return false;
     }
@@ -905,6 +897,30 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
 
     @Override
     public boolean keyUp(int keycode) {
+        switch(keycode) {
+            case 23: //amazon fire remote select
+                activateSelection();
+                return true;
+            case 82: // amazon fire menu
+                if(currentDialog==null) {
+                    dialogPreferences();
+                    hotSpotSelected = hotSpotPreferencesRoot.getRight();
+                }
+                else {
+                    dialogClose();
+                    hotSpotSelected = hotSpotRoot.getRight();
+                }
+                return true;
+            case 85: // amazon fire play/pause
+                activateSelection();
+                return true;
+            case 89: // amazon fire wind back
+                break;
+            case 90: // amazon fire wind forward
+                break;
+            default:
+                updateDirections();
+        }
         return false;
     }
 

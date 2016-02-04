@@ -74,6 +74,8 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     private HotSpot hotSpotSelected = null;
     private Vector2 coords = new Vector2();
     private long lastControllerGameFrame;
+    private int evaluateDirectionsLastDirs = 0;
+
 
     private void preInit(final Main main) {
         this.main = main;
@@ -644,6 +646,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public boolean keyDown(int keycode) {
+        //Gdx.app.log("keyDown","keyCode: " + keycode);
         evaluateDirections();
         return false;
     }
@@ -654,17 +657,27 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
             long gameFrame = game.getRealFrame();
             if (gameFrame - lastControllerGameFrame > 40) {
                 int dirs = mcminos.getKeyDirections();
-                if (dirs > 0 && !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
-                    if (hotSpotSelected == null) pauseOff();
-                    else {
-                        if ((dirs & Mover.UP) > 0)
-                            moveCursor(Mover.UP);
-                        else if ((dirs & Mover.RIGHT) > 0)
-                            moveCursor(Mover.RIGHT);
-                        else if ((dirs & Mover.DOWN) > 0)
-                            moveCursor(Mover.DOWN);
-                        else if ((dirs & Mover.LEFT) > 0)
-                            moveCursor(Mover.LEFT);
+                if ( !mcminos.isWinning() && !mcminos.isKilled() && !mcminos.isFalling()) {
+                    if(dirs > 0) {
+                        if (hotSpotSelected == null) {
+                            if(!dialogs.active()) pauseOff();
+                        }
+                        else {
+                            if ((dirs & Mover.UP) > 0)
+                                moveCursor(Mover.UP);
+                            else if ((dirs & Mover.RIGHT) > 0)
+                                moveCursor(Mover.RIGHT);
+                            else if ((dirs & Mover.DOWN) > 0)
+                                moveCursor(Mover.DOWN);
+                            else if ((dirs & Mover.LEFT) > 0)
+                                moveCursor(Mover.LEFT);
+                        }
+                        evaluateDirectionsLastDirs = dirs;
+                    } else { // just became 0
+                        if(evaluateDirectionsLastDirs>0) {
+                            dialogs.checkDoorKey(evaluateDirectionsLastDirs);
+                            evaluateDirectionsLastDirs = 0;
+                        }
                     }
                 }
             }
@@ -673,13 +686,31 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public boolean keyUp(int keycode) {
-        evaluateDirections();
-        dialogs.checkDoorKey(keycode); // TODO: check if this can be done in evaluate
+        switch(keycode) {
+            case 23: //amazon fire remote select
+                triggerAction();
+                return true;
+            case 82: // amazon fire menu
+                toggleGameMenu();
+                return true;
+            case 85: // amazon fire play/pause
+                togglePause();
+                return true;
+            case 89: // amazon fire wind back
+                break;
+            case 90: // amazon fire wind forward
+                break;
+            default:
+                evaluateDirections();
+        }
+
+//        dialogs.checkDoorKey(keycode); // TODO: check if this can be done in evaluate
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
+        //Gdx.app.log("keyTyped"," character: " + character);
         switch (character) {
             case '+':
                 zoomPlus();
@@ -756,6 +787,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         else {
             pauseOn();
             dialogs.openGameMenu();
+            hotSpotSelected = dialogs.getHotSpotRoot();
         }
     }
 
@@ -763,6 +795,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         if (isPaused()) {
             if(hasDialog()) {
                 closeDialog(); // first close dialog
+                hotSpotSelected = toolbox.getHotSpotRoot().getDown();
             }
             else pauseOff();
         } else {
@@ -786,12 +819,12 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
                             break;
                         case 101:
                             toggleGameMenu();
-                            hotSpotSelected = dialogs.getHotSpotRoot();
                             break;
                         case 102:
                             toolbox.activateChocolate();
                             break;
                         case 103:
+                            hideHotSpot();
                             dialogs.openDoorOpener();
                             break;
                         case 104:
@@ -1095,6 +1128,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
             dialogs.close();
             toolbox.rebuild();
             hotSpotSelected = null;
+            evaluateDirectionsLastDirs = 0;
         }
         game.startTimer();
     }
@@ -1133,49 +1167,68 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public void connected(Controller controller) {
-
+        Gdx.app.log("connected","Controller: "+controller.getName());
     }
 
     @Override
     public void disconnected(Controller controller) {
-
+        Gdx.app.log("disconnected","Controller: "+controller.getName());
     }
 
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
+        //Gdx.app.log("buttonDown","Controller: "+controller.getName()
+        //        + " buttonCode: " + buttonCode);
         triggerAction();
         return true;
     }
 
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
+        //Gdx.app.log("buttonUp", "Controller: " + controller.getName()
+        //        + " buttonCode: " + buttonCode);
         return false;
     }
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
+        //Gdx.app.log("axisMoved","Controller: "+controller.getName()
+        //        + " axisCode: " + axisCode
+        //        + " value: " + value);
         evaluateDirections();
         return false;
     }
 
     @Override
     public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+        //Gdx.app.log("povMoved","Controller: "+controller.getName()
+        //        + " povCode: " + povCode
+        //        + " PovDirection: " + value);
         evaluateDirections();
         return false;
     }
 
     @Override
     public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+        //Gdx.app.log("xSliderMoved","Controller: "+controller.getName()
+        //        + " slidercode: " + sliderCode
+        //        + " boolval: " + value);
         return false;
     }
 
     @Override
     public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+        //Gdx.app.log("ySliderMoved","Controller: "+controller.getName()
+        //        + " slidercode: " + sliderCode
+        //        + " boolval: " + value);
         return false;
     }
 
     @Override
     public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+        //Gdx.app.log("accelerometerMoved","Controller: "+controller.getName()
+        //        + " accelerometerCode: " + accelerometerCode
+        //        + " Vector3: " + value);
         return false;
     }
 

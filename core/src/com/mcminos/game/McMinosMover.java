@@ -17,7 +17,6 @@ import java.util.HashSet;
  */
 public class McMinosMover extends Mover {
 
-    static final float CONTROLLER_THRESHOLD = 0.2f;
     private Game game;
     private McMinos mcminos;
     private Audio audio;
@@ -607,53 +606,7 @@ public class McMinosMover extends Mover {
      * @return
      */
     public boolean updateKeyDirections() {
-        keyDirections = 0;
-        if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP) ) keyDirections |= 1;
-        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) keyDirections |= 2;
-        if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN) ) keyDirections |= 4;
-        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) keyDirections |= 8;
-        Array<Controller> controllers = Controllers.getControllers();
-        for(int i=controllers.size-1; i>=0; i--) {
-            Controller c = controllers.get(i);
-            float x = c.getAxis(0);
-            float y = c.getAxis(1);
-            if(y<-CONTROLLER_THRESHOLD ) {
-                keyDirections |= 1;
-            } else if(x>CONTROLLER_THRESHOLD) {
-                keyDirections |= 2;
-            }
-            if(y>CONTROLLER_THRESHOLD) {
-                keyDirections |= 4;
-            } else if(x<-CONTROLLER_THRESHOLD) {
-                keyDirections |= 8;
-            }
-            for( int pov=0; pov<1; pov ++ ) { // TODO: check how many
-                switch (c.getPov(pov)) {
-                    case north:
-                        keyDirections |= 1;
-                        break;
-                    case northEast:
-                        keyDirections |= 3;
-                        break;
-                    case east:
-                        keyDirections |= 2;
-                        break;
-                    case southEast:
-                        keyDirections |= 6;
-                    case south:
-                        keyDirections |= 4;
-                        break;
-                    case southWest:
-                        keyDirections |= 12;
-                        break;
-                    case west:
-                        keyDirections |= 8;
-                        break;
-                    case northWest:
-                        keyDirections |= 9;
-                }
-            }
-        }
+        keyDirections = Util.getKeyDirections();
 
         if(keyDirections > 0) {
             mcminos.unsetDestination();
