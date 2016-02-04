@@ -50,6 +50,7 @@ public class Toolbox {
     private ArrayList<ToolboxButton> buttonList = new ArrayList<>();
     private boolean rebuildNecessary = true; // at the beginning it has to be rebuilt
     private boolean activatingTouchInProgress = false;
+    private int activeButtons = 0;
 
     public Toolbox(final Play play) {
         this.play = play;
@@ -224,6 +225,8 @@ public class Toolbox {
             // make all visible
             table.clearChildren();
 
+            activeButtons = 0;
+
             for (int i = 0; i < buttonList.size(); i++) {
                 if (!rowadded) {
                     lastTB.row();
@@ -231,6 +234,7 @@ public class Toolbox {
                 }
                 ToolboxButton tb = buttonList.get(i);
                 if (tb.isVisible()) {
+                    activeButtons ++;
                     tb.rebuildButton( res ); // TODO: check, if this creates memory leak
                     lastTB = tb.addToTable();
                     rowadded = false;
@@ -361,5 +365,9 @@ public class Toolbox {
 
     public HotSpot getHotSpotRoot() {
         return hotSpotRoot;
+    }
+
+    public boolean hasItems() {
+        return activeButtons > 2;
     }
 }
