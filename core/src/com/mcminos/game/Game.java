@@ -31,7 +31,7 @@ import java.util.zip.InflaterInputStream;
  */
 public class Game {
     // constants
-    public static final int timeResolution = 128; // How often per second movements are updated? TODO: if better 128 aor 120 against stuttering
+    public static final int timeResolution = 120; // How often per second movements are updated? TODO: if better 128 aor 120 against stuttering
     //public static final int timeResolutionExponent = Util.log2binary(timeResolution);
     public static final int baseSpeed = 2; // base speed of all units (kind of the slowest anybody usually moves) in blocks per second
     public static final int timeResolutionSquare = timeResolution * timeResolution; // someimes needed for precision

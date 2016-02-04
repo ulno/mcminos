@@ -627,7 +627,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         font.setColor(1, 1, 1, 0.8f);
         int pauseRes = playwindow.resolution;
         pauseFont = main.getLevelFont(pauseRes);
-        pauseFont.setColor(1,1,1,0.8f);
+        pauseFont.setColor(1, 1, 1, 0.8f);
     }
 
     @Override
@@ -817,6 +817,8 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         } else {
             pauseOn();
             hotSpotSelected = toolbox.getHotSpotRoot();
+            if(toolbox.hasItems())
+                hotSpotSelected = hotSpotSelected.getDown().getDown();
         }
     }
 
