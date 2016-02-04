@@ -2,9 +2,14 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,7 +24,7 @@ import java.io.BufferedReader;
 /**
  * Created by ulno on 24.12.15.
  */
-public class Credits implements Screen {
+public class Credits implements Screen, ControllerListener {
     private final Main main;
     private final Stage stage;
     private final SpriteBatch batch;
@@ -32,6 +37,7 @@ public class Credits implements Screen {
     private long realTime = 0;
     private long realTimePassed = 0;
     private long lastDeltaTimeLeft = 0;
+    private boolean finished = false;
 
     public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;
@@ -44,6 +50,8 @@ public class Credits implements Screen {
         fader.fadeOutInMusicFixed(2);
 
         Gdx.input.setInputProcessor(stage); // set inputprocessor
+        Controllers.clearListeners();
+        Controllers.addListener(this);
 
         // read credits for current language TODO: language
         BufferedReader br = new BufferedReader(Gdx.files.internal(Main.TEXT_FILE).reader());
@@ -97,7 +105,7 @@ public class Credits implements Screen {
         stage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.activateMainMenu( levelConfig );
+                finished = true;
             }
         });
 
@@ -105,7 +113,7 @@ public class Credits implements Screen {
 
             @Override
             public boolean keyTyped(InputEvent event, char character) {
-                main.activateMainMenu( levelConfig );
+                finished = true;
                 return true;
             }
 
@@ -146,6 +154,10 @@ public class Credits implements Screen {
         }
         stage.draw();
         fader.render();
+        if(finished) {
+            dispose();
+            main.activateMainMenu( levelConfig );
+        }
     }
 
     @Override
@@ -173,5 +185,51 @@ public class Credits implements Screen {
     public void dispose() {
         fader.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void connected(Controller controller) {
+
+    }
+
+    @Override
+    public void disconnected(Controller controller) {
+
+    }
+
+    @Override
+    public boolean buttonDown(Controller controller, int buttonCode) {
+        return false;
+    }
+
+    @Override
+    public boolean buttonUp(Controller controller, int buttonCode) {
+        finished = true;
+        return false;
+    }
+
+    @Override
+    public boolean axisMoved(Controller controller, int axisCode, float value) {
+        return false;
+    }
+
+    @Override
+    public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+        return false;
+    }
+
+    @Override
+    public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+        return false;
+    }
+
+    @Override
+    public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+        return false;
+    }
+
+    @Override
+    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+        return false;
     }
 }

@@ -460,7 +460,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
                 lastCell.expandY().fillY();
             }
         }
-
+        categorySelector.setScrollY((res + res / 8) * (activatedCategory-2));
     }
 
     private void leave() {
@@ -635,11 +635,6 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
 
         levelFont = main.getLevelFont(preferences.getSymbolResolution() / 2);
         rebuildMenu();
-    }
-
-    public void restoreInputProcessor() {
-        Gdx.input.setInputProcessor(stage); // restore inputprocessor
-
     }
 
     @Override

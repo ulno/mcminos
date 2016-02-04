@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -231,6 +232,7 @@ public class Main extends com.badlogic.gdx.Game {
     public void exit() {
         // dispose(); is called by Gdx.app.exit()
         preDispose(); // but not this
+        Controllers.clearListeners();
         Gdx.app.exit();
     }
 

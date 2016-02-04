@@ -673,6 +673,9 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
                     if(dirs > 0) {
                         if (hotSpotSelected == null) {
                             if(!dialogs.active()) pauseOff();
+                            else {
+                                dialogs.evaluateDirections(dirs);
+                            }
                         }
                         else {
                             if ((dirs & Mover.UP) > 0)

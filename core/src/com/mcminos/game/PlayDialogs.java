@@ -1,7 +1,6 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -33,6 +32,8 @@ public class PlayDialogs {
     private Skin menuSkin;
 
     private Table dialog = null;
+    private ScrollPane dialogMainScroll = null;
+
     private final LevelBlock doorBlocks[] = new LevelBlock[4];
     private Label pillLabel;
     private SegmentString pillLabelText;
@@ -112,7 +113,7 @@ public class PlayDialogs {
         //       topRow.add(closeButton).right(); better to have th ebutton fixed in group on top
         closeButton.getCell().setPosition(rootWidth-res/8,rootHeight-res/8,Align.topRight);
         rootGroup.addActor(closeButton.getCell());
-        open(rootTable);
+        open(rootTable,mainScroll);
         return(bodyTable);
     }
 
@@ -473,11 +474,16 @@ public class PlayDialogs {
         closeTimer = 180; // 3 seconds: TODO: do not hardcode here
     }
 
-    private void open(Table dialog) {
+    private void open(Table dialog, ScrollPane mainScroll) {
         close(); // old one needs to be gone
         play.pause(); // make sure game is paused
         this.dialog = dialog;
+        this.dialogMainScroll = mainScroll;
         stage.addActor(dialog);
+    }
+
+    private void open(Table dialog) {
+        open(dialog, null);
     }
 
     private LevelBlock checkDoor(LevelBlock lb1, LevelBlock lb2) {
@@ -734,6 +740,26 @@ allows cheating */
                 play.hideHotSpot();
                 play.pauseOff();
                 break;
+
+        }
+    }
+
+    public static float scrollDelta = 0.1f;
+    public void evaluateDirections(int dirs) {
+        if(dialogMainScroll != null) {
+            float x = dialogMainScroll.getVisualScrollPercentX();
+            float y = dialogMainScroll.getVisualScrollPercentY();
+
+
+            if ((dirs & Mover.UP) > 0)
+                dialogMainScroll.setScrollPercentY(y - scrollDelta);
+            else if ((dirs & Mover.DOWN) > 0)
+                dialogMainScroll.setScrollPercentY(y + scrollDelta);
+
+            if ((dirs & Mover.RIGHT) > 0)
+                dialogMainScroll.setScrollPercentX(x + scrollDelta);
+            else if ((dirs & Mover.LEFT) > 0)
+                dialogMainScroll.setScrollPercentX(x - scrollDelta);
 
         }
     }
