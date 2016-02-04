@@ -726,7 +726,8 @@ allows cheating */
                 leaveGame();
                 break;
             case 56:
-                play.setHotSpotSettings();
+                //play.setHotSpotSettings();
+                play.hideHotSpot();
                 close();
                 break;
             case 57:

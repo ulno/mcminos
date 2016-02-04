@@ -27,6 +27,7 @@ public class Congrats implements Screen {
     private final Audio audio;
     private final Preferences preferences;
     private final Fader fader;
+    private boolean finished = false;
 
     public Congrats(Main main, LevelConfig currentLevelConfig) {
         this.main = main;
@@ -73,8 +74,7 @@ public class Congrats implements Screen {
         stage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.activateMainMenu( levelConfig );
-                dispose();
+                finished = true;
             }
         });
 
@@ -82,8 +82,7 @@ public class Congrats implements Screen {
 
             @Override
             public boolean keyTyped(InputEvent event, char character) {
-                main.activateMainMenu( levelConfig );
-                dispose();
+                finished = true;
                 return true;
             }
 
@@ -105,6 +104,10 @@ public class Congrats implements Screen {
             fader.render();
         } else {
             stage.act();
+        }
+        if(finished) {
+            dispose();
+            main.activateMainMenu( levelConfig );
         }
     }
 

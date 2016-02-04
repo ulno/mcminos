@@ -807,7 +807,8 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         if (isPaused()) {
             if(hasDialog()) {
                 closeDialog(); // first close dialog
-                hotSpotSelected = toolbox.getHotSpotRoot().getDown();
+//                hotSpotSelected = toolbox.getHotSpotRoot().getDown();
+                hideHotSpot();
             }
             else pauseOff();
         } else {
