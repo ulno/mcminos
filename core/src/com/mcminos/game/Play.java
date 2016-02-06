@@ -1305,9 +1305,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     @Override
     public void mqttUp(char button) {
         evaluateDirections();
-        if(button == ' ') { // our convention for fire
-            triggerAction();
-        }
+        keyTyped(button); // forward to the keys
     }
 
     @Override
