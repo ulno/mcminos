@@ -48,12 +48,24 @@ public class Util {
     }
 
 
-    public static int getKeyDirections() {
+    public static int getKeyDirections(MqttController mqttController) {
         int keyDirections = 0;
-        if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP) ) keyDirections |= Mover.UP;
-        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) keyDirections |= Mover.RIGHT;
-        if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN) ) keyDirections |= Mover.DOWN;
-        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) keyDirections |= Mover.LEFT;
+        if(Gdx.input.isKeyPressed(Input.Keys.W)
+                || Gdx.input.isKeyPressed(Input.Keys.UP)
+                || mqttController.isDown('w')
+                ) keyDirections |= Mover.UP;
+        if(Gdx.input.isKeyPressed(Input.Keys.D)
+                || Gdx.input.isKeyPressed(Input.Keys.RIGHT)
+                || mqttController.isDown('d')
+                ) keyDirections |= Mover.RIGHT;
+        if(Gdx.input.isKeyPressed(Input.Keys.S)
+                || Gdx.input.isKeyPressed(Input.Keys.DOWN)
+                || mqttController.isDown('s')
+                ) keyDirections |= Mover.DOWN;
+        if(Gdx.input.isKeyPressed(Input.Keys.A)
+                || Gdx.input.isKeyPressed(Input.Keys.LEFT)
+                || mqttController.isDown('a')
+                ) keyDirections |= Mover.LEFT;
         Array<Controller> controllers = Controllers.getControllers();
         for(int i=controllers.size-1; i>=0; i--) {
             Controller c = controllers.get(i);

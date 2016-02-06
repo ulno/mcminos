@@ -17,6 +17,7 @@ import java.util.HashSet;
  */
 public class McMinosMover extends Mover {
 
+    private MqttController mqttController;
     private Game game;
     private McMinos mcminos;
     private Audio audio;
@@ -45,6 +46,7 @@ public class McMinosMover extends Mover {
         levelObject = mcminos.getLevelObject();
         this.level = game.getLevel();
         ghosts = game.getGhosts();
+        this.mqttController = game.getMain().getMqttController();
         mcminos.setMover(this);
         mcminos.gfxSelect();
         for (int y = 0; y < mazeSize; y++) {
@@ -606,7 +608,7 @@ public class McMinosMover extends Mover {
      * @return
      */
     public boolean updateKeyDirections() {
-        keyDirections = Util.getKeyDirections();
+        keyDirections = Util.getKeyDirections(mqttController);
 
         if(keyDirections > 0) {
             mcminos.unsetDestination();

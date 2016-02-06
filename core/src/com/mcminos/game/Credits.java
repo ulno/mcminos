@@ -24,7 +24,7 @@ import java.io.BufferedReader;
 /**
  * Created by ulno on 24.12.15.
  */
-public class Credits implements Screen, ControllerListener {
+public class Credits implements Screen, ControllerListener, MqttControllerListener {
     private final Main main;
     private final Stage stage;
     private final SpriteBatch batch;
@@ -50,6 +50,7 @@ public class Credits implements Screen, ControllerListener {
         fader.fadeOutInMusicFixed(2);
 
         Gdx.input.setInputProcessor(stage); // set inputprocessor
+        main.getMqttController().setListener(this);
         Controllers.clearListeners();
         Controllers.addListener(this);
 
@@ -183,6 +184,7 @@ public class Credits implements Screen, ControllerListener {
 
     @Override
     public void dispose() {
+        main.getMqttController().clearListener();
         fader.dispose();
         stage.dispose();
     }
@@ -231,5 +233,22 @@ public class Credits implements Screen, ControllerListener {
     @Override
     public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
         return false;
+    }
+
+    @Override
+    public void mqttDown(char button) {
+
+    }
+
+    @Override
+    public void mqttUp(char button) {
+        if(button == ' ') { // our convention for fire
+            finished = true;
+        }
+    }
+
+    @Override
+    public void mqttAnalog(byte analogNr, int value) {
+
     }
 }

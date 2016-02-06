@@ -17,6 +17,9 @@ import java.util.HashMap;
  * This is the Main class from where the game is controlled.
  */
 public class Main extends com.badlogic.gdx.Game {
+    // if the following file exists in teh hom edirectory or on the sd-card in android and there is a valid hostname in
+    // here, then the mqtt-controller is active and reacts to messages sent on the MqttController/McMinos topic
+    private static final String MQTT_CONFIG_FILE = ".mcminos.mqttController";
     private Audio audio;
     public static final String TEXT_FILE = "text";
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
@@ -37,6 +40,7 @@ public class Main extends com.badlogic.gdx.Game {
     private InputProcessor defaultInputProcessor;
     private Statistics statistics;
     private Preferences preferences;
+    private MqttController mqttController;
 
     public LevelsConfig getLevelsConfig() {
         return levelsConfig;
@@ -62,7 +66,24 @@ public class Main extends com.badlogic.gdx.Game {
             versionString = "undefined";
         }
 
+        initMqttController();
+
         this.setScreen(new Load(this));
+    }
+
+    private void initMqttController() {
+        // init with contents of an external file
+        FileHandle mqttConfig = Gdx.files.external(MQTT_CONFIG_FILE);
+        String hostAndPort = null;
+
+        if(mqttConfig.exists()) {
+            try {
+                hostAndPort = new BufferedReader(mqttConfig.reader()).readLine().trim();
+            } catch (IOException e) {
+                //ignore and leave hostAndPort undefined
+            }
+        }
+        mqttController = new MqttController("McMinos",hostAndPort);
     }
 
     /**
@@ -156,6 +177,7 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void preDispose() {
+        mqttController.dispose();
         audio.dispose();
         for (Skin s : levelSkinList.values()) {
             s.dispose();
@@ -238,5 +260,9 @@ public class Main extends com.badlogic.gdx.Game {
 
     public void fadeExit() {
         setScreen( new FadeExit(this) );
+    }
+
+    public MqttController getMqttController() {
+        return mqttController;
     }
 }

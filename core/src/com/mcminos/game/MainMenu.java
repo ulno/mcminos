@@ -30,7 +30,7 @@ import java.util.HashMap;
 /**
  * Created by ulno on 11.09.15.
  */
-public class MainMenu implements Screen, InputProcessor, ControllerListener {
+public class MainMenu implements Screen, InputProcessor, ControllerListener, MqttControllerListener {
     public final static String WEBSITE="http://mcminos.com";
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
@@ -65,6 +65,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
     Vector2 coords = new Vector2();
     private HotSpot hotSpotPreferencesRoot;
     private int keyDirections;
+    private MqttController mqttController;
 
 
     public MainMenu(final Main main) {
@@ -142,6 +143,8 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
         Controllers.clearListeners();
         Controllers.addListener(this);
         keyDirections = 0;
+        mqttController = main.getMqttController();
+        mqttController.setListener(this);
     }
 
     @Override
@@ -192,6 +195,24 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
     @Override
     public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
         return false;
+    }
+
+    @Override
+    public void mqttDown(char button) {
+        updateDirections();
+    }
+
+    @Override
+    public void mqttUp(char button) {
+        updateDirections();
+        if(button == ' ') { // our convention for fire
+            activateSelection();
+        }
+    }
+
+    @Override
+    public void mqttAnalog(byte analogNr, int value) {
+
     }
 
 
@@ -654,6 +675,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
 
     @Override
     public void dispose() {
+        mqttController.clearListener();
         for (Texture t : textureCache.values())
             t.dispose();
         stage.dispose();
@@ -850,7 +872,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener {
     }
 
     public void updateDirections() {
-        keyDirections = Util.getKeyDirections();
+        keyDirections = Util.getKeyDirections(mqttController);
     }
 
     public void evaluateDirections() {

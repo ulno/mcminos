@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by ulno on 20.12.15.
  */
-public class Congrats implements Screen, ControllerListener {
+public class Congrats implements Screen, ControllerListener, MqttControllerListener {
     private final Main main;
     private final LevelCategory category;
     private final LevelConfig levelConfig;
@@ -44,6 +44,7 @@ public class Congrats implements Screen, ControllerListener {
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage);
+        main.getMqttController().setListener(this);
         Controllers.clearListeners();
         Controllers.addListener(this);
         // set inputprocessor
@@ -143,6 +144,7 @@ public class Congrats implements Screen, ControllerListener {
 
     @Override
     public void dispose() {
+        main.getMqttController().clearListener();
         stage.dispose();
          // batch.dispose(); in stage
         fader.dispose();
@@ -193,4 +195,21 @@ public class Congrats implements Screen, ControllerListener {
     public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
         return false;
     }
+
+    @Override
+    public void mqttDown(char button) {
+
+    }
+
+    @Override
+    public void mqttUp(char button) {
+        if(button == ' ') { // our convention for fire
+            finished = true;
+        }
+    }
+
+    @Override
+    public void mqttAnalog(byte analogNr, int value) {
+    }
+
 }

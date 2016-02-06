@@ -421,4 +421,8 @@ public class Game {
     public boolean isTimerActivated() {
         return timer;
     }
+
+    public Main getMain() {
+        return main;
+    }
 }

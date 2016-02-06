@@ -29,7 +29,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by ulno on 10.09.15.
  */
-public class Play implements Screen, GestureListener, InputProcessor, ControllerListener {
+public class Play implements Screen, GestureListener, InputProcessor, ControllerListener, MqttControllerListener {
     public final static long doubleClickFrames = Game.timeResolution / 3;
     private OrthographicCamera camera;
     private Game game;
@@ -77,6 +77,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     private long lastControllerGameFrame;
     private int evaluateDirectionsLastDirs = 0;
     private BitmapFont pauseFont;
+    private MqttController mqttController;
 
 
     private void preInit(final Main main) {
@@ -191,6 +192,10 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
         Controllers.clearListeners();
         Controllers.addListener(this);
+
+        // get MQTT Controller
+        mqttController = main.getMqttController();
+        mqttController.setListener(this);
 
 
         pauseOn(); // make sure it's active and game is paused
@@ -645,6 +650,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public void dispose() {
+        main.getMqttController().clearListener();
         fader.dispose();
         game.dispose();
         stage.dispose();
@@ -1289,5 +1295,23 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     public void hideHotSpot() {
         hotSpotSelected = null;
+    }
+
+    @Override
+    public void mqttDown(char button) {
+        evaluateDirections();
+    }
+
+    @Override
+    public void mqttUp(char button) {
+        evaluateDirections();
+        if(button == ' ') { // our convention for fire
+            triggerAction();
+        }
+    }
+
+    @Override
+    public void mqttAnalog(byte analogNr, int value) {
+
     }
 }
