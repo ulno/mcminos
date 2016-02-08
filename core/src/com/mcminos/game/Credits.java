@@ -24,7 +24,7 @@ import java.io.BufferedReader;
 /**
  * Created by ulno on 24.12.15.
  */
-public class Credits implements Screen, ControllerListener, MqttControllerListener {
+public class Credits implements Screen, ControllerListener, GameNetControllerListener {
     private final Main main;
     private final Stage stage;
     private final SpriteBatch batch;
@@ -38,7 +38,7 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
     private long realTimePassed = 0;
     private long lastDeltaTimeLeft = 0;
     private boolean finished = false;
-    private MqttController mqttController;
+    private GameNetController gameNetController;
 
     public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;
@@ -51,8 +51,8 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
         fader.fadeOutInMusicFixed(2);
 
         Gdx.input.setInputProcessor(stage); // set inputprocessor
-        mqttController = main.getMqttController();
-        mqttController.setListener(this);
+        gameNetController = main.getGameNetController();
+        gameNetController.setListener(this);
         Controllers.clearListeners();
         Controllers.addListener(this);
 
@@ -153,7 +153,7 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
                     realTimePassed += step * Game.timeResolution;
                 }
             }
-            mqttController.evaluateMessages();
+            gameNetController.evaluateMessages();
             stage.act();
         }
         stage.draw();
@@ -187,7 +187,7 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
 
     @Override
     public void dispose() {
-        mqttController.clearListener();
+        gameNetController.clearListener();
         fader.dispose();
         stage.dispose();
     }
@@ -239,19 +239,19 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
     }
 
     @Override
-    public void mqttDown(char button) {
+    public void gameNetDown(char button) {
 
     }
 
     @Override
-    public void mqttUp(char button) {
+    public void gameNetUp(char button) {
         if(button == ' ') { // our convention for fire
             finished = true;
         }
     }
 
     @Override
-    public void mqttAnalog(byte analogNr, int value) {
+    public void gameNetAnalog(byte analogNr, int value) {
 
     }
 }

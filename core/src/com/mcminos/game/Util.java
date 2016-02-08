@@ -6,9 +6,6 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.StringBuilder;
-
-import java.io.BufferedReader;
 
 /**
  * Created by ulno on 30.08.15.
@@ -48,23 +45,23 @@ public class Util {
     }
 
 
-    public static int getKeyDirections(MqttController mqttController) {
+    public static int getKeyDirections(GameNetController gameNetController) {
         int keyDirections = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.W)
                 || Gdx.input.isKeyPressed(Input.Keys.UP)
-                || mqttController.isDown('w')
+                || gameNetController.isDown('w')
                 ) keyDirections |= Mover.UP;
         if(Gdx.input.isKeyPressed(Input.Keys.D)
                 || Gdx.input.isKeyPressed(Input.Keys.RIGHT)
-                || mqttController.isDown('d')
+                || gameNetController.isDown('d')
                 ) keyDirections |= Mover.RIGHT;
         if(Gdx.input.isKeyPressed(Input.Keys.S)
                 || Gdx.input.isKeyPressed(Input.Keys.DOWN)
-                || mqttController.isDown('s')
+                || gameNetController.isDown('s')
                 ) keyDirections |= Mover.DOWN;
         if(Gdx.input.isKeyPressed(Input.Keys.A)
                 || Gdx.input.isKeyPressed(Input.Keys.LEFT)
-                || mqttController.isDown('a')
+                || gameNetController.isDown('a')
                 ) keyDirections |= Mover.LEFT;
         Array<Controller> controllers = Controllers.getControllers();
         for(int i=controllers.size-1; i>=0; i--) {

@@ -29,7 +29,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by ulno on 10.09.15.
  */
-public class Play implements Screen, GestureListener, InputProcessor, ControllerListener, MqttControllerListener {
+public class Play implements Screen, GestureListener, InputProcessor, ControllerListener, GameNetControllerListener {
     public final static long doubleClickFrames = Game.timeResolution / 3;
     private OrthographicCamera camera;
     private Game game;
@@ -77,7 +77,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     private long lastControllerGameFrame;
     private int evaluateDirectionsLastDirs = 0;
     private BitmapFont pauseFont;
-    private MqttController mqttController;
+    private GameNetController gameNetController;
 
 
     private void preInit(final Main main) {
@@ -194,8 +194,8 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         Controllers.addListener(this);
 
         // get MQTT Controller
-        mqttController = main.getMqttController();
-        mqttController.setListener(this);
+        gameNetController = main.getGameNetController();
+        gameNetController.setListener(this);
 
 
         pauseOn(); // make sure it's active and game is paused
@@ -391,7 +391,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
             // add stage and menu
             stage.draw();
-            mqttController.evaluateMessages();
+            gameNetController.evaluateMessages();
             evaluateDirections();
             stage.act(delta); // evaluate interaction with menu
 
@@ -456,15 +456,15 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         layout = font.draw(batch, score, x, yText );
         x += layout.width + res/4;*/
 
-//        framerateScore.setLength(0);
-//        framerateScore.append("F");
-//        framerateScore.append(Gdx.graphics.getFramesPerSecond());
-//        layout = font.draw(batch, framerateScore, x, yText );
-//        x += layout.width + res/4;
+        framerateScore.setLength(0);
+        framerateScore.append("F");
+        framerateScore.append(Gdx.graphics.getFramesPerSecond());
+        layout = font.draw(batch, framerateScore, x, yText );
+        x += layout.width + res/4;
 
         // avoid too much moving, due to variable font size
-////        x = Math.max(x, res * (2 + Math.max(5,score.length() + framerateScore.length()) ));
-//        x = Math.max(x, res * 5);
+//        x = Math.max(x, res * (2 + Math.max(5,score.length() + framerateScore.length()) ));
+        x = Math.max(x, res * 5);
 
         livesScore.setLength(0);
         int lives = mcminos.getLives();
@@ -651,7 +651,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public void dispose() {
-        main.getMqttController().clearListener();
+        main.getGameNetController().clearListener();
         fader.dispose();
         game.dispose();
         stage.dispose();
@@ -1299,18 +1299,18 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     }
 
     @Override
-    public void mqttDown(char button) {
+    public void gameNetDown(char button) {
         evaluateDirections();
     }
 
     @Override
-    public void mqttUp(char button) {
+    public void gameNetUp(char button) {
         evaluateDirections();
         keyTyped(button); // forward to the keys
     }
 
     @Override
-    public void mqttAnalog(byte analogNr, int value) {
+    public void gameNetAnalog(byte analogNr, int value) {
 
     }
 }

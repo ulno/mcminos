@@ -1,23 +1,16 @@
 package com.mcminos.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Created by ulno on 01.10.15.
  */
 public class McMinosMover extends Mover {
 
-    private MqttController mqttController;
+    private GameNetController gameNetController;
     private Game game;
     private McMinos mcminos;
     private Audio audio;
@@ -46,7 +39,7 @@ public class McMinosMover extends Mover {
         levelObject = mcminos.getLevelObject();
         this.level = game.getLevel();
         ghosts = game.getGhosts();
-        this.mqttController = game.getMain().getMqttController();
+        this.gameNetController = game.getMain().getGameNetController();
         mcminos.setMover(this);
         mcminos.gfxSelect();
         for (int y = 0; y < mazeSize; y++) {
@@ -608,7 +601,7 @@ public class McMinosMover extends Mover {
      * @return
      */
     public boolean updateKeyDirections() {
-        keyDirections = Util.getKeyDirections(mqttController);
+        keyDirections = Util.getKeyDirections(gameNetController);
 
         if(keyDirections > 0) {
             mcminos.unsetDestination();

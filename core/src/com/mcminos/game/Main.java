@@ -18,8 +18,8 @@ import java.util.HashMap;
  */
 public class Main extends com.badlogic.gdx.Game {
     // if the following file exists in teh hom edirectory or on the sd-card in android and there is a valid hostname in
-    // here, then the mqtt-controller is active and reacts to messages sent on the MqttController/McMinos topic
-    private static final String MQTT_CONFIG_FILE = ".mcminos.mqttController";
+    // here, then the mqtt-controller is active and reacts to messages sent on the GameNetController/McMinos topic
+    private static final String MQTT_CONFIG_FILE = ".mcminos.gameNetController";
     private Audio audio;
     public static final String TEXT_FILE = "text";
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
@@ -40,7 +40,7 @@ public class Main extends com.badlogic.gdx.Game {
     private InputProcessor defaultInputProcessor;
     private Statistics statistics;
     private Preferences preferences;
-    private MqttController mqttController;
+    private GameNetController gameNetController;
 
     public LevelsConfig getLevelsConfig() {
         return levelsConfig;
@@ -75,16 +75,16 @@ public class Main extends com.badlogic.gdx.Game {
         // init with contents of an external file
         FileHandle mqttConfig = Gdx.files.external(MQTT_CONFIG_FILE);
 //        FileHandle mqttConfig = Gdx.files.absolute("/storage/emulated/0/"+MQTT_CONFIG_FILE);
-        String hostAndPort = null;
+        int port = -1;
 
         if(mqttConfig.exists()) {
             try {
-                hostAndPort = new BufferedReader(mqttConfig.reader()).readLine().trim();
+                port = Integer.valueOf(new BufferedReader(mqttConfig.reader()).readLine().trim());
             } catch (IOException e) {
                 //ignore and leave hostAndPort undefined
             }
         }
-        mqttController = new MqttController("McMinos",hostAndPort);
+        gameNetController = new GameNetController(port);
     }
 
     /**
@@ -178,7 +178,7 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     public void preDispose() {
-        mqttController.dispose();
+        gameNetController.dispose();
         audio.dispose();
         for (Skin s : levelSkinList.values()) {
             s.dispose();
@@ -263,7 +263,7 @@ public class Main extends com.badlogic.gdx.Game {
         setScreen( new FadeExit(this) );
     }
 
-    public MqttController getMqttController() {
-        return mqttController;
+    public GameNetController getGameNetController() {
+        return gameNetController;
     }
 }

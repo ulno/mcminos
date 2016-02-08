@@ -1,7 +1,6 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
@@ -23,7 +22,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by ulno on 20.12.15.
  */
-public class Congrats implements Screen, ControllerListener, MqttControllerListener {
+public class Congrats implements Screen, ControllerListener, GameNetControllerListener {
     private final Main main;
     private final LevelCategory category;
     private final LevelConfig levelConfig;
@@ -34,7 +33,7 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
     private final Preferences preferences;
     private final Fader fader;
     private boolean finished = false;
-    private MqttController mqttController;
+    private GameNetController gameNetController;
 
     public Congrats(Main main, LevelConfig currentLevelConfig) {
         this.main = main;
@@ -45,8 +44,8 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage);
-        mqttController = main.getMqttController();
-        mqttController.setListener(this);
+        gameNetController = main.getGameNetController();
+        gameNetController.setListener(this);
         Controllers.clearListeners();
         Controllers.addListener(this);
         // set inputprocessor
@@ -116,7 +115,7 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
             fader.render();
         } else {
             stage.act();
-            mqttController.evaluateMessages();
+            gameNetController.evaluateMessages();
         }
         if(finished) {
             dispose();
@@ -147,7 +146,7 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
 
     @Override
     public void dispose() {
-        mqttController.clearListener();
+        gameNetController.clearListener();
         stage.dispose();
          // batch.dispose(); in stage
         fader.dispose();
@@ -200,19 +199,19 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
     }
 
     @Override
-    public void mqttDown(char button) {
+    public void gameNetDown(char button) {
 
     }
 
     @Override
-    public void mqttUp(char button) {
+    public void gameNetUp(char button) {
         if(button == ' ') { // our convention for fire
             finished = true;
         }
     }
 
     @Override
-    public void mqttAnalog(byte analogNr, int value) {
+    public void gameNetAnalog(byte analogNr, int value) {
     }
 
 }

@@ -1,7 +1,6 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -22,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.HashMap;
@@ -30,7 +28,7 @@ import java.util.HashMap;
 /**
  * Created by ulno on 11.09.15.
  */
-public class MainMenu implements Screen, InputProcessor, ControllerListener, MqttControllerListener {
+public class MainMenu implements Screen, InputProcessor, ControllerListener, GameNetControllerListener {
     public final static String WEBSITE="http://mcminos.com";
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
@@ -65,7 +63,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
     Vector2 coords = new Vector2();
     private HotSpot hotSpotPreferencesRoot;
     private int keyDirections;
-    private MqttController mqttController;
+    private GameNetController gameNetController;
 
 
     public MainMenu(final Main main) {
@@ -143,8 +141,8 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
         Controllers.clearListeners();
         Controllers.addListener(this);
         keyDirections = 0;
-        mqttController = main.getMqttController();
-        mqttController.setListener(this);
+        gameNetController = main.getGameNetController();
+        gameNetController.setListener(this);
     }
 
     @Override
@@ -198,12 +196,12 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
     }
 
     @Override
-    public void mqttDown(char button) {
+    public void gameNetDown(char button) {
         updateDirections();
     }
 
     @Override
-    public void mqttUp(char button) {
+    public void gameNetUp(char button) {
         updateDirections();
         if(button == ' ') { // our convention for fire
             activateSelection();
@@ -211,7 +209,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
     }
 
     @Override
-    public void mqttAnalog(byte analogNr, int value) {
+    public void gameNetAnalog(byte analogNr, int value) {
 
     }
 
@@ -614,7 +612,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) {
                 stage.act(delta);
-                mqttController.evaluateMessages();
+                gameNetController.evaluateMessages();
                 evaluateDirections();
             }
             stage.draw();
@@ -676,7 +674,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
 
     @Override
     public void dispose() {
-        mqttController.clearListener();
+        gameNetController.clearListener();
         for (Texture t : textureCache.values())
             t.dispose();
         stage.dispose();
@@ -873,7 +871,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
     }
 
     public void updateDirections() {
-        keyDirections = Util.getKeyDirections(mqttController);
+        keyDirections = Util.getKeyDirections(gameNetController);
     }
 
     public void evaluateDirections() {
