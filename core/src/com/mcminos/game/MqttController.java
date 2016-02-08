@@ -2,6 +2,7 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
  * Created by ulno on 06.02.16.
@@ -20,6 +21,9 @@ public class MqttController {
     private final String topic;
     private MqttClient mqttClient;
     private MqttControllerListener listener;
+    private static int MESSAGE_BUFFER_SIZE = 128;
+    private byte[][] messageBuffer = new byte[MESSAGE_BUFFER_SIZE][];
+    private int messageBufferFill = 0;
 
     /**
      *
@@ -27,6 +31,7 @@ public class MqttController {
      * @param hostAndPort does not necessaryly need to include port (if not default is taken)
      */
     MqttController(String topic, String hostAndPort) {
+        MemoryPersistence persistence = new MemoryPersistence();
         this.topic = topicBase + "/" + topic;
         clientId = MqttClient.generateClientId();
         buttonStates = new boolean[buttonCount];
@@ -35,47 +40,30 @@ public class MqttController {
         for(int i=0; i<analogCount; i++) analogStates[i]=0;
         if(!(hostAndPort==null || hostAndPort.equals(""))) {
             try {
-                mqttClient = new MqttClient("tcp://" + hostAndPort, clientId);
+                mqttClient = new MqttClient("tcp://" + hostAndPort, clientId, persistence);
                 MqttConnectOptions connOpts = new MqttConnectOptions();
                 connOpts.setCleanSession(true);
                 mqttClient.connect(connOpts);
 
-                mqttClient.subscribe(this.topic);
+                mqttClient.subscribe(this.topic,1);
 
                 mqttClient.setCallback(new MqttCallback() {
                     @Override
                     public void connectionLost(Throwable cause) {
                         System.out.println("MQTT Connection lost!");
+                        System.out.println(cause.fillInStackTrace());
                     }
 
                     @Override
-                    public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    synchronized public void messageArrived(String topic, MqttMessage message) throws Exception {
                         byte[] payload = message.getPayload();
-                        switch (payload.length) {
-                            case 2: // This is a button event
-                                switch (payload[0]) {
-                                    case 'd': // down
-                                        buttonStates[payload[1]] = true;
-                                        if (listener != null) {
-                                            listener.mqttDown((char) payload[1]);
-                                        }
-                                        break;
-                                    case 'u': // down
-                                        buttonStates[payload[1]] = false;
-                                        if (listener != null) {
-                                            listener.mqttUp((char) payload[1]);
-                                        }
-                                        break;
-                                }
-                                break;
-                            case 3: // an analog event
-                                analogStates[payload[0]] = ((payload[1] >= 128) ? (256 - payload[1]) : payload[1]) * 256 + payload[2]; // little endian two -complement
-                                if (listener != null) {
-                                    listener.mqttAnalog(payload[0], analogStates[payload[0]]);
-                                }
-                                break;
-                            default: // unparsable
-                                Gdx.app.log("MqttController", "unparseble MQTT message received: " + new String(message.getPayload()));
+                        if(payload.length==2 || payload.length==3) {
+                            // store
+                            messageBuffer[messageBufferFill] = payload;
+                            messageBufferFill ++;
+                        } else {
+                            // unparsable
+                            Gdx.app.log("MqttController", "unparseble MQTT message received: " + new String(message.getPayload()));
                         }
                     }
 
@@ -103,6 +91,38 @@ public class MqttController {
         }
     }
 
+    public void evaluateMessages() {
+        for(int i=0; i<messageBufferFill; i++) {
+            byte[] payload = messageBuffer[i];
+            switch (payload.length) {
+                case 2: // This is a button event
+                    switch (payload[0]) {
+                        case 'd': // down
+                            buttonStates[payload[1]] = true;
+                            if (listener != null) {
+                                listener.mqttDown((char) payload[1]);
+                            }
+                            break;
+                        case 'u': // down
+                            buttonStates[payload[1]] = false;
+                            if (listener != null) {
+                                listener.mqttUp((char) payload[1]);
+                            }
+                            break;
+                    }
+                    break;
+                case 3: // an analog event
+                    analogStates[payload[0]] = ((payload[1] >= 128) ? (256 - payload[1]) : payload[1]) * 256 + payload[2]; // little endian two -complement
+                    if (listener != null) {
+                        listener.mqttAnalog(payload[0], analogStates[payload[0]]);
+                    }
+                    break;
+                default:
+            }
+            messageBufferFill = 0;
+        }
+    }
+
     public void setListener(MqttControllerListener listener) {
         this.listener  = listener;
     }
@@ -122,7 +142,8 @@ public class MqttController {
     public void dispose() {
         clearListener();
         try {
-            mqttClient.disconnect();
+            if(mqttClient != null)
+                mqttClient.disconnect();
         } catch (MqttException e) {
             //e.printStackTrace();
         }

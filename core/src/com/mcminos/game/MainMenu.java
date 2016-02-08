@@ -614,6 +614,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Mqt
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) {
                 stage.act(delta);
+                mqttController.evaluateMessages();
                 evaluateDirections();
             }
             stage.draw();

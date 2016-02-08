@@ -74,6 +74,7 @@ public class Main extends com.badlogic.gdx.Game {
     private void initMqttController() {
         // init with contents of an external file
         FileHandle mqttConfig = Gdx.files.external(MQTT_CONFIG_FILE);
+//        FileHandle mqttConfig = Gdx.files.absolute("/storage/emulated/0/"+MQTT_CONFIG_FILE);
         String hostAndPort = null;
 
         if(mqttConfig.exists()) {

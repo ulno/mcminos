@@ -38,6 +38,7 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
     private long realTimePassed = 0;
     private long lastDeltaTimeLeft = 0;
     private boolean finished = false;
+    private MqttController mqttController;
 
     public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;
@@ -50,7 +51,8 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
         fader.fadeOutInMusicFixed(2);
 
         Gdx.input.setInputProcessor(stage); // set inputprocessor
-        main.getMqttController().setListener(this);
+        mqttController = main.getMqttController();
+        mqttController.setListener(this);
         Controllers.clearListeners();
         Controllers.addListener(this);
 
@@ -151,6 +153,7 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
                     realTimePassed += step * Game.timeResolution;
                 }
             }
+            mqttController.evaluateMessages();
             stage.act();
         }
         stage.draw();
@@ -184,7 +187,7 @@ public class Credits implements Screen, ControllerListener, MqttControllerListen
 
     @Override
     public void dispose() {
-        main.getMqttController().clearListener();
+        mqttController.clearListener();
         fader.dispose();
         stage.dispose();
     }

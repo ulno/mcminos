@@ -34,6 +34,7 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
     private final Preferences preferences;
     private final Fader fader;
     private boolean finished = false;
+    private MqttController mqttController;
 
     public Congrats(Main main, LevelConfig currentLevelConfig) {
         this.main = main;
@@ -44,7 +45,8 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
         batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport(), batch);
         Gdx.input.setInputProcessor(stage);
-        main.getMqttController().setListener(this);
+        mqttController = main.getMqttController();
+        mqttController.setListener(this);
         Controllers.clearListeners();
         Controllers.addListener(this);
         // set inputprocessor
@@ -114,6 +116,7 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
             fader.render();
         } else {
             stage.act();
+            mqttController.evaluateMessages();
         }
         if(finished) {
             dispose();
@@ -144,7 +147,7 @@ public class Congrats implements Screen, ControllerListener, MqttControllerListe
 
     @Override
     public void dispose() {
-        main.getMqttController().clearListener();
+        mqttController.clearListener();
         stage.dispose();
          // batch.dispose(); in stage
         fader.dispose();

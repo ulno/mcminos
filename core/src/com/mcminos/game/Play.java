@@ -391,8 +391,9 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
             // add stage and menu
             stage.draw();
-            stage.act(delta); // evaluate interaction with menu
+            mqttController.evaluateMessages();
             evaluateDirections();
+            stage.act(delta); // evaluate interaction with menu
 
             // draw selected hotspot
             if(hotSpotSelected != null) {
