@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 
 /**
  * Created by ulno on 06.02.16.
@@ -16,17 +19,19 @@ public class GameNetController {
     public static final int NUMBER_OF_BUTTON_BYTES = (NUMBER_OF_BUTTONS + 7) / 8;
     public static final int NUMBER_OF_AXIS = 16;
     public static final int NUMBER_OF_AXIS_BYTES = NUMBER_OF_AXIS * 2;
+    private DatagramChannel channel = null;
     private Thread receiverThread;
     private byte message[] = new byte[NUMBER_OF_BUTTON_BYTES + NUMBER_OF_AXIS_BYTES];
 
     private boolean buttonStates[];
     private int analogStates[];
     private GameNetControllerListener listener;
-    private static int MESSAGE_BUFFER_SIZE = 0x10000;
-    private byte[] messageBuffer = new byte[MESSAGE_BUFFER_SIZE];
+    private static int MESSAGE_BUFFER_SIZE = NUMBER_OF_BUTTON_BYTES + NUMBER_OF_AXIS_BYTES;
+    //private byte[] messageBuffer = new byte[MESSAGE_BUFFER_SIZE];
+    private ByteBuffer messageBuffer = ByteBuffer.allocateDirect(MESSAGE_BUFFER_SIZE); // if nto direct -> memory leak
 
     private DatagramSocket socket = null;
-    private DatagramPacket incoming = new DatagramPacket(messageBuffer, messageBuffer.length);
+    //private DatagramPacket incoming = new DatagramPacket(messageBuffer, messageBuffer.length);
     private boolean finished = false;
 
     private boolean getButtonFromMessage(int nr) {
@@ -53,8 +58,12 @@ public class GameNetController {
         for (int i = 0; i < NUMBER_OF_AXIS; i++) analogStates[i] = 0;
         if (port > 0) {
             try {
-                socket = new DatagramSocket(port);
-                socket.setSoTimeout(500);
+                //socket = new DatagramSocket(port);
+                //socket.setSoTimeout(10);
+                channel = DatagramChannel.open();
+                channel.configureBlocking(false); // TODO: necessary?
+                socket = channel.socket();
+                socket.bind(new InetSocketAddress(port));
             } catch (Exception e) {
                 Gdx.app.log("GameNetController", "Can't open socket.", e);
             }
@@ -62,19 +71,26 @@ public class GameNetController {
             receiverThread = new Thread() {
                 @Override
                 public void run() {
-                    if (socket != null) {
+                    if (channel != null) {
                         while (!finished) {
                             try {
                                 //System.out.println("Trying to receive...");
-                                socket.receive(incoming);
-                                //System.out.println("Received sth. Length: " + incoming.getLength());
-                                if (incoming.getLength() == message.length) {
-                                    // seems correct, so save it and overwrite whatever was received before
-                                    for (int i = message.length - 1; i >= 0; i--) message[i] = messageBuffer[i];
+                                //socket.receive(incoming);
+                                messageBuffer.clear();
+                                if( channel.receive(messageBuffer) != null) {
+                                    messageBuffer.flip();
+                                    //System.out.println("Received sth. Length: " + messageBuffer.remaining());
+                                    messageBuffer.get(message);
                                 }
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 //System.out.println("...receive... failed");
                                 //e.printStackTrace(); // might just have timed out
+                            }
+                            try {
+                                Thread.sleep(10); // prevent busy wait and race
+                            } catch (InterruptedException e) {
+
+
                             }
                         }
                     }
@@ -91,7 +107,7 @@ public class GameNetController {
      */
     public void evaluateMessages() {
         // see if packages arrived
-        if (socket != null && listener != null) { // if initialized and somebody is subscribed
+        if (channel != null && listener != null) { // if initialized and somebody is subscribed
             // parse last message received and compare with actual states
             for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
                 boolean pressed = getButtonFromMessage(i);
@@ -131,7 +147,7 @@ public class GameNetController {
         clearListener();
         finished = true; //stop thread
         try {
-            socket.close();
+            channel.close();
         } catch (Exception e) {
             //e.printStackTrace();
         }
