@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class Main extends com.badlogic.gdx.Game {
     // if the following file exists in teh hom edirectory or on the sd-card in android and there is a valid hostname in
     // here, then the mqtt-controller is active and reacts to messages sent on the GameNetController/McMinos topic
-    private static final String MQTT_CONFIG_FILE = ".mcminos.gameNetController";
+    private static final String GAMENET_CONFIG_FILE = ".mcminos.gameNetController";
     private Audio audio;
     public static final String TEXT_FILE = "text";
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
@@ -66,25 +66,25 @@ public class Main extends com.badlogic.gdx.Game {
             versionString = "undefined";
         }
 
-        initMqttController();
+        initGameNetController();
 
         this.setScreen(new Load(this));
     }
 
-    private void initMqttController() {
+    private void initGameNetController() {
         // init with contents of an external file
-        FileHandle mqttConfig = Gdx.files.external(MQTT_CONFIG_FILE);
-//        FileHandle mqttConfig = Gdx.files.absolute("/storage/emulated/0/"+MQTT_CONFIG_FILE);
+        FileHandle gameNetController = Gdx.files.external(GAMENET_CONFIG_FILE);
+//        FileHandle mqttConfig = Gdx.files.absolute("/storage/emulated/0/"+GAMENET_CONFIG_FILE);
         int port = -1;
 
-        if(mqttConfig.exists()) {
+        if(gameNetController.exists()) {
             try {
-                port = Integer.valueOf(new BufferedReader(mqttConfig.reader()).readLine().trim());
-            } catch (IOException e) {
+                port = Integer.valueOf(new BufferedReader(gameNetController.reader()).readLine().trim());
+            } catch (Exception e) {
                 //ignore and leave hostAndPort undefined
             }
         }
-        gameNetController = new GameNetController(port);
+        this.gameNetController = new GameNetController(port);
     }
 
     /**
