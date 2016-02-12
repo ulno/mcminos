@@ -210,7 +210,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Gam
 
     @Override
     public void gameNetAnalog(byte analogNr, int value) {
-
+        // TODO: eventually this shoudl be implemented too
     }
 
 
