@@ -1,6 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -10,48 +11,32 @@ import java.nio.channels.DatagramChannel;
 
 /**
  * Created by ulno on 06.02.16.
- * <p>
+ * <p/>
  * receive control-commands via UDP
  * eventually also send status updates back
  */
 public class GameNetController {
     public static final int NUMBER_OF_BUTTONS = 256;
-    public static final int NUMBER_OF_BUTTON_BYTES = (NUMBER_OF_BUTTONS + 7) / 8;
     public static final int NUMBER_OF_AXIS = 16;
-    public static final int NUMBER_OF_AXIS_BYTES = NUMBER_OF_AXIS * 2;
+    public static final int MAX_BUFFER_SIZE = 128;
     private DatagramChannel channel = null;
     private Thread receiverThread;
-    private byte message[] = new byte[NUMBER_OF_BUTTON_BYTES + NUMBER_OF_AXIS_BYTES];
 
     private boolean buttonStates[];
     private int analogStates[];
     private GameNetControllerListener listener;
-    private static int MESSAGE_BUFFER_SIZE = NUMBER_OF_BUTTON_BYTES + NUMBER_OF_AXIS_BYTES;
-    //private byte[] messageBuffer = new byte[MESSAGE_BUFFER_SIZE];
-    private ByteBuffer messageBuffer = ByteBuffer.allocateDirect(MESSAGE_BUFFER_SIZE); // if nto direct -> memory leak
+    private ByteBuffer messageBuffer = ByteBuffer.allocateDirect(MAX_BUFFER_SIZE);
+    private byte messageSaved[] = new byte[MAX_BUFFER_SIZE];
+    private int messageSavedSize;
 
     private DatagramSocket socket = null;
     //private DatagramPacket incoming = new DatagramPacket(messageBuffer, messageBuffer.length);
     private boolean finished = false;
 
-    private boolean getButtonFromMessage(int nr) {
-        int byteNr = nr / 8;
-        int bitNr = nr % 8;
-        return (message[byteNr] & (1 << bitNr)) > 0;
-    }
-
-    private int getAxisFromMessage(int nr) {
-        int byteNr = NUMBER_OF_BUTTON_BYTES + nr * 2;
-        byte high = message[byteNr];
-        byte low = message[byteNr + 1];
-        return ((high >= 128) ? (256 - high) : high) * 256 + low; // little endian two -complement
-    }
-
     /**
      * @param port on which port to listen, if <= 0 don't activate
      */
     GameNetController(int port) {
-        for(int i=0; i<message.length; i++) message[i] = 0; // init
         buttonStates = new boolean[NUMBER_OF_BUTTONS];
         for (int i = 0; i < NUMBER_OF_BUTTONS; i++) buttonStates[i] = false;
         analogStates = new int[NUMBER_OF_AXIS];
@@ -77,10 +62,12 @@ public class GameNetController {
                                 //System.out.println("Trying to receive...");
                                 //socket.receive(incoming);
                                 messageBuffer.clear();
-                                if( channel.receive(messageBuffer) != null) {
+                                if (channel.receive(messageBuffer) != null) {
                                     messageBuffer.flip();
                                     //System.out.println("Received sth. Length: " + messageBuffer.remaining());
-                                    messageBuffer.get(message);
+                                    messageSavedSize = messageBuffer.remaining();
+                                    if(messageSavedSize <= MAX_BUFFER_SIZE)
+                                        messageBuffer.get(messageSaved, 0, messageSavedSize);
                                 }
                             } catch (Exception e) {
                                 //System.out.println("...receive... failed");
@@ -109,22 +96,47 @@ public class GameNetController {
         // see if packages arrived
         if (channel != null && listener != null) { // if initialized and somebody is subscribed
             // parse last message received and compare with actual states
-            for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
-                boolean pressed = getButtonFromMessage(i);
-                if (pressed != buttonStates[i]) {
-                    buttonStates[i] = pressed;
-                    if (pressed) listener.gameNetDown((char) i);
-                    else listener.gameNetUp((char) i);
-                }
-            }
-            for (int i = 0; i < NUMBER_OF_AXIS; i++) {
-                int newState = getAxisFromMessage(i);
-                if (newState != analogStates[i]) {
-                    analogStates[i] = newState;
-                    listener.gameNetAnalog((byte) i, newState);
+            int pointer = 0;
+            boolean pressed;
+            byte button;
+            while (pointer <= messageSavedSize -2 ) {
+                int event = messageSaved[pointer];
+                pointer++;
+                switch (event) {
+                    case 1: // Button Up
+                        buttonEvent(messageSaved[pointer], false);
+                        pointer++;
+                        break;
+                    case 2: // Button Down
+                        buttonEvent(messageSaved[pointer], true);
+                        pointer++;
+                        break;
+                    case 3:
+                        button = messageSaved[pointer];
+                        pointer++;
+                        byte high = messageSaved[pointer];
+                        pointer++;
+                        byte low = messageSaved[pointer];
+                        int newState = ((high >= 128) ? (256 - high) : high) * 256 + low; // little endian two -complement
+                        if (newState != analogStates[button]) {
+                            analogStates[button] = newState;
+                            listener.gameNetAnalog(button, newState);
+                        }
+                        pointer++;
                 }
             }
         }
+    }
+
+
+    private void buttonEvent(byte buttonNr, boolean newState) {
+        boolean oldState = buttonStates[buttonNr];
+        if (oldState != newState) {
+            buttonStates[buttonNr] = newState;
+            if (newState) listener.gameNetUp((char) buttonNr);
+            else listener.gameNetDown((char) buttonNr);
+        }
+
     }
 
     public void setListener(GameNetControllerListener listener) {
