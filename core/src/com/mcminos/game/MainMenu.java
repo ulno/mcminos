@@ -1,13 +1,8 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,20 +10,21 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import net.ulno.libni.receiver.libgdx.LibniListener;
+import net.ulno.libni.receiver.libgdx.LibniMergedInput;
 
 import java.util.HashMap;
 
 /**
  * Created by ulno on 11.09.15.
  */
-public class MainMenu implements Screen, InputProcessor, ControllerListener, GameNetControllerListener {
+public class MainMenu implements Screen, InputProcessor, LibniListener {
     public final static String WEBSITE="http://mcminos.com";
     private final LevelsConfig levelsConfig;
     private final Statistics statistics;
@@ -63,7 +59,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Gam
     Vector2 coords = new Vector2();
     private HotSpot hotSpotPreferencesRoot;
     private int keyDirections;
-    private GameNetController gameNetController;
+    private LibniMergedInput networkInput;
 
 
     public MainMenu(final Main main) {
@@ -137,80 +133,40 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Gam
     public void init() {
         audio.musicFixed(0);
         fader.fadeOutIn();
-        Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
-        Controllers.clearListeners();
-        Controllers.addListener(this);
         keyDirections = 0;
-        gameNetController = main.getGameNetController();
-        gameNetController.setListener(this);
+        networkInput = main.getLibniMergedInput();
+        networkInput.setListener(this);
+        networkInput.initInputMultiplexer();
+        networkInput.addInputProcessor(stage);
+        networkInput.addInputProcessor(this);
     }
 
     @Override
-    public void connected(Controller controller) {
-    }
-
-    @Override
-    public void disconnected(Controller controller) {
-
-    }
-
-    @Override
-    public boolean buttonDown(Controller controller, int buttonCode) {
-        updateDirections();
-        return false;
-    }
-
-    @Override
-    public boolean buttonUp(Controller controller, int buttonCode) {
-        updateDirections();
-        activateSelection();
-        return true;
-//        return false;
-    }
-
-    @Override
-    public boolean axisMoved(Controller controller, int axisCode, float value) {
-        updateDirections();
-        return false;
-    }
-
-    @Override
-    public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-        updateDirections();
-        return false;
-    }
-
-    @Override
-    public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-        return false;
-    }
-
-    @Override
-    public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-        return false;
-    }
-
-    @Override
-    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-        return false;
-    }
-
-    @Override
-    public void gameNetDown(char button) {
+    public void libniDown(int button) {
         updateDirections();
     }
 
     @Override
-    public void gameNetUp(char button) {
+    public void libniUp(int button) {
         updateDirections();
-        if(button == ' ') { // our convention for fire
+        if(button == LibniMergedInput.BUTTON_FIRE) {
             activateSelection();
+        } else if (button == LibniMergedInput.BUTTON_ESCAPE){
+            if(currentDialog==null) {
+                dialogPreferences();
+                hotSpotSelected = hotSpotPreferencesRoot.getRight();
+            }
+            else {
+                dialogClose();
+                hotSpotSelected = hotSpotRoot.getRight();
+            }
         }
     }
 
     @Override
-    public void gameNetAnalog(byte analogNr, int value) {
-        // TODO: eventually this shoudl be implemented too
+    public void libniAnalog(int analogNr, long value) {
+        // analog-transfer to directions is already handled in libni and calls libniUp or Down
+        // TODO: eventually this should be implemented too
     }
 
 
@@ -612,7 +568,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Gam
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             if(!fader.isActive()) {
                 stage.act(delta);
-                gameNetController.evaluateMessages();
+                networkInput.evaluate();
                 evaluateDirections();
             }
             stage.draw();
@@ -674,7 +630,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Gam
 
     @Override
     public void dispose() {
-        gameNetController.clearListener();
+        networkInput.clearListener();
         for (Texture t : textureCache.values())
             t.dispose();
         stage.dispose();
@@ -871,7 +827,7 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Gam
     }
 
     public void updateDirections() {
-        keyDirections = Util.getKeyDirections(gameNetController);
+        keyDirections = networkInput.getDirections();
     }
 
     public void evaluateDirections() {
@@ -900,43 +856,19 @@ public class MainMenu implements Screen, InputProcessor, ControllerListener, Gam
             case 'F': // only capital:
                 toggleFullscreen();
                 return true;
-            case '9':
+            /*case '9':
                 ScreenshotFactory.saveScreenshot();
                 return true;
             case ' ':
             case 13:
                 activateSelection();
-                break;
+                break; handled in libniUp*/
         }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        switch(keycode) {
-            case 23: //amazon fire remote select
-                activateSelection();
-                return true;
-            case 82: // amazon fire menu
-                if(currentDialog==null) {
-                    dialogPreferences();
-                    hotSpotSelected = hotSpotPreferencesRoot.getRight();
-                }
-                else {
-                    dialogClose();
-                    hotSpotSelected = hotSpotRoot.getRight();
-                }
-                return true;
-            case 85: // amazon fire play/pause
-                activateSelection();
-                return true;
-            case 89: // amazon fire wind back
-                break;
-            case 90: // amazon fire wind forward
-                break;
-            default:
-                updateDirections();
-        }
         return false;
     }
 

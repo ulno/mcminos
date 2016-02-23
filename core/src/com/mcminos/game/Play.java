@@ -1,10 +1,6 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,18 +14,19 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import net.ulno.libni.receiver.libgdx.LibniListener;
+import net.ulno.libni.receiver.libgdx.LibniMergedInput;
 
 /**
  * Created by ulno on 10.09.15.
  */
-public class Play implements Screen, GestureListener, InputProcessor, ControllerListener, GameNetControllerListener {
+public class Play implements Screen, GestureListener, InputProcessor, LibniListener {
     public final static long doubleClickFrames = Game.timeResolution / 3;
     private OrthographicCamera camera;
     private Game game;
@@ -77,7 +74,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     private long lastControllerGameFrame;
     private int evaluateDirectionsLastDirs = 0;
     private BitmapFont pauseFont;
-    private GameNetController gameNetController;
+    private LibniMergedInput networkInput;
 
 
     private void preInit(final Main main) {
@@ -187,16 +184,11 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
         // InputProcessor
         GestureDetector gd = new GestureDetector(this);
-        InputMultiplexer im = new InputMultiplexer(stage, gd, this);
-        Gdx.input.setInputProcessor(im); // init multiplexed InputProcessor
-
-        Controllers.clearListeners();
-        Controllers.addListener(this);
-
-        // get MQTT Controller
-        gameNetController = main.getGameNetController();
-        gameNetController.setListener(this);
-
+        networkInput = main.getLibniMergedInput();
+        networkInput.addInputProcessor(stage);
+        networkInput.addInputProcessor(gd);
+        networkInput.addInputProcessor(this);
+        networkInput.setListener(this);
 
         pauseOn(); // make sure it's active and game is paused
 
@@ -391,7 +383,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
             // add stage and menu
             stage.draw();
-            gameNetController.evaluateMessages();
+            networkInput.evaluate();
             evaluateDirections();
             stage.act(delta); // evaluate interaction with menu
 
@@ -651,7 +643,7 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 
     @Override
     public void dispose() {
-        main.getGameNetController().clearListener();
+        main.getLibniMergedInput().clearListener();
         fader.dispose();
         game.dispose();
         stage.dispose();
@@ -748,6 +740,12 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
             case '>':
                 increaseSymbolResolution();
                 break;
+        }
+        return false;
+    }
+
+    private void handleTypedKey(char character) {
+        switch (character) {
             case '1':
                 pauseOn();
                 toolbox.activateChocolate();
@@ -801,7 +799,6 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
 //                evaluateDirections();
                 break;
         }
-        return false;
     }
 
     private void toggleGameMenu() {
@@ -1190,73 +1187,6 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
         fader.fadeOutIn();
     }
 
-    @Override
-    public void connected(Controller controller) {
-        Gdx.app.log("connected","Controller: "+controller.getName());
-    }
-
-    @Override
-    public void disconnected(Controller controller) {
-        Gdx.app.log("disconnected","Controller: "+controller.getName());
-    }
-
-    @Override
-    public boolean buttonDown(Controller controller, int buttonCode) {
-        //Gdx.app.log("buttonDown","Controller: "+controller.getName()
-        //        + " buttonCode: " + buttonCode);
-        return true;
-    }
-
-    @Override
-    public boolean buttonUp(Controller controller, int buttonCode) {
-        //Gdx.app.log("buttonUp", "Controller: " + controller.getName()
-        //        + " buttonCode: " + buttonCode);
-        triggerAction();
-        return false;
-    }
-
-    @Override
-    public boolean axisMoved(Controller controller, int axisCode, float value) {
-        //Gdx.app.log("axisMoved","Controller: "+controller.getName()
-        //        + " axisCode: " + axisCode
-        //        + " value: " + value);
-        evaluateDirections();
-        return false;
-    }
-
-    @Override
-    public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-        //Gdx.app.log("povMoved","Controller: "+controller.getName()
-        //        + " povCode: " + povCode
-        //        + " PovDirection: " + value);
-        evaluateDirections();
-        return false;
-    }
-
-    @Override
-    public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-        //Gdx.app.log("xSliderMoved","Controller: "+controller.getName()
-        //        + " slidercode: " + sliderCode
-        //        + " boolval: " + value);
-        return false;
-    }
-
-    @Override
-    public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-        //Gdx.app.log("ySliderMoved","Controller: "+controller.getName()
-        //        + " slidercode: " + sliderCode
-        //        + " boolval: " + value);
-        return false;
-    }
-
-    @Override
-    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-        //Gdx.app.log("accelerometerMoved","Controller: "+controller.getName()
-        //        + " accelerometerCode: " + accelerometerCode
-        //        + " Vector3: " + value);
-        return false;
-    }
-
     private void moveCursor(int direction) {
         HotSpot newHS = hotSpotSelected;
         switch(direction) {
@@ -1299,18 +1229,18 @@ public class Play implements Screen, GestureListener, InputProcessor, Controller
     }
 
     @Override
-    public void gameNetDown(char button) {
+    public void libniDown(int button) {
         evaluateDirections();
     }
 
     @Override
-    public void gameNetUp(char button) {
+    public void libniUp(int button) {
         evaluateDirections();
-        keyTyped(button); // forward to the keys
+        handleTypedKey((char)button); // forward to the keys
     }
 
     @Override
-    public void gameNetAnalog(byte analogNr, int value) {
+    public void libniAnalog(int analogNr, long value) {
 
     }
 }

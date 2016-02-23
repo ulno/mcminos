@@ -1,11 +1,7 @@
 package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by ulno on 30.08.15.
@@ -45,27 +41,27 @@ public class Util {
     }
 
 
-    public static int getKeyDirections(GameNetController gameNetController) {
+/*    public static int getKeyDirections(NetworkController networkInput) {
         int keyDirections = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.W)
                 || Gdx.input.isKeyPressed(Input.Keys.UP)
-                || gameNetController.isDown('w')
+                || networkInput.isDown('w')
                 ) keyDirections |= Mover.UP;
         if(Gdx.input.isKeyPressed(Input.Keys.D)
                 || Gdx.input.isKeyPressed(Input.Keys.RIGHT)
-                || gameNetController.isDown('d')
+                || networkInput.isDown('d')
                 ) keyDirections |= Mover.RIGHT;
         if(Gdx.input.isKeyPressed(Input.Keys.S)
                 || Gdx.input.isKeyPressed(Input.Keys.DOWN)
-                || gameNetController.isDown('s')
+                || networkInput.isDown('s')
                 ) keyDirections |= Mover.DOWN;
         if(Gdx.input.isKeyPressed(Input.Keys.A)
                 || Gdx.input.isKeyPressed(Input.Keys.LEFT)
-                || gameNetController.isDown('a')
+                || networkInput.isDown('a')
                 ) keyDirections |= Mover.LEFT;
-        Array<Controller> controllers = Controllers.getControllers();
+        Array<LibniController> controllers = Controllers.getControllers();
         for(int i=controllers.size-1; i>=0; i--) {
-            Controller c = controllers.get(i);
+            LibniController c = controllers.get(i);
             for(int axes=0; axes<3; axes++) {
                 float x = c.getAxis(axes*2);
                 float y = c.getAxis(axes*2+1);
@@ -118,5 +114,5 @@ public class Util {
             }
         }
         return keyDirections;
-    }
+    }*/
 }

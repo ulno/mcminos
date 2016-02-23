@@ -2,6 +2,7 @@ package com.mcminos.game;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
+import net.ulno.libni.receiver.libgdx.LibniMergedInput;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class McMinosMover extends Mover {
 
-    private GameNetController gameNetController;
+    private LibniMergedInput networkInput;
     private Game game;
     private McMinos mcminos;
     private Audio audio;
@@ -39,7 +40,7 @@ public class McMinosMover extends Mover {
         levelObject = mcminos.getLevelObject();
         this.level = game.getLevel();
         ghosts = game.getGhosts();
-        this.gameNetController = game.getMain().getGameNetController();
+        this.networkInput = game.getMain().getLibniMergedInput();
         mcminos.setMover(this);
         mcminos.gfxSelect();
         for (int y = 0; y < mazeSize; y++) {
@@ -601,7 +602,7 @@ public class McMinosMover extends Mover {
      * @return
      */
     public boolean updateKeyDirections() {
-        keyDirections = Util.getKeyDirections(gameNetController);
+        keyDirections = networkInput.getDirections();
 
         if(keyDirections > 0) {
             mcminos.unsetDestination();

@@ -2,14 +2,9 @@ package com.mcminos.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,13 +13,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import net.ulno.libni.receiver.libgdx.LibniListener;
+import net.ulno.libni.receiver.libgdx.LibniMergedInput;
 
 import java.io.BufferedReader;
 
 /**
  * Created by ulno on 24.12.15.
  */
-public class Credits implements Screen, ControllerListener, GameNetControllerListener {
+public class Credits implements Screen, LibniListener {
     private final Main main;
     private final Stage stage;
     private final SpriteBatch batch;
@@ -38,7 +35,7 @@ public class Credits implements Screen, ControllerListener, GameNetControllerLis
     private long realTimePassed = 0;
     private long lastDeltaTimeLeft = 0;
     private boolean finished = false;
-    private GameNetController gameNetController;
+    private LibniMergedInput networkInput;
 
     public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;
@@ -50,11 +47,9 @@ public class Credits implements Screen, ControllerListener, GameNetControllerLis
         fader = new Fader(main,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         fader.fadeOutInMusicFixed(2);
 
-        Gdx.input.setInputProcessor(stage); // set inputprocessor
-        gameNetController = main.getGameNetController();
-        gameNetController.setListener(this);
-        Controllers.clearListeners();
-        Controllers.addListener(this);
+        networkInput = main.getLibniMergedInput();
+        networkInput.addInputProcessor(stage);
+        networkInput.setListener(this);
 
         // read credits for current language TODO: language
         BufferedReader br = new BufferedReader(Gdx.files.internal(Main.TEXT_FILE).reader());
@@ -153,7 +148,7 @@ public class Credits implements Screen, ControllerListener, GameNetControllerLis
                     realTimePassed += step * Game.timeResolution;
                 }
             }
-            gameNetController.evaluateMessages();
+            networkInput.evaluate();
             stage.act();
         }
         stage.draw();
@@ -187,71 +182,25 @@ public class Credits implements Screen, ControllerListener, GameNetControllerLis
 
     @Override
     public void dispose() {
-        gameNetController.clearListener();
+        networkInput.clearListener();
         fader.dispose();
         stage.dispose();
     }
 
     @Override
-    public void connected(Controller controller) {
+    public void libniDown(int button) {
 
     }
 
     @Override
-    public void disconnected(Controller controller) {
-
-    }
-
-    @Override
-    public boolean buttonDown(Controller controller, int buttonCode) {
-        return false;
-    }
-
-    @Override
-    public boolean buttonUp(Controller controller, int buttonCode) {
-        finished = true;
-        return false;
-    }
-
-    @Override
-    public boolean axisMoved(Controller controller, int axisCode, float value) {
-        return false;
-    }
-
-    @Override
-    public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-        return false;
-    }
-
-    @Override
-    public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-        return false;
-    }
-
-    @Override
-    public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-        return false;
-    }
-
-    @Override
-    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-        return false;
-    }
-
-    @Override
-    public void gameNetDown(char button) {
-
-    }
-
-    @Override
-    public void gameNetUp(char button) {
+    public void libniUp(int button) {
         if(button == ' ') { // our convention for fire
             finished = true;
         }
     }
 
     @Override
-    public void gameNetAnalog(byte analogNr, int value) {
+    public void libniAnalog(int analogNr, long value) {
 
     }
 }

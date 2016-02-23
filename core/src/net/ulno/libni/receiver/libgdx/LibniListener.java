@@ -1,24 +1,26 @@
-package com.mcminos.game;
+package net.ulno.libni.receiver.libgdx;
 
 /**
  * Created by ulno on 06.02.16.
  */
-public interface GameNetControllerListener {
+public interface LibniListener {
     /**
      * This is called, when a button was pressed and going down.
      * @param button
      */
-    public void gameNetDown(char button );
+    public void libniDown(int button );
 
     /**
      * This is called, when a button is released and going up.
      * @param button
      */
-    public void gameNetUp(char button );
+    public void libniUp(int button );
 
     /**
      * a 2 byte analog value is sent for controller with nr analogNr
      * values from -2^15 to 2^15-1
+     * @param analogNr
+     * @param value
      */
-    public void gameNetAnalog(byte analogNr, int value);
+    public void libniAnalog(int analogNr, long value);
 }
