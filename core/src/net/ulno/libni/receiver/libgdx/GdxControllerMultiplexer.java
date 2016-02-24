@@ -1,5 +1,6 @@
 package net.ulno.libni.receiver.libgdx;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.utils.Array;
@@ -11,14 +12,15 @@ import com.badlogic.gdx.utils.Array;
  */
 public class GdxControllerMultiplexer extends LibniController { // TODO: add later actual subcontrollers with creation and deletion listeners
     public static final float CONTROLLER_THRESHOLD = 0.2f; // Make this configurable per controller or even per axis
+    private static final int POV_CENTER = -1;
     public static final int POV_NORTH = 0;
-    public static final int POV_NORTHEAST = 1;
+    public static final int POV_NORTHEAST = 4;
     public static final int POV_EAST = 2;
-    public static final int POV_SOUTHEAST = 3;
-    public static final int POV_SOUTH = 4;
-    public static final int POV_SOUTHWEST = 5;
-    public static final int POV_WEST = 6;
-    public static final int POV_NORTHWEST = 7;
+    public static final int POV_SOUTHEAST = 5;
+    public static final int POV_SOUTH = 1;
+    public static final int POV_SOUTHWEST = 7;
+    public static final int POV_WEST = 3;
+    public static final int POV_NORTHWEST = 6;
     public static final int BUTTON1 = 8;
     public static final int BUTTON2 = 9;
     public static final int BUTTON3 = 10;
@@ -40,6 +42,10 @@ public class GdxControllerMultiplexer extends LibniController { // TODO: add lat
             com.badlogic.gdx.controllers.Controller c = controllers.get(i);
             int povCode = 0;
             switch(unmappedButtonNr) {
+                case POV_CENTER:
+                    // this needs to disable all pov-buttons
+                    pressed = false; // center can't be pressed
+                    break;
                 case POV_NORTH:
                     pressed |= c.getPov(povCode) == PovDirection.north;
                     break;
@@ -104,7 +110,8 @@ public class GdxControllerMultiplexer extends LibniController { // TODO: add lat
         for (int i = controllers.size - 1; i >= 0; i--) {
             com.badlogic.gdx.controllers.Controller c = controllers.get(i);
             currentAxis = c.getAxis(unmappedAnalogNr);
-            currentAxisAbs = Math.abs(axisValue);
+            currentAxisAbs = Math.abs(currentAxis);
+            //Gdx.app.log("unmappedAnalog","Nr: "+unmappedAnalogNr+" Value: "+currentAxis);
             if (currentAxisAbs > axisValueAbs) { // select biggest absolute value on this axis
                 axisValue = currentAxis;
                 axisValueAbs = currentAxisAbs;

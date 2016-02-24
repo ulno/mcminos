@@ -20,7 +20,7 @@ public class NetworkMultiplexer extends LibniController implements UpdateListene
     public static final int BUFFER_HEADER_SIZE=16;
     public static final int MAX_NETWORK_CONTROLLERS=128;
     private Hashtable<NetworkControllerID,NetworkController> networkControllers = new Hashtable<>();
-    private ArrayList<NetworkControllerID> networkNetworkControllerIDList = new ArrayList<>();
+    private ArrayList<NetworkControllerID> networkControllerIDList = new ArrayList<>();
     private Random random = new Random();
 
     private DatagramChannel channel = null;
@@ -45,6 +45,7 @@ public class NetworkMultiplexer extends LibniController implements UpdateListene
                 //ignore and leave hostAndPort undefined
             }
         }
+        initUDP(port);
 
     }
 
@@ -125,21 +126,25 @@ public class NetworkMultiplexer extends LibniController implements UpdateListene
             clientID = (clientID<<8) + messageSaved[15];
             evaluateID.clientID = clientID;
 
-            if(!networkControllers.containsKey(clientID)) { // creating new controller
-                int index = networkNetworkControllerIDList.size();
+            if(!networkControllers.containsKey(evaluateID)) { // creating new controller
+                int index = networkControllerIDList.size();
                 if(  index >= MAX_NETWORK_CONTROLLERS ) { // discard randomly one
                     index = random.nextInt(MAX_NETWORK_CONTROLLERS);
                     // delete element in hashmap
-                    networkControllers.get(networkNetworkControllerIDList.get(index)).dispose();
-                    networkControllers.remove(networkNetworkControllerIDList.get(index));
+                    networkControllers.get(networkControllerIDList.get(index)).dispose();
+                    networkControllers.remove(networkControllerIDList.get(index));
                 }
-                NetworkControllerID newID = new NetworkControllerID(sessionID,clientID);
+                NetworkControllerID newID = new NetworkControllerID(sessionID, clientID);
                 NetworkController controller = new NetworkController(newID);
                 controller.setUpdateListener(this);
-                networkNetworkControllerIDList.set(index,newID);
-                networkControllers.put(newID,controller);
-           }
-            networkControllers.get(clientID).evaluateNetworkPackage( messageSaved, messageSavedSize );
+                if (networkControllerIDList.size() >= index) {
+                    networkControllerIDList.add(newID);
+                } else { // is in there
+                    networkControllerIDList.set(index, newID);
+                }
+                networkControllers.put(newID, controller);
+            }
+            networkControllers.get(evaluateID).evaluateNetworkPackage(messageSaved, messageSavedSize);
         }
     }
 
@@ -167,8 +172,8 @@ public class NetworkMultiplexer extends LibniController implements UpdateListene
 
     @Override
     public boolean getButton(int button) {
-        for(int i = networkControllers.size()-1; i>=0; i--) {
-            if(networkControllers.get(i).getButton(button))
+        for(int i = networkControllerIDList.size()-1; i>=0; i--) {
+            if(networkControllers.get(networkControllerIDList.get(i)).getButton(button))
                 return true;
         }
         return false;
@@ -178,8 +183,8 @@ public class NetworkMultiplexer extends LibniController implements UpdateListene
     public long getAnalog(int analogNr) {
         long analog=0;
         long analogAbs=0;
-        for(int i = networkControllers.size()-1; i>=0; i--) {
-            NetworkController c = networkControllers.get(i);
+        for(int i = networkControllerIDList.size()-1; i>=0; i--) {
+            NetworkController c = networkControllers.get(networkControllerIDList.get(i));
             long newAnalog = c.getAnalog(analogNr);
             long newAnalogAbs = Math.abs(newAnalog);
             if(newAnalogAbs > analogAbs) {

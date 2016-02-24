@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class Main extends com.badlogic.gdx.Game {
     // if the following file exists in teh hom edirectory or on the sd-card in android and there is a valid hostname in
     // here, then the mqtt-controller is active and reacts to messages sent on the NetworkLibniController/McMinos topic
-    private static final String GAMENET_CONFIG_FILE = ".mcminos.libniMergedInput";
+    private static final String LIBNI_CONFIG_FILE = ".mcminos.libni";
     private Audio audio;
     public static final String TEXT_FILE = "text";
     public static final String DEFAULT_UISKIN = "uiskins/default/uiskin.json";
@@ -107,32 +107,32 @@ public class Main extends com.badlogic.gdx.Game {
                         // default mapping was already initialized, so nothing to do here
                     }
                 },
-                Gdx.files.external(GAMENET_CONFIG_FILE),
+                Gdx.files.external(LIBNI_CONFIG_FILE),
                 new GdxControllerMapping()
                         .addButton(LibniMergedInput.BUTTON_UP, GdxControllerMultiplexer.POV_NORTH)
                         .addButton(LibniMergedInput.BUTTON_UP, GdxControllerMultiplexer.POV_NORTHWEST)
                         .addButton(LibniMergedInput.BUTTON_UP, GdxControllerMultiplexer.POV_NORTHEAST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,0,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,2,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,4,true)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_WEST)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_NORTHWEST)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_SOUTHWEST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,1,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,3,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,5,true)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,1,false)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,3,false)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,5,false)
+                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_EAST)
+                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_NORTHEAST)
+                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_SOUTHEAST)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,0,true)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,2,true)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,4,true)
                         .addButton(LibniMergedInput.BUTTON_DOWN, GdxControllerMultiplexer.POV_SOUTH)
                         .addButton(LibniMergedInput.BUTTON_DOWN, GdxControllerMultiplexer.POV_SOUTHWEST)
                         .addButton(LibniMergedInput.BUTTON_DOWN, GdxControllerMultiplexer.POV_SOUTHEAST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,0,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,2,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,4,false)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_EAST)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_NORTHEAST)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_SOUTHEAST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,1,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,3,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,5,false)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,1,true)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,3,true)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,5,true)
+                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_WEST)
+                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_NORTHWEST)
+                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_SOUTHWEST)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,0,false)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,2,false)
+                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,4,false)
                         .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON1)
                         .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON2)
                         .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON3)

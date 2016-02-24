@@ -258,8 +258,12 @@ public class LibniMergedInput implements InputProcessor, ControllerListener, Upd
         // TODO: Handle multiple pov-codes
         //Gdx.app.log("povMoved","LibniController: "+controller.getName()
         //        + " povCode: " + povCode
-        //        + " PovDirection: " + value);
-        gdxControllerMultiplexer.registerButtonEvent(povCode);
+        //        + " PovDirection: " + value + " ordinal: " + value.ordinal());
+        //if(value == PovDirection.center) { // this resets all pov-directions
+        // allways update all
+            for(int i=0; i<8; i++)
+                gdxControllerMultiplexer.registerButtonEvent(i);
+        //} else gdxControllerMultiplexer.registerButtonEvent(value.ordinal()-1);
         return false;
     }
 

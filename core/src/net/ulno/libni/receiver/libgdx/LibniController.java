@@ -54,6 +54,11 @@ public abstract class LibniController {
 
     protected abstract long unmappedAnalog( int unmappedAnalogNr );
 
+    private boolean unmappedAnalogToLibniButton(int unmappedAnalogNr, int libniButtonNr) {
+        long analogValue = unmappedAnalog(unmappedAnalogNr);
+        return mapping.selectButtonValue(unmappedAnalogNr, libniButtonNr, analogValue);
+    }
+
     /**
      * This is called when there was a button change happening through a registered event
      * @param buttonNr
@@ -66,14 +71,34 @@ public abstract class LibniController {
     }
 
     /**
+     * This is called when there was a ananlog change happening through a registered event
+     * @param analogNr
+     * @param value
+     */
+    private void analogUpdated( int analogNr, long value ) {
+        if(updateListener != null) {
+            updateListener.analogUpdated( analogNr, value );
+        }
+    }
+
+    /**
      * needs to be called when an event was triggered for this
      * @param unmappedButtonNr
      */
     public void registerButtonEvent( int unmappedButtonNr ) {
-        int button = mapping.getButton(unmappedButtonNr);
-        if(button < 0) return; // is not handled
-        ArrayList<Integer> triggers = mapping.getTriggers(button);
-        boolean currentState = buttons[button];
+        ArrayList<Integer> triggerButtons = mapping.getLibniButtonsFromUnmappedButton(unmappedButtonNr);
+        if(triggerButtons == null) return; // is not handled
+        int bsize = triggerButtons.size();
+        if(bsize == 0) return;
+        for(int triggerIndex = bsize-1; triggerIndex >= 0; triggerIndex--) {
+            int button = triggerButtons.get(triggerIndex);
+            processButtonEventForLibniButton( button );
+        }
+    }
+
+    private void processButtonEventForLibniButton(int libniButton) {
+        ArrayList<Integer> triggers = mapping.getUnmappedButtonsFromLibniButton(libniButton);
+        boolean currentState = buttons[libniButton];
         boolean newState = false;
         if (triggers != null) for (int i = triggers.size() - 1; i >= 0; i--) {
             if (unmappedButtonPressed(triggers.get(i))) { // if any is pressed, say button is pressed
@@ -81,35 +106,47 @@ public abstract class LibniController {
                 break;
             }
         }
-        if(!newState) {
+        if (!newState) {
             // check also the analogs to compute state
-            ArrayList<Integer> analogs = mapping.getAnalogs(button);
-            if(analogs!=null) for (int i = analogs.size() - 1; i >= 0; i--) {
-               newState = unmappedAnalogToButton(analogs.get(i), button);
-
+            ArrayList<Integer> analogs = mapping.getUnmappedAnalogsFromLibniButton(libniButton);
+            if (analogs != null) for (int i = analogs.size() - 1; i >= 0; i--) {
+                if( unmappedAnalogToLibniButton(analogs.get(i), libniButton) ) {
+                    newState = true;
+                    break;
+                }
             }
         }
 
-        if(newState != currentState) {
-            buttons[button] = newState;
-            buttonUpdated( button, newState );
+        if (newState != currentState) {
+            buttons[libniButton] = newState;
+            buttonUpdated(libniButton, newState);
         }
     }
 
-    private boolean unmappedAnalogToButton(int analogNr, int buttonNr) {
-        long analog = unmappedAnalog(analogNr);
-        if(analog != 0) {
-            if (mapping.isAnalogPositive(analogNr)) {
-                return analog > 0;
-            } else {
-                return analog < 0;
-            }
-        }
-        return false;
-    }
-
+    /**
+     * needs to be called when an event was triggered for this
+    * @param unmappedAnalogNr
+     */
     public void registerAnalogEvent( int unmappedAnalogNr ) {
-        // TODO: else anything analog is lost
+        // check first if this analog influences buttons
+        ArrayList<Integer> libniButtons = mapping.getLibniButtonsFromUnmappedAnalog(unmappedAnalogNr);
+        if(libniButtons != null && libniButtons.size() > 0) { // we have some buttons which are influenced
+            for(int i = libniButtons.size()-1; i>=0; i--) {
+                int libniButton = libniButtons.get(i);
+                processButtonEventForLibniButton( libniButton ); // just forward
+            }
+        }
+
+        // now check analogs which are influenced
+        int libniAnalog = mapping.getLibniAnalogFromUnmappedAnalog(unmappedAnalogNr);
+        if(libniAnalog<0) return; // not handled
+
+        long currentState = analogs[libniAnalog];
+        long newState =  unmappedAnalog(unmappedAnalogNr);
+        if(currentState != newState) {
+            analogs[libniAnalog] = newState;
+            analogUpdated(libniAnalog, newState);
+        }
     }
 
     public void evaluate() {

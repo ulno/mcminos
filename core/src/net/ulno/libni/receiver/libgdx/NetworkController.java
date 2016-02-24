@@ -29,7 +29,7 @@ public class NetworkController extends LibniController {
         if (updateListener != null) { // if initialized and somebody is subscribed
             int pointer = 0;
             // parse header
-            pointer += NetworkMultiplexer.BUFFER_HEADER_SIZE; // TODO: do something here!
+            pointer += NetworkMultiplexer.BUFFER_HEADER_SIZE; // TODO: do something here! Look at version information
             // parse last message received and compare with actual states
             boolean pressed;
             byte button;

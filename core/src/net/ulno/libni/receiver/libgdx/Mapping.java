@@ -1,7 +1,5 @@
 package net.ulno.libni.receiver.libgdx;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,32 +7,37 @@ import java.util.HashMap;
  * Created by ulno on 22.02.16.
  */
 public class Mapping {
-    HashMap<Integer,Integer> keycodeToLibniButton = new HashMap<>();
+    HashMap<Integer,ArrayList<Integer>> keycodeToLibniButtons = new HashMap<>();
     HashMap<Integer,ArrayList<Integer>> libniButtonToKeycodes = new HashMap<>();
-    HashMap<Integer,Integer> analogToLibniButton = new HashMap();
-    HashMap<Integer,Boolean> analogToLibniButtonSelect = new HashMap();
+    HashMap<Integer,ArrayList<Integer>> analogToLibniButtons = new HashMap();
+    HashMap<Integer,ArrayList<Boolean>> analogToLibniButtonSelect = new HashMap();
     HashMap<Integer,ArrayList<Integer>> libniButtonToAnalogs = new HashMap<>();
     HashMap<Integer,Integer> analogToLibniAnalog = new HashMap();
     HashMap<Integer,ArrayList<Integer>> libniAnalogToAnalogs = new HashMap<>();
 
     public Mapping addButton( int libniButton, int keycode ) {
-        if(!keycodeToLibniButton.containsKey(keycode)) {
-            ArrayList<Integer> list;
+        ArrayList<Integer> libniButtons;
 
-            keycodeToLibniButton.put(keycode, libniButton);
-            if (libniButtonToKeycodes.containsKey(libniButton)) {
-                // add to existing list
-                list = libniButtonToKeycodes.get(libniButton);
-                list.add(keycode);
-            } else {
-                // create new list
-                list = new ArrayList<Integer>();
-                list.add(keycode);
-                libniButtonToKeycodes.put(libniButton, list);
-            }
+        if(keycodeToLibniButtons.containsKey(keycode)) {
+            libniButtons = keycodeToLibniButtons.get(keycode);
         } else {
-            Gdx.app.log("Mapping.addButton","Button "+keycode+" already assigned.");
+            libniButtons = new ArrayList<>();
+            keycodeToLibniButtons.put(keycode, libniButtons);
         }
+        // add to existing list
+        libniButtons.add(libniButton);
+
+        ArrayList<Integer> keycodes;
+        if (libniButtonToKeycodes.containsKey(libniButton)) {
+            // add to existing list
+            keycodes = libniButtonToKeycodes.get(libniButton);
+        } else {
+            // create new list
+            keycodes = new ArrayList<Integer>();
+            libniButtonToKeycodes.put(libniButton, keycodes);
+        }
+        keycodes.add(keycode);
+
         return this;
     }
 
@@ -46,24 +49,35 @@ public class Mapping {
      * @param positive sepcify if this being positive is mapped to pressed (and if negative to unpressed) or vice versa
      */
     public Mapping addButtonFromAnalog(int libniButton, int analogNr, boolean positive) {
-        if(!analogToLibniButton.containsKey(analogNr)) {
-            ArrayList<Integer> list;
+        ArrayList<Integer> libniButtons;
+        ArrayList<Boolean> libniButtonsPositive;
 
-            analogToLibniButton.put(analogNr, libniButton);
-            analogToLibniButtonSelect.put(analogNr, positive);
-            if (libniButtonToAnalogs.containsKey(libniButton)) {
-                // add to existing list
-                list = libniButtonToAnalogs.get(libniButton);
-                list.add(analogNr);
-            } else {
-                // create new list
-                list = new ArrayList<Integer>();
-                list.add(analogNr);
-                libniButtonToAnalogs.put(libniButton, list);
-            }
+        if(analogToLibniButtons.containsKey(analogNr)) {
+            libniButtons = analogToLibniButtons.get(analogNr);
+            libniButtonsPositive = analogToLibniButtonSelect.get(analogNr);
         } else {
-            Gdx.app.log("Mapping.addButtonFromAnalog","Analog "+analogNr+" already assigned.");
+            libniButtons = new ArrayList<>();
+            analogToLibniButtons.put(analogNr, libniButtons);
+            libniButtonsPositive = new ArrayList<>();
+            analogToLibniButtonSelect.put(analogNr, libniButtonsPositive);
         }
+        // add to existing list
+        libniButtons.add(libniButton);
+        libniButtonsPositive.add(positive);
+
+
+        ArrayList<Integer> list;
+
+        if (libniButtonToAnalogs.containsKey(libniButton)) {
+            // add to existing list
+            list = libniButtonToAnalogs.get(libniButton);
+        } else {
+            // create new list
+            list = new ArrayList<Integer>();
+            libniButtonToAnalogs.put(libniButton, list);
+        }
+        list.add(analogNr);
+
         return this;
     }
 
@@ -82,20 +96,46 @@ public class Mapping {
         }
     }
 
-    public int getButton(int toMap) {
-        if(!keycodeToLibniButton.containsKey(toMap)) return -1;
-        return keycodeToLibniButton.get(toMap);
+    public ArrayList<Integer> getLibniButtonsFromUnmappedButton(int unmappedButton) {
+        return keycodeToLibniButtons.get(unmappedButton);
     }
 
-    public ArrayList<Integer> getTriggers(int libniButton) {
+    public int getLibniAnalogFromUnmappedAnalog(int analogNr) {
+        if(!analogToLibniAnalog.containsKey(analogNr)) return -1;
+        return analogToLibniAnalog.get(analogNr);
+    }
+
+    public ArrayList<Integer> getLibniButtonsFromUnmappedAnalog(int analogNr) {
+        return analogToLibniButtons.get(analogNr);
+    }
+
+    public ArrayList<Integer> getUnmappedButtonsFromLibniButton(int libniButton) {
         return libniButtonToKeycodes.get(libniButton);
     }
 
-    public ArrayList<Integer> getAnalogs(int buttonNr) {
-        return libniAnalogToAnalogs.get(buttonNr);
+    public ArrayList<Integer> getUnmappedAnalogsFromLibniButton( int libniButton ) {
+        return libniButtonToAnalogs.get(libniButton);
     }
 
-    public boolean isAnalogPositive(int analogNr) {
-        return analogToLibniButtonSelect.get(analogNr);
+    public ArrayList<Integer> getUnmappedAnalogsFromLibniAnalog(int libniAnalog) {
+        return libniAnalogToAnalogs.get(libniAnalog);
     }
+
+    public boolean selectButtonValue(int unmappedAnalogNr, int libniButtonNr, long analogValue) {
+        ArrayList<Integer> triggerButtons = analogToLibniButtons.get(unmappedAnalogNr);
+        int buttonIndex = triggerButtons.indexOf(libniButtonNr);
+        boolean positive = analogToLibniButtonSelect.get(unmappedAnalogNr).get(buttonIndex); // TODO: merge into one class to speed up
+        if(analogValue != 0) {
+            if (positive) {
+                return analogValue > 0;
+            } else {
+                return analogValue < 0;
+            }
+        }
+        return false;
+    }
+
+/*    public boolean isAnalogPositive(int analogNr) {
+        return analogToLibniButtonSelect.get(analogNr);
+    }*/
 }
