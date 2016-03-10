@@ -1,4 +1,6 @@
 ############ project specific stuff #####################
+# importet libni stuff
+core/src/net
 **/assets/entities/
 **/assets/user-save*
 **/assets/user-stats*
