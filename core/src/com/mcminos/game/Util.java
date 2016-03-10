@@ -41,7 +41,7 @@ public class Util {
     }
 
 
-/*    public static int getKeyDirections(NetworkController networkInput) {
+/*    public static int getKeyDirections(NetworkReceiver networkInput) {
         int keyDirections = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.W)
                 || Gdx.input.isKeyPressed(Input.Keys.UP)
@@ -59,9 +59,9 @@ public class Util {
                 || Gdx.input.isKeyPressed(Input.Keys.LEFT)
                 || networkInput.isDown('a')
                 ) keyDirections |= Mover.LEFT;
-        Array<LibniController> controllers = Controllers.getControllers();
+        Array<LibniReceiver> controllers = Controllers.getControllers();
         for(int i=controllers.size-1; i>=0; i--) {
-            LibniController c = controllers.get(i);
+            LibniReceiver c = controllers.get(i);
             for(int axes=0; axes<3; axes++) {
                 float x = c.getAxis(axes*2);
                 float y = c.getAxis(axes*2+1);

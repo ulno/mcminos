@@ -8,6 +8,7 @@ import com.mcminos.game.Main;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+        //System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true"); no effect?
         /*Preferences preferencesHandle = Gdx.app.getPreferences( "com.mcminos.game.prefs");
         if(!preferencesHandle.contains("fs")) {
             preferencesHandle.putBoolean("fs",false);

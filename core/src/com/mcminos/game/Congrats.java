@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import net.ulno.libni.receiver.libgdx.LibniListener;
-import net.ulno.libni.receiver.libgdx.LibniMergedInput;
+import net.ulno.libni.receiver.LibniListener;
+import net.ulno.libni.gdxReceiver.GdxMergedInput;
 
 /**
  * Created by ulno on 20.12.15.
@@ -30,7 +30,7 @@ public class Congrats implements Screen, LibniListener {
     private final Preferences preferences;
     private final Fader fader;
     private boolean finished = false;
-    private LibniMergedInput networkInput;
+    private GdxMergedInput networkInput;
 
     public Congrats(Main main, LevelConfig currentLevelConfig) {
         this.main = main;

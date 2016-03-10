@@ -2,7 +2,7 @@ package com.mcminos.game;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
-import net.ulno.libni.receiver.libgdx.LibniMergedInput;
+import net.ulno.libni.gdxReceiver.GdxMergedInput;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class McMinosMover extends Mover {
 
-    private LibniMergedInput networkInput;
+    private GdxMergedInput networkInput;
     private Game game;
     private McMinos mcminos;
     private Audio audio;

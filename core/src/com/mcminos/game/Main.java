@@ -6,7 +6,13 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import net.ulno.libni.receiver.libgdx.*;
+import net.ulno.libni.gdxReceiver.GdxReceiverMapping;
+import net.ulno.libni.gdxReceiver.GdxReceiverMultiplexer;
+import net.ulno.libni.gdxReceiver.GdxKeyboardMapping;
+import net.ulno.libni.gdxReceiver.GdxMergedInput;
+import net.ulno.libni.receiver.LibniMapping;
+import net.ulno.libni.receiver.NetworkReceiver;
+import net.ulno.libni.receiver.NewNetworkReceiverCallback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +48,7 @@ public class Main extends com.badlogic.gdx.Game {
     private InputProcessor defaultInputProcessor;
     private Statistics statistics;
     private Preferences preferences;
-    private LibniMergedInput libniMergedInput;
+    private GdxMergedInput libniMergedInput;
 
     public LevelsConfig getLevelsConfig() {
         return levelsConfig;
@@ -74,73 +80,74 @@ public class Main extends com.badlogic.gdx.Game {
     }
 
     private void initLibniInput() {
-        this.libniMergedInput = new LibniMergedInput(
-                new KeyboardMapping()
-                        .addButton(LibniMergedInput.BUTTON_UP, Input.Keys.W)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, Input.Keys.D)
-                        .addButton(LibniMergedInput.BUTTON_DOWN, Input.Keys.S)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, Input.Keys.A)
-                        .addButton(LibniMergedInput.BUTTON_UP, Input.Keys.UP)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, Input.Keys.RIGHT)
-                        .addButton(LibniMergedInput.BUTTON_DOWN, Input.Keys.DOWN)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, Input.Keys.LEFT)
-                        .addButton(LibniMergedInput.BUTTON_ESCAPE, Input.Keys.ESCAPE)
-                        .addButton(LibniMergedInput.BUTTON_ESCAPE, Input.Keys.T)
-                        .addButton(LibniMergedInput.BUTTON_ESCAPE, Input.Keys.M)
+        this.libniMergedInput = new GdxMergedInput(
+                new GdxKeyboardMapping()
+                        .addButton(LibniMapping.BUTTON_UP, Input.Keys.W)
+                        .addButton(LibniMapping.BUTTON_RIGHT, Input.Keys.D)
+                        .addButton(LibniMapping.BUTTON_DOWN, Input.Keys.S)
+                        .addButton(LibniMapping.BUTTON_LEFT, Input.Keys.A)
+                        .addButton(LibniMapping.BUTTON_UP, Input.Keys.UP)
+                        .addButton(LibniMapping.BUTTON_RIGHT, Input.Keys.RIGHT)
+                        .addButton(LibniMapping.BUTTON_DOWN, Input.Keys.DOWN)
+                        .addButton(LibniMapping.BUTTON_LEFT, Input.Keys.LEFT)
+                        .addButton(LibniMapping.BUTTON_ESCAPE, Input.Keys.ESCAPE)
+                        .addButton(LibniMapping.BUTTON_ESCAPE, Input.Keys.T)
+                        .addButton(LibniMapping.BUTTON_ESCAPE, Input.Keys.M)
                         .addButton('p', Input.Keys.P)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, Input.Keys.SPACE)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, Input.Keys.ENTER)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, 23) //amazon fire remote select
-                        .addButton(LibniMergedInput.BUTTON_ESCAPE, 82) // amazon fire menu
-                        .addButton(LibniMergedInput.BUTTON_ESCAPE, 85) // amazon fire play/pause
+                        .addButton(LibniMapping.BUTTON_FIRE, Input.Keys.SPACE)
+                        .addButton(LibniMapping.BUTTON_FIRE, Input.Keys.ENTER)
+                        .addButton(LibniMapping.BUTTON_FIRE, Input.Keys.Q)
+                        .addButton(LibniMapping.BUTTON_FIRE, 23) //amazon fire remote select
+                        .addButton(LibniMapping.BUTTON_ESCAPE, 82) // amazon fire menu
+                        .addButton(LibniMapping.BUTTON_ESCAPE, 85) // amazon fire play/pause
 
                         // 89: // amazon fire wind back
                         // 90: // amazon fire wind forward
                 ,
 
-                new NewControllerCallback() {
+                new NewNetworkReceiverCallback() {
 
                     @Override
-                    public void receiveController(NetworkController controller) {
+                    public void receiveController(NetworkReceiver controller) {
                         // configure mapping
                         // as McMinos is not multiplayer, we assign all controllers the same (default) mapping
                         // default mapping was already initialized, so nothing to do here
                     }
                 },
                 Gdx.files.external(LIBNI_CONFIG_FILE),
-                new GdxControllerMapping()
-                        .addButton(LibniMergedInput.BUTTON_UP, GdxControllerMultiplexer.POV_NORTH)
-                        .addButton(LibniMergedInput.BUTTON_UP, GdxControllerMultiplexer.POV_NORTHWEST)
-                        .addButton(LibniMergedInput.BUTTON_UP, GdxControllerMultiplexer.POV_NORTHEAST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,1,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,3,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_UP,5,false)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_EAST)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_NORTHEAST)
-                        .addButton(LibniMergedInput.BUTTON_RIGHT, GdxControllerMultiplexer.POV_SOUTHEAST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,0,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,2,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_RIGHT,4,true)
-                        .addButton(LibniMergedInput.BUTTON_DOWN, GdxControllerMultiplexer.POV_SOUTH)
-                        .addButton(LibniMergedInput.BUTTON_DOWN, GdxControllerMultiplexer.POV_SOUTHWEST)
-                        .addButton(LibniMergedInput.BUTTON_DOWN, GdxControllerMultiplexer.POV_SOUTHEAST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,1,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,3,true)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_DOWN,5,true)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_WEST)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_NORTHWEST)
-                        .addButton(LibniMergedInput.BUTTON_LEFT, GdxControllerMultiplexer.POV_SOUTHWEST)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,0,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,2,false)
-                        .addButtonFromAnalog(LibniMergedInput.BUTTON_LEFT,4,false)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON1)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON2)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON3)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON4)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON5)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON6)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON7)
-                        .addButton(LibniMergedInput.BUTTON_FIRE, GdxControllerMultiplexer.BUTTON8)
+                new GdxReceiverMapping()
+                        .addButton(LibniMapping.BUTTON_UP, GdxReceiverMultiplexer.POV_NORTH)
+                        .addButton(LibniMapping.BUTTON_UP, GdxReceiverMultiplexer.POV_NORTHWEST)
+                        .addButton(LibniMapping.BUTTON_UP, GdxReceiverMultiplexer.POV_NORTHEAST)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_UP,1,false)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_UP,3,false)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_UP,5,false)
+                        .addButton(LibniMapping.BUTTON_RIGHT, GdxReceiverMultiplexer.POV_EAST)
+                        .addButton(LibniMapping.BUTTON_RIGHT, GdxReceiverMultiplexer.POV_NORTHEAST)
+                        .addButton(LibniMapping.BUTTON_RIGHT, GdxReceiverMultiplexer.POV_SOUTHEAST)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_RIGHT,0,true)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_RIGHT,2,true)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_RIGHT,4,true)
+                        .addButton(LibniMapping.BUTTON_DOWN, GdxReceiverMultiplexer.POV_SOUTH)
+                        .addButton(LibniMapping.BUTTON_DOWN, GdxReceiverMultiplexer.POV_SOUTHWEST)
+                        .addButton(LibniMapping.BUTTON_DOWN, GdxReceiverMultiplexer.POV_SOUTHEAST)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_DOWN,1,true)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_DOWN,3,true)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_DOWN,5,true)
+                        .addButton(LibniMapping.BUTTON_LEFT, GdxReceiverMultiplexer.POV_WEST)
+                        .addButton(LibniMapping.BUTTON_LEFT, GdxReceiverMultiplexer.POV_NORTHWEST)
+                        .addButton(LibniMapping.BUTTON_LEFT, GdxReceiverMultiplexer.POV_SOUTHWEST)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_LEFT,0,false)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_LEFT,2,false)
+                        .addButtonFromAnalog(LibniMapping.BUTTON_LEFT,4,false)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON1)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON2)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON3)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON4)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON5)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON6)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON7)
+                        .addButton(LibniMapping.BUTTON_FIRE, GdxReceiverMultiplexer.BUTTON8)
         );
     }
 
@@ -320,7 +327,7 @@ public class Main extends com.badlogic.gdx.Game {
         setScreen( new FadeExit(this) );
     }
 
-    public LibniMergedInput getLibniMergedInput() {
+    public GdxMergedInput getLibniMergedInput() {
         return libniMergedInput;
     }
 }

@@ -16,8 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import net.ulno.libni.receiver.libgdx.LibniListener;
-import net.ulno.libni.receiver.libgdx.LibniMergedInput;
+import net.ulno.libni.receiver.LibniListener;
+import net.ulno.libni.gdxReceiver.GdxMergedInput;
+import net.ulno.libni.receiver.LibniMapping;
 
 import java.util.HashMap;
 
@@ -59,7 +60,7 @@ public class MainMenu implements Screen, InputProcessor, LibniListener {
     Vector2 coords = new Vector2();
     private HotSpot hotSpotPreferencesRoot;
     private int keyDirections;
-    private LibniMergedInput networkInput;
+    private GdxMergedInput networkInput;
 
 
     public MainMenu(final Main main) {
@@ -149,9 +150,9 @@ public class MainMenu implements Screen, InputProcessor, LibniListener {
     @Override
     public void libniUp(int button) {
         updateDirections();
-        if(button == LibniMergedInput.BUTTON_FIRE) {
+        if(button == LibniMapping.BUTTON_FIRE) {
             activateSelection();
-        } else if (button == LibniMergedInput.BUTTON_ESCAPE){
+        } else if (button == LibniMapping.BUTTON_ESCAPE){
             if(currentDialog==null) {
                 dialogPreferences();
                 hotSpotSelected = hotSpotPreferencesRoot.getRight();

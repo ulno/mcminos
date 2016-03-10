@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import net.ulno.libni.receiver.libgdx.LibniListener;
-import net.ulno.libni.receiver.libgdx.LibniMergedInput;
+import net.ulno.libni.receiver.LibniListener;
+import net.ulno.libni.gdxReceiver.GdxMergedInput;
 
 import java.io.BufferedReader;
 
@@ -35,7 +35,7 @@ public class Credits implements Screen, LibniListener {
     private long realTimePassed = 0;
     private long lastDeltaTimeLeft = 0;
     private boolean finished = false;
-    private LibniMergedInput networkInput;
+    private GdxMergedInput networkInput;
 
     public Credits(Main main, LevelConfig levelConfig) {
         this.main = main;

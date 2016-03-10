@@ -20,8 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import net.ulno.libni.receiver.libgdx.LibniListener;
-import net.ulno.libni.receiver.libgdx.LibniMergedInput;
+import net.ulno.libni.receiver.LibniListener;
+import net.ulno.libni.gdxReceiver.GdxMergedInput;
 
 /**
  * Created by ulno on 10.09.15.
@@ -74,7 +74,7 @@ public class Play implements Screen, GestureListener, InputProcessor, LibniListe
     private long lastControllerGameFrame;
     private int evaluateDirectionsLastDirs = 0;
     private BitmapFont pauseFont;
-    private LibniMergedInput networkInput;
+    private GdxMergedInput networkInput;
 
 
     private void preInit(final Main main) {
