@@ -185,6 +185,7 @@ public class Play implements Screen, GestureListener, InputProcessor, LibniListe
         // InputProcessor
         GestureDetector gd = new GestureDetector(this);
         networkInput = main.getLibniMergedInput();
+        networkInput.initInputMultiplexer(); // reset input multiplexer
         networkInput.addInputProcessor(stage);
         networkInput.addInputProcessor(gd);
         networkInput.addInputProcessor(this);

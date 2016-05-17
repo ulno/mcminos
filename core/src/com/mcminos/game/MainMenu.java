@@ -120,6 +120,8 @@ public class MainMenu implements Screen, InputProcessor, LibniListener {
 
     private void selectLevel(LevelConfig level) {
         selectedLevel = level;
+        // TODO: sth needs to be forgotten here hotSpotRoot = null; // forget hotspots
+        // seems not to work Gdx.input.setInputProcessor(null); // clear input processor to prevent garbage input later
         main.setScreen(new Play(main, level, 0, 3));
     }
 
