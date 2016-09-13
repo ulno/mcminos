@@ -29,7 +29,8 @@ mkdir -p IGNORED
 cd IGNORED
 git clone https://github.com/ulno/libni
 cd "$root_path"
-ln -s ../../../IGNORED/libni/receiver/java/libgdx/net core/src/net
+rm core/src/net &> /dev/null
+ln -s ../../IGNORED/libni/receiver/java/libgdx/net core/src/net
 
 echo "Now I will autoselect the flavor forge, "
 echo "this might compile the images and might take a long time."
