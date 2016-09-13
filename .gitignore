@@ -12,6 +12,8 @@ core/src/net
 ic_launcher.png
 **/data/*.png
 **/music/random/
+**/music/fixed/Chamber-of-Jewels.mp3
+**/music/fixed/The-Princess-Haunted.mp3
 **/drawable-*
 ios/data
 android/assets/text
