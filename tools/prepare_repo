@@ -1,5 +1,7 @@
 #!/bin/bash
 # this needs to be run after the first checkout to get basic dependencies
+echo "Preparing McMinos-repository for first installation."
+echo
 
 # find project root
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
@@ -13,4 +15,12 @@ cd android/assets/music
 
 # run flavor for forge once
 cd "$root_path"
-tools/falvor forge
+tools/flavor forge
+
+DEPS="python-pygame inkscape"
+
+echo "Trying to install dependencies on debian-like systems."
+echo "We need: "
+echo "You can abort here, if you have fulfiled these else press"
+echo "return to continue. I will ask for becoming root to run apt."
+sudo apt install $DEPS
