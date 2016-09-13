@@ -1,0 +1,16 @@
+#!/bin/bash
+# this needs to be run after the first checkout to get basic dependencies
+
+# find project root
+dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+cd "$dir/.."
+
+root_path="$(pwd)"
+
+# get music
+cd android/assets/music
+./download.sh
+
+# run flavor for forge once
+cd "$root_path"
+tools/falvor forge
