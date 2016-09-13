@@ -12,21 +12,29 @@ root_path="$(pwd)"
 # get music
 cd android/assets/music
 ./download.sh
+cd "$root_path"
 
-
+## system dependencies
 DEPS="python-pygame inkscape"
 
 echo "Trying to install dependencies on debian-like systems."
 echo "We need: "
-echo "You can abort teh request for root, if you have fulfiled these else press"
-echo "return to continue. I will ask for becoming root to run apt."
+echo "You can abort the request for root, if you have fulfilled these."
+echo "I will now ask for becoming root to run apt (or if done before"
+echo "auto check and install the deps)."
 sudo apt install $DEPS
 
-echo " Now autorunning flavor forge, "
+echo "Installing the dependencies to the libni library and link it in."
+mkdir -p IGNORED
+cd IGNORED
+git clone https://github.com/ulno/libni
+ln -s ../../../IGNORED/libni/receiver/java/libgdx/net core/src/net
+cd "$root_path"
+
+echo "Now I will autoselect the flavor forge, "
 echo "this might compile the images and might take a long time."
-echo " Press return to continue."
+echo "Press return to continue."
 read tmp
 
 # run flavor for forge once
-cd "$root_path"
 tools/flavor forge
