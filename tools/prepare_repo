@@ -13,14 +13,20 @@ root_path="$(pwd)"
 cd android/assets/music
 ./download.sh
 
-# run flavor for forge once
-cd "$root_path"
-tools/flavor forge
 
 DEPS="python-pygame inkscape"
 
 echo "Trying to install dependencies on debian-like systems."
 echo "We need: "
-echo "You can abort here, if you have fulfiled these else press"
+echo "You can abort teh request for root, if you have fulfiled these else press"
 echo "return to continue. I will ask for becoming root to run apt."
 sudo apt install $DEPS
+
+echo " Now autorunning flavor forge, "
+echo "this might compile the images and might take a long time."
+echo " Press return to continue."
+read tmp
+
+# run flavor for forge once
+cd "$root_path"
+tools/flavor forge
