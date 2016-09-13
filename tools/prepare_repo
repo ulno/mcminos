@@ -28,8 +28,8 @@ echo "Installing the dependencies to the libni library and link it in."
 mkdir -p IGNORED
 cd IGNORED
 git clone https://github.com/ulno/libni
-ln -s ../../../IGNORED/libni/receiver/java/libgdx/net core/src/net
 cd "$root_path"
+ln -s ../../../IGNORED/libni/receiver/java/libgdx/net core/src/net
 
 echo "Now I will autoselect the flavor forge, "
 echo "this might compile the images and might take a long time."
