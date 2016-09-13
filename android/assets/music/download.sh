@@ -10,7 +10,7 @@ It will download the fixed and random music into the current folder.
 Most of the music is from Eric Matyas at soundimage.org.
 You are not allowed to redistribute his music without consent.
 You can though use it for your own games when attributing
-Eric, soundimage.org, and his music as discribed here on http://soundimage.org
+Eric, soundimage.org, and his music as described here on http://soundimage.org
 
 If you build McMinos, you must make sure that the attribution to soundimage.org
 is present in the credit text (linked from the flavor folder) to
