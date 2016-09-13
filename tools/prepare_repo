@@ -39,3 +39,10 @@ read tmp
 
 # run flavor for forge once
 tools/flavor forge
+
+echo "Done."
+echo "Check for potential errors and eventually rerun."
+echo
+echo "If everything is correctly setup, you should be able to run the game with tools/start"
+echo "Enjoy McMinos and consider a contribution or donation (at http://mcminos.ulno.net/donate)"
+echo "to keep it alive."
