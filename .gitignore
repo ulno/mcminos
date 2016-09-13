@@ -1,6 +1,9 @@
 ############ project specific stuff #####################
-# importet libni stuff
+
+## importet libni stuff
 core/src/net
+
+## generated assets
 **/assets/entities/
 **/assets/user-save*
 **/assets/user-stats*
@@ -19,18 +22,18 @@ robovm-build
 FLAVOR
 flavorConfig.gradle
 ios/robovm.properties
-
+# also generated when flavor is called
 loadscreen.png
 
+## design artefacts
 # Hidden images from generation of test animated gifs
 .*png
-
 # ancient gif images as base for new sketches
 *.gif
-
 # generated screenshots
 screenshot*.png
 
+## auto generated from git version info for each compilation
 VERSION
 VERSIONSTRING
 
@@ -164,3 +167,6 @@ libgdx-*.zip.MD5
 
 ## IGNORED file dump (Andreas, 2015-12-13)
 /IGNORED
+
+## secrets and keys which are not public
+/android/fabric.properties
