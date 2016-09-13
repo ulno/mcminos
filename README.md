@@ -3,7 +3,7 @@
 
 Let's keep it alive together.
 
-McMinos is pacman-like puzzle game.
+McMinos is a Pacman-like puzzle game.
 
 For more information see at the moment still http://mcminos.com - 
 information will be slowly migrated here.
