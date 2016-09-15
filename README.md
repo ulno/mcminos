@@ -5,7 +5,7 @@ Let's keep it alive together.
 
 McMinos is a Pacman-like puzzle game.
 
-For more information see at the moment still http://mcminos.com - 
+For more information, still head on to http://mcminos.com - 
 information will be slowly migrated here.
 
 Just some quick info how to compile McMinos:
@@ -25,3 +25,4 @@ try to run tools/images manually.
 
 More to come, post issues, if you have trouble or fork and write help
 writing/migrating documentation.
+
