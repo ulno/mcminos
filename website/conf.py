@@ -179,10 +179,12 @@ THEME_COLOR = '#5670d4'
 POSTS = (
     ("posts/*.rst", "posts", "post.tmpl"),
     ("posts/*.txt", "posts", "post.tmpl"),
+    ("posts/*.md", "posts", "post.tmpl"),
 )
 PAGES = (
     ("stories/*.rst", "", "story.tmpl"),
     ("stories/*.txt", "", "story.tmpl"),
+    ("stories/*.md", "", "story.tmpl"),
 )
 
 
@@ -545,6 +547,8 @@ REDIRECTIONS = []
 # MUST be 'master', and 'gh-pages' for other repositories.
 # GITHUB_SOURCE_BRANCH = 'master'
 # GITHUB_DEPLOY_BRANCH = 'gh-pages'
+GITHUB_SOURCE_BRANCH = 'master'
+GITHUB_DEPLOY_BRANCH = 'gh-pages'
 
 # The name of the remote where you wish to push to, using github_deploy.
 # GITHUB_REMOTE_NAME = 'origin'

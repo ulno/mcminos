@@ -14,10 +14,17 @@ created its ancestor in the early 1990ies for Atari ST computers. So you may
 rightfully call it a retro game. We have now re-created it with the hope that
 you will find joy and recreation playing it.
 
+Unfortunately, the initial excitement of the public was a little underwhelming
+(yes, probably our marketing was underwhelming too). As we want to keep McMinos
+inspite of this alive and also want to open it up for academic and research projects,
+we are open sourcing it. We will keep paied versions around to fund potential further
+development of the game. If we get enough money, we will also still offer compiled versions
+of the iOS versions. The sources of McMinos are hosted on https://github.com/ulno/mcminos
+
 Get McMinos
 -----------
 
-Buy either from `Google Play
+To donate, buy either from `Google Play
 <https://play.google.com/store/apps/details?id=com.mcminos.gameAlive/>`__ or
 `Apple's iTunes App Store
 <https://itunes.apple.com/us/app/mcminos-alive/id1080519796?mt=8/>`__:
@@ -25,8 +32,8 @@ Buy either from `Google Play
 |google-paid| |apple-paid|
 
 
-At first McMinos may look a lot like its archetype, that classic video and
-arcade game whith a circular protagonist whose task it is to eat all pellets in
+At first McMinos may look a lot like its archetype (Pacman and Sokoban), that classic video and
+arcade game with a circular protagonist whose task it is to eat all pellets in
 a maze. And indeed, some levels are just like that. But McMinos is more:
 inspired by many classics we have added many extras and features to make our
 levels fun, some rich in action, some brain teasers to puzzle you quite a
@@ -35,7 +42,7 @@ while.
 Try it out for free
 -------------------
 
-If you want to try out McMinos, feel free to download our free teaser version, either from `Google Play <https://play.google.com/store/apps/details?id=com.mcminos.gameTeaser/>`__ or from `Apple's iTunes App Store <https://itunes.apple.com/us/app/mcminos-teaser/id1079961722?mt=8/>`__:
+If you want the free version of McMinos, feel free to download it from `Google Play <https://play.google.com/store/apps/details?id=com.mcminos.gameTeaser/>`__ or from `Apple's iTunes App Store <https://itunes.apple.com/us/app/mcminos-teaser/id1079961722?mt=8/>`__:
 
 |google-free| |apple-free|
 

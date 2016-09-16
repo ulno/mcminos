@@ -10,6 +10,12 @@
 
 |Teaser - One ghost, one cookie| |Teaser - Blastmaster 2|
 
+Die deutsche Version dieser Webseite ist leider nicht mehr aktuell seit McMinos open source geworden
+ist. Wenn Sie helfen wollen sie zu übersetzen, schreiben oder antworten Sie doch auf einen Issue in github.
+Die Open source version finden Sie hier: https://github.com/ulno/mcminos
+
+Für aktuelle Informationen, besuchen Sie bitte die englische Webseite.
+
 McMinos ist ein Videospiel für Mobilgeräte (Handys, Tablets, usw.) die entweder
 mit Android oder iOS laufen. Seinen Urahn haben wir in den frühen Neunzigern für
 Atari-ST-Computer entwickelt. Also dürfen Sie es gern als Retro-Spiel

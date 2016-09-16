@@ -149,6 +149,9 @@ Scintilla-based programmer's editor
 
 Music
 =====
+  * Legacy McMinos Title Song in credits: UlNo
+  * Main menu screen music: "The-Princess-Haunted": Eric Matyas - http://www.soundimage.org
+  * Congratulations screen: "Chamber-of-Jewels": Eric Matyas - http://www.soundimage.org
+  * In-Game music: "Cyber-Streets", "The-Toy-Factory", "The-Triumph-of-Technology_v001", "Urban-Sci-Fi-Heroes": Eric Matyas - http://www.soundimage.org
 
-[2do]
 
