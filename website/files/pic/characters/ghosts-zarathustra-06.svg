@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg3505" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata id="metadata3510">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+    <dc:date>2010-08-09</dc:date>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+     </cc:Agent>
+    </dc:creator>
+    <dc:rights>
+     <cc:Agent>
+      <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:rights>
+    <dc:publisher>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:publisher>
+    <dc:identifier>ghost-zarathustra-06</dc:identifier>
+    <dc:description>Ghost &quot;Zarathustra&quot; for McMinos</dc:description>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1">
+  <g id="g44159">
+   <rect id="rect44157" height="32" width="32" y="0" x="0" fill="none"/>
+   <path id="path4706" d="m2.0348 25c-1.9907-6.025 6.1518-24 13.965-24 7.8134 0 15.991 17.975 14 24-1.9907 6.0248-9.5457 6-14 6s-11.975 0.02478-13.965-6z" stroke="#000" stroke-linecap="round" stroke-width="2"/>
+   <path id="path4696" d="m2 25c-1.9931-6.032 6.1769-24 14-24s15.993 17.968 14 24c-1.9931 6.0324-9.5402 6-14 6s-12.007 0.03242-14-6z" fill="#ff0"/>
+   <path id="path4700" d="m22 10.5a6 5.5 0 1 1 -12 0 6 5.5 0 1 1 12 0z" transform="matrix(1.1667 0 0 1.2727 -2.6667 -3.8636)" fill="#c0c000"/>
+   <path id="path4698" d="m22 10.5a6 5.5 0 1 1 -12 0 6 5.5 0 1 1 12 0z" transform="matrix(1 0 0 1.0909 -.000062 -1.9541)" fill="#fff"/>
+   <path id="path4702" d="m18 13a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(0 -1 1 0 2.9999 28.551)"/>
+   <path id="path4704" stroke-linejoin="round" d="m28 19c-0.000001 0-3.973 9-12 9s-12-9-12-9 4.0163-1 12-1 12 1 12 1z" stroke="#800000" stroke-linecap="round" fill="#400000"/>
+   <path id="rect4727" style="block-progression:tb;text-indent:0;color:#000000;text-transform:none" d="m8 18.462v4.538h6v-4.5l-6-0.0384z"/>
+   <path id="rect4723" d="m9 18.5h4v3.5h-4v-3.5z" fill="#fff"/>
+   <path id="rect4725" d="m11 18.5h2v3.5h-2v-3.5z" fill="#f0ffff"/>
+   <path id="path3875" stroke-linejoin="round" d="m4 19s4.0494-1 12-1 12 1 12 1" stroke="#800000" stroke-linecap="round" fill="none"/>
+  </g>
+ </g>
+</svg>

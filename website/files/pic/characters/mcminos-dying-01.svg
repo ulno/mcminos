@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg3505" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata id="metadata3510">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>McMinos dying 01</dc:title>
+    <dc:date>2010-11-26</dc:date>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+     </cc:Agent>
+    </dc:creator>
+    <dc:rights>
+     <cc:Agent>
+      <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:rights>
+    <dc:publisher>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:publisher>
+    <dc:identifier>mcminos-dying-01</dc:identifier>
+    <dc:description>McMinos dying (by fading away). Version 2.</dc:description>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1">
+  <g id="g7306">
+   <rect id="rect7304" height="32" width="32" y="0" x="0" fill="none"/>
+   <path id="path4818" d="m16 1c-8.2843 0-15 6.7157-15 15 0 8.284 6.7157 15 15 15 8.284 0 15-6.716 15-15 0-8.2843-6.716-15-15-15zm0 1c7.732 0 14 6.268 14 14s-6.268 14-14 14-14-6.268-14-14 6.268-14 14-14z"/>
+   <path id="path3403" d="m16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14 14-6.268 14-14-6.268-14-14-14zm-5.812 2.9375l1.75 3 3.031-1.75 0.5 0.9063-3.031 1.75 1.75 3.0312-0.876 0.5-1.75-3.0312-3.0308 1.7502-0.5-0.906 3.0308-1.7505-1.7495-3 0.8755-0.5zm11.593 3.0937l1.719 3.0308 3.031-1.7495 0.531 0.8755-3.031 1.75 1.75 3.031-0.875 0.5-1.75-3.031-3.031 1.75-0.5-0.876 3.031-1.75-1.75-3.0308 0.875-0.5zm-15.312 8.4068l19.312 5.156-0.25 0.968-8.562-2.281c-0.476 1.776-1.402 3.261-2.563 4.281-1.16 1.021-2.631 1.611-4.094 1.219-1.4609-0.391-2.4838-1.632-2.9682-3.093-0.4845-1.462-0.5061-3.229-0.0313-5l-1.0937-0.282 0.25-0.968z" fill="#bf4040"/>
+   <path id="rect3622" d="m6.4688 16.438l-0.25 0.968 1.0937 0.282c-0.4748 1.771-0.4532 3.538 0.0313 5 0.4844 1.461 1.5073 2.702 2.9682 3.093 1.463 0.392 2.934-0.198 4.094-1.219 1.161-1.02 2.087-2.505 2.563-4.281l8.562 2.281 0.25-0.968-19.312-5.156zm1.8124 1.531l7.7188 2.062c-0.858 3.201-3.304 5.353-5.438 4.781-2.1334-0.571-3.1384-3.642-2.2808-6.843z"/>
+   <path id="rect2823" d="m9.324 5.4403 1.7344 3.004-3.0311 1.75 0.51562 0.89309 3.0311-1.75 1.75 3.0311 0.86603-0.5-1.75-3.0311l3.031-1.7495-0.516-0.8931-3.031 1.75-1.734-3.004-0.866 0.5z"/>
+   <path id="path3600" d="m20.915 8.5461 1.7344 3.004-3.0311 1.75 0.51562 0.89309 3.0311-1.75 1.75 3.0311 0.86603-0.5-1.75-3.0311 3.0311-1.75l-0.515-0.8929-3.032 1.7499-1.734-3.0039-0.866 0.5z"/>
+   <path id="path3606" d="m8.2812 17.957c-0.85765 3.2008 0.14739 6.272 2.2812 6.8438 2.1339 0.57177 4.5798-1.5805 5.4375-4.7812l-7.7188-2.0625z" fill="#ffb9a1"/>
+  </g>
+ </g>
+</svg>

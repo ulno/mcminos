@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg3505" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata id="metadata3510">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+    <dc:date>2010-04-26</dc:date>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+     </cc:Agent>
+    </dc:creator>
+    <dc:rights>
+     <cc:Agent>
+      <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:rights>
+    <dc:publisher>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:publisher>
+    <dc:identifier>vorlage-32x32-mcminos</dc:identifier>
+    <dc:description>Vorlage für 32x32-Pixel-Icons für McMinos. Metadaten jeweils entsprechend anpassen!</dc:description>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1">
+  <rect id="rect6553" height="32" width="32" y="0" x="0" fill="none"/>
+  <g id="g10658" transform="matrix(1.0667 0 0 1.0667 -1.0667 -1.0667)">
+   <path id="path6549" d="m15.267 10c0 3.4613-2.8059 6.2672-6.2672 6.2672s-6.2672-2.8059-6.2672-6.2672 2.8059-6.2672 6.2672-6.2672 6.2672 2.8059 6.2672 6.2672z" transform="matrix(1.1169 0 0 1.1169 -1.0524 -1.1693)"/>
+   <path id="path6551" d="m15.267 10c0 3.4613-2.8059 6.2672-6.2672 6.2672s-6.2672-2.8059-6.2672-6.2672 2.8059-6.2672 6.2672-6.2672 6.2672 2.8059 6.2672 6.2672z" transform="matrix(1.1169 0 0 1.1169 12.948 -1.1693)"/>
+   <path id="path4818" d="m274.66 136.06c0 8.2847-6.4323 15.001-14.367 15.001s-14.367-6.7161-14.367-15.001c0-8.2847 6.4323-15.001 14.367-15.001s14.367 6.7161 14.367 15.001z" transform="matrix(1.0441 0 0 .99994 -255.76 -120.06)"/>
+   <path id="path3403" d="m14.957 8c0 3.8612-3.1301 6.9913-6.9913 6.9913s-6.9913-3.1301-6.9913-6.9913 3.1301-6.9913 6.9913-6.9913 6.9913 3.1301 6.9913 6.9913z" transform="matrix(2.0025 0 0 2.0025 .049747 -.019905)" fill="red"/>
+   <path id="path3429" d="m32.314 51.824c0 2.1119-1.8612 3.8239-4.157 3.8239-2.2959 0-4.157-1.712-4.157-3.8239" transform="matrix(3.1272 0 0 3.3997 -72.053 -160.18)" fill="maroon"/>
+   <path id="path5770" d="m24 21c0 2.7306-3.5817 4.9443-8 4.9443s-8-2.2136-8-4.9443c0-2.7306 3.5817-4.9443 8-4.9443s8 2.2136 8 4.9443z" fill="#500"/>
+   <path id="path5768" d="m8 26.55s3.1809-2.1126 5-2.5496c0.97233-0.2336 2 0 3 0s2.0193-0.19559 3 0c1.9644 0.39179 5.5496 2.3053 5.5496 2.3053s-5.883 3.2366-8.5496 3.2366c-2.6667 0-8-2.9924-8-2.9924z" fill="red"/>
+   <path id="path3407" d="m10 5c0 1.1046-0.8954 2-2 2s-2-0.8954-2-2 0.8954-2 2-2 2 0.89543 2 2z" transform="matrix(3 0 0 3 -15 -5)" fill="#fff"/>
+   <path id="path3425" d="m10 5c0 1.1046-0.8954 2-2 2s-2-0.8954-2-2 0.8954-2 2-2 2 0.89543 2 2z" transform="matrix(3 0 0 3 -1 -5)" fill="#fff"/>
+   <path id="path3409" d="m9 5c0 0.5523-0.4477 1-1 1s-1-0.4477-1-1 0.4477-1 1-1 1 0.4477 1 1z" transform="matrix(3,0,0,3,-15,-5)"/>
+   <path id="path3427" d="m9 5c0 0.5523-0.4477 1-1 1s-1-0.4477-1-1 0.4477-1 1-1 1 0.4477 1 1z" transform="matrix(3,0,0,3,-1,-5)"/>
+   <path id="path5707" d="m17 22c0 1.1046-0.44772 2-1 2s-1-0.89543-1-2 0.44772-2 1-2 1 0.89543 1 2z" transform="translate(0 -1.6947)" fill="red"/>
+   <path id="path3443" d="m24 51.824c0-0.42238 1.8612-0.76478 4.157-0.76478 2.2959 0 4.157 0.3424 4.157 0.76478" transform="matrix(3.3678 0 0 .0000017603 -78.827 16)" fill="#fff"/>
+   <path id="path5772" d="m16.557 16.278c0 0.11626-0.0017 0.21051-0.0038 0.21051s-0.0038-0.09425-0.0038-0.21051 0.0017-0.21051 0.0038-0.21051 0.0038 0.09425 0.0038 0.21051z" fill="#500"/>
+  </g>
+ </g>
+</svg>
