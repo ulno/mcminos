@@ -1,6 +1,0 @@
-{
-  "name": "Mcminos",
-  "tagline": "McMinos is pacman-like puzzle game.",
-  "body": "# McMinos is Alive...\r\n... and now it's even open!\r\n\r\nLet's keep it alive together.\r\n\r\nMcMinos is a Pacman-like puzzle game.\r\n\r\nFor more information, still head on to http://mcminos.com - \r\ninformation will be slowly migrated here.\r\n\r\nJust some quick info how to compile McMinos:\r\n\r\nInitially you should have Java installed and for now a linux environment (cygwin might work).\r\n\r\nAfter cloning McMinos from github, run tools/setup_repo \r\nin a command line (you should only need to do this once).\r\nThis might take a while as it needs to compile all the images.\r\n\r\nIf everything went correctly, you should now be able to start McMinos by\r\nexecuting tools/start or tools/start-fs (this latter tries to run McMinos\r\nin fullscreen mode).\r\n\r\nIf errors occur, most usually there has been trouble with the image compilation,\r\ntry to run tools/images manually.\r\n\r\nMore to come, post issues, if you have trouble or fork and write help\r\nwriting/migrating documentation.\r\n\r\n",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}

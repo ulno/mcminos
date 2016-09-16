@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg3505" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <title id="title2867">Ghost Hanky (1st ghost ever) for McMinos</title>
+ <metadata id="metadata3510">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Ghost Hanky (1st ghost ever) for McMinos</dc:title>
+    <dc:date>2010-08-08</dc:date>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+     </cc:Agent>
+    </dc:creator>
+    <dc:rights>
+     <cc:Agent>
+      <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:rights>
+    <dc:publisher>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:publisher>
+    <dc:identifier>ghost-hanky-01</dc:identifier>
+    <dc:description>Ghost Hanky (1st ghost ever) for McMinos</dc:description>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer3" display="none">
+  <image id="image3738" width="32" xlink:href="/home/andreas/Dokumente/Projekte/McMinos/mcminos_pc/grafik/32x32/ghosts/ghost-1-hanky-01.gif" height="32" y="0" x="0"/>
+ </g>
+ <g id="layer1" display="none">
+  <path id="path3762" d="m13 1c1.71 0.1065 4.515 0.3964 6 2s1.286 6.739 2 8 0.04 0.932 1 1 2.946-2.2545 4-3 1.939-2.2121 3-2 1.582 1.621 2 3 0.164 4.343 0 6-0.682 3.802-1 5-1 2.051-1 3 0.69 2.252 1 3 0.854 1.382 1 2 0 2 0 2-3.105-0.669-4-1-1.384-0.556-2-1-1.723-1.331-2-2 0-2 0-2-2.642 2.237-4 3-3.577 1.903-5 2-3.256-0.403-4-1c-0.7441-0.597-0.5953-1.545-1-2s-0.9838-1.004-1.5246-1-0.9061 0.426-1.4754 1-1.1932 2.384-2 3-3 1-3 1 0.7558-1.495 1-3 0.1496-4.895 0-7-0.8504-4.895-1-7c-0.14962-2.105-0.72835-5.8215 0-7 0.7284-1.1785 1.2501-1.1217 2-1s1.3597 1.1116 2 2 2 4 2 4-0.5264-8.3167 1-10c1.5264-1.6834 3.29-1.1065 5-1z" fill-opacity=".25098" fill="#f00"/>
+ </g>
+ <g id="layer4">
+  <g id="g35964">
+   <rect id="rect35962" height="32" width="32" y="0" x="0" fill="none"/>
+   <path id="path3821" d="m16 1c-4.416 0-8 3.584-8 8v2h-1c0-1.656-1.344-3-3-3s-3 1.344-3 3v20l9.75-1.9375c1.404 1.219 3.247 1.938 5.25 1.938 2.0031 0 3.8461-0.71946 5.25-1.9375l9.75 1.938v-20c0-1.656-1.344-3-3-3s-3 1.344-3 3h-1v-2c0-4.416-3.584-8-8-8z" stroke="#000" stroke-linecap="round" stroke-width="2" fill="#fff"/>
+   <path id="path3802" d="m16 1c-4.416 0-8 3.584-8 8v2h-1c0-1.656-1.344-3-3-3s-3 1.344-3 3v20l9.75-1.9375c1.404 1.219 3.247 1.938 5.25 1.938 2.0031 0 3.8461-0.71946 5.25-1.9375l9.75 1.938v-20c0-1.656-1.344-3-3-3s-3 1.344-3 3h-1v-2c0-4.416-3.584-8-8-8z" fill="#fff"/>
+   <path id="path3768" d="m13 8.5a1.5 2.5 0 1 1 -3 0 1.5 2.5 0 1 1 3 0z" fill-opacity=".99357" transform="translate(2)"/>
+   <path id="path3770" d="m18 8.5a1.5 2.5 0 1 1 -3 0 1.5 2.5 0 1 1 3 0z" fill-opacity=".99357" transform="translate(2)"/>
+   <path id="path3806" d="m7 11c0 1.656-1.344 3-3 3v1c2.208 0 4-1.792 4-4h-1z" fill="#c0c0c0"/>
+   <path id="path3809" d="m25 11c0 1.656 1.344 3 3 3v1c-2.208 0-4-1.792-4-4h1z" fill="#c0c0c0"/>
+   <path id="path3813" d="m10 12s3 8 6 8 6-8 6-8-3.8367 2-6 2-6-2-6-2z"/>
+   <rect id="rect3823" height="8" width="1" y="20" x="8" fill="#c0c0c0"/>
+   <rect id="rect3825" height="8" width="1" y="21" x="4" fill="#c0c0c0"/>
+   <rect id="rect3827" height="8" width="1" y="21" x="27" fill="#c0c0c0"/>
+   <rect id="rect3829" height="8" width="1" y="20" x="23" fill="#c0c0c0"/>
+  </g>
+ </g>
+</svg>

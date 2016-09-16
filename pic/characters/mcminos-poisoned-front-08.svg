@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg3505" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata id="metadata3510">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+    <dc:date>2010-08-11</dc:date>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker &lt;zapyon@gmx.net&gt;</dc:title>
+     </cc:Agent>
+    </dc:creator>
+    <dc:rights>
+     <cc:Agent>
+      <dc:title>Copyright (C) 2010 by Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:rights>
+    <dc:publisher>
+     <cc:Agent>
+      <dc:title>Andreas Neudecker</dc:title>
+     </cc:Agent>
+    </dc:publisher>
+    <dc:identifier>mcminos-poisoned-front-08</dc:identifier>
+    <dc:description>McMinos poisoned, frontal, animation step 01.</dc:description>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1">
+  <path id="path3403" d="m14.957 8a6.9913 6.9913 0 1 1 -13.983 0 6.9913 6.9913 0 1 1 13.983 0z" transform="matrix(2.0025 0 0 2.0025 .049751 -.019901)" fill="#bf4040"/>
+  <path id="path3429" d="m32.314 51.824a4.157 3.8239 0 1 1 -8.314 0" transform="matrix(3.1272 0 0 -.0000018245 -72.053 16)" fill="#fff"/>
+  <path id="path3443" d="m24 51.824a4.157 0.76478 0 0 1 8.314 0" transform="matrix(3.3678 0 0 .0000017603 -78.827 16)" fill="#fff"/>
+  <path id="path3636" stroke-linejoin="round" d="m28 18c-2 0-2.1526 1.2916-4 1.2456-1.847-0.046-1.91-2.241-4-2.246-2.09-0.004-1.991 2.288-4 2.246-2.009-0.043-1.856-2.241-4-2.246-2.0359-0.004-1.928 2.323-4 2.246-2.0183-0.076-1.9672-1.246-4-1.246" stroke="#000" stroke-linecap="round" fill="none"/>
+  <path id="path3618" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(2.5 0 0 2.5 -11 -2.5)" fill="#00f"/>
+  <path id="path3407" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(2 0 0 2 -7 -.0000056)" fill="#0f0"/>
+  <path id="path3620" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(2.5 0 0 2.5 3 -2.5)" fill="#00f"/>
+  <path id="path3425" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(2 0 0 2 7 -.0000056)" fill="#0f0"/>
+  <path id="path3606" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(1.5 0 0 1.5 -3 2.5)" fill="#00f"/>
+  <path id="path3608" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(1.5 0 0 1.5 11 2.5)" fill="#00f"/>
+  <path id="path3610" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="translate(1 5)" fill="#0f0"/>
+  <path id="path3612" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(0.5 0 0 0.5 5 7.5)" fill="#00f"/>
+  <path id="path3614" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="translate(15 5)" fill="#0f0"/>
+  <path id="path3616" d="m10 5a2 2 0 1 1 -4 0 2 2 0 1 1 4 0z" transform="matrix(0.5 0 0 0.5 19 7.5)" fill="#00f"/>
+  <path id="path4818" d="m16 1c-8.2843 0-15 6.7157-15 15 0 8.284 6.7157 15 15 15 8.284 0 15-6.716 15-15 0-8.2843-6.716-15-15-15zm0 1c7.732 0 14 6.268 14 14s-6.268 14-14 14-14-6.268-14-14 6.268-14 14-14z"/>
+ </g>
+</svg>

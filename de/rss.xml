@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>McMinos</title><link>http://mcminos.com/</link><description>Information about the game McMinos</description><atom:link rel="self" href="/de/rss.xml" type="application/rss+xml"></atom:link><language>de</language><lastBuildDate>Fri, 16 Sep 2016 15:44:24 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>iOS Version Available</title><link>/de/posts/ios-version-available/</link><dc:creator>Andreas Neudecker &amp; Ulrich Norbisrath</dc:creator><description>&lt;p&gt;There we go, McMinos is now also availabel in the Apple AppStore! Go grab it!&lt;/p&gt;</description><guid>/de/posts/ios-version-available/</guid><pubDate>Sat, 06 Feb 2016 06:05:08 GMT</pubDate></item><item><title>Support Discussion</title><link>/de/posts/support/</link><dc:creator>Andreas Neudecker &amp; Ulrich Norbisrath</dc:creator><description>&lt;p&gt;As every program, also McMinos might be not free from errors and bugs.
+Let us use the comment section here to find and squish them.
+Thanks for helping us to help you.&lt;/p&gt;</description><guid>/de/posts/support/</guid><pubDate>Tue, 02 Feb 2016 03:12:54 GMT</pubDate></item><item><title>Android Alive</title><link>/de/posts/android-alive/</link><dc:creator>Andreas Neudecker &amp; Ulrich Norbisrath</dc:creator><description>&lt;p&gt;Just a short note: McMinos versions (teaser and alive) are life on the
+Google Playstore. Come and check them out!&lt;/p&gt;</description><guid>/de/posts/android-alive/</guid><pubDate>Fri, 29 Jan 2016 09:42:21 GMT</pubDate></item><item><title>Countdown is on - flavoring works</title><link>/de/posts/countdown-is-on-flavoring-works/</link><dc:creator>Andreas Neudecker &amp; Ulrich Norbisrath</dc:creator><description>&lt;div&gt;&lt;p&gt;Nearly ready!&lt;/p&gt;
+&lt;p&gt;Some of you might have already found themselves on the page
+and are hopefully waiting eagerly for our release.
+I had some small setbacks, managing the two flavors of McMinos as well on
+Android as on iOS.&lt;/p&gt;
+&lt;p&gt;The good news are: I did succeed tonight. Hopefully, I can start tomorrow to
+upload the free and payed version to the respective stores.&lt;/p&gt;
+&lt;p&gt;I will keep you updated.
+Until next time&lt;/p&gt;
+&lt;p&gt;UlNo&lt;/p&gt;&lt;/div&gt;</description><guid>/de/posts/countdown-is-on-flavoring-works/</guid><pubDate>Tue, 26 Jan 2016 16:50:05 GMT</pubDate></item></channel></rss>
