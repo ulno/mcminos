@@ -1,6 +1,6 @@
 .. title: McMinos becomes Open Source
 .. slug: mcminos-open-source
-.. date: 2016-09-16 09:42:21 UTC
+.. date: 2016-09-16 12:10:30 UTC
 .. tags: 
 .. category: 
 .. link: 
