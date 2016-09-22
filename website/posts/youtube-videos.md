@@ -1,5 +1,5 @@
 .. title: Videos on youtube available
-.. slug: mcminos-open-source
+.. slug: youtube-videos
 .. date: 2016-09-22 15:36:00 UTC
 .. tags: 
 .. category: 
