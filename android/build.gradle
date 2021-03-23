@@ -12,8 +12,8 @@ android {
     apply from: "../flavorConfig.gradle"
 //    ext.applicationID = fcApplicationId
 
-    buildToolsVersion "23.0.1"
-    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+    compileSdkVersion 25
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
