@@ -896,7 +896,7 @@ public class MainMenu implements Screen, InputProcessor, LibniListener {
     }
 
     @Override
-    public boolean scrolled(int amount) {
+    public boolean scrolled(float amountX, float amountY) {
         return false;
     }
 

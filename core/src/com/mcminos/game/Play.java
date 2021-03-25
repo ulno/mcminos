@@ -958,11 +958,12 @@ public class Play implements Screen, GestureListener, InputProcessor, LibniListe
     }
 
     @Override
-    public boolean scrolled(int amount) {
-        if (amount > 0) {
+    public boolean scrolled(float amountX, float amountY) {
+        // TODO: also evaluate y
+        if (amountX > 0) {
             zoomMinus();
             return true;
-        } else if (amount < 0) {
+        } else if (amountX < 0) {
             zoomPlus();
             return true;
         }
@@ -1098,6 +1099,11 @@ public class Play implements Screen, GestureListener, InputProcessor, LibniListe
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return false;
+    }
+
+    @Override
+    public void pinchStop() {
+        // TODO: does this need to be implemented?
     }
 
     public int getGameResolution() {

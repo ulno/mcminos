@@ -1,12 +1,15 @@
-apply plugin: "java"
+//apply plugin: "java"
 apply from: "../flavorConfig.gradle"
 
-sourceCompatibility = 1.7
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.mainClassName = "com.mcminos.game.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../android/assets");
-project.ext.texturePacker = ["extra/images-packer-input", "android/assets/entities", "pack"]
+project.ext {
+	mainClassName = "com.mcminos.game.desktop.DesktopLauncher"
+	assetsDir = new File("../android/assets");
+	texturePacker = ["extra/images-packer-input", "android/assets/entities", "pack"]
+}
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
@@ -16,50 +19,37 @@ task run(dependsOn: classes, type: JavaExec) {
     ignoreExitValue = true
 }
 
-task fullscreen(dependsOn: classes, type: JavaExec) {
+task debug(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
-    args = ["fullscreen"]
+    debug = true
 }
 
 task dist(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
-    from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
-    from files(project.assetsDir);
- 
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
-}
-
-dist.dependsOn classes
-
-eclipse {
-    project {
-        name = appName + "-desktop"
-        linkedResource name: 'assets', type: '2', location: 'PARENT-1-PROJECT_LOC/android/assets'
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
-}
-
-task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
-  doLast {
-    def classpath = new XmlParser().parse(file(".classpath"))
-    new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ]);
-    def writer = new FileWriter(file(".classpath"))
-    def printer = new XmlNodePrinter(new PrintWriter(writer))
-    printer.setPreserveWhitespace(true)
-    printer.print(classpath)
-  }
+    with jar
 }
 
 import com.badlogic.gdx.tools.texturepacker.TexturePacker
-task texturePacker << {
-    if (project.ext.has('texturePacker')) {
-        logger.info "Calling TexturePacker: "+texturePacker
-        TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
+task texturePacker {
+    doLast {
+	    if (project.ext.has('texturePacker')) {
+	        logger.info "Calling TexturePacker: "+texturePacker
+	        TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
+	    }
     }
 }
+
+
+dist.dependsOn classes
+
+eclipse.project.name = appName + "-desktop"
