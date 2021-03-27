@@ -3,7 +3,7 @@ dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 cd "$dir/.."
 if test "$1" = fullscreen; then
     shift
-    exec ./gradlew desktop:fullscreen "$@"
+    exec ./gradlew desktop:run --args=fullscreen "$@"
 else
     exec ./gradlew desktop:run "$@"
 fi
