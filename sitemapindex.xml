@@ -6,23 +6,23 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
-  <loc>/de/galleries/rss.xml</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <loc>/categories/cat_posts.xml</loc>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>/de/categories/cat_posts.xml</loc>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>/de/rss.xml</loc>
-  <lastmod>2016-09-22T19:44:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>/galleries/rss.xml</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>/rss.xml</loc>
-  <lastmod>2016-09-22T19:44:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>/sitemap.xml</loc>
-  <lastmod>2016-09-22T19:44:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </sitemap>
 </sitemapindex>

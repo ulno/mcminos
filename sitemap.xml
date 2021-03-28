@@ -7,170 +7,158 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="de" href="/de/" />
  </url>
  <url>
   <loc>/2016/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/archive.html</loc>
-  <lastmod>2016-09-22T19:44:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/blog/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/categories/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
+ </url>
+ <url>
+  <loc>/categories/cat_posts/</loc>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/credits/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="de" href="/de/creditsde/" />
  </url>
  <url>
   <loc>/de/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/2016/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/archive.html</loc>
-  <lastmod>2016-09-22T19:44:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/blog/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/categories/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
+ </url>
+ <url>
+  <loc>/de/categories/cat_posts/</loc>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/creditsde/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/documentation/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/downloads/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
- </url>
- <url>
-  <loc>/de/galleries/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/keyboard_shortcuts/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/posts/android-alive/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="/posts/android-alive/" />
  </url>
  <url>
   <loc>/de/posts/countdown-is-on-flavoring-works/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="/posts/countdown-is-on-flavoring-works/" />
  </url>
  <url>
   <loc>/de/posts/ios-version-available/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="/posts/ios-version-available/" />
  </url>
  <url>
   <loc>/de/posts/mcminos-open-source/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="/posts/mcminos-open-source/" />
  </url>
  <url>
   <loc>/de/posts/support/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="/posts/support/" />
  </url>
  <url>
   <loc>/de/posts/youtube-videos/</loc>
-  <lastmod>2016-09-22T19:44:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="/posts/youtube-videos/" />
  </url>
  <url>
   <loc>/de/screenshots/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/de/support/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/documentation/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="de" href="/de/documentation/" />
  </url>
  <url>
   <loc>/downloads/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="de" href="/de/downloads/" />
  </url>
  <url>
-  <loc>/galleries/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
- </url>
- <url>
   <loc>/keyboard_shortcuts/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="de" href="/de/keyboard_shortcuts/" />
  </url>
  <url>
-  <loc>/listings/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
- </url>
- <url>
-  <loc>/pic/characters/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
- </url>
- <url>
-  <loc>/pic/parts/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
- </url>
- <url>
   <loc>/posts/android-alive/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/posts/countdown-is-on-flavoring-works/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/posts/ios-version-available/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/posts/mcminos-open-source/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/posts/support/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/posts/youtube-videos/</loc>
-  <lastmod>2016-09-22T19:44:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
  <url>
   <loc>/screenshots/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="de" href="/de/screenshots/" />
  </url>
  <url>
   <loc>/support/</loc>
-  <lastmod>2016-09-16T18:48:00Z</lastmod>
+  <lastmod>2021-03-28T17:38:00Z</lastmod>
  </url>
 </urlset>
