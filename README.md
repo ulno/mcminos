@@ -5,14 +5,13 @@ Let's keep it alive together.
 
 McMinos is a Pacman-like puzzle game.
 
-For more information, still head on to http://mcminos.com - 
-information will be slowly migrated here.
+For more information, head to https://ulno.github.io/mcminos/
 
 Just some quick info how to compile McMinos:
 
 Initially you should have Java installed and for now a linux environment (cygwin might work).
 
-After cloning McMinos from github, run tools/setup_repo 
+After cloning McMinos from github, run tools/prepare_repo 
 in a command line (you should only need to do this once).
 This might take a while as it needs to compile all the images.
 
