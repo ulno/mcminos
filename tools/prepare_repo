@@ -18,8 +18,9 @@ cd "$root_path"
 DEPS="python-pygame inkscape"
 
 echo "Trying to install dependencies on debian-like systems."
-echo "We need: "
-echo "You can abort the request for root, if you have fulfilled these."
+echo "We need: $DEPS"
+echo "You can abort the request for root, if you have fulfilled these"
+echo "or run a different linux distribution like arch."
 echo "I will now ask for becoming root to run apt (or if done before"
 echo "auto check and install the deps)."
 sudo apt install $DEPS
